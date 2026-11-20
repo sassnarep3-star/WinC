@@ -17,13 +17,13 @@ How to claim: set Status to `in progress`, put your session ID and file scope in
 | T-06 | Suggestions page (decision paths for review before implementation) | done | arena-23428c9e | suggestions.html |
 | T-07 | Questions & Answers page (open questions, missing information) | done | arena-23428c9e | questions.html |
 | T-08 | Flagged for Review page (irregularities + source links) | done | arena-23428c9e | flagged.html |
-| T-09 | Buyer-question guides (question-shaped articles, no unverified product claims) | done | arena-23428c9e | guides.html, guides/*.html |
+| T-09 | Buyer-question guides (question-shaped articles, no unverified product claims) | done | arena-23428c9e | guides.html, guide-*.html |
 | T-10 | Compliance page: Associates disclosure, link marking, verification policy | done | arena-23428c9e | compliance.html |
 | T-11 | SEO/findability: sitemap.xml, robots.txt, meta/OG tags, RSS feed | done | arena-23428c9e | sitemap.xml, robots.txt, feed.xml |
 | T-12 | Outbound click counter (privacy-preserving, client-side, no third parties) | done | arena-23428c9e | js/click-counter.js |
 | T-13 | Verification page: line-by-line method, sources used | done | arena-23428c9e | verification.html |
-| T-14 | Integration: re-verify combined data, link check, build check | done | arena-23428c9e | all |
-| T-15 | PR to main, merge, confirm GitHub Pages deploy | done | arena-23428c9e | — |
+| T-14 | Integration: re-verify combined data, link check, build check | done | arena-23428c9e | all — 14 HTML, 203 internal refs, 0 broken (script), all 19 routes HTTP 200 locally |
+| T-15 | PR to main, merge, confirm GitHub Pages deploy | done | arena-23428c9e | see Merge / deploy record |
 
 ## Source log (official sources checked)
 
