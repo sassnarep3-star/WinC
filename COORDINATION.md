@@ -1,8 +1,8 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena-82d39deb`** (branch `arena/82d39deb-winc`). That session's board,
-> sources and findings are in the **last section of this file**. Earlier sessions are kept
-> verbatim as the provenance trail.
+> **Latest session: `f1fd0ff0`** (branch `arena/f1fd0ff0-winc`). That session's board is appended at
+> the end of this file. Earlier sessions, including `arena-82d39deb`, are kept verbatim as the
+> provenance trail.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -454,3 +454,33 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 | --- | --- |
 | 2026-11-20 | PR opened from `arena/0458cd24-winc` → `main`: source-register corrections (S01/S02/S03/S06/S20 access notes), product-title reconciliation (FLG-018), COORDINATION.md + EXECUTIVE-SUMMARY.md integration record. |
 | 2026-11-20 | Merged to `main`. GitHub Pages legacy build re-run; `status: built`, no error. Live pages re-fetched to confirm the merged content serves. |
+
+---
+
+# Session f1fd0ff0 — shop polish pass, 4th verification observation, parallel-PR reconciliation (2026-11-20)
+
+Branch `arena/f1fd0ff0-winc`, based on `main@ba0b838` (PR #15 merged; PR #16 from session
+`arena-82d39deb` also merged). Read `main` before touching shared outputs, as the board requires.
+
+## Board
+
+| ID | Task | Status | Owner | Files |
+| --- | --- | --- | --- | --- |
+| T30 | Fourth independent live observation of the five supplied `link.amazon` links + the five resolved listings, recorded with the reader used | in progress | f1fd0ff0 | `data/probes.json`, `data/sources.json` |
+| T31 | Make the reader path read like a shop: per-product artwork, human card copy instead of the raw listing title, flag IDs removed from cards, seasonal front-page strip | in progress | f1fd0ff0 | `scripts/build_site.py`, `assets/img/*`, `data/products.json` |
+| T32 | Reconcile the two open parallel PRs (#17 `arena/04112b09-winc`, #18 `arena/23428c9e-winc`) against `main`: compare, decide, record — no silent clobber | in progress | f1fd0ff0 | `COORDINATION.md`, `flagged-for-review.html` (via builder) |
+| T33 | Suggestions + questions registers: add what this polish pass proved, keep the review-before-implement contract | pending | f1fd0ff0 | `data/suggestions.json`, `data/questions.json` |
+| T34 | Gate: assert per-product image + card copy exist, and that no reader-facing card carries a flag ID | pending | f1fd0ff0 | `scripts/check_site.py` |
+| T35 | Executive summary + README reconciled with the repo state (computed) | pending | f1fd0ff0 | `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Integration: build + gate green, PR to main, merge, confirm Pages deploy | pending | f1fd0ff0 | all (integration only) |
+
+## Why this pass exists (audit, before any edit)
+
+| ID | Finding | Action |
+| --- | --- | --- |
+| B-01 | Every product card rendered the **raw Amazon listing title** as its body copy — three near-identical keyword-stuffed paragraphs on one page. That is exactly the "AI slop / scraped store" tell the brief asks to remove. | replaced with short editorial card copy written from listing facts (`data/products.json` `card_copy`) |
+| B-02 | All three air-fryer cards and both thermometer cards used the **same illustration** (category image), so the shop grid looked like a template. | one commissioned illustration per product; category tiles keep the category art |
+| B-03 | Reader cards carried internal register IDs (`see FLG-005`) in the middle of a spec line. | flag notes stay on the product page + Flagged for review; cards say nothing about our bookkeeping |
+| B-04 | Open PRs **#17 and #18 are whole-site rebuilds** under different brands ("Crisp Report", "Air & Ember"), both `CONFLICTING` against `main`. They duplicate what `main` already ships (shop pages, guides, suggestions, questions, flags, sitemap) in a second, less complete form. | not merged; recorded here and on Flagged for Review so the owner can decide — merging either would delete the source register, gate and measurement layer that `main` carries |
+
+Claim committed and pushed before any other edit.
