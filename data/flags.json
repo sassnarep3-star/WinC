@@ -236,6 +236,38 @@
       "detail": "Session dd79e08d (2026-11-20): HT07 appeared only in an Amazon.fr listing reference (S-row in sources.json). The US listing observed for B0DHZTCNR5 does not show it in the fields we captured. Under the verification rule the value is blank rather than carried over from another marketplace. Related: FLG-004 (ASIN canonicality).",
       "action": "Confirm the model on the amazon.com listing for B0DHZTCNR5 or the manufacturer page; only then re-add it with its URL and date.",
       "status": "needs review"
+    },
+    {
+      "id": "FLG-026",
+      "title": "Sibling variant listings: a reader can land on a different listing than the row this site records",
+      "detail": "On the 2026-11-20 fourth read, two of the five resolved URLs carried a variant parameter (th=1) in addition to lv=shuf + plpRedirect=mhFallback, and Amazon's own rails on the recorded pages showed near-identical listings at different ASINs — Chefman 6 Qt dual basket at B0B7C327LK, ThermoMaven 1 Sec in Orange at B0GL7Z4KP4, a CHEF iQ Sense at B0DZFNQXGL. The five rows this site publishes are the listings that were observed, not a claim that every reader sees the same colourway or bundle.",
+      "action": "During the one-link Associates test (FLG-002), record the exact variant each link serves for each of the five products, pin the reader link to that variant, and leave intended_* blank until the owner confirms which listing was meant (FLG-003, FLG-009).",
+      "status": "needs review",
+      "sources": [
+        "S22",
+        "S28"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B0DHZTCNR5",
+        "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ]
+    },
+    {
+      "id": "FLG-027",
+      "title": "Prices, ratings and deal badges were on the pages and were not copied — so the site cannot speak about seasonal discounts",
+      "detail": "The listings read on 2026-11-20 displayed dollar amounts, star ratings, review counts and 'Black Friday Deal' badges. Amazon's Program Policies permit price and availability display only through an Amazon-served link or the Creator/PA API (S02), and a static build cannot keep those values current, so every such cell stays blank (FLG-006). The consequence is editorial as well as legal: in the one season when readers most want price context, this site can only send them to Amazon and say so.",
+      "action": "Decide on direction.html (SG-27): either wire the Creator/PA API into a build step that serves prices at request time with the required freshness note, or keep the no-price rule and publish seasonal guides that compare the listing's stated features instead. Until a decision is recorded, the CTA stays 'Check price & details on Amazon' and no discount is claimed anywhere.",
+      "status": "needs review",
+      "sources": [
+        "S02",
+        "S28",
+        "S06"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ]
     }
   ]
 }

@@ -91,14 +91,15 @@
       "season": "Holiday cooking",
       "question": "Thigh, breast, or the wing — and how close to the bone?",
       "why": "USDA FSIS names the three places to check a whole bird and says to avoid bone. The instant-read listing cannot help with technique; a guide can, and the source is already in the register.",
-      "needs": "USDA FSIS Food Thermometers page (S17) — already cited in the published probe guide; would need a cooking-technique section with per-step citations.",
-      "status": "planned",
+      "needs": "Published 2026-11-20 by session f1fd0ff0 from the sources listed on this row — no hands-on measurement was added, and nothing that could not be sourced was filled in.",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
         "https://www.amazon.com/dp/B0DHZTCNR5"
-      ]
+      ],
+      "published_as": "guides/probe-placement-holiday-cook.html"
     },
     {
       "id": "TP-07",
@@ -123,13 +124,14 @@
       "season": "Everyday",
       "question": "Is the number on the box a measurement or a marketing claim?",
       "why": "The instant-read listing states ±0.5°F and NIST & NSF certification; the wireless listing states no tolerance figure on the page read. Readers are comparing numbers that do not come from the same place.",
-      "needs": "The listing's certification claim, and — if the owner wants to go further — a manufacturer calibration page. No claim about this site's own measurements is possible: nobody here has tested a probe.",
-      "status": "planned",
+      "needs": "Published 2026-11-20 by session f1fd0ff0 from the sources listed on this row — no hands-on measurement was added, and nothing that could not be sourced was filled in.",
+      "status": "published",
       "chosen_from": "editorial hypothesis; no measured query data exists yet",
       "priority": "medium",
       "source": [
         "https://www.amazon.com/dp/B0DHZTCNR5"
-      ]
+      ],
+      "published_as": "guides/probe-accuracy-check.html"
     },
     {
       "id": "TP-09",
@@ -138,13 +140,14 @@
       "season": "Everyday",
       "question": "Will the cable survive a small basket and a hot element?",
       "why": "The wireless listing names air fryer as a use and states a 1000°F probe heat limit. The cable rating is the part readers get wrong, and it is a check-the-listing question rather than a test result.",
-      "needs": "Listing wording on probe heat limits and any cable rating the manufacturer publishes. No clearance measurement may be claimed without a source.",
-      "status": "planned",
+      "needs": "Published 2026-11-20 by session f1fd0ff0 from the sources listed on this row — no hands-on measurement was added, and nothing that could not be sourced was filled in.",
+      "status": "published",
       "chosen_from": "editorial hypothesis — cross-links the thermometer and air-fryer clusters; no measured query data exists yet",
       "priority": "medium",
       "source": [
         "https://www.amazon.com/dp/B0DZFD6R9Z"
-      ]
+      ],
+      "published_as": "guides/probe-placement-holiday-cook.html"
     },
     {
       "id": "TP-10",
@@ -194,6 +197,24 @@
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-13",
+      "title": "Will it actually fit on my counter?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Before you order, what do you have to measure — and what can the listing tell you?",
+      "why": "Two of the three fryers in the shop are bigger than a reader expects (13.4 and 16.9 inches deep), and the biggest is 26.5 lb. A wrong fit is the most common way an appliance goes back.",
+      "needs": "Listed dimensions and weights already in data/products.json, each re-confirmed against the live listing (S24, S25, S28). No new sources were needed, and no clearance figure was invented: the guide tells the reader which number to ask the manufacturer for.",
+      "status": "published",
+      "published_as": "guides/counter-fit-before-you-order.html",
+      "chosen_from": "verification finding — the 2026-11-20 listing re-read put three different footprint shapes in front of us, and the existing cleanup guide already promised a counter-space answer without the measurements page",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
       ]
     }
   ]

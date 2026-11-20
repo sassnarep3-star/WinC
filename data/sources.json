@@ -125,7 +125,7 @@
       "id": "S17",
       "title": "USDA FSIS — Food Thermometers",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
-      "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F.",
+      "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F. Calibration section read in full 2026-11-20 (session f1fd0ff0): ice-water method — fill a glass with ice, add drinking water, stir, immerse the stem a minimum of 2 inches without touching the sides or bottom, wait a minimum of 30 seconds, the reading should be 32°F; boiling-water method — 2 inches deep, 30 seconds, 212°F at sea level, and boiling point falls by at least 2°F (possibly 5°F) at altitude. Care: wash by hand, most thermometers should not be immersed, and 'Do not leave your food thermometer in food while cooking unless the manufacturer's instructions specifically say it can withstand heat'. Type table: oven-cord, fork-combination and thermistor types are listed as 'Cannot be calibrated'; thermocouple can; most food thermometers read accurate within 2 to 4°F.",
       "date": "2026-11-20"
     },
     {
@@ -191,6 +191,30 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, LED Shake Reminder, Programmable'; Product Dimensions 12.75\"D x 13.5\"W x 10\"H; Capacity 8 quarts; size selector 6/8/9 quarts; bullet 'presets ... a temperature range from 200-400°F'; bullet 'cETL approved ... 1000 Watts/120 Volts – RJ38-SQSS-8T'; page states 'There is a newer model of this item'.",
       "date": "2026-11-20"
+    },
+    {
+      "id": "S28",
+      "title": "Fourth independent live read of all five resolved listings + re-resolution record (session f1fd0ff0, 2026-11-20)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "All five recorded ASINs were re-read through the same reader on 2026-11-20 by a session that had not seen them before. 5/5 page <title> values match the stored titles verbatim; the Emeril details table re-confirmed dimensions, capacity, model, UPC, wattage and its own ASIN row. Two of five resolved URLs additionally carried th=1 (a variant parameter) on top of lv=shuf + plpRedirect=mhFallback. Prices, star ratings, review counts, Best-Sellers-Rank and 'Black Friday Deal' badges were visible on these pages and were deliberately not copied (S02, FLG-006, FLG-027).",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader; the redirect target is a reproducible observation, not a confirmation of intent (FLG-009)."
+    },
+    {
+      "id": "S29",
+      "title": "Amazon listing — live page for B0DHZTCNR5 (ThermoMaven 1 Sec instant-read), fourth read",
+      "url": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "what": "<title> 2026-11-20: 'ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black' — verbatim match with data/products.json. The ±0.5°F figure and the NIST/NSF certification are the seller's claims in the listing title, which is why the accuracy guide explains how to test the reading at home instead of repeating the claim as a measurement.",
+      "date": "2026-11-20",
+      "access": "Read live; model number not shown in the fields captured, so it stays blank (FLG-025)."
+    },
+    {
+      "id": "S30",
+      "title": "Amazon listing — live page for B0DZFD6R9Z (CHEF iQ Sense Gen3), fourth read",
+      "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "what": "<title> 2026-11-20: 'CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3' — verbatim match. The 1000°F heat-safe figure and the air-fryer use case are the listing's own words; FSIS guidance on leaving a thermometer in food is quoted alongside them in the placement guide (S17).",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader."
     }
   ]
 }

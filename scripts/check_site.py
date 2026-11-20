@@ -370,6 +370,69 @@ if "the shop" not in idx_text.lower():
     fail("index.html: front page no longer shows the shop")
 
 
+# --- reader-copy + shop-surface rules (session f1fd0ff0) -------------------
+# These exist because "make it read like a shop, not a scraped feed" is a
+# requirement, not a preference: it now fails the build when it regresses.
+for p2 in products:
+    cc = (p2.get("card_copy") or "").strip()
+    if not cc:
+        fail(f"{p2['id']}: card_copy missing — a card with no editorial line prints the raw listing title")
+    if len(cc) > 360:
+        fail(f"{p2['id']}: card_copy is {len(cc)} chars — too long to read as a shop card line")
+    if "FLG-" in cc or re.search(r"\bS\d\d\b", cc):
+        fail(f"{p2['id']}: card_copy carries internal register ids; reader copy must not")
+    if PRICE_RE.search(cc):
+        fail(f"{p2['id']}: card_copy contains a price (Program Policies)")
+    for fld in ("capacity", "dimensions", "weight", "temperature", "power", "model", "upc", "brand"):
+        val = p2.get(fld) or ""
+        if "FLG-" in val:
+            fail(f"{p2['id']}: '{fld}' carries a flag id — that note belongs in listing_notes/Flagged for Review, "
+                 f"not in a value a reader copies into a shopping list")
+    for field in ("card_image", "card_image_caption", "form_factor", "best_for"):
+        if not p2.get(field):
+            fail(f"{p2['id']}: field '{field}' is empty — the shop grid renders it")
+    cimg = p2.get("card_image") or ""
+    if cimg and not os.path.exists(os.path.join(ROOT, cimg)):
+        fail(f"{p2['id']}: card_image {cimg} does not exist")
+    cap = (p2.get("card_image_caption") or "").lower()
+    if cap and not cap.startswith("commissioned editorial illustration"):
+        fail(f"{p2['id']}: product artwork must be labelled as a commissioned illustration")
+    if cap and "not a product photograph" not in cap:
+        fail(f"{p2['id']}: image caption must say the picture is not a product photograph")
+
+# artwork has to be light enough to be worth loading
+IMG_DIR = os.path.join(ROOT, "assets", "img")
+if os.path.isdir(IMG_DIR):
+    for fn in sorted(os.listdir(IMG_DIR)):
+        fp = os.path.join(IMG_DIR, fn)
+        if not os.path.isfile(fp):
+            continue
+        kb = os.path.getsize(fp) / 1024
+        if kb > 400:
+            fail(f"assets/img/{fn} is {kb:.0f} KB — compress web artwork (LCP budget), do not ship a raw PNG")
+        if fn.endswith(".png") and kb > 200:
+            fail(f"assets/img/{fn}: a PNG this large should be a JPEG at this site's sizes")
+
+# the shop grid on the front page stays free of bookkeeping language
+idx_html = read("index.html") if os.path.exists(os.path.join(ROOT, "index.html")) else ""
+m = re.search(r"(?s)<h2>The shop</h2>(.*?)<h2>", idx_html)
+if m and "FLG-" in m.group(1):
+    fail("index.html: the shop grid carries flag ids — keep register language on the product and review pages")
+
+# a dated seasonal surface must actually carry its date, or it silently goes stale
+sm_block = re.search(r'(?s)<section class="seasonal".*?</section>', idx_html)
+if sm_block and not re.search(r"20\d\d", sm_block.group(0)):
+    fail("index.html: the seasonal strip has no year in it — date it or remove it")
+
+# a topic may only be marked published when its page exists and is built
+for t2 in topic_doc["topics"]:
+    if t2.get("status") == "published":
+        pa = t2.get("published_as") or ""
+        if not pa:
+            fail(f"topic {t2.get('id')}: status published but no published_as path")
+        elif not os.path.exists(os.path.join(ROOT, pa)):
+            fail(f"topic {t2.get('id')}: published_as {pa} is not built")
+
 # --- every register row must carry an official source link (or say why not) ---
 REGISTER_PAGES = ["questions.html", "topics.html", "flagged-for-review.html", "products/index.html"]
 for hf in REGISTER_PAGES:

@@ -315,6 +315,57 @@
       "answer": "",
       "sources": [],
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+    },
+    {
+      "id": "Q-22",
+      "question": "Which variant of each product should each reader link point at?",
+      "decision_it_gates": "Whether the five buttons promise the same listing the register describes, and whether product pages can claim a colour, bundle or size at all.",
+      "have": "Four independent observations of the same five tokens (2026-11-17 and three on 2026-11-20) all resolving to the same five ASINs, with titles matching verbatim; two URLs additionally served a th=1 variant parameter, and Amazon's rails showed sibling listings (Chefman 6 Qt dual basket B0B7C327LK, ThermoMaven Orange B0GL7Z4KP4, CHEF iQ Sense B0DZFNQXGL).",
+      "missing": "The variant actually intended by whoever supplied the five short links, and the variant the enrolled Associates workflow serves after the one-link test.",
+      "blocking": "no — but it caps what any product page may promise, so no colour/bundle claim is made anywhere on the site",
+      "discovery": "Run FLG-002's one-link test through the enrolled workflow and record the final URL with all query parameters for each of the five; compare the variant id (th=…) with the listing the register describes; then either pin the link or keep the generic /dp/<ASIN> form and say nothing about variants.",
+      "owner": "Account owner, with whoever chose the five links",
+      "answer": "",
+      "sources": [
+        "S22",
+        "S28",
+        "S29",
+        "S30"
+      ],
+      "source_note": "Published as FLG-026 on Flagged for Review."
+    },
+    {
+      "id": "Q-23",
+      "question": "Do we want seasonal price context, and if so are we willing to run the Creator/PA API?",
+      "decision_it_gates": "Whether the site may show or reference price and deal context at all — which is the difference between a holiday buying guide that converts and one that only compares listed features.",
+      "have": "Amazon's Program Policies rule as read on 2026-11-20: price and availability may be displayed only through an Amazon-served link or the Creator/PA API (S02). The listings read today show dollar amounts, star ratings and 'Black Friday Deal' badges, and none of it is copied here (FLG-006, FLG-027).",
+      "missing": "Whether this account has Creator/PA API access approved, what the API returns for the five ASINs, and who re-runs the build when the values change.",
+      "blocking": "no — the site is compliant as it stands; it just cannot answer the question every November reader actually asks",
+      "discovery": "In Associates Central, check whether the Account Management → API access step has been completed for this site; if it has, request access for the five ASINs, store the raw response under data/ with a timestamp, and only then design a display that carries the freshness note.",
+      "owner": "Account owner (API approval) + whoever runs the build",
+      "answer": "",
+      "sources": [
+        "S02",
+        "S28"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-24",
+      "question": "What is the real publishing cadence this site can sustain, and who owns it?",
+      "decision_it_gates": "Whether the topic backlog is a schedule or a wish list — which decides how many guides to scaffold now and when measured queries start driving the choice.",
+      "have": "Every guide published so far was written from data already in this repo — the listings' own stated specs plus USDA FSIS guidance — with no new source required; three more were published on 2026-11-20 that way, and scripts/new_guide.py turns the mechanical part into one command. The backlog page says, per row, what each remaining topic would need.",
+      "missing": "A commitment: how many guides per week, over how many weeks, and who checks the sources before publish. Nothing in the repo records an owner or a cadence.",
+      "blocking": "no — cadence is a decision, not a data gap, but every 'we publish weekly' claim would otherwise be invented",
+      "discovery": "Pick one row on direction.html (SG-21 area) and set the number you can actually sustain; the About page renders cadence from that choice, and the gate keeps the page honest by refusing counts that are typed instead of computed.",
+      "owner": "Site owner",
+      "answer": "",
+      "sources": [
+        "S16",
+        "S17",
+        "S28"
+      ],
+      "source_note": "Backlog: topics.html · scaffold: scripts/new_guide.py"
     }
   ]
 }

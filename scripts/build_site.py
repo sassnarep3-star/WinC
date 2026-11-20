@@ -51,12 +51,12 @@ TOPICS = TOPIC_DATA["topics"]
 
 CATEGORIES = [("Air Fryers", "air-fryers.html"), ("Meat Thermometers", "thermometers.html")]
 CAT_IMG = {
-    "Air Fryers": ("assets/img/air-fryers.png",
+    "Air Fryers": ("assets/img/air-fryers.jpg",
         "Editorial illustration: air fryer baskets open on a kitchen counter. Not a product photograph."),
-    "Meat Thermometers": ("assets/img/thermometers.png",
+    "Meat Thermometers": ("assets/img/thermometers.jpg",
         "Editorial illustration: instant-read probe and wireless sensor on a countertop. Not a product photograph."),
 }
-HERO_IMG = ("assets/img/hero-counter.png",
+HERO_IMG = ("assets/img/hero-counter.jpg",
     "Editorial illustration: kitchen counter with an air fryer, a probe thermometer and a board of roasted potatoes. Not a product photograph.")
 
 def prods(cat=None):
@@ -227,27 +227,41 @@ def page_html(path, title, desc, body, page_type="page", extra_head="", image=""
         f'<main class="wrap">{body}</main>' + footer_html(depth) +
         f'<script src="{"../"*depth}assets/app.js" defer></script></body></html>')
 
+def card_image(p, depth=0):
+    """Per-product illustration, falling back to the category tile only if none is recorded."""
+    pfx = "../" * depth
+    img = p.get("card_image") or CAT_IMG.get(p["category"], HERO_IMG)[0]
+    cap = p.get("card_image_caption") or CAT_IMG.get(p["category"], HERO_IMG)[1]
+    return pfx + img, cap
+
+
+def card_specs(p):
+    """The three numbers a reader compares. Only listed values, never inferred ones."""
+    out = []
+    if p["capacity"] and p["capacity"] != "—":
+        out.append(("Capacity", p["capacity"]))
+    if p["dimensions"]:
+        out.append(("Footprint", p["dimensions"]))
+    if p["weight"]:
+        out.append(("Weight", p["weight"]))
+    if p["temperature"]:
+        out.append(("Range", p["temperature"]))
+    return out
+
+
 def product_card(p, depth=0):
     pfx = "../" * depth
-    img, cap = CAT_IMG.get(p["category"], HERO_IMG)
-    specs = []
-    if p["capacity"] and p["capacity"] != "—":
-        specs.append(f"Capacity: {esc(p['capacity'])}")
-    if p["dimensions"]:
-        specs.append(f"Size: {esc(p['dimensions'])}")
-    if p["weight"]:
-        specs.append(f"Weight: {esc(p['weight'])}")
-    if p["model"]:
-        specs.append(f"Model: {esc(p['model'])}")
-    li = "".join(f"<li>{x}</li>" for x in specs)
-    return f"""<article class="card">
-<figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
+    img, cap = card_image(p, depth)
+    chips = "".join(f'<span class="spec"><b>{esc(k)}</b> {esc(v)}</span>' for k, v in card_specs(p))
+    copy = p.get("card_copy") or p["short_label"]
+    return f"""<article class="card productcard">
+<figure class="cardimg"><img src="{img}" alt="{esc(cap)}" loading="lazy" width="1200" height="800"></figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
-<p>{esc(p['title'])}</p>
-<ul class="specs">{li}</ul>
+<p>{esc(copy)}</p>
+<div class="chips">{chips}</div>
 <div class="actions">{buy_button_small(p)}</div>
-<p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
+<p class="meta">{esc(p['observed_asin'])} · listing read {esc(p['source_date'])}</p>
 </article>"""
 
 def guide_card(g, depth=0):
@@ -306,41 +320,85 @@ def specs_table(p):
 def capture_block(depth=0):
     pfx = "../" * depth
     return f"""<section class="capture" aria-label="Reader updates">
-<h3>Get the next comparison — checklist first, hype never.</h3>
-<p>One email when a new guide publishes.</p>
+<div>
+<h3>Get the next guide when it lands.</h3>
+<p>One message per new comparison. No offers, no countdowns.</p>
 <form id="reader-capture" action="{pfx}measurement.html" method="get">
 <label for="email">Email address</label>
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<small>No newsletter is running yet, so this form sends your address nowhere — it is here so the decision about a provider can be made in the open. Until it is made, the <a href="{pfx}feed.xml">RSS feed</a> delivers every new guide, and the <a href="{pfx}disclosure.html">disclosure</a> lists what this site collects.</small>
+</div>
 </section>"""
 
 # ---------- HOME ----------
+def glance_table():
+    """One-screen comparison on the front page, generated from the same rows as the cards."""
+    head = ("<tr><th>Product</th><th>Form, as listed</th><th>Capacity</th><th>Footprint</th>"
+            "<th>Weight</th><th>What the listing sets it up for</th><th>Source</th></tr>")
+    rows = []
+    for p in PRODUCTS:
+        rows.append(
+            f'<tr><td><a href="{p["page"]}">{esc(p["short_label"])}</a></td>'
+            f'<td>{esc(p.get("form_factor", ""))}</td>'
+            f'<td>{esc(p["capacity"]) if p["capacity"] and p["capacity"] != "—" else "— see listing"}</td>'
+            f'<td>{esc(p["dimensions"]) if p["dimensions"] else "— not confirmed"}</td>'
+            f'<td>{esc(p["weight"]) if p["weight"] else "— not confirmed"}</td>'
+            f'<td>{esc(p.get("best_for", ""))}</td>'
+            f'<td class="src"><a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p["observed_asin"])}</a></td></tr>')
+    return ('<div class="tablewrap glance"><table><thead>' + head + "</thead><tbody>" + "".join(rows) +
+            "</tbody></table></div>"
+            f'<p class="legend">Every cell above is copied from the listing linked in the last column, read {TODAY}. '
+            "No price, rating or ranking appears in this table because a static page cannot keep any of them current — "
+            '<a href="disclosure.html">why not</a>.</p>')
+
+
+def seasonal_strip():
+    """Dated seasonal front for the guides that answer this week's questions."""
+    picks = [g for g in GUIDES if g.get("season") == "Holiday cooking"][:3]
+    if not picks:
+        return ""
+    items = "".join(
+        f'<li><a href="{g["path"]}">{esc(g["title"])}</a> <span class="meta">{read_min(g)} min · {esc(g["cluster"])}</span></li>'
+        for g in picks)
+    return f"""<section class="seasonal" aria-label="This week">
+<div>
+<span class="kicker kicker-warm">This week · holiday cook</span>
+<h2>Thanksgiving falls on Thursday 26 November 2026.</h2>
+<p>Four days to settle the two questions that actually decide dinner: where the probe goes, and whether your counter can take the appliance. Both answers come from the federal food-safety guidance and the manufacturers' own listings — never from us guessing.</p>
+<ul class="seasonallist">{items}</ul>
+</div>
+</section>"""
+
+
 def home_body():
     c = counts()
     cards = "".join(product_card(x) for x in PRODUCTS)
     rail = "".join(guide_card(g) for g in GUIDES)
     img, cap = HERO_IMG
-    lead = GUIDES[0]
     tiles = ""
     for name, href in CATEGORIES:
         cimg, ccap = CAT_IMG[name]
-        tiles += (f'<a class="cattile" href="{href}"><img src="{cimg}" alt="{esc(ccap)}" loading="lazy" width="800" height="500">'
+        tiles += (f'<a class="cattile" href="{href}"><img src="{cimg}" alt="{esc(ccap)}" loading="lazy" width="1200" height="800">'
                   f'<span class="catname">{esc(name)}</span><span class="catcount">{len(prods(name))} in the shop · {len(guides_for(name))} guides</span></a>')
     return f"""
-<section class="hero">
-<span class="kicker">Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
-<h1>{esc(lead['title'])}</h1>
-<p class="lede">{esc(lead['desc'])}</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {read_min(lead)} min read · <a href="about.html">How we check</a> · <a href="verification.html">Sources</a></p>
+<section class="hero hero-shop">
+<span class="kicker">{c['products']} appliances on the counter · {c['guides']} guides · updated {TODAY}</span>
+<h1>Three air fryers and two thermometers, on the numbers you can check yourself.</h1>
+<p class="lede">No “best of” list and no invented prices. Every capacity, footprint and weight here is copied from the manufacturer's own Amazon listing, with the link and the date beside it — and anything we could not confirm stays blank instead of being estimated.</p>
 <figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="750"><figcaption>{esc(cap)}</figcaption></figure>
-<p class="cta-row"><a class="btn btn-ghost" href="{lead['path']}">Read the guide →</a> <a class="btn btn-quiet" href="products/index.html">See all {c['products']} products</a></p>
+<p class="cta-row"><a class="btn" href="products/index.html">Compare the five side by side</a> <a class="btn btn-ghost" href="guides/index.html">Read the {c['guides']} guides</a></p>
+<p class="byline">Written by the ShopNow Kitchen Desk · <a href="about.html">how we work</a> · <a href="verification.html">source register</a></p>
 </section>
 
 <h2>The shop</h2>
 <div class="grid">{cards}</div>
-<p class="seclink"><a class="btn btn-quiet" href="products/index.html">Compare every spec in one table →</a></p>
+<p class="seclink"><a class="btn btn-quiet" href="products/index.html">Every listed spec, in one table →</a></p>
+
+<h2>The five, at a glance</h2>
+{glance_table()}
+{seasonal_strip()}
 
 <h2>Start with a question, not a brand</h2>
 <div class="grid">{rail}</div>
@@ -348,9 +406,6 @@ def home_body():
 
 <h2>Or start with a category</h2>
 <div class="catgrid">{tiles}</div>
-
-<h2>How this site works</h2>
-<div class="notice"><strong>Every number here is copied from the manufacturer's own Amazon listing, with the link and the date beside it.</strong> Where a value could not be confirmed, the cell stays blank and is listed for review — never estimated. Every outbound product link is sponsored and labelled as such: the <a href="disclosure.html">disclosure</a> explains it, and the <a href="verification.html">source register</a> shows the evidence.</div>
 {capture_block()}
 """
 
@@ -447,15 +502,18 @@ def product_body(p):
         rows = "".join(f'<details class="faqitem"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)
         faq_html = f'<h2>Questions readers ask about this one</h2><div class="faqlist">{rows}</div>'
     return f"""
-<section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
+<section class="hero hero-product"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
-<p class="lede">{esc(p['title'])}</p>
-<p class="meta">Observed ASIN {esc(p['observed_asin'])} · Listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
-<div class="actions" style="margin:14px 0">{buy_button(p)}</div>
-<p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
+<p class="lede">{esc(p.get('card_copy') or p['title'])}</p>
+<p class="meta">Observed ASIN {esc(p['observed_asin'])} · listing read {esc(p['source_date'])} · <a href="../verification.html">verification record</a></p>
+<figure class="lede-figure"><img src="../{esc(p.get('card_image') or CAT_IMG.get(p['category'], HERO_IMG)[0])}" alt="{esc(p.get('card_image_caption') or CAT_IMG.get(p['category'], HERO_IMG)[1])}" width="1200" height="800"><figcaption>{esc(p.get('card_image_caption') or '')}</figcaption></figure>
+<div class="actions" style="margin:16px 0">{buy_button(p)}</div>
+<p class="meta">You will go to Amazon, where price and availability are shown. This button is a sponsored link, and we earn from qualifying purchases.</p>
 </section>
+<div class="listingtitle"><span>What the listing itself says, verbatim</span><p>{esc(p['title'])}</p></div>
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
+{f'<p class="footnote">Re-read {esc(p["source_date"])}: {esc(p["fourth_read"])}</p>' if p.get('fourth_read') else ''}
 <h2>What to compare before you buy</h2>
 <ul>
 <li><strong>Capacity vs. your actual meals:</strong> {esc(p['capacity'] or 'see listing')} — measure the tray or bird you cook most often.</li>
@@ -1095,6 +1153,12 @@ def topic_sources(t):
         return '<span class="meta">— none yet</span>'
     return " ".join(f'<a href="{esc(u)}" rel="nofollow noopener" target="_blank">{esc(u.split("/dp/")[-1] if "/dp/" in u else u)}</a>' for u in urls)
 
+def published_link(t):
+    """A topic may only claim 'published' if the built page is in the repo (the gate checks it)."""
+    path = t.get("published_as")
+    return f'<br><a href="{esc(path)}">read it →</a>' if path else ""
+
+
 def topics_body():
     rows = ""
     for t in TOPICS:
@@ -1106,7 +1170,7 @@ def topics_body():
                  f'<td>{esc(t["why"])}</td><td>{esc(t["needs"])}</td>'
                  f'<td>{topic_sources(t)}</td>'
                  f'<td>{esc(t["chosen_from"])}</td>'
-                 f'<td><span class="{cls}">{esc(status)}</span></td></tr>')
+                 f'<td><span class="{cls}">{esc(status)}</span>{published_link(t)}</td></tr>')
     published = "".join(f'<li><a href="{g["path"]}">{esc(g["title"])}</a> <span class="meta">({esc(g.get("cluster",""))})</span></li>'
                         for g in GUIDES)
     return f"""
@@ -1178,7 +1242,7 @@ def main():
             extra_head=(product_faq_jsonld(x) + breadcrumb_jsonld(
                 [("Home", "index.html"), ("The shop", "products/index.html"),
                  (x["category"], cat_href_x), (x["short_label"], x["page"])])),
-            image=CAT_IMG.get(x["category"], HERO_IMG)[0])
+            image=x.get("card_image") or CAT_IMG.get(x["category"], HERO_IMG)[0])
     for g in GUIDES:
         g_cat = dict(CATEGORIES).get(g.get("category"), "guides/index.html")
         pages[g["path"]] = P(g["path"], g["title"] + " | ShopNow Kitchen", g["desc"], guide_body(g),
