@@ -309,6 +309,36 @@
       "expected_effect": "One decision that unblocks topic choice, link format, and the imprint question. Measure: nothing to measure — this is a decision, not an experiment.",
       "evidence": "FLG-011 (locale unresolved), Q-10 (audience), and the fact that all five links resolve to amazon.com listings while the owner operates in NL.",
       "feeds_prompt": "Record the audience, marketplace and language decision in data/questions.json answers and on the About page, then re-check every outbound link format against that decision."
+    },
+    {
+      "id": "SG-21",
+      "title": "Write comparison headlines that sound like a buyer asking, not a brand claiming",
+      "status": "open",
+      "area": "Editorial",
+      "problem": "Some headlines read like product descriptions instead of buyer questions. The question-shaped ones earn more trust and match how people actually search.",
+      "proposal": "Rewrite product-card headlines and page titles to lead with the buyer's question, not the manufacturer's name string. Keep the full listing title where it appears (it's sourced), but let the editorial headline do the selling.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. No claims change; only the framing of existing copy.",
+      "expected_effect": "Headlines read like a shop, not a data dump. Measure: outbound_click rate on question-shaped vs name-shaped cards once the endpoint exists.",
+      "evidence": "Front page card headings vs guide headings; guide titles are already question-shaped.",
+      "feeds_prompt": "Audit every product-card heading on index.html, air-fryers.html and thermometers.html; where a heading is a manufacturer name string, replace it with a buyer question that the listed specs answer.",
+      "status_detail": "Open. This is the shop-framing pass — the framing layer, not the data layer."
+    },
+    {
+      "id": "SG-22",
+      "title": "Let Search Console queries pick topic six and beyond",
+      "status": "open",
+      "area": "Findability",
+      "problem": "All topics are editorial hypotheses. None is backed by measured query data because no Search Console property exists yet. The site cannot yet choose topics from real demand.",
+      "proposal": "Verify Search Console ownership (SG-08), export the query list, and rank topics by impressions + position. Any topic the site already ranks 8–25 for with 50+ impressions gets promoted to 'write next'.",
+      "effort": "M",
+      "cost": "none",
+      "risk": "None. Search Console is read-only; it informs the backlog, it does not change any page.",
+      "expected_effect": "Topics chosen from demand instead of taste. Measure: number of topics whose 'chosen_from' changes from hypothesis to measured query.",
+      "evidence": "data/topics.json — every topic says 'no measured query data exists yet'.",
+      "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
+      "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification)."
     }
   ]
 }

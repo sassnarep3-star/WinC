@@ -315,6 +315,19 @@
       "answer": "",
       "sources": [],
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+    },
+    {
+      "id": "Q-22",
+      "question": "How does the site get its first real visitors, and which channel comes first?",
+      "decision_it_gates": "Whether the first ten guides are written for search, for social, or for an email list — and whether the capture form is worth wiring up before any traffic exists.",
+      "have": "A local-only reader capture block (no provider, no sending), a sitemap, an RSS feed, and 14 planned topics. No Search Console property, no analytics endpoint deployed, no backlinks, no social accounts.",
+      "missing": "A channel decision, a traffic target, and a date by which the first measured visitor should arrive.",
+      "blocking": "no",
+      "discovery": "Owner picks one: (a) search-first (publish topics, submit sitemap, wait for indexing), (b) social-first (build a presence off-site and link in), (c) email-first (configure the capture provider and drive sign-ups). Record the choice in this row's answer field.",
+      "owner": "Account owner",
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     }
   ]
 }

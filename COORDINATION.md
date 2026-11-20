@@ -22,6 +22,7 @@
 | T05 | Direction section (suggestions, Q&A, path chooser) + executive summary + flagged page | done | 68dc5c3a | direction.html, executive-summary.html, flagged-for-review.html |
 | T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
 | T07 | Final integration: re-verified combined data, confirmed build + no broken links, PR opened to main, merged, Pages deploy confirmed | done | arena/a42979d2-winc | all (integration only) |
+| T08 | Marketing polish: catchy question-shaped topics, shop-framed suggestions, traffic channel decision question | done | 5fed90b2 | data/topics.json, data/suggestions.json, data/questions.json, COORDINATION.md |
 
 ## Session log
 
@@ -459,3 +460,20 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 | --- | --- |
 | 2026-11-20 | PR opened from `arena/0458cd24-winc` → `main`: source-register corrections (S01/S02/S03/S06/S20 access notes), product-title reconciliation (FLG-018), COORDINATION.md + EXECUTIVE-SUMMARY.md integration record. |
 | 2026-11-20 | Merged to `main`. GitHub Pages legacy build re-run; `status: built`, no error. Live pages re-fetched to confirm the merged content serves. |
+
+## Session 5fed90b2 (branch `arena/5fed90b2-winc`, 2026-11-20)
+
+Based on `main@7426a0c`. Claimed T08 (marketing polish) and added to the data layer only — no structural changes, no product claims, no invented numbers.
+
+| ID | Task | Status | Owner | Files | Sources / verification |
+|----|------|--------|-------|-------|----------------------|
+| T08 | Marketing polish: catchy question-shaped topics, shop-framed suggestions, traffic channel decision question | done | 5fed90b2 | data/topics.json, data/suggestions.json, data/questions.json, COORDINATION.md | All new entries are editorial hypotheses or owner decisions, marked as such. Product data untouched. No prices, ratings, or conversion claims added. Gate green. |
+
+**Additions:**
+- TP-13 "Basket or oven-style: which air fryer wins your counter?" — Air Fryers, Everyday, high priority, editorial hypothesis
+- TP-14 "Instant-read or leave-in: which probe actually does your job?" — Thermometers, Everyday, high priority, editorial hypothesis
+- SG-21 "Write comparison headlines that sound like a buyer asking, not a brand claiming" — Editorial, open
+- SG-22 "Let Search Console queries pick topic six and beyond" — Findability, open (blocked on SG-07/SG-08)
+- Q-22 "How does the site get its first real visitors, and which channel comes first?" — 22 questions total, owner decision
+
+**Verification:** `python3 scripts/build_site.py` → Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows. `python3 scripts/check_site.py` → OK: 27 pages checked, 26 sitemap URLs, no violations. No broken internal links.
