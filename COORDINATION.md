@@ -801,6 +801,10 @@ T01–T07 verified green. T07 integration (this session): PR → main → merge 
 
 ## PR / merge record
 
+- PR #27 https://github.com/sassnarep3-star/WinC/pull/27 from `arena/68db484a-winc` → `main`; merged: True (merge commit 7be495120008d97cb57477d89ee71ec7d51de7db).
+- Merge result: merged with `gh pr merge 27 --merge` → main @ 7be495120008d97cb57477d89ee71ec7d51de7db.
+- Pages deploy confirmed: `status: built`, `error: null`, `https_enforced: true` at https://sassnarep3-star.github.io/WinC/ (live front page serves the disclosure strip and five Sponsored-tagged product cards).
+
 - PR: opened from `arena/68db484a-winc` → `main` after this commit is pushed (number recorded below once created).
 - Merge result: pending.
 - Pages deploy: site already reports `status: built`, `https_enforced: true`, source `{main, /}` at https://sassnarep3-star.github.io/WinC/ ; re-confirmed after the merge commit builds (recorded below).
