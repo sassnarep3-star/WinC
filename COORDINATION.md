@@ -131,3 +131,12 @@ The five defined events in `assets/app.js` were re-checked by name this session:
 | 2026-11-20 06:27:23Z | Merged with `gh pr merge 22 --merge` → `main` @ `394d268`. |
 | 2026-11-20 06:27:24Z | Pages build for `394d268` started; `status: built`, `error: null`. |
 | 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/reheat-leftovers-air-fryer.html` serves the new USDA-sourced guide (disclosure strip above the fold, sourced table, cluster-filtered cards, tagged Sponsored buttons, FAQ, computed 3-min read); front page serves both new guides in the rail, the computed **In season · Holiday cooking** band (3 seasonal guides), 8-guide rail, category tiles, and the honest capture-form copy. |
+
+## PR / merge record (T08, session 5fed90b2)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#30** https://github.com/sassnarep3-star/WinC/pull/30 from `arena/5fed90b2-winc` → `main`: marketing polish — TP-13/TP-14 catchy question-shaped topics, SG-21/SG-22 shop-framed suggestions register entries. |
+| 2026-11-20 | Merged with `gh pr merge 30 --merge` → `main`. |
+| 2026-11-20 | Pages build started; `status: built`, `error: null`. Site live: https://sassnarep3-star.github.io/WinC/. |
+| 2026-11-20 | Gate: `python3 scripts/build_site.py` → `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.` `python3 scripts/check_site.py` → `OK: 29 pages checked, 28 sitemap URLs, no violations.` |
