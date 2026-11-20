@@ -258,6 +258,10 @@ def source_link(url, label):
     """Evidence citation. Deliberately NOT an affiliate link: no tag, nofollow."""
     return f'<a class="srclink" href="{esc(url)}" rel="nofollow noopener" target="_blank">{esc(label)}</a>'
 
+def rich(text):
+    """Escape, then let `backticked` spans become code. Register copy is prose, not HTML."""
+    return re.sub(r"`([^`\n]{1,120})`", r"<code>\1</code>", esc(text))
+
 def pill(text, kind="note"):
     return f'<span class="pill pill-{esc(kind)}">{esc(text)}</span>'
 
@@ -454,11 +458,11 @@ def direction_body():
         cards += f"""<article class="sug" id="{esc(x['id'])}">
 <header><h3>{esc(x['title'])}</h3>{pill(x['status'], cls)}</header>
 <p class="sugmeta">{esc(x['area'])} · {esc(x['id'])} · effort {esc(x['effort'])} ({EFFORT.get(x['effort'], x['effort'])}) · cost: {esc(x['cost'])}</p>
-<p class="why"><span>Problem</span>{esc(x['problem'])}</p>
-<p class="why"><span>Suggestion</span>{esc(x['proposal'])}</p>
-<p class="why"><span>Risk</span>{esc(x['risk'])}</p>
-<p class="why"><span>How we would know it worked</span>{esc(x['expected_effect'])}</p>
-<p class="why"><span>Evidence</span>{esc(x['evidence'])}</p>
+<p class="why"><span>Problem</span>{rich(x['problem'])}</p>
+<p class="why"><span>Suggestion</span>{rich(x['proposal'])}</p>
+<p class="why"><span>Risk</span>{rich(x['risk'])}</p>
+<p class="why"><span>How we would know it worked</span>{rich(x['expected_effect'])}</p>
+<p class="why"><span>Evidence</span>{rich(x['evidence'])}</p>
 <details class="promptbox"><summary>Instruction block for the next build prompt</summary>
 <pre><code>{esc(x['feeds_prompt'])}</code></pre></details>
 </article>"""

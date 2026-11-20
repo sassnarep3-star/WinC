@@ -43,7 +43,7 @@ try{var s=localStorage.getItem('sk_path');if(s){var r=document.querySelector('in
 <header><h3>Gate reader links until the Associates one-link test is done</h3><span class="pill pill-act">recommended-now</span></header>
 <p class="sugmeta">Compliance · SG-01 · effort S (small — hours) · cost: none</p>
 <p class="why"><span>Problem</span>Every buy button is built as amazon.com/dp/&lt;observed ASIN&gt;?tag=shopnow047c-20 from a fallback redirect target, and the tracking ID itself is unconfirmed (FLG-001, FLG-002). A monetised link whose tracking ID is not issued is worse than no link: it earns nothing and it is the classic reason accounts get closed.</p>
-<p class="why"><span>Suggestion</span>Ship the site with the buy buttons present but marked `data-link-state=&quot;pending-verification&quot;` and a visible line on each product page: &#x27;Destination and tracking not yet confirmed — we are testing one link per product before we scale.&#x27; Turn buttons into plain text only if the owner prefers zero risk.</p>
+<p class="why"><span>Suggestion</span>Ship the site with the buy buttons present but marked <code>data-link-state=&quot;pending-verification&quot;</code> and a visible line on each product page: &#x27;Destination and tracking not yet confirmed — we are testing one link per product before we scale.&#x27; Turn buttons into plain text only if the owner prefers zero risk.</p>
 <p class="why"><span>Risk</span>Low. Temporarily suppresses the only monetisation path.</p>
 <p class="why"><span>How we would know it worked</span>Removes the highest-severity account risk before traffic exists. Measure: zero unconfirmed-tag links in the build; gate check passes.</p>
 <p class="why"><span>Evidence</span>Amazon Associates Operating Agreement + Program Policies (S01, S02) as cited on the Verification page; both are login-gated, so confirm in your own console (FLG-006 note in sources).</p>
@@ -94,7 +94,7 @@ try{var s=localStorage.getItem('sk_path');if(s){var r=document.querySelector('in
 <p class="sugmeta">Machinery · SG-06 · effort M (medium — a session) · cost: none</p>
 <p class="why"><span>Problem</span>All four guides lived as Python string literals inside an 841-line builder. Adding a guide meant editing code, which is how cadence dies — and it is how a stray quote takes down a deploy.</p>
 <p class="why"><span>Suggestion</span>Load guides from data/guides/*.json (verbatim migration, no copy edits), sort by published date, and add scripts/new_guide.py so a new guide is &#x27;drop a file, run build&#x27;. Sitemap, RSS, search index and cluster counts all pick it up from the same source.</p>
-<p class="why"><span>Risk</span>Medium — touched the build path, so it must stay gated: `npm run build &amp;&amp; npm run check` green before merge.</p>
+<p class="why"><span>Risk</span>Medium — touched the build path, so it must stay gated: <code>npm run build &amp;&amp; npm run check</code> green before merge.</p>
 <p class="why"><span>How we would know it worked</span>One-command cadence. Measure: time from &#x27;topic chosen&#x27; to &#x27;page live&#x27;; number of builder edits needed to publish (target: zero).</p>
 <p class="why"><span>Evidence</span>GUIDES list at scripts/build_site.py:298-446; three separate loops iterated it.</p>
 <details class="promptbox"><summary>Instruction block for the next build prompt</summary>
