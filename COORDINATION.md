@@ -1168,3 +1168,44 @@ discarding either side, both times:
 | --- | --- |
 | 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round. |
 | 2026-11-20 | **PR #46 merged** (`gh pr merge 46 --merge`). Main HEAD = `afa86c7b` "Merge pull request #46 from sassnarep3-star/arena/156c2ecf-winc". GitHub Pages: `status: built`, source `main`, https://sassnarep3-star.github.io/WinC/ — live re-fetch confirms the merged build serves (topics page shows "18 in the backlog", including TP-16..TP-18). Build + gate before merge: `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` / `OK: 38 pages checked, 37 sitemap URLs, no violations.` |
+
+# Session arena/ceced4d0-winc — final integration (T39–T45)
+
+Branch `arena/ceced4d0-winc`, based on `main@0fee666`. Started 2026-11-20. Role: **final
+integration session** — take the open parallel PRs, keep the parts that make the site better,
+drop the parts that would regress it, re-verify the combined tree line by line, and publish.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+|----|------|--------|-------|------------|
+| T39 | Reconcile the five open PRs (#28, #33, #35, #42, #44) against current `main`; merge what is net-positive, close what regresses | in progress | arena/ceced4d0-winc | (integration only) |
+| T40 | Deployment race repair: two publishers were contending for the same `github-pages` environment | pending | arena/ceced4d0-winc | `.github/workflows/`, `scripts/deploy_check.py` |
+| T41 | Answer register: give every open question an answer state, the answer the sources support, the date and the source ids it rests on | pending | arena/ceced4d0-winc | `data/questions.json`, `scripts/build_site.py`, `scripts/check_site.py` |
+| T42 | Editorial voice: replace seller-title body copy on the five product cards with desk-written dek / best-for / catch | pending | arena/ceced4d0-winc | `data/products.json`, `scripts/build_site.py`, `assets/img/` |
+| T43 | Agent pipeline: research → draft → publish → optimise, refusing to emit a price/rating/test claim | pending | arena/ceced4d0-winc | `scripts/agent/`, `data/research/`, `data/optimisation.json` |
+| T44 | Line-by-line re-verification of the combined data + build + gate + audit | pending | arena/ceced4d0-winc | all (verification only) |
+| T45 | PR → `main`, merge, confirm Pages deploy, live re-fetch, record | pending | arena/ceced4d0-winc | (integration only) |
+
+## Verification performed by this session before claiming (2026-11-20)
+
+- `npm run verify` on `main@0fee666` → `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search
+  rows.` · `OK: 38 pages checked, 37 sitemap URLs, no violations.` · analytics contract 4/4 + worker OK.
+- `node tools/audit.mjs` → **0 findings** across A1–A10 (disclosure, sponsored+tagged links, no
+  redirect intermediaries, no price/rating text, no verdicts, all links+fragments resolve, no
+  capture forms, sitemap agreement, no secrets, register provenance).
+- **Deployment race — evidence re-read from GitHub's own records, not inferred.** The Pages
+  build history shows three `errored` legacy builds, each with `duration: 0` (an immediate abort,
+  not a compile failure): `43ccae81` (06:03:16Z), `c744dceb` (06:23:35Z), `7426a0ce` (06:23:51Z).
+  The Actions run list for the same timestamps shows the `pages build and deployment` workflow
+  **cancelled** on `43ccae81` and `c744dceb`, and the legacy builder failing on the same commits.
+  Two publishers were contending for the same `github-pages` environment. `PUT /repos/…/pages`
+  returns **HTTP 403 "Resource not accessible by integration"** from this token, so the
+  publishing source cannot be switched from here — the repair has to be made in the repository.
+- **Policy quotes re-fetched directly this session** (not from a cached copy): Program Policies
+  §2(b) — "Special Links must use the Associates ID we have assigned to you" and "you must include
+  your Associates ID or \"tag\" (appearing as XXXXX-##…) as a parameter in the URL of each link";
+  the price rule — "your Site may only show prices and availability if: (a) we serve the link in
+  which that price and availability data are displayed, or (b) you obtain Product pricing and
+  availability data via Creators API or PA API"; and the tracking-ID help page — "our software
+  automatically adds \"-20\" to the end of all Associate IDs".
