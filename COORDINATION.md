@@ -63,3 +63,57 @@ This checkout has no session identifier beyond the active Arena branch (`arena/9
 ### Integration note (68dc5c3a, 2026-11-20)
 
 Session 9471c338's Counter Notes stub (decision.html, review.html, ledger.html, styles.css) is preserved under `archive/counter-notes/` as historical record. The live site is ShopNow Kitchen (this branch), which implements the full brief: verified products, measurement, guides. Their `.github/workflows/pages.yml` is kept; live deploy remains legacy Pages (branch main, path /).
+
+---
+
+## Session 1f90cb3e — live re-verification and correction pass (branch `arena/1f90cb3e-winc`)
+
+**Session ID: `1f90cb3e`.** Start state: this branch was rebased onto `origin/main` (c2a5823), which
+already contains the merged ShopNow Kitchen site from session `68dc5c3a` (PR #2). This session does
+**not** rebuild the site. It re-verifies the shipped data **line by line against live official
+sources** and corrects what is wrong — the task the final integration step is required to do.
+
+### Claim (T08)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T08 | Live re-verification of all five product records + corrections + source/flag register refresh + §2(k) Program Content disclaimer + ledger-export in measurement | in progress | 1f90cb3e | `data/products.json`, `data/sources.json`, `data/flags.json`, `scripts/build_site.py`, `scripts/check_site.py`, `assets/`, `COORDINATION.md` |
+
+### Why this scope, and how it avoids the other live sessions
+
+- Sessions `70d8ad52` and `f87d2975` branched from the **initial commit** `a6083c9` (their boards
+  state the repo "contained only README.md"). Their branches currently contain **only** a
+  `COORDINATION.md`; they have written no site files. They are building *alternate* layouts
+  (`docs/`, `pages/`, `sources/`, `scripts/build.py`).
+- This session works against the **merged** site on `main` (`scripts/build_site.py` +
+  `scripts/check_site.py`, root-level HTML), because that is what is deployed and what a reader sees.
+- **Conflict risk flagged:** when `70d8ad52` or `f87d2975` opens a PR, their branch is based on the
+  initial commit and their file layout differs from `main`. Merging either would **replace** the
+  merged site rather than extend it. The integration decision on those PRs belongs to whoever
+  integrates last; this session's corrections are written to the merged layout so they survive
+  either way. Recorded here so no session's work is silently discarded.
+
+### What this session verified live (2026-11-20) — first-hand, not inherited
+
+All five submitted `link.amazon` short links were re-resolved live in this session (closing the
+sandbox limitation behind FLG-008). Each landed on an `amazon.com/dp/<ASIN>` page:
+
+| Submitted | Live redirect target (observed 2026-11-20) | Listing title read on that page |
+|---|---|---|
+| `link.amazon/B04G1MEwY` | `B0CDY277D3` | CHEFMAN 6 Quart Dual Basket Air Fryer Oven |
+| `link.amazon/B02NbDxp3` | `B09B7SB46R` | Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven |
+| `link.amazon/B00hJ57DV` | `B08DKYBTPH` | Chefman Air Fryer 8 Qt \| TurboFry 4-in-1 with 450°F Hi-Fry Option |
+| `link.amazon/B0c8moW59` | `B0DHZTCNR5` | ThermoMaven 1 Sec Professional Digital Meat Thermometer |
+| `link.amazon/B0f3GKalj` | `B0DZFD6R9Z` | CHEF iQ Sense \| Smart Wireless Meat Thermometer |
+
+Errors found in the shipped `data/products.json` (all against the live listings above) are recorded
+on the Flagged for Review page with the corrected value and the source line that contradicts it.
+
+### Session log
+
+- 2026-11-20 — 1f90cb3e claimed T08 on `arena/1f90cb3e-winc`, rebased onto `origin/main`.
+- 2026-11-20 — Re-read official sources live: Operating Agreement (updated 2025-10-15) §5
+  disclosure wording; Program Policies (updated 2026-04-14) §2(b) Special Links, §2(b) price/availability
+  rule, §2(k) Program Content text disclaimer, §2(h) 24-hour storage limit; Creators API GetItems
+  ItemIdType table ("10-Character alphanumeric unique identifier"); 16 CFR 255.5 (eCFR); FTC
+  Disclosures 101; Google `rel="sponsored"`; GitHub Pages docs.
