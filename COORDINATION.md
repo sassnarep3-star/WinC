@@ -1783,4 +1783,16 @@ this integration landed, and PR #18 via PR #39 — both lineages are preserved h
 - Audit fixes landed earlier in this session: source-row anchors double-quoted so both gates see them,
   S15 short-link provenance rendered as text not an anchor, `tools/audit.mjs` A6/A7 scan markup not
   inline scripts (false positives removed). Later sessions independently cleared A6/A7 as well.
-- Registers at this session's close: 39 sources, 34 flags, 7 probe observations, 15 guides, 38 pages.
+- Registers at this session's close (final): **40 sources** (S01–S40), **35 flags** (FLG-001..035),
+  **8 probe observations** (five 5/5-matching + three divergent same-day runs #6–#8), 18 guides, 41 pages.
+
+## PR / merge record (arena-9a3bb152, T32)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR #44 opened: https://github.com/sassnarep3-star/WinC/pull/44 (`arena/9a3bb152-winc` → `main`) — verification re-check (T30), tone audit (T31), final integration (T32). |
+| 2026-11-20 | Four reconciliation rounds against a fast-moving `main` (PRs #38–#55 landed mid-session): each round unioned registers by id, renumbered this session's rows onto free slots (S30→S36→S39, FLG-026→FLG-030 enrichment, FLG-034→FLG-035), restored the full provenance trail twice, and removed committed conflict markers from `EXECUTIVE-SUMMARY.md`. Nothing from any session was discarded. |
+| 2026-11-20 | `gh pr merge 44 --merge` → **merged**, merge commit `489e00e`. |
+| 2026-11-20T07:26:38Z | Pages build for `489e00e`: **status built**, error null (legacy Pages, branch `main`, path `/`). |
+| 2026-11-20 | Live re-fetch via the page reader (not curl — egress note above): https://sassnarep3-star.github.io/WinC/ serves the merged publication — Agreement §5 disclosure strip first, editorial hero, five product cards each ending `Sponsored · paid affiliate link` with `?tag=shopnow047c-20` links and per-row Source tails, illustrations captioned “Not a product photograph.” |
+| 2026-11-20 | T30–T32 **done**. Gates on the merged tree: `check_site` OK (41 pages, 40 sitemap URLs, no violations), `tools/audit.mjs` 0 findings (A1–A10), freshness 0 overdue, `npm test` green, committed HTML == generator output. |
