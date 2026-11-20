@@ -271,6 +271,12 @@ def product_card(p, depth=0):
         specs.append(f"Weight: {esc(p['weight'])}")
     if p["model"]:
         specs.append(f"Model: {esc(p['model'])}")
+    # thermometers carry no capacity/model sometimes: fall back to the spec the listing does state
+    if not specs:
+        if p.get("temperature"):
+            specs.append(f"Reading: {esc(p['temperature'])}")
+        if p.get("power") and p["power"] != "—":
+            specs.append(f"Power: {esc(p['power'])}")
     li = "".join(f"<li>{x}</li>" for x in specs)
     return f"""<article class="card">
 <figure class="cardimg">{pic(img, cap, 800, 500, pfx, cls="cardpic")}</figure>
