@@ -9,7 +9,7 @@ It leads with products, answers buyer questions, and keeps verification one clic
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
 - **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 14 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
+- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 
 ## Key facts (all sourced)
@@ -98,3 +98,13 @@ approved link form for this account, or that these five listings are the five pr
 meant to be promoted (Q-01, Q-02, Q-16). Those need an enrolled Associates account. Until they are
 answered, this is a well-sourced publication with a gated monetisation path — which is the correct
 state to be in, not a half-finished one.
+
+
+---
+
+# Session `4ca9e665` — verification re-check, disclosure wording, close-out — 2026-11-20
+
+- **Operating Agreement §5 re-fetched** from affiliate-program.amazon.com/help/operating/agreement: the required sentence "As an Amazon Associate I earn from qualifying purchases." matches the disclosure strip on every page.
+- **FTC Endorsement Guides re-fetched.** ftc.gov is reachable now (the register said it was not). Its affiliate section says "a 'buy now' button would not be adequate" and that a "paid link" next to an affiliate link is adequate. The Amazon button tag said only "Sponsored", so it now reads "Sponsored · paid affiliate link" (FLG-017).
+- **Pages:** build of `358dd0c` status `built`, no error. Gate: 26 pages, 25 sitemap URLs, no violations.
+- **Not done, and still open:** tracking-ID confirmation, one-link Associates test, short-link status, FLG-004/005 spec conflicts, analytics deployment, Search Console. These need an enrolled Associates account or an owner decision.
