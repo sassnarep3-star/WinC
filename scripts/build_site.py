@@ -3,7 +3,7 @@
 Run: python3 scripts/build_site.py
 No third-party dependencies. Generated HTML is committed for GitHub Pages (legacy build).
 """
-import json, html, os, datetime
+import json, html, os, datetime, re, glob
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
@@ -18,6 +18,61 @@ PRODUCTS = load("data/products.json")["products"]
 SOURCES = load("data/sources.json")["sources"]
 FLAGS = load("data/flags.json")["flags"]
 SRC = {s["id"]: s for s in SOURCES}
+
+def load_guides():
+    """Guides live in data/guides/*.json so publishing = drop a file. Newest first."""
+    out = []
+    for fn in sorted(glob.glob(os.path.join(ROOT, "data", "guides", "*.json"))):
+        if os.path.basename(fn).startswith("_"):
+            continue
+        with open(fn, encoding="utf-8") as f:
+            g = json.load(f)
+        g["_file"] = os.path.basename(fn)
+        g.setdefault("category", g.get("cluster", ""))
+        g.setdefault("image", "")
+        g.setdefault("published", TODAY)
+        g.setdefault("updated", TODAY)
+        g.setdefault("season", "Everyday")
+        out.append(g)
+    out.sort(key=lambda g: (g["published"], g.get("slug", "")), reverse=True)
+    return out
+
+GUIDES = load_guides()
+PROBES = load("data/probes.json")
+_sug = load("data/suggestions.json")
+SUGGESTIONS = _sug["suggestions"]
+QUESTIONS = load("data/questions.json")["questions"]
+QMETA = load("data/questions.json")
+
+CATEGORIES = [("Air Fryers", "air-fryers.html"), ("Meat Thermometers", "thermometers.html")]
+CAT_IMG = {
+    "Air Fryers": ("assets/img/air-fryers.png",
+        "Editorial illustration: air fryer baskets open on a kitchen counter. Not a product photograph."),
+    "Meat Thermometers": ("assets/img/thermometers.png",
+        "Editorial illustration: instant-read probe and wireless sensor on a countertop. Not a product photograph."),
+}
+HERO_IMG = ("assets/img/hero-counter.png",
+    "Editorial illustration: kitchen counter with an air fryer, a probe thermometer and a board of roasted potatoes. Not a product photograph.")
+
+def prods(cat=None):
+    return [x for x in PRODUCTS if cat is None or x["category"] == cat]
+def guides_for(cat=None):
+    return [g for g in GUIDES if cat is None or g.get("category") == cat]
+def words(html_str):
+    return len(re.sub(r"<[^>]+>", " ", re.sub(r"(?s)<(script|style).*?</\1>", " ", html_str)).split())
+def read_min(g):
+    return max(2, round(words(g["body"]) / 220))
+def cluster_sentence():
+    bits = []
+    for name, _ in CATEGORIES:
+        bits.append(f"{name} ({len(prods(name))} products, {len(guides_for(name))} guides)")
+    return "; ".join(bits)
+def counts():
+    return {"products": len(PRODUCTS), "guides": len(GUIDES), "sources": len(SOURCES),
+            "flags": len(FLAGS), "questions": len(QUESTIONS),
+            "blocking": sum(1 for q in QUESTIONS if q.get("blocking","no").startswith("yes")),
+            "open_sug": sum(1 for x in SUGGESTIONS if x["status"].startswith("open")),
+            "done_sug": sum(1 for x in SUGGESTIONS if x["status"] == "done-this-session")}
 BY_ASIN = {p["observed_asin"]: p for p in PRODUCTS}
 
 def esc(s):
@@ -63,27 +118,47 @@ def disclosure_strip_for(path):
         '</div></div>'
     )
 
-NAV = [
+NAV_READER = [
     ("index.html", "Home"),
-    ("air-fryers.html", "Air Fryers"),
+    ("products/index.html", "The shop"),
+    ("guides/index.html", "Guides"),
+    ("air-fryers.html", "Air fryers"),
     ("thermometers.html", "Thermometers"),
-    ("guides/basket-or-oven-style-air-fryer.html", "Guides"),
-    ("products/chefman-6qt-dual-basket-b0cdy277d3.html", "Products"),
-    ("direction.html", "Direction"),
-    ("verification.html", "Verification"),
-    ("about.html", "About"),
+]
+# Every dashboard surface lives in exactly one navigation group, and in the footer.
+NAV_DESK = [
+    ("verification.html", "Verification & sources"),
+    ("flagged-for-review.html", "Flagged for review"),
+    ("questions.html", "Open questions"),
+    ("direction.html", "Suggestions & paths"),
+    ("measurement.html", "Measurement & ledger"),
+    ("executive-summary.html", "Executive summary"),
+    ("search.html", "Search the site"),
+    ("about.html", "About & method"),
+    ("disclosure.html", "Disclosure"),
 ]
 
 def nav_html(current, depth):
-    items = []
-    for href, label in NAV:
-        cur = ' aria-current="page"' if href == current else ""
-        h = ("../" * depth + href) if depth else href
-        items.append(f'<a href="{h}"{cur}>{label}</a>')
-    return '<nav class="mainnav" aria-label="Main"><div class="wrap">' + "".join(items) + "</div></nav>"
+    pfx = "../" * depth
+    def links(items):
+        out = []
+        for href, label in items:
+            cur = ' aria-current="page"' if href == current else ""
+            out.append(f'<a href="{pfx}{href}"{cur}>{label}</a>')
+        return "".join(out)
+    desk_cur = ' aria-current="page"' if any(href == current for href, _ in NAV_DESK) else ""
+    return ('<nav class="mainnav" aria-label="Main content"><div class="wrap">'
+            + links(NAV_READER)
+            + f'<details class="desknav"{desk_cur}><summary>The Desk<span aria-hidden="true"> ⌄</span></summary>'
+              f'<div class="deskgroup"><p class="desknote">Operations &amp; evidence — not part of the editorial flow.</p>'
+            + links(NAV_DESK) + "</div></details></div></nav>")
 
 def footer_html(depth):
     p = "../" * depth
+    guide_links = "".join(
+        f'<li><a href="{p}{g["path"]}">{esc(g["title"])}</a></li>' for g in GUIDES)
+    cat_links = "".join(f'<li><a href="{p}{href}">{esc(n)}</a> ({len(prods(n))})</li>' for n, href in CATEGORIES)
+    desk_links = "".join(f'<li><a href="{p}{href}">{label}</a></li>' for href, label in NAV_DESK)
     return f"""<footer><div class="wrap">
 <div class="footer-disclosure"><strong>As an Amazon Associate I earn from qualifying purchases.</strong>
 This site contains sponsored product links (marked <span class="sponsored-tag">Sponsored</span>).
@@ -91,36 +166,33 @@ Prices and availability are shown on Amazon — check Amazon for current details
 <a href="{p}disclosure.html">Full disclosure</a></div>
 <div class="cols">
 <div><h4>Shop</h4><ul>
-<li><a href="{p}air-fryers.html">Air Fryers</a></li>
-<li><a href="{p}thermometers.html">Meat Thermometers</a></li>
-<li><a href="{p}products/chefman-6qt-dual-basket-b0cdy277d3.html">All products</a></li>
+<li><a href="{p}products/index.html">All {counts()['products']} products</a></li>
+{cat_links}
 </ul></div>
 <div><h4>Guides</h4><ul>
-<li><a href="{p}guides/basket-or-oven-style-air-fryer.html">Basket or oven-style?</a></li>
-<li><a href="{p}guides/air-fryer-capacity-checklist.html">Capacity checklist</a></li>
-<li><a href="{p}guides/cleanup-and-counter-space.html">Cleanup &amp; counter space</a></li>
-<li><a href="{p}guides/multi-function-appliance-questions.html">Multi-function questions</a></li>
+<li><a href="{p}guides/index.html">All guides</a></li>
+{guide_links}
 </ul></div>
-<div><h4>Dashboard</h4><ul>
-<li><a href="{p}verification.html">Verification &amp; sources</a></li>
-<li><a href="{p}flagged-for-review.html">Flagged for Review</a></li>
-<li><a href="{p}measurement.html">Measurement &amp; ledger</a></li>
-<li><a href="{p}executive-summary.html">Executive summary</a></li>
-<li><a href="{p}direction.html">Direction &amp; suggestions</a></li>
+<div><h4>The Desk</h4><ul>
+{desk_links}
 </ul></div>
 <div><h4>Site</h4><ul>
-<li><a href="{p}about.html">About &amp; authorship</a></li>
-<li><a href="{p}search.html">Search</a></li>
 <li><a href="{p}sitemap.xml">Sitemap</a></li>
 <li><a href="{p}feed.xml">RSS feed</a></li>
 <li><a href="{p}disclosure.html">Disclosure &amp; privacy</a></li>
+<li><a href="{p}index.html">Front page</a></li>
 </ul></div>
 </div>
-<p class="meta" style="color:#A8A29E">ShopNow Kitchen · {TODAY} · Tracking ID {TAG} (see Flagged for Review FLG-001). Product names and trademarks belong to their owners; this site is not endorsed by Amazon.</p>
+<p class="meta footnote">ShopNow Kitchen · {TODAY} · Tracking ID {TAG} (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners; this site is not endorsed by or affiliated with Amazon beyond Associates participation. No testing, ranking or price claim is made without a stated source.</p>
 </div></footer>"""
 
-def head(title, desc, path, extra=""):
+
+def head(title, desc, path, extra="", page_type="page", image=""):
     canon = SITE + path
+    ogimg = f'\n<meta property="og:image" content="{SITE}{image}">' if image else ""
+    tcard = ('\n<meta name="twitter:card" content="summary_large_image">' if image
+             else '\n<meta name="twitter:card" content="summary">')
+    ogtype = "article" if page_type == "guide" else "website"
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -129,16 +201,16 @@ def head(title, desc, path, extra=""):
 <link rel="canonical" href="{canon}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{canon}">
+<meta property="og:type" content="{ogtype}">
+<meta property="og:url" content="{canon}">{ogimg}{tcard}
 <link rel="stylesheet" href="{'../' if '/' in path else ''}assets/style.css">
 <link rel="alternate" type="application/rss+xml" title="ShopNow Kitchen" href="{'../' if '/' in path else ''}feed.xml">
 {extra}
 </head>"""
 
-def page_html(path, title, desc, body, page_type="page", extra_head=""):
+def page_html(path, title, desc, body, page_type="page", extra_head="", image=""):
     depth = path.count("/")
-    return (head(title, desc, path, extra_head) +
+    return (head(title, desc, path, extra_head, page_type, image) +
         f'<body data-page-type="{page_type}">'
         f'<header class="masthead"><div class="wrap"><a class="brand" href="{"../"*depth}index.html">ShopNow <span>Kitchen</span></a>'
         f'<p class="tagline">Basket or oven-style? Compare before you buy.</p>'
@@ -149,17 +221,19 @@ def page_html(path, title, desc, body, page_type="page", extra_head=""):
 
 def product_card(p, depth=0):
     pfx = "../" * depth
-    icon = "🍟" if p["category"] == "Air Fryers" else "🌡️"
+    img, cap = CAT_IMG.get(p["category"], HERO_IMG)
     specs = []
     if p["capacity"] and p["capacity"] != "—":
         specs.append(f"Capacity: {esc(p['capacity'])}")
     if p["dimensions"]:
         specs.append(f"Size: {esc(p['dimensions'])}")
+    if p["weight"]:
+        specs.append(f"Weight: {esc(p['weight'])}")
     if p["model"]:
         specs.append(f"Model: {esc(p['model'])}")
-    li = "".join(f"<li>{s}</li>" for s in specs)
+    li = "".join(f"<li>{x}</li>" for x in specs)
     return f"""<article class="card">
-<div class="icon" aria-hidden="true">{icon}</div>
+<figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
 <p>{esc(p['title'])}</p>
@@ -167,6 +241,25 @@ def product_card(p, depth=0):
 <div class="actions">{buy_button_small(p)}</div>
 <p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
 </article>"""
+
+def guide_card(g, depth=0):
+    pfx = "../" * depth
+    img = g.get("image") or CAT_IMG.get(g.get("category", ""), HERO_IMG)[0]
+    cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
+    return f'''<article class="card guidecard">
+<figure class="cardimg"><img src="{pfx}{esc(img)}" alt="Editorial illustration for: {esc(g['title'])}" loading="lazy" width="800" height="500"></figure>
+<span class="cat">Guide · {esc(g['cluster'])}</span>
+<h3><a href="{pfx}{g['path']}">{esc(g['title'])}</a></h3>
+<p>{esc(g['desc'])}</p>
+<p class="meta">{esc(g['published'])} · {read_min(g)} min read · {esc(g.get('season', 'Everyday'))}</p>
+</article>'''
+
+def source_link(url, label):
+    """Evidence citation. Deliberately NOT an affiliate link: no tag, nofollow."""
+    return f'<a class="srclink" href="{esc(url)}" rel="nofollow noopener" target="_blank">{esc(label)}</a>'
+
+def pill(text, kind="note"):
+    return f'<span class="pill pill-{esc(kind)}">{esc(text)}</span>'
 
 def specs_table(p):
     rows = [
@@ -191,45 +284,63 @@ def specs_table(p):
 
 def capture_block(depth=0):
     pfx = "../" * depth
-    return f"""<section class="capture" aria-label="Reader capture">
-<h3>Get the next comparison — no hype, just the checklist.</h3>
-<p>One email when a new guide publishes. Double opt-in. No tracking pixel. Unsubscribe anytime.</p>
+    return f"""<section class="capture" aria-label="Reader updates">
+<h3>Get the next comparison — checklist first, hype never.</h3>
+<p>One email when a new guide publishes.</p>
 <form id="reader-capture" action="{pfx}measurement.html" method="get">
 <label for="email">Email address</label>
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>Submitting records a <code>reader_capture_submit</code> event (see <a href="{pfx}measurement.html">Measurement</a>). Your email is handled by the email provider you choose — this static site does not store it.</small>
+<small>The honest version: this is a static site, so submitting only records a <code>reader_capture_submit</code> count inside your own browser and takes you to the <a href="{pfx}measurement.html">measurement page</a>. No list exists and nothing reaches a server until the owner wires up an email provider — see <a href="{pfx}flagged-for-review.html">FLG-013</a>.</small>
 </section>"""
 
 # ---------- HOME ----------
 def home_body():
-    cards = "".join(product_card(p) for p in PRODUCTS)
+    c = counts()
+    cards = "".join(product_card(x) for x in PRODUCTS)
+    rail = "".join(guide_card(g) for g in GUIDES)
+    img, cap = HERO_IMG
+    lead = GUIDES[0]
+    tiles = ""
+    for name, href in CATEGORIES:
+        cimg, ccap = CAT_IMG[name]
+        tiles += (f'<a class="cattile" href="{href}"><img src="{cimg}" alt="{esc(ccap)}" loading="lazy" width="800" height="500">'
+                  f'<span class="catname">{esc(name)}</span><span class="catcount">{len(prods(name))} in the shop · {len(guides_for(name))} guides</span></a>')
     return f"""
 <section class="hero">
-<span class="kicker">Countertop cooking · Season: Everyday meals</span>
-<h1>Basket or oven-style? Compare before you buy.</h1>
-<p class="lede">Five kitchen appliances, compared on the specs you can check: capacity, size, cleanup, and what each one actually does. No “best” claims, no invented prices — just the numbers from Amazon’s own listings and the questions to ask before you spend.</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · <a href="about.html">How we check</a> · <a href="verification.html">Sources</a></p>
+<span class="kicker">Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
+<h1>{esc(lead['title'])}</h1>
+<p class="lede">{esc(lead['desc'])}</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {read_min(lead)} min read · <a href="about.html">How we check</a> · <a href="verification.html">Sources</a></p>
+<figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="750"><figcaption>{esc(cap)}</figcaption></figure>
+<p class="cta-row"><a class="btn btn-ghost" href="{lead['path']}">Read the guide →</a> <a class="btn btn-quiet" href="products/index.html">See all {c['products']} products</a></p>
 </section>
-<h2>Shop the five</h2>
+
+<h2>The shop</h2>
 <div class="grid">{cards}</div>
-<div class="notice"><strong>How to read this page:</strong> every “Check on Amazon” button is a sponsored link (marked <span class="sponsored-tag">Sponsored</span>). Prices and availability live on Amazon. Specs below are copied from Amazon’s listings on {TODAY} — if a cell is blank, we could not confirm it and left it blank.</div>
-<h2>Start with a question</h2>
-<div class="grid">
-<article class="card"><span class="cat">Guide · Air fryers</span><h3><a href="guides/basket-or-oven-style-air-fryer.html">Basket or oven-style air fryer: what should you compare?</a></h3><p>Two baskets that finish together vs. one big oven cavity — the trade-offs in capacity, footprint, and cleanup.</p></article>
-<article class="card"><span class="cat">Guide · Capacity</span><h3><a href="guides/air-fryer-capacity-checklist.html">A no-hype checklist for comparing air fryer capacity</a></h3><p>Quarts mean different things. Measure the food, not the marketing.</p></article>
-<article class="card"><span class="cat">Guide · Cleanup</span><h3><a href="guides/cleanup-and-counter-space.html">How to assess cleanup and counter-space trade-offs</a></h3><p>Dishwasher-safe parts, windows, and the inches your counter actually has.</p></article>
-<article class="card"><span class="cat">Guide · Multi-function</span><h3><a href="guides/multi-function-appliance-questions.html">Questions to ask before buying a multi-function kitchen appliance</a></h3><p>24 functions sound great — until you ask which ones you will use weekly.</p></article>
-</div>
-<h2>Thermometers, too</h2>
-<p>Two meat thermometers are in the shop: an instant-read probe and a wireless 3-probe system. <a href="thermometers.html">Compare them →</a></p>
+<div class="notice"><strong>How to read this page:</strong> every “Check on Amazon” button is a sponsored link, marked <span class="sponsored-tag">Sponsored</span>. Prices and availability live on Amazon, not here. The specs are copied from Amazon’s own listings on {TODAY}; where a cell is blank it is because we could not confirm the value, and we would rather show you a gap than a guess.</div>
+
+<h2>Start with a question, not a product</h2>
+<div class="grid">{rail}</div>
+<p><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a></p>
+
+<h2>Browse by category</h2>
+<div class="catgrid">{tiles}</div>
+
+<h2>Why the numbers here are boring in a good way</h2>
+<ul>
+<li>{c['sources']} sources on the <a href="verification.html">verification register</a>. Every product row links to the listing it came from, with the date it was read.</li>
+<li>{c['flags']} items we could not confirm, published on <a href="flagged-for-review.html">Flagged for review</a> with the action that would settle each one.</li>
+<li>Intended product and observed redirect are stored as separate fields, on purpose: a link that redirects somewhere is not proof of what someone meant.</li>
+<li>{c['questions']} open questions ({c['blocking']} of them blocking) are on one page: <a href="questions.html">Open questions</a>.</li>
+</ul>
 {capture_block()}
 <h2>What we do not do</h2>
 <ul>
-<li>No prices, ratings, or “bought in past week” numbers on this site (Program Policies + volatility — see <a href="flagged-for-review.html">FLG-006</a>).</li>
-<li>No “best” rankings without a stated method. We compare specs; you decide.</li>
-<li>No copied Amazon descriptions. Every word here is original.</li>
+<li>No “best” rankings without a stated method. We compare listed specs; you decide.</li>
+<li>No invented hands-on testing. Nobody on this desk has cooked with these five units, so no page claims it.</li>
+<li>No copied Amazon descriptions, no scraped Amazon images, no countdown timers, no “only 3 left in stock”.</li>
 </ul>
 """
 
@@ -294,229 +405,139 @@ def product_body(p):
 {capture_block(depth=1)}
 """
 
-# ---------- GUIDES ----------
-GUIDES = [
-    {
-        "path": "guides/basket-or-oven-style-air-fryer.html",
-        "title": "Basket or oven-style air fryer: what should you compare?",
-        "desc": "Two baskets that finish together vs. one big oven cavity. Compare capacity, footprint, and cleanup across the three air fryers in the shop.",
-        "cluster": "Air Fryers",
-        "body": """
-<p>Three air fryers are in the shop, and they split into two shapes. Two are <strong>basket-style</strong> (one or two removable baskets you slide in and out). One is <strong>oven-style</strong> (a countertop oven cavity with French doors and racks). The shape changes everything about capacity, cleanup, and counter space — so compare the shape first, then the specs.</p>
-<h2>The two shapes, in plain terms</h2>
-<div class="tablewrap"><table><thead><tr><th>Question</th><th>Basket-style (Chefman 6 Qt dual, Chefman 8 Qt)</th><th>Oven-style (Emeril 26QT French Door)</th></tr></thead><tbody>
-<tr><td>How food goes in</td><td>Pull-out baskets; two small baskets (6 Qt model) or one large basket (8 Qt model)</td><td>French doors open to a rack cavity; fits a whole chicken or 12-inch pizza per listing</td></tr>
-<tr><td>Capacity shape</td><td>6 Qt split as two 3-Qt baskets, or 8 Qt in a single basket</td><td>26QT (24.6 L) single cavity</td></tr>
-<tr><td>Footprint (listing)</td><td>6 Qt: 13.38×11.81×10.63 in · 8 Qt: 12.75×13.5×10 in</td><td>16.9×15.8×14.8 in — the largest of the three</td></tr>
-<tr><td>Weight (listing)</td><td>13.3 lb (6 Qt) · 12.8 lb (8 Qt)</td><td>26.5 lb — about double; plan where it lives</td></tr>
-<tr><td>Cleanup</td><td>Nonstick, dishwasher-safe baskets (per listings)</td><td>Racks, pan, drip tray, crisper basket — more parts to wash</td></tr>
-</tbody></table></div>
-<p class="src">Sources: <a href="https://www.amazon.com/dp/B0CDY277D3" rel="nofollow noopener" target="_blank">B0CDY277D3</a> · <a href="https://www.amazon.com/dp/B08DKYBTPH" rel="nofollow noopener" target="_blank">B08DKYBTPH</a> · <a href="https://www.amazon.com/dp/B09B7SB46R" rel="nofollow noopener" target="_blank">B09B7SB46R</a> · checked 2026-11-20.</p>
-<h2>Which shape fits your kitchen?</h2>
-<ul>
-<li><strong>Choose basket-style if</strong> you cook two foods at once (main + side), want the smallest footprint, and prefer fewer parts to wash.</li>
-<li><strong>Choose oven-style if</strong> you need rack space for baking, rotisserie, or a full tray — and you have the counter depth for a 16.9-inch-deep unit.</li>
-<li><strong>Either way,</strong> measure your counter and the cabinet above it before you order. Depth is where oven-style units surprise people.</li>
-</ul>
-<h2>Shop the comparison</h2>
-<div class="grid">CARDS</div>
-<h2>Frequently asked questions</h2>
-<div class="faq">
-<details><summary>Is a 6-quart dual basket the same as a 6-quart single basket?</summary><p>No. The Chefman 6 Qt splits capacity into two 3-Qt baskets with a Sync Finish option, so two foods can finish together. A single 6-Qt basket gives one larger space. Compare how you actually cook: two small batches, or one big one?</p></details>
-<details><summary>Why is the oven-style model so much heavier?</summary><p>Per its listing it weighs 26.5 pounds, roughly double the basket models, because it is a full countertop oven with racks and accessories (7 included per listing). Weight matters for where it lives and how you clean around it.</p></details>
-<details><summary>Do I need windows to see the food?</summary><p>The Chefman 6 Qt has easy-view windows on each basket; the Chefman 8 Qt listing does not mention windows. Windows help you check doneness without pulling the basket — a small thing that matters if you cook often.</p></details>
-</div>
-""",
-        "faq": [
-            ("Is a 6-quart dual basket the same as a 6-quart single basket?", "No. The Chefman 6 Qt splits capacity into two 3-Qt baskets with a Sync Finish option, so two foods can finish together. A single 6-Qt basket gives one larger space. Compare how you actually cook: two small batches, or one big one?"),
-            ("Why is the oven-style model so much heavier?", "Per its listing it weighs 26.5 pounds, roughly double the basket models, because it is a full countertop oven with racks and accessories (7 included per listing). Weight matters for where it lives and how you clean around it."),
-            ("Do I need windows to see the food?", "The Chefman 6 Qt has easy-view windows on each basket; the Chefman 8 Qt listing does not mention windows. Windows help you check doneness without pulling the basket — a small thing that matters if you cook often."),
-        ],
-    },
-    {
-        "path": "guides/air-fryer-capacity-checklist.html",
-        "title": "A no-hype checklist for comparing air fryer capacity",
-        "desc": "Quarts mean different things. Measure the food, not the marketing — a practical capacity checklist for the three air fryers in the shop.",
-        "cluster": "Air Fryers",
-        "body": """
-<p>“6 quart,” “8 quart,” and “26 quart” sound like a simple ladder. They are not. A dual-basket 6 Qt is two 3-Qt spaces. An 8 Qt is one space. A 26QT oven is a rack cavity measured differently again. Use this checklist to compare capacity by the food you cook, not by the biggest number.</p>
-<h2>The checklist</h2>
-<div class="tablewrap"><table><thead><tr><th>#</th><th>Check</th><th>How to do it</th></tr></thead><tbody>
-<tr><td>1</td><td>Measure your most-cooked food</td><td>Put your usual tray, bird, or batch of fries on a ruler. Write down length × width × height.</td></tr>
-<tr><td>2</td><td>Compare usable space, not quarts</td><td>Two 3-Qt baskets ≠ one 6-Qt basket. A 26QT oven fits a 12-inch pizza per listing — does that match your pans?</td></tr>
-<tr><td>3</td><td>Check basket count</td><td>Dual basket (Chefman 6 Qt) = cook main + side together. Single basket (Chefman 8 Qt) = one larger batch.</td></tr>
-<tr><td>4</td><td>Check depth, not just width</td><td>Emeril 26QT is 16.9 in deep. Measure counter depth + cabinet clearance before you buy.</td></tr>
-<tr><td>5</td><td>Check weight &amp; storage</td><td>Emeril 26.5 lb vs. Chefman ~13 lb. Heavier ovens tend to stay in one spot — is that your plan?</td></tr>
-<tr><td>6</td><td>Ignore “bought in past week”</td><td>Popularity badges change daily and are not on this site. Capacity is a measurement, not a vote.</td></tr>
-</tbody></table></div>
-<h2>Worked example (from the shop)</h2>
-<div class="tablewrap"><table><thead><tr><th>Model</th><th>Capacity (listing)</th><th>What it means for dinner</th></tr></thead><tbody>
-<tr><td>Chefman 6 Qt Dual (B0CDY277D3)</td><td>6 Qt as two 3-Qt baskets</td><td>Chicken in one basket, fries in the other; Sync Finish ends them together.</td></tr>
-<tr><td>Chefman 8 Qt (B08DKYBTPH)</td><td>8 Qt single basket</td><td>One bigger batch — better for a single large item or a full basket of fries.</td></tr>
-<tr><td>Emeril 26QT (B09B7SB46R)</td><td>26QT oven cavity</td><td>Rack cooking: whole chicken, 12-inch pizza, or a full tray of cookies per listing.</td></tr>
-</tbody></table></div>
-<p class="src">Sources: Amazon listings B0CDY277D3, B08DKYBTPH, B09B7SB46R · checked 2026-11-20.</p>
-<h2>Shop by capacity</h2>
-<div class="grid">CARDS</div>
-<h2>Frequently asked questions</h2>
-<div class="faq">
-<details><summary>Is 8 quarts always bigger than 6 quarts?</summary><p>For usable single-batch space, yes — the 8 Qt is one basket. But the 6 Qt dual gives you two independent spaces, which can be more useful for a main + side meal. “Bigger” depends on the meal.</p></details>
-<details><summary>How do I know if a 12-inch pizza fits?</summary><p>The Emeril listing says it fits a 12-inch pizza. Measure your actual pan (including handles) and compare it to the cavity dimensions on Amazon before you buy.</p></details>
-</div>
-""",
-        "faq": [
-            ("Is 8 quarts always bigger than 6 quarts?", "For usable single-batch space, yes — the 8 Qt is one basket. But the 6 Qt dual gives you two independent spaces, which can be more useful for a main + side meal. “Bigger” depends on the meal."),
-            ("How do I know if a 12-inch pizza fits?", "The Emeril listing says it fits a 12-inch pizza. Measure your actual pan (including handles) and compare it to the cavity dimensions on Amazon before you buy."),
-        ],
-    },
-    {
-        "path": "guides/cleanup-and-counter-space.html",
-        "title": "How to assess cleanup and counter-space trade-offs",
-        "desc": "Dishwasher-safe parts, windows, and the inches your counter actually has. A practical cleanup and footprint guide for basket vs. oven-style fryers.",
-        "cluster": "Air Fryers",
-        "body": """
-<p>Air fryers promise less oil. They do not promise less washing. Cleanup and counter space are where “great on paper” appliances end up in a closet. Compare these two things before you buy.</p>
-<h2>Cleanup: count the parts</h2>
-<div class="tablewrap"><table><thead><tr><th>Model</th><th>Parts to wash (per listing)</th><th>What to verify on Amazon</th></tr></thead><tbody>
-<tr><td>Chefman 6 Qt Dual</td><td>Two nonstick baskets; dishwasher-safe per listing</td><td>“Dishwasher safe” wording + window seals (hand-wash vs. dishwasher)</td></tr>
-<tr><td>Chefman 8 Qt</td><td>One nonstick basket; dishwasher-safe parts per listing</td><td>Same — confirm which parts are dishwasher-safe</td></tr>
-<tr><td>Emeril 26QT</td><td>Rack, bake pan, drip tray, crisper basket, rotisserie spit, fetch tool (7 accessories)</td><td>Which accessories are dishwasher-safe; crumb-tray access</td></tr>
-</tbody></table></div>
-<p class="src">Sources: Amazon listings B0CDY277D3, B08DKYBTPH, B09B7SB46R · checked 2026-11-20.</p>
-<h2>Counter space: measure depth first</h2>
-<ul>
-<li><strong>Chefman 6 Qt:</strong> 13.38 in deep × 11.81 in wide × 10.63 in tall.</li>
-<li><strong>Chefman 8 Qt:</strong> 12.75 in deep × 13.5 in wide × 10 in tall.</li>
-<li><strong>Emeril 26QT:</strong> 16.9 in deep × 15.8 in wide × 14.8 in tall — measure counter depth and the cabinet above it.</li>
-</ul>
-<p>Tip: tape the footprint on your counter with painter’s tape. Leave it for a day. If you keep moving it, it is too big for that spot.</p>
-<h2>Windows and shake reminders: small features, daily use</h2>
-<p>The Chefman 6 Qt has easy-view windows and a shake reminder; the 8 Qt has an LED shake reminder. These do not change capacity — they change how often you open the basket to check. If you cook daily, they matter. If you cook weekly, they do not.</p>
-<h2>Shop with cleanup in mind</h2>
-<div class="grid">CARDS</div>
-<h2>Frequently asked questions</h2>
-<div class="faq">
-<details><summary>Are all parts dishwasher-safe?</summary><p>Listings say baskets/parts are dishwasher-safe, but always confirm which parts on Amazon — windows, seals, and accessories are often hand-wash only.</p></details>
-<details><summary>How much counter depth do I need?</summary><p>At least the unit’s depth plus a few inches to pull baskets or open doors. The Emeril needs ~17 inches of depth; many counters are 24–25 inches deep, but cabinets above can be the real limit.</p></details>
-</div>
-""",
-        "faq": [
-            ("Are all parts dishwasher-safe?", "Listings say baskets/parts are dishwasher-safe, but always confirm which parts on Amazon — windows, seals, and accessories are often hand-wash only."),
-            ("How much counter depth do I need?", "At least the unit’s depth plus a few inches to pull baskets or open doors. The Emeril needs ~17 inches of depth; many counters are 24–25 inches deep, but cabinets above can be the real limit."),
-        ],
-    },
-    {
-        "path": "guides/multi-function-appliance-questions.html",
-        "title": "Questions to ask before buying a multi-function kitchen appliance",
-        "desc": "24 functions sound great — until you ask which ones you will use weekly. Questions for oven-style fryers and wireless thermometers.",
-        "cluster": "Multi-function",
-        "body": """
-<p>“24 cooking functions” and “5 sensors” are real specs — and easy to overvalue. Before you buy a multi-function appliance, ask which functions you will use every week, and what the extra complexity costs you in cleanup, counter space, and learning curve.</p>
-<h2>Ask these seven questions</h2>
-<div class="tablewrap"><table><thead><tr><th>#</th><th>Question</th><th>Why it matters</th></tr></thead><tbody>
-<tr><td>1</td><td>Which 3 functions will I use weekly?</td><td>Emeril lists 24 presets (air fry, bake, broil, dehydrate, roast, slow cook…). Name your three before you buy.</td></tr>
-<tr><td>2</td><td>What do the accessories cost me?</td><td>7 accessories = 7 things to wash and store. Count them.</td></tr>
-<tr><td>3</td><td>Does it replace something I own?</td><td>An oven-style fryer can replace a toaster oven — but only if it fits your counter (16.9 in deep).</td></tr>
-<tr><td>4</td><td>For thermometers: probe or wireless?</td><td>ThermoMaven is a single instant-read probe (±0.5°F). CHEF iQ Sense is 3 wireless probes + hub with WiFi and app alerts.</td></tr>
-<tr><td>5</td><td>What does “wireless” require?</td><td>CHEF iQ needs WiFi + app + hub charging. ThermoMaven needs a battery and works anywhere. Match to your cooking (grill vs. oven).</td></tr>
-<tr><td>6</td><td>What is the heat limit?</td><td>CHEF iQ lists 1000°F heat-safe. Confirm the limit for your grill/smoker on Amazon.</td></tr>
-<tr><td>7</td><td>What will I check on Amazon?</td><td>Price, availability, and “dishwasher-safe” wording live on Amazon. This site does not show prices (policy).</td></tr>
-</tbody></table></div>
-<p class="src">Sources: <a href="https://www.amazon.com/dp/B09B7SB46R" rel="nofollow noopener" target="_blank">B09B7SB46R</a> · <a href="https://www.amazon.com/dp/B0DHZTCNR5" rel="nofollow noopener" target="_blank">B0DHZTCNR5</a> · <a href="https://www.amazon.com/dp/B0DZFD6R9Z" rel="nofollow noopener" target="_blank">B0DZFD6R9Z</a> · checked 2026-11-20.</p>
-<h2>Probe vs. wireless: the real choice</h2>
-<div class="tablewrap"><table><thead><tr><th></th><th>ThermoMaven 1 Sec (instant-read)</th><th>CHEF iQ Sense Gen3 (wireless)</th></tr></thead><tbody>
-<tr><td>How it works</td><td>Fold-out probe, 1-second reading, auto-rotate LED</td><td>3 ultra-thin probes in food + hub; WiFi to app; flip/rest reminders</td></tr>
-<tr><td>Best for</td><td>Quick checks: steak, chicken, candy, everyday cooking</td><td>Long cooks: brisket, turkey, smoker — monitor from another room</td></tr>
-<tr><td>Needs</td><td>Battery; no app</td><td>WiFi, app, hub charging; up to 70 hours per charge (listing)</td></tr>
-<tr><td>Accuracy (listing)</td><td>±0.5°F, NIST &amp; NSF certified</td><td>4 internal sensors + ambient sensor; 5 sensors total</td></tr>
-</tbody></table></div>
-<h2>Shop the multi-function picks</h2>
-<div class="grid">CARDS</div>
-<h2>Frequently asked questions</h2>
-<div class="faq">
-<details><summary>Do I need 24 functions?</summary><p>Only if you will use them. Most households use 3–5 weekly. If your three are air fry, bake, and roast, a simpler basket model may serve you better than a 24-function oven.</p></details>
-<details><summary>Is wireless always better than instant-read?</summary><p>No. Wireless wins for long, unattended cooks. Instant-read wins for quick, portable checks and needs no app or WiFi. They solve different problems.</p></details>
-</div>
-""",
-        "faq": [
-            ("Do I need 24 functions?", "Only if you will use them. Most households use 3–5 weekly. If your three are air fry, bake, and roast, a simpler basket model may serve you better than a 24-function oven."),
-            ("Is wireless always better than instant-read?", "No. Wireless wins for long, unattended cooks. Instant-read wins for quick, portable checks and needs no app or WiFi. They solve different problems."),
-        ],
-    },
-]
+# ---------- GUIDES: loaded from data/guides/*.json (see load_guides) ----------
 
 def guide_body(g):
-    cards = "".join(product_card(p, depth=1) for p in PRODUCTS)
+    pool = prods(g.get("category")) or PRODUCTS
+    cards = "".join(product_card(x, depth=1) for x in pool)
     body = g["body"].replace("CARDS", cards)
+    cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
+    fig = ""
+    if g.get("image"):
+        fig = (f'<figure class="lede-figure"><img src="../{esc(g["image"])}" alt="{esc(cap)}" width="1200" height="750">'
+               f'<figcaption>{esc(cap)}</figcaption></figure>')
+    cat_href = dict(CATEGORIES).get(g.get("category"), "guides/index.html")
     return f"""
-<section class="hero"><span class="kicker">Guide · {esc(g['cluster'])} · Question-shaped</span>
+<section class="hero"><span class="kicker">Guide · {esc(g['cluster'])} · Season: {esc(g.get('season','Everyday'))}</span>
 <h1>{esc(g['title'])}</h1>
 <p class="lede">{esc(g['desc'])}</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · 4 min read · <a href="../verification.html">Sources</a></p>
+<p class="meta">By the ShopNow Kitchen Desk · Published {esc(g['published'])} · Updated {esc(g['updated'])} · {read_min(g)} min read · <a href="../{cat_href}">This category</a> · <a href="../verification.html">Sources</a></p>
 </section>
+{fig}
 <div class="guide-hero">{body}</div>
+<div class="byline-box"><strong>How this page was made.</strong> Written from published listings and official guidance, by an editorial desk — not from hands-on use, so no page here claims testing. Every table row links to its source; anything we could not confirm is left blank and listed on <a href="../flagged-for-review.html">Flagged for review</a>. Sponsored links are marked <span class="sponsored-tag">Sponsored</span>.</div>
 {capture_block(depth=1)}
 """
 
 def faq_jsonld(g):
-    items = []
-    for q, a in g["faq"]:
-        items.append({"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}})
+    items = [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in g["faq"]]
     return ('<script type="application/ld+json">' +
             json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": items}) + "</script>")
 
 # ---------- DIRECTION ----------
-def direction_body():
-    return f"""
-<section class="hero"><span class="kicker">Direction · Suggestions for review</span>
-<h1>Direction: suggestions, open questions, and the path chooser</h1>
-<p class="lede">Nothing here is implemented yet. Review the suggestions, answer the questions, and pick a path. Implementation starts only after you choose.</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
+def status_pill_class(st):
+    if st.startswith("done"): return "ok"
+    if st.startswith("recommended"): return "act"
+    if st.startswith("open-blocked"): return "blocked"
+    if st.startswith("open"): return "wait"
+    if st.startswith("fixed"): return "ok"
+    return "note"
 
-<h2>Suggestions (choose one path)</h2>
-<div class="notice"><strong>How to choose:</strong> pick the path that matches your goal. Paths are mutually exclusive for the next build. Your choice is stored only in this browser (localStorage) — no data leaves the device.</div>
+EFFORT = {"S": "small — hours", "M": "medium — a session", "L": "large — more than one session"}
+
+def direction_body():
+    c = counts()
+    cards = ""
+    for x in SUGGESTIONS:
+        cls = status_pill_class(x["status"])
+        opts = ""
+        cards += f"""<article class="sug" id="{esc(x['id'])}">
+<header><h3>{esc(x['title'])}</h3>{pill(x['status'], cls)}</header>
+<p class="sugmeta">{esc(x['area'])} · {esc(x['id'])} · effort {esc(x['effort'])} ({EFFORT.get(x['effort'], x['effort'])}) · cost: {esc(x['cost'])}</p>
+<p class="why"><span>Problem</span>{esc(x['problem'])}</p>
+<p class="why"><span>Suggestion</span>{esc(x['proposal'])}</p>
+<p class="why"><span>Risk</span>{esc(x['risk'])}</p>
+<p class="why"><span>How we would know it worked</span>{esc(x['expected_effect'])}</p>
+<p class="why"><span>Evidence</span>{esc(x['evidence'])}</p>
+<details class="promptbox"><summary>Instruction block for the next build prompt</summary>
+<pre><code>{esc(x['feeds_prompt'])}</code></pre></details>
+</article>"""
+    return f"""
+<section class="hero"><span class="kicker">Direction · {len(SUGGESTIONS)} suggestions, nothing implemented by surprise</span>
+<h1>Read these, choose a path, and the next prompt writes itself</h1>
+<p class="lede">Each suggestion states the evidence for it, what it changes, the risk, and how to tell whether it worked. Ticking boxes here changes nothing on the site — it stores your selection in this browser and assembles a copy-paste instruction block for whoever builds next. Implementation only starts after you choose.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {c['open_sug']} still open, {c['done_sug']} already shipped this session</p></section>
+
+<h2>Choose the next path</h2>
+<div class="notice"><strong>How to choose:</strong> pick the path that matches what you want in the next month, not the one that sounds most ambitious. Paths are mutually exclusive for one build. Your choice is stored only in this browser (localStorage); no data leaves the device and nothing is sent anywhere.</div>
 <form class="chooser" id="path-chooser">
-<label><input type="radio" name="path" value="A"> <strong>Path A — Shop depth (recommended).</strong> Add one comparison page per category, real product photography (licensed), and a weekly guide cadence. Best for organic traffic from buyer questions.</label>
-<label><input type="radio" name="path" value="B"> <strong>Path B — Content volume.</strong> Publish 2 guides/week from the question backlog, add seasonal clusters (grilling, holiday baking). Best for search coverage; slower per-page quality.</label>
-<label><input type="radio" name="path" value="C"> <strong>Path C — Measurement first.</strong> Deploy the analytics endpoint, run the one-link Associates tests, and wait for first-party data before adding content. Best for data-driven decisions; slowest to grow.</label>
+<label><input type="radio" name="path" value="A"> <strong>Path A — Trust the money path first (recommended).</strong> Run the one-link Associates tests, confirm the tracking ID, keep links gated until they pass. Nothing grows until the click actually attributes.</label>
+<label><input type="radio" name="path" value="B"> <strong>Path B — Shop depth.</strong> Add a “match to your situation” block to both categories and per-row source dates on every spec, then licensed photography. Best for conversion; needs the imagery decision (Q-07).</label>
+<label><input type="radio" name="path" value="C"> <strong>Path C — Content volume.</strong> Two guides a week from the question backlog plus a seasonal cluster. Best for coverage; worst without measurement, because you will be guessing which topic to write next.</label>
+<label><input type="radio" name="path" value="D"> <strong>Path D — Measure first.</strong> Deploy the endpoint and Search Console now, add nothing, and choose the next five topics from 4 weeks of real queries.</label>
 <button class="btn" type="submit">Save my choice (this browser only)</button>
 <span id="chooser-msg" class="meta"></span>
 </form>
 <script>
-document.getElementById('path-chooser').addEventListener('submit',function(e){{
-  e.preventDefault();
-  var v=document.querySelector('input[name=path]:checked');
-  if(!v){{document.getElementById('chooser-msg').textContent='Pick a path first.';return;}}
-  try{{localStorage.setItem('sk_path',v.value);}}catch(err){{}}
-  document.getElementById('chooser-msg').textContent='Saved: Path '+v.value+' (stored in this browser only).';
-}});
-try{{var s=localStorage.getItem('sk_path');if(s){{var r=document.querySelector('input[name=path][value="'+s+'"]');if(r)r.checked=true;}}}}catch(err){{}}
+(function(){{var f=document.getElementById('path-chooser');if(!f)return;
+function save(){{var v=document.querySelector('input[name=path]:checked');var m=document.getElementById('chooser-msg');
+if(!v){{m.textContent='Pick a path first.';return;}}
+try{{localStorage.setItem('sk_path',v.value);}}catch(e){{}}
+m.textContent='Saved: Path '+v.value+' (this browser only, nothing transmitted).';}}
+f.addEventListener('submit',function(e){{e.preventDefault();save();}});
+try{{var s=localStorage.getItem('sk_path');if(s){{var r=document.querySelector('input[name=path][value="'+s+'"]');if(r)r.checked=true;}}}}catch(e){{}}}})();
 </script>
-
-<h2>Questions, information, and answers</h2>
-<p>What we know, what we do not, and how to discover the missing pieces. Blank means unverified — never inferred.</p>
-<div class="tablewrap"><table><thead><tr><th>#</th><th>Question</th><th>What we know (with source)</th><th>What we do not know</th><th>How to discover it</th></tr></thead><tbody>
-<tr><td>Q1</td><td>Is tracking ID {TAG} issued and active?</td><td>Shape matches abcd-20 pattern (S06).</td><td>Issued/active status — no public page confirms it (FLG-001).</td><td>Check Associates Central; record confirmation date.</td></tr>
-<tr><td>Q2</td><td>Do the five short links resolve to the observed ASINs?</td><td>Prior sessions resolved them live 2026-11-17 (S14); listings confirm the ASINs exist (S09–S13).</td><td>Re-observation in this session (sandbox blocked — FLG-008).</td><td>Re-observe from unrestricted network; update observed_date.</td></tr>
-<tr><td>Q3</td><td>Are link.amazon short links permitted Special Links?</td><td>Unresolved (FLG-003). Not claimed invalid.</td><td>Exact compliance status.</td><td>Confirm in Associates Central; keep short links out of reader buttons until confirmed.</td></tr>
-<tr><td>Q4</td><td>What are the current prices?</td><td>Policy: do not display static prices (S02).</td><td>Current prices (intentionally blank — FLG-006).</td><td>Read on Amazon; or Creators/PA API with timestamp.</td></tr>
-<tr><td>Q5</td><td>Which products convert?</td><td>Nothing — ledger is empty by design.</td><td>Clicks, orders, sessions (no first-party data yet).</td><td>Deploy endpoint + Associates Reports; fill ledger only from authorized reports.</td></tr>
-<tr><td>Q6</td><td>Which guides get searched?</td><td>Four question-shaped guides published; RSS + sitemap live.</td><td>Search queries, traffic (no Search Console data yet).</td><td>Submit sitemap in Search Console; read queries monthly.</td></tr>
-<tr><td>Q7</td><td>Which specs are wrong?</td><td>FLG-004 (ThermoMaven variant) + FLG-005 (Chefman model/temp) flagged.</td><td>Canonical model/temp for B08DKYBTPH; canonical ASIN for ThermoMaven.</td><td>Confirm on live listings + manufacturer pages.</td></tr>
-<tr><td>Q8</td><td>What imagery can we use?</td><td>No Amazon images used (IP License, S02).</td><td>Licensed photography.</td><td>Commission/license photos; never scrape Amazon images.</td></tr>
-</tbody></table></div>
-<p class="src">Sources: S01–S15 on the <a href="verification.html">Verification</a> page. Flags: <a href="flagged-for-review.html">Flagged for Review</a>.</p>
-
-<h2>Design-direction pack (for the next build prompt)</h2>
-<ul>
-<li><strong>Look:</strong> warm paper background, ink text, terracotta + green accents; product cards first, verification below the fold. No dark-mode dashboard, no chart-junk.</li>
-<li><strong>Voice:</strong> human buyer questions as headlines; short answers; checklists over adjectives. No “AI-powered” hype on reader pages.</li>
-<li><strong>Imagery:</strong> licensed lifestyle photos (counter, food, hands) + simple SVG icons. No Amazon product images, no logos.</li>
-<li><strong>Seasons &amp; clusters:</strong> “Countertop Cooking” season; clusters “Air Fryers” and “Meat Thermometers”; seasonal angles (grilling, holiday baking) as guides, not banners.</li>
-<li><strong>Findability:</strong> one sitemap, one RSS feed, question-shaped titles, FAQ schema, internal links from every guide to its category.</li>
-</ul>
-{capture_block()}
+<h2>The register</h2>
+<p>Tick the ones you want, then copy the block at the bottom of the page. Anything marked <em>open-blocked</em> cannot start until the matching question on the <a href="questions.html">open-questions register</a> is answered.</p>
+<div class="suglist">{cards}</div>
+{prompt_builder()}
 """
+
+def prompt_builder():
+    ids = "".join(
+        f'<label class="pick"><input type="checkbox" class="sg-pick" value="{esc(x["id"])}" data-title="{esc(x["title"])}" data-prompt="{esc(x["feeds_prompt"])}"> '
+        f'<span>{pill(x["id"], status_pill_class(x["status"]))} {esc(x["title"])}</span></label>'
+        for x in SUGGESTIONS)
+    recommended = [x for x in SUGGESTIONS if x["status"].startswith("recommended") or x["status"].startswith("open") and not x["status"].startswith("open-blocked")]
+    rec = "\n".join(f"- {x['feeds_prompt']}" for x in SUGGESTIONS
+                    if x["status"].startswith("recommended") or x["id"] in ("SG-02", "SG-08", "SG-10", "SG-13", "SG-09"))
+    return f"""<section class="builder" id="prompt-builder">
+<h2>Build the next prompt</h2>
+<p>Check the suggestions you accept. The list below updates in this browser and is never transmitted. Then paste it into the next build session — it already contains the standing rules (blank over guessed, intended vs observed kept separate, gate must pass before merge).</p>
+<div class="picks">{ids}</div>
+<label class="pick pick-path">Also apply path: <select id="path-select"><option value="">none</option><option>A</option><option>B</option><option>C</option><option>D</option></select></label>
+<h3>Copy this</h3>
+<textarea id="prompt-out" rows="14" readonly spellcheck="false">Check the boxes above to fill this in.</textarea>
+<button class="btn" type="button" id="prompt-copy">Copy to clipboard</button>
+<span id="copy-msg" class="meta"></span>
+<h3>If you would rather not choose, this is the recommended set</h3>
+<pre><code>{esc(rec)}</code></pre>
+<script>
+(function(){{
+ var out=document.getElementById('prompt-out'), msg=document.getElementById('copy-msg');
+ var HEAD="Implement on the ShopNow Kitchen site (repo sassnarep3-star/WinC). Standing rules: read COORDINATION.md and claim tasks before editing; never fill an unverified value — leave it blank and flag it; keep intended_* and observed_* fields separate; run `npm run build && npm run check` until green; open a PR to main, merge, and confirm Pages is live.\n\nACCEPTED SUGGESTIONS\n";
+ var TAIL="\n\nAlso: re-verify anything you touch against an official source and add it to data/sources.json with a retrieval date. Do not add prices, ratings, review counts, or hands-on-testing claims. Every outbound product link keeps rel=\"sponsored nofollow noopener\" and the affiliate tag.";
+ function fmt(){{
+  var on=[].slice.call(document.querySelectorAll('.sg-pick:checked'));
+  var path=document.getElementById('path-select').value;
+  if(!on.length&&!path){{out.value="Check the boxes above to fill this in.";return;}}
+  var body=on.map(function(c){{return "- ["+c.value+"] "+c.dataset.title+"\n  → "+c.dataset.prompt;}}).join("\n");
+  if(path){{body=(body?body+"\n":"")+"- Path "+path+" from direction.html applies to this build.";}}
+  out.value=HEAD+(body||"(none)")+TAIL;}}
+ document.querySelectorAll('.sg-pick,#path-select').forEach(function(el){{el.addEventListener('change',fmt);}});
+ document.getElementById('prompt-copy').addEventListener('click',function(){{
+   if(!out.value||out.value.indexOf('Check the boxes')===0){{msg.textContent='Nothing selected yet.';return;}}
+   out.select();
+   try{{document.execCommand('copy');msg.textContent='Copied.';}}catch(e){{msg.textContent='Select the text and copy manually.';}}}});
+ try{{var saved=JSON.parse(localStorage.getItem('sk_sugs')||'[]');
+   document.querySelectorAll('.sg-pick').forEach(function(c){{if(saved.indexOf(c.value)>-1)c.checked=true;}});fmt();
+   document.querySelectorAll('.sg-pick').forEach(function(c){{c.addEventListener('change',function(){{
+     var sel=[].slice.call(document.querySelectorAll('.sg-pick:checked')).map(function(x){{return x.value;}});
+     try{{localStorage.setItem('sk_sugs',JSON.stringify(sel));}}catch(e){{}}}});}});
+ }}catch(e){{}}
+}})();
+</script>
+</section>"""
 
 # ---------- VERIFICATION ----------
 def verification_body():
@@ -666,7 +687,7 @@ def measurement_body():
 <tr><td>Nav labels (SG-27)</td><td><span class="okpill">shipped</span></td><td>Single navigation group on every page</td></tr>
 <tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td><a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
 <tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record date here</td></tr>
-<tr><td>Reader capture (SG-30)</td><td><span class="okpill">shipped (form)</span></td><td>Newsletter form on front page + guides; double opt-in via provider</td></tr>
+<tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see FLG-013</td></tr>
 <tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td><a href="search.html">search.html</a> (client-side, no server)</td></tr>
 </tbody></table></div>
 {capture_block()}
@@ -674,63 +695,70 @@ def measurement_body():
 
 # ---------- ABOUT ----------
 def about_body():
+    c = counts()
     return f"""
 <section class="hero"><span class="kicker">About · Authorship &amp; method</span>
-<h1>About ShopNow Kitchen: a publication, not a dashboard</h1>
-<p class="lede">We compare countertop appliances on checkable specs and human buyer questions. Here is who writes, how we check, and what “published” means here.</p>
+<h1>About ShopNow Kitchen: a publication, with its workings visible</h1>
+<p class="lede">We compare countertop appliances on checkable specs and human buyer questions. Here is who writes, how we check, what “published” means here, and what we refuse to claim.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
 <h2>Authorship</h2>
-<p>Every page is bylined <strong>the ShopNow Kitchen Desk</strong> (editorial team). We do not invent personal credentials, test kitchens, or hands-on reviews. If we ever test a product, the page will say what was tested, when, and what was observed — with photos. Until then, we compare manufacturer/Amazon-listed specs and say so.</p>
+<p>Every page is bylined <strong>the ShopNow Kitchen Desk</strong> — an editorial desk, not a person. We do not invent a name, credentials, a test kitchen, or hands-on experience. If we ever test something, the page will say what was tested, when, and what was observed. Until then we compare manufacturer and listing specs and say exactly that.</p>
+<div class="notice"><strong>This is a decision, not a gap.</strong> A named expert byline would help readers and search engines judge us — but only if it is real. See <a href="questions.html">Q-06</a> and <a href="direction.html">SG-09</a>: supply one human name and bio and the site will use it; otherwise the desk byline stays and so does the “no testing claimed” rule.</div>
 <h2>Methodology</h2>
 <ol>
-<li>Start from the submitted link; record intent and observation in separate fields (never merged).</li>
-<li>Confirm specs on Amazon’s own listing pages; link every table row to its source.</li>
-<li>Leave unverified cells blank and flag them (see <a href="flagged-for-review.html">Flagged for Review</a>).</li>
-<li>Run the compliance gate (<code>scripts/check_site.py</code>) before publishing.</li>
-<li>Measure with the five defined events; fill the ledger only from first-party reports.</li>
+<li>Start from the submitted link; record intent and observation in <strong>separate fields, never merged</strong>.</li>
+<li>Read the official source for every claim: the listing for a spec, the regulator for a safety figure, the programme agreement for a rule.</li>
+<li>If a value cannot be confirmed, the cell stays blank and the item is flagged. Nothing is inferred, averaged or “best guessed”.</li>
+<li>Every page passes a compliance gate before publish (<code>scripts/check_site.py</code>): disclosure present, paid links qualified, no static prices, no broken internal links, sitemap coverage complete.</li>
+<li>Measure with the five defined events; fill the campaign ledger only from first-party reports, with a date attached.</li>
 </ol>
 <h2>Brand, seasons, and clusters</h2>
 <ul>
-<li><strong>Brand:</strong> ShopNow Kitchen — warm paper, ink text, terracotta + green. No Amazon logos or product images.</li>
-<li><strong>Season:</strong> “Countertop Cooking” (everyday meals). Seasonal angles (grilling, holiday baking) appear as guides, not banners.</li>
-<li><strong>Clusters:</strong> <em>Air Fryers</em> (3 products, 3 guides) and <em>Meat Thermometers</em> (2 products, 1 guide). Every guide links to its category.</li>
+<li><strong>Brand:</strong> ShopNow Kitchen — warm paper, ink text, terracotta and sage. Typography and whitespace, not badges and countdown timers.</li>
+<li><strong>Imagery:</strong> commissioned editorial illustrations, always captioned as illustrations. No Amazon product images and no logos — the IP licence restricts them, and a scraped photo would promise a product we have not seen.</li>
+<li><strong>Seasons:</strong> currently “Holiday cooking” alongside everyday cooking; grilling and holiday-baking angles run as guides, not as banners that expire on the server.</li>
+<li><strong>Clusters (computed from data, so this cannot drift):</strong> {esc(cluster_sentence())}.</li>
 </ul>
 <h2>Publishing cadence</h2>
-<p>New guides are added to the existing sitemap and RSS feed in the same build. The next topic is chosen from measured Search Console queries — not instinct — once Search Console data exists (see <a href="measurement.html">Measurement</a>).</p>
+<p>A new guide is one JSON file in <code>data/guides/</code>, then <code>npm run build</code>. Sitemap, RSS, the search index, this page’s cluster counts and every nav rail pick it up from the same source — no hand-edited lists. The next topic should come from measured queries rather than instinct, which is why <a href="measurement.html">measurement</a> is wired even while it records nothing yet.</p>
+<h2>Corrections</h2>
+<p>If a row on this site is wrong, that is a defect, not a difference of opinion. Flagged items are published on <a href="flagged-for-review.html">Flagged for review</a> with the source link and the action that would settle them; we would rather show an open question than fill it with a guess.</p>
 {capture_block()}
 """
 
 # ---------- EXEC SUMMARY ----------
 def exec_body():
+    c = counts()
     return f"""
-<section class="hero"><span class="kicker">Executive summary</span>
-<h1>Executive summary: five products, one shop, honest numbers</h1>
-<p class="lede">ShopNow Kitchen is a publication front page for five Amazon products (3 air fryers, 2 meat thermometers) with tracking ID {TAG}. It leads with products, answers buyer questions, and keeps verification one click away — not in the way.</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
+<section class="hero"><span class="kicker">Executive summary · for the owner, not for readers</span>
+<h1>Executive summary: {c['products']} products, {c['guides']} guides, nothing invented</h1>
+<p class="lede">ShopNow Kitchen is a publication front page over an evidence ledger. It leads with products and buyer questions; verification sits one click away instead of in the way. Every number below is computed from the repo, not typed by hand, so this page cannot go stale without the data going stale first.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · full text in <code>EXECUTIVE-SUMMARY.md</code></p></section>
+
 <h2>What is live</h2>
-<ul>
-<li><strong>Shop:</strong> front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (rel=sponsored) and disclosure above the fold.</li>
-<li><strong>Guides:</strong> 4 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions).</li>
-<li><strong>Trust:</strong> verification register (intent vs. observed kept separate), 15-source register, 8 flagged items, compliance gate.</li>
-<li><strong>Measurement:</strong> 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.</li>
-</ul>
-<h2>Key facts (all sourced)</h2>
-<div class="tablewrap"><table><thead><tr><th>Fact</th><th>Value</th><th>Source</th></tr></thead><tbody>
-<tr><td>Submitted links</td><td>5 link.amazon short links (9-char tokens)</td><td class="src"><a href="verification.html">Verification §1</a></td></tr>
-<tr><td>Observed ASINs</td><td>B0CDY277D3 · B09B7SB46R · B08DKYBTPH · B0DHZTCNR5 · B0DZFD6R9Z</td><td class="src"><a href="verification.html">Verification §1–2</a></td></tr>
-<tr><td>Intended ASINs</td><td>Blank (9-char tokens are not ASINs; nothing public binds them)</td><td class="src">S05 (ASIN = 10 chars)</td></tr>
-<tr><td>Prices / ratings</td><td>Blank by policy + volatility</td><td class="src">S02 (FLG-006)</td></tr>
-<tr><td>Tracking ID</td><td>{TAG} (as supplied; unconfirmed — FLG-001)</td><td class="src"><a href="flagged-for-review.html">FLG-001</a></td></tr>
-<tr><td>Site URL</td><td>{SITE}</td><td class="src">S08</td></tr>
+<div class="tablewrap"><table><thead><tr><th>Layer</th><th>State</th><th>Where</th></tr></thead><tbody>
+<tr><td>Shop</td><td>{c['products']} product pages, 2 category pages, 1 shop index, all with sponsored buttons and disclosure above the fold</td><td><a href="products/index.html">The shop</a></td></tr>
+<tr><td>Editorial</td><td>{c['guides']} question-shaped guides, newest first, each filtered to its own cluster</td><td><a href="guides/index.html">Guides index</a></td></tr>
+<tr><td>Trust</td><td>{c['sources']} sources, {c['flags']} flagged items, intended vs observed kept in separate fields</td><td><a href="verification.html">Verification</a></td></tr>
+<tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open, {c['done_sug']} done this session) + {c['questions']} questions, {c['blocking']} blocking</td><td><a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
+<tr><td>Measurement</td><td>5 events defined, beacon shipped, endpoint <strong>not deployed</strong>, ledger empty by design</td><td><a href="measurement.html">Measurement</a></td></tr>
+<tr><td>Findability</td><td>1 sitemap ({c['guides'] + c['products'] + 12} URLs), RSS, canonicals, FAQ + Article schema, robots scoping internals out</td><td><code>sitemap.xml</code></td></tr>
 </tbody></table></div>
-<h2>What happens next (needs your review)</h2>
+
+<h2>The five links, in one table</h2>
+<div class="tablewrap"><table><thead><tr><th>Supplied</th><th>Token length</th><th>Valid ASIN?</th><th>Observed destination</th><th>Intended ASIN</th></tr></thead><tbody>
+{"".join(f"<tr><td><code>{esc(p['submitted_token'])}</code></td><td>{p['token_length']}</td><td>No — 10 characters required (S05)</td><td><strong>{esc(p['observed_asin'])}</strong></td><td>{blank(p['intended_asin'])}</td></tr>" for p in PRODUCTS)}
+</tbody></table></div>
+<p class="src">Re-observed independently on {PROBES['probe_date']} by {esc(PROBES['probe_session'])}: 5/5 destinations matched the earlier observation, and every final URL carried <code>lv=shuf</code> + <code>plpRedirect=mhFallback</code> — a fallback route, so “observed” is not “intended” (FLG-009). Log: <a href="verification.html">Verification §4</a>.</p>
+
+<h2>What has to happen before any of this earns anything</h2>
 <ol>
-<li>Confirm tracking ID + run one-link Associates tests (FLG-001, FLG-002).</li>
-<li>Re-observe redirects + resolve FLG-004/FLG-005 spec conflicts.</li>
-<li>Deploy analytics endpoint; submit sitemap to Search Console.</li>
-<li>Pick a path on the <a href="direction.html">Direction</a> page before the next build.</li>
+<li>Confirm the tracking ID and one test link per product in Associates Central (FLG-001, FLG-002, Q-01, Q-16).</li>
+<li>Confirm intent for the five products with whoever supplied them (Q-02) — do not infer it from a redirect.</li>
+<li>Deploy the metrics endpoint, then pick topics from Search Console queries rather than taste (SG-07, SG-08).</li>
+<li>Settle the spec conflicts on the manufacturer page, not on Amazon marketing copy (FLG-005, FLG-010, Q-05).</li>
 </ol>
-<div class="notice"><strong>No revenue forecast, no conversion score.</strong> The ledger is empty until first-party reports arrive. That is the honest starting point.</div>
+<div class="notice"><strong>No revenue forecast, no conversion score, no traffic projection.</strong> There is no first-party data yet, so any number here would be fiction. The ledger stays empty until authorised reports arrive — that is the honest starting point, and it is also what makes the first real number meaningful.</div>
 {capture_block()}
 """
 
@@ -767,28 +795,183 @@ def notfound_body():
 <p class="lede">Try the <a href="index.html">front page</a> or <a href="search.html">search</a>.</p></section>
 """
 
-# ---------- BUILD ----------
-def main():
-    pages = {}  # path -> html
-    pages["index.html"] = page_html("index.html", "ShopNow Kitchen — Basket or oven-style? Compare before you buy.", "Five kitchen appliances compared on checkable specs: capacity, size, cleanup. No hype, no invented prices.", home_body())
-    pages["air-fryers.html"] = page_html("air-fryers.html", "Air Fryers — Compare basket vs. oven-style", "Compare three air fryers: Chefman 6 Qt dual basket, Chefman 8 Qt, Emeril 26QT French Door. Capacity, size, cleanup.", category_body("Air Fryers", "Air Fryers: basket or oven-style?", "Three air fryers, two shapes. Compare capacity, footprint, and cleanup on the specs you can check.", '<li><a href="guides/basket-or-oven-style-air-fryer.html">Basket or oven-style: what should you compare?</a></li><li><a href="guides/air-fryer-capacity-checklist.html">Capacity checklist</a></li><li><a href="guides/cleanup-and-counter-space.html">Cleanup &amp; counter-space trade-offs</a></li>'))
-    pages["thermometers.html"] = page_html("thermometers.html", "Meat Thermometers — Instant-read vs. wireless", "Compare ThermoMaven 1 Sec instant-read and CHEF iQ Sense Gen3 wireless (3 probes, WiFi). Accuracy, range, needs.", category_body("Meat Thermometers", "Meat Thermometers: probe or wireless?", "One instant-read probe and one 3-probe wireless system. Compare accuracy, range, and what each needs to work.", '<li><a href="guides/multi-function-appliance-questions.html">Questions before buying a multi-function appliance</a></li>'))
-    for p in PRODUCTS:
-        pages[p["page"]] = page_html(p["page"], f"{p['short_label']} — specs & comparison | ShopNow Kitchen", f"{p['title']}. Specs from Amazon's listing, sources linked. Sponsored link to Amazon.", product_body(p))
+# ---------- INDEX & REGISTER PAGES ----------
+def guides_index_body():
+    pfx = "../"
+    by_cat = {}
     for g in GUIDES:
-        pages[g["path"]] = page_html(g["path"], g["title"] + " | ShopNow Kitchen", g["desc"], guide_body(g), page_type="guide", extra_head=faq_jsonld(g))
-    pages["direction.html"] = page_html("direction.html", "Direction — Suggestions, questions, and the path chooser", "Review suggestions, open questions, and pick the next build path. Nothing is implemented until you choose.", direction_body())
-    pages["verification.html"] = page_html("verification.html", "Verification — Sources, intent record, and specs", "Every table row has a source link or is blank and flagged. Product-intent record with intended vs. observed kept separate.", verification_body())
-    pages["flagged-for-review.html"] = page_html("flagged-for-review.html", "Flagged for Review — What we could not verify", "Eight flagged items that do not block the site. Review them after the site is live and request changes.", flagged_body())
-    pages["disclosure.html"] = page_html("disclosure.html", "Disclosure — How this site earns money", "As an Amazon Associate I earn from qualifying purchases. Sponsored links, no displayed prices, privacy.", disclosure_body())
-    pages["measurement.html"] = page_html("measurement.html", "Measurement — Five events and an empty ledger", "Privacy-preserving click counter, self-hosted endpoint, five defined events, empty campaign ledger.", measurement_body())
-    pages["about.html"] = page_html("about.html", "About — Authorship, method, seasons and clusters", "Who writes ShopNow Kitchen, how we check, and what published means here.", about_body())
-    pages["executive-summary.html"] = page_html("executive-summary.html", "Executive summary — Five products, one shop", "What is live, key sourced facts, and what happens next.", exec_body())
-    pages["search.html"] = page_html("search.html", "Search — ShopNow Kitchen", "Client-side search across products and guides.", search_body())
-    pages["404.html"] = page_html("404.html", "Not found | ShopNow Kitchen", "That page is not on the counter.", notfound_body())
+        by_cat.setdefault(g.get("category", "Other"), []).append(g)
+    secs = ""
+    for cat, href in CATEGORIES:
+        gs = by_cat.pop(cat, [])
+        if not gs:
+            continue
+        secs += (f'<h2 id="{esc(cat.lower().replace(" ", "-"))}">{esc(cat)}</h2>'
+                 f'<p class="seclink"><a href="{pfx}{href}">Browse all {esc(cat)} →</a></p>'
+                 f'<div class="grid">' + "".join(guide_card(g, depth=1) for g in gs) + "</div>")
+    for cat, gs in by_cat.items():
+        secs += f'<h2>{esc(cat)}</h2><div class="grid">' + "".join(guide_card(g, depth=1) for g in gs) + "</div>"
+    return f"""
+<section class="hero"><span class="kicker">Guides · {counts()['guides']} published</span>
+<h1>Guides: questions worth asking before you spend</h1>
+<p class="lede">Every guide here is question-shaped on purpose. Nobody shops at 9pm for “brand X review”; they search the thing they are actually unsure about — does a dual basket beat one big one, how many quarts feed a family of four, whether a probe can live in the oven.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · <a href="{pfx}feed.xml">RSS</a> · <a href="{pfx}sitemap.xml">Sitemap</a></p></section>
+<div class="notice"><strong>What these pages are not:</strong> not reviews, not “we tested it”, not rankings. They are structured comparisons of published specifications plus the food-safety figures regulators actually publish, with the source of every number one click away.</div>
+{secs}
+<h2>Cadence</h2>
+<p>One JSON file in <code>data/guides/</code> plus <code>python3 scripts/new_guide.py &amp;&amp; python3 scripts/build_site.py</code> publishes a guide: this index, the front-page rail, the sitemap, the RSS feed, the search index and the About page’s cluster counts all read the same source — no hand-maintained list anywhere.</p>
+<p class="seclink"><a class="btn btn-quiet" href="{pfx}direction.html">Suggest the next topic →</a> <a class="btn btn-quiet" href="{pfx}questions.html">Questions we still need answered →</a></p>
+{capture_block(depth=1)}
+"""
 
-    # ItemList JSON-LD for home
-    items = [{"@type": "ListItem", "position": i + 1, "url": SITE + p["page"], "name": p["short_label"]} for i, p in enumerate(PRODUCTS)]
+def products_index_body():
+    pfx = "../"
+    rows = ""
+    for x in PRODUCTS:
+        rows += (f'<tr><td><a href="{pfx}{esc(x["page"])}">{esc(x["short_label"])}</a><br><span class="meta">{esc(x["brand"])}</span></td>'
+                 f'<td>{esc(x["category"])}</td><td>{blank(x["capacity"] if x["capacity"] != "—" else "")}</td>'
+                 f'<td>{blank(x["dimensions"])}</td><td>{blank(x["weight"])}</td><td>{blank(x["model"])}</td>'
+                 f'<td>{blank(x["temperature"])}</td><td>{blank(x["power"])}</td>'
+                 f'<td>{blank(x["price"])}</td><td>{blank(x["rating"])}</td>'
+                 f'<td class="src">{source_link(x["source_url"], "Listing")} <span class="meta">{esc(x["source_date"])}</span></td></tr>')
+    cards = "".join(product_card(x, depth=1) for x in PRODUCTS)
+    return f"""
+<section class="hero"><span class="kicker">The shop · {counts()['products']} products</span>
+<h1>Everything in the shop, in one table</h1>
+<p class="lede">Three air fryers, two thermometers. This is the honest version of a shop window: what the listing states, where we read it, and which cells we will not fill in for you.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Specs read {TODAY} · <a href="{pfx}verification.html">Verification</a></p></section>
+<div class="tablewrap"><table><thead><tr><th>Product</th><th>Category</th><th>Capacity</th><th>Footprint</th><th>Weight</th><th>Model</th><th>Temperature</th><th>Power</th><th>Price</th><th>Rating</th><th>Source</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="notice"><strong>The price and rating columns are blank by policy, not by accident.</strong> Amazon’s Program Policies bar static price display, and ratings move daily — either number would be stale the moment it was written. The button on each card takes you to the listing, where the live figure is. See <a href="{pfx}flagged-for-review.html">FLG-006</a>.</div>
+<h2>Cards</h2>
+<div class="grid">{cards}</div>
+<h2>How these five got here</h2>
+<p>Each product entered the shop as a <code>link.amazon</code> short link rather than a listing URL. We recorded the token we were given, resolved it, and stored what came back in a separate field — because the response was a fallback route, not a canonical match. The raw redirects, the date, and what that does and does not prove are in <a href="{pfx}verification.html#probes">§4 of the verification register</a> and in <code>data/probes.json</code>.</p>
+<p class="seclink"><a class="btn btn-quiet" href="{pfx}executive-summary.html">Read the executive summary →</a></p>
+{capture_block(depth=1)}
+"""
+
+def questions_body():
+    c = counts()
+    rows = ""
+    for q in QUESTIONS:
+        bl = q.get("blocking", "no")
+        kind = "act" if bl.startswith("yes") else "note"
+        rows += (f'<tr><td><strong>{esc(q["id"])}</strong><br>{pill("blocking" if bl.startswith("yes") else "non-blocking", kind)}</td>'
+                 f'<td><strong>{esc(q["question"])}</strong><p class="meta">Gates: {esc(q["decision_it_gates"])}</p></td>'
+                 f'<td>{esc(q["have"])}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
+                 f'<td>{esc(q["owner"])}</td><td class="answercell">{blank(q["answer"])}</td></tr>')
+    pack = "\n\n".join(f'{q["id"]}. {q["question"]}\nWhat we need: {q["missing"]}\nHow to get it: {q["discovery"]}'
+                        for q in QUESTIONS if q.get("blocking", "no").startswith("yes"))
+    return f"""
+<section class="hero"><span class="kicker">Open questions · {c['questions']} rows, {c['blocking']} blocking</span>
+<h1>What has to be answered before the next decision is reasonable</h1>
+<p class="lede">Not a to-do list — a register. Each row states what we already know and can cite, what is genuinely missing, which decision that gap blocks, and the concrete action that produces the answer. A blank answer cell means nobody has it yet, not that we skipped it.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · evidence in <a href="verification.html">the source register</a>, consequences in <a href="flagged-for-review.html">Flagged for review</a></p></section>
+<div class="notice"><strong>Read it this way:</strong> the five blocking rows are worth more than any content decision. Three of them (Q-01, Q-02, Q-04, Q-16) can only be answered inside an enrolled Amazon Associates account, which this environment cannot reach — that is a fact about the tools, not an excuse. When you have each answer, paste it into <code>answer</code> in <code>data/questions.json</code> and the table updates on the next build.</div>
+<div class="tablewrap"><table class="qtable"><thead><tr><th>ID</th><th>Question</th><th>What we have (and its source)</th><th>What we do not have</th><th>How to discover it</th><th>Who can answer</th><th>Answer</th></tr></thead><tbody>{rows}</tbody></table></div>
+<h2>Copy-ready question pack</h2>
+<p>The blocking rows, as a message you can send to whoever owns the account.</p>
+<pre><code>{esc(pack)}</code></pre>
+<h2>Where a suggestion becomes a question</h2>
+<ul>
+<li><a href="direction.html">SG-01 / SG-08</a> depend on Q-01, Q-16 and the one-link test — money and measurement both wait on account access.</li>
+<li><a href="direction.html">SG-09</a> is Q-06. Authorship is the only trust improvement nobody else can supply.</li>
+<li><a href="direction.html">SG-03 / SG-10</a> depend on Q-05 and Q-07 — imagery and canonical specs.</li>
+</ul>
+{capture_block()}
+"""
+
+def probes_section():
+    rows = ""
+    for pr in PROBES["probes"]:
+        agree = "matches 2026-11-17" if pr.get("agrees_with_prior_session") else "DIVERGES from 2026-11-17"
+        flags = " ".join(f"<code>{esc(f)}</code>" for f in pr.get("observed_flags", []))
+        note = f'<p class="meta">{esc(pr["note"])}</p>' if pr.get("note") else ""
+        rows += (f'<tr><td><code>{esc(pr["submitted_token"])}</code><br><span class="meta">{pr["token_chars"]} chars · lowercase: {esc(pr["token_lowercase_letters"])}</span></td>'
+                 f'<td>{esc(pr["http_result"])}</td><td><a href="{esc(pr["final_url"].split("?")[0])}" rel="nofollow noopener" target="_blank">{esc(pr["final_asin"])}</a></td>'
+                 f'<td class="src">{flags}</td><td>{esc(agree)}</td><td>{esc(pr["breadcrumb_top"])}{note}</td></tr>')
+    interp = PROBES["interpretation"]
+    return f"""
+<h2 id="probes">4 · Redirect re-observation log</h2>
+<p>Independent re-check of all five supplied links, run by {esc(PROBES['probe_session'])} on {esc(PROBES['probe_date'])} — which closes FLG-008, the prior session’s note that nobody in this repo had observed the redirects directly. Method: {esc(PROBES['probe_method'])}</p>
+<div class="tablewrap"><table><thead><tr><th>Supplied token</th><th>Result</th><th>Final listing</th><th>Query flags on the response</th><th>vs prior session</th><th>Browse path / note</th></tr></thead><tbody>{rows}</tbody></table></div>
+<h3>What this proves</h3>
+<p>{esc(interp['reproduced'])}</p>
+<h3>What it does not prove</h3>
+<p>{esc(interp['what_reproduction_does_not_prove'])}</p>
+<div class="notice"><strong>Operational consequence.</strong> {esc(interp['operational_consequence'])}</div>
+"""
+
+# ---------- BUILD ----------
+def rfc822(d):
+    return datetime.datetime.strptime(d, "%Y-%m-%d").strftime("%a, %d %b %Y 00:00:00 +0000")
+
+def main():
+    pages = {}
+    P = page_html
+    pages["index.html"] = P("index.html", "ShopNow Kitchen — Basket or oven-style? Compare before you buy.",
+        "Five kitchen appliances compared on the specs you can check: capacity, footprint, cleanup, accuracy. Sources on every row, no invented prices.",
+        home_body(), image=HERO_IMG[0])
+    pages["products/index.html"] = P("products/index.html", "The shop — all five products, with sources | ShopNow Kitchen",
+        "Every product in the shop in one table: capacity, footprint, weight, model, temperature, power, and the listing each value came from.",
+        products_index_body(), image=HERO_IMG[0])
+    pages["guides/index.html"] = P("guides/index.html", "Guides — question-shaped buying guides | ShopNow Kitchen",
+        f"{counts()['guides']} buyer guides on air fryers and meat thermometers: capacity, cleanup, counter space, probes, and food-safety targets.",
+        guides_index_body(), image=HERO_IMG[0])
+    pages["questions.html"] = P("questions.html", "Open questions — what must be answered before deciding | ShopNow Kitchen",
+        f"{counts()['questions']} questions with what we have, what is missing, why it blocks a decision, and how to find the answer.",
+        questions_body())
+    guide_li = lambda cat: "".join(
+        f'<li><a href="{g["path"]}">{esc(g["title"])}</a> <span class="meta">({read_min(g)} min read)</span></li>'
+        for g in guides_for(cat)) or '<li>Guide incoming — see <a href="guides/index.html">all guides</a>.</li>'
+    cat_copy = {
+        "Air Fryers": ("Air Fryers — Compare basket vs. oven-style | ShopNow Kitchen",
+            "Compare three air fryers on listed specs: Chefman 6 Qt dual basket, Chefman 8 Qt TurboFry, Emeril 26QT French Door. Capacity, footprint, cleanup, sources on every row.",
+            "Air Fryers: basket or oven-style?",
+            "Three air fryers, two shapes. Compare capacity, footprint and cleanup on the specs you can check — then read the guides written for exactly those questions."),
+        "Meat Thermometers": ("Meat Thermometers — Instant-read vs. wireless | ShopNow Kitchen",
+            "Compare ThermoMaven 1 Sec instant-read and CHEF iQ Sense Gen3 wireless on listed specs, plus the USDA temperature targets that decide which one you need.",
+            "Meat thermometers: probe in your hand, or left in the food?",
+            "One instant-read and one three-probe wireless system. The USDA food-safety targets are the same for both — what differs is who takes the reading, and when."),
+    }
+    for name, href in CATEGORIES:
+        t, d, h1, lede = cat_copy[name]
+        pages[href] = P(href, t, d,
+            category_body(name, h1, lede, guide_li(name)),
+            image=CAT_IMG[name][0])
+    for x in PRODUCTS:
+        pages[x["page"]] = P(x["page"], f"{x['short_label']} — specs & comparison | ShopNow Kitchen",
+            f"{x['title']} Specs read from Amazon's listing, source linked. Price and rating intentionally not displayed.",
+            product_body(x), image=CAT_IMG.get(x["category"], HERO_IMG)[0])
+    for g in GUIDES:
+        pages[g["path"]] = P(g["path"], g["title"] + " | ShopNow Kitchen", g["desc"], guide_body(g),
+                             page_type="guide", extra_head=faq_jsonld(g), image=g.get("image") or "")
+    pages["direction.html"] = P("direction.html", "Suggestions & paths — the decision board | ShopNow Kitchen",
+        f"{len(SUGGESTIONS)} reviewed suggestions with evidence, effort, risk and how to measure each one; tick the ones you accept and copy the next build prompt.",
+        direction_body())
+    pages["verification.html"] = P("verification.html", "Verification — source register, intent record, redirect log | ShopNow Kitchen",
+        "Line-by-line verification: product-intent record with intended and observed kept separate, spec sources, the source register, and the redirect re-observation log.",
+        verification_body() + probes_section())
+    pages["flagged-for-review.html"] = P("flagged-for-review.html", "Flagged for review — what we could not verify | ShopNow Kitchen",
+        f"{counts()['flags']} flagged items with source links and the action that resolves each. Published, not hidden; none of it blocks the site.",
+        flagged_body())
+    pages["disclosure.html"] = P("disclosure.html", "Disclosure — how this site earns money | ShopNow Kitchen",
+        "As an Amazon Associate I earn from qualifying purchases. Sponsored links, no displayed prices, and what we collect about you (locally only).",
+        disclosure_body())
+    pages["measurement.html"] = P("measurement.html", "Measurement — five events and an empty ledger | ShopNow Kitchen",
+        "Privacy-preserving click counter, self-hosted endpoint code, five defined events, and a campaign ledger that stays empty until first-party reports arrive.",
+        measurement_body())
+    pages["about.html"] = P("about.html", "About — authorship, method, brand and cadence | ShopNow Kitchen",
+        "Who writes ShopNow Kitchen (a desk, not a person), how every claim is sourced, what we refuse to claim, and how a new guide gets published.",
+        about_body())
+    pages["executive-summary.html"] = P("executive-summary.html", "Executive summary — five products, one shop, honest numbers | ShopNow Kitchen",
+        "What is live, what the link investigation found, what must happen before this earns anything, and what is deliberately not claimed.",
+        exec_body())
+    pages["search.html"] = P("search.html", "Search — ShopNow Kitchen", "Client-side search across products, guides and registers. Nothing leaves your browser.",
+        search_body())
+    pages["404.html"] = P("404.html", "Not found | ShopNow Kitchen", "That page is not on the counter.", notfound_body())
+
+    items = [{"@type": "ListItem", "position": n + 1, "url": SITE + x["page"], "name": x["short_label"]} for n, x in enumerate(PRODUCTS)]
     pages["index.html"] = pages["index.html"].replace("</head>", '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "ItemList", "itemListElement": items}) + "</script></head>")
 
     for path, content in pages.items():
@@ -797,45 +980,59 @@ def main():
         with open(full, "w", encoding="utf-8") as f:
             f.write(content)
 
-    # sitemap.xml
+    # sitemap: lastmod from real per-page dates, not a build stamp
+    dates = {g["path"]: g.get("updated", TODAY) for g in GUIDES}
     urls = []
     for path in sorted(pages.keys()):
         if path == "404.html":
             continue
-        urls.append(f"  <url><loc>{SITE}{path}</loc><lastmod>{TODAY}</lastmod></url>")
-    sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
-               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>\n")
+        urls.append(f"  <url><loc>{SITE}{path}</loc><lastmod>{dates.get(path, TODAY)}</lastmod></url>")
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
-        f.write(sitemap)
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>\n")
 
-    # robots.txt
+    # robots: content open, implementation internals kept out of the crawl set
     with open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8") as f:
-        f.write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
+        f.write("User-agent: *\nAllow: /\n"
+                "Disallow: /scripts/\nDisallow: /data/\nDisallow: /analytics/\n"
+                "Disallow: /archive/\nDisallow: /assets/search-index.json\n"
+                f"Sitemap: {SITE}sitemap.xml\n")
 
-    # feed.xml (RSS 2.0)
     feed_items = []
     for g in GUIDES:
-        feed_items.append(f"    <item><title>{esc(g['title'])}</title><link>{SITE}{g['path']}</link><guid>{SITE}{g['path']}</guid><description>{esc(g['desc'])}</description><pubDate>{TODAY}T00:00:00Z</pubDate></item>")
-    for p in PRODUCTS:
-        feed_items.append(f"    <item><title>{esc(p['short_label'])}</title><link>{SITE}{p['page']}</link><guid>{SITE}{p['page']}</guid><description>{esc(p['title'])}</description><pubDate>{TODAY}T00:00:00Z</pubDate></item>")
-    feed = ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>\n'
-            f"  <title>ShopNow Kitchen</title><link>{SITE}</link><description>Basket or oven-style? Compare before you buy. Capacity, size, cleanup — no hype.</description>\n"
-            + "\n".join(feed_items) + "\n</channel></rss>\n")
+        feed_items.append(f"    <item><title>{esc(g['title'])}</title><link>{SITE}{g['path']}</link><guid isPermaLink=\"true\">{SITE}{g['path']}</guid>"
+                          f"<category domain=\"{SITE}\">{esc(g.get('cluster', ''))}</category>"
+                          f"<description>{esc(g['desc'])}</description><pubDate>{rfc822(g.get('published', TODAY))}</pubDate></item>")
+    for x in PRODUCTS:
+        feed_items.append(f"    <item><title>{esc(x['short_label'])}</title><link>{SITE}{x['page']}</link><guid isPermaLink=\"true\">{SITE}{x['page']}</guid>"
+                          f"<description>{esc(x['title'])}</description><pubDate>{rfc822(TODAY)}</pubDate></item>")
     with open(os.path.join(ROOT, "feed.xml"), "w", encoding="utf-8") as f:
-        f.write(feed)
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n'
+                f"  <title>ShopNow Kitchen</title><link>{SITE}</link><atom:link href=\"{SITE}feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>"
+                "<description>Basket or oven-style? Compare before you buy. Specs, sources and the questions that decide it — no hype.</description>\n"
+                + "\n".join(feed_items) + "\n</channel></rss>\n")
 
-    # search index
     idx = []
-    for p in PRODUCTS:
-        idx.append({"title": p["short_label"], "url": p["page"], "kind": "Product · " + p["category"], "text": p["title"] + " " + p["brand"] + " " + p["model"] + " " + p["capacity"] + " " + p["observed_asin"]})
+    for x in PRODUCTS:
+        idx.append({"title": x["short_label"], "url": x["page"], "kind": "Product · " + x["category"],
+                    "text": " ".join([x["title"], x["brand"], x["model"], x["capacity"], x["observed_asin"], x["submitted_token"]])})
     for g in GUIDES:
-        idx.append({"title": g["title"], "url": g["path"], "kind": "Guide · " + g["cluster"], "text": g["desc"]})
-    for path, title in [("air-fryers.html", "Air Fryers"), ("thermometers.html", "Meat Thermometers"), ("direction.html", "Direction"), ("verification.html", "Verification"), ("measurement.html", "Measurement"), ("about.html", "About"), ("executive-summary.html", "Executive summary")]:
-        idx.append({"title": title, "url": path, "kind": "Page", "text": title + " ShopNow Kitchen"})
+        idx.append({"title": g["title"], "url": g["path"], "kind": "Guide · " + g["cluster"], "text": g["desc"] + " " + g.get("season", "")})
+    for path, title, extra in [("air-fryers.html", "Air Fryers", "basket oven-style capacity cleanup"),
+                               ("thermometers.html", "Meat Thermometers", "instant-read wireless probe USDA 165"),
+                               ("products/index.html", "The shop", "all products table specs sources"),
+                               ("guides/index.html", "All guides", "buyer questions checklists"),
+                               ("direction.html", "Suggestions & paths", "decision board next prompt"),
+                               ("questions.html", "Open questions", "missing information blocking"),
+                               ("verification.html", "Verification", "sources intent observed redirect"),
+                               ("flagged-for-review.html", "Flagged for review", "unverified items"),
+                               ("measurement.html", "Measurement", "events ledger endpoint"),
+                               ("executive-summary.html", "Executive summary", "what is live what happens next"),
+                               ("about.html", "About", "authorship method brand cadence")]:
+        idx.append({"title": title, "url": path, "kind": "Page", "text": title + " ShopNow Kitchen " + extra})
     with open(os.path.join(ROOT, "assets", "search-index.json"), "w", encoding="utf-8") as f:
-        json.dump(idx, f, indent=2)
+        json.dump(idx, f, indent=2, ensure_ascii=False)
 
-    print(f"Built {len(pages)} pages + sitemap + feed + search index.")
+    print(f"Built {len(pages)} pages, {len(urls)} sitemap URLs, {len(GUIDES)} guides, {len(idx)} search rows.")
 
 if __name__ == "__main__":
     main()

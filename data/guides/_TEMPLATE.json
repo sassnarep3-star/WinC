@@ -1,0 +1,16 @@
+{
+  "_note": "Copy this file to data/guides/<slug>.json (or run scripts/new_guide.py). The loader ignores files starting with an underscore. Rules: every numeric claim needs a source link; price/rating/stock/review-count are never published; no hands-on testing claim unless a test actually happened and is described with a date.",
+  "slug": "<slug>",
+  "path": "guides/<slug>.html",
+  "title": "Question-shaped title a buyer would actually type",
+  "desc": "Standalone summary: meta description + RSS + card text.",
+  "cluster": "Display label",
+  "category": "Air Fryers | Meat Thermometers",
+  "published": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "season": "Everyday | Holiday cooking | Grilling",
+  "image": "assets/img/hero-counter.png",
+  "image_caption": "Editorial illustration. Not a product photograph.",
+  "body": "<p>HTML. Use <div class=\"grid\">CARDS</div> where the builder should insert the matching products.</p>",
+  "faq": [["Question?", "Answer, sourced."]]
+}
