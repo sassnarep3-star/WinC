@@ -6,7 +6,7 @@
       "url": "https://affiliate-program.amazon.com/help/operating/agreement",
       "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats; §6: a §5 violation is a material breach",
       "date": "2026-11-20",
-      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. §5 disclosure wording confirmed verbatim; §1 Special Links 'tagged' format confirmed. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note was over-cautious and is retired."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. §5 disclosure wording confirmed verbatim; §1 Special Links 'tagged' format confirmed. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note was over-cautious and is retired. Re-read 2026-11-20 by session arena-9a3bb152: §5 sentence and §6 material-breach clause confirmed verbatim; page stamped 'Updated: October 15, 2025'."
     },
     {
       "id": "S02",
@@ -14,7 +14,7 @@
       "url": "https://affiliate-program.amazon.com/help/operating/policies",
       "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; Special Links must carry the Associate ID/tag (XXXXX-##); no inaccurate price/product claims; disclosure + privacy requirements",
       "date": "2026-11-20",
-      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. The price/availability rule and the Special Link tag requirement were confirmed verbatim. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note is retired."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. The price/availability rule and the Special Link tag requirement were confirmed verbatim. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note is retired. Re-read 2026-11-20 by session arena-9a3bb152: price/availability rule and XXXXX-## tag rule confirmed verbatim; page stamped 'Updated: April 14, 2026'."
     },
     {
       "id": "S03",
@@ -22,21 +22,23 @@
       "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking",
       "what": "Verbatim, fetched 2026-11-20: 'that connection should be disclosed clearly and conspicuously'; affiliate section: 'You should disclose your relationship to the retailer clearly and conspicuously on your site'; 'The closer the disclosure is to your recommendation, the better.'; 'Consumers might not understand that \"affiliate link\" means ... a \"buy now\" button would not be adequate.'; '\"Paid link\" right next to an affiliate link should be an adequate disclosure'.",
       "date": "2026-11-20",
-      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov)."
+      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov). Re-read 2026-11-20 by session arena-9a3bb152: all four quoted affiliate-section sentences confirmed verbatim."
     },
     {
       "id": "S04",
       "title": "Google — Qualify your outbound links to Google (rel=sponsored)",
       "url": "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links",
       "what": "Mark ads/paid placements with rel=sponsored; affiliate links qualify",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Re-read 2026-11-20 by session arena-9a3bb152: rel=sponsored guidance confirmed; page stamped 'Last updated 2025-12-10 UTC'."
     },
     {
       "id": "S05",
       "title": "Sell on Amazon — What is an ASIN?",
       "url": "https://sell.amazon.com/blog/what-is-an-asin",
       "what": "ASIN is a unique 10-character alphanumeric code; found after /dp/ in product URL",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Re-read 2026-11-20 by session arena-9a3bb152: 'unique 10-character alphanumeric code' and '/dp/' URL rule confirmed verbatim."
     },
     {
       "id": "S06",
@@ -66,7 +68,7 @@
       "url": "https://www.amazon.com/dp/B0CDY277D3",
       "what": "Title, brand, model RJ38-SQPF-3TDB-2W, 6 Qt, dimensions, weight, temp, UPC",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the listing <title> matched the stored product title verbatim. Detailed spec cells (model/UPC/dimensions/weight/power) remain sourced to the listing body and are re-checked at the workflow test."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the listing <title> matched the stored product title verbatim. Detailed spec cells (model/UPC/dimensions/weight/power) remain sourced to the listing body and are re-checked at the workflow test. Title + breadcrumb re-confirmed live 2026-11-20 by session arena-9a3bb152 (fallback summary page lv=shuf + plpRedirect=mhFallback); stored title matches the live <title>."
     },
     {
       "id": "S10",
@@ -74,7 +76,7 @@
       "url": "https://www.amazon.com/dp/B09B7SB46R",
       "what": "Title, brand, model 4-00675-02X-VN, 26QT, dimensions, weight, UPC; title vs bullets accessory-count conflict flagged (FLG-010)",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads '...Six Cooking Accessories Included' while the listing body bullets say 7 accessories (FLG-010). The stored title was reconciled to the live <title>."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads '...Six Cooking Accessories Included' while the listing body bullets say 7 accessories (FLG-010). The stored title was reconciled to the live <title>. Title + breadcrumb re-confirmed live 2026-11-20 by session arena-9a3bb152 (fallback summary page lv=shuf + plpRedirect=mhFallback); stored title matches the live <title>."
     },
     {
       "id": "S11",
@@ -82,7 +84,7 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Title, brand, 8 Qt, dimensions, weight, power, UPC; model/temp conflicts flagged (FLG-005)",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads 'TurboFry 4-in-1 ... 450°F Hi-Fry', which supports the 450°F mention behind FLG-005. The stored title was reconciled to the live <title>."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads 'TurboFry 4-in-1 ... 450°F Hi-Fry', which supports the 450°F mention behind FLG-005. The stored title was reconciled to the live <title>. Title + breadcrumb re-confirmed live 2026-11-20 by session arena-9a3bb152 (fallback summary page lv=shuf + plpRedirect=mhFallback); stored title matches the live <title>."
     },
     {
       "id": "S12",
@@ -90,7 +92,7 @@
       "url": "https://www.amazon.com/dp/B0DHZTCNR5",
       "what": "Title, ±0.5°F accuracy, NIST&NSF certified, auto-rotate LED, IP67 waterproof; model HT07 via Amazon.fr (FLG-004)",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms ±0.5°F, NIST&NSF Certified and IP67 Waterproof. The stored title was reconciled to the live <title>."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms ±0.5°F, NIST&NSF Certified and IP67 Waterproof. The stored title was reconciled to the live <title>. Title + breadcrumb re-confirmed live 2026-11-20 by session arena-9a3bb152 (fallback summary page lv=shuf + plpRedirect=mhFallback); stored title matches the live <title>."
     },
     {
       "id": "S13",
@@ -98,7 +100,7 @@
       "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
       "what": "Title, 3 probes + hub, WiFi, 1000°F, model CQ60-3C-Z1-E, UPC, package dims",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms 3 Ultra-Thin Probes, 1000°F Heat Safe and Gen3. The stored title was reconciled to the live <title>."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms 3 Ultra-Thin Probes, 1000°F Heat Safe and Gen3. The stored title was reconciled to the live <title>. Title + breadcrumb re-confirmed live 2026-11-20 by session arena-9a3bb152 (fallback summary page lv=shuf + plpRedirect=mhFallback); stored title matches the live <title>."
     },
     {
       "id": "S14",
@@ -119,14 +121,16 @@
       "title": "USDA FSIS — Safe Minimum Internal Temperature Chart",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
       "what": "All poultry (incl. ground poultry, giblets, stuffing) 165°F; ground meats 160°F; beef/pork/veal/lamb steaks, chops, roasts 145°F + rest ≥3 min; fresh/ham uncooked 145°F + rest. Used as the only numeric food-safety claims in the two new guides.",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Re-read 2026-11-20 by session arena-9a3bb152: poultry 165°F, ground meats 160°F, steaks/chops/roasts 145°F + 3-min rest, uncooked ham 145°F + rest confirmed verbatim; page stamped 'Last Updated: Apr 14, 2025'."
     },
     {
       "id": "S17",
       "title": "USDA FSIS — Food Thermometers",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
       "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F.",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Re-read 2026-11-20 by session arena-9a3bb152."
     },
     {
       "id": "S18",
@@ -191,6 +195,14 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, LED Shake Reminder, Programmable'; Product Dimensions 12.75\"D x 13.5\"W x 10\"H; Capacity 8 quarts; size selector 6/8/9 quarts; bullet 'presets ... a temperature range from 200-400°F'; bullet 'cETL approved ... 1000 Watts/120 Volts – RJ38-SQSS-8T'; page states 'There is a newer model of this item'.",
       "date": "2026-11-20"
+    },
+    {
+      "id": "S27",
+      "title": "Fourth live resolution of the five supplied link.amazon tokens (session arena-9a3bb152)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "Fourth observation, 2026-11-20: B0f3GKalj → /dp/B0DZFD6R9Z (matches all prior observations, same lv=shuf + plpRedirect=mhFallback flags); B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. 1/5 matched. Divergence published as FLG-026; no claim that any link is invalid (FLG-003).",
+      "date": "2026-11-20",
+      "access": "Fetched 2026-11-20 through the same reader as the earlier observations. Per-request behavior differs from the first three runs; reader-side degradation and a change in short-link behavior cannot be separated from this environment, hence FLG-026 with a browser re-check action."
     }
   ]
 }

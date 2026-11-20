@@ -9,7 +9,7 @@ It leads with products, answers buyer questions, and keeps verification one clic
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
 - **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
+- **Trust:** verification register (intent vs. observed kept separate), 27-source register, 26 flagged items, redirect re-observation log (four observations), compliance gate (`scripts/check_site.py`).
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 
 ## Key facts (all sourced)
@@ -19,7 +19,7 @@ It leads with products, answers buyer questions, and keeps verification one clic
 | Submitted links | 5 link.amazon short links (9-char tokens) | Verification §1 |
 | Observed ASINs | B0CDY277D3 · B09B7SB46R · B08DKYBTPH · B0DHZTCNR5 · B0DZFD6R9Z | Verification §1–2, §4 |
 | Intended ASINs | Blank (9-char tokens are not ASINs) | S05 (ASIN = 10 chars) |
-| Redirect targets, re-observed 2026-11-20 | 5/5 identical to 2026-11-17; every response carried `lv=shuf` + `plpRedirect=mhFallback` | S18, `data/probes.json` |
+| Redirect targets, re-observed 2026-11-20 | First three observations 5/5 identical (2026-11-17, twice 2026-11-20); a fourth run matched 1/5 — four tokens landed on the Amazon homepage (FLG-026, cause unresolved, links not claimed invalid per FLG-003) | S18, S27, `data/probes.json` |
 | Food-safety figures in the two new guides | Poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest | S16, S17 (USDA FSIS) |
 | Prices / ratings | Blank by policy + volatility | S02 (FLG-006) |
 | Tracking ID | shopnow047c-20 (as supplied; unconfirmed — FLG-001) | Flagged for Review |
@@ -202,3 +202,53 @@ sitemap URLs, no violations.**
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
+
+# Fourth verification pass & integration — 2026-11-20 (session `arena-9a3bb152`)
+
+## What was re-read line by line (official sources, fetched live 2026-11-20)
+
+| Ref | Source | Result |
+|-----|--------|--------|
+| S01 | Associates Operating Agreement | §5 sentence ("As an Amazon Associate I earn from qualifying purchases.") and §6 material-breach clause confirmed verbatim; stamped "Updated: October 15, 2025". |
+| S02 | Associates Program Policies | Price/availability rule and the XXXXX-## tag rule confirmed verbatim; stamped "Updated: April 14, 2026". |
+| S03 | FTC Endorsement Guides FAQ | All four quoted affiliate sentences confirmed verbatim ("clearly and conspicuously", "The closer the disclosure is to your recommendation, the better.", "buy now" inadequate, "Paid link" adequate). |
+| S04 | Google — qualify outbound links | `rel="sponsored"` guidance confirmed; stamped "Last updated 2025-12-10 UTC". |
+| S05 | Sell on Amazon — what is an ASIN | "unique 10-character alphanumeric code" and the `/dp/` URL rule confirmed verbatim. |
+| S16/S17 | USDA FSIS | Temperature chart values confirmed verbatim (poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest; uncooked ham 145°F + rest). |
+| S09–S13 | The five observed listings | 5/5 stored titles equal the live listing `<title>` (minus Amazon's prefix/suffix); category breadcrumbs confirm 3 air fryers + 2 meat thermometers. |
+
+## What was observed (fourth probe run)
+
+All five supplied `link.amazon` tokens were re-resolved through the same reader. **1 of 5 matched
+the recorded mapping** (B0f3GKalj → B0DZFD6R9Z, same `lv=shuf` + `plpRedirect=mhFallback` flags);
+the other four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon homepage.
+Cause unresolved — reader-side degradation and short-link behavior change cannot be separated
+from this environment. Published as **FLG-026** with the action (browser re-check + enrolled
+Associates one-link test, FLG-002). No link is claimed invalid (FLG-003); `observed_*` fields
+still rest on the three earlier 5/5-matching observations (S14, S18, S22); `intended_*` stays blank.
+
+## Register defects found and repaired (not left silently wrong)
+
+1. **FLG-025 carried a duplicate of FLG-015** after an earlier conflict resolution, instead of the
+   title-drift flag `COORDINATION.md` documents. Restored to the title-drift record (status
+   `resolved 2026-11-20`, sources S09–S13); the duplicate content is dropped.
+2. **Executive-summary table cited the wrong flag ids** after the earlier renumbering
+   (wattage cited FLG-019 → actually FLG-022; contradictions cited FLG-015/FLG-017 → actually
+   FLG-020/FLG-018; name-string cited FLG-016 → actually FLG-019; buyer facts cited
+   FLG-020/FLG-021 → actually FLG-023/FLG-024). All references corrected in
+   `scripts/build_site.py` and rebuilt pages.
+3. **Stale "5/5 identical every time" claim** across the front-of-book copy: rewritten to state
+   three matching observations plus the divergent fourth (FLG-026).
+
+## Reader-path tone audit
+
+Front page, both category pages, five product pages and six guides read as a shop/publication:
+lead story, product cards with Sponsored labels, decision blocks, FAQ, seasonal framing. Audit
+surfaces (verification, flags, questions, suggestions, measurement, executive summary) sit in one
+nav group ("The Desk") and the footer, off the reader path. No ranking, price, or testing claim
+appears anywhere on the reader path.
+
+## Gate status
+
+`python3 scripts/build_site.py && python3 scripts/check_site.py` → green after these edits
+(`Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` / `OK: 27 pages checked, 26 sitemap URLs, no violations.`). Re-verified again after the integration merge.
