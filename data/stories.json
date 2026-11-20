@@ -1,0 +1,151 @@
+{
+  "_note": "Long-form product narratives for the shop. One entry per product id in data/products.json. The rule for every paragraph: it may only use (a) values already stored in data/products.json for that product, (b) published food-safety figures from USDA FSIS (S16/S17), or (c) the editorial arithmetic called out explicitly. No 'we tested', no verdicts, no popularity or value claims, no prices. `spec_anchor` names the one stored field the narrative rests on, so a reader can check it on the listing.",
+  "_writing_rules": [
+    "Turn a spec into a decision, not an adjective: 'two 3-quart baskets' -> 'two foods, separately timed'.",
+    "State the trade-off the listed spec creates. Every appliance gives something up.",
+    "Quote seller claims as claims, never as findings.",
+    "Name the listing's own contradictions where they touch this narrative.",
+    "Never claim testing, ownership, popularity, or 'best'. The gate enforces the obvious cases."
+  ],
+  "updated": "2026-11-20",
+  "stories": [
+    {
+      "product_id": "p1-chefman-6qt",
+      "series": "The Countertop Series",
+      "kicker": "Drawer fryer · two baskets",
+      "headline": "Two baskets, one drawer frame: what a 6-quart dual actually buys you",
+      "spec_anchor": "capacity",
+      "standfirst": "The Chefman 6 Quart is not one big basket cut in half. It is two 3-quart drawers that can be timed separately, and that single fact decides most of the meals it is good at.",
+      "paragraphs": [
+        "Most air-fryer shopping starts with a quart number and stops there. That number is the least interesting spec on this machine. The listing describes two independent 3-quart baskets with a Sync Finish that brings them both out at the same moment, inside a footprint of about 13 by 12 inches and a listed weight of 13.3 pounds. Read those three facts together and the picture is specific: it is a machine for cooking two different things at once in a kitchen that can spare a foot of counter depth.",
+        "The practical gain is timing, not volume. A single-basket fryer of the same six quarts would force you to cook the protein, hold it somewhere warm, then cook the vegetables — which is how a 20-minute dinner becomes a 35-minute one. Two drawers let you start the longer item first and drop the shorter one in later, or use Sync Finish so both land together. Whether that matters to you depends on one thing you can check about your own cooking: how often your meals have two components that want different times.",
+        "The trade-off is real and the listing does not mention it. Two drawers mean two smaller cooking surfaces and a divider down the middle of the machine. A 3-quart basket is the unit of measure: the bird, the tray or the rack you cook most often has to fit inside one of them, and if it does not, the dual-basket layout is working against you. For one large item cooked flat, the 8-quart single basket in this shop is the shape that fits that job.",
+        "One number on this listing contradicts another. The title and bullets say six quarts across two 3-quart baskets; the details table states a capacity of six litres, which is roughly 6.3 quarts. The difference is small enough not to change a buying decision, but it is on the page, so it is recorded as flagged rather than quietly rounded (FLG-018). The listed temperature range is 200–450°F and the listed draw is 1700 W at 120 V — both are the listing's own figures, and both are worth re-reading on the page you land on before you buy.",
+        "What this tells a buyer: a dual-basket fryer earns its keep when two things cook at once at different times, and it costs you the ability to cook one large item flat. Measure the counter depth first — the listed 13.38 inches of depth is the number that gets people, because a basket fryer needs clearance in front of it to open the drawers, not just space under it."
+      ],
+      "series_note": "",
+      "flags": [
+        "FLG-018"
+      ]
+    },
+    {
+      "product_id": "p2-emeril-26qt",
+      "series": "The Countertop Series",
+      "kicker": "Oven-style · one cavity",
+      "headline": "26 quarts of cavity, and the two numbers on the listing that disagree",
+      "spec_anchor": "capacity",
+      "standfirst": "The Emeril 26QT is the only oven in this shop, and it is sized for a table rather than a plate. Its listing is also the most self-contradicting of the five.",
+      "paragraphs": [
+        "A 26-quart cavity is not a bigger air-fryer basket; it is a small oven with a fan. The listing describes French doors, a countertop convection cavity, and a long list of one-touch presets. The listed exterior is roughly 17 inches deep, 16 wide and 15 tall, and the unit is listed at 26.5 pounds. That is a machine that lives on a counter permanently, not one that comes out of a cupboard — and it needs headroom above it, because the doors open outward and the top gets hot.",
+        "The reason to choose it is capacity for a crowd: a cavity that takes a whole bird or a full tray of vegetables does a job no drawer fryer can. The listing's own bullet copy sizes the cavity for four to six people. That is a seller's claim about serving count, not a measurement, and this site quotes it as a claim.",
+        "Now the part that matters for anyone comparing on the spec sheet: the listing does not agree with itself, twice. The title says 24 one-touch preset options and six cooking accessories; the bullet copy gives 25 presets and seven accessories (FLG-010, FLG-020). Neither number changes how the appliance cooks. Both change how much you should trust a count on this listing — if you are buying specifically for a function you saw in the preset list, find that function named in the bullets before you decide.",
+        "There is also a genuine gap on this record. No maximum temperature and no wattage could be confirmed from the listing body in this session, so both cells are blank on the product page rather than inferred from a sibling model. For an oven-style unit the top of the temperature range is the figure that sets what it can do at the top of its range, so it is the first thing to establish on the Amazon page itself. The listing's serving claim — a cavity sized for four to six people, a 6-lb chicken and a 12-inch pizza — is the seller's own sizing statement, quoted here as a claim (FLG-021).",
+        "The decision this product asks is shape, not size. If your cooking is trays — a whole fish, a batch of fries and a tray of peppers at once — the cavity wins. If your cooking is two portions and a 25-minute limit, a 26-quart oven is a large object to preheat for a small job, and the drawer machines in this shop are the better fit."
+      ],
+      "series_note": "Accessory and preset counts on this listing are inconsistent; both figures are published on the product page as the listing states them.",
+      "flags": [
+        "FLG-010",
+        "FLG-020",
+        "FLG-021"
+      ]
+    },
+    {
+      "product_id": "p3-chefman-8qt",
+      "series": "The Countertop Series",
+      "kicker": "Drawer fryer · one XL basket",
+      "headline": "One basket, eight quarts, and a listing that argues with itself about heat",
+      "spec_anchor": "temperature",
+      "standfirst": "The 8-quart Chefman is the simplest machine in the shop and the one with the most muddled listing: its own title advertises a temperature its detail table does not support.",
+      "paragraphs": [
+        "This is the single-basket shape most people picture when they hear 'air fryer': one drawer, one nonstick basket, one temperature, one timer. At a listed eight quarts it is the largest single basket in this shop, and its listed weight — 12.8 pounds — is lighter than the 6-quart dual-basket machine, which is worth noticing if the appliance has to move between cooks.",
+        "The heat story is where the listing gets interesting. The title advertises a 450°F Hi-Fry option; the bullet copy states a 200–400°F range; the details table gives a different model string again. The honest reading is that the machine has a Hi-Fry setting the seller wants in the title, and a base range below it, and that the exact ceiling should be confirmed on the page you are sent to (FLG-005). This site does not resolve the conflict by picking the nicer number.",
+        "The other live irregularity is the wattage. An earlier capture in this repo recorded 1700 W for this model; the listing's bullet copy reads 1000 W at 120 V for the RJ38-SQSS-8T. The repo was corrected and the old figure kept beside it as provenance (FLG-022). It matters because 1000 W is a modest draw for an eight-quart cavity — it is the kind of machine that trades a little speed for a smaller electrical appetite, and a buyer with an old kitchen circuit may care about that more than they expect.",
+        "The ASIN itself is a family, not a single product. Amazon's own page offers the same model in 6-, 8- and 9-quart sizes under size variations, and states that a newer model of the item exists (FLG-023, FLG-024). Both facts are normal marketplace behaviour with one practical consequence: the review count and the price shown on the page belong to the variation you land on, so read the size selector before you read anything else.",
+        "Who this suits: a household that cooks one large thing at a time and wants the simplest possible control panel. Who it does not: anyone whose weeknight cooking is two components with different timings — that is the dual-basket case, and splitting an eight-quart batch to fake it wastes the capacity you paid for."
+      ],
+      "series_note": "",
+      "flags": [
+        "FLG-005",
+        "FLG-019",
+        "FLG-022",
+        "FLG-023",
+        "FLG-024"
+      ]
+    },
+    {
+      "product_id": "p4-thermomaven",
+      "series": "The Thermometer Files",
+      "kicker": "Instant-read · handheld",
+      "headline": "One second, half a degree, and the word 'instant' doing a lot of work",
+      "spec_anchor": "temperature",
+      "standfirst": "This is the tool you pick up, stab into the middle of the meat, read and put down. Its whole value is how fast and how accurately it answers one question.",
+      "paragraphs": [
+        "An instant-read thermometer replaces guesswork with a number, and the number is the only thing that decides whether dinner is safe. USDA FSIS publishes the targets: 165°F for all poultry including ground poultry, 160°F for ground meats, and 145°F with a three-minute rest for steaks, chops and roasts (S16). Those figures do not depend on which thermometer you own — they depend on the thermometer being accurate and being read in the right place.",
+        "The listed specification for this unit is a one-second read and an accuracy of plus or minus 0.5°F, with an auto-rotating display and an IP67 water rating. Read against the USDA targets, a half-degree tolerance is far tighter than the margin you need at 165°F; the practical question is not precision but placement, which no spec can answer for you. USDA's own guidance is to insert the probe into the thickest part, away from bone, fat and griddle (S17).",
+        "The word 'instant' deserves a caveat that applies to every brand, not just this one. A one-second read is a claim about the sensor settling, and it is a seller's claim on a listing. What the record does not contain is an independent lab measurement of this specific unit's speed — and this site will not pretend otherwise. What can be checked is the accuracy statement, which is stated as a tolerance rather than a promise of perfection.",
+        "There is a real catalogue hazard with this brand worth knowing before you buy. Amazon's page for this ASIN surfaces other ThermoMaven instant-read listings that differ in colour and in their speed claim, at different prices and separate ASINs. The shop's item is the black one-second model listed here; if you land on a '0.5 sec' version, you are looking at a different product with a different ASIN. Check the title on the page you reach, not the one in your history.",
+        "What it does not do: it cannot watch a roast for two hours. That is the leave-in job, and if your cooking is long and low — a bird, a brisket, an oven session you want to walk away from — this is the tool you use to check the end, not the tool that tells you when to come back."
+      ],
+      "series_note": "",
+      "flags": [
+        "FLG-015"
+      ]
+    },
+    {
+      "product_id": "p5-chefiq",
+      "series": "The Thermometer Files",
+      "kicker": "Wireless · hub and probes",
+      "headline": "Three probes, no wire, and a phone that has to stay in range",
+      "spec_anchor": "capacity",
+      "standfirst": "The CHEF iQ Sense is a different category of object from a handheld probe: probes that stay in the food, a hub that talks to your phone, and a cook you monitor from another room.",
+      "paragraphs": [
+        "The listing describes three ultra-thin probes, a charging hub, WiFi range and a heat-safe claim up to 1000°F, with five sensors across the system and Gen3 in the name. The point of the design is the thing a handheld cannot do: leave the probe in the food, close the oven or smoker, and read the temperature without opening anything. For a long cook that is the difference between a roast you babysit and one you can leave.",
+        "The trade-off is a chain of dependencies that no single spec states. The probe must be in the food, the hub must be powered and within range of the probes, the phone must be connected to the hub, and the app must be running. Every link in that chain is a way for a cook to go unmonitored. USDA's position is blunt — a food thermometer is the only reliable way to confirm safety (S17) — so a wireless system that silently loses connection is worse than a cheap instant-read that never had one, unless you check the connection before you walk away.",
+        "Three probes is the spec that separates this listing from its own stablemate. Amazon's page shows a two-probe configuration of the same 'Sense' model family sold separately, with a different ASIN, and the price difference between them is not a difference in accuracy. If you are buying for a single roast, two probes is enough; the third earns its place when you are cooking more than one piece of meat at once, or one large piece where you want a second reading near a different part.",
+        "What the listing does not settle: the model string appears as a compact alphanumeric code, and the dimensions given on the page describe the package rather than the deployed hub. Neither is a reason to avoid the product; both are reasons to read the Amazon page's own specification block rather than a summary of it. The probes recharge through the hub, which is worth knowing because a probe that runs flat mid-cook is the failure mode this design invites — the listing says the hub charges them, not how long a charge lasts.",
+        "Who this is for: someone who already cooks with a phone nearby and wants a long cook monitored without opening the oven. Who it is not for: someone who wants to stab a chicken breast and read a number in one second — that is the instant-read job, and this system is slower to set up by design."
+      ],
+      "series_note": "",
+      "flags": []
+    },
+    {
+      "product_id": "p1-chefman-6qt-cluster",
+      "series": "The Countertop Series",
+      "kicker": "Cluster note · air fryers",
+      "headline": "How the three air fryers here differ in one sentence each",
+      "spec_anchor": "capacity",
+      "standfirst": "Three machines, two shapes: two drawer fryers and one oven. The difference that decides most purchases is not capacity — it is whether you cook two things at once or one big thing.",
+      "paragraphs": [
+        "The 6-quart Chefman is two 3-quart drawers that can be timed separately. The 8-quart Chefman is one large drawer. The Emeril is a 26-quart oven cavity with doors. Those three sentences are the entire shape decision, and the rest of the spec sheet is detail.",
+        "Capacity numbers across the three are not comparable at face value. Six quarts split into two baskets is not the same usable space as six quarts in one basket; a 26-quart oven cavity is a different geometry again. Compare the shape against your cooking before you compare the numbers against each other."
+      ],
+      "series_note": "",
+      "flags": []
+    },
+    {
+      "product_id": "p4-thermomaven-cluster",
+      "series": "The Thermometer Files",
+      "kicker": "Cluster note · thermometers",
+      "headline": "How the two thermometers here differ in one sentence each",
+      "spec_anchor": "temperature",
+      "standfirst": "One is a handheld probe you read in a second. The other is a set of probes that stay in the food and report to your phone. The USDA targets are identical for both.",
+      "paragraphs": [
+        "The ThermoMaven is a one-second instant-read with a stated half-degree tolerance. The CHEF iQ Sense is a three-probe wireless system with a hub and an app. Both are tools for the same question — is this food at a safe internal temperature — and neither changes what that temperature is.",
+        "The choice comes down to how long the cook is. A weeknight chicken breast is a ten-second job with a handheld. A three-hour roast is where a leave-in probe stops being a luxury and starts being the difference between monitoring and guessing."
+      ],
+      "series_note": "",
+      "flags": []
+    }
+  ],
+  "_series": {
+    "The Countertop Series": [
+      "p1-chefman-6qt",
+      "p2-emeril-26qt",
+      "p3-chefman-8qt"
+    ],
+    "The Thermometer Files": [
+      "p4-thermomaven",
+      "p5-chefiq"
+    ]
+  }
+}

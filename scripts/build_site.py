@@ -50,15 +50,45 @@ CATEGORY_DATA = load("data/categories.json")
 CATEGORY_PROFILES = {c["category"]: c for c in CATEGORY_DATA["categories"]}
 TOPIC_DATA = load("data/topics.json")
 TOPICS = TOPIC_DATA["topics"]
+STORY_DATA = load("data/stories.json")
+STORIES = {s["product_id"]: s for s in STORY_DATA["stories"]}
+SERIES = STORY_DATA.get("_series", {})
+MAKERS = {m["name"]: m for m in load("data/makers.json")["makers"]}
+MAKER_BY_ID = {m["id"]: m for m in load("data/makers.json")["makers"]}
+# series metadata: slug, page path, illustration, caption, standfirst
+SERIES_META = {
+    "The Countertop Series": {
+        "slug": "series/countertop.html",
+        "kicker": "Series · air fryers",
+        "title": "The Countertop Series: three air fryers, read closely",
+        "desc": "Three air-fryer shapes compared on the specs their listings actually state — two drawers, one XL drawer, one French-door cavity — with the contradictions inside each listing named rather than smoothed over.",
+        "image": "assets/img/series-countertop.webp",
+        "caption": "Editorial illustration: a two-drawer fryer, a single-drawer fryer and a French-door oven on a counter. Not a product photograph.",
+        "lede": "Every machine in this series was read from its own Amazon listing, line by line, and every figure on these pages comes from that read. Where a listing disagrees with itself, the disagreement is printed.",
+    },
+    "The Thermometer Files": {
+        "slug": "series/thermometers.html",
+        "kicker": "Series · thermometers",
+        "title": "The Thermometer Files: two ways to answer one question",
+        "desc": "A handheld instant-read and a three-probe wireless system, measured against USDA's published temperature targets — and against the failure modes each design invites.",
+        "image": "assets/img/series-thermometer.webp",
+        "caption": "Editorial illustration: an instant-read probe and a wireless hub with probes. Not a product photograph.",
+        "lede": "The USDA's minimum temperatures are the same whichever thermometer you own. What differs is who holds the tool while the food cooks — and what happens when the tool, or the phone, or the network, stops answering.",
+    },
+}
+SERIES_OF = {}
+for sname, pids in SERIES.items():
+    for pid in pids:
+        SERIES_OF[pid] = sname
 
 CATEGORIES = [("Air Fryers", "air-fryers.html"), ("Meat Thermometers", "thermometers.html")]
 CAT_IMG = {
-    "Air Fryers": ("assets/img/air-fryers.png",
+    "Air Fryers": ("assets/img/air-fryers.webp",
         "Editorial illustration: air fryer baskets open on a kitchen counter. Not a product photograph."),
-    "Meat Thermometers": ("assets/img/thermometers.png",
+    "Meat Thermometers": ("assets/img/thermometers.webp",
         "Editorial illustration: instant-read probe and wireless sensor on a countertop. Not a product photograph."),
 }
-HERO_IMG = ("assets/img/hero-counter.png",
+HERO_IMG = ("assets/img/hero-counter.webp",
     "Editorial illustration: kitchen counter with an air fryer, a probe thermometer and a board of roasted potatoes. Not a product photograph.")
 
 def prods(cat=None):
@@ -246,9 +276,10 @@ def product_card(p, depth=0):
 <figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
-<p>{esc(p['title'])}</p>
+<p class="cardhook">{esc((STORIES.get(p["id"]) or {}).get("standfirst") or p["title"])}</p>
 <ul class="specs">{li}</ul>
 <div class="actions">{buy_button_small(p)}</div>
+<div class="cardfoot">{series_link(p, depth)}{('<a class="sourcetail" href="' + pfx + 'verification.html">Listing read ' + esc(p["source_date"]) + '</a>')}</div>
 <p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
 </article>"""
 
@@ -310,12 +341,17 @@ def capture_block(depth=0):
     return f"""<section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
 <p>One email when a new guide publishes.</p>
-<form id="reader-capture" action="{pfx}measurement.html" method="get">
+<form id="reader-capture" action="" method="get" novalidate data-nosubmit="true">
 <label for="email">Email address</label>
-<input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+<input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<script>
+// Nothing is transmitted and nothing is submitted — not even into this page's own URL.
+// A browser with JavaScript disabled gets a disabled control and an honest sentence, not a silent GET.
+document.getElementById('reader-capture').addEventListener('submit', function(e){{ e.preventDefault(); }});
+</script>
+<small>There is no newsletter running yet, so this control is switched off on purpose: it transmits nothing, stores your address nowhere, and cannot submit a form. A subscription flow needs a provider, a consent record and a retention period first — those are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> states exactly what this site does and does not collect.</small>
 </section>"""
 
 # ---------- HOME ----------
@@ -429,6 +465,89 @@ def category_body(cat, title, intro, guide_links):
 {capture_block()}
 """
 
+# ---------- STORY LAYER: series + product narratives ----------
+def series_link(p, depth=0):
+    """Small series badge for a product card, or empty when the product is not in a series."""
+    sname = SERIES_OF.get(p["id"])
+    if not sname:
+        return ""
+    meta = SERIES_META[sname]
+    return f'<a class="seriesbadge" href="{"../"*depth}{meta["slug"]}">{esc(sname)}</a>'
+
+def story_paragraphs(st):
+    return "".join(f"<p>{esc(par)}</p>" for par in st["paragraphs"])
+
+def story_body(p):
+    """The long narrative on a product page: a published piece, not a spec dump."""
+    st = STORIES.get(p["id"])
+    if not st:
+        return ""
+    mk = MAKER_BY_ID.get({"Chefman": "chefman", "Emeril": "emeril",
+                          "ThermoMaven": "thermomaven", "CHEF iQ": "chefiq"}.get(p["brand"], ""), {})
+    anchor_label = SPEC_LABELS.get(st.get("spec_anchor", ""), human_key(st.get("spec_anchor", "")))
+    anchor_value = p.get(st.get("spec_anchor", "")) or "not confirmed from the listing"
+    sname = SERIES_OF.get(p["id"])
+    series_meta = SERIES_META.get(sname, {})
+    crumb = (f'<p class="seriesline"><span class="seriesmark">{esc(st["series"])}</span> · '
+             f'<a href="../{esc(series_meta.get("slug", ""))}">{esc(sname)}</a></p>' if sname else "")
+    maker = ""
+    if mk:
+        maker = (f'<div class="makerbox"><h3>About the maker: {esc(mk["name"])}</h3>'
+                 f'<p>{esc(mk["story"])}</p>'
+                 f'<ul class="makerclaims">'
+                 + "".join(f'<li>{esc(c["claim"])} <span class="meta">— {esc(c["source_label"])}, '
+                           f'<a href="../verification.html#src-{esc(c["source_id"])}">{esc(c["source_id"])}</a></span></li>'
+                           for c in mk["checkable_claims"])
+                 + "</ul>"
+                 + (f'<p class="meta">Official brand site, listed for your own check and not quoted here: '
+                    f'<a href="{esc(mk["official_site"])}" rel="nofollow noopener" target="_blank">{esc(mk["official_site"])}</a></p>'
+                    if mk.get("official_site") else f'<p class="meta">{esc(mk.get("official_site_note", ""))}</p>')
+                 + "</div>")
+    flags = "".join(f'<a class="flagchip" href="../flagged-for-review.html">{esc(f)}</a>' for f in st.get("flags", []))
+    flagrow = (f'<p class="meta">Listing contradictions this piece depends on: {flags}</p>' if flags else "")
+    return f"""
+<article class="story">
+{crumb}
+<h2>{(esc(st['headline']))}</h2>
+<p class="standfirst">{esc(st['standfirst'])}</p>
+<p class="anchorline"><strong>Deciding spec:</strong> {esc(anchor_label)} — <em>{esc(anchor_value)}</em>, as listed. <a href="{esc(p['source_url'])}" rel="nofollow noopener" target="_blank">Read it on Amazon</a></p>
+{story_paragraphs(st)}
+{flagrow}
+{maker}
+</article>"""
+
+def series_body(sname):
+    meta = SERIES_META[sname]
+    pids = SERIES.get(sname, [])
+    members = [p for p in PRODUCTS if p["id"] in pids]
+    cards = "".join(product_card(p, depth=1) for p in members)
+    pieces = ""
+    for p in members:
+        st = STORIES.get(p["id"])
+        if not st:
+            continue
+        pieces += (f'<article class="seriespiece"><p class="meta">{esc(st["kicker"])} · {esc(p["short_label"])}</p>'
+                   f'<h3>{esc(st["headline"])}</h3><p>{esc(st["standfirst"])}</p>'
+                   f'<p><a class="btn btn-quiet" href="../{esc(p["page"])}">Read the full piece →</a></p></article>')
+    guide_links = "".join(
+        f'<li><a href="../{g["path"]}">{esc(g["title"])}</a> <span class="meta">({read_min(g)} min read)</span></li>'
+        for g in GUIDES if g.get("category") in {q["category"] for q in members})
+    return f"""
+<section class="hero"><span class="kicker">{esc(meta['kicker'])}</span>
+<h1>{esc(meta['title'])}</h1>
+<p class="lede">{esc(meta['lede'])}</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {len(members)} products · <a href="../about.html">How we check</a></p></section>
+<figure class="lede-figure"><img src="../{esc(meta['image'])}" alt="{esc(meta['caption'])}" width="1200" height="655"><figcaption>{esc(meta['caption'])}</figcaption></figure>
+<h2>In this series</h2>
+<div class="grid">{cards}</div>
+<h2>The pieces</h2>
+<div class="serieslist">{pieces}</div>
+<h2>Guides that go with it</h2>
+<ul>{guide_links}</ul>
+<div class="byline-box"><strong>How these pages are made.</strong> Each piece starts from one stored spec in <code>data/products.json</code> and argues only from that spec and from USDA's published figures where food safety is involved. No machine in this series has been tested or used by this desk, so no line here claims experience. Contradictions inside a listing are published on the product page and on <a href="../flagged-for-review.html">Flagged for review</a> rather than resolved by preference.</div>
+{capture_block(depth=1)}
+"""
+
 # ---------- PRODUCT PAGES ----------
 def product_body(p):
     related = [q for q in PRODUCTS if q["category"] == p["category"] and q["id"] != p["id"]]
@@ -467,6 +586,7 @@ def product_body(p):
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
 <p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
 </section>
+{story_body(p)}
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
 <h2>What to compare before you buy</h2>
@@ -695,7 +815,7 @@ def verification_body():
     intent_rows = []
     for p in PRODUCTS:
         intent_rows.append(
-            f"<tr><td>{esc(p['submitted_url'])}<br><span class='meta'>token {esc(p['submitted_token'])} ({p['token_length']} chars)</span></td>"
+            f"<tr><td><code>{esc(p['submitted_url'])}</code><br><span class='meta'>token {esc(p['submitted_token'])} ({p['token_length']} chars, not linkable on purpose — FLG-003)</span></td>"
             f"<td>{blank(p['intended_asin'])}</td><td>{blank(p['intended_listing_url'])}</td>"
             f"<td>{blank(p['confirmation_date'])}</td><td>{blank(p['intended_source'])}</td>"
             f"<td><strong>{esc(p['observed_asin'])}</strong><br><a href='{esc(p['observed_listing_url'])}' rel='nofollow noopener' target='_blank'>{esc(p['observed_listing_url'])}</a><br><span class='meta'>{esc(p['observed_date'])}</span></td></tr>")
@@ -716,7 +836,11 @@ def verification_body():
                         + "".join(specs_rows) + "</tbody></table></div>")
 
     src_rows = "".join(
-        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
+        f'<tr id="src-{esc(s["id"])}"><td>{esc(s["id"])}</td><td>{esc(s["title"])}<br>' + (
+            f'<code class="src">{esc(s["url"])}</code> <span class="meta">(recorded as text: a short-link redirect hop is not republished — FLG-003)</span>'
+            if "link.amazon" in s["url"] else
+            f'<a class="src" href="{esc(s["url"])}" rel="nofollow noopener" target="_blank">{esc(s["url"])}</a>')
+        + f'</td><td>{esc(s["what"])}</td><td>{esc(s["date"])}</td></tr>'
         for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
@@ -973,8 +1097,18 @@ function run(){{
   if(!q){{box.innerHTML='<p class="meta">Type a query above.</p>';return;}}
   var hits=INDEX.filter(function(x){{return (x.title+' '+x.text).toLowerCase().indexOf(q)>-1;}});
   if(!hits.length){{box.innerHTML='<p>No matches for <strong>'+q+'</strong>. Try “air fryer” or “thermometer”.</p>';return;}}
-  box.innerHTML='<p class="meta">'+hits.length+' result(s) for <strong>'+q+'</strong></p><div class="grid">'+
-    hits.map(function(h){{return '<article class="card"><span class="cat">'+h.kind+'</span><h3><a href="'+h.url+'">'+h.title+'</a></h3><p>'+h.text.slice(0,180)+'…</p></article>';}}).join('')+'</div>';
+  box.textContent='';
+  var note=document.createElement('p'); note.className='meta';
+  note.textContent=hits.length+' result(s) for “'+q+'”'; box.appendChild(note);
+  var grid=document.createElement('div'); grid.className='grid';
+  hits.forEach(function(h){{
+    var art=document.createElement('article'); art.className='card';
+    var cat=document.createElement('span'); cat.className='cat'; cat.textContent=h.kind;
+    var h3=document.createElement('h3'); var a=document.createElement('a'); a.href=h.url; a.textContent=h.title; h3.appendChild(a);
+    var p2=document.createElement('p'); p2.textContent=h.text.slice(0,180)+'…';
+    art.appendChild(cat); art.appendChild(h3); art.appendChild(p2); grid.appendChild(art);
+  }});
+  box.appendChild(grid);
 }}
 </script>
 """
@@ -1200,6 +1334,10 @@ def main():
                                  [("Home", "index.html"), ("Guides", "guides/index.html"),
                                   (g.get("cluster", "Guides"), g_cat), (g["title"], g["path"])])),
                              image=g.get("image") or "")
+    for sname, meta in SERIES_META.items():
+        pages[meta["slug"]] = P(meta["slug"], meta["title"] + " | ShopNow Kitchen", meta["desc"],
+            series_body(sname), image=meta["image"],
+            extra_head=breadcrumb_jsonld([("Home", "index.html"), (sname, meta["slug"])]))
     pages["direction.html"] = P("direction.html", "Suggestions & paths — the decision board | ShopNow Kitchen",
         f"{len(SUGGESTIONS)} reviewed suggestions with evidence, effort, risk and how to measure each one; tick the ones you accept and copy the next build prompt.",
         direction_body())
