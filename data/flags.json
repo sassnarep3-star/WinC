@@ -294,34 +294,16 @@
     },
     {
       "id": "FLG-030",
-      "title": "Two of five redirect responses served a variant (th=1), so a button can land on a different listing than the row describes",
-      "detail": "Observation #6 (session f1fd0ff0, 2026-11-20): B08DKYBTPH and B0DZFD6R9Z resolved with an added th=1 variant parameter on top of lv=shuf + plpRedirect=mhFallback, while the same product names appear at other ASINs (already recorded on this register as FLG-026 and FLG-027 for the ThermoMaven and CHEF iQ siblings, and FLG-029 for the fallback route). What this row adds: the mechanism is a per-request variant parameter on the resolved URL, not only a second listing id, so a stable ASIN mapping does not by itself pin the colour, size or bundle a reader sees.",
-      "action": "During the one-link Associates test (FLG-002), record each link's final URL including every query parameter for all five products; if a variant parameter appears, either pin the Special Link to that variant or keep the bare /dp/<ASIN> form and leave variant wording out of the product copy. Keep intended_* blank until the owner confirms intent (FLG-003).",
+      "title": "Supplied link.amazon tokens did not reproduce the prior ASIN mapping via this fetch path (2026-11-20)",
+      "detail": "Session arena/1c6908d1-winc re-fetched all five supplied link.amazon tokens directly on 2026-11-20. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts — i.e. the token->ASIN mapping recorded by prior sessions (S14/S18/S22/S29, data/probes.json) was NOT reproduced through this fetch path. This does NOT establish the links are invalid (FLG-003 unchanged, never claimed invalid). The likely causes are a difference in redirect/cookie/region handling between the page-reader fetch and the prior sessions' browser/curl resolution, or session-dependent redirect behaviour. The observed_* ASIN values remain valid product identities (the /dp/ listings are live and titles match), but the token-to-ASIN mapping's reproducibility across observation methods is now in question.",
+      "action": "Re-resolve each token in a real enrolled-Associates browser context (cookies + region) and record the final URL per token in data/probes.json with a dated provenance line; reconcile against the prior mapping. Do not claim the links are invalid until that is done.",
       "status": "needs review",
       "sources": [
-        "S29",
-        "S36",
-        "S22"
-      ],
-      "source_urls": [
-        "https://www.amazon.com/dp/B08DKYBTPH",
-        "https://www.amazon.com/dp/B0DZFD6R9Z"
-      ]
-    },
-    {
-      "id": "FLG-031",
-      "title": "Deal season arrives and this site still cannot say anything about price: the stance is undecided",
-      "detail": "The listings read on 2026-11-20 displayed dollar amounts, list-price strikethroughs, review counts and 'Black Friday Deal' badges. None were copied, because a static build cannot keep them current and Program Policies restrict price display to an Amazon-served link or the Creator/PA API (S02, FLG-006). The unresolved part is editorial, not legal: the site publishes seasonal guides that answer 'what should you check before you click buy' while having no sanctioned way to describe the only variable readers weigh that week. SG-32 (deal-season playbook) and SG-35 (seasonal close-out rule) both assume this is settled.",
-      "action": "Choose a stance on the direction register (SG-44 / Q-26): either wire the Creator/PA API into a timestamped build step with the freshness note, or adopt a permanent no-price editorial position and say so on the disclosure page and in the seasonal guides. Recorded decision, then the copy follows it.",
-      "status": "needs review",
-      "sources": [
-        "S02",
-        "S06",
+        "S15",
+        "S18",
         "S36"
       ],
-      "source_urls": [
-        "https://www.amazon.com/dp/B0CDY277D3"
-      ]
+      "source_note": ""
     }
   ]
 }

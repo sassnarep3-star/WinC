@@ -476,3 +476,46 @@ rebases against the parallel PR rounds without dropping anyone's work.
 No price, rating, review count, revenue forecast or conversion score anywhere. Short links are
 never called invalid (FLG-003). Intended vs observed identifiers stay in separate fields. The
 campaign ledger stays empty until first-party reports exist.
+
+---
+
+# Audit-clean pass + verification #5 (2026-11-20, session `arena/1c6908d1-winc`)
+
+This pass confirmed the independent-audit findings are cleared on `main`, re-ran the product
+verification line by line, and added review-prompt suggestions distinct from the site's existing work.
+
+## The independent audit is clean
+
+`tools/audit.mjs` reports **0 findings** (all ten rules pass) on the merged tree. A6 (the `#src-*`
+fragment links resolve — `main` fixed the source-row id quote style and rewrote the client-side search
+with the DOM API) and A7 (the reader-capture form no longer puts the email in the URL — this session
+upgraded it to `method="post"`, more robust than `get`+`novalidate` for a JavaScript-blocked browser)
+are both addressed. `npm run verify` → **Built 38 pages, 37 sitemap URLs** / **OK: 38 pages checked,
+37 sitemap URLs, no violations.**
+
+## Verification pass #5, and one new irregularity
+
+- **All five `amazon.com/dp/<ASIN>` listings re-read live on 2026-11-20.** Each `<title>` matched
+  `data/products.json` verbatim; breadcrumb confirms category (3 air fryers, 2 meat thermometers). The
+  `lv=shuf` + `plpRedirect=mhFallback` fallback route is present on all five (FLG-009/FLG-029). No spec
+  value drifted; no correction needed.
+- **New irregularity — FLG-030.** Re-fetching the five supplied `link.amazon` tokens directly did **not**
+  reproduce the prior token→ASIN mapping via this fetch path: 4/5 resolved to the amazon.com homepage and
+  `B0f3GKalj` returned HTTP 500 on two attempts. This does **not** establish the links are invalid
+  (FLG-003 unchanged — never claimed invalid); it means the mapping's reproducibility across observation
+  methods is in question. Recorded as source **S36**, flag **FLG-030**, and open question **Q-26**, with
+  the resolution action (re-resolve in an enrolled Associates browser with cookies + region).
+
+## New review-prompt suggestions (distinct from the site's existing suggestions)
+
+- **SG-43 — editorial voice pass.** Make reader copy read like a publication, not generated text, without
+  touching a single fact or source. Directly answers the brief's "should not read like AI slop."
+- **SG-44 — accept/reject/defer review workflow.** Record the review decision in-repo per suggestion so
+  the chosen path persists and gates the next build, rather than living only in the browser.
+
+## Still open (owner-side)
+
+Tracking-ID confirmation, the one-link Associates test, short-link compliance status, the
+manufacturer-page spec conflicts, analytics-endpoint deployment and Search Console — all require an
+enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
+forecast; the campaign ledger stays empty until first-party reports arrive.
