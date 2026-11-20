@@ -459,3 +459,25 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 | --- | --- |
 | 2026-11-20 | PR opened from `arena/0458cd24-winc` → `main`: source-register corrections (S01/S02/S03/S06/S20 access notes), product-title reconciliation (FLG-018), COORDINATION.md + EXECUTIVE-SUMMARY.md integration record. |
 | 2026-11-20 | Merged to `main`. GitHub Pages legacy build re-run; `status: built`, no error. Live pages re-fetched to confirm the merged content serves. |
+
+---
+
+# Session arena-9a3bb152 — verification re-check + final integration (2026-11-20)
+
+Branch `arena/9a3bb152-winc`, based on `ba0b838` (PR #15 merged; PR #16 content present).
+Claim pushed at session start per the board rule.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | Files |
+| --- | --- | --- | --- | --- |
+| T30 | Independent verification re-check: re-read official sources behind the register (Associates Operating Agreement, Program Policies, FTC, Google sponsored/affiliate guidance, ASIN definition), line by line against `data/sources.json` + rendered pages | in progress | arena-9a3bb152 | `COORDINATION.md`, `data/sources.json` (corrections only) |
+| T31 | Reader-path tone audit: front page + guides read like a shop/publication, not an audit; no implementation leakage in reader copy | in progress | arena-9a3bb152 | `scripts/build_site.py` (reader copy only), generated HTML |
+| T32 | Final integration: reconcile open PRs #17/#18 (both CONFLICTING against `main`, unrelated histories) without discarding either session's work, build + gate green, PR → main, merge, confirm Pages deploy, record result here | pending | arena-9a3bb152 | all (integration only) |
+
+**Conflict-sensitivity note:** sessions `arena-04112b09` (PR #17) and `arena-23428c9e` (PR #18)
+were still active at claim time (PR updates 06:13/06:20 UTC). Their PRs branch from an
+*unrelated history* (root `a6083c9`, not an ancestor of `main`), so every shared path conflicts.
+Before editing any shared output this session re-reads `origin/main`; their PRs are reconciled in
+T32 with the same no-discard rule earlier sessions used (canonical site kept, distinctive content
+preserved, changes logged here).
