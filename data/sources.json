@@ -193,15 +193,39 @@
       "date": "2026-11-20"
     },
     {
+      "id": "S27",
+      "title": "USDA FSIS - Leftovers and Food Safety",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/leftovers-and-food-safety",
+      "what": "Verbatim, fetched 2026-11-20: 'Within 2 hours of cooking food or after it is removed from an appliance keeping it warm, leftovers must be refrigerated. Throw away all perishable foods that have been left in room temperature for more than 2 hours (1 hour if the temperature is over 90° F...)'; 'Leftovers can be kept in the refrigerator for 3 to 4 days or frozen for 3 to 4 months.'; 'When reheating leftovers, be sure they reach 165° F as measured with a food thermometer. Reheat sauces, soups and gravies by bringing them to a rolling boil. Cover leftovers to reheat.'; 'Bacteria grow rapidly between the temperatures of 40° F and 140° F.' Page footer: 'Last Updated: Jul 31, 2020'.",
+      "date": "2026-11-20",
+      "access": "Fetched directly by arena-c2123b9c (full page, both chunks). Official .gov source; page states its own last-updated date."
+    },
+    {
       "id": "S28",
-      "title": "Fourth independent live read of all five resolved listings + re-resolution record (session f1fd0ff0, 2026-11-20)",
+      "title": "Google Search documentation updates - FAQ rich result documentation removed (June 2026 entry)",
+      "url": "https://developers.google.com/search/updates#removing-faq-rich-result",
+      "what": "June 2026 entry: 'Removing documentation for the FAQ rich result feature'. The former page developers.google.com/search/docs/appearance/structured-data/faqpage now resolves to this updates page (observed by following the old URL on 2026-11-20). Consequence recorded for this site: FAQPage JSON-LD may remain as machine-readable markup, but no page may promise FAQ rich results.",
+      "date": "2026-11-20",
+      "access": "Fetched directly by arena-c2123b9c; redirect of the old FAQ-doc URL observed live on 2026-11-20."
+    },
+    {
+      "id": "S29",
+      "title": "Independent redirect observation #4, session arena-c2123b9c (2026-11-20)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "Fourth probe observation: all five link.amazon tokens re-resolved live; 5/5 mappings reproduce (B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z). Rows carry session=arena-c2123b9c, date=2026-11-20, observation=4. Fallback-route flags still on every row (FLG-009).",
+      "date": "2026-11-20",
+      "access": "Rows committed on branch arena/c2123b9c-winc; URL resolves on main once this session's PR merges."
+    },
+    {
+      "id": "S30",
+      "title": "Fifth independent live read of all five resolved listings + re-resolution record (session f1fd0ff0, 2026-11-20)",
       "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
       "what": "All five recorded ASINs were re-read through the same reader on 2026-11-20 by a session that had not seen them before. 5/5 page <title> values match the stored titles verbatim; the Emeril details table re-confirmed dimensions, capacity, model, UPC, wattage and its own ASIN row. Two of five resolved URLs additionally carried th=1 (a variant parameter) on top of lv=shuf + plpRedirect=mhFallback. Prices, star ratings, review counts, Best-Sellers-Rank and 'Black Friday Deal' badges were visible on these pages and were deliberately not copied (S02, FLG-006, FLG-027).",
       "date": "2026-11-20",
       "access": "Read live through the fetch_page reader; the redirect target is a reproducible observation, not a confirmation of intent (FLG-009)."
     },
     {
-      "id": "S29",
+      "id": "S31",
       "title": "Amazon listing — live page for B0DHZTCNR5 (ThermoMaven 1 Sec instant-read), fourth read",
       "url": "https://www.amazon.com/dp/B0DHZTCNR5",
       "what": "<title> 2026-11-20: 'ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black' — verbatim match with data/products.json. The ±0.5°F figure and the NIST/NSF certification are the seller's claims in the listing title, which is why the accuracy guide explains how to test the reading at home instead of repeating the claim as a measurement.",
@@ -209,7 +233,7 @@
       "access": "Read live; model number not shown in the fields captured, so it stays blank (FLG-025)."
     },
     {
-      "id": "S30",
+      "id": "S32",
       "title": "Amazon listing — live page for B0DZFD6R9Z (CHEF iQ Sense Gen3), fourth read",
       "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
       "what": "<title> 2026-11-20: 'CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3' — verbatim match. The 1000°F heat-safe figure and the air-fryer use case are the listing's own words; FSIS guidance on leaving a thermometer in food is quoted alongside them in the placement guide (S17).",

@@ -1,0 +1,176 @@
+{
+  "slug": "capacity-checklist",
+  "title": "A no-hype checklist for comparing air fryer capacity",
+  "dek": "Litres, quart counts and 'feeds a family of' claims measure different things. Here is how to read each one without being sold something.",
+  "cluster": "capacity",
+  "published_on": "2026-11-20",
+  "reviewed_on": "2026-11-20",
+  "author": "Crisp Report desk",
+  "provenance": "A reading list for spec sheets. It contains no measurement we took, because we took none, and no recommendation, because the products on our desk are still unresolved identifiers.",
+  "reading_time_min": 4,
+  "blocks": [
+    {
+      "t": "lead",
+      "x": "Capacity is the number a buyer checks first and understands last. It is also the field where a listing can be technically accurate and practically useless at the same time, because 'volume' can mean the basket, the chamber, or the chamber including whatever the racks displace. Six checks fix that in about five minutes."
+    },
+    {
+      "t": "h2",
+      "x": "1. Find out what the volume figure is the volume of"
+    },
+    {
+      "t": "p",
+      "x": "Ask one question of every listing: is this the **cooking chamber** or the **whole interior including door and element housing**? Manufacturers state both. Some say 'capacity to the fill line', some say 'total chamber', and some only say a number. Where the definition is missing, treat the figure as unverified rather than as a small-print win."
+    },
+    {
+      "t": "callout",
+      "kind": "warn",
+      "x": "A litre or quart figure with no stated definition is not a comparison. It is a decoration with a unit attached. Two listings can both say the same number and mean different boxes."
+    },
+    {
+      "t": "h2",
+      "x": "2. Convert volume into a single layer, because that is how crisping works"
+    },
+    {
+      "t": "figure",
+      "src": "capacity.png",
+      "alt": "Two cross-section diagrams of a cooking chamber: on the left a single flat layer of food with air curving over it; on the right the same chamber packed with stacked layers and a dotted line where the airflow is blocked.",
+      "cap": "Left: one layer, air on both faces. Right: the same litre figure, no air. This is why a volume number and a capacity claim are not the same statement."
+    },
+    {
+      "t": "p",
+      "x": "Anything you want browned on two faces needs to lie flat with air around it. So take the usable area of the basket floor - length × width, from the dimensions the listing states, not from a photo - and count how many of your actual items fit in one layer. Wings: count them. Fries: a shallow pile is fine. A whole small bird: it either stands inside the stated height or it does not."
+    },
+    {
+      "t": "check",
+      "items": [
+        "Basket floor area in cm, from the **product dimensions** table (not the box dimensions)",
+        "Height clearance to the element or the drawer face, same table",
+        "Rack count, if the unit claims more than one layer - because two real layers beat one big one on throughput",
+        "Whether the stated number is per layer or for the unit"
+      ],
+      "x": "The four numbers worth writing down before you compare two models:"
+    },
+    {
+      "t": "h2",
+      "x": "3. Distrust the household-size sentence"
+    },
+    {
+      "t": "p",
+      "x": "'Feeds a family of four' is a marketing phrase, and it is usually the least verifiable sentence on the page. Two listings claiming to feed four can differ by a full rack. If a page offers a household-size claim and no floor area, you are being asked to accept a conclusion without its premise - which is also precisely the kind of overbroad claim the Associates terms forbid us to repeat, so we do not repeat it here either."
+    },
+    {
+      "t": "quote",
+      "x": "You must not make inaccurate, overbroad, deceptive or otherwise misleading claims about any Product…",
+      "cite": "Amazon Associates Program Policies, Participation Requirements §2(b)",
+      "src": "SRC-02"
+    },
+    {
+      "t": "p",
+      "x": "We apply that rule to our own copy, not just to a brand's: no page on this site will tell you a basket feeds four, six or sixteen. It will tell you which field to read so that you can decide what it feeds you."
+    },
+    {
+      "t": "h2",
+      "x": "4. Check the batch count, not the batch size"
+    },
+    {
+      "t": "p",
+      "x": "The practical capacity question is how many runs you make for one meal. A smaller drawer you can fill, shake and refill in a couple of minutes often beats a big chamber you must rotate and monitor - and it is the answer you cannot read off a litre figure. Two proxies are on the listing: whether the drawer pulls out cleanly with one hand, and whether the controls can be adjusted without interrupting the run."
+    },
+    {
+      "t": "h2",
+      "x": "5. Look for the picture with something ordinary in it"
+    },
+    {
+      "t": "p",
+      "x": "Scale is the least reliable thing in appliance photography. A gallery of golden food in an empty basket tells you nothing. What helps: an image with a hand, a standard tray, a chicken drumstick, or a tape measure. If the gallery is all beauty shots and the dimensions table is the only place size appears, the listing is asking you to guess - and guessing is how returns happen."
+    },
+    {
+      "t": "h2",
+      "x": "6. Then check what the noise and heat do to your counter"
+    },
+    {
+      "t": "p",
+      "x": "A bigger chamber usually means a bigger fan and a hotter exterior, both of which change where you can put it. Read the clearance requirement in the manual and compare it against the actual space - including the wall behind and anything above. A unit that technically fits a shelf but violates its own clearance note is not a fit; it is a future return."
+    },
+    {
+      "t": "h2",
+      "x": "A worked comparison you can copy"
+    },
+    {
+      "t": "table",
+      "head": [
+        "What I need to cook",
+        "Field I look for",
+        "What would make me reject it"
+      ],
+      "rows": [
+        [
+          "Two portions of anything flat and crisped",
+          "Basket floor area, single layer",
+          "Only a litre figure and no dimensions table"
+        ],
+        [
+          "One tray for six people, once a week",
+          "Rack count and per-layer area",
+          "'Family of X' text with no area at all"
+        ],
+        [
+          "Whole small bird or a deep dish",
+          "Vertical clearance to the element",
+          "A drawer that cannot be lifted out with the food inside"
+        ],
+        [
+          "Frozen snacks, daily, badly lit kitchen",
+          "Window, controls reachable mid-run",
+          "A chamber so large it takes a run to preheat for 200 g of fries"
+        ],
+        [
+          "Counter is a shared 40 cm strip",
+          "Body footprint plus clearance, from the manual",
+          "Any listing that states box dimensions but not body dimensions"
+        ]
+      ],
+      "caption": "This table is a template. Fill the middle column from each listing while you compare, and the last column decides for you."
+    },
+    {
+      "t": "callout",
+      "kind": "note",
+      "x": "Why our own desk shows blanks in the capacity column. The five product identifiers we were given are nine characters long, which we cannot resolve to a listing - so there is no basket, no chamber and no figure to report. We would rather publish an empty cell with a reason than a number we made up.",
+      "src": [
+        "FLG-001"
+      ]
+    },
+    {
+      "t": "h2",
+      "x": "What this checklist cannot do"
+    },
+    {
+      "t": "unverified",
+      "items": [
+        "Tell you which brand's figure is honest. We have not verified any brand.",
+        "Substitute for the manual, which is the only document with a binding clearance and capacity statement.",
+        "Give you a price or a value judgement. Prices require an Amazon-served link or an approved API on this desk, and we hold neither.",
+        "Predict how your household behaves: capacity regret is usually a storage and washing story, not a litres story."
+      ],
+      "src": [
+        "SRC-02"
+      ]
+    },
+    {
+      "t": "h2",
+      "x": "One-line answer"
+    },
+    {
+      "t": "p",
+      "x": "Compare floor area in a single layer and rack count; ignore the household-size sentence; and if a listing will not tell you what its volume figure means, that is your answer about the listing, not about the product."
+    }
+  ],
+  "related": [
+    "basket-or-oven",
+    "cleanup-and-counter-space"
+  ],
+  "cta": {
+    "kind": "none",
+    "note": "No product link: the identifiers on the desk are unresolved, and a link to an unconfirmed product is a link to a guess."
+  }
+}

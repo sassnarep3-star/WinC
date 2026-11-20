@@ -318,21 +318,15 @@
     },
     {
       "id": "Q-22",
-      "question": "Which variant of each product should each reader link point at?",
-      "decision_it_gates": "Whether the five buttons promise the same listing the register describes, and whether product pages can claim a colour, bundle or size at all.",
-      "have": "Four independent observations of the same five tokens (2026-11-17 and three on 2026-11-20) all resolving to the same five ASINs, with titles matching verbatim; two URLs additionally served a th=1 variant parameter, and Amazon's rails showed sibling listings (Chefman 6 Qt dual basket B0B7C327LK, ThermoMaven Orange B0GL7Z4KP4, CHEF iQ Sense B0DZFNQXGL).",
-      "missing": "The variant actually intended by whoever supplied the five short links, and the variant the enrolled Associates workflow serves after the one-link test.",
-      "blocking": "no — but it caps what any product page may promise, so no colour/bundle claim is made anywhere on the site",
-      "discovery": "Run FLG-002's one-link test through the enrolled workflow and record the final URL with all query parameters for each of the five; compare the variant id (th=…) with the listing the register describes; then either pin the link or keep the generic /dp/<ASIN> form and say nothing about variants.",
-      "owner": "Account owner, with whoever chose the five links",
+      "question": "What is the runbook when an observed listing dies, goes unavailable, or rotates into a different model?",
+      "decision_it_gates": "Whether a product page can stay live while its listing is gone, and how fast a sponsored link is hidden. Gates SG-34.",
+      "have": "Evidence the risk is real: listing titles rotated between captures (ThermoMaven wording changed across observations; data/probes.json observation #4), the Chefman 8 Qt listing carries a two-version conflict on its own page (FLG-005), and Amazon now states a newer model exists on that listing (FLG-024).",
+      "missing": "An owner decision between (a) retired state - page stays, buttons hidden, dated note; (b) replacement via a fresh product-intent record with new intended_* fields, never reusing the old slug; plus who monitors listings and how often.",
+      "blocking": "no - but it must be decided before the first 404, not after",
+      "discovery": "Owner decision in one sitting. Then implement via SG-34 (builder retired state + gate check). If replacement is chosen, the new record follows the same intended-vs-observed rule as everything else.",
+      "owner": "Account owner (decision); any session can implement it once made",
       "answer": "",
-      "sources": [
-        "S22",
-        "S28",
-        "S29",
-        "S30"
-      ],
-      "source_note": "Published as FLG-026 on Flagged for Review."
+      "sources": []
     },
     {
       "id": "Q-23",
@@ -345,8 +339,10 @@
       "owner": "Account owner (API approval) + whoever runs the build",
       "answer": "",
       "sources": [
-        "S02",
-        "S28"
+        "S29",
+        "S30",
+        "S31",
+        "S32"
       ],
       "source_note": ""
     },
@@ -361,9 +357,8 @@
       "owner": "Site owner",
       "answer": "",
       "sources": [
-        "S16",
-        "S17",
-        "S28"
+        "S02",
+        "S30"
       ],
       "source_note": "Backlog: topics.html · scaffold: scripts/new_guide.py"
     }

@@ -1,0 +1,552 @@
+{
+  "$comment": "Review board. Nothing here is implemented until a row is accepted. Each suggestion carries the evidence behind it, the real options with their trade-offs, a recommendation, and prompt_snippet - the instruction to hand a build session once the path is chosen. impact/effort are this session's judgement, not measurements.",
+  "state_legend": {
+    "pending review": "default; nothing built",
+    "accepted": "operator picked a path; build session implements exactly that option",
+    "rejected": "documented so nobody re-pitches it",
+    "deferred": "accepted in principle, blocked on a question id"
+  },
+  "suggestions": [
+    {
+      "id": "SG-01",
+      "title": "Get five real listing URLs before marketing anything",
+      "one_line": "The product identity is the only input the whole site is missing, and it is a two-minute job on a logged-in machine.",
+      "why": "Every token in the brief is 9 characters (SRC-12), which cannot be resolved from here; the register therefore publishes blanks. Until an ASIN is confirmed, no title, price or suitability claim can be written without inventing it.",
+      "options": [
+        {
+          "label": "A. Paste the five final product URLs",
+          "detail": "Open each link, copy the address bar into data/product-intent.json (official_listing_url + confirmed_on).",
+          "tradeoff": "Fastest, but tells us nothing about whether the links were Associates links."
+        },
+        {
+          "label": "B. Regenerate one Special Link per product from the listing",
+          "detail": "Use SiteStripe/GetLink while signed in; record the ASIN it used. This yields a tagged link and a confirmed identity in one motion.",
+          "tradeoff": "Slightly slower; it is also the only path that satisfies both SRC-01 §1 and SRC-02 §2(b)."
+        },
+        {
+          "label": "C. Park the products; run a methodology-only publication",
+          "detail": "Keep the guides, drop the Picks page until identifiers exist.",
+          "tradeoff": "Honest, but forfeits the commercial purpose of the site."
+        }
+      ],
+      "recommendation": "B, then A for the record. It converts a data-cleanup task into the compliance step the brief already asked for.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "blocking",
+      "effort": "S",
+      "depends_on": [
+        "Q-01",
+        "Q-02"
+      ],
+      "prompt_snippet": "For each of the five confirmed listing URLs, set intended_asin, official_listing_url, confirmed_on and confirmation_source in data/product-intent.json, keep observed_redirect_target separate, then rebuild so the Picks table fills its title column from the listing page only.",
+      "src": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-12"
+      ]
+    },
+    {
+      "id": "SG-02",
+      "title": "Replace every outbound href with the tagged Special Link we generate",
+      "one_line": "The site should never hand a reader a shortened or host-ambiguous URL.",
+      "why": "The Operating Agreement permits only the tagged formats Amazon provides (SRC-01 §1); a malformed link simply does not accrue (SRC-02 §2(g)); and shortening that obscures the destination is separately prohibited (SRC-02 §6(w)). The supplied link.amazon form shows no tag parameter to us, which is a question to resolve, not an accusation (FLG-003).",
+      "options": [
+        {
+          "label": "A. Full /dp/<ASIN> URL + ?tag=<id> built by the generator",
+          "detail": "Deterministic, reviewable in the HTML source, and it renders the destination in the status bar.",
+          "tradeoff": "Longer href; looks less tidy in a plain-text context (newsletters)."
+        },
+        {
+          "label": "B. Keep Amazon's own short link where the reader is",
+          "detail": "Shorter, but requires that it was produced by Amazon's tooling and stays resolvable.",
+          "tradeoff": "We cannot verify destination from a repo; the rel and label must still carry the meaning."
+        },
+        {
+          "label": "C. Search-box fallback for unresolved products",
+          "detail": "Link to the store's search results for the query, with original content on-page.",
+          "tradeoff": "Legal only with relevant original content on the page (SRC-02 §2(b)); loses per-product attribution."
+        }
+      ],
+      "recommendation": "A for every product row; C only for guides that need a category-level exit and already carry original analysis.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "S",
+      "depends_on": [
+        "Q-03"
+      ],
+      "prompt_snippet": "Point the generator's link builder at data/product-intent.json only, emitting https://www.amazon.com/dp/<confirmed-asin>?tag=<tracking-id> with rel=\"sponsored nofollow\" and a (paid link) label, and fail the build if any outbound href lacks tag=.",
+      "src": [
+        "SRC-01",
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "SG-03",
+      "title": "Pick the marketplace the reader actually buys on",
+      "one_line": "A Dutch reader sent to amazon.com converts worse and returns more; the tag locale has to match the store.",
+      "why": "Links must point at an Amazon Site covered by the associate's locale (SRC-01 §1); the operator sits in Naaldwijk, NL, while the supplied ID looks like the US program. We cannot see which locales the account is enrolled in.",
+      "options": [
+        {
+          "label": "A. US store only",
+          "detail": "Simplest if the account is US-only.",
+          "tradeoff": "EU shipping/VAT friction for NL readers."
+        },
+        {
+          "label": "B. Locale-aware links, one block per reader market",
+          "detail": "Generator emits .com and .nl variants; reader picks (or geo hint via a manual toggle, no tracking).",
+          "tradeoff": "Needs a tracking ID registered per locale; doubles the link matrix."
+        },
+        {
+          "label": "C. Editorial for NL/EU, links to .nl",
+          "detail": "Localise topics (energy labels, socket types, EU warranty).",
+          "tradeoff": "Only viable if the account covers amazon.nl."
+        }
+      ],
+      "recommendation": "Answer Q-03 first; if the account is US-only, ship A now and add the language layer in C later. Do not fake locale routing with a redirect - that is a Redirecting Link (SRC-02 §2(e)).",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "M",
+      "depends_on": [
+        "Q-03"
+      ],
+      "prompt_snippet": "Add a marketplace table to site.config.json (store host, Associates host, locale tag) and make the link builder take its host and tag from that table; ship a visible, manual store switch that rewrites hrefs client-side without redirecting anyone.",
+      "src": [
+        "SRC-01",
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "SG-04",
+      "title": "Turn each product row into a decision card, not a verdict",
+      "one_line": "Buyers act on trade-offs they can check; they bounce on superlatives they cannot.",
+      "why": "The Program Policies forbid inaccurate, overbroad or misleading product claims (SRC-02 §2(b)), and Google's own self-check asks whether a heading exaggerates (SRC-08). A 'what to check / who it suits / what we have not confirmed' card satisfies both and reads like a shop.",
+      "options": [
+        {
+          "label": "A. Three-block card: suited for, check on the listing, what we cannot confirm",
+          "detail": "Static, no data we lack, obviously honest.",
+          "tradeoff": "Less punchy than an award badge."
+        },
+        {
+          "label": "B. Score out of 10",
+          "detail": "Familiar affiliate format.",
+          "tradeoff": "Requires defensible inputs; without testing or API data the number is decoration - we reject this."
+        },
+        {
+          "label": "C. Comparison table across a category, no per-product verdict",
+          "detail": "Criteria rows, reader fills values from the listing.",
+          "tradeoff": "Weaker on a single product page, strong on a guide."
+        }
+      ],
+      "recommendation": "A now, C on the two cluster guides. Add B only after a real test exists.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "M",
+      "depends_on": [
+        "Q-01"
+      ],
+      "prompt_snippet": "Extend the product card component with 'suited for', 'check on the listing' and 'not yet confirmed' blocks driven by content/product-cards.json, and remove any scoring UI until a test record exists.",
+      "src": [
+        "SRC-02",
+        "SRC-08"
+      ]
+    },
+    {
+      "id": "SG-05",
+      "title": "Handle price and commission the only two legal ways",
+      "one_line": "Either the store serves the number, or the API does - never the article body.",
+      "why": "Prices and availability may be shown only in an Amazon-served link or from Creators/PA API under the License (SRC-02 §2(b)); Creators API needs 10 qualifying sales in 30 days (SRC-05) and PA-API 5 already returns 403 (SRC-06). Comparison displays additionally require the lowest new (and supplied used) price.",
+      "options": [
+        {
+          "label": "A. No numbers; 'price shown on the listing' + timestamp of our last check",
+          "detail": "Compliant today, and it keeps stale prices off the page permanently.",
+          "tradeoff": "Readers must click to compare."
+        },
+        {
+          "label": "B. Amazon-served widget/link that renders live price",
+          "detail": "Compliant because Amazon serves it.",
+          "tradeoff": "Depends on which display formats the account can use."
+        },
+        {
+          "label": "C. Creators API cache with 1-hour refresh, after access exists",
+          "detail": "Real comparison tables, honest timestamps.",
+          "tradeoff": "Blocked until the sales threshold clears; cache discipline required (G-12)."
+        }
+      ],
+      "recommendation": "A today; apply for B where the account allows; queue C as the unlock event that justifies building comparison logic.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "S",
+      "depends_on": [
+        "Q-05",
+        "Q-06"
+      ],
+      "prompt_snippet": "Keep all price fields blank in data, render the 'price shown on the listing' microcopy in the product card, and keep gate G-06 armed so any currency pattern without a provenance key fails the build.",
+      "src": [
+        "SRC-02",
+        "SRC-05",
+        "SRC-06"
+      ]
+    },
+    {
+      "id": "SG-06",
+      "title": "Switch on measurement in the order the host allows",
+      "one_line": "Local counting now, a collector only when a server and a legal basis exist, Search Console regardless.",
+      "why": "Pages is static (SRC-09), so a self-hosted endpoint cannot live here; sub-tags may never be tied to an end user (SRC-02 §2(b)); synthetic traffic is banned (§6(s)); and GitHub already logs IPs, so the privacy text must be accurate. The brief's five events are not enumerated in what we received (Q-12).",
+      "options": [
+        {
+          "label": "A. Browser-local counters, nothing sent, totals readable on-page",
+          "detail": "Zero new data flows; honest disclosure stays one sentence.",
+          "tradeoff": "No cross-device aggregate; operator must read it from a shared device or skip it."
+        },
+        {
+          "label": "B. A + a disabled collector stub posting aggregates to a VPS you control",
+          "detail": "Ship the schema, keep endpoint null; retention 30 days; no IP logging server-side.",
+          "tradeoff": "You must run a box and write the privacy entry."
+        },
+        {
+          "label": "C. A + Search Console only (no own counter)",
+          "detail": "Queries, impressions, CTR from the authorized first-party report - which is exactly what the campaign ledger is allowed to ingest.",
+          "tradeoff": "No on-site event granularity."
+        }
+      ],
+      "recommendation": "A + C now, B as the opt-in upgrade. Do not deploy a hosted analytics tag on an EU-audience site without Q-11 answered.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "S",
+      "depends_on": [
+        "Q-11",
+        "Q-12"
+      ],
+      "prompt_snippet": "Keep assets/js/clicks.js in local-only mode, ship tools/collector.sample.mjs behind an explicit opt-in, and add a footer 'measurement' line generated from the state of endpoint in site.config.json.",
+      "src": [
+        "SRC-02",
+        "SRC-09"
+      ]
+    },
+    {
+      "id": "SG-07",
+      "title": "Automate the schedule, not the scraping",
+      "one_line": "A weekly job that opens the re-verification queue, not a robot that visits Amazon.",
+      "why": "Program Content that is gone from Amazon must be removed promptly (SRC-02 §6(c)), which is a real recurring duty; but artificially generating clicks or sessions, by robot or software, is prohibited (§6(s)). So the automatable part is staleness detection on our own data, and the human part is the check.",
+      "options": [
+        {
+          "label": "A. Weekly Action: flag rows whose checked_on is older than 30 days; open an issue",
+          "detail": "Runs on our repo only; no automated access to Amazon.",
+          "tradeoff": "Still needs a human to look at the listing."
+        },
+        {
+          "label": "B. Automated page fetch of listing URLs",
+          "detail": "Detects disappearance without a human.",
+          "tradeoff": "Automated access to the store plus a scraping surface; not worth the ambiguity for 5 rows."
+        },
+        {
+          "label": "C. Nothing; manual monthly pass",
+          "detail": "Cheapest.",
+          "tradeoff": "Duty silently unmet between passes."
+        }
+      ],
+      "recommendation": "A. It keeps the compliance duty visible and refuses the automated-traffic line by design.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "medium",
+      "effort": "S",
+      "depends_on": [
+        "Q-05"
+      ],
+      "prompt_snippet": "Add tools/freshness.mjs that lists rows older than 30 days and a weekly workflow calling it; fail the build when a product row is stale and unreviewed.",
+      "src": [
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "SG-08",
+      "title": "Publish the four briefed questions as guides, then let queries pick the fifth",
+      "one_line": "One question per page, one page per week, next topic chosen from measured impressions.",
+      "why": "The brief supplies four working titles and no demand evidence (Q-07). Google's guidance rewards pages that answer a specific question with original analysis and headings that do not exaggerate (SRC-08), and Search Console is the free first-party source for what to write next.",
+      "options": [
+        {
+          "label": "A. Weekly cadence, four guides now, queue the rest from queries",
+          "detail": "Matches the machinery already in this build (feed + sitemap auto-append).",
+          "tradeoff": "Requires a human to keep the cadence."
+        },
+        {
+          "label": "B. Bulk-generate 40 long-tail pages",
+          "detail": "Looks like scale.",
+          "tradeoff": "Exactly the search-engine-first pattern Google warns about; also starves on verification. Rejected."
+        },
+        {
+          "label": "C. Cluster-first: three hub pages, then subordinate guides",
+          "detail": "Stronger internal linking and a better crawl path.",
+          "tradeoff": "Slower to first publish."
+        }
+      ],
+      "recommendation": "A now, C at eight guides, with a hard rule that no page publishes while carrying an unverified product claim.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "M",
+      "depends_on": [
+        "Q-07",
+        "Q-10"
+      ],
+      "prompt_snippet": "Add a guide to content/guides/, run the generator, and confirm the new URL lands in sitemap.xml and feed.xml automatically; keep titles question-shaped and free of superlatives.",
+      "src": [
+        "SRC-08"
+      ]
+    },
+    {
+      "id": "SG-09",
+      "title": "Give search one site to index, and keep the feed link-free",
+      "one_line": "Sitemap, canonical, one H1, JSON-LD, and an RSS feed that carries headlines - not store links.",
+      "why": "Structured data fields and their meaning are documented (SRC-07); the site lives on a sub-path so canonical must be absolute and internal links relative (SRC-09); and a feed body containing store links is where syndication puts affiliate links in someone else's mailer, which the Participation Requirements restrict to solicited messages (SRC-02 §4).",
+      "options": [
+        {
+          "label": "A. Headline-only feed + sitemap auto-append + Article JSON-LD",
+          "detail": "What this build does.",
+          "tradeoff": "Feed readers lose inline excerpts; that is the point."
+        },
+        {
+          "label": "B. Full-text feed with links",
+          "detail": "Better subscriber experience.",
+          "tradeoff": "Uncontrolled redistribution of Special Links. Rejected."
+        },
+        {
+          "label": "C. No feed",
+          "detail": "One less surface.",
+          "tradeoff": "Loses a legitimate discovery channel the brief asked to keep."
+        }
+      ],
+      "recommendation": "A, and add a Search Console submission step to the deployment checklist rather than a new feed.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "medium",
+      "effort": "S",
+      "depends_on": [],
+      "prompt_snippet": "Keep G-13 armed (assert no store host appears inside feed item bodies) and record the Search Console submission date in data/sources.json as an operator-supplied note.",
+      "src": [
+        "SRC-02",
+        "SRC-07",
+        "SRC-09"
+      ]
+    },
+    {
+      "id": "SG-10",
+      "title": "Decide the domain before earning any ranking",
+      "one_line": "github.io/WinC is fine to prove a thesis and bad to compound one.",
+      "why": "Project Pages sites sit under /WinC/ (SRC-09), a name that says nothing to a buyer and re-roots every canonical, sitemap and feed when changed. The chosen name must also avoid Amazon marks and misspellings (SRC-02 §1(g)).",
+      "options": [
+        {
+          "label": "A. Stay on the sub-path for 90 days",
+          "detail": "Zero cost, zero setup; proves the content earns queries.",
+          "tradeoff": "Any later move needs 301s that Pages cannot do for us at that path."
+        },
+        {
+          "label": "B. Custom domain now, CNAME + base_url flip",
+          "detail": "Brand, link equity and a credible publisher line.",
+          "tradeoff": "Money and 20 minutes of DNS; must not contain an Amazon mark."
+        },
+        {
+          "label": "C. Subdomain of an existing owned domain",
+          "detail": "Inherits trust if the root is real and topical.",
+          "tradeoff": "Only good if that site's subject is adjacent."
+        }
+      ],
+      "recommendation": "A until the first ten guides exist, then B; flip base_url and rebuild in the same commit.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "medium",
+      "effort": "S",
+      "depends_on": [
+        "Q-08"
+      ],
+      "prompt_snippet": "Change site.config.json base_url and path_prefix, add the CNAME file at the repo root, rebuild, and re-run the link gate to prove no absolute /WinC/ link survived.",
+      "src": [
+        "SRC-02",
+        "SRC-09"
+      ]
+    },
+    {
+      "id": "SG-11",
+      "title": "Do not build the price-alert feature the plan implies",
+      "one_line": "Drop-alerts are the most-requested affiliate widget Amazon expressly forbids.",
+      "why": "'Unless otherwise agreed by Amazon, your Site must not have price tracking and/or price alerting functionality' (SRC-02 §6(y)). A 'notify me when under €X' form looks like an obvious conversion win and is a contractual breach.",
+      "options": [
+        {
+          "label": "A. Skip it; ship a monthly 'what changed on the desk' note",
+          "detail": "Keeps the list-building purpose without price mechanics.",
+          "tradeoff": "Lower urgency hook."
+        },
+        {
+          "label": "B. Build it and accept the risk",
+          "detail": "None of us wants to be the one who says this is fine.",
+          "tradeoff": "Material-breach exposure. Rejected."
+        },
+        {
+          "label": "C. Ask Amazon for written agreement first",
+          "detail": "The policy leaves an express door open.",
+          "tradeoff": "Slow, and likely no; keep the ask in the file as an option, not a plan."
+        }
+      ],
+      "recommendation": "A. Keep C as a recorded question so nobody re-litigates it.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "S",
+      "depends_on": [],
+      "prompt_snippet": "Leave the alert feature unbuilt, keep gate G-08 asserting its absence, and record the option-C question in data/questions.json as Q-11a if the operator wants the written ask pursued.",
+      "src": [
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "SG-12",
+      "title": "Buy trust with a name, a review log and a corrections line",
+      "one_line": "A publication has someone to call out; a content farm does not.",
+      "why": "Google's self-assessment asks who created the content and how (SRC-08); the Endorsement Guides care that endorsements reflect honest opinion (SRC-04); and §5 fixes first-person disclosure wording (SRC-01). None of that survives an unnamed desk forever.",
+      "options": [
+        {
+          "label": "A. Named human byline + 'reviewed on' stamp + corrections section",
+          "detail": "Cheapest credibility we can actually stand behind.",
+          "tradeoff": "Requires a real person to accept accountability."
+        },
+        {
+          "label": "B. Desk byline only, provenance note on every page",
+          "detail": "What ships now.",
+          "tradeoff": "Caps how strong any claim can get."
+        },
+        {
+          "label": "C. Persona ('our testing lab')",
+          "detail": "Marketing-forward.",
+          "tradeoff": "Implies testing we have not done; deceptive under SRC-02 §2(b). Rejected."
+        }
+      ],
+      "recommendation": "B now, A as soon as the operator names a person; never C.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "medium",
+      "effort": "S",
+      "depends_on": [
+        "Q-09"
+      ],
+      "prompt_snippet": "Set authorship.person_byline, add reviewed_on to each guide, and render a Corrections block from data/corrections.json (create it, empty, with a documented schema).",
+      "src": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-04",
+        "SRC-08"
+      ]
+    },
+    {
+      "id": "SG-13",
+      "title": "Illustrate with our own art, labelled as illustration",
+      "one_line": "Own imagery lifts the page and stays clear of product-content rights.",
+      "why": "Program Content may only be resized or truncated without altering meaning, and must vanish when Amazon removes it (SRC-02 §6(a),(c)); the IP License terms were not reachable from here (Q-13). Generating our own diagrams sidesteps an unresolved question and gives the site a look.",
+      "options": [
+        {
+          "label": "A. Commissioned/generative explanatory diagrams, alt text, 'illustration' caption",
+          "detail": "What this build does: airflow, capacity, counter-footprint diagrams.",
+          "tradeoff": "Not photographs of the actual product."
+        },
+        {
+          "label": "B. Amazon-supplied product images",
+          "detail": "Recognisable to shoppers.",
+          "tradeoff": "Rights and staleness obligations we cannot yet discharge."
+        },
+        {
+          "label": "C. Stock photography",
+          "detail": "Polished.",
+          "tradeoff": "Generic food photography reads as filler and says nothing about a product."
+        }
+      ],
+      "recommendation": "A; revisit B only with the IP License open in front of us.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "medium",
+      "effort": "S",
+      "depends_on": [
+        "Q-13"
+      ],
+      "prompt_snippet": "Keep assets/img limited to original illustrations, each with a caption node saying 'illustration, not product imagery', and have the gate reject img elements without alt.",
+      "src": [
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "SG-14",
+      "title": "Write the three policy pages once and link them everywhere",
+      "one_line": "Disclosure, privacy, and how-we-verify - short, plain, and in the footer of every page.",
+      "why": "§3(e) of the Participation Requirements expects disclosure of cookies and pixels; GitHub Pages logs IP addresses (SRC-09); Amazon names GDPR and the ePrivacy Directive as applicable law; and the FTC standard is that the connection is disclosed where the recommendation is read (SRC-04).",
+      "options": [
+        {
+          "label": "A. Three separate short pages + the strip above the fold",
+          "detail": "Each page answers one question in ten lines.",
+          "tradeoff": "Three more URLs in the sitemap."
+        },
+        {
+          "label": "B. One long legal page",
+          "detail": "Fewer files.",
+          "tradeoff": "Nobody reads it; conspicuousness fails in practice."
+        },
+        {
+          "label": "C. Strip only, no pages",
+          "detail": "Minimal.",
+          "tradeoff": "Nothing to point a reviewer at. Rejected."
+        }
+      ],
+      "recommendation": "A, with the disclosure page carrying the exact §5 sentence and the quote of where it comes from.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "medium",
+      "effort": "S",
+      "depends_on": [
+        "Q-14"
+      ],
+      "prompt_snippet": "Keep /disclosure/, /privacy/ and /how-we-verify/ generated from site.config.json so any change to measurement state rewrites the privacy wording automatically.",
+      "src": [
+        "SRC-04",
+        "SRC-09"
+      ]
+    },
+    {
+      "id": "SG-15",
+      "title": "Adopt one primary metric and refuse the rest",
+      "one_line": "'Clicks that reached a listing we can confirm' is the only number this site can currently earn honestly.",
+      "why": "Revenue depends on rates we have not verified (Q-06), attribution is 24 hours with an 89-day cart tail (SRC-02 CIS §1), and reported orders arrive only from the account's own reports. Optimising a derived number before the inputs exist produces confident nonsense.",
+      "options": [
+        {
+          "label": "A. Primary: confirmed outbound clicks; guard-rail: unresolved product rows = 0",
+          "detail": "Both are countable from what we control.",
+          "tradeoff": "No revenue talk until reports exist."
+        },
+        {
+          "label": "B. Primary: estimated EPC",
+          "detail": "Familiar to affiliates.",
+          "tradeoff": "Requires rates and revenue we do not have; would be invented. Rejected."
+        },
+        {
+          "label": "C. Primary: impressions from Search Console",
+          "detail": "Authorized first-party, arrives quickly.",
+          "tradeoff": "Measures visibility, not decision quality."
+        }
+      ],
+      "recommendation": "A as the operational metric, C as the editorial signal, ledger stays empty until first authorized report.",
+      "accepted_option": null,
+      "decision": "pending review",
+      "impact": "high",
+      "effort": "S",
+      "depends_on": [
+        "Q-10",
+        "Q-15"
+      ],
+      "prompt_snippet": "Render the ledger from data/ledger.csv with an 'authorized source' column required per row, and have the gate reject any ledger row whose source is not a first-party report.",
+      "src": [
+        "SRC-02"
+      ]
+    }
+  ]
+}

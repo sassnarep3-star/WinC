@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suggestions &amp; decision paths — Air &amp; Ember review desk</title>
+<meta name="description" content="Every proposed change to the site as a reviewable card with options, effort, impact, and the exact decision question — nothing implemented until a path is chosen.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/suggestions.html">
+<meta property="og:title" content="Suggestions &amp; decision paths — Air &amp; Ember">
+<meta property="og:description" content="Proposed changes as reviewable cards with options and a decision question.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/suggestions.html">
+<meta name="theme-color" content="#21201c">
+<link rel="alternate" type="application/rss+xml" title="Air &amp; Ember guides" href="feed.xml">
+<link rel="stylesheet" href="css/site.css">
+<script src="js/click-counter.js" defer></script>
+<script src="js/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">A&amp;E</span>
+      <span class="brand-text"><strong>Air &amp; Ember</strong><em>Countertop gear, straight answers</em></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="guides.html">Guides</a>
+      <div class="nav-group">
+        <button class="nav-group-toggle" aria-expanded="false">Review desk ▾</button>
+        <div class="nav-group-panel">
+          <a href="executive-summary.html">Executive summary</a>
+          <a href="suggestions.html">Suggestions &amp; paths</a>
+          <a href="questions.html">Questions &amp; answers</a>
+          <a href="verification.html">Verification log</a>
+          <a href="flagged.html">Flagged for review</a>
+          <a href="compliance.html">Compliance &amp; disclosure</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="disclosure-strip" role="note">
+    <strong>Advertisement</strong> — As an Amazon Associate we earn from qualifying purchases.
+    <a href="compliance.html" data-event="disclosure_click">How we disclose and mark every link</a>
+  </div>
+</header>
+
+<main id="main" class="wrap" style="padding-top:36px">
+  <p class="eyebrow">Review desk · suggestions</p>
+  <h1>Pick a path before anything changes</h1>
+  <p class="hero-standfirst">Each card below is a proposed change with (usually) two honest options, the effort it costs, and the exact question to answer. Nothing on this list is implemented until someone picks a path — except the safety floor already in place: disclosure, source links, and blank-unverified fields.</p>
+
+  <div class="stat-row">
+    <div class="stat"><b>10</b><span>suggestions open</span></div>
+    <div class="stat"><b>0</b><span>decisions recorded</span></div>
+    <div class="stat"><b>4</b><span>already-done defaults (reversible)</span></div>
+    <div class="stat"><b>20 Nov</b><span>last board update</span></div>
+  </div>
+
+  <h2>How to use this page</h2>
+  <ol>
+    <li>Read a card: the yellow box is the decision.</li>
+    <li>Pick Path A or Path B (or write your own in the repo — see <a href="questions.html">open questions</a>).</li>
+    <li>Record the choice — reply with the suggestion ID (e.g. <span class="mono">S-04</span>) and the path. Implementation follows the choice, not the other way round.</li>
+  </ol>
+
+  <div class="grid-2">
+
+    <article class="card suggestion" data-filter-item="S-01 links special links short links tag">
+      <header><h3>S-01 · Standardize outbound links as tagged Special Links</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>Buyer CTAs currently use the documented <span class="mono">/dp/ASIN?tag=shopnow047c-20</span> format with <span class="mono">rel="sponsored nofollow noopener"</span> and a visible “Sponsored” tag. The five supplied <span class="mono">link.amazon/…</span> codes remain recorded in the register but are not used as buyer CTAs; their compliance status is unresolved (FLG-002/003).</p>
+      <div class="paths">
+        <div class="path"><b>Path A — keep current</b>Tagged /dp/ links everywhere; supplied codes stay in the register as provenance only.</div>
+        <div class="path"><b>Path B — switch CTAs to supplied codes</b>Use link.amazon/… as the buyer CTA too (only wise if Associates confirms those codes are Special Links — see S-02).</div>
+      </div>
+      <p class="decision-q">Decision: which link format do buyer CTAs use going forward?</p>
+      <div class="meta-row"><span class="chip">Effort: low</span><span class="chip">Impact: attribution</span><span class="chip">Blocks: S-02</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-02 test one link associates workflow before scaling">
+      <header><h3>S-02 · One-link-per-product Associates test before scaling</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>The brief requires testing one link per product in the enrolled Associates workflow — confirming destination <em>and</em> that it reports — before scaling links. We can’t run it without Associates account access; it’s the single highest-value verification left.</p>
+      <div class="paths">
+        <div class="path"><b>Path A — owner runs the 5-link test</b>Owner clicks each of the 5 tagged links from the site, checks the Associates report within 48h, records results here.</div>
+        <div class="path"><b>Path B — delay until first order</b>Ship as-is and treat the first attributed order as the test (slower, riskier for attribution).</div>
+      </div>
+      <p class="decision-q">Decision: who runs the 5-link test, and by when?</p>
+      <div class="meta-row"><span class="chip">Effort: 30 min</span><span class="chip">Impact: high</span><span class="chip">Needs: Associates login</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-03 publishing cadence guides weekly">
+      <header><h3>S-03 · Publishing cadence for question-shaped guides</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>Five guides shipped. The brief wants a cadence so the sitemap and feed grow on a rhythm, and so the next topic is chosen from measured queries rather than instinct (which needs analytics first — S-05).</p>
+      <div class="paths">
+        <div class="path"><b>Path A — 1 guide / fortnight</b>Steady, reviewable, easy to sustain; first two topics chosen from on-site search + questions page.</div>
+        <div class="path"><b>Path B — 1 guide / week through the season</b>Faster index coverage; higher risk of thin content without measurement.</div>
+      </div>
+      <p class="decision-q">Decision: what cadence, starting when?</p>
+      <div class="meta-row"><span class="chip">Effort: ongoing</span><span class="chip">Impact: organic traffic</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-04 analytics endpoint measurement events click counter">
+      <header><h3>S-04 · Where click &amp; conversion measurement actually lives</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>Shipped: a privacy-preserving client-side counter recording five events into localStorage only (no cookies, no third parties) — see <a href="verification.html">the metrics panel</a>. Missing: any server-side endpoint (static hosting has none), and conversions can only come from Amazon’s own reports.</p>
+      <div class="paths">
+        <div class="path"><b>Path A — keep local-only</b>Zero infrastructure; events stay in the reader’s browser (so they don’t aggregate across readers — honest but weak).</div>
+        <div class="path"><b>Path B — self-host a tiny endpoint</b>e.g. a worker/serverless function on your own domain receiving sendBeacon posts; enable the existing <span class="mono">ENDPOINT_OFF</span> flag; define the canonical five events (FLG-007).</div>
+      </div>
+      <p class="decision-q">Decision: local-only, or stand up a self-hosted endpoint? And confirm the canonical five events.</p>
+      <div class="meta-row"><span class="chip">Effort: A none / B half-day</span><span class="chip">Impact: decisions depend on it</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-05 search console sitemap seo index">
+      <header><h3>S-05 · Search Console + sitemap submission</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>The site ships <span class="mono">sitemap.xml</span>, <span class="mono">robots.txt</span>, canonicals, Open Graph tags, and an RSS feed — but nobody has submitted them to Google Search Console, and no verified query data exists yet.</p>
+      <div class="paths">
+        <div class="path"><b>Path A — submit now, read in 2–4 weeks</b>Owner verifies the property, submits the sitemap, shares query data back to the desk.</div>
+        <div class="path"><b>Path B — wait for a custom domain</b>Verify once on the final domain to avoid re-work if the site moves off <span class="mono">*.github.io</span>.</div>
+      </div>
+      <p class="decision-q">Decision: submit on github.io now, or wait for a custom domain?</p>
+      <div class="meta-row"><span class="chip">Effort: 20 min</span><span class="chip">Impact: high for topic choice</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-06 reader capture newsletter email">
+      <header><h3>S-06 · Reader capture (the “SG-30” item)</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>No email capture exists: static hosting can’t process sign-ups, and we won’t fake a form. The brief lists reader capture as a parallel-pass item.</p>
+      <div class="paths">
+        <div class="path"><b>Path A — hosted form provider</b>Add a reputable newsletter embed (buttondown, beehiiv, etc.) — third-party, so it needs a privacy line in the footer.</div>
+        <div class="path"><b>Path B — no capture for now</b>Rely on RSS; revisit with the analytics decision (S-04).</div>
+      </div>
+      <p class="decision-q">Decision: which provider, or none?</p>
+      <div class="meta-row"><span class="chip">Effort: low</span><span class="chip">Impact: audience ownership</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-07 imagery images photography policy">
+      <header><h3>S-07 · Imagery strategy</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>The site currently uses original editorial images generated for this project (hero + two guide photos). Hot-linking Amazon product images is not something we’ll do without a license check.</p>
+      <div class="paths">
+        <div class="path"><b>Path A — keep original imagery</b>Consistent look, no third-party image rights questions; add a photo per guide over time.</div>
+        <div class="path"><b>Path B — licensed product photography</b>Source real photos of the five units (requires purchase or brand assets) for higher trust on product pages.</div>
+      </div>
+      <p class="decision-q">Decision: original-only, or budget for real product photos?</p>
+      <div class="meta-row"><span class="chip">Effort: A low / B medium</span><span class="chip">Impact: conversion trust</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-08 product intent confirmation owner ASIN">
+      <header><h3>S-08 · Fill the intent fields (owner confirmation)</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>The intent record has five blank rows: intended ASIN, intended listing URL, confirmation date, source. Only the owner can supply them — nothing public binds a 9-character code to a product (FLG-001/003).</p>
+      <div class="paths">
+        <div class="path"><b>Path A — confirm all five now</b>Owner states the intended product for each code; we record date + source; observed fields stay separate.</div>
+        <div class="path"><b>Path B — leave blank indefinitely</b>Register stays half-filled; “intended” never distinguishes from “observed” for readers.</div>
+      </div>
+      <p class="decision-q">Decision: will you confirm the intended product for each of the five codes?</p>
+      <div class="meta-row"><span class="chip">Effort: 10 min</span><span class="chip">Impact: data integrity</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-09 commission category fee report">
+      <header><h3>S-09 · Confirm commission category per product</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>We show the official Kitchen rate-card rate (4.50%) with its source, and flag that Amazon assigns each product’s fee category (FLG-005). Associates reporting can confirm the real category per ASIN.</p>
+      <div class="paths">
+        <div class="path"><b>Path A — check in Associates report</b>Owner looks up fee category for the 5 ASINs; we replace the caveat with the confirmed category + date.</div>
+        <div class="path"><b>Path B — keep rate-card caveat</b>Accept the general rate as the honest answer for now.</div>
+      </div>
+      <p class="decision-q">Decision: confirm per-ASIN fee categories from the report?</p>
+      <div class="meta-row"><span class="chip">Effort: 15 min</span><span class="chip">Impact: accuracy</span></div>
+    </article>
+
+    <article class="card suggestion" data-filter-item="S-10 domain brand custom">
+      <header><h3>S-10 · Custom domain vs github.io</h3><span class="flag-status">Awaiting decision</span></header>
+      <p>Findability starts with a stable, brandable URL. The site lives at <span class="mono">sassnarep3-star.github.io/WinC/</span> for now; canonicals and sitemap point there.</p>
+      <div class="paths">
+        <div class="path"><b>Path A — stay on github.io</b>Free, zero setup; canonicals already correct; revisit if traction appears.</div>
+        <div class="path"><b>Path B — buy a domain now</b>One 301 from github.io, update canonicals/sitemap once; better for Search Console long-term (pairs with S-05 Path B).</div>
+      </div>
+      <p class="decision-q">Decision: stay, or buy a domain this season?</p>
+      <div class="meta-row"><span class="chip">Effort: A none / B low</span><span class="chip">Impact: brand + SEO</span></div>
+    </article>
+  </div>
+
+  <h2>Already done — the safety floor (reversible defaults)</h2>
+  <div class="grid-2">
+    <div class="notice ok" style="margin:0">
+      <h3>✅ Disclosure above the fold, every page</h3>
+      <p>Strip under the masthead + footer repeat, per FTC placement guidance. No decision needed to keep it; removing it would be a compliance regression.</p>
+    </div>
+    <div class="notice ok" style="margin:0">
+      <h3>✅ Source on every register row</h3>
+      <p>Blank-unverified policy in force: unconfirmed fields stay empty and are flagged, never inferred.</p>
+    </div>
+    <div class="notice ok" style="margin:0">
+      <h3>✅ Sponsored marking on outbound links</h3>
+      <p><span class="mono">rel="sponsored nofollow noopener"</span> + visible “Sponsored” tags on every product CTA.</p>
+    </div>
+    <div class="notice ok" style="margin:0">
+      <h3>✅ SEO scaffolding shipped</h3>
+      <p>sitemap.xml, robots.txt, canonicals, OG tags, RSS feed — all wired; submission is S-05.</p>
+    </div>
+  </div>
+
+  <div class="notice">
+    <h3 style="margin-bottom:.3em">Where decisions get recorded</h3>
+    <p>Reply with the suggestion ID and path (e.g. “S-04 → Path B”), or edit the board in the repo (<span class="mono">COORDINATION.md</span>). Once a choice is recorded, the corresponding task is claimed there and worked in order. See also the <a href="questions.html">questions that shape these decisions</a>.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Air &amp; Ember</h4>
+        <p>A small publication about countertop cooking gear: five picks, question-shaped guides, and a review desk that shows its work.</p>
+        <p>Tracking ID: <span class="mono">shopnow047c-20</span></p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products &amp; register</a>
+          <a href="guides.html">All guides</a>
+          <a href="feed.xml">RSS feed</a>
+        </div>
+      </div>
+      <div>
+        <h4>Review desk</h4>
+        <div class="footer-links">
+          <a href="executive-summary.html">Executive summary</a>
+          <a href="suggestions.html">Suggestions &amp; paths</a>
+          <a href="questions.html">Questions &amp; answers</a>
+          <a href="verification.html">Verification log</a>
+          <a href="flagged.html">Flagged for review</a>
+          <a href="compliance.html">Compliance &amp; disclosure</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-disclosure"><strong>Advertisement:</strong> As an Amazon Associate we earn from qualifying purchases. Product links on this site are marked as sponsored. We may earn a commission if you buy through them, at no extra cost to you. <a href="compliance.html">Full disclosure and link policy</a>.</p>
+    <p class="footer-meta">Product facts observed 20 Nov 2026 from official Amazon listing pages; prices and ratings change. Unverified fields are left blank and published on the <a href="flagged.html">Flagged for review</a> page. © 2026 Air &amp; Ember.</p>
+  </div>
+</footer>
+</body>
+</html>
