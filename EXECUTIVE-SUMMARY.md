@@ -8,10 +8,10 @@ It leads with products, answers buyer questions, and keeps verification one clic
 ## What is live
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold. Every card now leads with a desk-written dek, a "best for" line and an honest "the catch" — the seller's keyword title no longer appears as body copy.
-- **Guides:** 8 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
-- **Trust:** verification register (intent vs. observed kept separate), 30-source register, 25 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`) **and** an independent audit (`tools/audit.mjs`) that currently reports 0 findings across 10 rules.
+- **Guides:** 11 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
+- **Trust:** verification register (intent vs. observed kept separate), 31-source register, 26 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`) **and** an independent audit (`tools/audit.mjs`) that currently reports 0 findings across 10 rules.
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
-- **Decision layer:** 22 open questions, **11 answered / 10 partly answered / 1 still open**, 5 of them blocking. 34 suggestions, 6 of them about how decisions get made rather than about the site.
+- **Decision layer:** 22 open questions, **11 answered / 10 partly answered / 1 still open**, 5 of them blocking. 37 suggestions, 6 of them about how decisions get made rather than about the site.
 - **Machinery:** `scripts/agent/` — research → draft → publish → optimise. Each step refuses to write a value it cannot source.
 
 ## Key facts (all sourced)
@@ -239,7 +239,7 @@ renumbered; no other session's claim or work was touched).
   register; `TODAY` in the builder is now overridable via `WINC_BUILD_DATE` (default unchanged).
 - **New source evidence:** S27 (USDA FSIS Leftovers, fetched), S28 (Google updates — FAQ rich result
   docs removed, June 2026), S29 (observation #4 provenance).
-- **Gate on the merged tree:** `OK: 29 pages checked, 28 sitemap URLs, no violations.` (8 guides,
+- **Gate on the merged tree:** `OK: 32 pages checked, 31 sitemap URLs, no violations.` (8 guides,
   25 search rows). The stricter register-schema gate from the third pass passes unchanged.
 
 ---
