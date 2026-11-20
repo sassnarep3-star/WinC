@@ -222,3 +222,12 @@ ul.notes strong{color:var(--accent)}
 
 /* topics table: keep the long question readable */
 table td p{margin:4px 0 0}
+
+/* Path chooser (Direction page): the four published paths and their suggestion boxes */
+.pathpill{display:inline-block;background:#FDF2F0;border:1px solid #F3CFC7;color:#9A3412;font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pathboxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:16px 0}
+.pathbox{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#FFFBF7}
+.pathbox h3{margin:0 0 6px;font-size:15px}
+.pathbox p{margin:0 0 8px;font-size:13.5px;color:var(--muted)}
+.pathbox ul{margin:0;padding-left:18px;font-size:13.5px}
+.pathbox li{margin:4px 0}

@@ -1,7 +1,7 @@
 {
-  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
+  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. Every row also carries `path` (A-D, matching the four published paths), `decision_by` (who can actually decide it) and `discovery` (what would have to be known to decide it). A row with no missing information says so rather than pretending otherwise.",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass; statuses repaired against the code, new suggestions added)",
+  "reviewed_by_session": "arena-82d39deb (third pass; statuses repaired against the code, new suggestions added); paths, decision owners and discovery added by b0920c92 (2026-11-20)",
   "suggestions": [
     {
       "id": "SG-01",
@@ -16,7 +16,11 @@
       "expected_effect": "Removes the highest-severity account risk before traffic exists. Measure: zero unconfirmed-tag links in the build; gate check passes.",
       "evidence": "Amazon Associates Operating Agreement + Program Policies (S01, S02) as cited on the Verification page; both are login-gated, so confirm in your own console (FLG-006 note in sources).",
       "feeds_prompt": "Run the one-link-per-product Associates test for the five observed ASINs, record destination + tracking-report confirmation per product, and only then remove data-link-state=\"pending-verification\". Keep intended_* fields blank unless the owner confirms intent in writing.",
-      "status_detail": "Still the first thing to do: it gates every monetised link on the site."
+      "status_detail": "Still the first thing to do: it gates every monetised link on the site.",
+      "path": "A",
+      "decision_by": "Account owner",
+      "discovery": "Needs Associates Central access — no public source can settle it.",
+      "status_detail_by": "Account owner"
     },
     {
       "id": "SG-02",
@@ -31,7 +35,11 @@
       "expected_effect": "Category no longer orphaned; thermometer pages gain internal links. Measure: Search Console impressions/clicks for thermometer queries after 4 weeks.",
       "evidence": "File-level inspection: guides/ contained 4 files, none in the thermometer cluster; about_body() hardcoded the wrong count.",
       "feeds_prompt": "Keep cluster counts computed from data/guides/*.json and data/products.json — never hand-written — and add a gate check that fails if any category has zero guides.",
-      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20."
+      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep both clusters covered.",
+      "status_detail_by": "This site"
     },
     {
       "id": "SG-03",
@@ -46,7 +54,11 @@
       "expected_effect": "Higher click-through from social/messaging shares; warmer read. Measure: outbound_click per session on illustrated vs pre-change pages, and share-click rate once the endpoint exists.",
       "evidence": "assets/ contained no image files (verified by directory listing); head() emitted no og:image.",
       "feeds_prompt": "Commission licensed lifestyle photography for the five products and both categories; keep the 'no Amazon product images' rule, keep the illustration captions, and swap files in without touching copy. Never scrape Amazon imagery.",
-      "status_detail": "Illustrations shipped; the licensed-photography decision (Q-07) is still open."
+      "status_detail": "Illustrations shipped; the licensed-photography decision (Q-07) is still open.",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep the illustrations.",
+      "status_detail_by": "This site"
     },
     {
       "id": "SG-04",
@@ -61,7 +73,11 @@
       "expected_effect": "Fewer dead ends, more pages per session. Measure: pages/session and the share of sessions that reach a second product page.",
       "evidence": "Rendered nav HTML in index.html: href=\"guides/basket-or-oven-style-air-fryer.html\" labelled 'Guides'; no guides/index.html existed on disk.",
       "feeds_prompt": "Keep nav generated from one NAV list in the builder and assert in the gate that every nav label resolves to an index page, not a leaf.",
-      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20."
+      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep the navigation honest.",
+      "status_detail_by": "This site"
     },
     {
       "id": "SG-05",
@@ -77,7 +93,10 @@
       "evidence": "scripts/build_site.py guide_body(): product_card(p, depth=1) for p in PRODUCTS — unfiltered.",
       "feeds_prompt": "Change guide CARDS to filter by the guide's category field and add a gate check that fails if a guide's product block contains a product from another category.",
       "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20: guide CARDS are filtered by the guide's category field with a fallback. This register still said 'open' until this session's audit — a register that misstates its own status is worse than no register.",
-      "status_detail_by": "arena-23d7ed19 (2026-11-20)"
+      "status_detail_by": "arena-23d7ed19 (2026-11-20)",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep guides on-topic."
     },
     {
       "id": "SG-06",
@@ -92,7 +111,11 @@
       "expected_effect": "One-command cadence. Measure: time from 'topic chosen' to 'page live'; number of builder edits needed to publish (target: zero).",
       "evidence": "GUIDES list at scripts/build_site.py:298-446; three separate loops iterated it.",
       "feeds_prompt": "Keep data/guides/*.json as the only guide source; extend scripts/new_guide.py with --cluster and --season flags and a pre-fill that refuses to write a guide with no source link per table row.",
-      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20."
+      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep data/ the single source of truth.",
+      "status_detail_by": "This site"
     },
     {
       "id": "SG-07",
@@ -107,7 +130,11 @@
       "expected_effect": "Real denominators for every future decision. Measure: events/day > 0 and ledger rows timestamped from the endpoint, not from guesses.",
       "evidence": "assets/app.js CONFIG.endpoint === \"\" (local-only mode); FLG-007 states the endpoint is shipped, not deployed.",
       "feeds_prompt": "Deploy analytics/worker.js, set CONFIG.endpoint in assets/app.js, confirm all five events land, and add a nightly count to the campaign ledger table. Do not fabricate backfill for the days before go-live.",
-      "status_detail": "Still open: the endpoint code exists but is not deployed, so no event leaves a browser."
+      "status_detail": "Still open: the endpoint code exists but is not deployed, so no event leaves a browser.",
+      "path": "D",
+      "decision_by": "Account owner",
+      "discovery": "Needs a host for the endpoint; the code is already verified end to end.",
+      "status_detail_by": "Account owner"
     },
     {
       "id": "SG-08",
@@ -122,7 +149,11 @@
       "expected_effect": "Topics chosen from demand instead of taste. Measure: query list saved into data/queries-log.json with a dated provenance line, as the campaign ledger does for clicks.",
       "evidence": "The brief's Priority 4 ('the next topic is chosen from measured queries instead of instinct'); no SC property exists yet (FLG-007 adjacent).",
       "feeds_prompt": "After Search Console has 4 weeks of data, export queries where the site ranks 8-25 with >50 impressions, store them in data/queries-log.json with the export date, and generate one guide per chosen query from the data/guides/_template.json file.",
-      "status_detail": "Still open: no Search Console property exists, so no topic on the backlog is chosen from measured queries yet."
+      "status_detail": "Still open: no Search Console property exists, so no topic on the backlog is chosen from measured queries yet.",
+      "path": "D",
+      "decision_by": "Account owner",
+      "discovery": "Needs Search Console property access.",
+      "status_detail_by": "Account owner"
     },
     {
       "id": "SG-09",
@@ -137,7 +168,11 @@
       "expected_effect": "E-E-A-T signal, reviewer identity for later product-schema work. Measure: nothing automated; re-check after 3 months.",
       "evidence": "about_body() authorship copy; brief's 'authorship' requirement in the publication pass.",
       "feeds_prompt": "Add data/authors.json with {name, bio, credentials, contact, orcid_or_links}, render bylines from it, and keep the current 'no hands-on testing' disclosure line intact wherever a byline appears.",
-      "status_detail": "Still open: the desk byline is honest but caps trust signals."
+      "status_detail": "Still open: the desk byline is honest but caps trust signals.",
+      "path": "B",
+      "decision_by": "Account owner",
+      "discovery": "Needs one real name and a bio, or a decision to keep the desk byline.",
+      "status_detail_by": "Account owner"
     },
     {
       "id": "SG-10",
@@ -152,7 +187,11 @@
       "expected_effect": "The pages become citable. Measure: zero cells flagged 'conflicts' in the specs table.",
       "evidence": "data/products.json p3/p4/p2 fields; data/probes.json notes from the 2026-11-20 re-observation.",
       "feeds_prompt": "For each conflicted spec cell, fetch the manufacturer's own page, record URL + retrieval date in data/sources.json, and render both values with dates when sources disagree instead of choosing one.",
-      "status_detail": "Partly closed: the third read on 2026-11-20 confirmed both conflicting strings on the live listing; the manufacturer page is still the only way to settle them."
+      "status_detail": "Partly closed: the third read on 2026-11-20 confirmed both conflicting strings on the live listing; the manufacturer page is still the only way to settle them.",
+      "path": "A",
+      "decision_by": "Account owner",
+      "discovery": "Needs the manufacturer's own page to settle two listing conflicts.",
+      "status_detail_by": "Account owner"
     },
     {
       "id": "SG-11",
@@ -168,7 +207,10 @@
       "evidence": "category_body() renders intro + guide links + cards, no decision block; brief's 'make it read like a shop'.",
       "feeds_prompt": "Add a 'Match to your situation' module to category_body() driven by a per-category profiles list in data/categories.json, and require every rendered recommendation to name the spec it rests on (enforce in check_site.py).",
       "status_detail": "Shipped by session arena-82d39deb on 2026-11-20: data/categories.json adds reader profiles per category, and each category page now renders a 'Match to your situation' block where every answer names the one listed spec it rests on. The photography half of this suggestion (licensed lifestyle shots) stays open under SG-03 / Q-07.",
-      "status_detail_by": "arena-82d39deb (2026-11-20)"
+      "status_detail_by": "arena-82d39deb (2026-11-20)",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Implementation only — it starts once the links are verified."
     },
     {
       "id": "SG-12",
@@ -183,7 +225,11 @@
       "expected_effect": "Truthfulness stops depending on the person editing. Measure: gate run on every commit; count of violations caught pre-merge.",
       "evidence": "scripts/check_site.py inspected line by line (133 lines); banned-phrase and image-existence checks absent.",
       "feeds_prompt": "Keep scripts/check_site.py failing closed; add the banned-phrase, computed-counts, image-exists and per-row-source checks, and never mark a task verified without an official source link in data/sources.json.",
-      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20; extended again in this session (register-schema checks)."
+      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20; extended again in this session (register-schema checks).",
+      "path": "A",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep it.",
+      "status_detail_by": "This site"
     },
     {
       "id": "SG-13",
@@ -199,7 +245,10 @@
       "evidence": "assets/app.js reader-capture handler records an event locally; capture_block() text in scripts/build_site.py.",
       "feeds_prompt": "Rewrite capture copy to describe implemented behaviour only, and add 'Double opt-in' plus any other unimplemented privacy promise to the check_site.py banned list.",
       "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20: the capture copy was rewritten to describe implemented behaviour only, and check_site.py now fails on unimplemented privacy promises. The 'double opt-in' phrase is on the gate's banned list.",
-      "status_detail_by": "arena-23d7ed19 (2026-11-20)"
+      "status_detail_by": "arena-23d7ed19 (2026-11-20)",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep the copy honest."
     },
     {
       "id": "SG-14",
@@ -214,7 +263,11 @@
       "expected_effect": "Cleaner crawl set. Measure: indexed-page count in Search Console equals sitemap URL count.",
       "evidence": "robots.txt before this session: three lines, no Disallow.",
       "feeds_prompt": "Keep robots.txt generated by the builder so the Disallow list cannot drift from the repo layout, and re-check after adding any new top-level directory.",
-      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20."
+      "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep the robots file honest.",
+      "status_detail_by": "This site"
     },
     {
       "id": "SG-15",
@@ -230,7 +283,10 @@
       "risk": "Low. The information is not deleted, it is moved to pages that are still one click from every page.",
       "expected_effect": "A reader reaches a product or a guide before meeting the process. Measure: outbound_click rate on the front page once the endpoint exists (SG-07).",
       "evidence": "Rendered index.html on 2026-11-20 (before this session): the section 'Why the numbers here are boring in a good way' and the capture block's self-describing caveat.",
-      "feeds_prompt": "Keep the front page in publication order — hero, shop, guides, categories, one-line method note — and never let a count of sources, flags or questions appear in the reader path. Dashboard surfaces live in the footer and the single 'The Desk' navigation group."
+      "feeds_prompt": "Keep the front page in publication order — hero, shop, guides, categories, one-line method note — and never let a count of sources, flags or questions appear in the reader path. Dashboard surfaces live in the footer and the single 'The Desk' navigation group.",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep the front page a shop."
     },
     {
       "id": "SG-16",
@@ -246,7 +302,10 @@
       "risk": "Medium for trust: a profile that reaches beyond the listed specs becomes an opinion. The compliance gate checks that every profile names a field that exists in data/products.json.",
       "expected_effect": "Faster decisions and more outbound clicks without inflating any claim. Measure: outbound_click per category page once SG-07 is deployed.",
       "evidence": "category_body() before this session rendered intro + cards + a comparison table + guide links, and nothing that answered 'which one for me'.",
-      "feeds_prompt": "Keep profiles in data/categories.json, one deciding spec per profile, and extend the gate so a profile that names a field absent from data/products.json fails the build."
+      "feeds_prompt": "Keep profiles in data/categories.json, one deciding spec per profile, and extend the gate so a profile that names a field absent from data/products.json fails the build.",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep the decision blocks."
     },
     {
       "id": "SG-17",
@@ -262,7 +321,10 @@
       "risk": "Low, but the honesty matters: a page of planned topics must not read like a demand forecast.",
       "expected_effect": "A visible editorial pipeline, and a place where a measured query can replace a hypothesis once Search Console data exists. Measure: number of topics whose 'chosen from' changes from hypothesis to measured query.",
       "evidence": "No page in the 2026-11-20 build listed planned topics; the only trace of the backlog was in the COORDINATION.md session log.",
-      "feeds_prompt": "Keep the backlog in data/topics.json, mark every planned topic's chosen_from explicitly, and never label a topic 'popular' or 'trending' without measured query data."
+      "feeds_prompt": "Keep the backlog in data/topics.json, mark every planned topic's chosen_from explicitly, and never label a topic 'popular' or 'trending' without measured query data.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep the backlog visible."
     },
     {
       "id": "SG-18",
@@ -278,7 +340,10 @@
       "risk": "Low. The rule protects against the single most likely silent error: a plausible number from the wrong source.",
       "expected_effect": "Spec rows stop drifting from their source. Measure: number of corrected values per verification pass — target zero after this pass.",
       "evidence": "data/products.json p3-chefman-8qt: power was '1700W / 120V' until the 2026-11-20 third read; now '1000W / 120V' with power_prior_capture kept (FLG-022).",
-      "feeds_prompt": "Re-read a product's own details table and bullet copy before recording any spec row, keep the previous value as *_prior_capture, and open a flag whenever two official sources disagree instead of choosing one."
+      "feeds_prompt": "Re-read a product's own details table and bullet copy before recording any spec row, keep the previous value as *_prior_capture, and open a flag whenever two official sources disagree instead of choosing one.",
+      "path": "A",
+      "decision_by": "This site",
+      "discovery": "Already shipped; keep reading each spec from its own listing."
     },
     {
       "id": "SG-19",
@@ -293,7 +358,11 @@
       "risk": "Cash and time if commissioned; a credibility gap if scraped imagery appears without rights.",
       "expected_effect": "Better trust and click-through if photography ships; nothing measurable if the decision is to stay with illustrations. Measure: outbound_click per product page, once the endpoint exists.",
       "evidence": "assets/img/ holds four original illustrations; About → Methodology states the no-Amazon-imagery rule; Q-07 asks where the images come from permanently.",
-      "feeds_prompt": "Decide the imagery line once, in writing, and either commission licensed photography with credits or record 'illustrations by policy' as the standing rule. Never use Amazon-hosted product images."
+      "feeds_prompt": "Decide the imagery line once, in writing, and either commission licensed photography with credits or record 'illustrations by policy' as the standing rule. Never use Amazon-hosted product images.",
+      "path": "B",
+      "decision_by": "Account owner",
+      "discovery": "Needs a decision on licensing and budget.",
+      "status_detail_by": "Account owner"
     },
     {
       "id": "SG-20",
@@ -308,7 +377,17 @@
       "risk": "Deciding late is the expensive option: content written for the wrong market is sunk cost.",
       "expected_effect": "One decision that unblocks topic choice, link format, and the imprint question. Measure: nothing to measure — this is a decision, not an experiment.",
       "evidence": "FLG-011 (locale unresolved), Q-10 (audience), and the fact that all five links resolve to amazon.com listings while the owner operates in NL.",
-      "feeds_prompt": "Record the audience, marketplace and language decision in data/questions.json answers and on the About page, then re-check every outbound link format against that decision."
+      "feeds_prompt": "Record the audience, marketplace and language decision in data/questions.json answers and on the About page, then re-check every outbound link format against that decision.",
+      "path": "A",
+      "decision_by": "Account owner",
+      "discovery": "Needs a decision on audience, marketplace and locale.",
+      "status_detail_by": "Account owner"
     }
-  ]
+  ],
+  "path_definitions": {
+    "A": "Trust the money path first — confirm the tracking ID, run the one-link Associates tests, settle the two live spec conflicts. Recommended, because everything else depends on it.",
+    "B": "Shop depth — decision blocks, imagery, authorship, the page types that convert.",
+    "C": "Content volume — keep both clusters covered and the topic backlog published.",
+    "D": "Measure first — deploy the endpoint and Search Console, then choose topics from real queries."
+  }
 }

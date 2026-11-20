@@ -608,11 +608,13 @@ def suggestion_table():
         rows += (f'<tr><td><strong>{esc(x["id"])}</strong></td>'
                  f'<td><a href="#{esc(x["id"])}">{esc(x["title"])}</a></td>'
                  f'<td>{esc(x["area"])}</td><td>{esc(x["effort"])}</td><td>{esc(x["cost"])}</td>'
+                 f'<td><span class="pathpill">Path {esc(x.get("path","?"))}</span></td>'
+                 f'<td>{esc(x.get("decision_by","This site"))}</td>'
                  f'<td class="src">{suggestion_sources(x)}</td>'
                  f'<td>{pill(x["status"], cls)}</td>'
                  f'<td>{esc(x["expected_effect"])}</td></tr>')
     return ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Suggestion</th><th>Area</th><th>Effort</th>'
-            '<th>Cost</th><th>Status</th><th>Where the evidence is</th>'
+            '<th>Cost</th><th>Path</th><th>Who decides</th><th>Status</th><th>Where the evidence is</th>'
             '<th>How we would know it worked</th></tr></thead><tbody>'
             + rows + "</tbody></table></div>")
 
@@ -633,6 +635,21 @@ def suggestion_stages():
             + block("Already shipped", shipped, "Done in an earlier session or this one — kept so the reasoning is not lost."))
 
 
+def path_boxes():
+    """The suggestions that belong to each published path, so choosing a path shows its work."""
+    defs = _sug.get("path_definitions", {})
+    out = []
+    for key in ("A", "B", "C", "D"):
+        items = [x for x in SUGGESTIONS if x.get("path") == key]
+        if not items:
+            continue
+        lis = "".join(f'<li><a href="#{esc(x["id"])}"><strong>{esc(x["id"])}</strong> — {esc(x["title"])}</a>'
+                      f' <span class="meta">({esc(x.get("decision_by","This site"))})</span></li>' for x in items)
+        out.append(f'<div class="pathbox" data-path="{key}"><h3>Path {key}</h3>'
+                   f'<p>{esc(defs.get(key, ""))}</p><ul>{lis}</ul></div>')
+    return "".join(out)
+
+
 def direction_body():
     c = counts()
     cards = ""
@@ -642,12 +659,13 @@ def direction_body():
         detail_html = f'<p class="why"><span>Status detail</span>{rich(detail)}</p>' if detail else ""
         cards += f"""<article class="sug" id="{esc(x['id'])}">
 <header><h3>{esc(x['title'])}</h3>{pill(x['status'], cls)}</header>
-<p class="sugmeta">{esc(x['area'])} · {esc(x['id'])} · effort {esc(x['effort'])} ({EFFORT.get(x['effort'], x['effort'])}) · cost: {esc(x['cost'])}</p>
+<p class="sugmeta">{esc(x['area'])} · {esc(x['id'])} · effort {esc(x['effort'])} ({EFFORT.get(x['effort'], x['effort'])}) · cost: {esc(x['cost'])} · Path {esc(x.get('path','?'))} · decided by {esc(x.get('decision_by','This site'))}</p>
 <p class="why"><span>Problem</span>{rich(x['problem'])}</p>
 <p class="why"><span>Suggestion</span>{rich(x['proposal'])}</p>
 <p class="why"><span>Risk</span>{rich(x['risk'])}</p>
 <p class="why"><span>How we would know it worked</span>{rich(x['expected_effect'])}</p>
 <p class="why"><span>Evidence</span>{rich(x['evidence'])}</p>
+<p class="why"><span>What would have to be known to decide this</span>{rich(x.get('discovery','Not stated.'))}</p>
 {detail_html}
 <details class="promptbox"><summary>Instruction block for the next build prompt</summary>
 <pre><code>{esc(x['feeds_prompt'])}</code></pre></details>
@@ -672,6 +690,7 @@ def direction_body():
 <label><input type="radio" name="path" value="B"> <strong>Path B — Shop depth.</strong> Extend the decision blocks with per-row source dates, then settle the imagery question (Q-07) and commission licensed photography. Best for conversion.</label>
 <label><input type="radio" name="path" value="C"> <strong>Path C — Content volume.</strong> Two guides a week from the published topic backlog plus a seasonal cluster. Best for coverage; worst without measurement, because you will be guessing which topic to write next.</label>
 <label><input type="radio" name="path" value="D"> <strong>Path D — Measure first.</strong> Deploy the endpoint and Search Console now, add nothing, and choose the next five topics from 4 weeks of real queries.</label>
+<div class="pathboxes">{path_boxes()}</div>
 <button class="btn" type="submit">Save my choice (this browser only)</button>
 <span id="chooser-msg" class="meta"></span>
 </form>
@@ -1129,7 +1148,7 @@ def questions_body():
                  f'<td><strong>{esc(q["question"])}</strong><p class="meta">Gates: {esc(q["decision_it_gates"])}</p></td>'
                  f'<td>{link_source_ids(esc(q["have"]))}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
                  f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}</td>'
-                 f'<td class="answercell">{blank(q["answer"])}</td></tr>')
+                 f'<td class="answercell">{esc(q["answer"]) if q.get("answer") else "<span class=blank>&#8212; not yet answered</span>"}</td></tr>')
     pack = "\n\n".join(f'{q["id"]}. {q["question"]}\nWhat we need: {q["missing"]}\nHow to get it: {q["discovery"]}'
                         for q in QUESTIONS if q.get("blocking", "no").startswith("yes"))
     return f"""
