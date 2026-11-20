@@ -466,13 +466,13 @@ Branch `arena/f1fd0ff0-winc`, based on `main@ba0b838` (PR #15 merged; PR #16 fro
 
 | ID | Task | Status | Owner | Files |
 | --- | --- | --- | --- | --- |
-| T30 | Fourth independent live observation of the five supplied `link.amazon` links + the five resolved listings, recorded with the reader used | in progress | f1fd0ff0 | `data/probes.json`, `data/sources.json` |
-| T31 | Make the reader path read like a shop: per-product artwork, human card copy instead of the raw listing title, flag IDs removed from cards, seasonal front-page strip | in progress | f1fd0ff0 | `scripts/build_site.py`, `assets/img/*`, `data/products.json` |
-| T32 | Reconcile the two open parallel PRs (#17 `arena/04112b09-winc`, #18 `arena/23428c9e-winc`) against `main`: compare, decide, record — no silent clobber | in progress | f1fd0ff0 | `COORDINATION.md`, `flagged-for-review.html` (via builder) |
-| T33 | Suggestions + questions registers: add what this polish pass proved, keep the review-before-implement contract | pending | f1fd0ff0 | `data/suggestions.json`, `data/questions.json` |
-| T34 | Gate: assert per-product image + card copy exist, and that no reader-facing card carries a flag ID | pending | f1fd0ff0 | `scripts/check_site.py` |
-| T35 | Executive summary + README reconciled with the repo state (computed) | pending | f1fd0ff0 | `EXECUTIVE-SUMMARY.md`, `README.md` |
-| T36 | Integration: build + gate green, PR to main, merge, confirm Pages deploy | pending | f1fd0ff0 | all (integration only) |
+| T30 | Fourth independent live observation of the five supplied `link.amazon` links + the five resolved listings, recorded with the reader used | done | f1fd0ff0 | `data/probes.json`, `data/sources.json` |
+| T31 | Make the reader path read like a shop: per-product artwork, human card copy instead of the raw listing title, flag IDs removed from cards, seasonal front-page strip | done | f1fd0ff0 | `scripts/build_site.py`, `assets/img/*`, `data/products.json` |
+| T32 | Reconcile the two open parallel PRs (#17 `arena/04112b09-winc`, #18 `arena/23428c9e-winc`) against `main`: compare, decide, record — no silent clobber | done (recorded; not merged) | f1fd0ff0 | `COORDINATION.md`, `flagged-for-review.html` (via builder) |
+| T33 | Suggestions + questions registers: add what this polish pass proved, keep the review-before-implement contract | done | f1fd0ff0 | `data/suggestions.json`, `data/questions.json` |
+| T34 | Gate: assert per-product image + card copy exist, and that no reader-facing card carries a flag ID | done | f1fd0ff0 | `scripts/check_site.py` |
+| T35 | Executive summary + README reconciled with the repo state (computed) | done | f1fd0ff0 | `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Integration: build + gate green, PR to main, merge, confirm Pages deploy | in progress | f1fd0ff0 | all (integration only) |
 
 ## Why this pass exists (audit, before any edit)
 
@@ -484,3 +484,45 @@ Branch `arena/f1fd0ff0-winc`, based on `main@ba0b838` (PR #15 merged; PR #16 fro
 | B-04 | Open PRs **#17 and #18 are whole-site rebuilds** under different brands ("Crisp Report", "Air & Ember"), both `CONFLICTING` against `main`. They duplicate what `main` already ships (shop pages, guides, suggestions, questions, flags, sitemap) in a second, less complete form. | not merged; recorded here and on Flagged for Review so the owner can decide — merging either would delete the source register, gate and measurement layer that `main` carries |
 
 Claim committed and pushed before any other edit.
+
+
+## Results (T30–T36, session f1fd0ff0)
+
+### Verification performed, with the official source for each claim
+
+| What was checked | How | Result |
+| --- | --- | --- |
+| All five supplied `link.amazon` tokens | Re-resolved live through the fetch reader on 2026-11-20 (fourth observation, third by an independent session) | 5/5 → B0CDY277D3, B09B7SB46R, B08DKYBTPH, B0DHZTCNR5, B0DZFD6R9Z; every response still carries `lv=shuf` + `plpRedirect=mhFallback`; two additionally served `th=1`. Recorded in `data/probes.json` → `fourth_observation`, source S28 |
+| Five stored product titles | Compared byte-for-byte with each listing's live `<title>` | 5/5 verbatim matches (S28, S29, S30) |
+| Emeril 26QT spec row (the most populated one) | The fetched page exposed the full details table | Dimensions 16.9"D x 15.8"W x 14.8"H, capacity 24.6 litres, model 4-00675-02X-VN, UPC 752356835682, 1700 W/120 V, 75–500°F, page's own ASIN row B09B7SB46R — **all match the register**; the six-vs-seven accessories contradiction reproduced again (`Configuration` vs `Item Highlight`), so FLG-010 stands |
+| Prices, star ratings, review counts, deal badges | Visible during the reads | **Not copied anywhere** (Program Policies S02; FLG-006). Published as FLG-027 with the decision it forces (SG-27 / Q-23) |
+| Sibling/variant listings | Amazon's own rails on the recorded pages | Chefman 6 Qt dual `B0B7C327LK`, ThermoMaven Orange `B0GL7Z4KP4`, CHEF iQ `B0DZFNQXGL` — logged as FLG-026, and no product page claims a colour, size or bundle |
+| USDA FSIS *Food Thermometers* | Fetched in full, calibration/care/types sections read verbatim | Ice-water method (2 in. deep, 30 s, 32°F), boiling-water method (212°F at sea level; −2 to −5°F at altitude), "accurate within 2 to 4 degrees F", which types "cannot be calibrated", the leave-in-food rule, and the hand-wash rule — used as the sourcing for the accuracy guide; S17 enriched with the verbatim passages |
+| Thanksgiving 2026 date on the seasonal strip | Calendar arithmetic from the statutory "fourth Thursday in November" rule | 26 November 2026 (Nov 1 = Sunday; Thursdays 5/12/19/26). The strip carries its year in its own text so it cannot silently go stale |
+| Data leaked into reader copy | New gate rule | **Found one real defect:** Chefman 8 Qt `temperature` and `model` values embedded "— see FLG-005". Values cleaned; flag notes stay in `listing_notes`/Flagged page; the gate now fails any spec value carrying a flag id |
+
+### Irregularities flagged this session (published on the Flagged for review page)
+
+- **FLG-026** — variant ambiguity: `th=1` on two responses + three sibling listings in Amazon's own rails; the observed target is stable, the served variant may not be.
+- **FLG-027** — price/rating/deal data cannot be shown by a static build under S02, which is also an editorial limit for the holiday season; decision recorded as SG-27 / Q-23 rather than left implicit.
+- Carry-overs still open, unchanged and not re-litigated: FLG-001 (tracking ID issuance), FLG-002 (one-link Associates test), FLG-003 (short-link compliance status — *not* claimed invalid), FLG-004/005/010 (listing-internal contradictions), FLG-007 (analytics endpoint not deployed), Q-13 (no Search Console property).
+
+### Parallel-session note: open PRs #17 and #18 (T32)
+
+- Both are **whole-site rebuilds under different brands** (`arena/04112b09-winc` → "Crisp Report", `arena/23428c9e-winc` → "Air & Ember"), each `CONFLICTING` against `main`.
+- Diff names show they re-create `data/products.json`, `data/flags.json`, `data/sources.json`, `data/suggestions.json`, `data/questions.json`, `index.html`, `sitemap.xml`, `robots.txt`, `feed.xml` and the stylesheet from scratch. Merging either would **replace** the registers, the compliance gate, the redirect log and the measurement layer that `main` already carries — a net loss of verified data, not an addition.
+- Decision: **not merged by this session.** Their content ideas are recorded here for the owner: #18 carries a Black-Friday reading guide (`guide-black-friday-reading.html`) — the same ground is now covered by `guides/probe-placement-holiday-cook.html` plus FLG-027's price decision; #17 adds `assets/js/clicks.js` and `data/ledger.csv`, both already present in more complete form (`assets/app.js` with the five events, `data/campaign-ledger.json` with a schema and provenance trail).
+- Owners of those branches should rebase onto `main` and re-run `npm run verify`, or close their PRs. This is recorded instead of silently discarded, per the working agreement.
+
+### Repo changes this session (all on `arena/f1fd0ff0-winc`)
+
+| Area | Files | What |
+| --- | --- | --- |
+| Shop surfaces | `scripts/build_site.py`, `assets/style.css` | per-product cards with editorial copy + chips, front-page at-a-glance table, dated seasonal strip, product pages lead with the editorial read and quote the listing title as a source |
+| Imagery | `assets/img/*.jpg` (12 files) | one commissioned illustration per product and per guide; 43 MB of PNGs → 1.9 MB of web JPEGs; artwork doubles as `og:image` |
+| Registers | `data/products.json`, `sources.json`, `probes.json`, `flags.json`, `topics.json`, `suggestions.json`, `questions.json` | fourth read recorded; S28–S30; FLG-026/027; TP-06/08/09 closed + TP-13 added; SG-21–SG-30; Q-22–Q-24 |
+| Editorial | `data/guides/probe-accuracy-check.json`, `probe-placement-holiday-cook.json`, `counter-fit-before-you-order.json` | three new guides, every figure sourced to USDA FSIS or the listing |
+| Gate | `scripts/check_site.py` | card copy/image rules, artwork weight budget, no flag ids in reader values or in the front-page grid, seasonal strip must carry a year, published topics must point at a built page |
+| Docs | `README.md`, `EXECUTIVE-SUMMARY.md`, `COORDINATION.md` | counts and standing rules reconciled with the repo; this record |
+
+**Build + gate at close:** `Built 30 pages, 29 sitemap URLs, 9 guides, 26 search rows.` → `OK: 30 pages checked, 29 sitemap URLs, no violations.`
