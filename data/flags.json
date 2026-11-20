@@ -295,14 +295,13 @@
     {
       "id": "FLG-030",
       "title": "Supplied link.amazon tokens did not reproduce the prior ASIN mapping via this fetch path (2026-11-20)",
-      "detail": "Session arena/1c6908d1-winc re-fetched all five supplied link.amazon tokens directly on 2026-11-20. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts — i.e. the token->ASIN mapping recorded by prior sessions (S14/S18/S22/S29, data/probes.json) was NOT reproduced through this fetch path. This does NOT establish the links are invalid (FLG-003 unchanged, never claimed invalid). The likely causes are a difference in redirect/cookie/region handling between the page-reader fetch and the prior sessions' browser/curl resolution, or session-dependent redirect behaviour. The observed_* ASIN values remain valid product identities (the /dp/ listings are live and titles match), but the token-to-ASIN mapping's reproducibility across observation methods is now in question. Independently corroborated the same day by session arena-9a3bb152 (observation #7, S39, data/probes.json): that run also landed B04G1MEwY/B02NbDxp3/B00hJ57DV/B0c8moW59 on the amazon.com homepage, while B0f3GKalj reproduced /dp/B0DZFD6R9Z — so the divergence is reproducible across two sessions on 2026-11-20 (fetch-path/client behavior, not one reader's glitch).",
+      "detail": "Session arena/1c6908d1-winc re-fetched all five supplied link.amazon tokens directly on 2026-11-20. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts — i.e. the token->ASIN mapping recorded by prior sessions (S14/S18/S22/S29, data/probes.json) was NOT reproduced through this fetch path. This does NOT establish the links are invalid (FLG-003 unchanged, never claimed invalid). The likely causes are a difference in redirect/cookie/region handling between the page-reader fetch and the prior sessions' browser/curl resolution, or session-dependent redirect behaviour. The observed_* ASIN values remain valid product identities (the /dp/ listings are live and titles match), but the token-to-ASIN mapping's reproducibility across observation methods is now in question.",
       "action": "Re-resolve each token in a real enrolled-Associates browser context (cookies + region) and record the final URL per token in data/probes.json with a dated provenance line; reconcile against the prior mapping. Do not claim the links are invalid until that is done.",
       "status": "needs review",
       "sources": [
         "S15",
         "S18",
-        "S36",
-        "S39"
+        "S36"
       ],
       "source_note": ""
     },
@@ -354,6 +353,21 @@
     },
     {
       "id": "FLG-034",
+      "title": "Third data point in the cross-path disagreement: short-link pass #7 landed 4/5 on the home page",
+      "detail": "Session b0920c92's short-link pass (S38) reproduces the divergence: B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ instead of a product listing, while B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four were re-fetched individually: identical. This extends FLG-033's disagreement record: listing re-reads agree 5/5 (S30-S34, S36, S37) while short-link passes diverge (FLG-030 by arena/1c6908d1, FLG-034 by b0920c92). The /dp/ control in the same pass confirmed all five listings still serve the recorded products. Cause not determinable from this environment. NOT a claim that the short links are invalid - FLG-003 remains open and unresolved. A fourth divergent run the same day (session arena-9a3bb152, observation #8, S40) landed the same four tokens on the Amazon homepage while B0f3GKalj matched — four independent sessions (f1fd0ff0, arena/1c6908d1, b0920c92, arena-9a3bb152) now show the same fetch-path divergence.",
+      "action": "Same action as FLG-030: verify each submitted link in a normal browser session on two different days; if the home page is what a reader gets, the owner confirms intended products (Q-02) and issues Special Links from Associates Central (FLG-002).",
+      "status": "needs review",
+      "sources": [
+        "S15",
+        "S29",
+        "S37",
+        "S38",
+        "S40"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-035",
       "title": "CHEF iQ Sense is sold in 2-probe and 3-probe configurations under different ASINs",
       "detail": "Amazon's page for B0DZFD6R9Z (3 probes) surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) in the same module. Probe count is a headline spec for this product, so the two configurations are easy to confuse and are not the same purchase.",
       "action": "Owner or reader: confirm the probe count on the listing page reached. Recorded on the product page so the spec is not assumed from a family name.",

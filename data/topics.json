@@ -11,14 +11,16 @@
       "question": "Am I buying a different machine, or the same machine with a different name?",
       "why": "The oven-style listing names toaster-oven modes and a much larger cavity; the fryer listings name baskets. Readers cannot tell from a title which one their cooking style needs.",
       "needs": "Listed cavity size, listed functions, listed capacity for each of the three air fryers (already in data/products.json). No new sources required.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the brief's 'basket or oven-style' question is the site's own framing; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
-      ]
+      ],
+      "status_note": "Published 2026-11-20 as guides/air-fryer-vs-convection-oven.html by session arena/a81c0f0e-winc (merged via PR #37); the guide's own _provenance records its per-row sources.",
+      "published_as": "guides/air-fryer-vs-convection-oven.html"
     },
     {
       "id": "TP-02",
@@ -28,14 +30,16 @@
       "question": "Quarts are not servings — what fits, in practice?",
       "why": "Capacity is the first spec every buyer filters on and the easiest one to over-interpret. The Emeril listing itself makes a serving claim (4–6 people) that can be checked against the others.",
       "needs": "Listed capacities (6 Qt / two 3-Qt baskets, 8 quarts, 26 Qt = 24.6 L) plus the listing's own serving claim. USDA MyPlate serving guidance would be the neutral yardstick for portions if it is cited per row.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — pairs with the published capacity checklist; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
-      ]
+      ],
+      "status_note": "Published 2026-11-20 as guides/what-6-quarts-actually-holds.html by session arena/a81c0f0e-winc (merged via PR #37); the guide's own _provenance records its per-row sources.",
+      "published_as": "guides/what-6-quarts-actually-holds.html"
     },
     {
       "id": "TP-03",

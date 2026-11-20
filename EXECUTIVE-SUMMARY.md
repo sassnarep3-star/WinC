@@ -547,6 +547,56 @@ manufacturer-page spec conflicts, analytics-endpoint deployment and Search Conso
 enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
 forecast; the campaign ledger stays empty until first-party reports arrive.
 
+
+---
+
+# Session b0920c92 — row-level sourcing site-wide, observation #6, decision desk, measurement proof (T43–T49)
+
+Merged with `main` three times as parallel PRs landed (through #51); every register is the union of
+all sessions' work.
+
+## 1 · Every table row on every page carries its source
+The gate's row-source rule now applies to every page: a row passes if it links an official source,
+cites the source register, prints the source URL as text, or explicitly says its source is internal
+or blank. The strict runs found 95 unsourced rows across the waves (61 + 22 + 12); all repaired with
+per-row citations. Deep links (`#src-*`, `#flag-*`, `#q-*`, `#t-*`) are gate-checked to resolve.
+
+## 2 · Observation #7 extends the short-link cross-path disagreement (FLG-034, S38)
+Two independent sessions recorded the same divergence on 2026-11-20: four of the five `link.amazon`
+short links land on the Amazon home page (FLG-030 by arena/1c6908d1; FLG-034 by this session, S38; cross-path disagreement recorded as FLG-033),
+while all five direct `/dp/` listings still serve the recorded products. Recorded as observations,
+not verdicts; FLG-003 stays open. The merged interpretation now separates the reproducible
+observed-ASIN records from the unstable short-link behaviour.
+
+## 3 · The measurement layer is proven against its hardened contract
+`scripts/verify_measurement.py` runs the shipped collector as a real server, posts all five events
+with the beacon's own payload, and asserts responses, aggregates, the hardened row schema, and that
+no IP, user agent, cookie, email, search query, client timestamp or client site ID survives. It
+caught a real defect in the pre-hardening collector (client-timestamp field mismatch) before the
+hardened schema superseded that field entirely. `npm run verify` includes it.
+
+## 4 · The decision desk names its deciders
+Every suggestion row (40 across the union) carries its path (A–D), who decides it (SG-01, SG-07,
+SG-08, SG-09, SG-10, SG-19, SG-20, SG-22, SG-29 and SG-30 need the account owner) and what would
+have to be known to decide it. Question rows with no answer say "not yet answered".
+
+## 5 · TP-06 published; register reconciled
+**Where exactly do you put the probe in a chicken?** (TP-06) quotes the USDA FSIS *Food Thermometers*
+factsheet (S17, fetched and read 2026-11-20) for the three-point whole-bird check and the 165 °F
+minimum (S16). TP-01/TP-02 marked published crediting their sessions; this session's parallel TP-10
+draft was dropped in favour of the merged one.
+### Integration outcome (this session)
+
+PR #47 was merged into `main` as `0d257d5` after five rounds of reconciling with parallel sessions; GitHub Pages rebuilt
+(`status: built`, no error) one second after the merge commit, and the new guide was re-fetched from the live URL to confirm the
+deployed state. What landed: the sixth redirect observation, two sourced guides, the front-page glance table and dated seasonal
+strip grafted onto main's renderer, `card_copy` on all five products, and four added gate rules. What was withdrawn on purpose:
+this session's duplicate holiday guide, its two per-listing source rows, its JPEG artwork set, and its rewrite of the renderer
+and stylesheet. Full reconciliation and handoff notes are in the `f1fd0ff0` section of `COORDINATION.md`.
+
+
+**Integration record (T49):** PR #54 merged as `4bfe5d3` (2026-11-20T07:14:00Z); Pages build `built`, live site verified.
+
 ---
 
 # Fourth verification pass & integration — 2026-11-20 (session `arena-9a3bb152`)
@@ -563,18 +613,18 @@ forecast; the campaign ledger stays empty until first-party reports arrive.
 | S16/S17 | USDA FSIS | Temperature chart values confirmed verbatim (poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest; uncooked ham 145°F + rest). |
 | S09–S13 | The five observed listings | 5/5 stored titles equal the live listing `<title>` (minus Amazon's prefix/suffix); category breadcrumbs confirm 3 air fryers + 2 meat thermometers. |
 
-## What was observed (seventh probe run)
+## What was observed (eighth probe run)
 
 All five supplied `link.amazon` tokens were re-resolved through the same reader. **1 of 5 matched
 the recorded mapping** (B0f3GKalj → B0DZFD6R9Z, same `lv=shuf` + `plpRedirect=mhFallback` flags);
 the other four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon homepage. This is
-recorded observation #7 — the first five runs (2026-11-17 and observations #2–#5 on 2026-11-20 by
-arena-23d7ed19, arena-82d39deb, arena-c2123b9c and arena-70bd2fcc) all matched 5/5, and observation
-#6 (f1fd0ff0 / arena/1c6908d1) diverged the same way — see FLG-030, which now records both runs.
+recorded observation #8 — the first five runs (2026-11-17 and observations #2–#5 on 2026-11-20) all
+matched 5/5, then three more sessions diverged the same day (#6 f1fd0ff0/1c6908d1, #7 b0920c92,
+#8 arena-9a3bb152) — four independent divergent runs now recorded under FLG-030/FLG-033/FLG-034.
 Cause unresolved — reader-side degradation and short-link behavior change cannot be separated
-from this environment. Folded into **FLG-030** (the flag arena/1c6908d1 created for their run) with the action (browser re-check + enrolled
+from this environment. Folded into the divergence record (**FLG-030**/**FLG-033**/**FLG-034**) with the action (browser re-check + enrolled
 Associates one-link test, FLG-002). No link is claimed invalid (FLG-003); `observed_*` fields
-still rest on the five earlier 5/5-matching observations (S14, S18, S22, S29 and the arena-70bd2fcc run; this run is S39); `intended_*` stays blank.
+still rest on the five earlier 5/5-matching observations (S14, S18, S22, S29 and the arena-70bd2fcc run; this run is S40); `intended_*` stays blank.
 
 ## Register defects found and repaired (not left silently wrong)
 

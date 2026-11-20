@@ -285,6 +285,14 @@
     },
     {
       "id": "S38",
+      "title": "Independent short-link re-resolution #7 — divergent (4/5 home page) — plus /dp/ control, session b0920c92 (2026-11-20)",
+      "url": "https://link.amazon/B0f3GKalj",
+      "what": "Session b0920c92 re-resolved all five submitted link.amazon short links on 2026-11-20. DIVERGENT from the listing re-reads (S30-S34, S36, S37, all 5/5): four of the five (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) ended on the Amazon home page, and only B0f3GKalj still resolved to B0DZFD6R9Z with the same fallback flags. Two of the four re-fetched individually: identical, so not a parallel-request artefact. This adds a third divergent data point to the disagreement FLG-033 records (FLG-030 vs the 5/5 passes): two sessions (arena/1c6908d1 via FLG-030 and b0920c92 here) saw the home-page fallback on short-link passes while listing re-reads kept agreeing 5/5. Control in the same pass: all five direct /dp/ listings re-opened and every one still served the recorded <title> and breadcrumb, so the published reader links are unaffected. An observation only - not a claim that the links are invalid (FLG-003 stays open); recorded as FLG-034.",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92. Direct shell access to amazon.com is blocked by this sandbox's egress policy, so every observation is a reader fetch."
+    },
+    {
+      "id": "S39",
       "title": "Amazon Associates — Standard Commission Income Statement (Table 1 rate card)",
       "url": "https://affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ",
       "what": "Table 1 fixed rates, fetched verbatim 2026-11-20: 'Physical Books, Kitchen, Automotive | 4.50%'; 'All Other Categories | 4.00%'. Publicly readable without login. Answers the rate half of Q-04; per-ASIN commission-category assignment is not stated on this page and stays unconfirmed.",
@@ -292,10 +300,10 @@
       "access": "Directly fetched anonymously on 2026-11-20 by session arena-9a3bb152; Table 1 read in full."
     },
     {
-      "id": "S39",
-      "title": "Seventh recorded observation of the five supplied link.amazon tokens (session arena-9a3bb152)",
+      "id": "S40",
+      "title": "Eighth recorded observation of the five supplied link.amazon tokens (session arena-9a3bb152)",
       "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
-      "what": "Observation #7, 2026-11-20: B0f3GKalj → /dp/B0DZFD6R9Z (matches all prior observations, same lv=shuf + plpRedirect=mhFallback flags); B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. 1/5 matched. Second independent divergent run; details folded into FLG-030; no claim that any link is invalid (FLG-003).",
+      "what": "Observation #8, 2026-11-20: B0f3GKalj → /dp/B0DZFD6R9Z (matches all prior observations, same lv=shuf + plpRedirect=mhFallback flags); B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. 1/5 matched. Fourth divergent run of the day; details folded into FLG-033/FLG-034; no claim that any link is invalid (FLG-003).",
       "date": "2026-11-20",
       "access": "Fetched 2026-11-20 through the same reader as the earlier observations. Per-request behavior differs from the first three runs; reader-side degradation and a change in short-link behavior cannot be separated from this environment, hence FLG-026 with a browser re-check action."
     }

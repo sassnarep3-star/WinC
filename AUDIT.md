@@ -4,7 +4,7 @@ Run: `node tools/audit.mjs` · date: 2026-11-20
 
 --------------------------------------------------------------------------
 
-Scanned 40 published HTML pages, 123 tracked files (archive/ excluded — that tree is a retired alternate build, not a live surface).
+Scanned 41 published HTML pages, 126 tracked files (archive/ excluded — that tree is a retired alternate build, not a live surface).
 Canonical disclosure string is fixed inside this file, quoted from Associates Program Operating Agreement §5,
 so editing site configuration cannot switch the check off.
 
