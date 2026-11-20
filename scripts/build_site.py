@@ -278,12 +278,23 @@ def product_card(p, depth=0):
         if p.get("power") and p["power"] != "—":
             specs.append(f"Power: {esc(p['power'])}")
     li = "".join(f"<li>{x}</li>" for x in specs)
+    # The card carries one prose paragraph (the story standfirst), then the two decision
+    # lines a shopper actually compares on: what it is best for, and what it costs you.
+    # The longer dek belongs on the product page, where there is room for it.
+    best = p.get("best_for")
+    catch = p.get("catch")
+    best_html = (f'<p class="bestfor"><strong>Best for</strong> {esc(best)}</p>'
+                 if best else "")
+    catch_html = (f'<p class="catchline"><strong>The catch:</strong> {esc(catch)}</p>'
+                  if catch else "")
     return f"""<article class="card">
 <figure class="cardimg">{pic(img, cap, 800, 500, pfx, cls="cardpic")}</figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
 <p class="cardhook">{esc((STORIES.get(p["id"]) or {}).get("standfirst") or p["title"])}</p>
+{best_html}
 <ul class="specs">{li}</ul>
+{catch_html}
 <div class="actions">{buy_button_small(p)}</div>
 <div class="cardfoot">{series_link(p, depth)}{('<a class="sourcetail" href="' + pfx + 'verification.html">Listing read ' + esc(p["source_date"]) + '</a>')}</div>
 <p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
@@ -622,10 +633,30 @@ def product_body(p):
     if faq:
         rows = "".join(f'<details class="faqitem"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)
         faq_html = f'<h2>Questions readers ask about this one</h2><div class="faqlist">{rows}</div>'
+    # The desk's own read of the product: one line, what it is best for, and the catch.
+    # Every one of these fields was checked against the register before it was written —
+    # the specs table below is the evidence.
+    dek = p.get("dek") or p["title"]
+    best = p.get("best_for")
+    catch = p.get("catch")
+    desk = (f'<div class="deskline">'
+            f'<p class="dekline">{esc(dek)}</p>'
+            + (f'<p class="bestfor"><strong>Best for</strong> {esc(best)}</p>' if best else "")
+            + (f'<p class="catchline"><strong>The catch:</strong> {esc(catch)}</p>' if catch else "")
+            + "</div>")
+    checks = p.get("check_before_buying") or []
+    checks_html = ""
+    if checks:
+        items = "".join(f"<li>{esc(c)}</li>" for c in checks)
+        checks_html = (f'<h2>Check these three things before you buy</h2><ul class="notes checks">{items}</ul>'
+                       '<p class="meta">Each line is a check on the listing, not a verdict on the product. '
+                       'Where the listing contradicts itself, the contradiction is named and flagged '
+                       'rather than resolved here.</p>')
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
 <p class="lede">{esc((STORIES.get(p['id']) or {}).get('standfirst') or p['title'])}</p>
+{desk}
 <p class="aslisted"><span class="aslabel">As listed on Amazon</span> {esc(p['title'])}</p>
 <p class="meta">Observed ASIN {esc(p['observed_asin'])} · Listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
@@ -635,6 +666,7 @@ def product_body(p):
 {house_ad(depth=1)}
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
+{checks_html}
 <h2>What to compare before you buy</h2>
 <ul>
 <li><strong>Capacity vs. your actual meals:</strong> {esc(p['capacity'] or 'see listing')} — measure the tray or bird you cook most often.</li>
@@ -1278,8 +1310,12 @@ def products_index_body():
     pfx = "../"
     rows = ""
     for x in PRODUCTS:
+        best_for = x.get("best_for") or ""
+        best_cell = esc(best_for) if best_for else '<span class="blank">— blank (unverified)</span>'
         rows += (f'<tr><td><a href="{pfx}{esc(x["page"])}">{esc(x["short_label"])}</a><br><span class="meta">{esc(x["brand"])}</span></td>'
-                 f'<td>{esc(x["category"])}</td><td>{blank(x["capacity"] if x["capacity"] != "—" else "")}</td>'
+                 f'<td>{esc(x["category"])}</td>'
+                 f'<td>{best_cell}</td>'
+                 f'<td>{blank(x["capacity"] if x["capacity"] != "—" else "")}</td>'
                  f'<td>{blank(x["dimensions"])}</td><td>{blank(x["weight"])}</td><td>{blank(x["model"])}</td>'
                  f'<td>{blank(x["temperature"])}</td><td>{blank(x["power"])}</td>'
                  f'<td>{blank(x["price"])}</td><td>{blank(x["rating"])}</td>'
@@ -1291,7 +1327,7 @@ def products_index_body():
 <p class="lede">Three air fryers, two thermometers. This is the honest version of a shop window: what the listing states, where we read it, and which cells we will not fill in for you.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Specs read {TODAY} · <a href="{pfx}verification.html">Verification</a></p></section>
 {house_ad(depth=1)}
-<div class="tablewrap"><table><thead><tr><th>Product</th><th>Category</th><th>Capacity</th><th>Footprint</th><th>Weight</th><th>Model</th><th>Temperature</th><th>Power</th><th>Price</th><th>Rating</th><th>Source</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Product</th><th>Category</th><th>Best for</th><th>Capacity</th><th>Footprint</th><th>Weight</th><th>Model</th><th>Temperature</th><th>Power</th><th>Price</th><th>Rating</th><th>Source</th></tr></thead><tbody>{rows}</tbody></table></div>
 <p class="legend"><strong>Reading the blanks:</strong> <code>—</code> means the field does not apply to that product type (a thermometer has no wattage). <span class="blank">— blank (unverified)</span> means we looked and could not confirm it, so we left it empty rather than estimate it. Both are answers; a guess would not be.</p>
 <div class="notice"><strong>The price and rating columns are blank by policy, not by accident.</strong> Amazon’s Program Policies bar static price display, and ratings move daily — either number would be stale the moment it was written. The button on each card takes you to the listing, where the live figure is. See <a href="{pfx}flagged-for-review.html">FLG-006</a>.</div>
 <h2>Cards</h2>

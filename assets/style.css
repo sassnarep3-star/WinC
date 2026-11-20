@@ -367,3 +367,19 @@ table td p{margin:4px 0 0}
 .lede-figure picture{display:block}
 .seriestile picture{display:block}
 .cattile picture{display:block}
+
+/* ============================================================
+   Desk line (session arena/ceced4d0-winc)
+   The shop's own read of a product: one line, what it is best for,
+   and the catch. Rendered from data/products.json, so every word is
+   checkable against the spec table on the same page.
+   ============================================================ */
+.carddek{margin:0 0 8px;font-size:14.5px;line-height:1.5;color:#4A443F}
+.bestfor{margin:0 0 8px;font-size:13.5px;line-height:1.45;color:#3F3A35}
+.bestfor strong,.catchline strong{font-weight:800;color:var(--accent2)}
+.catchline{margin:0 0 10px;font-size:13.5px;line-height:1.45;color:#5A524B;border-left:3px solid #E4B7A0;padding-left:9px}
+.deskline{margin:14px 0 4px;padding:13px 15px;background:#FCF8F1;border:1px solid var(--line);border-radius:10px}
+.deskline .dekline{margin:0 0 8px;font-size:16px;line-height:1.5;color:#2E2A26;font-weight:600}
+.deskline .bestfor,.deskline .catchline{margin:0}
+.deskline .catchline{margin-top:8px;border-left-color:#E4B7A0}
+ul.checks li{margin:0 0 7px;line-height:1.5}

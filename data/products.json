@@ -61,7 +61,15 @@
         ]
       ],
       "image": "assets/img/p6qt.png",
-      "image_caption": "Editorial illustration: a dual-basket air fryer with two pull-out baskets, one open. Not a product photograph of this product."
+      "image_caption": "Editorial illustration: a dual-basket air fryer with two pull-out baskets, one open. Not a product photograph of this product.",
+      "dek": "Two 3-quart baskets that can finish at the same time, in a smaller footprint than the single-basket 8-quart beside it.",
+      "best_for": "Cooking a main and a side together",
+      "catch": "Each basket is 3 quarts, so one large item does not fit in either one — the two baskets divide into two things, not one big thing.",
+      "check_before_buying": [
+        "Measure your counter depth against the listed 13.38\" and leave room in front for the drawer to pull out.",
+        "Decide whether you cook two things at once. If you usually cook one, a single 8-quart basket is the simpler buy.",
+        "Check on the listing which parts are dishwasher-safe before you plan on hand-washing them."
+      ]
     },
     {
       "id": "p2-emeril-26qt",
@@ -140,7 +148,15 @@
         ]
       ],
       "image": "assets/img/p26qt.png",
-      "image_caption": "Editorial illustration: a french-door countertop oven with racks visible. Not a product photograph of this product."
+      "image_caption": "Editorial illustration: a french-door countertop oven with racks visible. Not a product photograph of this product.",
+      "dek": "A real countertop oven — French doors and an extra-large interior — and the biggest cavity in the shop.",
+      "best_for": "Baking, roasting, and cooking for more than four",
+      "catch": "26.5 lb and 16.9 inches deep. It is the heaviest and the largest thing here, and it needs the most counter and the most cleaning.",
+      "check_before_buying": [
+        "Measure depth against the listed 16.9\" and check the cabinet clearance above it, not just the footprint.",
+        "Count the presets you will actually use. The listing disagrees with itself on how many there are — 24 in the title, 25 in the bullet copy (FLG-020) — so read the number on the page in front of you.",
+        "Budget for the accessories — the listing counts them as six in its title and seven in its bullet copy (FLG-010), and more parts means more to wash."
+      ]
     },
     {
       "id": "p3-chefman-8qt",
@@ -224,7 +240,15 @@
         ]
       ],
       "image": "assets/img/p8qt.png",
-      "image_caption": "Editorial illustration: a stainless single-basket air fryer with the basket open. Not a product photograph of this product."
+      "image_caption": "Editorial illustration: a stainless single-basket air fryer with the basket open. Not a product photograph of this product.",
+      "dek": "One large basket with the shallowest footprint of the three fryers — 12.75 inches deep.",
+      "best_for": "One big batch of one thing",
+      "catch": "The listing's own title and bullet copy disagree about the top temperature (FLG-005), and its title does not mention a viewing window the way the 6-quart model's does.",
+      "check_before_buying": [
+        "Re-read the temperature range on the live listing before you rely on it — the copy on that page conflicts (FLG-005).",
+        "Check both the 12.75\" depth and the 13.5\" width; the drawer needs clearance in front as well as behind.",
+        "If you plan to check the food without stopping the cook, confirm the listing mentions a window for this model."
+      ]
     },
     {
       "id": "p4-thermomaven",
@@ -287,7 +311,15 @@
       ],
       "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)",
       "image": "assets/img/pthermo.png",
-      "image_caption": "Editorial illustration: a slim instant-read thermometer on a cutting board beside a roasted chicken. Not a product photograph of this product."
+      "image_caption": "Editorial illustration: a slim instant-read thermometer on a cutting board beside a roasted chicken. Not a product photograph of this product.",
+      "dek": "A spot-check thermometer: pull it, press it, read it, put it back in the drawer.",
+      "best_for": "Checking doneness without committing to a cook",
+      "catch": "It tells you where the food is at the moment you ask. Nothing is watching it while you are doing something else.",
+      "check_before_buying": [
+        "Confirm the accuracy figure on the live listing before you build a plan around ±0.5°F.",
+        "Note what the reading is measuring: a thermometer is only as good as the spot you put it in.",
+        "If you are cooking for hours, compare it against a leave-in probe before you rely on a single spot check."
+      ]
     },
     {
       "id": "p5-chefiq",
@@ -343,7 +375,15 @@
         ]
       ],
       "image": "assets/img/pchefiq.png",
-      "image_caption": "Editorial illustration: ultra-thin probe thermometers resting in a charging hub. Not a product photograph of this product."
+      "image_caption": "Editorial illustration: ultra-thin probe thermometers resting in a charging hub. Not a product photograph of this product.",
+      "dek": "Three probes and a WiFi hub that reports the reading — the only product in the shop that keeps cooking while you walk away.",
+      "best_for": "A whole bird plus sides, with the reading reported to your phone",
+      "catch": "It is the only thing here that needs a hub, a network and a phone to tell you anything. Without those it is three expensive sticks.",
+      "check_before_buying": [
+        "Confirm the probe count and the hub contents on the live listing — this model family is listed several ways (FLG-014).",
+        "Plan where the hub sits so the signal actually reaches it, and check the app works before the holiday.",
+        "Check how the probes are cleaned, and whether you would rather hand-wash three of them after every cook."
+      ]
     }
   ],
   "_note": "Per-product illustration fields added 2026-11-20 (session arena-70bd2fcc): these are original editorial illustrations in the site style — not product photographs, not seller images — so no product-image policy question applies. Captions say so on every page."
