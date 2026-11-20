@@ -468,7 +468,7 @@
       "cost": "none",
       "risk": "Low. Descriptive copy only; every claim stays within what the listing states. Must avoid the banned hype register the gate already rejects.",
       "expected_effect": "Reads like a publication instead of a register. Measure: nothing yet — no analytics endpoint exists; once it does, outbound_click per product page is the signal.",
-      "evidence": "Session arena/61148297-winc: blurb added to all five products in data/products.json; scripts/build_site.py product_card/product_body render the blurb with the title kept verbatim; scripts/check_site.py still green (27 pages, no violations).",
+      "evidence": "Session arena/61148297-winc: blurb added to all five products in data/products.json; scripts/build_site.py product_card/product_body render the blurb with the title kept verbatim; scripts/check_site.py still green (29 pages, no violations).",
       "feeds_prompt": "When adding a product, write a one-line blurb that states the product's shape and the trade-off a buyer weighs, render it as the card body and lede, and keep the verbatim listing title in a labelled block. Never let the raw listing title be the only reader-facing copy."
     }
   ]

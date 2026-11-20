@@ -54,8 +54,8 @@ re-confirmed both render fully. No register value was changed by this verificati
 - Appended this session's section to `EXECUTIVE-SUMMARY.md`.
 
 **Gate:** `python3 scripts/build_site.py && python3 scripts/check_site.py` →
-`Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` /
-`OK: 27 pages checked, 26 sitemap URLs, no violations.`
+`Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.` /
+`OK: 29 pages checked, 28 sitemap URLs, no violations.`
 
 **Irregularities:** none new. Existing open flags are unchanged (FLG-001 tracking ID,
 FLG-002/FLG-003 short-link + Special Link status, FLG-004 intended-vs-observed, FLG-005/010/018/020

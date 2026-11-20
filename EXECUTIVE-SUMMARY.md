@@ -266,8 +266,8 @@ text anonymously; the register already records this, and this session re-confirm
   record of what the listing says. No rankings, no superiority claims, no prices. Recorded as
   suggestion **SG-35** (done-this-session) on the Direction page.
 - New `.cardblurb` / `.listtitle` styles; everything else in the design system is unchanged.
-- `npm run verify` → **Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.** →
-  **OK: 27 pages checked, 26 sitemap URLs, no violations.**
+- `npm run verify` → **Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.** →
+  **OK: 29 pages checked, 28 sitemap URLs, no violations.**
 
 ## Still open (unchanged, and why they stay open)
 
