@@ -1,0 +1,298 @@
+{
+  "$comment": "Decision preconditions. Each entry states what a reasonable decision needs, what this session could and could not establish from the repo and from official sources, and the concrete place to look. `answer` stays null until a human or an account confirms it - we do not fill it in.",
+  "how_to_read": "severity: blocking = no publishable product claim until answered; high = shapes architecture or the first month of editorial; medium = improves accuracy or efficiency. `default_if_unanswered` is what the site does in the meantime, so the build is never blocked by an unknown - only the claim is.",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question": "Which product is each of the five supplied links actually meant to point at?",
+      "decision_it_unblocks": "Everything product-facing: the Picks table, guide mentions, link placement, the single-link-per-product test.",
+      "what_we_have": "Five strings of the form https://link.amazon/<9-character token> recorded in the brief on 2026-11-20.",
+      "what_we_lack": "The product title, brand, marketplace and listing URL behind each token. No official confirmation is reachable from this environment.",
+      "how_to_find_out": "Open each link in the browser of the machine that owns the Associates account and copy the address bar; or in Associates Central use the link-building tool (GetLink / SiteStripe on the product page) to regenerate a link from the intended listing and compare the /dp/<ASIN> segment. Paste the five final URLs here and the register fills itself.",
+      "who_can_answer": "Account owner (2 minutes per link)",
+      "answer": null,
+      "severity": "blocking",
+      "blocks": [
+        "T16",
+        "SG-01",
+        "SG-04"
+      ],
+      "default_if_unanswered": "The five rows publish with blank title, price, rating and listing URL, marked unverified, and no product claim is written anywhere.",
+      "src": [
+        "SRC-11",
+        "SRC-12"
+      ]
+    },
+    {
+      "id": "Q-02",
+      "question": "Are the five tokens truncated ASINs, mistyped ASINs, or an identifier from some other system?",
+      "decision_it_unblocks": "Whether we can auto-correct anything at all, and how the collector should validate incoming links.",
+      "what_we_have": "A reproducible shape measurement: every token is 9 characters and mixed-case (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj).",
+      "what_we_lack": "An authoritative statement of the ASIN length rule that we were able to open (Seller Central help was not reachable here), and any evidence about how the tokens were captured.",
+      "how_to_find_out": "Two steps: (1) note where the links came from - a clipboard pass, a spreadsheet, or a link tool; a lost character across all five usually means a copy/paste or export artefact. (2) Confirm the identifier rule from the logged-in Seller Central help or the GetItems reference, then re-run npm run check.",
+      "who_can_answer": "Account owner + a page we could not reach",
+      "severity": "blocking",
+      "answer": null,
+      "blocks": [
+        "T16",
+        "SG-01"
+      ],
+      "default_if_unanswered": "The build's shape check reports the length and refuses to treat the token as confirmed; nothing is auto-repaired, because inventing a 10th character would fabricate a product identity.",
+      "src": [
+        "SRC-12",
+        "SRC-13"
+      ]
+    },
+    {
+      "id": "Q-03",
+      "question": "Which Associates account and which marketplace does tracking ID shopnow047c-20 belong to, and is this site's URL registered to it?",
+      "decision_it_unblocks": "Which store links send readers to (amazon.com vs amazon.nl/.de), whether commission accrues at all, and whether the account's site list must be updated.",
+      "what_we_have": "The ID as written in the brief; it matches the documented tag pattern XXXXX-## (SRC-02 §2(b)) and contains no Amazon mark.",
+      "what_we_lack": "Whether the ID exists, is active, and lists this domain. Keeping account information accurate is the operator's duty under the Participation Requirements.",
+      "how_to_find_out": "Associates Central → Account settings → Your sites & channels (confirm the deployed URL is listed) and → Account settings → Tracking IDs (confirm shopnow047c-20 exists). Note the locale switcher: US and non-US accounts have separate documents.",
+      "who_can_answer": "Account owner (5 minutes)",
+      "answer": null,
+      "severity": "blocking",
+      "blocks": [
+        "SG-02",
+        "SG-03"
+      ],
+      "default_if_unanswered": "All generated store links carry ?tag=shopnow047c-20 as the operator's stated ID, and the site says the ID is unverified rather than implying an active enrollment.",
+      "src": [
+        "SRC-02",
+        "SRC-11"
+      ]
+    },
+    {
+      "id": "Q-04",
+      "question": "Is the account accepted, provisional, or dormant - and has the early qualifying-sales condition already been met?",
+      "decision_it_unblocks": "Whether the first objective is revenue optimisation or simply staying enrolled; how the calendar is sequenced.",
+      "what_we_have": "Nothing in the repository speaks to this.",
+      "what_we_lack": "Account status, the date the application was submitted, and qualifying-sales count to date.",
+      "how_to_find_out": "Associates Central home and earnings pages show status and reported earnings; the acceptance/decision email shows the application date.",
+      "who_can_answer": "Account owner",
+      "answer": null,
+      "severity": "high",
+      "blocks": [
+        "SG-06",
+        "SG-09"
+      ],
+      "default_if_unanswered": "The plan optimises for publishable, compliant pages that can earn their first sales, because that ordering is safe under either account state.",
+      "src": [
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "Q-05",
+      "question": "Do we have Creators API access yet (which requires at least 10 qualifying sales in the past 30 days)?",
+      "decision_it_unblocks": "Whether automated price/availability/rating ingestion is permitted at all; whether the research agent can have a live data source.",
+      "what_we_have": "The official prerequisite, quoted: enrolment plus 'at least 10 qualifying sales within the past 30 days to access the PA API through the Creators API' (SRC-05), and confirmation that PA-API 5 returns 403 AccessDeniedException (SRC-06).",
+      "what_we_lack": "Whether this account clears the threshold, and its credential state.",
+      "how_to_find_out": "Associates Central → Tools → Creators API: registration status and credential list. If it is unavailable, the page will not let you create a credential.",
+      "who_can_answer": "Account owner",
+      "answer": null,
+      "severity": "high",
+      "blocks": [
+        "T17",
+        "SG-05",
+        "SG-07"
+      ],
+      "default_if_unanswered": "No price, rating or availability field is populated anywhere on the site, and the automation roadmap starts at 'manual link + manual listing check' until the API gate clears.",
+      "src": [
+        "SRC-05",
+        "SRC-06"
+      ]
+    },
+    {
+      "id": "Q-06",
+      "question": "What commission category and rate apply to the products we would promote?",
+      "decision_it_unblocks": "Any 'revenue per click' arithmetic, niche prioritisation, and whether the ledger should forecast anything at all.",
+      "what_we_have": "The rate structure lives in the Commission Income Statement Appendix inside the Program Policies (SRC-02), and the payment minimums and check-processing fee sit on the same page - both read from the official text and quoted in the register. We keep the figures out of our own copy so a stale number cannot outlive the source.",
+      "what_we_lack": "Which category a given listing falls in and the current percentage for it; we extracted no product-specific rate.",
+      "how_to_find_out": "Associates Central → Help → Program Policies → Appendix, find the row for the store and category; the account's own rate card is the authoritative copy.",
+      "who_can_answer": "Account owner (or any reader with the same page open)",
+      "answer": null,
+      "severity": "medium",
+      "blocks": [
+        "SG-05"
+      ],
+      "default_if_unanswered": "The campaign ledger stores clicks and orders only; it has no revenue column filled and no forecast anywhere.",
+      "src": [
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "Q-07",
+      "question": "Which niche does this publication own, and is there measured demand for it?",
+      "decision_it_unblocks": "The first eight guide titles, the cluster structure, and what 'high-converting products' even means here.",
+      "what_we_have": "Four editorial hypotheses written in the brief (basket vs oven, capacity checklist, cleanup and counter space, multi-function questions), explicitly labelled as working titles.",
+      "what_we_lack": "Any query, traffic or competition evidence. No Search Console property, no keyword tool output, no third-party benchmark in the repo.",
+      "how_to_find_out": "Create the Search Console property for the deployed URL, publish the four hypotheses, then let four to six weeks of impressions and queries pick the fifth topic. Free, first-party, and it replaces instinct.",
+      "who_can_answer": "Site owner, after data exists",
+      "answer": null,
+      "severity": "high",
+      "blocks": [
+        "SG-08"
+      ],
+      "default_if_unanswered": "The four hypotheses are published as methodology guides and no page claims to be about popularity, volume or ranking.",
+      "src": [
+        "SRC-08",
+        "SRC-11"
+      ]
+    },
+    {
+      "id": "Q-08",
+      "question": "Does the site stay on the github.io sub-path or move to a custom domain?",
+      "decision_it_unblocks": "Canonical URLs, sitemap contents, feed links, the disclosure page path, and how easily 'who is the publisher' can be answered.",
+      "what_we_have": "Pages publishes from branch main at / (SRC-10) to https://sassnarep3-star.github.io/WinC/ (SRC-09: project sites live under /<repo>/).",
+      "what_we_lack": "The operator's intent, budget, and whether a domain is already owned. Whatever name is chosen cannot contain an Amazon mark (SRC-02 §1(g)).",
+      "how_to_find_out": "Decide, then: add a CNAME file plus the DNS record, and re-run the generator with the new base_url; canonical, sitemap and feed rewrite themselves.",
+      "who_can_answer": "Site owner",
+      "answer": null,
+      "severity": "medium",
+      "blocks": [
+        "SG-10"
+      ],
+      "default_if_unanswered": "Everything is generated for the sub-path; base_url is one line in site.config.json.",
+      "src": [
+        "SRC-09",
+        "SRC-10"
+      ]
+    },
+    {
+      "id": "Q-09",
+      "question": "Who is the named human accountable for published claims?",
+      "decision_it_unblocks": "Bylines, the About page, whether the disclosure reads 'I' or 'we', and whether a guide may carry a personal test claim at all.",
+      "what_we_have": "A desk byline and an explicit provenance note; §5 of the Operating Agreement requires the first-person sentence verbatim, which is a real reason a human identity must exist somewhere.",
+      "what_we_lack": "A name. We will not invent one: a fabricated reviewer is both a false identity and, under the Endorsement Guides, a misleading endorsement.",
+      "how_to_find_out": "Operator supplies a name, role and contact route; then set authorship.person_byline and rebuild.",
+      "who_can_answer": "Site owner",
+      "answer": null,
+      "severity": "high",
+      "blocks": [
+        "SG-12"
+      ],
+      "default_if_unanswered": "Pages say 'Crisp Report desk', the About page states plainly that a person must review before claims get stronger, and no guide pretends to have tested anything.",
+      "src": [
+        "SRC-01",
+        "SRC-04",
+        "SRC-08"
+      ]
+    },
+    {
+      "id": "Q-10",
+      "question": "What first-party performance data exists today?",
+      "decision_it_unblocks": "Whether 'data-driven optimisation' is a plan or a claim; which page gets rewritten first.",
+      "what_we_have": "Nothing. The repo contained one commit with a 6-byte README when this session started.",
+      "what_we_lack": "Search Console ownership, analytics history, backlinks, impressions, CTR, and any conversion report.",
+      "how_to_find_out": "Verify the site in Search Console (a URL-prefix property is fastest), let it collect, and record the first two weeks in data/ledger.csv using only the authorized report.",
+      "who_can_answer": "Site owner",
+      "answer": null,
+      "severity": "high",
+      "blocks": [
+        "SG-08",
+        "SG-09"
+      ],
+      "default_if_unanswered": "The ledger ships empty with headers defined, and every 'we will know by' field names its measurement source instead of a guess.",
+      "src": [
+        "SRC-12"
+      ]
+    },
+    {
+      "id": "Q-11",
+      "question": "Where would event data be collected, on what legal basis, and for how long?",
+      "decision_it_unblocks": "Whether the click counter posts anywhere, what the privacy page must say, and whether an EU-focused site needs a consent step.",
+      "what_we_have": "GitHub Pages is static - it cannot run a collector. Participation Requirements expect cookie/pixel disclosure (SRC-02 §3(e)); GitHub logs visitor IP addresses (SRC-09). Amazon's own text names the ePrivacy Directive and GDPR as applicable law (SRC-02 §3(a)), which matters because the operator is Netherlands-based.",
+      "what_we_lack": "A host we control, a retention policy, a processing basis, and a decision on whether aggregate counting is worth the disclosure burden at all.",
+      "how_to_find_out": "Choose one: (a) keep counting local-only, (b) run the supplied collector on a VPS with 30-day retention, (c) adopt a self-hosted privacy analytics product. Then write the privacy page from the choice, not the other way round.",
+      "who_can_answer": "Site owner",
+      "answer": null,
+      "severity": "high",
+      "blocks": [
+        "T18",
+        "SG-06"
+      ],
+      "default_if_unanswered": "Collector ships disabled (endpoint: null). Events are counted in the visitor's own browser and never sent; the page says so.",
+      "src": [
+        "SRC-02",
+        "SRC-09"
+      ]
+    },
+    {
+      "id": "Q-12",
+      "question": "Are the 'five defined events' from the brief specified anywhere?",
+      "decision_it_unblocks": "The measurement schema, and therefore what the ledger columns and the collector accept.",
+      "what_we_have": "The brief says to record five defined events but does not enumerate them in the text this session received.",
+      "what_we_lack": "The operator's list, if one exists.",
+      "how_to_find_out": "Either confirm the five proposed here (page_view, guide_open, outbound_click, product_intent_check, editorial_decision) or supply the original five and we alias them in data/events.json.",
+      "who_can_answer": "Operator",
+      "answer": null,
+      "severity": "medium",
+      "blocks": [
+        "SG-06"
+      ],
+      "default_if_unanswered": "We publish a proposed five with explicit field definitions and mark the proposal as ours, not as an existing standard.",
+      "src": [
+        "SRC-11"
+      ]
+    },
+    {
+      "id": "Q-13",
+      "question": "May we reuse Amazon-supplied images or titles in the layout?",
+      "decision_it_unblocks": "Whether product cards can carry imagery at all, and what the assets folder may contain.",
+      "what_we_have": "The rule that Program Content may not be altered except proportional resizing and non-meaning-changing truncation, and that it must be removed once it is gone from Amazon (SRC-02 §6(a),(c)). The IP License governs reuse and we could not open it from here.",
+      "what_we_lack": "The specific image-rights terms and any storage or expiry limits on image URLs.",
+      "how_to_find_out": "Read the 'Associates Program IP License and Usage Requirements' section of the Program Policies page while logged in, and check the image-serving option in the link tool.",
+      "who_can_answer": "Account owner",
+      "answer": null,
+      "severity": "medium",
+      "blocks": [
+        "SG-13"
+      ],
+      "default_if_unanswered": "Only our own generated illustrations are used, each labelled as an illustration rather than product imagery.",
+      "src": [
+        "SRC-02"
+      ]
+    },
+    {
+      "id": "Q-14",
+      "question": "Is there an existing disclosure, privacy policy or cookie notice on the operator's other properties?",
+      "decision_it_unblocks": "Whether this site links to a group policy or must stand alone, and whether wording conflicts need reconciling.",
+      "what_we_have": "Nothing in the repo references an existing policy.",
+      "what_we_lack": "Any prior document, the operator's legal entity, and the country of establishment for tax and payment settings (the payment minimums and tax schedules in the Operating Agreement depend on it).",
+      "how_to_find_out": "Search the operator's other properties; if none exists, keep the standalone pages we ship and update them when a group policy appears.",
+      "who_can_answer": "Site owner",
+      "answer": null,
+      "severity": "medium",
+      "blocks": [
+        "SG-14"
+      ],
+      "default_if_unanswered": "Standalone disclosure and privacy pages, generated with the same base URL as everything else.",
+      "src": [
+        "SRC-02",
+        "SRC-04"
+      ]
+    },
+    {
+      "id": "Q-15",
+      "question": "What is the pass condition for this project in 90 days?",
+      "decision_it_unblocks": "Every prioritisation argument in the suggestions board; without it, 'optimise' has no referent.",
+      "what_we_have": "Two candidate conditions implied by the sources: the enrolment-survival condition (earn qualifying sales early) and a coverage condition (one guide per question the desk can answer without inventing data).",
+      "what_we_lack": "The operator's threshold - indexed pages, impressions, clicks, click-through-to-listing rate, orders, or a revenue number.",
+      "how_to_find_out": "Pick one primary and one guard-rail metric, write them into data/ledger.csv as targets, and the weekly note reports against them.",
+      "who_can_answer": "Site owner",
+      "answer": null,
+      "severity": "high",
+      "blocks": [
+        "SG-08",
+        "SG-09",
+        "SG-15"
+      ],
+      "default_if_unanswered": "The site reports coverage and verification state (pages live, rows unresolved, gate failures) and stays silent on success.",
+      "src": [
+        "SRC-02",
+        "SRC-12"
+      ]
+    }
+  ]
+}

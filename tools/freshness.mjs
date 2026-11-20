@@ -1,34 +1,48 @@
-// tools/freshness.mjs — the staleness queue described in SG-07 (option A).
-// It reads OUR data and prints the rows a human has to re-check. It deliberately does not open a
-// browser or poll a store: generating clicks or sessions programmatically is prohibited, and a
-// repository job should not be scraping listings to find out whether a page moved.
-import { loadAll, ROOT } from "./lib.mjs";
+// tools/freshness.mjs — the staleness queue over the live registers.
+// Reads data/products.json (+ data/probes.json) and prints what a human must re-check.
+// It never opens the store: generating sessions or clicks programmatically is prohibited, and a
+// repository job should not be scraping listings to learn whether a page moved.
+//   node tools/freshness.mjs [--days N] [--quiet]
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
 
-const D = loadAll();
+const ROOT = process.cwd();
+const DAYS = Number(process.argv[++process.argv.indexOf("--days")] || 30);
+const QUIET = process.argv.includes("--quiet");
+const read = (p) => (existsSync(join(ROOT, p)) ? JSON.parse(readFileSync(join(ROOT, p), "utf8")) : null);
+const products = read("data/products.json")?.products || [];
+const probes = read("data/probes.json")?.probes || [];
 const TODAY = new Date();
-const WINDOW_DAYS = 30;
-const rows = [];
 
-for (const r of D.intent.records) {
-  const reviewed = r.confirmed_on || null;
-  const age = reviewed ? Math.floor((TODAY - new Date(reviewed + "T00:00:00Z")) / 86400000) : null;
-  rows.push({
-    id: r.id,
-    state: r.intended_asin_confirmed ? (age > WINDOW_DAYS ? "stale" : "fresh") : "unresolved",
-    age,
-    action: !r.intended_asin_confirmed
-      ? `confirm the listing, then set intended_asin/official_listing_url/confirmed_on (leave observed_redirect_target separate)`
-      : age > WINDOW_DAYS
-        ? `re-read the listing or remove the row — Program Content that is gone from Amazon must come off the site`
+// dates in these registers are human notes ("2026-11-17 + snippet 2026-11-20"), so take the latest
+// ISO date inside the string rather than assuming a parseable field
+const lastDate = (s) => (String(s || "").match(/\d{4}-\d{2}-\d{2}/g) || []).sort().pop() || null;
+const ageOf = (d) => (d ? Math.floor((TODAY - new Date(d + "T00:00:00Z")) / 864e5) : null);
+const probeFor = (p) => probes.find((x) => x.submitted_token === p.submitted_token || x.final_asin === p.observed_asin) || null;
+
+const rows = products.map((p) => {
+  const observed = ageOf(lastDate(p.observed_date));
+  const confirmed = lastDate(p.confirmation_date);
+  const pr = probeFor(p);
+  const state = !confirmed
+    ? observed === null ? "no observation" : observed > DAYS ? "stale observation" : "observed, intent unconfirmed"
+    : ageOf(confirmed) > DAYS ? "stale confirmation" : "fresh";
+  return {
+    id: p.id, title: p.title ? `${String(p.title).slice(0, 34)}…` : "—",
+    observed, state, agrees: pr ? (pr.agrees_with_prior_session ? "yes" : "no") : "n/a",
+    action: !confirmed
+      ? "confirm the intended listing with the account owner, then fill intended_asin + confirmation_date (leave observed_* separate)"
+      : observed !== null && observed > DAYS
+        ? "re-read the listing or remove the row — content that is gone from Amazon must come off the site"
         : "none",
-    flags: (r.related_flags || []).join(" ") || "—",
-  });
+  };
+});
+const overdue = rows.filter((r) => r.state.startsWith("stale"));
+if (!QUIET) {
+  console.log(`\nfreshness — ${rows.length} product rows · window ${DAYS}d · ${overdue.length} overdue · ${rows.filter((r) => r.agrees === "no").length} probe disagreement(s)\n`);
+  for (const r of rows)
+    console.log(`  ${r.id.padEnd(34)} ${String(r.observed === null ? "—" : r.observed + "d").padStart(6)}  ${r.state.padEnd(26)} agree:${r.agrees.padEnd(4)} ${r.action}`);
+  console.log(`\n  published rows: every store page in the register is re-read on this cadence; the site's own gate`);
+  console.log(`  (scripts/check_site.py) remains the blocker — this queue only tells you who has to act.\n`);
 }
-
-const overdue = rows.filter((x) => x.state === "stale");
-const unresolved = rows.filter((x) => x.state === "unresolved");
-console.log(`\nfreshness — ${D.intent.records.length} register rows · ${unresolved.length} unresolved · ${overdue.length} past the ${WINDOW_DAYS}-day window\n`);
-for (const x of rows) console.log(`  ${x.id.padEnd(6)} ${x.state.padEnd(11)} ${x.age === null ? "—" : String(x.age) + "d"}  ${x.action}  [${x.flags}]`);
-console.log(`\nnext publish gate re-runs this as part of: npm run verify`);
-console.log(`sources checked: ${D.sources.sources.length} registered, ${D.sources.sources.filter((s) => s.method === "fetched").length} fetched this session\n`);
-if (overdue.length) { console.error(`${overdue.length} row(s) past window — fix before publishing`); process.exit(1); }
+process.exit(overdue.length ? 1 : 0);
