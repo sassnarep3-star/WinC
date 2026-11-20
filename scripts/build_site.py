@@ -79,6 +79,9 @@ def counts():
             "flags": len(FLAGS), "questions": len(QUESTIONS), "topics": len(TOPICS),
             "profiles": sum(len(v.get("profiles", [])) for v in CATEGORY_PROFILES.values()),
             "blocking": sum(1 for q in QUESTIONS if q.get("blocking","no").startswith("yes")),
+            "answered": sum(1 for q in QUESTIONS if q.get("answer_state") == "answered"),
+            "partly": sum(1 for q in QUESTIONS if q.get("answer_state") == "partly"),
+            "still_open": sum(1 for q in QUESTIONS if q.get("answer_state") == "open"),
             "open_sug": sum(1 for x in SUGGESTIONS if x["status"].startswith("open")),
             "done_sug": sum(1 for x in SUGGESTIONS if x["status"] == "done-this-session")}
 BY_ASIN = {p["observed_asin"]: p for p in PRODUCTS}
@@ -1015,10 +1018,23 @@ def exec_body():
 <tr><td>Shop</td><td>{c['products']} product pages, {len(CATEGORIES)} category pages, 1 shop index, each with a decision block or a decision shortcut</td><td><a href="products/index.html">The shop</a></td></tr>
 <tr><td>Editorial</td><td>{c['guides']} question-shaped guides, {c['topics']} planned topics, {c['profiles']} reader situations that name their deciding spec</td><td><a href="guides/index.html">Guides</a> · <a href="topics.html">Topics</a></td></tr>
 <tr><td>Trust</td><td>{c['sources']} sources, {c['flags']} flagged items, intended vs observed kept in separate fields</td><td><a href="verification.html">Verification</a> · <a href="flagged-for-review.html">Flagged</a></td></tr>
-<tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open) + {c['questions']} questions, {c['blocking']} blocking</td><td><a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
+<tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open) + {c['questions']} questions — <strong>{c['answered']} answered</strong>, {c['partly']} partly answered, {c['still_open']} still open; {c['blocking']} blocking</td><td><a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
 <tr><td>Measurement</td><td>5 events defined, beacon shipped, endpoint <strong>not deployed</strong>, ledger empty by design</td><td><a href="measurement.html">Measurement</a></td></tr>
+<tr><td>Machinery</td><td>Agent pipeline: research → draft → publish → optimise. Each step refuses to write a value it cannot source; optimise makes no recommendation while the ledger is empty.</td><td><code>scripts/agent/</code></td></tr>
 <tr><td>Findability</td><td>{total_pages} pages in the sitemap, RSS, canonicals, Article + FAQ + Breadcrumb schema, robots scoping internals out</td><td><code>sitemap.xml</code></td></tr>
 </tbody></table></div>
+
+<h2>What you can decide today</h2>
+<p>The register is no longer only a list of gaps. These rows are settled by a source and can be
+acted on without waiting for anyone; the ones below are the parts that are settled while the rest
+of the row stays open.</p>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Question</th><th>State</th><th>Answer</th></tr></thead><tbody>
+{"".join(f"<tr><td><strong>{esc(q['id'])}</strong></td><td>{esc(q['question'])}</td><td>{pill('answered','ok')}</td><td>{esc(q['answer'])}</td></tr>" for q in QUESTIONS if q.get('answer_state') == 'answered')}
+{"".join(f"<tr><td><strong>{esc(q['id'])}</strong></td><td>{esc(q['question'])}</td><td>{pill('partly answered','warn')}</td><td>{esc(q['answer'])}</td></tr>" for q in QUESTIONS if q.get('answer_state') == 'partly')}
+{"".join(f"<tr><td><strong>{esc(q['id'])}</strong></td><td>{esc(q['question'])}</td><td>{pill('still open','act')}</td><td>{blank(q['answer'])}</td></tr>" for q in QUESTIONS if q.get('answer_state') == 'open')}
+</tbody></table></div>
+<p class="meta">Full register, with what we have, what is missing, how to discover it and who can
+answer: <a href="questions.html">Open questions</a>.</p>
 
 <h2>The five links, in one table</h2>
 <div class="tablewrap"><table><thead><tr><th>Supplied</th><th>Token length</th><th>Valid ASIN?</th><th>Observed destination</th><th>Intended ASIN</th></tr></thead><tbody>

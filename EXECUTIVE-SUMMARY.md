@@ -7,10 +7,12 @@ It leads with products, answers buyer questions, and keeps verification one clic
 
 ## What is live
 
-- **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
+- **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold. Every card now leads with a desk-written dek, a "best for" line and an honest "the catch" — the seller's keyword title no longer appears as body copy.
 - **Guides:** 8 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
+- **Trust:** verification register (intent vs. observed kept separate), 30-source register, 25 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`) **and** an independent audit (`tools/audit.mjs`) that currently reports 0 findings across 10 rules.
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
+- **Decision layer:** 22 open questions, **11 answered / 10 partly answered / 1 still open**, 5 of them blocking. 34 suggestions, 6 of them about how decisions get made rather than about the site.
+- **Machinery:** `scripts/agent/` — research → draft → publish → optimise. Each step refuses to write a value it cannot source.
 
 ## Key facts (all sourced)
 
@@ -20,19 +22,22 @@ It leads with products, answers buyer questions, and keeps verification one clic
 | Observed ASINs | B0CDY277D3 · B09B7SB46R · B08DKYBTPH · B0DHZTCNR5 · B0DZFD6R9Z | Verification §1–2, §4 |
 | Intended ASINs | Blank (9-char tokens are not ASINs) | S05 (ASIN = 10 chars) |
 | Redirect targets, re-observed 2026-11-20 | 5/5 identical to 2026-11-17; every response carried `lv=shuf` + `plpRedirect=mhFallback` | S18, `data/probes.json` |
-| Food-safety figures in the two new guides | Poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest | S16, S17 (USDA FSIS) |
+| Listing titles, re-read 2026-11-20 | All five live pages served their own title and category breadcrumb; titles match the register exactly | S09–S13 |
+| Food-safety figures in the guides | Poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest | S16, S17 (USDA FSIS) |
 | Prices / ratings | Blank by policy + volatility | S02 (FLG-006) |
-| Tracking ID | shopnow047c-20 (as supplied; unconfirmed — FLG-001) | Flagged for Review |
+| Tracking ID | shopnow047c-20 — shape confirmed for amazon.com ("-20" is appended automatically), issuance unconfirmed | S20 (FLG-001) |
+| Deploy path | Branch publish (legacy Pages source, main, path `/`); the competing Actions publish workflow was removed 2026-11-20 | S21, S30 |
 | Site URL | https://sassnarep3-star.github.io/WinC/ | S08 |
 
 ## What happens next (needs review)
 
-1. Confirm tracking ID + run one-link Associates tests (FLG-001, FLG-002).
-2. Re-observe redirects + resolve FLG-004/FLG-005 spec conflicts.
+1. Confirm tracking ID + run one-link Associates tests (FLG-001, FLG-002) — these gate live money.
+2. Re-observe redirects + resolve FLG-005 / FLG-010 / FLG-014 spec conflicts against the manufacturer.
 3. Deploy analytics endpoint; submit sitemap to Search Console.
-4. Pick a path on the Direction page before the next build.
+4. Pick a path on the Direction page before the next build (SG-36 asks for the dependency columns that make that triage possible).
 
-**No revenue forecast, no conversion score.** The ledger is empty until first-party reports arrive.
+**No revenue forecast, no conversion score.** The ledger is empty until first-party reports arrive, and
+`scripts/agent/optimize.py` says so rather than producing a recommendation.
 
 ---
 
