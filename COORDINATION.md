@@ -1,5 +1,11 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
+> **Current session: `arena-82d39deb`** (branch `arena/82d39deb-winc`, based on `main@358dd0c`).
+> That session's board, sources and findings are in the **last section of this file**. Earlier
+> sections are kept verbatim as the provenance trail. Rule: claim a task by writing the session ID
+> + file scope, then commit and push the claim immediately. Never start a task another session has
+> claimed. Keep scopes non-overlapping.
+
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
 > Never start a task another session has claimed. Keep scopes non-overlapping.
@@ -171,3 +177,38 @@ collector counts clicks and reads only — it cannot see an order, by design.
 
 New session note for whoever picks this up: `pkill -f collect.py` / `pgrep -f 'collect\.py'` will
 kill your own shell if the same string appears in the running command. Use `fuser -k <port>/tcp`.
+
+---
+
+# Session arena-82d39deb — third pass: publication quality, decision modules, suggestions v2
+
+Branch `arena/82d39deb-winc`, based on `main@358dd0c` (PR #9 merged). Started 2026-11-20.
+Read-only re-audit first: `main` was re-read immediately before editing shared outputs
+(lesson from session arena-23d7ed19's rebase conflict). Files owned by earlier sessions are not
+rewritten; earlier registers are appended to, never replaced.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | Files |
+| --- | --- | --- | --- | --- |
+| T20 | Third independent verification pass: re-resolve all 5 supplied links + re-read all 5 Amazon listings, line by line, against products.json | in progress | arena-82d39deb | `data/probes.json`, `data/products.json`, `data/sources.json` |
+| T21 | Publication-quality front page: lead with products and buyer questions, move audit furniture off the reader path, remove implementation leakage from reader copy | in progress | arena-82d39deb | `scripts/build_site.py` (home_body, capture_block), `index.html` (generated) |
+| T22 | Decision modules: "Match to your situation" per category (data/categories.json) + "at a glance" / FAQ decision shortcut per product | in progress | arena-82d39deb | `data/categories.json`, `scripts/build_site.py` (category_body, product_body), `data/products.json` |
+| T23 | Topic hub / question backlog page (question-shaped guide pipeline, honest about not yet measured) | in progress | arena-82d39deb | `data/topics.json`, `scripts/build_site.py`, `topics.html` (generated) |
+| T24 | Suggestions register v2: repair stale statuses found in audit, add this session's suggestions, render a reviewable table + staged path | in progress | arena-82d39deb | `data/suggestions.json`, `scripts/build_site.py` (direction_body) |
+| T25 | Questions register: add missing-information rows + discovery actions found in this audit | in progress | arena-82d39deb | `data/questions.json`, `scripts/build_site.py` (questions_body) |
+| T26 | Gate extension: register-schema checks, category-profile checks, FAQ/probe drift checks | in progress | arena-82d39deb | `scripts/check_site.py` |
+| T27 | Executive summary reconciled with repo state (computed, not typed) | pending | arena-82d39deb | `EXECUTIVE-SUMMARY.md`, `scripts/build_site.py` (exec_body) |
+| T28 | Final integration: re-verify combined data, build + gate green, PR to main, merge, confirm Pages deploy | pending | arena-82d39deb | all (integration only) |
+
+## Audit findings that started this session (before any edit)
+
+| ID | Finding | Status |
+| --- | --- | --- |
+| A-01 | `data/suggestions.json` statuses are stale against the code: SG-05 (guide product block filtered by cluster) and SG-13 (capture copy rewritten) are marked `open` but were shipped in the previous session; SG-11 (category decision block) was still genuinely open and is now implemented in this session. A register that misstates its own status is worse than no register. | fixed this session (T24) |
+| A-02 | The reader path carried audit furniture: the front page counted sources/flags/questions as a feature, and the newsletter block explained its own broken implementation in reader copy ("records a count inside your own browser", FLG-013). The brief asks to lead with products and keep dashboard surfaces in the footer + one nav group. | fixed this session (T21) |
+| A-03 | Category and product pages had no decision shortcut: a reader could read every spec and still not know which spec decides their case. SG-11 flagged this and left it open. | fixed this session (T22) |
+| A-04 | No page listed the guide backlog, so "publish question-shaped guides, then measure" had no visible pipeline and no place to record what was published vs planned. | fixed this session (T23) |
+| A-05 | `scripts/check_site.py` checks rendered HTML only. It never validates the registers it depends on (`suggestions.json`, `questions.json`), so a missing key or an invented status passes silently. | fixed this session (T26) |
+| A-06 | `products.json` carried `observed_*` values that were re-observable but never re-read against the live listing in this session; no third observation date existed. | addressed this session (T20) |
+
