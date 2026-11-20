@@ -60,7 +60,9 @@
           "What should I measure before buying?",
           "The listed footprint is 13.38\"D x 11.81\"W x 10.63\"H and the listed weight is 13.3 lb. Measure the depth of your counter and the clearance above the unit, not just the square footage you have free."
         ]
-      ]
+      ],
+      "image": "assets/img/p6qt.png",
+      "image_caption": "Editorial illustration: a dual-basket air fryer with two pull-out baskets, one open. Not a product photograph of this product."
     },
     {
       "id": "p2-emeril-26qt",
@@ -138,7 +140,9 @@
           "How large a cook can it handle?",
           "The listing's own bullet says the 26-quart cavity is sized for 4-6 people, can rotisserie a 6-lb chicken and bake a 12-inch pizza. That is the seller's sizing claim on the listing, quoted as a claim and not as advice from this desk (FLG-021)."
         ]
-      ]
+      ],
+      "image": "assets/img/p26qt.png",
+      "image_caption": "Editorial illustration: a french-door countertop oven with racks visible. Not a product photograph of this product."
     },
     {
       "id": "p3-chefman-8qt",
@@ -221,7 +225,9 @@
           "Does it really reach 450F?",
           "The page title says '450F Hi-Fry Option' while the bullet copy on the same page says a temperature range from 200-400F. Both strings are shown on the specs table rather than one of them being quietly chosen (FLG-005)."
         ]
-      ]
+      ],
+      "image": "assets/img/p8qt.png",
+      "image_caption": "Editorial illustration: a stainless single-basket air fryer with the basket open. Not a product photograph of this product."
     },
     {
       "id": "p4-thermomaven",
@@ -283,7 +289,9 @@
           "It is an instant-read device: you put the tip in the food for a second and read the number off the device. For a probe that stays in the food while it cooks, the other thermometer in this shop is the one whose listing names air-fryer use."
         ]
       ],
-      "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)"
+      "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)",
+      "image": "assets/img/pthermo.png",
+      "image_caption": "Editorial illustration: a slim instant-read thermometer on a cutting board beside a roasted chicken. Not a product photograph of this product."
     },
     {
       "id": "p5-chefiq",
@@ -338,7 +346,10 @@
           "What does 'unlimited range' mean?",
           "It is a marketing phrase on the listing. What it means is that the hub reports over your network rather than over a short radio link; how far the hub can sit from the cooker is a question about your router and your house, not a published number."
         ]
-      ]
+      ],
+      "image": "assets/img/pchefiq.png",
+      "image_caption": "Editorial illustration: ultra-thin probe thermometers resting in a charging hub. Not a product photograph of this product."
     }
-  ]
+  ],
+  "_note": "Per-product illustration fields added 2026-11-20 (session arena-70bd2fcc): these are original editorial illustrations in the site style — not product photographs, not seller images — so no product-image policy question applies. Captions say so on every page."
 }

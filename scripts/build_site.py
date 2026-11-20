@@ -61,6 +61,25 @@ CAT_IMG = {
 HERO_IMG = ("assets/img/hero-counter.png",
     "Editorial illustration: kitchen counter with an air fryer, a probe thermometer and a board of roasted potatoes. Not a product photograph.")
 
+def current_season():
+    """Publication season computed from today's date (never typed by hand)."""
+    t = datetime.date.today()
+    if t.month in (11, 12):
+        return f"Holiday {t.year}"
+    if t.month == 1:
+        return f"New Year {t.year}"
+    if 6 <= t.month <= 8:
+        return f"Summer {t.year}"
+    return "Everyday"
+
+def product_img(p, depth=0):
+    """Per-product illustration when one is registered; category fallback otherwise."""
+    pfx = "../" * depth
+    if p.get("image"):
+        return pfx + p["image"], p.get("image_caption") or CAT_IMG.get(p["category"], HERO_IMG)[1]
+    img, cap = CAT_IMG.get(p["category"], HERO_IMG)
+    return pfx + img, cap
+
 def prods(cat=None):
     return [x for x in PRODUCTS if cat is None or x["category"] == cat]
 def guides_for(cat=None):
@@ -231,7 +250,7 @@ def page_html(path, title, desc, body, page_type="page", extra_head="", image=""
 
 def product_card(p, depth=0):
     pfx = "../" * depth
-    img, cap = CAT_IMG.get(p["category"], HERO_IMG)
+    img, cap = product_img(p, depth)
     specs = []
     if p["capacity"] and p["capacity"] != "—":
         specs.append(f"Capacity: {esc(p['capacity'])}")
@@ -241,9 +260,12 @@ def product_card(p, depth=0):
         specs.append(f"Weight: {esc(p['weight'])}")
     if p["model"]:
         specs.append(f"Model: {esc(p['model'])}")
+    if not specs and p.get("temperature") and p["temperature"] != "—":
+        # a thermometer lists no physical dims — the reading spec is the one that decides
+        specs.append(f"Reading: {esc(p['temperature'])}")
     li = "".join(f"<li>{x}</li>" for x in specs)
     return f"""<article class="card">
-<figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
+<figure class="cardimg"><img src="{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
 <p class="cardblurb">{esc(p.get('blurb') or p['title'])}</p>
@@ -350,7 +372,7 @@ def home_body():
         season_bands += f'<h2>In season · {esc(sname)}</h2>\n<div class="grid">{scards}</div>\n'
     return f"""
 <section class="hero">
-<span class="kicker">Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
+<span class="kicker">Countertop cooking · Season: {esc(lead.get('season') or current_season())}</span>
 <h1>{esc(lead['title'])}</h1>
 <p class="lede">{esc(lead['desc'])}</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {read_min(lead)} min read · <a href="about.html">How we check</a> · <a href="verification.html">Sources</a></p>
@@ -439,6 +461,11 @@ def category_body(cat, title, intro, guide_links):
 """
 
 # ---------- PRODUCT PAGES ----------
+def _product_lede_figure(p, depth=1):
+    img, cap = product_img(p, depth)
+    return (f'<figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="750" loading="lazy">'
+            f'<figcaption>{esc(cap)}</figcaption></figure>')
+
 def product_body(p):
     related = [q for q in PRODUCTS if q["category"] == p["category"] and q["id"] != p["id"]]
     rel_cards = "".join(product_card(q, depth=1) for q in related)
@@ -476,6 +503,7 @@ def product_body(p):
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
 <p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
 </section>
+{_product_lede_figure(p)}
 <p class="listtitle"><span class="listtitle-k">Listing title, verbatim</span>{esc(p['title'])}</p>
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}

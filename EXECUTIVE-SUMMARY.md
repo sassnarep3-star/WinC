@@ -264,10 +264,10 @@ text anonymously; the register already records this, and this session re-confirm
   as the card body and page lede. The manufacturer's own title is kept verbatim in a labelled
   **"Listing title, verbatim"** block on each product page, so the desk copy is never the only
   record of what the listing says. No rankings, no superiority claims, no prices. Recorded as
-  suggestion **SG-35** (done-this-session) on the Direction page.
+  suggestion **SG-39** (done-this-session) on the Direction page.
 - New `.cardblurb` / `.listtitle` styles; everything else in the design system is unchanged.
-- `npm run verify` → **Built 32 pages, 31 sitemap URLs, 11 guides, 28 search rows.** →
-  **OK: 32 pages checked, 31 sitemap URLs, no violations.**
+- `npm run verify` → **Built 34 pages, 33 sitemap URLs, 13 guides, 30 search rows.** →
+  **OK: 34 pages checked, 33 sitemap URLs, no violations.**
 
 ## Still open (unchanged, and why they stay open)
 
