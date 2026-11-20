@@ -240,7 +240,7 @@ try{var s=localStorage.getItem('sk_path');if(s){var r=document.querySelector('in
 <p class="why"><span>Suggestion</span>Make the details-table read mandatory for any spec row, keep the prior capture beside the corrected value so the change is visible, and re-read the remaining rows (model, UPC, weight) for the two thermometers, whose model and package details are still partly blank or inferred from another marketplace.</p>
 <p class="why"><span>Risk</span>Low. The rule protects against the single most likely silent error: a plausible number from the wrong source.</p>
 <p class="why"><span>How we would know it worked</span>Spec rows stop drifting from their source. Measure: number of corrected values per verification pass — target zero after this pass.</p>
-<p class="why"><span>Evidence</span>data/products.json p3-chefman-8qt: power was &#x27;1700W / 120V&#x27; until the 2026-11-20 third read; now &#x27;1000W / 120V&#x27; with power_prior_capture kept (FLG-019).</p>
+<p class="why"><span>Evidence</span>data/products.json p3-chefman-8qt: power was &#x27;1700W / 120V&#x27; until the 2026-11-20 third read; now &#x27;1000W / 120V&#x27; with power_prior_capture kept (FLG-022).</p>
 <p class="why"><span>Status detail</span>Shipped in this session: the third independent re-read found one wrong row (the 8-quart Chefman&#x27;s wattage) and it was corrected with the prior capture kept.</p>
 <details class="promptbox"><summary>Instruction block for the next build prompt</summary>
 <pre><code>Re-read a product&#x27;s own details table and bullet copy before recording any spec row, keep the previous value as *_prior_capture, and open a flag whenever two official sources disagree instead of choosing one.</code></pre></details>

@@ -277,7 +277,7 @@
       "cost": "none",
       "risk": "Low. The rule protects against the single most likely silent error: a plausible number from the wrong source.",
       "expected_effect": "Spec rows stop drifting from their source. Measure: number of corrected values per verification pass — target zero after this pass.",
-      "evidence": "data/products.json p3-chefman-8qt: power was '1700W / 120V' until the 2026-11-20 third read; now '1000W / 120V' with power_prior_capture kept (FLG-019).",
+      "evidence": "data/products.json p3-chefman-8qt: power was '1700W / 120V' until the 2026-11-20 third read; now '1000W / 120V' with power_prior_capture kept (FLG-022).",
       "feeds_prompt": "Re-read a product's own details table and bullet copy before recording any spec row, keep the previous value as *_prior_capture, and open a flag whenever two official sources disagree instead of choosing one."
     },
     {

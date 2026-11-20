@@ -274,7 +274,7 @@
     {
       "id": "Q-19",
       "question": "When an Amazon listing and a manufacturer page disagree, which one wins — and who signs off?",
-      "decision_it_gates": "Every contested spec cell on the site (FLG-005, FLG-010, FLG-015, FLG-017, FLG-019) and any future 'best' claim that rests on a number.",
+      "decision_it_gates": "Every contested spec cell on the site (FLG-005, FLG-010, FLG-018, FLG-020, FLG-022) and any future 'best' claim that rests on a number.",
       "have": "A standing rule today: show both strings with their dates, pick neither, and flag the row. Four live listing-internal contradictions are published that way.",
       "missing": "A written precedence rule and a named person who resolves the conflicts, plus a place to record the resolution so it is not re-litigated every session.",
       "blocking": "no — the current rule (show both, flag it) is the safe one",

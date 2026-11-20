@@ -8,10 +8,9 @@ It leads with products, answers buyer questions, and keeps verification one clic
 ## What is live
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
-- **Editorial:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook), 12 queued topics published on `topics.html`, and 11 reader situations on the two category pages, each naming the one listed spec it rests on.
-- **Trust:** verification register (intent vs. observed kept separate), 26-source register, 21 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
-- **Decisions:** 20 reviewed suggestions with a review table, a staged path and a prompt builder (`direction.html`); 21 open questions, 5 of them blocking (`questions.html`).
-- **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search. 27 pages, 26 sitemap URLs.
+- **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
+- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
+- **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 
 ## Key facts (all sourced)
 
@@ -100,7 +99,15 @@ meant to be promoted (Q-01, Q-02, Q-16). Those need an enrolled Associates accou
 answered, this is a well-sourced publication with a gated monetisation path — which is the correct
 state to be in, not a half-finished one.
 
+
 ---
+
+# Session `4ca9e665` — verification re-check, disclosure wording, close-out — 2026-11-20
+
+- **Operating Agreement §5 re-fetched** from affiliate-program.amazon.com/help/operating/agreement: the required sentence "As an Amazon Associate I earn from qualifying purchases." matches the disclosure strip on every page.
+- **FTC Endorsement Guides re-fetched.** ftc.gov is reachable now (the register said it was not). Its affiliate section says "a 'buy now' button would not be adequate" and that a "paid link" next to an affiliate link is adequate. The Amazon button tag said only "Sponsored", so it now reads "Sponsored · paid affiliate link" (FLG-017).
+- **Pages:** build of `358dd0c` status `built`, no error. Gate: 26 pages, 25 sitemap URLs, no violations.
+- **Not done, and still open:** tracking-ID confirmation, one-link Associates test, short-link status, FLG-004/005 spec conflicts, analytics deployment, Search Console. These need an enrolled Associates account or an owner decision.
 
 # Third pass — verification, decision support, and a shop-shaped front page (2026-11-20, session `arena-82d39deb`)
 
@@ -120,18 +127,18 @@ changed. Nothing else moved.
   rows line by line. That found **one wrong row**: the 8-quart Chefman was recorded at 1700 W /
   120 V, which is the wattage printed on the *6-quart* Chefman listing. The live bullet reads
   "1000 Watts/120 Volts – RJ38-SQSS-8T". Corrected, and the earlier capture is kept beside it
-  (`power_prior_capture`) so the change is visible rather than silent. (FLG-019)
+  (`power_prior_capture`) so the change is visible rather than silent. (FLG-022)
 - **Four listing-internal contradictions were confirmed live**, and are now published on the
   product pages instead of being smoothed over: the 8-Qt temperature (title "450°F Hi-Fry" vs.
   bullets "200–400°F", FLG-005), the Emeril accessory count (title "Six" vs. bullets "7", FLG-010),
-  the Emeril preset count (title 24 vs. bullets 25, FLG-017) and the 6-Qt capacity unit (details
-  table "6 liters" vs. title "6 quart", FLG-015).
+  the Emeril preset count (title 24 vs. bullets 25, FLG-020) and the 6-Qt capacity unit (details
+  table "6 liters" vs. title "6 quart", FLG-018).
 - **Two buyer-relevant facts were found in the live pages**: the 8-Qt ASIN is a 6/8/9-quart size
-  family (so the same link can land on a different size, FLG-020), and Amazon's own page states
-  there is a newer model of that item (FLG-021).
+  family (so the same link can land on a different size, FLG-023), and Amazon's own page states
+  there is a newer model of that item (FLG-024).
 - **Amazon's name strings vary for the same ASIN.** The live title for B08DKYBTPH reads
   "TurboFry® 4-in-1 with 450°F Hi-Fry"; the earlier capture read "TurboFry Touch …". Both are
-  stored; the live one is displayed. (FLG-016)
+  stored; the live one is displayed. (FLG-019)
 
 Source register grew from 21 to 26 rows; flagged items from 14 to 21.
 
@@ -145,7 +152,7 @@ Source register grew from 21 to 26 rows; flagged items from 14 to 21.
 - **Product pages** gained three things: what to compare before you buy (already there, now above
   the specs), *where the listing disagrees with itself* (each contradiction with its flag id), and
   *what the listing claims, quoted as claims* (serving size, rotisserie and pizza limits stay the
-  seller's words, FLG-018) — plus a three-question reader FAQ with FAQ schema.
+  seller's words, FLG-021) — plus a three-question reader FAQ with FAQ schema.
 - **Guides** gained a third FAQ each where they had two, so every guide answers at least three
   questions on the page itself.
 

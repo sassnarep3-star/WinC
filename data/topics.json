@@ -75,10 +75,10 @@
       "cluster": "Air Fryers",
       "season": "Everyday",
       "question": "The page contradicts itself — what do I actually get?",
-      "why": "A listing whose own title and bullets disagree (FLG-010, FLG-017) is exactly the kind of detail a reader will hit at the checkout screen, and it is the clearest argument for reading the page rather than a round-up.",
+      "why": "A listing whose own title and bullets disagree (FLG-010, FLG-020) is exactly the kind of detail a reader will hit at the checkout screen, and it is the clearest argument for reading the page rather than a round-up.",
       "needs": "A manufacturer page for the 4-00675-02X-VN model, which would also settle the model string itself.",
       "status": "blocked",
-      "chosen_from": "editorial hypothesis — raised by the third-pass verification (FLG-010, FLG-017), not by a measured query",
+      "chosen_from": "editorial hypothesis — raised by the third-pass verification (FLG-010, FLG-020), not by a measured query",
       "priority": "medium",
       "source": [
         "https://www.amazon.com/dp/B09B7SB46R"

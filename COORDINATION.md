@@ -1,10 +1,8 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Current session: `arena-82d39deb`** (branch `arena/82d39deb-winc`, based on `main@358dd0c`).
-> That session's board, sources and findings are in the **last section of this file**. Earlier
-> sections are kept verbatim as the provenance trail. Rule: claim a task by writing the session ID
-> + file scope, then commit and push the claim immediately. Never start a task another session has
-> claimed. Keep scopes non-overlapping.
+> **Latest session: `arena-82d39deb`** (branch `arena/82d39deb-winc`). That session's board,
+> sources and findings are in the **last section of this file**. Earlier sessions are kept
+> verbatim as the provenance trail.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -180,6 +178,83 @@ kill your own shell if the same string appears in the running command. Use `fuse
 
 ---
 
+## Session dd79e08d (branch `arena/dd79e08d-winc`, started 2026-11-20)
+
+State on arrival: `main` = `358dd0c` (PR #9), gate green (26 pages, 25 sitemap URLs), live Pages `built` at `358dd0c`. Live front page re-read through the fetch tool; Operating Agreement re-read (updated 2025-10-15, matches S01 register row).
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T18 | Label + sourcing audit pass: remove inferred "single basket" wording (8 Qt listing title says "XL Nonstick Dishwasher-Safe Basket"); blank ThermoMaven model "HT07" sourced from Amazon.fr, not the US listing (new flag FLG-015); regenerate; gate; PR + merge + Pages check | done | dd79e08d | `data/products.json`, `data/guides/*.json`, `data/flags.json`, `data/sources.json`, `COORDINATION.md`, generated HTML |
+
+**Sources (T18):** Amazon Associates Operating Agreement https://affiliate-program.amazon.com/help/operating/agreement (fetched 2026-11-20, "Updated October 15, 2025"); observed listing https://www.amazon.com/dp/B08DKYBTPH (fetched 2026-11-20 via fetch tool; fallback route per FLG-009; title "Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 … XL Nonstick Dishwasher-Safe Basket"); live site https://sassnarep3-star.github.io/WinC/ (fetched 2026-11-20).
+
+**Verification performed:** live front page re-read and compared against the build; buy links checked (5/5 carry `tag=shopnow047c-20`, `rel="sponsored nofollow noopener"`, Sponsored label); gate `python3 scripts/check_site.py` → OK, no violations.
+
+**Irregularities found and handled:** (1) "single basket" label was inferred, not sourced → replaced with listing wording "XL basket" (FLG-016, fixed). (2) ThermoMaven model HT07 came from Amazon.fr, not the US listing → blanked (FLG-015, needs review). Nothing else changed; FLG-001..FLG-014 unchanged.
+
+**Not done (no access in sandbox):** Associates Central tracking-ID confirmation and one-link workflow test (FLG-001, FLG-002, Q-01, Q-16). These remain owner-side.
+
+**PR / merge record (T18, session dd79e08d):** PR #10 https://github.com/sassnarep3-star/WinC/pull/10 (`arena/dd79e08d-winc` → `main`), `gh pr merge 10 --merge` → merged, merge commit `d8b1a85`. Pages build for `d8b1a85`: `status: built`, `error: null`. Live check via the browser reader: `flagged-for-review.html` lists FLG-015. Build/gate on the merged tree: `Built 26 pages, 25 sitemap URLs` / `OK: 26 pages checked, 25 sitemap URLs, no violations.`
+
+## Session 5c2f1a2c (branch `arena/5c2f1a2c-winc`, 2026-11-20)
+
+Based on `main@358dd0c`. **ID collision note:** this session first wrote its task as T18 while session dd79e08d also claimed T18 (above). Both are kept; this session's task is **T19** below. Open draft PR #5 (`arena/70d8ad52-winc`, HELD, `docs/` site) was not touched.
+
+| ID | Task | Status | Owner | File scope |
+|----|------|--------|-------|------------|
+| T19 | Re-verify the 5 observed redirect targets + Operating Agreement against live sources; create the empty, schema-defined campaign ledger (`data/campaign-ledger.json`) and render it on `measurement.html` from the file instead of a hard-coded row; gate; PR → main; Pages check | done | 5c2f1a2c | `data/campaign-ledger.json`, `scripts/build_site.py` (measurement section only), `measurement.html` (generated), `COORDINATION.md` |
+
+### Verification performed (T19)
+
+- `https://affiliate-program.amazon.com/help/operating/agreement` — fetched 2026-11-20; header reads "Updated: October 15, 2025", matching the S-register row. Login-gated pages were not read.
+- Live fetch of each observed target `https://www.amazon.com/dp/<ASIN>` on 2026-11-20, titles compared with `data/probes.json`: B0CDY277D3 (Chefman 6 Qt Dual Basket), B09B7SB46R (Emeril 26QT French Door), B08DKYBTPH (Chefman 8 Qt TurboFry), B0DHZTCNR5 (ThermoMaven 1 Sec), B0DZFD6R9Z (CHEF iQ Sense Gen3). All five match the register.
+- All five still carry `lv=shuf` and `plpRedirect=mhFallback` (FLG-009): stable target, intended ASIN still blank.
+- Prices visible on the fetched pages were not copied anywhere (FLG-006).
+
+### Irregularities
+
+- `data/campaign-ledger.json` was referenced by measurement.html, questions.json and analytics/collect.py but did not exist. Created as an empty, schema-defined file; the measurement page now renders it (empty state still shown).
+- Emeril title says "Six Cooking Accessories" while listing bullets say 7 — FLG-010 stands.
+- Tracking ID issuance (FLG-001) still unconfirmed from Associates Central (login required).
+- Short-link status unresolved (FLG-003); not called invalid.
+
+### PR record (T19)
+
+- PR https://github.com/sassnarep3-star/WinC/pull/11 — opened from `arena/5c2f1a2c-winc` → `main`.
+- Gate: `python3 scripts/build_site.py && python3 scripts/check_site.py` → OK, 26 pages, 25 sitemap URLs, no violations.
+
+- Merge result and Pages build status for PR #11 are recorded in the session reply. The board cannot record its own merge commit without pushing to `main`, which this session must not do.
+
+---
+
+## Session 4ca9e665 (branch `arena/4ca9e665-winc`, 2026-11-20)
+
+Single-branch session: all work stays on `arena/4ca9e665-winc`; no other branches were created or pushed.
+Rebase note: `main` moved to `d8b1a85` (PR #10, session dd79e08d) while this session worked. The rebase conflicted, so it was aborted; the session's edits were reapplied on top of `d8b1a85` with no lines of the other session's work removed. Its FLG-015/FLG-016 were kept; this session's flag is FLG-017 to avoid an ID collision.
+
+| Task | Status | Owner | Files | Sources / verification / irregularities |
+|---|---|---|---|---|
+| Re-verify Operating Agreement §5 wording | done | arena/4ca9e665-winc | — | Fetched `https://affiliate-program.amazon.com/help/operating/agreement` 2026-11-20: "As an Amazon Associate I earn from qualifying purchases." matches the disclosure strip. |
+| Re-verify FTC affiliate-link guidance | done | arena/4ca9e665-winc | `data/sources.json` (S03), `data/flags.json` (FLG-017) | Fetched `https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking` 2026-11-20. The "unreachable" note on S03 is superseded. Irregularity: bare "Sponsored" tag next to buy buttons → wording changed to "Sponsored · paid affiliate link". |
+| Buy-button tag wording | done | arena/4ca9e665-winc | `scripts/build_site.py`, generated HTML | Tag text only; `rel="sponsored nofollow noopener"`, tracking ID and `data-event` unchanged. Gate green. |
+| Pages state check | done | arena/4ca9e665-winc | — | `gh api repos/sassnarep3-star/WinC/pages/builds/latest`: `built`, commit `358dd0c`, no error. |
+| Gate + build | done | arena/4ca9e665-winc | — | `python3 scripts/build_site.py` → 26 pages, 25 sitemap URLs, 6 guides; `python3 scripts/check_site.py` → no violations. |
+
+Still open (cannot be claimed from this sandbox; see questions.html): Q-01 tracking-ID issuance, FLG-002 one-link Associates test, FLG-003 short-link status, FLG-004/FLG-005 spec conflicts, FLG-007 analytics endpoint deploy, Search Console submission.
+
+PR / merge record for this session is appended below once it has run.
+
+### Session 4ca9e665 — PR / merge record
+
+| Time (UTC) | Result |
+|---|---|
+| 2026-11-20 06:02 | PR **#13** https://github.com/sassnarep3-star/WinC/pull/13 from `arena/4ca9e665-winc` → `main`; `mergeable: MERGEABLE`, `mergeStateStatus: CLEAN`. |
+| 2026-11-20 06:02:29 | Merged with `gh pr merge 13 --merge` → `main` @ `259fb9f`. |
+| 2026-11-20 06:02:50 | Pages build for `259fb9f`: `built`, `error: null`. |
+| 2026-11-20 | Live re-read: `https://sassnarep3-star.github.io/WinC/products/chefman-6qt-dual-basket-b0cdy277d3.html` shows "Sponsored · paid affiliate link" beside the tagged Amazon button. |
+
+---
+
 # Session arena-82d39deb — third pass: publication quality, decision modules, suggestions v2
 
 Branch `arena/82d39deb-winc`, based on `main@358dd0c` (PR #9 merged). Started 2026-11-20.
@@ -221,15 +296,15 @@ rewritten; earlier registers are appended to, never replaced.
 | --- | --- | --- |
 | All 5 supplied `link.amazon` links | Live re-resolution through the reader (redirects followed, final URL + `<title>` recorded) | 5/5 destinations identical across **three** observations (2026-11-17, and twice on 2026-11-20 by `arena-23d7ed19` and `arena-82d39deb`). Sources: S22, `data/probes.json` |
 | The redirect mechanism | Query strings read verbatim | `lv=shuf` + `plpRedirect=mhFallback` on all 5 again — a fallback route, not a canonical resolution (FLG-009). `intended_*` fields stay blank |
-| Spec rows for all 5 products | Each listing's product-details table + bullet copy re-read | 1 row wrong → corrected (FLG-019); 4 listing-internal contradictions confirmed live (FLG-005, FLG-010, FLG-015, FLG-017); 2 buyer-relevant facts found (FLG-020, FLG-021); 1 Amazon name-string variance (FLG-016) |
+| Spec rows for all 5 products | Each listing's product-details table + bullet copy re-read | 1 row wrong → corrected (FLG-022); 4 listing-internal contradictions confirmed live (FLG-005, FLG-010, FLG-018, FLG-020); 2 buyer-relevant facts found (FLG-023, FLG-024); 1 Amazon name-string variance (FLG-019) |
 | Decision blocks | `data/categories.json` profile sources | Every profile's source checked against the recorded listings; gate now fails a profile that cites an unrecorded listing |
 | Registers | `data/suggestions.json`, `data/questions.json`, `data/topics.json`, `data/products.json`, `data/probes.json` | Schema + provenance + drift checks added to `scripts/check_site.py` and run green |
 | Site build | `python3 scripts/build_site.py && python3 scripts/check_site.py` | `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` → `OK: 27 pages checked, 26 sitemap URLs, no violations.` |
 
-**Findings recorded on the site** (`flagged-for-review.html`, 21 items): FLG-015 (6-Qt capacity unit
-conflict), FLG-016 (Amazon name-string variance for B08DKYBTPH), FLG-017 (Emeril preset count
-24 vs 25), FLG-018 (seller-written serving/rotisserie/pizza claims, quoted as claims), FLG-019
-(wrong wattage, corrected), FLG-020 (6/8/9-quart size family under one ASIN), FLG-021 (Amazon flags
+**Findings recorded on the site** (`flagged-for-review.html`, 21 items): FLG-018 (6-Qt capacity unit
+conflict), FLG-019 (Amazon name-string variance for B08DKYBTPH), FLG-020 (Emeril preset count
+24 vs 25), FLG-021 (seller-written serving/rotisserie/pizza claims, quoted as claims), FLG-022
+(wrong wattage, corrected), FLG-023 (6/8/9-quart size family under one ASIN), FLG-024 (Amazon flags
 a newer model of the 8-Qt item).
 
 **Sources added this session:** S22 (third redirect observation) · S23 (listing re-read summary) ·
@@ -242,6 +317,27 @@ FLG-002 reader links not yet tested in the enrolled Associates workflow · FLG-0
 compliance status unresolved (never claimed invalid) · FLG-007 analytics endpoint code shipped but
 not deployed · FLG-011/FLG-012 audience and legal-entity decisions outstanding ·
 Q-17 "what does success look like" still unanswered, so every expected-effect line is a hypothesis.
+
+### Merge note (arena-82d39deb, 2026-11-20)
+
+While this session was working, three other sessions merged to `main` (PR #10–#14:
+`dd79e08d`, `5c2f1a2c`, `4ca9e665`). `main` moved from `358dd0c` to `d075cf2` while this branch
+was in flight, so the branch was merged over the new `main` rather than merged *into* an old
+base. Nothing from either side was discarded:
+
+| Their change | How it was kept |
+| --- | --- |
+| `dd79e08d`: ThermoMaven model `HT07` blanked (their FLG-015) and the inferred “single basket” wording removed (their FLG-016) | Their blank + `model_note` and the `XL basket` short label are kept; this session's new profiles, topics and FAQ wording were rewritten to stop repeating the same inference |
+| `dd79e08d`/`4ca9e665`: buy-button tag now reads “Sponsored · paid affiliate link” (their FLG-017) | Kept verbatim in `buy_button()` / `buy_button_small()` |
+| `4ca9e665`: FTC source S03 rewritten with verbatim quotes after fetching ftc.gov successfully | Kept verbatim |
+| `5c2f1a2c`: schema-defined campaign ledger (`data/campaign-ledger.json`) rendered from data | Kept; the ledger still renders as empty because no first-party rows exist |
+
+**Flag-id collision:** this session had added FLG-015…FLG-021 before seeing those ids taken on
+`main`. Rather than overwrite another session's register, **this session's seven flags were
+renumbered to FLG-018…FLG-024** and every cross-reference (in `data/products.json`,
+`data/probes.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md` and this board) was renumbered in
+the same commit. `main` keeps FLG-015/016/017. The register now holds 24 flags with no duplicate
+id, and the gate checks that every flag cited by a product note exists.
 
 **Task status:** T20–T26 done · T27 done (executive summary + README reconciled with the repo) ·
 T28 integration in progress (see the PR/merge record below).
