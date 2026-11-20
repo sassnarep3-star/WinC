@@ -4,25 +4,25 @@
       "id": "S01",
       "title": "Amazon Associates Program Operating Agreement (Updated 2025-10-15)",
       "url": "https://affiliate-program.amazon.com/help/operating/agreement",
-      "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats",
+      "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats; §6: a §5 violation is a material breach",
       "date": "2026-11-20",
-      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. §5 disclosure wording confirmed verbatim; §1 Special Links 'tagged' format confirmed. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note was over-cautious and is retired."
     },
     {
       "id": "S02",
       "title": "Amazon Associates Program Policies (Updated 2026-04-14)",
       "url": "https://affiliate-program.amazon.com/help/operating/policies",
-      "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; disclosure + privacy requirements",
+      "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; Special Links must carry the Associate ID/tag (XXXXX-##); no inaccurate price/product claims; disclosure + privacy requirements",
       "date": "2026-11-20",
-      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. The price/availability rule and the Special Link tag requirement were confirmed verbatim. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note is retired."
     },
     {
       "id": "S03",
       "title": "FTC Endorsement Guides: What People Are Asking",
       "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking",
-      "what": "Affiliate commission relationship must be disclosed clearly and conspicuously; closer to recommendation is better",
+      "what": "Verbatim, fetched 2026-11-20: 'that connection should be disclosed clearly and conspicuously'; affiliate section: 'You should disclose your relationship to the retailer clearly and conspicuously on your site'; 'The closer the disclosure is to your recommendation, the better.'; 'Consumers might not understand that \"affiliate link\" means ... a \"buy now\" button would not be adequate.'; '\"Paid link\" right next to an affiliate link should be an adequate disclosure'.",
       "date": "2026-11-20",
-      "access": "ftc.gov HTML page returned an error from this sandbox. Use the CFR/FTC PDF text instead (S22) for the quoted standard."
+      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov)."
     },
     {
       "id": "S04",
@@ -42,9 +42,9 @@
       "id": "S06",
       "title": "Amazon Associates — Application Review Process (special tagged links)",
       "url": "https://affiliate-program.amazon.com/help/node/topic/G8TW5AE9XL2VX9VM",
-      "what": "Special links are identifiers (e.g. abcd-20) embedded in Amazon product links; must be embedded on declared sites",
+      "what": "Special links are identifiers (e.g. abcd-20) embedded in Amazon product links and must be embedded on declared sites; review requires at least 3 qualified sales within the first 180 days (personal orders do not qualify); a good rule of thumb is at least 10 posts; sites must be publicly available",
       "date": "2026-11-20",
-      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+      "access": "Directly fetched on 2026-11-20 by session arena/0458cd24-winc; the special-link identifier and the review criteria confirmed verbatim. Publicly readable without login — the earlier 'login-gated' note is retired."
     },
     {
       "id": "S07",
@@ -65,35 +65,40 @@
       "title": "Amazon listing — CHEFMAN 6 Qt Dual Basket (B0CDY277D3)",
       "url": "https://www.amazon.com/dp/B0CDY277D3",
       "what": "Title, brand, model RJ38-SQPF-3TDB-2W, 6 Qt, dimensions, weight, temp, UPC",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the listing <title> matched the stored product title verbatim. Detailed spec cells (model/UPC/dimensions/weight/power) remain sourced to the listing body and are re-checked at the workflow test."
     },
     {
       "id": "S10",
       "title": "Amazon listing — Emeril Lagasse 26QT French Door (B09B7SB46R)",
       "url": "https://www.amazon.com/dp/B09B7SB46R",
-      "what": "Title, brand, model 4-00675-02X-VN, 26QT, dimensions, weight, UPC",
-      "date": "2026-11-20"
+      "what": "Title, brand, model 4-00675-02X-VN, 26QT, dimensions, weight, UPC; title vs bullets accessory-count conflict flagged (FLG-010)",
+      "date": "2026-11-20",
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads '...Six Cooking Accessories Included' while the listing body bullets say 7 accessories (FLG-010). The stored title was reconciled to the live <title>."
     },
     {
       "id": "S11",
       "title": "Amazon listing — Chefman 8 Qt TurboFry (B08DKYBTPH)",
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Title, brand, 8 Qt, dimensions, weight, power, UPC; model/temp conflicts flagged (FLG-005)",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads 'TurboFry 4-in-1 ... 450°F Hi-Fry', which supports the 450°F mention behind FLG-005. The stored title was reconciled to the live <title>."
     },
     {
       "id": "S12",
       "title": "Amazon listing — ThermoMaven 1 Sec (B0DHZTCNR5)",
       "url": "https://www.amazon.com/dp/B0DHZTCNR5",
-      "what": "Title, ±0.5°F accuracy, NIST&NSF certified, auto-rotate LED, waterproof; model HT07 via Amazon.fr (FLG-004)",
-      "date": "2026-11-20"
+      "what": "Title, ±0.5°F accuracy, NIST&NSF certified, auto-rotate LED, IP67 waterproof; model HT07 via Amazon.fr (FLG-004)",
+      "date": "2026-11-20",
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms ±0.5°F, NIST&NSF Certified and IP67 Waterproof. The stored title was reconciled to the live <title>."
     },
     {
       "id": "S13",
       "title": "Amazon listing — CHEF iQ Sense Gen3 (B0DZFD6R9Z)",
       "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
       "what": "Title, 3 probes + hub, WiFi, 1000°F, model CQ60-3C-Z1-E, UPC, package dims",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms 3 Ultra-Thin Probes, 1000°F Heat Safe and Gen3. The stored title was reconciled to the live <title>."
     },
     {
       "id": "S14",
@@ -143,7 +148,7 @@
       "url": "https://affiliate-program.amazon.com/help/node/topic/GM6CHU93RDXZV7D8",
       "what": "'our software automatically adds \"-20\" to the end of all Associate IDs' — supports treating shopnow047c-20 as a US-marketplace-shaped tracking ID. Does not confirm issuance (FLG-001).",
       "date": "2026-11-20",
-      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+      "access": "Directly fetched on 2026-11-20 by session arena/0458cd24-winc; the '-20' suffix statement confirmed verbatim. Publicly readable without login — the earlier 'login-gated' note is retired."
     },
     {
       "id": "S21",

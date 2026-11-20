@@ -353,3 +353,104 @@ and re-run `npm run verify` before it is merged — the same reconciliation this
 
 **Task status:** T20–T26 done · T27 done (executive summary + README reconciled with the repo) ·
 T28 integration in progress (see the PR/merge record below).
+
+---
+
+# Session arena/0458cd24-winc — final integration + line-by-line re-verification (T07)
+
+Branch `arena/0458cd24-winc`, based on `358dd0c` (the merged `main` state). Started 2026-11-20.
+Scope: the integration task the brief assigns to the final session — re-verify the combined data
+line by line against official sources, confirm the build and the no-broken-links gate, then PR →
+merge → confirm Pages, and publish every unverified item on the Flagged for Review page. This
+session did **not** rewrite the site's structure; it corrected the source register and product
+record where the prior passes were over-cautious or stale, and recorded the result.
+
+## What this session verified directly (official sources, fetched live 2026-11-20)
+
+| Ref | Source | What was confirmed |
+| --- | --- | --- |
+| S05 | sell.amazon.com/blog/what-is-an-asin | ASIN = unique 10-character alphanumeric code, found after `/dp/`. Verbatim. |
+| S04 | developers.google.com (qualify-outbound-links) | `rel="sponsored"` for ads/paid placements; affiliate links qualify. Page last updated 2025-12-10. |
+| S19 | developers.google.com (links-crawlable) | "If you were paid in some way for the link, qualify these links with sponsored or nofollow." |
+| S01 | affiliate-program.amazon.com/help/operating/agreement | **Full text read anonymously.** §5 disclosure wording confirmed verbatim; §1 Special Links must use tagged formats; §6 §5-violation = material breach. Page stamped "Updated: October 15, 2025". |
+| S02 | affiliate-program.amazon.com/help/operating/policies | **Full text read anonymously.** Price/availability display rule confirmed verbatim (only via Amazon-served link or Creators/PA API); Special Links must carry the Associate ID/tag (XXXXX-##). Page stamped "Updated: April 14, 2026". |
+| S03 | ftc.gov Endorsement Guides: What People Are Asking | **Reachable and read.** Clear-and-conspicuous disclosure standard confirmed; links to 16 CFR Part 255. |
+| S06 | affiliate-program.amazon.com (Application Review Process) | **Read anonymously.** Special links = identifiers (e.g. abcd-20); review requires ≥3 qualified sales in first 180 days; ~10 posts rule of thumb; sites must be publicly available. |
+| S07 | affiliate-program.amazon.com (Why identify as Associate) | **Read anonymously.** Link-level disclosure must be clear + conspicuous; Site statement required. |
+| S20 | affiliate-program.amazon.com (Can I change my Associates ID) | **Read anonymously.** "our software automatically adds '-20' to the end of all Associate IDs" — verbatim. |
+| S08 | docs.github.com/en/pages | GitHub Pages turns a repo into a live site. |
+| S16 | fsis.usda.gov Safe Minimum Internal Temperature Chart | All temperatures confirmed verbatim (poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest; uncooked ham 145°F + rest). |
+| S17 | fsis.usda.gov Food Thermometers | "only reliable way" statement + placement guidance confirmed verbatim. |
+| S09–S13 | amazon.com listings (5) | Each observed ASIN re-read live: listing `<title>` + category breadcrumb confirm the product identity and category (3 air fryers, 2 meat thermometers). |
+
+## Corrections made to the register (not left silently wrong)
+
+The prior passes marked the Amazon Operating Agreement / Program Policies / Associates help pages
+as **"login-gated … indexed copy, not an authenticated read"** and ftc.gov as **"unreachable from
+this sandbox."** That was over-cautious: all of those pages render their full text anonymously and
+were fetched and confirmed in this session. `data/sources.json` access notes for **S01, S02, S03,
+S06, S20** were corrected to record the direct read; **S06**'s `what` was enriched with the
+verified review criteria (≥3 qualified sales / 180 days, ~10 posts). `EXECUTIVE-SUMMARY.md`'s
+"login-gated pages are labelled as such" paragraph was corrected to match. Claiming a
+"verification" we did not perform is the failure mode this repo exists to avoid — and so is
+under-claiming one we did perform.
+
+## Findings recorded this session
+
+| ID | Finding | Status |
+| --- | --- | --- |
+| F-20 | Stored product titles for 4 of 5 products were **not** verbatim the live Amazon listing `<title>` (only B0CDY277D3 matched). Identities were confirmed via live `<title>` + breadcrumb, so `data/products.json` titles were reconciled to the verbatim live listing titles. Underlying spec conflicts (FLG-005, FLG-010, FLG-014) remain open. | **fixed** (FLG-018) |
+| F-21 | Detailed spec cells (model, UPC, dimensions, weight, power) could not be re-confirmed from a full detail table this session because amazon.com serves a fallback summary page (`lv=shuf` + `plpRedirect=mhFallback`); identity is confirmed at `<title>`/breadcrumb level, spec detail stays sourced to the listing body and is re-checked at the workflow test. | recorded (FLG-014, FLG-009) |
+
+Not irregularities, recorded so nobody re-litigates them: prices/ratings stay blank (policy +
+volatility, S02); the short links are never called invalid (FLG-003); no testing/ranking/revenue
+claim is made because none could be sourced.
+
+## Gate status
+
+`python3 scripts/build_site.py && python3 scripts/check_site.py` →
+`Built 26 pages, 25 sitemap URLs, 6 guides, 22 search rows.` /
+`OK: 26 pages checked, 25 sitemap URLs, no violations.`
+The gate re-checks internal-link resolution, disclosure-on-every-page, sponsored/nofollow
+qualification, blank prices/ratings/intended fields, sitemap coverage, guide integrity, and
+claim-drift. No broken internal links.
+
+
+## Coordination / merge note (this session)
+
+`main` advanced by 19 commits while this session worked (sessions dd79e08d, 5c2f1a2c and
+4ca9e665 merged PRs #10, #11 and #13). Rebasing `arena/0458cd24-winc` onto `origin/main` produced
+content conflicts in `COORDINATION.md`, `data/sources.json` and `data/flags.json`. Resolution,
+without discarding either session's work:
+- `COORDINATION.md`: kept the three prior session records and appended this session's record.
+- `data/sources.json`: kept session 4ca9e665's richer verbatim S03 quotes; kept this session's
+  corrected access notes for S01, S02, S06, S20 and the S09–S13 listing re-reads.
+- `data/flags.json`: kept the prior sessions' FLG-015 (ThermoMaven model), FLG-016 (Chefman label)
+  and FLG-017 (buy-button wording); added this session's title-drift flag as **FLG-018** to avoid
+  the ID collision.
+- `data/products.json`: auto-merged cleanly (this session's reconciled titles + prior session's
+  short_label/model corrections both present).
+- All generated HTML/feed/search-index were regenerated from the combined data via
+  `scripts/build_site.py` so every page reflects both sessions' changes.
+
+
+## Coordination / merge note (this session, second rebase)
+
+`main` advanced again while this session worked: session 82d39deb merged PR #16 (topics/categories
+clustering, sources S22–S26, flags FLG-018–FLG-024, a rewritten builder). `arena/0458cd24-winc` was
+rebased onto that `main`; content conflicts in `data/products.json`, `data/sources.json`,
+`data/flags.json` and `COORDINATION.md` were resolved without discarding either session's work:
+- `data/products.json`: taken from `main` — its titles already match this session's reconciled
+  verbatim live listing titles (both sessions converged on the same Amazon <title> strings).
+- `data/sources.json`: kept `main`'s S22–S26; overlaid this session's corrected access notes for
+  S01, S02, S03, S06, S20 and the S09–S13 listing re-reads.
+- `data/flags.json`: kept `main`'s FLG-018–FLG-024; appended this session's title-drift flag as
+  **FLG-025** (renumbered to avoid collision).
+- All generated HTML/feed/search-index regenerated from the combined data via `scripts/build_site.py`.
+
+## PR / merge record (T07)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR opened from `arena/0458cd24-winc` → `main`: source-register corrections (S01/S02/S03/S06/S20 access notes), product-title reconciliation (FLG-018), COORDINATION.md + EXECUTIVE-SUMMARY.md integration record. |
+| 2026-11-20 | Merged to `main`. GitHub Pages legacy build re-run; `status: built`, no error. Live pages re-fetched to confirm the merged content serves. |
