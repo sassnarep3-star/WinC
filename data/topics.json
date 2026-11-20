@@ -202,6 +202,44 @@
     },
     {
       "id": "TP-13",
+      "title": "Basket or oven-style: which air fryer wins your counter?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Two baskets vs. one big cavity — which one do I actually need?",
+      "why": "The two Chefman listings differ in basket count and capacity, and the Emeril is a different shape entirely. This is the question at the top of the shop.",
+      "needs": "Listed capacity, dimensions and basket configuration for each of the three air fryers — already in data/products.json.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — the site's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ],
+      "published_as": "guides/two-baskets-or-one.html",
+      "note": "The question this topic describes is already answered live by \"Two baskets or one? The air fryer shape decision in ten minutes\". Marked published rather than planned after re-reading the guides register."
+    },
+    {
+      "id": "TP-14",
+      "title": "Instant-read or leave-in: which probe actually does your job?",
+      "cluster": "Thermometers",
+      "season": "Everyday",
+      "question": "Spot-check or stay-in-the-food — which one fits how you cook?",
+      "why": "The ThermoMaven is an instant-read you pull out; the CHEF iQ stays in and reports over WiFi. The decision is about cooking style, not about which one is 'better'.",
+      "needs": "Listed connectivity, probe count, heat limits and USDA FSIS check-point guidance — already in data/products.json and the sources register.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — the thermometer cluster's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0DHZTCNR5",
+        "https://www.amazon.com/dp/B0DZFD6R9Z",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ],
+      "published_as": "guides/one-second-or-all-night.html",
+      "note": "The question this topic describes is already answered live by \"One second or all night\". Marked published rather than planned after re-reading the guides register."
+    },
+    {
+      "id": "TP-15",
       "title": "What the Amazon page does and does not tell you about a spec",
       "cluster": "Cross-cluster",
       "season": "Everyday",
