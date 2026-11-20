@@ -1295,6 +1295,41 @@ rather than reusing taken ones. Outcome, in the order it matters:
 `Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
 `npm run verify` green.
 
+### Integration record — PR #47 merged into `main` (2026-11-20)
+
+- **PR:** https://github.com/sassnarep3-star/WinC/pull/47 → merged as `0d257d5` (`gh pr merge 47 --merge`, exit 0).
+  Merging took five `origin/main` merges first; GitHub reported `CONFLICTING` four times because parallel sessions kept
+  landing (PRs #17/#18, #37–#41, #43–#45, #46/#48, #49). The final merge was performed while `mergeable: MERGEABLE` /
+  `mergeStateStatus: CLEAN`, and main's tree was re-checked before clicking.
+- **Confirmed on `main` after the merge:** `sixth_observation` + `probe6_note` + six probe dates in `data/probes.json`;
+  `FLG-031/032/033`; `SG-45…SG-53`; `Q-27/28/29`; `data/sources.json` at 37 rows with the S17 calibration passages;
+  `glance_table()` and `seasonal_strip()` defined *and called* in `scripts/build_site.py`; the reader-copy/flag-id gate rule in
+  `scripts/check_site.py`; both new guides present; `card_copy` on all five products.
+- **Pages:** `status: "built"`, `error: null`, build `created_at 2026-11-20T07:06:09Z` — one second after the merge commit
+  (`07:06:08Z`), so the deploy is from the merged tree.
+- **Live re-fetch:** https://sassnarep3-star.github.io/WinC/guides/probe-accuracy-check.html returns the page with the disclosure
+  strip above the fold, the commissioned illustration, the FSIS citations, the sponsored-labelled buy link, and an internal link
+  to `guides/turkey-probe-placement.html` (the parallel session's guide this session's duplicate was deleted in favour of).
+  A second live fetch of `index.html` failed transiently (`Failed to fetch page`), so the front-page state is confirmed from the
+  deployed tree instead of a browser render: `tablewrap glance` and “Thanksgiving falls on Thursday 26 November 2026.” are both
+  present in `main:index.html`.
+- **Landed next to this merge, not by it:** PR #35 (session `arena/d1b621b7`) merged an `archive/arena-d1b621b7/` self-contained
+  docs-site copy plus its own COORDINATION section. It is on `main`; this branch has not re-merged it. Nothing here touches
+  `archive/`, and the gate skips `archive/` by rule, so it does not affect the published site — the next session should expect
+  it when diffing.
+
+### Handoff for the next session (this session's unfinished line, stated plainly)
+
+1. `FLG-033` is the only *new* open question worth chasing from the sandbox: it is the disagreement between this repo's six
+   reproducing redirect observations and `FLG-030`'s non-reproducing path. It cannot be closed here — the resolution is
+   `FLG-002`'s one-link test inside the enrolled Associates workflow.
+2. `SG-47` / `Q-27` (the no-price stance) and `SG-48` / `Q-29` (variant pinning) are owner decisions; both have a proposal,
+   effort, risk and a measurement named on the Direction page.
+3. `SG-49` (measurement-gated topics) and `SG-22`/`SG-29`/`Q-13` all wait on the same two things: the analytics endpoint
+   deployed (`analytics/worker.js`, FLG-007) and a Search Console property. Until then no topic may cite measured demand, and
+   the gate enforces that.
+4. `Q-28` (cadence) is unanswered, so the About page must keep describing the pipeline rather than promising a frequency.
+
 ---
 
 # Session arena/156c2ecf-winc — line-by-line re-verification + decision-register completion (T39–T42)

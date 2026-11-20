@@ -546,3 +546,12 @@ Tracking-ID confirmation, the one-link Associates test, short-link compliance st
 manufacturer-page spec conflicts, analytics-endpoint deployment and Search Console — all require an
 enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
 forecast; the campaign ledger stays empty until first-party reports arrive.
+
+### Integration outcome (this session)
+
+PR #47 was merged into `main` as `0d257d5` after five rounds of reconciling with parallel sessions; GitHub Pages rebuilt
+(`status: built`, no error) one second after the merge commit, and the new guide was re-fetched from the live URL to confirm the
+deployed state. What landed: the sixth redirect observation, two sourced guides, the front-page glance table and dated seasonal
+strip grafted onto main's renderer, `card_copy` on all five products, and four added gate rules. What was withdrawn on purpose:
+this session's duplicate holiday guide, its two per-listing source rows, its JPEG artwork set, and its rewrite of the renderer
+and stylesheet. Full reconciliation and handoff notes are in the `f1fd0ff0` section of `COORDINATION.md`.
