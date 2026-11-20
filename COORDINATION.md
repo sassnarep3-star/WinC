@@ -140,7 +140,7 @@ Task IDs T29–T32 were already used by arena-c2123b9c, so this session's task i
 
 | ID | Task | Status | Owner | File scope |
 | --- | --- | --- | --- | --- |
-| T33 | Analytics privacy boundary: event-specific property allow-lists in both collectors, server-side day only, contract tests wired into `npm test` | in progress | arena-482d5832 | `analytics/collect.py`, `analytics/worker.js`, `analytics/README.md`, `analytics/test_worker.mjs` (new), `scripts/test_analytics.py` (new), `package.json` (`test` + `verify` scripts only) |
+| T33 | Analytics privacy boundary: event-specific property allow-lists in both collectors, server-side day only, contract tests wired into `npm test` | done (PR #25, merged 18071e3) | arena-482d5832 | `analytics/collect.py`, `analytics/worker.js`, `analytics/README.md`, `analytics/test_worker.mjs` (new), `scripts/test_analytics.py` (new), `package.json` (`test` + `verify` scripts only) |
 
 **Scope note.** T04 (measurement layer, owner 68dc5c3a) is marked done. Its files are edited here
 under a new claim, not re-opened. No other active claim covers these files; no site HTML, builder,
@@ -316,3 +316,15 @@ Lesson for anyone scripting this board: match headings line-anchored (`"\n## X\n
 substring, and diff a shared file after a scripted in-place edit — a script that silently shortens a
 shared file is the fastest way to erase a session's record. `git show <sha>:COORDINATION.md` recovered it
 in one command, which is the argument for small, frequent commits.
+
+### PR / merge record (T33)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:2x | PR **#25** https://github.com/sassnarep3-star/WinC/pull/25 opened `arena/482d5832-winc` → `main`. First push reported CONFLICTING (main gained PR #24, both sides appended to COORDINATION.md; resolved by keeping both records). Re-verified on the rebased tree: `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows` · `OK: 29 pages checked, 28 sitemap URLs, no violations` · `npm test` pass · committed output == generator output. |
+| 2026-11-20 06:2x | CI `verify site` (run 44688215419) passed on head `5063b18`: gate, committed-output check, XML well-formedness, audit (report), staleness queue. |
+| 2026-11-20 06:30:31Z | Merged with `gh pr merge 25 --merge` → `main` @ `18071e3`. |
+| 2026-11-20 06:30:32Z | Pages build for `18071e3`: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch of `measurement.html` shows the merged five-event table, the endpoint note (FLG-007, not deployed), and the empty ledger. The sandbox cannot reach `github.io` directly; the check was done through the page reader. |
+
+**Status:** T33 done. Open after this task, unchanged: FLG-007 (endpoint not deployed), SG-29 (Search Console not submitted), SG-30 / FLG-013 (no newsletter list). Nothing in this task claims any of them as complete.
