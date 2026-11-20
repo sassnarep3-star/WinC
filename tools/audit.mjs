@@ -92,7 +92,13 @@ const add = (rule, msg) => findings.push({ rule, msg });
     const isQuoted = (idx) => text.slice(Math.max(0, idx - 220), idx).includes("Amazon shows") || /as listed on Amazon|quote|Amazon’s own/i.test(text.slice(Math.max(0, idx - 220), idx));
     for (const m of text.matchAll(PRICE)) if (!isQuoted(m.index)) p.push(`${rel(f)}: “${m[0]}”`);
     for (const m of text.matchAll(RATING)) if (!isQuoted(m.index)) r.push(`${rel(f)}: “${m[0]}”`);
-    const vm = text.match(VERDICT); if (vm) v.push(`${rel(f)}: “${vm[0]}”`);
+    // A quoted string is being *reported*, not asserted: the registers quote an excluded badge name
+    // ("Best-Sellers-Rank") precisely to say it was not copied. The primary gate treats quoted
+    // mentions this way (see scan_text in scripts/check_site.py, which drops quoted spans before
+    // matching), so the second gate must too — otherwise the honest sentence is the one that fails.
+    const entities = (t) => t.replace(/&#x27;|&#39;|&quot;|&ldquo;|&rdquo;|&lsquo;|&rsquo;|&apos;/g, "'");
+    const unquoted = entities(text).replace(/[‘'"][^‘'"]{1,140}[’'"]/g, " ");
+    const vm = unquoted.match(VERDICT); if (vm) v.push(`${rel(f)}: “${vm[0]}”`);
   }
   if (p.length) add("A4", `price figures outside a quotation (§2(b) reserves prices to Amazon-served links/API): ${p.slice(0, 5).join("; ")}`);
   if (r.length) add("A4", `rating or review-count text published (§6(t)): ${r.slice(0, 5).join("; ")}`);

@@ -293,15 +293,74 @@
       "source_note": ""
     },
     {
+      "id": "FLG-030",
+      "title": "Supplied link.amazon tokens did not reproduce the prior ASIN mapping via this fetch path (2026-11-20)",
+      "detail": "Session arena/1c6908d1-winc re-fetched all five supplied link.amazon tokens directly on 2026-11-20. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts — i.e. the token->ASIN mapping recorded by prior sessions (S14/S18/S22/S29, data/probes.json) was NOT reproduced through this fetch path. This does NOT establish the links are invalid (FLG-003 unchanged, never claimed invalid). The likely causes are a difference in redirect/cookie/region handling between the page-reader fetch and the prior sessions' browser/curl resolution, or session-dependent redirect behaviour. The observed_* ASIN values remain valid product identities (the /dp/ listings are live and titles match), but the token-to-ASIN mapping's reproducibility across observation methods is now in question.",
+      "action": "Re-resolve each token in a real enrolled-Associates browser context (cookies + region) and record the final URL per token in data/probes.json with a dated provenance line; reconcile against the prior mapping. Do not claim the links are invalid until that is done.",
+      "status": "needs review",
+      "sources": [
+        "S15",
+        "S18",
+        "S36"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-031",
+      "title": "Deal season is here and the no-price stance is still a habit, not a policy",
+      "detail": "The listings read on 2026-11-20 displayed dollar amounts, list-price strikethroughs, review counts and 'Black Friday Deal' badges. None were copied, because a static build cannot keep them current and Program Policies restrict price display to an Amazon-served link or the Creator/PA API (S02, FLG-006). The unresolved part is editorial: the site publishes seasonal guides that answer 'what should you check before you click buy' while having no sanctioned way to talk about the one variable readers weigh that week, and SG-32 (deal-season playbook) and SG-35 (seasonal close-out rule) both assume this is settled.",
+      "action": "Record the stance on the direction register (SG-47 / Q-27): either wire the Creator/PA API into a timestamped build step with the required freshness note, or adopt a permanent no-price position and say so on the disclosure page and in the seasonal copy. Whichever is chosen, the site states it instead of implying it.",
+      "status": "needs review",
+      "sources": [
+        "S02",
+        "S06",
+        "S37"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B0CDY277D3"
+      ]
+    },
+    {
+      "id": "FLG-032",
+      "title": "Two of five redirect responses served a th=1 variant, so a stable ASIN still does not pin what the reader sees",
+      "detail": "Observation #6 (2026-11-20, session f1fd0ff0): B08DKYBTPH and B0DZFD6R9Z resolved with an added th=1 variant parameter on top of lv=shuf + plpRedirect=mhFallback. This is a different mechanism from the sibling-ASIN findings already on this register (FLG-026 ThermoMaven, FLG-027 CHEF iQ) and from the fallback-route note (FLG-029): the same ASIN can be served at a different colour, size or bundle depending on the request, so a link can land on a listing this site does not describe.",
+      "action": "During the one-link Associates test (FLG-002), record each link's final URL including every query parameter for all five products. If a variant parameter appears, either pin the Special Link to that variant or keep the bare /dp/<ASIN> form and leave variant wording out of the product copy. intended_* stays blank until the owner confirms intent (FLG-003).",
+      "status": "needs review",
+      "sources": [
+        "S29",
+        "S37",
+        "S22"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ]
+    },
+    {
+      "id": "FLG-033",
+      "title": "Observations of the same five links now disagree across fetch paths (FLG-030 vs 5/5 reproduction six times over)",
+      "detail": "FLG-030 records that session arena/1c6908d1's pass did not reproduce the prior ASIN mapping 'via this fetch path'. Six other observations — 2026-11-17 and four separate sessions on 2026-11-20, including this session's #6 through the fetch_page reader — map all five tokens to the same five ASINs with matching page titles every time. The disagreement is therefore about the observation method, not about the links: one path returns a redirect, another returns a summary or an error page. Nothing has been resolved in favour of either, because the register's rule is that an observation only describes its own path.",
+      "action": "Treat FLG-030 and this row as one question with two answers until the Associates workflow settles it: run FLG-002's one-link test inside the enrolled workflow (the only route that determines what a reader actually receives), record the final URL per product with its fetch path named, then mark both rows fixed in the same commit. Until then keep the reader links as they are and keep intended_* blank.",
+      "status": "needs review",
+      "sources": [
+        "S29",
+        "S37",
+        "S22"
+      ],
+      "source_urls": [
+        "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json"
+      ]
+    },
+    {
       "id": "FLG-041",
       "title": "Brand-endorsement statement missing while brand names sit next to buy buttons",
       "detail": "Program Policies §6(d) forbids using Program Content 'in a manner that implies a person's or company's endorsement or sponsorship of, or commercial tie-in or other association with, any product, service, party, or cause'. Every product page and card on this site reproduces the seller's listing title — which contains brand and celebrity names (Emeril Lagasse, Chefman, ThermoMaven, CHEF iQ) — next to a sponsored buy button. The site's disclosure covered the Amazon relationship but said nothing about the brands, so a reader could infer an endorsement that does not exist.",
       "action": "Fixed the same day: a one-line 'not endorsed by the brands' statement added to the disclosure page, the About page and the site-wide footer, worded as the policy's own concept. Review the wording against the Operating Agreement before any brand-relations contact.",
       "status": "fixed by this session (2026-11-20), review the wording",
       "sources": [
-        "S36"
+        "S38"
       ],
-      "source_note": "Clause read verbatim from the Amazon Associates Program Policies on 2026-11-20 — see S36 in the source register for the quoted text and the URL."
+      "source_note": "Clause read verbatim from the Amazon Associates Program Policies on 2026-11-20 — see S38 in the source register for the quoted text and the URL."
     },
     {
       "id": "FLG-042",
@@ -310,9 +369,9 @@
       "action": "scripts/freshness.py reports every recorded read older than the threshold and exits non-zero past the hard limit; run it before a publish. Owner-side: the actual takedown check needs a browser and a decision about who acts on it.",
       "status": "mitigated by tooling, open as a process",
       "sources": [
-        "S36"
+        "S38"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S36. The tooling measures the age of a recorded read; it cannot see Amazon's site."
+      "source_note": "Clause read verbatim 2026-11-20 — see S38. The tooling measures the age of a recorded read; it cannot see Amazon's site."
     },
     {
       "id": "FLG-043",
@@ -321,9 +380,9 @@
       "action": "Recorded in the executive summary, the disclosure page and the direction register so no future session builds a scraper-for-training step into the pipeline. If the owner wants model training on Program Content, the gate is a written approval from Amazon, not a code change.",
       "status": "open by design — a scope boundary, not a bug",
       "sources": [
-        "S36"
+        "S38"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S36."
+      "source_note": "Clause read verbatim 2026-11-20 — see S38."
     },
     {
       "id": "FLG-044",
@@ -332,12 +391,12 @@
       "action": "Before any list is started: real consent capture with a timestamped opt-in record, a provider, and the disclosure updated in the same commit. Keep affiliate links out of unsolicited mail permanently.",
       "status": "open — gated by Q-21",
       "sources": [
-        "S36"
+        "S38"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S36."
+      "source_note": "Clause read verbatim 2026-11-20 — see S38."
     },
     {
-      "id": "FLG-030",
+      "id": "FLG-034",
       "title": "FAQ rich-result documentation removed by Google; schema is parsed, not displayed",
       "detail": "Google's Search Central changelog entry of June 2026 reads 'Removing documentation for the FAQ rich result feature', and the FAQPage and HowTo documentation URLs now redirect to that updates page (anchors #removing-faq-rich-result and #how-to-deprecation). This site emits FAQPage markup on every guide and product page. That markup is still machine-readable, but no rich result should be expected from it, and no HowTo markup is worth adding.",
       "action": "Keep the FAQ content because it answers real questions; delete any copy, register row or roadmap item that promises a FAQ rich result. Re-check the changelog before the next schema decision.",
@@ -348,29 +407,29 @@
       "source_note": "Google Search Central changelog and the redirect behaviour of the FAQPage/HowTo documentation URLs, read 2026-11-20 — see S28."
     },
     {
-      "id": "FLG-031",
+      "id": "FLG-035",
       "title": "Short product labels truncate the listing title — permitted only while meaning is unchanged",
       "detail": "Program Policies §6(a) bars adding to or altering Program Content but allows truncating text 'in a manner that does not materially alter the meaning of the text'. The shelf uses short labels ('Chefman 8 Qt TurboFry (XL basket)', 'Emeril 26QT French Door oven') while the product pages publish the full listing title verbatim. The labels drop marketing qualifiers and add a parenthetical shape descriptor, which is the kind of judgement §6(a) asks a human to review.",
       "action": "The verbatim title is displayed on every product page under the label, and the label field is now listed on the verification page so a reviewer can compare the two strings side by side.",
       "status": "open — needs a human comparison, not a code change",
       "sources": [
-        "S36"
+        "S38"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S36. No claim is made that any specific label is or is not compliant."
+      "source_note": "Clause read verbatim 2026-11-20 — see S38. No claim is made that any specific label is or is not compliant."
     },
     {
-      "id": "FLG-032",
+      "id": "FLG-036",
       "title": "The disclosure claimed ‘Amazon product descriptions are never copied’ while product pages publish the verbatim listing title",
       "detail": "Found by session ab951e4c on 2026-11-20 while adding the §6(a) citation. The disclosure page asserted that no Amazon product description is copied, yet every product page reproduces the listing's title string verbatim and every spec cell is copied from the listing's details table. Both practices are what the site's whole method depends on — a spec without the seller's exact words is not verifiable — so the sentence was wrong, not the practice. A reader or an Amazon reviewer checking the claim against the page would have found the contradiction first.",
       "action": "Replaced with a precise statement of what is taken from a listing (title and detail values, each with URL and read date), what is never taken (listing images, banners, description paragraphs), and the §6(a) truncation rule the labels rely on. Q-23 asks the human question the policy leaves open.",
       "status": "fixed by this session",
       "sources": [
-        "S36"
+        "S38"
       ],
-      "source_note": "Program Policies §6(a), read verbatim 2026-11-20 (S36). No external source speaks to our own wording; the contradiction was internal."
+      "source_note": "Program Policies §6(a), read verbatim 2026-11-20 (S38). No external source speaks to our own wording; the contradiction was internal."
     },
     {
-      "id": "FLG-033",
+      "id": "FLG-037",
       "title": "The measurement page labelled a table ‘Findability status (SG-27..SG-30)’ when those IDs name different rows",
       "detail": "The suggestion register has grown to 31 rows, and SG-27 is now the reader-capture decision, not a nav-label row. The heading on measurement.html still pointed at SG-27..SG-30 for a table about nav labels, RSS, Search Console and capture — an ID citation that had quietly gone stale while the register moved under it. Cross-references by ID across two registers are exactly the kind of link that rots without failing loudly.",
       "action": "Heading changed to describe its own contents (‘What is wired, and what is only code so far’) and the rows now cite files and flags rather than suggestion IDs. The gate no longer has to police this class of drift because the page no longer makes the claim.",
@@ -379,7 +438,7 @@
       "source_note": "Internal only — a stale cross-reference inside the repository, found and removed in the same pass that added the rows it would have misled a reader about."
     },
     {
-      "id": "FLG-034",
+      "id": "FLG-038",
       "title": "The executive summary page cited flag IDs that had drifted to the wrong findings",
       "detail": "Found by session ab951e4c on 2026-11-20 while reading the exec page for other reasons. Its 'latest verification pass' table cited FLG-019 for the wattage correction, FLG-015/FLG-017 for the capacity and preset conflicts, FLG-016 for the name string, and FLG-020/FLG-021 for the size family and newer-model notices. In the current register those numbers belong to other findings (the real ones are FLG-022, FLG-018/FLG-020, FLG-019, FLG-023/FLG-024). The prose was right; the pointers were not — the predictable result of a pass-level findings table typed into the builder while the register it cites kept growing and was renumbered once by another session.",
       "action": "All five references corrected in the same commit, and the gate now fails any generated page that cites a FLG id absent from data/flags.json. A semantic check (does the cited flag actually match the sentence?) cannot be automated, which is what SG-28 is for.",
@@ -388,16 +447,16 @@
       "source_note": "Internal only — a cross-reference inside this repository, found by reading the rendered page against the register."
     },
     {
-      "id": "FLG-035",
+      "id": "FLG-039",
       "title": "Three suggestion rows said ‘shipped in this session’, which stops meaning anything after four sessions",
-      "detail": "Found by session ab951e4c while reconciling the suggestion register against the code. SG-16, SG-17 and SG-18 carried status 'done-this-session' with a status_detail of 'Shipped in this session: …', and the file-level field reviewed_by_session names only the most recent reviewer. Read literally, the register claimed that the newest pass had shipped work three earlier passes had done — the same class of error as a mis-numbered flag reference (FLG-034), just pointing at authorship instead of a finding.",
+      "detail": "Found by session ab951e4c while reconciling the suggestion register against the code. SG-16, SG-17 and SG-18 carried status 'done-this-session' with a status_detail of 'Shipped in this session: …', and the file-level field reviewed_by_session names only the most recent reviewer. Read literally, the register claimed that the newest pass had shipped work three earlier passes had done — the same class of error as a mis-numbered flag reference (FLG-050), just pointing at authorship instead of a finding.",
       "action": "Each row now names the session and task that shipped it (arena-82d39deb, T20/T22/T23). The _note no longer invites readers to treat reviewed_by_session as authorship, and the gate fails any shipped/done row whose status_detail does not name a pass.",
       "status": "fixed by this session; gate rule added",
       "sources": [],
       "source_note": "Internal only — a provenance error inside this repository's own register, found by reading the rows against the coordination log."
     },
     {
-      "id": "FLG-036",
+      "id": "FLG-040",
       "title": "Two illustration sets and two freshness clocks collided in the merge and were reconciled",
       "detail": "Found by session ab951e4c while merging origin/main on 2026-11-20. This pass drew five product illustrations (assets/img/prod-*.jpg) and added a Python freshness clock (scripts/freshness.py + data/freshness.json); the trunk had in the meantime gained five per-product illustrations of its own (p6qt/p8qt/p26qt/pthermo/pchefiq, ~2.8 MB PNGs each), two seasonal PNGs, and a Node clock (tools/freshness.mjs). Ten near-identical 2.8 MB PNGs and two clocks is how a multi-session site gains weight and loses coherence. Resolution: the trunk's artwork is what cards and product pages show, because its captions describe each specific unit; this pass's five remain as guide header art, one per guide where it fits; every trunk PNG was converted to the same optimized 1200×750 q82 JPEG profile, so assets/img went from 20 MB to 2.3 MB and both sets are cheap. Both clocks remain wired (the Python one is what the gate and measurement.html use); consolidating them is a follow-up.",
       "action": "Decide which freshness clock is canonical and delete or absorb the other. Do not generate a third illustration set for a product that already has one — check assets/img and data/products.json first. If a product needs photographic art instead, that is Q-07's owner decision, not another illustration.",
@@ -406,7 +465,7 @@
       "source_note": "Internal only — a repository-state finding from the merge itself, written down so a later session does not add a third set."
     },
     {
-      "id": "FLG-037",
+      "id": "FLG-045",
       "title": "The reader-capture form could submit an address into a URL when scripting was blocked",
       "detail": "Found by the independent second gate (tools/audit.mjs, rule A7) while reconciling this merge, and confirmed by reading the markup: the form carried action=measurement.html method=get with a named email input. With scripting blocked, pressing Subscribe navigates to measurement.html?email=you@example.com — the address then sits in the reader's history and in whatever request log the static host keeps, while the copy on the page said the address goes nowhere. Nothing was ever collected by us; the leak was the browser's own fallback path.",
       "action": "Fixed 2026-11-20 (session ab951e4c): the form now posts to no destination (action=\"\", novalidate) and the input has no name attribute, so a no-script submission has no key/value pair to carry — an address cannot enter a URL or a request log. The counter still fires, because it reads the event, not the field. The field's own note on the page states the reason in plain words.",
@@ -414,21 +473,21 @@
       "sources": [
         "S03"
       ],
-      "source_note": "No Amazon clause governs a form that collects nothing; this is the site's own accuracy duty — the copy said 'sends your address nowhere' while the markup had a path that could carry it. Recorded under the same principle as S36 §6(a) (do not misdescribe what your site does)."
+      "source_note": "No Amazon clause governs a form that collects nothing; this is the site's own accuracy duty — the copy said 'sends your address nowhere' while the markup had a path that could carry it. Recorded under the same principle as S38 §6(a) (do not misdescribe what your site does)."
     },
     {
-      "id": "FLG-038",
+      "id": "FLG-046",
       "title": "Internal search puts the query in the page URL, which the measurement table implied it never would",
       "detail": "search.html reads results from ?q= so a search can be shared or reloaded, and the form is a GET with a named input. The measurement page's 'never stored: search query text' row is true of this site's counter (and of a site that stores nothing), but a reader could reasonably read it as 'what I type never appears anywhere', while the host serving the page can log the URL it was asked for.",
       "action": "The measurement table now states the exception in the row itself and carries a plain note under the event table. No code change: the URL is the mechanism that makes search work without a server, and removing it would break shareable searches.",
       "status": "disclosed rather than removed",
       "sources": [
-        "S36"
+        "S38"
       ],
       "source_note": "Program Policies §3 makes the site owner responsible for accurate disclosure of what is collected and how; the fix is accuracy of the claim, not a new feature."
     },
     {
-      "id": "FLG-039",
+      "id": "FLG-047",
       "title": "The independent second gate could not read single-quoted ids and reported 52 phantom broken fragments",
       "detail": "tools/audit.mjs rule A6 scans each page for id=\"...\" in double quotes; the source register rows in verification.html were emitted with id='src-S01' in single quotes. Both are valid HTML. The result was 52 'unresolved fragment' findings against links that resolve in every browser — the kind of false positive that trains a reviewer to ignore a gate. It also meant that any tool reading only double-quoted ids is blind to that page's anchors.",
       "action": "Both sides fixed (2026-11-20, session ab951e4c): the builder now emits double-quoted ids for the register anchors, consistent with the rest of the page, and the audit accepts either quoting style with a comment saying why. A6 is now clean for the right reason — the references resolve, and the tool can see it.",
@@ -437,7 +496,7 @@
       "source_note": "Internal only — a tooling blind spot found while merging; the second gate's finding was wrong but its disagreement with the primary gate was worth chasing, which is why it exists."
     },
     {
-      "id": "FLG-040",
+      "id": "FLG-048",
       "title": "The second gate read an inline-JS string as a link and reported a phantom unresolved reference",
       "detail": "After the id-quoting fix, tools/audit.mjs rule A6 still reported one broken reference: search.html → '+h.url+'. That is a JavaScript expression inside the page's own search script (it builds result links at runtime), not a published href. A checker that treats every quoted string in a page as a file path will keep inventing findings out of client-side code, and a gate that cries wolf gets ignored. Provenance note: this flag's own first draft quoted a builder expression literally and tripped the leak rule — the wording was changed rather than the rule loosened.",
       "action": "Fixed in the audit (2026-11-20, session ab951e4c): a value containing quote/concatenation/template characters is recognised as a runtime expression and skipped, with the reason commented at the site of the change. The site itself needed no change, and the separate rule that fails when an un-interpolated builder expression leaks into static output is untouched — this only stops A6 mistaking JS for markup.",
@@ -446,25 +505,25 @@
       "source_note": "Internal only — a second-gate false positive, recorded because the honest response to a gate finding is to prove which side was wrong."
     },
     {
-      "id": "FLG-045",
+      "id": "FLG-049",
       "title": "Third register-id collision inside one day: ids were allocated by guessing what other sessions would use",
-      "detail": "This branch claimed S27…S28, FLG-026…FLG-040, SG-21…SG-28 and Q-22…Q-26 against a board read at session start. Nine other PRs merged while it worked. Round one: the trunk already held S27, SG-21…SG-28 and Q-22/Q-23 for other findings, so this pass renumbered to S30, SG-39…SG-42, Q-24…Q-27, TP-15…TP-20. Round two (PRs #40…#48): the trunk had *also* taken those slots — S30…S35, SG-39…SG-42, Q-24…Q-25, TP-15…TP-18, FLG-026…FLG-029 — so the same rows needed new ids again. Renumbering at merge time is correct, but it is bookkeeping a machine can do, and each round is a chance to leave a reference pointing at another session's row.",
+      "detail": "This branch claimed S27…S28, FLG-026…FLG-048, SG-21…SG-28 and Q-22…Q-30 against a board read at session start. Nine other PRs merged while it worked. Round one: the trunk already held S27, SG-21…SG-28 and Q-22/Q-23 for other findings, so this pass renumbered to S30, SG-39…SG-42, Q-24…Q-31, TP-15…TP-25. Round two (PRs #40…#48): the trunk had *also* taken those slots — S30…S35, SG-39…SG-42, Q-24…Q-25, TP-15…TP-18, FLG-026…FLG-029 — so the same rows needed new ids again. Renumbering at merge time is correct, but it is bookkeeping a machine can do, and each round is a chance to leave a reference pointing at another session's row.",
       "action": "Closed structurally rather than by care: scripts/alloc_ids.py allocates ids from the merged tree at commit time and rewrites a row's own references with the same map, and scripts/check_site.py now fails any file (data, scripts, markdown, generated HTML) that cites an S/FLG/SG/Q/TP id absent from its register. This pass's fifteen flag rows are the first test of both.",
       "status": "fixed by tooling; allocation discipline enforced by the gate",
       "sources": [],
       "source_note": "Internal only — a coordination defect in this repository's own ids, found by the merge process itself."
     },
     {
-      "id": "FLG-046",
+      "id": "FLG-050",
       "title": "The suggestions register had a four-row gap that a live citation pointed into",
-      "detail": "Found on 2026-11-20 by scripts/alloc_ids.py --check, the reference audit added in this merge. The register runs from SG-01 up to SG-50 but the numbers 23, 24, 25 and 26 were never issued (an earlier session's numbering jumped), and the FSIS temperature-chart source row's access note told a reader to re-check the figures 'see the two suggestion rows numbered 24 and 25' — a pointer into a hole. Gaps like this are invisible to a count-based check and to anyone reading only the top of the file.",
+      "detail": "Found on 2026-11-20 by scripts/alloc_ids.py --check, the reference audit added in this merge. The register runs from SG-01 up to SG-61 but the numbers 23, 24, 25 and 26 were never issued (an earlier session's numbering jumped), and the FSIS temperature-chart source row's access note told a reader to re-check the figures 'see the two suggestion rows numbered 24 and 25' — a pointer into a hole. Gaps like this are invisible to a count-based check and to anyone reading only the top of the file.",
       "action": "The citation was corrected to name the duty that actually exists (the freshness clock and the stale-read removal flag) rather than inventing three rows to fill a gap whose intended content nobody recorded. The four hole numbers stay empty on purpose: ids are allocated from max+1 by scripts/alloc_ids.py, so a gap is never silently reused for something else. Read a missing number as never-issued, not as deleted.",
       "status": "found and closed at the reference; the gap is left as evidence",
       "sources": [],
       "source_note": "Internal only — a register-integrity finding from this repository's own ids, surfaced by tooling added in the same merge."
     },
     {
-      "id": "FLG-047",
+      "id": "FLG-051",
       "title": "A committed merge-conflict marker had shipped inside the executive summary",
       "detail": "Found on 2026-11-20 while writing this pass's summary section: main's EXECUTIVE-SUMMARY.md contained a conflict region left in place by an earlier merge — a marker line, a one-line HEAD side, a separator, and 196 lines of main's own history inside the block. Markdown renders that as literal '<<<<<<< HEAD' text, and nothing in either gate looked at it, because both gates check the generated HTML and the registers, not the repository's prose. Nothing was lost: the 196 lines were the only copy of three earlier sessions' sections.",
       "action": "Resolved losslessly by this pass: the three marker lines were removed and both sides kept, after checking that no heading in the block was duplicated elsewhere in the file. A rule was added to scripts/check_site.py so any committed conflict marker in HTML, JSON, markdown, Python or CSS fails the build — the class of defect, not the instance.",

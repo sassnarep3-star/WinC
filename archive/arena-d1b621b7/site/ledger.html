@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campaign ledger — empty by design · Kitchen Shortlist</title>
+<meta name="description" content="The campaign ledger: defined columns, append-only provenance rules, zero rows until authorized first-party reports supply numbers. No forecasts, no conversion scores.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/ledger.html">
+<meta property="og:title" content="Campaign ledger — empty by design">
+<meta property="og:description" content="Schema defined, rows gated on authorized first-party reports.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/ledger.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Kitchen Shortlist RSS" href="rss.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ANALYTICS_ENDPOINT = null; /* local mode — FLG-006 */</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span><span class="brand-name">Kitchen Shortlist</span><span class="brand-tag">Buyer-first appliance guides</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guides/index.html">Guides</a></li>
+        <li><a href="products.html">The Shortlist</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Before You Decide</a></li>
+        <li><a href="executive-summary.html">Summary</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap">
+    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+    <span class="sep">·</span> If you buy through a product link on this page we may earn a commission at no extra cost to you.
+    <span class="sep">·</span> Product links carry <code>rel="sponsored"</code>.
+    <a href="compliance.html">How we disclose</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="index.html">Home</a> / Dashboard / Campaign ledger</p>
+    <h1>Campaign ledger</h1>
+    <p class="lede">The measurement-first rule made concrete: the schema exists, the entry rules exist, and the rows are <strong>zero</strong> — because no authorized first-party report has supplied a number yet. No conversion score, no revenue forecast, no modeled anything.</p>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Ledger rows</h2><span class="chip chip-neutral">0 rows · 2026-11-20</span></div>
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Append-only · every row must carry a provenance link · machine copy: <a href="data/campaign-ledger.json">campaign-ledger.json</a></caption>
+          <thead>
+            <tr>
+              <th scope="col">Timestamp (UTC)</th>
+              <th scope="col">Period</th>
+              <th scope="col">Source</th>
+              <th scope="col">Channel</th>
+              <th scope="col">Eligible sessions</th>
+              <th scope="col">Clicks</th>
+              <th scope="col">Reported orders</th>
+              <th scope="col">Provenance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-nosrc="true"><td colspan="8" class="empty-state">No rows yet. The first row will be entered when an authorized Associates report (or equivalent first-party report) is available — with its report date and link recorded in Provenance.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2col" style="margin-top:1.5rem">
+        <div class="note" style="margin:0">
+          <strong>Entry rules (from <a href="data/campaign-ledger.json">the schema</a>):</strong>
+          <ol style="margin:.5rem 0 0;padding-left:1.2rem">
+            <li>Zero rows until an authorized first-party report supplies the numbers.</li>
+            <li>Every row requires timestamp, source, channel, eligible sessions, clicks, reported orders, provenance.</li>
+            <li>Values are entered exactly as reported, with the report date recorded.</li>
+            <li>Append-only: corrections are new rows referencing the old one.</li>
+            <li>Never contains personally identifiable visitor data.</li>
+          </ol>
+        </div>
+        <div class="note" style="margin:0">
+          <strong>Why so strict?</strong> The brief's priority-4 rule: <em>measure before automating optimization</em>. A ledger that starts empty and dated stays honest; a ledger seeded with estimates becomes the source of every future bad decision. Related: <a href="measurement.html">event taxonomy</a> · <a href="flagged.html#flg-005">FLG-005 (rates unverified)</a>.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Kitchen Shortlist</span>
+        <p>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul class="footer-nav">
+          <li><a href="guides/index.html">All guides</a></li>
+          <li><a href="products.html">The Shortlist</a></li>
+          <li><a href="index.html#seasonal">Seasonal clusters</a></li>
+          <li><a href="rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Dashboard</h4>
+        <ul>
+          <li><a href="source-register.html">Source register</a></li>
+          <li><a href="flagged.html">Flagged for review</a></li>
+          <li><a href="measurement.html">Measurement</a></li>
+          <li><a href="ledger.html">Campaign ledger</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="executive-summary.html">Executive summary</a></li>
+          <li><a href="suggestions.html">Suggestions</a></li>
+          <li><a href="questions.html">Before you decide</a></li>
+          <li><a href="about.html">About &amp; editorial policy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclosure">
+      <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. If you buy through links on this page we may earn a commission at no extra cost to you. Product links are marked <code>rel="sponsored"</code>; we only recommend what our source register can support, and unverified values are published as blank rather than filled in.
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Kitchen Shortlist</span>
+      <a href="sitemap.xml">Sitemap</a>
+      <a href="robots.txt">Robots</a>
+      <a href="privacy.html">Privacy</a>
+      <span>Prices and availability change; check the listing for current terms.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/analytics.js" defer></script>
+</body>
+</html>

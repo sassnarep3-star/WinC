@@ -483,6 +483,41 @@ if html_files:
             finally:
                 os.unlink(tmp)
 
+# --- register language kept out of reader values, and dated seasonal copy (f1fd0ff0) ---
+for p2 in products:
+    for fld in ("capacity", "dimensions", "weight", "temperature", "power", "model", "upc", "brand"):
+        val = p2.get(fld) or ""
+        if "FLG-" in val or re.search(r"\bS\d\d\b", val):
+            fail(f"{p2['id']}: '{fld}' carries register language ({val[:60]!r}) — a reader copies this value into a "
+                 f"shopping list; the note belongs in listing_notes and on Flagged for Review")
+    cc = p2.get("card_copy")
+    if cc:
+        if "FLG-" in cc or PRICE_RE.search(cc):
+            fail(f"{p2['id']}: card_copy carries a flag id or a price")
+        if len(cc) > 400:
+            fail(f"{p2['id']}: card_copy is {len(cc)} chars — a card line, not an article")
+
+# a published topic must point at a guide file that actually exists
+for t3 in topic_doc["topics"]:
+    if t3.get("status") == "published":
+        pa = t3.get("published_as") or ""
+        if not pa:
+            fail(f"topic {t3.get('id')}: marked published with no published_as path")
+            continue
+        if not os.path.exists(os.path.join(ROOT, pa)):
+            fail(f"topic {t3.get('id')}: published_as {pa} is not built")
+        src = "data/guides/" + os.path.basename(pa) + "src" if False else "data/guides/" + os.path.basename(pa).replace(".html", ".json")
+        if not os.path.exists(os.path.join(ROOT, src)):
+            fail(f"topic {t3.get('id')}: {pa} has no source file {src} (publish = drop a file in data/guides/)")
+
+# an undated seasonal promise is how a site looks stale in public
+idx_html2 = read("index.html") if os.path.exists(os.path.join(ROOT, "index.html")) else ""
+m_sea = re.search(r'(?s)<section class="seasonal".*?</section>', idx_html2)
+if m_sea and not re.search(r"20\d\d", m_sea.group(0)):
+    fail("index.html: the seasonal strip carries no year — date it or drop it")
+if m_sea and "amazon.com/dp/" in m_sea.group(0):
+    fail("index.html: the seasonal strip links a product listing; keep it editorial and let the shop do that")
+
 
 # --- reader path, imagery, ledger and id integrity (session ab951e4c, 2026-11-20) ----
 # 1. A shelf card is selling copy with sources attached. Register vocabulary — flag ids,
@@ -528,6 +563,15 @@ for p in products:
 for img, owners in seen_img.items():
     if img and len(owners) > 1:
         fail(f"imagery: {img} is reused by {', '.join(owners)} — one illustration per product")
+
+# 2b. The reader sees the rendered page, so image uniqueness is checked there too: five shelf cards
+#     drawing two images is a shelf of duplicates however the data reads.
+idx_html = read("index.html")
+_blocks = re.findall(r'(?s)<article class="card productcard">(.*?)</article>', idx_html)
+_srcs = [m.group(1) for b in _blocks for m in [re.search(r'<img src="([^"]+)"', b)] if m]
+if _blocks and len(set(_srcs)) < len(_blocks):
+    fail(f"index.html: {len(_blocks)} shelf cards share {len(set(_srcs))} distinct images — one illustration per product "
+         "(the data can be unique while the card markup is not)")
 
 # 3. The campaign ledger may hold only first-party figures. An extra key, a float, a derived
 #    rate or an estimating word is the beginning of a fabricated number.

@@ -45,17 +45,13 @@
       "question": "What size cook do you need before you start hosting?",
       "why": "The 26-quart listing states a 6-lb rotisserie chicken and a 12-inch pizza in its own bullet copy. That is a directly checkable claim a reader can hold the site to.",
       "needs": "The listing bullets for B09B7SB46R (already captured) and the USDA FSIS whole-poultry guidance for the temperature side.",
-      "status": "published",
+      "status": "planned",
       "chosen_from": "editorial hypothesis — seasonal cluster already used by the holiday guide; no measured query data exists yet",
       "priority": "medium",
       "source": [
-        "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B09B7SB46R",
-        "https://www.amazon.com/dp/B08DKYBTPH",
-        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"
-      ],
-      "published_as": "guides/whole-chicken-air-fryer-fit.html",
-      "status_note": "Published 2026-11-20 as “Can it fit a whole chicken?”. The pizza half stays open: the only supporting text is the listing's own bullet, so the guide quotes it as a seller claim (FLG-021) rather than answering it."
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ]
     },
     {
       "id": "TP-04",
@@ -95,16 +91,15 @@
       "season": "Holiday cooking",
       "question": "Thigh, breast, or the wing — and how close to the bone?",
       "why": "USDA FSIS names the three places to check a whole bird and says to avoid bone. The instant-read listing cannot help with technique; a guide can, and the source is already in the register.",
-      "needs": "USDA FSIS Food Thermometers page (S17) — already cited in the published probe guide; would need a cooking-technique section with per-step citations.",
+      "needs": "Published 2026-11-20 as guides/turkey-probe-placement.html — FSIS placement and the 165°F figure quoted from the source on this row; nothing invented to fill a gap, and no hands-on measurement claimed.",
       "status": "published",
       "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
       "priority": "high",
       "source": [
-        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
-        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+        "https://www.amazon.com/dp/B0DHZTCNR5"
       ],
-      "published_as": "guides/whole-chicken-air-fryer-fit.html",
-      "status_note": "Published 2026-11-20: the three-place bird check is carried by the whole-chicken guide and the placement rules by the listing-literacy guide, both quoting USDA FSIS."
+      "published_as": "guides/turkey-probe-placement.html"
     },
     {
       "id": "TP-07",
@@ -129,16 +124,14 @@
       "season": "Everyday",
       "question": "Is the number on the box a measurement or a marketing claim?",
       "why": "The instant-read listing states ±0.5°F and NIST & NSF certification; the wireless listing states no tolerance figure on the page read. Readers are comparing numbers that do not come from the same place.",
-      "needs": "The listing's certification claim, and — if the owner wants to go further — a manufacturer calibration page. No claim about this site's own measurements is possible: nobody here has tested a probe.",
+      "needs": "Published 2026-11-20 as guides/probe-accuracy-check.html — FSIS placement and the 165°F figure quoted from the source on this row; nothing invented to fill a gap, and no hands-on measurement claimed.",
       "status": "published",
       "chosen_from": "editorial hypothesis; no measured query data exists yet",
       "priority": "medium",
       "source": [
-        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
         "https://www.amazon.com/dp/B0DHZTCNR5"
       ],
-      "published_as": "guides/thermometer-accuracy-ice-cup-check.html",
-      "status_note": "Published 2026-11-20 as “Your thermometer claims ±0.5°F…”, built on FSIS's 2–4°F statement and its documented ice-water and boiling-water checks."
+      "published_as": "guides/probe-accuracy-check.html"
     },
     {
       "id": "TP-09",
@@ -147,17 +140,14 @@
       "season": "Everyday",
       "question": "Will the cable survive a small basket and a hot element?",
       "why": "The wireless listing names air fryer as a use and states a 1000°F probe heat limit. The cable rating is the part readers get wrong, and it is a check-the-listing question rather than a test result.",
-      "needs": "Listing wording on probe heat limits and any cable rating the manufacturer publishes. No clearance measurement may be claimed without a source.",
+      "needs": "Published 2026-11-20 as guides/turkey-probe-placement.html — FSIS placement and the 165°F figure quoted from the source on this row; nothing invented to fill a gap, and no hands-on measurement claimed.",
       "status": "published",
       "chosen_from": "editorial hypothesis — cross-links the thermometer and air-fryer clusters; no measured query data exists yet",
       "priority": "medium",
       "source": [
-        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
-        "https://www.amazon.com/dp/B0DHZTCNR5",
         "https://www.amazon.com/dp/B0DZFD6R9Z"
       ],
-      "published_as": "guides/listing-wording-thermometer-claims.html",
-      "status_note": "Published 2026-11-20 in the listing-literacy guide, which quotes FSIS's rule that a thermometer may stay in the food only if the manufacturer designed it to."
+      "published_as": "guides/turkey-probe-placement.html"
     },
     {
       "id": "TP-10",
@@ -321,6 +311,25 @@
     },
     {
       "id": "TP-19",
+      "title": "Will it actually fit on my counter?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Before you order, what do you have to measure — and what can the listing tell you?",
+      "why": "Two of the three fryers in the shop are bigger than a reader expects (13.4 and 16.9 inches deep), and the biggest is 26.5 lb. A wrong fit is the most common way an appliance goes back.",
+      "needs": "Listed dimensions and weights already in data/products.json, each re-confirmed against the live listing (S24, S25, S28). No new sources were needed, and no clearance figure was invented: the guide tells the reader which number to ask the manufacturer for.",
+      "status": "published",
+      "published_as": "guides/counter-fit-before-you-order.html",
+      "chosen_from": "verification finding — the 2026-11-20 listing re-read put three different footprint shapes in front of us, and the existing cleanup guide already promised a counter-space answer without the measurements page",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
+      ],
+      "_note": "Added as TP-19: main had already taken TP-15..TP-18 for its own backlog rows on 2026-11-20 (a third renumbering the same day)."
+    },
+    {
+      "id": "TP-20",
       "title": "“Dishwasher-safe” baskets: does that cover the pan, the tray and the coil?",
       "cluster": "Air Fryers",
       "season": "Everyday",
@@ -337,7 +346,7 @@
       ]
     },
     {
-      "id": "TP-20",
+      "id": "TP-21",
       "title": "How much clearance does a countertop fryer need around it?",
       "cluster": "Air Fryers",
       "season": "Everyday",
@@ -354,7 +363,7 @@
       ]
     },
     {
-      "id": "TP-21",
+      "id": "TP-22",
       "title": "What does “Sync Finish” claim to do — and how would you notice if it didn't?",
       "cluster": "Air Fryers",
       "season": "Everyday",
@@ -369,7 +378,7 @@
       ]
     },
     {
-      "id": "TP-22",
+      "id": "TP-23",
       "title": "“1 second” versus the seconds FSIS lists per thermometer type",
       "cluster": "Thermometers",
       "season": "Everyday",
@@ -385,7 +394,7 @@
       ]
     },
     {
-      "id": "TP-23",
+      "id": "TP-24",
       "title": "Hub, app or alarm: who actually gets told when the probe hits temperature?",
       "cluster": "Thermometers",
       "season": "Holiday cooking",
@@ -401,7 +410,7 @@
       ]
     },
     {
-      "id": "TP-24",
+      "id": "TP-25",
       "title": "Reheat, bake, dehydrate: which modes does each listing actually name?",
       "cluster": "Air Fryers",
       "season": "Everyday",

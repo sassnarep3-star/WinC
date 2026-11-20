@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compliance — disclosure, links and the publishing gate · Kitchen Shortlist</title>
+<meta name="description" content="How disclosure, sponsored links, price display and Special Links are handled: the rules, the sources, the one-link test plan, and the CI gate that enforces it.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/compliance.html">
+<meta property="og:title" content="Compliance — disclosure, links and the publishing gate">
+<meta property="og:description" content="The rules we follow, the sources they come from, and the gate that keeps us honest.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/compliance.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Kitchen Shortlist RSS" href="rss.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ANALYTICS_ENDPOINT = null; /* local mode — FLG-006 */</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span><span class="brand-name">Kitchen Shortlist</span><span class="brand-tag">Buyer-first appliance guides</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guides/index.html">Guides</a></li>
+        <li><a href="products.html">The Shortlist</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Before You Decide</a></li>
+        <li><a href="executive-summary.html">Summary</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap">
+    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+    <span class="sep">·</span> If you buy through a product link on this page we may earn a commission at no extra cost to you.
+    <span class="sep">·</span> Product links carry <code>rel="sponsored"</code>.
+    <a href="compliance.html">How we disclose</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="index.html">Home</a> / Dashboard / Compliance</p>
+    <h1>Compliance</h1>
+    <p class="lede">Priority 5 of the brief: disclosures and API policy checks live <em>in</em> the publishing workflow — not in a memo. This page shows the rules, their official sources, and the automated gate that fails a build when a rule breaks.</p>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Disclosure policy</h2><span class="chip chip-verified">enforced</span></div>
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Disclosure rules → official basis → where they appear on this site</caption>
+          <thead>
+            <tr>
+              <th scope="col">Rule</th>
+              <th scope="col">Official basis</th>
+              <th scope="col">Where it appears</th>
+              <th scope="col">Gate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Exact Associates statement: “As an Amazon Associate I earn from qualifying purchases.”</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/agreement" rel="nofollow noopener" target="_blank">Operating Agreement §5 (V-01)</a></td>
+              <td>Disclosure strip under masthead + footer, every page</td>
+              <td><span class="chip chip-done">CI check</span></td>
+            </tr>
+            <tr>
+              <td>Disclosure must be “difficult to miss… easily understandable” and “unavoidable” online</td>
+              <td><a class="src" href="https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255" rel="nofollow noopener" target="_blank">16 CFR §255.0(f) (V-10)</a></td>
+              <td>Strip sits above all content, before any link, high-contrast amber</td>
+              <td><span class="chip chip-done">CI check</span></td>
+            </tr>
+            <tr>
+              <td>Material connection (commission) disclosed clearly and conspicuously</td>
+              <td><a class="src" href="https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking" rel="nofollow noopener" target="_blank">FTC Endorsement Guides FAQ (V-11)</a></td>
+              <td>Strip states commission earning; footer repeats; CTA context</td>
+              <td><span class="chip chip-done">CI check</span></td>
+            </tr>
+            <tr>
+              <td>Outbound product links marked as sponsored</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies §2(b) (V-03)</a></td>
+              <td><code>rel="sponsored nofollow noopener"</code> on every product link</td>
+              <td><span class="chip chip-done">CI check</span></td>
+            </tr>
+            <tr>
+              <td>No prices unless served by Amazon or via API with timestamp + disclaimer</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">IP License §2(i)–(k) (V-06)</a></td>
+              <td>All price cells blank + labelled unverified</td>
+              <td><span class="chip chip-done">CI check</span></td>
+            </tr>
+            <tr>
+              <td>No star ratings/reviews unless obtained via Creators/PA API</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Participation §6(t) (V-07)</a></td>
+              <td>All rating cells blank + labelled unverified</td>
+              <td><span class="chip chip-done">CI check</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="special-links">
+    <div class="wrap">
+      <div class="section-head"><h2>Special Links status &amp; the one-link test</h2><span class="chip chip-unverified">unresolved · FLG-003</span></div>
+      <div class="grid-2col">
+        <div class="note" style="margin:0">
+          <strong>Where things stand.</strong> Amazon pays only on properly formatted “Special Links” (<a href="source-register.html#v02">V-02</a>), disclaims fees when links aren't correctly tracked (<a href="source-register.html#v05">V-05</a>), and prohibits shortening that obscures the Amazon destination (<a href="source-register.html#v08">V-08</a>). The supplied <span class="code">link.amazon/…</span> links demonstrably reach Amazon listings (<a href="source-register.html#observations">O-01…O-05</a>), but their internal tagging is not observable from outside the Associates account. <strong>We do not claim they are invalid</strong> — their exact compliance status is unresolved in <a href="flagged.html#flg-003">FLG-003</a>.
+        </div>
+        <div class="note" style="margin:0">
+          <strong>The test plan (SG-19)</strong> — run inside the enrolled Associates workflow, one link per product:
+          <ol style="margin:.5rem 0 0;padding-left:1.2rem">
+            <li>Open Associates Central → check tracking ID <span class="code">shopnow047c-20</span> exists (<a href="flagged.html#flg-004">FLG-004</a>).</li>
+            <li>Generate one official link per product with the Site Stripe / link tools.</li>
+            <li>Click each supplied link in a clean session; record the final URL including <span class="code">tag=</span>.</li>
+            <li>Confirm the click appears in the Associates tracking report within 24 h (<a href="source-register.html#v04">V-04</a>).</li>
+            <li>Log results in FLG-003 → then SG-06 link swap can proceed.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>The publishing gate</h2><span class="chip chip-done">runs on every push</span></div>
+      <p class="section-intro">What can be automated, is. What can't (human review against the Operating Agreement and FTC guidance) sits behind the gate below with a named reviewer and a cadence.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Automated checks vs human review — the compliance workflow</caption>
+          <thead>
+            <tr>
+              <th scope="col">Check</th>
+              <th scope="col">Type</th>
+              <th scope="col">Fails when…</th>
+              <th scope="col">Source of rule</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Disclosure strip + footer statement present on every page</td>
+              <td><span class="chip chip-done">automated</span></td>
+              <td>exact Associates statement missing anywhere</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/agreement" rel="nofollow noopener" target="_blank">OA §5 (V-01)</a></td>
+            </tr>
+            <tr>
+              <td>Every outbound product link carries <code>sponsored</code></td>
+              <td><span class="chip chip-done">automated</span></td>
+              <td>any <code>link.amazon</code>/<code>/dp/</code> link without rel</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Policies §2(b) (V-03)</a></td>
+            </tr>
+            <tr>
+              <td>Every table row has a source link (or explicit empty-state row)</td>
+              <td><span class="chip chip-done">automated</span></td>
+              <td>a row shows a value with no source anchor</td>
+              <td><a class="src" href="about.html">project brief · verification rule</a></td>
+            </tr>
+            <tr>
+              <td>Unverified cells are blank, never filled with guesses</td>
+              <td><span class="chip chip-done">automated</span></td>
+              <td>price/rating patterns appear in product tables</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">V-06 / V-07</a></td>
+            </tr>
+            <tr>
+              <td>Sitemap covers every published page; feed covers every guide; internal links resolve</td>
+              <td><span class="chip chip-done">automated</span></td>
+              <td>drift between pages and sitemap/feed/links</td>
+              <td><a class="src" href="about.html">findability requirement</a></td>
+            </tr>
+            <tr>
+              <td>Disclosure placement &amp; endorsement context review</td>
+              <td><span class="chip chip-pending">human · quarterly</span></td>
+              <td>context changes (new ad formats, guest posts)</td>
+              <td><a class="src" href="https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking" rel="nofollow noopener" target="_blank">FTC FAQ (V-11)</a></td>
+            </tr>
+            <tr>
+              <td>Operating Agreement / Program Policies version check</td>
+              <td><span class="chip chip-pending">human · quarterly</span></td>
+              <td>Amazon updates the agreement (last seen: 2025-10-15 / 2026-04-14)</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/agreement" rel="nofollow noopener" target="_blank">OA page (V-13)</a></td>
+            </tr>
+            <tr>
+              <td>One-link Special Link test (SG-19)</td>
+              <td><span class="chip chip-unverified">human · before link swap</span></td>
+              <td>tracking report doesn't show the click</td>
+              <td><a class="src" href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Policies §2(b) (V-03)</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Gate implementation:</strong> <code>scripts/check_site.py</code> runs in <code>.github/workflows/site-checks.yml</code> on every push and pull request. A failing check blocks the merge — the same gate that will run on the final integration pass.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Kitchen Shortlist</span>
+        <p>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul class="footer-nav">
+          <li><a href="guides/index.html">All guides</a></li>
+          <li><a href="products.html">The Shortlist</a></li>
+          <li><a href="index.html#seasonal">Seasonal clusters</a></li>
+          <li><a href="rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Dashboard</h4>
+        <ul>
+          <li><a href="source-register.html">Source register</a></li>
+          <li><a href="flagged.html">Flagged for review</a></li>
+          <li><a href="measurement.html">Measurement</a></li>
+          <li><a href="ledger.html">Campaign ledger</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="executive-summary.html">Executive summary</a></li>
+          <li><a href="suggestions.html">Suggestions</a></li>
+          <li><a href="questions.html">Before you decide</a></li>
+          <li><a href="about.html">About &amp; editorial policy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclosure">
+      <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. If you buy through links on this page we may earn a commission at no extra cost to you. Product links are marked <code>rel="sponsored"</code>; we only recommend what our source register can support, and unverified values are published as blank rather than filled in.
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Kitchen Shortlist</span>
+      <a href="sitemap.xml">Sitemap</a>
+      <a href="robots.txt">Robots</a>
+      <a href="privacy.html">Privacy</a>
+      <span>Prices and availability change; check the listing for current terms.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/analytics.js" defer></script>
+</body>
+</html>

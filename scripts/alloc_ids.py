@@ -45,7 +45,15 @@ PATTERNS = {
 
 def load(rel):
     with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
-        return json.load(f)
+        text = f.read()
+    # Line-anchored, like a real conflict: a file that *quotes* a marker in prose (one flag row
+    # describes a committed marker) is not itself half-merged.
+    if any(ln.startswith(("<<<<<<< ", ">>>>>>> ")) or ln == "=======" for ln in text.split("\n")):
+        raise SystemExit(f"{rel} still contains merge-conflict markers — resolve it first "
+                         "(take the trunk's side, then run scripts/merge_registers.py to re-append "
+                         "this branch's rows at free ids). Allocating an id from a half-merged file "
+                         "is how a duplicate id gets committed.")
+    return json.loads(text)
 
 
 def register_ids(kind):
@@ -85,6 +93,25 @@ def next_ids(kind, count=1):
         used.add(n)
         out.append(norm(kind, n))
     return out
+
+
+def renum(text_or_obj, mapping):
+    """Rewrite id tokens in a string, list or dict using {old: new}.
+
+    Public because renumbering a row and leaving its citations behind is the failure this module
+    exists to prevent; anything that moves an id must be able to move its references in the same
+    breath. Longer keys are applied first so a partial token cannot be rewritten twice.
+    """
+    if isinstance(text_or_obj, str):
+        out = text_or_obj
+        for src, dst in sorted(mapping.items(), key=lambda kv: -len(kv[0])):
+            out = re.sub(rf"(?<![A-Za-z0-9-]){re.escape(src)}(?![\d])", dst, out)
+        return out
+    if isinstance(text_or_obj, list):
+        return [renum(x, mapping) for x in text_or_obj]
+    if isinstance(text_or_obj, dict):
+        return {k: renum(v, mapping) for k, v in text_or_obj.items()}
+    return text_or_obj
 
 
 def files_to_scan(html=True, data=True, docs=True, code=True):

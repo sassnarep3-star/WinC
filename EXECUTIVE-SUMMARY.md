@@ -295,6 +295,173 @@ explicit design directive to the build-prompt builder.
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
 
+---
+
+# Sixth observation and a shop-shaped front page (2026-11-20, session `f1fd0ff0`)
+
+The brief for this pass had three parts: lead with the products, give the reader a decision to
+make, and keep every number sourced. Three things changed on the site, and one row of data turned
+out to be wrong in public.
+
+## 1 · Verification, a sixth time — 5/5 titles verbatim, and two new findings
+
+- **All five supplied links were re-resolved and all five listings re-read** on 2026-11-20. Two
+  parallel sessions had already recorded observations #4 and #5 the same day; this is #6, and the
+  register now holds six observations across two dates. 5/5 page `<title>` values match the stored product
+  titles verbatim; the redirect responses still carry `lv=shuf` + `plpRedirect=mhFallback`. The
+  Emeril page exposed its full details table, so dimensions (16.9" × 15.8" × 14.8"), capacity
+  (24.6 litres), model `4-00675-02X-VN`, UPC `752356835682`, 1700 W and its own ASIN row were
+  re-checked cell by cell against `data/products.json` — all match, and the same page repeats the
+  six-versus-seven accessories contradiction (FLG-010) in `Configuration` vs `Item Highlight`.
+- **FLG-026 (new):** two of five resolved URLs carried a variant parameter (`th=1`), and Amazon's
+  own rails showed sibling listings for three products (Chefman 6 Qt dual basket `B0B7C327LK`,
+  ThermoMaven Orange `B0GL7Z4KP4`, CHEF iQ Sense `B0DZFNQXGL`). A stable destination still does not
+  pin the variant a reader is served, so no product page here claims a colour, size or bundle.
+- **FLG-027 (new):** prices, star ratings and “Black Friday Deal” badges were visible during the
+  reads and were not copied (Program Policies, S02). The consequence is stated as an open decision
+  (SG-27 / Q-23), not left as a silent gap.
+- **One reader-facing value was wrong in public:** the Chefman 8 Qt `temperature` and `model`
+  fields carried “— see FLG-005” inside the *value*, so a shopper copying the number copied our
+  bookkeeping with it. The fields are now clean (`200-400°F`, `RJ38-SQSS-8T`) and the disagreement
+  lives where it belongs — the product page's “Where the listing disagrees with itself” block and
+  the Flagged page. The gate now fails any spec value that carries a flag id.
+
+## 2 · The shop, rebuilt so it reads like one
+
+- Cards no longer print Amazon's keyword-stuffed title as body copy. Each carries a short editorial
+  line written only from that product's own sourced fields, with the verbatim listing title moved
+  to the product page under “What the listing itself says, verbatim”.
+- One commissioned illustration per product, so no two cards share artwork, and product artwork doubles as each
+  page's `og:image`. Every picture is captioned as a commissioned illustration that does not show the exact unit,
+  and each file is served through the site's `<picture>` pipeline (a compressed PNG with a WebP twin) instead of the
+  multi-megabyte originals the repo had started to accumulate.
+- The front page leads with the products and a one-screen at-a-glance table (form, capacity,
+  footprint, weight, what the listing sets it up for, source link per row), followed by the guides.
+  Register counts no longer appear as a feature of the landing page; the dashboard pages are one
+  navigation group plus the footer, as the brief asks.
+- A dated seasonal strip points at the holiday guides, beside the season bands and the series rail the shop already runs. It states its year in its own text, because
+  an undated seasonal promise is how a site ends up looking stale in public.
+
+## 3 · Guides and backlog: four rows closed by this pass
+
+`29` sources · `27` flags · `24` questions (5 blocking) ·
+`30` suggestions (19 shipped, 10 open, 1 recommended now) · `13` topics (4 published).
+
+Two guides were written this pass, each from sources already readable (a third, on turkey probe
+placement, was drafted and then deleted because a parallel session published `guides/turkey-probe-placement.html` on the same question —
+two near-identical articles is exactly the failure mode this site is trying to avoid):
+**probe-accuracy-check** and **counter-fit-before-you-order** —
+thermometer accuracy (USDA FSIS ice-water and boiling-water calibration methods, the 2–4°F
+expectation, which types cannot be adjusted), probe placement for a holiday bird (three places in a
+whole bird, 165°F, stuffing, the leave-in rule), and counter fit (the listed footprints and weights,
+with ventilation clearance explicitly refused because no listing states one).
+
+Build and gate at the close of this reconciliation are quoted in the final block of this section, after the three
+merges with `main` — the site ends the day at 40 pages and 17 guides with the gate green.
+
+## What still cannot be answered from this repo
+
+Nothing changed about the four blockers: the tracking ID's issuance (FLG-001), the one-link
+Associates test (FLG-002), the compliance status of the supplied short links (FLG-003), and the
+specification conflicts inside two listings (FLG-004, FLG-005, FLG-010). All of them need an enrolled
+Associates account or the owner's decision, and all of them are published on the Flagged page with
+the action that settles each. No price, rating, ranking or revenue figure appears anywhere, and the
+ledger stays empty until first-party reports arrive.
+
+### Reconciliation with the parallel passes that landed mid-session
+
+`main` absorbed two other sessions while this pass was in flight (PRs #38 and #41: their own fourth-pass verification, per-product artwork,
+a computed season kicker, and the `turkey-probe-placement` + `black-friday-air-fryer-checklist` guides). Both merges were resolved by union,
+main's rows keeping every colliding id, this session's rows renumbered (SG-39…SG-47, Q-24…Q-26, S30…S32, TP-15, FLG-026/027), this session's
+re-read recorded as observation #6 rather than overwriting #4 or #5, and this session's duplicate holiday guide deleted. The five product
+illustrations now resolve to this session's ~150 KB JPEGs and the 2.7–2.9 MB PNGs are gone. Full collision table in `COORDINATION.md`.
+
+### Reconciliation with the parallel sessions that landed the same day
+
+`main` absorbed three more passes while this one was being merged (PRs #17/#18 by their owners, then #37–#41 and #43–#45).
+This session's contribution was merged into that tree by union, three times over, with these decisions:
+
+- **Renderer:** `main`'s narrative/series/WebP builder was adopted; this session's front-page additions were grafted on
+  top of it (an at-a-glance comparison table, a dated seasonal strip, an editorial card line that takes precedence over
+  a scraped listing title) rather than replacing it. A shop gets one front page.
+- **Duplicate guide deleted, not doubled:** this session drafted a turkey probe-placement guide, found
+  `guides/turkey-probe-placement.html` already published by a parallel session, and removed its own. Two near-identical
+  articles on one question is the slop behaviour the brief asks to avoid, so the backlog rows TP-06/TP-09 point at the page
+  that exists.
+- **Sixth observation:** `data/probes.json` now carries observations #1–#6 across 2026-11-17 and 2026-11-20 (four separate
+  sessions). 5/5 tokens → 5/5 ASINs reproduced every time; observation #6 additionally compared each listing's `<title>`
+  byte-for-byte with this register (5/5 verbatim) and re-checked the Emeril details table cell by cell. Nothing overwritten.
+- **Id discipline:** where ids collided, `main`'s row kept the id and this session's rows were renumbered
+  (S36–S38, FLG-030/031, SG-39…SG-47, Q-26…Q-28, TP-16), with cross-references fixed so no register row cites an id that
+  now means something else. Four suggestion rows and one question row that a first-pass collision rule had silently dropped
+  were restored, so the register matches the work actually done.
+- **Imagery:** the PNG+WebP `<picture>` pair pipeline is kept; this session's JPEG conversions and their orphaned
+  leftovers were deleted, and `data/products.json` carries one artwork reference per product instead of two competing sets.
+- **Findings published rather than blocked:** FLG-030 (a `th=1` variant parameter on two of five resolved URLs, so a stable
+  ASIN still does not pin the colour/size/bundle served) and FLG-031 (deal season arrives and the no-price stance is still
+  an undecided editorial position, not a stated one), with SG-44/SG-45 and Q-26/Q-28 as the decisions the owner has to make.
+- **Real defect found and fixed in public:** two Chefman 8 Qt spec values carried “— see FLG-005” inside the value a reader
+  would copy. Values cleaned; the note lives on the product page and the Flagged page; the gate now fails that pattern, and
+  also fails a seasonal strip with no year in it.
+
+Standing rules for the next session, unchanged: prices, ratings, review counts and deal badges are never copied;
+`intended_*` and `observed_*` stay separate; nothing is claimed about testing; the tracking ID (FLG-001), the one-link
+Associates test (FLG-002) and the short-link status (FLG-003) still require the enrolled account, and the campaign ledger
+stays empty until an authorized first-party report is filed with provenance.
+
+
+---
+
+### Fourth merge of `main` the same day (PR #48, session `arena-156c2ecf`) — id discipline a third time, and one source row deleted rather than duplicated
+
+Their pass rewrote `data/sources.json`, `data/suggestions.json` and `data/topics.json` wholesale while this branch was being
+reconciled. Resolution:
+
+- **A duplicate source row was dropped, not merged.** This session had registered its own per-listing read rows; their S32/S33/S34
+  are the same two listings read on the same date. Mine were deleted and every reference repointed at their rows, so the register
+  carries one line per listing read. The only row this session added is S36, the sixth redirect observation, which their register
+  did not have.
+- **Suggestions renumbered again:** their SG-39…SG-42 keep the ids; this session's nine rows moved to SG-43…SG-51. Nine rows are
+  real work records (card copy, artwork, glance table, bookkeeping out of reader copy, backlog closure, the price stance, the
+  variant pin, the measurement-gated topics, print styles) — restoring them after an earlier collision rule silently dropped four
+  of them, and re-dropping them now would lose the record again.
+- **Topics:** their 18-row backlog was kept as the base; TP-06/TP-09 were flipped to their `turkey-probe-placement` page and
+  TP-08 to the accuracy guide, and this session's counter-fit row was appended as **TP-19** (TP-15…TP-18 were already taken).
+- **Their prose-count and dated-source-stamp rules (SG-39…SG-42) are honoured by this merge:** every source row this session
+  touches carries its read date, and no count in the docs was typed — the reconciliation blocks below state the build numbers as
+  the build printed them.
+- Nothing else of mine survived as a duplicate: the stylesheet and the builder are main's, plus the two grafted blocks and the two
+  grafted gate rules; my product JPEGs and my duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green (gate + `scripts/test_analytics.py` + `analytics/test_worker.mjs`).
+
+### Fifth merge of `main` the same day (PR #49, session `arena/1c6908d1-winc`) — and a contradiction between observations, recorded rather than resolved
+
+This pass merged with `-X theirs` (main wins every conflicting hunk), then re-registered this session's rows at free ids
+rather than reusing taken ones. Outcome, in the order it matters:
+
+- **What main's side kept:** its renderer, stylesheet, registers and its own new rows (S36, SG-43/SG-44, FLG-030, Q-26).
+  This branch's topics flips (TP-06/TP-08/TP-09 → published pages), `sixth_observation` + `probe6_note`, the two new guides,
+  `card_copy`, the glance table, the dated seasonal strip and the two gate rules all survived the merge — verified after it,
+  not assumed.
+- **What this session re-added at free ids:** sources S37 (the sixth observation) and the S17 calibration/care/types passages;
+  flags FLG-031 (the undecided no-price stance), FLG-032 (the `th=1` variant parameter) and FLG-033 (below); questions
+  Q-27/Q-28/Q-29; suggestions SG-45…SG-53 (nine records of the shop pass, with their cross-references repointed to the ids
+  main actually uses, so no row cites an id that now means something else). SG-36/SG-37/SG-38/SG-43 are cross-referenced
+  instead of duplicated, and the artwork row was rewritten to describe main's PNG+WebP pipeline rather than the JPEG set this
+  session first drafted.
+- **A real disagreement between observations, published:** FLG-030 records that `arena/1c6908d1`'s fetch path did *not*
+  reproduce the five-token → five-ASIN mapping. Six observations by four sessions (2026-11-17 and five on 2026-11-20) map all
+  five tokens to the same five ASINs every time, with the page titles matching verbatim. Neither side is overwritten: **FLG-033**
+  states that the discrepancy is about the fetch path, not about the links, and sets the action that settles it — FLG-002's
+  one-link test inside the enrolled Associates workflow, which is the only route that determines what a reader actually receives.
+  The supplied short links are still not called invalid (FLG-003 unchanged).
+- Duplication avoided rather than litigated: the two per-listing source rows this session had registered were dropped in favour
+  of main's S32/S33/S34 (same listings, same date), and the duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green.
 
 ---
 
@@ -339,6 +506,58 @@ campaign ledger stays empty until first-party reports exist.
 
 ---
 
+# Audit-clean pass + verification #5 (2026-11-20, session `arena/1c6908d1-winc`)
+
+This pass confirmed the independent-audit findings are cleared on `main`, re-ran the product
+verification line by line, and added review-prompt suggestions distinct from the site's existing work.
+
+## The independent audit is clean
+
+`tools/audit.mjs` reports **0 findings** (all ten rules pass) on the merged tree. A6 (the `#src-*`
+fragment links resolve — `main` fixed the source-row id quote style and rewrote the client-side search
+with the DOM API) and A7 (the reader-capture form no longer puts the email in the URL — this session
+upgraded it to `method="post"`, more robust than `get`+`novalidate` for a JavaScript-blocked browser)
+are both addressed. `npm run verify` → **Built 38 pages, 37 sitemap URLs** / **OK: 38 pages checked,
+37 sitemap URLs, no violations.**
+
+## Verification pass #5, and one new irregularity
+
+- **All five `amazon.com/dp/<ASIN>` listings re-read live on 2026-11-20.** Each `<title>` matched
+  `data/products.json` verbatim; breadcrumb confirms category (3 air fryers, 2 meat thermometers). The
+  `lv=shuf` + `plpRedirect=mhFallback` fallback route is present on all five (FLG-009/FLG-029). No spec
+  value drifted; no correction needed.
+- **New irregularity — FLG-030.** Re-fetching the five supplied `link.amazon` tokens directly did **not**
+  reproduce the prior token→ASIN mapping via this fetch path: 4/5 resolved to the amazon.com homepage and
+  `B0f3GKalj` returned HTTP 500 on two attempts. This does **not** establish the links are invalid
+  (FLG-003 unchanged — never claimed invalid); it means the mapping's reproducibility across observation
+  methods is in question. Recorded as source **S36**, flag **FLG-030**, and open question **Q-26**, with
+  the resolution action (re-resolve in an enrolled Associates browser with cookies + region).
+
+## New review-prompt suggestions (distinct from the site's existing suggestions)
+
+- **SG-43 — editorial voice pass.** Make reader copy read like a publication, not generated text, without
+  touching a single fact or source. Directly answers the brief's "should not read like AI slop."
+- **SG-44 — accept/reject/defer review workflow.** Record the review decision in-repo per suggestion so
+  the chosen path persists and gates the next build, rather than living only in the browser.
+
+## Still open (owner-side)
+
+Tracking-ID confirmation, the one-link Associates test, short-link compliance status, the
+manufacturer-page spec conflicts, analytics-endpoint deployment and Search Console — all require an
+enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
+forecast; the campaign ledger stays empty until first-party reports arrive.
+
+### Integration outcome (this session)
+
+PR #47 was merged into `main` as `0d257d5` after five rounds of reconciling with parallel sessions; GitHub Pages rebuilt
+(`status: built`, no error) one second after the merge commit, and the new guide was re-fetched from the live URL to confirm the
+deployed state. What landed: the sixth redirect observation, two sourced guides, the front-page glance table and dated seasonal
+strip grafted onto main's renderer, `card_copy` on all five products, and four added gate rules. What was withdrawn on purpose:
+this session's duplicate holiday guide, its two per-listing source rows, its JPEG artwork set, and its rewrite of the renderer
+and stylesheet. Full reconciliation and handoff notes are in the `f1fd0ff0` section of `COORDINATION.md`.
+
+---
+
 # Fourth pass — shop-first reader path, policy detail read to the clause, and id discipline (2026-11-20, session `ab951e4c`)
 
 Brief for this pass: make it read like a polished affiliate shop rather than AI output or an audit;
@@ -356,8 +575,8 @@ from the registers at write time, and every page that states a count computes it
 - **One image per product, on one optimized profile.** This pass drew five original illustrations; the
   trunk had meanwhile drawn its own five. Rather than shipping ten near-identical multi-megabyte
   files, the merge put the trunk's webp-backed set on cards and product pages and kept this pass's
-  art as guide header art. `assets/img` is 5.1 MB across 24 files, and the gate refuses a
-  shared or oversized product asset. Recorded as a merge decision, not hidden (FLG-045).
+  art as guide header art. `assets/img` is 5.4 MB across 26 files, and the gate refuses a
+  shared or oversized product asset. Recorded as a merge decision, not hidden (FLG-049).
 - **The front page's method essay became three lines.** "Nothing is tested, so nothing is claimed ·
   Blank beats guessed · The links are sponsored", each linking the register that proves it. The
   verbatim listing title now sits under the short shelf label on every product page, which is what
@@ -371,15 +590,15 @@ from the registers at write time, and every page that states a count computes it
 | Can it fit a whole chicken? | The three listings' own capacity, footprint and weight strings — including that none of them publishes an interior cavity dimension — plus the FSIS 165°F minimum and the three-place bird check |
 | Reading thermometer listing copy | FSIS care and placement rules (“most thermometers should not be immersed in water”; do not leave one in the food unless the maker designed it to) read against the listing's IP67, 1000°F and “unlimited range” wording |
 
-No test claim, no price, no rating, no “best”. The topic backlog went to 24 rows with 8 marked
+No test claim, no price, no rating, no “best”. The topic backlog went to 25 rows with 8 marked
 published **pointing at the guide that answers each**, and the rest stating in their own words that
 they are editorial hypotheses because no Search Console property exists. Cadence: this pass shipped
-three guides in one build, which is what the machinery supports per focused pass (SG-43).
+three guides in one build, which is what the machinery supports per focused pass (SG-54).
 
 ## 3 · Compliance: read the clauses, then change what the site says
 
 The Program Policies page renders anonymously, so §2(b), §4, §5, §6(a), §6(c) and §6(d) were read
-verbatim on 2026-11-20 and recorded as **S36**, and the consequences are on the site rather than in a
+verbatim on 2026-11-20 and recorded as **S38**, and the consequences are on the site rather than in a
 to-do list:
 
 - **§6(d) — no implied endorsement.** Brand and celebrity names sit beside buy buttons, so the
@@ -390,18 +609,18 @@ to-do list:
   removal decision stays human and is recorded as open (FLG-042, Q-22).
 - **§6(a) — truncate where the meaning is unchanged, never alter.** The short labels rely on that
   permission, so the full title is published under each one and the comparison is flagged for a human
-  rather than declared compliant (FLG-044's sibling finding, Q-27).
+  rather than declared compliant (FLG-044's sibling finding, Q-31).
 - **§5 — no Program Content in model training** without Amazon's express prior written approval. This
   is the boundary on the "AI-powered product research" ambition, and it is written into the standing
   rules so a later pass cannot drift past it: this repository renders, checks and records; it has no
-  crawler and no corpus export (FLG-043, Q-28).
+  crawler and no corpus export (FLG-043, Q-32).
 - **§4 — affiliate links in email only where the recipient solicited the message.** The capture form
   collects nothing today, so no rule is broken and no list can be started from it (FLG-044, Q-21).
 - **Disclosure accuracy.** The page used to claim “Amazon product descriptions are never copied” while
   every product page reproduces the listing's verbatim title — the practice is the method, so the
-  sentence was fixed to say what is taken, what is never taken, and the clause that permits it (FLG-032).
+  sentence was fixed to say what is taken, what is never taken, and the clause that permits it (FLG-048).
 - **Google's own changelog** confirms the FAQ rich-result documentation was removed and HowTo retired
-  (**S28**): the site keeps FAQ markup for parsing and promises no SERP feature (FLG-030, Q-29).
+  (**S28**): the site keeps FAQ markup for parsing and promises no SERP feature (FLG-050, Q-33).
 
 ## 4 · The independent second gate found four things, and two were this site's fault
 
@@ -410,10 +629,10 @@ gate four times. Each disagreement was chased to the correct side:
 
 | Finding | Who was wrong | Outcome |
 |---|---|---|
-| 52 “unresolved fragment” reports against the source register | the audit read only double-quoted `id=` | both sides fixed: register anchors are double-quoted, the audit accepts either style (FLG-039) |
-| an “unresolved reference” to a JavaScript concatenation | the audit treated inline JS as markup | fixed in the audit, with the reason at the change site (FLG-040) |
-| the capture form could submit an address into a URL when scripting was blocked | **the site** | the trunk made it non-submitting; this pass removed the field's `name` attribute so a script-blocked submit has no key/value pair to carry, and the page says why (FLG-037) |
-| “never stored: search query text” while search puts `?q=` in the address bar | **the claim was incomplete** | disclosed rather than removed, because the URL is the mechanism that makes server-less search shareable (FLG-038) |
+| 52 “unresolved fragment” reports against the source register | the audit read only double-quoted `id=` | both sides fixed: register anchors are double-quoted, the audit accepts either style (FLG-051) |
+| an “unresolved reference” to a JavaScript concatenation | the audit treated inline JS as markup | fixed in the audit, with the reason at the change site (FLG-048) |
+| the capture form could submit an address into a URL when scripting was blocked | **the site** | the trunk made it non-submitting; this pass removed the field's `name` attribute so a script-blocked submit has no key/value pair to carry, and the page says why (FLG-049) |
+| “never stored: search query text” while search puts `?q=` in the address bar | **the claim was incomplete** | disclosed rather than removed, because the URL is the mechanism that makes server-less search shareable (FLG-050) |
 
 ## 5 · Machinery, and the register's own hygiene
 
@@ -423,28 +642,28 @@ gate four times. Each disagreement was chased to the correct side:
   ledger was reverted to empty, because no authorized first-party report exists to record.
 - `scripts/alloc_ids.py` allocates ids from the merged tree and audits every cross-register
   reference. It exists because nine parallel sessions guessed at free ids and the guesses went stale
-  twice inside a day (FLG-045). On its first run it found a pre-existing defect: the suggestions
+  twice inside a day (FLG-049). On its first run it found a pre-existing defect: the suggestions
   register had a four-row hole that a live citation pointed into; the citation was corrected to name
-  the duty instead of inventing rows to fill the gap (FLG-046).
+  the duty instead of inventing rows to fill the gap (FLG-050).
 - The gate gained rule families for card hygiene, imagery uniqueness and size, ledger row schema, the
   §6(d) statement, recorded-date sanity and reference integrity. Each was verified by breaking it
   first — including three negative tests run against the merged tree before being reverted.
-- `data/suggestions.json` is 46 rows (24 shipped, 20 open) and every shipped row names the pass
+- `data/suggestions.json` is 57 rows (28 shipped, 25 open) and every shipped row names the pass
   that shipped it; 8 rows said “this session”, which stops meaning anything after nine sessions.
-  `data/questions.json` is 29 rows, 8 blocking, 6 answered from a source.
+  `data/questions.json` is 33 rows, 8 blocking, 0 answered from a source.
 
 ## 6 · Counts, read from the registers
 
 | Register | Read from the data on 2026-11-20 |
 |---|---|
-| Guides | 18 |
-| Sources | 36 |
-| Flagged items | 47 |
-| Suggestions | 46 |
-| Open questions | 29 (8 blocking, 6 answered) |
-| Topic backlog | 24 (8 published) |
-| Recorded reads on the freshness clock | 82 |
-| `assets/img` | 24 files, 5.1 MB, webp-served |
+| Guides | 20 |
+| Sources | 38 |
+| Flagged items | 51 |
+| Suggestions | 57 |
+| Open questions | 33 (8 blocking, 0 answered) |
+| Topic backlog | 25 (8 published) |
+| Recorded reads on the freshness clock | 88 |
+| `assets/img` | 26 files, 5.4 MB, webp-served |
 
 `npm run verify` on the merged tree: build → gate → analytics tests; `node tools/audit.mjs --strict`
 reports no findings.

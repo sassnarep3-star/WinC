@@ -5,3 +5,4 @@ analytics/events.jsonl
 # dependencies for local DOM tests only — never committed
 node_modules/
 package-lock.json
+.merge-tmp/

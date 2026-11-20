@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measurement — five events, privacy-preserving · Kitchen Shortlist</title>
+<meta name="description" content="The five defined events, the outbound-click counter design, endpoint deployment status, and this browser's live event log.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/measurement.html">
+<meta property="og:title" content="Measurement — five events, privacy-preserving">
+<meta property="og:description" content="What we count, what we deliberately don't, and where the numbers go.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/measurement.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Kitchen Shortlist RSS" href="rss.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ANALYTICS_ENDPOINT = null; /* local mode — FLG-006 */</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span><span class="brand-name">Kitchen Shortlist</span><span class="brand-tag">Buyer-first appliance guides</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guides/index.html">Guides</a></li>
+        <li><a href="products.html">The Shortlist</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Before You Decide</a></li>
+        <li><a href="executive-summary.html">Summary</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap">
+    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+    <span class="sep">·</span> If you buy through a product link on this page we may earn a commission at no extra cost to you.
+    <span class="sep">·</span> Product links carry <code>rel="sponsored"</code>.
+    <a href="compliance.html">How we disclose</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="index.html">Home</a> / Dashboard / Measurement</p>
+    <h1>Measurement</h1>
+    <p class="lede">Click and conversion measurement was turned on <em>before</em> the content engine — this page defines exactly what gets counted, what never gets counted, and where the data currently lives.</p>
+    <div class="stats" style="margin-top:1.4rem">
+      <div class="stat"><div class="num">5</div><div class="lbl">Defined events</div><div class="sub">taxonomy proposed — <a href="flagged.html#flg-009">FLG-009</a></div></div>
+      <div class="stat"><div class="num">0</div><div class="lbl">Cookies</div><div class="sub">no third-party requests</div></div>
+      <div class="stat"><div class="num" id="ep-mode">local</div><div class="lbl">Endpoint mode</div><div class="sub">deploy decision — <a href="suggestions.html#sg-list">SG-12</a></div></div>
+      <div class="stat"><div class="num" id="ev-count">0</div><div class="lbl">Events in this browser</div><div class="sub">live from the ring buffer</div></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>The five events</h2><span class="chip chip-proposed">awaiting approval · SG-13</span></div>
+      <p class="section-intro">The brief specified "the five defined events" without a definition in the repo, so this taxonomy was proposed and flagged for approval rather than silently assumed (<a href="flagged.html#flg-009">FLG-009</a>). Conversions are <strong>deliberately not</strong> an on-site event — orders only enter the system through authorized Associates reports in the <a href="ledger.html">campaign ledger</a>.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Event taxonomy · allowlisted in <code>analytics.js</code>; anything else is dropped</caption>
+          <thead>
+            <tr>
+              <th scope="col">Event</th>
+              <th scope="col">Fires when</th>
+              <th scope="col">Payload</th>
+              <th scope="col">Why it exists</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono"><a class="src" href="https://github.com/sassnarep3-star/WinC/blob/main/docs/assets/analytics.js" rel="nofollow noopener" target="_blank">page_view</a></td>
+              <td>Any page finishes loading</td>
+              <td class="mono">title, path, referrer (truncated)</td>
+              <td>Denominator for everything; guide popularity after 30 days</td>
+            </tr>
+            <tr>
+              <td class="mono"><a class="src" href="https://github.com/sassnarep3-star/WinC/blob/main/docs/assets/analytics.js" rel="nofollow noopener" target="_blank">outbound_product_click</a></td>
+              <td>Click on a sponsored product link (<code>link.amazon</code> or <code>/dp/</code>)</td>
+              <td class="mono">label, href (truncated)</td>
+              <td>The outbound-click counter — the core revenue signal</td>
+            </tr>
+            <tr>
+              <td class="mono"><a class="src" href="https://github.com/sassnarep3-star/WinC/blob/main/docs/assets/analytics.js" rel="nofollow noopener" target="_blank">guide_cta_click</a></td>
+              <td>Click on a primary CTA button (shortlist, guides)</td>
+              <td class="mono">label, href</td>
+              <td>Measures whether guides route readers to the shop surface</td>
+            </tr>
+            <tr>
+              <td class="mono"><a class="src" href="https://github.com/sassnarep3-star/WinC/blob/main/docs/assets/analytics.js" rel="nofollow noopener" target="_blank">search_query</a></td>
+              <td>Reader runs the on-page search filter</td>
+              <td class="mono">q, results count</td>
+              <td>On-site demand signal before Search Console exists</td>
+            </tr>
+            <tr>
+              <td class="mono"><a class="src" href="https://github.com/sassnarep3-star/WinC/blob/main/docs/assets/analytics.js" rel="nofollow noopener" target="_blank">subscribe_click</a></td>
+              <td>Click on RSS / subscribe links</td>
+              <td class="mono">href</td>
+              <td>Owned-audience growth (SG-30)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>What we never collect:</strong> no cookies, no raw IP addresses, no names, no cross-site identifiers, no ad-profile data. Session ids are random and stored only in this browser. See the <a href="privacy.html">privacy page</a> and <a href="https://affiliate-program.amazon.com/help/operating/policies">Amazon's own privacy-disclosure requirements for associates</a>.</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Live event log <span style="font-size:.55em;color:var(--muted)">(this browser only)</span></h2><button class="btn btn-ghost" style="padding:.35rem .9rem;font-size:.82rem" onclick="try{localStorage.removeItem('ks_events_v1')}catch(e){};location.reload()">Clear local log</button></div>
+      <div class="table-wrap">
+        <table class="data event-log">
+          <caption>Newest first · stored in localStorage ring buffer (max 500) until an endpoint is configured</caption>
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Event</th>
+              <th scope="col">Path</th>
+              <th scope="col">Detail</th>
+            </tr>
+          </thead>
+          <tbody id="event-rows">
+            <tr><td colspan="4" class="empty-state">Loading… if this stays empty, reload the page (requires JavaScript).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid-2col">
+        <div>
+          <div class="section-head"><h2>Endpoint status</h2><span class="chip chip-pending">not deployed</span></div>
+          <p style="font-size:.95rem;color:var(--ink-soft)">GitHub Pages can't receive event POSTs, so a self-hosted endpoint is required. The code ships ready in the repository; deployment is a hosting decision (<a href="flagged.html#flg-006">FLG-006</a>, <a href="questions.html#q07">Q-07</a>).</p>
+          <div class="table-wrap">
+            <table class="data" style="min-width:0">
+              <caption>Two deployable variants</caption>
+              <thead><tr><th scope="col">Variant</th><th scope="col">File</th><th scope="col">Needs</th></tr></thead>
+              <tbody>
+                <tr><td>Cloudflare Worker (recommended)</td><td><a class="src" href="https://github.com/sassnarep3-star/WinC/blob/main/analytics/endpoint.js">analytics/endpoint.js</a></td><td>CF account, KV namespace</td></tr>
+                <tr><td>Python stdlib server</td><td><a class="src" href="https://github.com/sassnarep3-star/WinC/blob/main/analytics/server.py">analytics/server.py</a></td><td>any host with Python 3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note" style="margin-top:1rem"><strong>After deploy:</strong> set <code>window.SITE_ANALYTICS_ENDPOINT = "https://your-endpoint/e"</code> in each page head — one line, then events flow to aggregate dashboards instead of only this browser.</div>
+        </div>
+        <div>
+          <div class="section-head"><h2>Growth tooling status</h2></div>
+          <div class="table-wrap">
+            <table class="data" style="min-width:0">
+              <caption>Findability &amp; audience surfaces</caption>
+              <thead><tr><th scope="col">Surface</th><th scope="col">Status</th><th scope="col">Note</th></tr></thead>
+              <tbody>
+                <tr><td>robots.txt + sitemap.xml</td><td><span class="chip chip-done">live</span></td><td><a class="src" href="robots.txt">robots.txt</a> · <a class="src" href="sitemap.xml">sitemap.xml</a></td></tr>
+                <tr><td>RSS feed</td><td><span class="chip chip-done">live</span></td><td><a class="src" href="rss.xml">rss.xml</a> — all guides included</td></tr>
+                <tr><td>Google Search Console</td><td><span class="chip chip-unverified">pending</span></td><td><a class="src" href="flagged.html#flg-007">FLG-007</a> — owner verification needed</td></tr>
+                <tr><td>Email capture</td><td><span class="chip chip-pending">decision</span></td><td><a class="src" href="suggestions.html#sg-list">SG-30</a> — provider + consent review</td></tr>
+                <tr><td>Campaign ledger</td><td><span class="chip chip-done">schema live</span></td><td><a class="src" href="ledger.html">0 rows by design</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Kitchen Shortlist</span>
+        <p>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul class="footer-nav">
+          <li><a href="guides/index.html">All guides</a></li>
+          <li><a href="products.html">The Shortlist</a></li>
+          <li><a href="index.html#seasonal">Seasonal clusters</a></li>
+          <li><a href="rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Dashboard</h4>
+        <ul>
+          <li><a href="source-register.html">Source register</a></li>
+          <li><a href="flagged.html">Flagged for review</a></li>
+          <li><a href="measurement.html">Measurement</a></li>
+          <li><a href="ledger.html">Campaign ledger</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="executive-summary.html">Executive summary</a></li>
+          <li><a href="suggestions.html">Suggestions</a></li>
+          <li><a href="questions.html">Before you decide</a></li>
+          <li><a href="about.html">About &amp; editorial policy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclosure">
+      <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. If you buy through links on this page we may earn a commission at no extra cost to you. Product links are marked <code>rel="sponsored"</code>; we only recommend what our source register can support, and unverified values are published as blank rather than filled in.
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Kitchen Shortlist</span>
+      <a href="sitemap.xml">Sitemap</a>
+      <a href="robots.txt">Robots</a>
+      <a href="privacy.html">Privacy</a>
+      <span>Prices and availability change; check the listing for current terms.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/analytics.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  try {
+    var list = (window.KitEvents ? window.KitEvents() : []).slice().reverse();
+    var rows = document.getElementById("event-rows");
+    var count = document.getElementById("ev-count");
+    if (count) count.textContent = String(list.length);
+    if (!rows) return;
+    if (!list.length) { rows.innerHTML = '<tr><td colspan="4" class="empty-state">No events yet — click a link or run a search, then reload.</td></tr>'; return; }
+    rows.innerHTML = list.map(function (ev) {
+      var detail = Object.keys(ev.detail || {}).map(function (k) { return k + "=" + ev.detail[k]; }).join(" · ");
+      return "<tr><td class='mono'>" + ev.ts.slice(11, 19) + "Z</td><td class='mono'>" + ev.event +
+        "</td><td class='mono'>" + ev.path + "</td><td style='font-size:.84em'>" +
+        String(detail).replace(/</g, "&lt;") + "</td></tr>";
+    }).join("");
+  } catch (e) {}
+});
+</script>
+</body>
+</html>
