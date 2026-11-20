@@ -1434,6 +1434,41 @@ drop the parts that would regress it, re-verify the combined tree line by line, 
   availability data via Creators API or PA API"; and the tracking-ID help page — "our software
   automatically adds \"-20\" to the end of all Associate IDs".
 
+## Results of this session (T39–T45)
+
+| ID | What changed | Verification |
+|----|--------------|--------------|
+| T39 | Link-state gate. Every buy button carries `data-link-state`; all five are `pending-verification` until the enrolled one-link test is recorded. Each product holds an empty `associates_link_test` record. Product pages and the shop page say so in the reader's path. SG-01 marked shipped; FLG-002 updated. | Gate refuses a half-filled record, a button claiming "verified" without a complete record, and a verified button pointing somewhere other than the tested Special Link. Each refusal was proved by breaking the data and watching the build fail. |
+| T40 | Deployment race repaired. The competing Actions publish workflow was removed; the branch build is the only publisher; a read-only `pages-verify.yml` checks the live site after each build. `scripts/deploy_check.py` added. | Evidence read from GitHub's own records: three legacy builds `errored` at `duration: 0` on commits whose Actions deploy was cancelled at the same second; `PUT /pages` returns 403 from this token, so the repair is repository-side. GitHub's docs describe branch source and an Actions workflow as alternatives. |
+| T41 | Answer register. All 29 questions carry a state, the answer, the date, and either the source ids or an internal-evidence note. Two panels added to the questions page. | Gate enforces the rule; a row with no state, no date or an unknown source id fails the build. |
+| T42 | Editorial voice. Desk line, best-for and catch on every product; "Best for" column in the shop table; card copy no longer the seller's keyword title. | Every new line checked against `data/products.json`; **five that overreached were corrected** (wire racks / "Twenty-four options" / "simplest footprint" / "alerts" / a list of items). |
+| T43 | Agent pipeline `scripts/agent/` (research → draft → publish → optimise), plus `data/research/*.json` and `data/optimisation.json`. | Refusals exercised: a price, a rating and a "we tested" claim are each rejected; `publish.py` refuses on a gate violation or a committed/generator mismatch; `optimize.py` makes no recommendation on an empty ledger. Running it found two defects (a flag field that does not exist; an answer that observation #6 made false). |
+| T44 | Sixth redirect observation + the cross-session disagreement. `sixth_observation` and `sixth_observation_alt` on every probe row; FLG-030 and FLG-033 published. | The disagreement was reproduced live by this session and independently by another on the same day; both are recorded rather than one being picked. New gate rule: a disagreeing observation cannot be recorded silently. |
+| T45 | Integration and publish. | `Built 41 pages, 40 sitemap URLs, 18 guides, 35 search rows.` · `OK: 41 pages checked, 40 sitemap URLs, no violations.` · `node tools/audit.mjs` → **0 findings**. |
+
+### Merge reconciliation with main (PRs #47–#55)
+
+`main` advanced five PRs while this session worked. Resolved without dropping either lineage:
+registers unioned **by id** (flags, questions, sources, suggestions — main's rows kept, this session's
+added, nothing renumbered away); `data/products.json` took **main's values as the base** (they are the
+register-language-clean ones main's gate requires) with this session's editorial fields layered on top;
+`data/probes.json` keeps **both** sixth observations, because they were made on the same day through the
+same reader and disagree about `B00hJ57DV` — dropping either would have been picking a winner;
+`COORDINATION.md`, `assets/style.css` and `EXECUTIVE-SUMMARY.md` kept both sides; every generated HTML
+file was regenerated from the merged data rather than hand-merged. One stale conflict marker left in
+`COORDINATION.md` by that union was found and removed; the tree now has zero markers outside `archive/`.
+
+### Open PRs at the time of this merge, and why each was not merged here
+
+| PR | Disposition |
+|----|-------------|
+| #28 (gate purchase links until intent + test) | **Not merged.** Its approach (render the buttons as plain text until the record is complete) suppresses the only monetisation path on a site whose purpose is to earn, and the site's own suggestion register (SG-01) proposes the other route, which this session implemented. Its `associates_link_test` record shape was adopted. |
+| #33 (editorial-voice pass) | **Not merged.** Its builder reverted main's season band, `stories.json` integration and `WINC_BUILD_DATE` knob, and its `blurb` field is superseded by the desk-line / best-for / catch fields on the current tree. Its copy was re-derived and re-checked here rather than taken. |
+| #42 (deploy repair + agent pipeline + answers) | **Not merged as a branch; taken as content.** Its deployment repair, agent pipeline and answer register were ported onto the current tree, and its builder rewrite was not taken (it would have reverted main's newer renderer). |
+| #44 (probe divergence + audit fixes) | **Not merged as a branch; its finding was reproduced independently here** and published as FLG-030/FLG-033. Its COORDINATION rewrite would have dropped other sessions' records. |
+| #5 / #35 (parallel `docs/` sites) | #35 was merged by its owner into `archive/arena-d1b621b7/`. #5 remains open and is left to its owner. |
+
+
 ---
 
 # Session `arena/1c6908d1-winc` — audit-clean pass, verification #5, review-prompt suggestions
@@ -1727,7 +1762,6 @@ side was discarded except the duplicates explained in I-08.
 - **I-08 — ID collisions across five sessions** (task IDs, flag IDs, source IDs, the observation
   slots, a parallel TP-10 guide). Renumbered onto free slots; duplicates dropped in favour of merged
   records; no other session's text edited.
-=======
 
 ## PR / merge record (session b0920c92, T49)
 
@@ -1737,4 +1771,3 @@ side was discarded except the duplicates explained in I-08.
 | 2026-11-20T07:14:00Z | `gh pr merge 54 --merge` → **merged**, merge commit `4bfe5d3b18810490dd4048e07539ec2fd8bf64e8`. |
 | 2026-11-20T07:14:02Z | Pages build for `4bfe5d3`: **status built**, error null (legacy + `pages build and deployment` + `verify site` all success). |
 | 2026-11-20 | Live site re-fetched: https://sassnarep3-star.github.io/WinC/ serves the merged publication — disclosure strip first, series, all five product cards with Sponsored tagged buttons, guides rail. |
->>>>>>> origin/main

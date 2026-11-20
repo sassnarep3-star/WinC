@@ -11,14 +11,15 @@ A five-product Amazon Associates publication in two categories — air fryers an
 
 | Layer | State on this build |
 |---|---|
-| Products | 5 (3 air fryers, 2 meat thermometers), each with a long-form narrative, a spec table, an FAQ, and flagged listing contradictions |
+| Products | 5 (3 air fryers, 2 meat thermometers), each with a long-form narrative, a desk line / best-for / catch, a spec table, an FAQ, and flagged listing contradictions |
 | Series | 2 editorial series pages, generated from `data/stories.json` |
-| Guides | 15 question-shaped guides across both categories, plus two series pages that tie each cluster together |
-| Topics | 18 in the published backlog — 4 marked published with links to the guide each became |
-| Sources | 35 register rows, each with URL, what it confirms, and a retrieval date |
-| Flags | 29 items, each with the action that would resolve it; all public on *Flagged for review* |
-| Open questions | 25, of which 8 are blocking; four of those can only be answered inside an enrolled Associates account |
-| Suggestions | 38, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
+| Guides | 18 question-shaped guides across both categories, plus two series pages that tie each cluster together |
+| Topics | 19 in the published backlog — published rows carry a link to the guide each became |
+| Sources | 38 register rows, each with URL, what it confirms, and a retrieval date |
+| Flags | 34 items, each with the action that would resolve it; all public on *Flagged for review* |
+| Open questions | 29, of which 8 are blocking; **every row now carries an answer state** — 11 answered, 15 partly answered, 3 still open — with the date and the sources it rests on |
+| Suggestions | 49, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
+| Buy links | every button declares `data-link-state`; all five are `pending-verification` until the enrolled one-link test is recorded |
 | Measurement | 5 defined events; endpoint code (`analytics/worker.js`, `analytics/collect.py`) shipped and tested; **not deployed**; campaign ledger **empty** |
 | Gates | `scripts/check_site.py` (authority) and `tools/audit.mjs` (independent, written from the policy documents) — **both pass with zero findings** |
 
@@ -547,7 +548,6 @@ manufacturer-page spec conflicts, analytics-endpoint deployment and Search Conso
 enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
 forecast; the campaign ledger stays empty until first-party reports arrive.
 
-<<<<<<< HEAD
 
 ---
 
@@ -586,7 +586,7 @@ have to be known to decide it. Question rows with no answer say "not yet answere
 factsheet (S17, fetched and read 2026-11-20) for the three-point whole-bird check and the 165 °F
 minimum (S16). TP-01/TP-02 marked published crediting their sessions; this session's parallel TP-10
 draft was dropped in favour of the merged one.
-=======
+
 ### Integration outcome (this session)
 
 PR #47 was merged into `main` as `0d257d5` after five rounds of reconciling with parallel sessions; GitHub Pages rebuilt
@@ -595,7 +595,74 @@ deployed state. What landed: the sixth redirect observation, two sourced guides,
 strip grafted onto main's renderer, `card_copy` on all five products, and four added gate rules. What was withdrawn on purpose:
 this session's duplicate holiday guide, its two per-listing source rows, its JPEG artwork set, and its rewrite of the renderer
 and stylesheet. Full reconciliation and handoff notes are in the `f1fd0ff0` section of `COORDINATION.md`.
->>>>>>> origin/main
 
 
 **Integration record (T49):** PR #54 merged as `4bfe5d3` (2026-11-20T07:14:00Z); Pages build `built`, live site verified.
+
+---
+
+# Session `arena/ceced4d0-winc` — final integration (2026-11-20)
+
+Six changes, each one closing a gap that the register itself named rather than one this session invented.
+
+## 1 · The answer register actually has answers now
+The questions page had 25 rows and an empty answer column on every one, so a reader could not tell
+what was settled from what was unknown. Every row now carries a **state** — answered, partly answered,
+still open — the answer the sources support, the date it was answered, and either the source ids it
+rests on or an explicit note that it rests on this repository's own records. The gate refuses an
+answered row with no date, an unknown source id, or neither a source nor an internal-evidence note,
+so an answer cannot rot into a claim. The page gained two panels a reviewer reads first: **decisions you
+can make now** and **still open**.
+
+## 2 · The product cards stopped opening with the seller's keyword string
+Five cards opened with Amazon's own title as body copy — the loudest "AI slop" signal on the site. Each
+product now carries a short desk line, a **Best for** line and **The catch** (the drawback, not a
+verdict), and the shop's comparison table gained a "Best for" column. Five of the new lines were
+corrected rather than shipped because they outran the register: "wire racks" for the Emeril (the
+register records French doors and an extra-large interior), "Twenty-four options" (the listing's title
+says 24 and its bullets 25 — the copy now names the conflict instead of picking a side), "the simplest
+footprint of the three fryers" (the 8-quart's stored footprint is 172 sq in against the 6-quart's 158),
+"alerts" for the CHEF iQ (the listing says WiFi reporting), and a list of items for the 6-quart that the
+register does not record.
+
+## 3 · The link state is now mechanical, not just written down
+The gate's own suggestion (SG-01) said to mark buttons pending-verification rather than remove them.
+Every buy button now carries `data-link-state`, each product page says in the reader's path that
+destination and click tracking are not confirmed yet, and each product holds an empty
+`associates_link_test` record — destination confirmed, tracking report confirmed, date, source, report
+reference — that the owner fills in when the enrolled test is run. The gate refuses a half-filled
+record, refuses a button claiming "verified" without a complete record, and refuses a verified button
+that does not point at the tested Special Link. Buttons were **not** switched off: that would suppress
+the only monetisation path on a site whose purpose is to earn, and it is the owner's call.
+
+## 4 · A sixth redirect observation, and the cross-session disagreement it exposed
+Re-resolving all five short links live: four reproduced their recorded targets; `B00hJ57DV` landed on
+the Amazon homepage. A second session, working the same day through the same reader, saw a different
+split. Both observations are now recorded on every probe row (`sixth_observation` and
+`sixth_observation_alt`) and the disagreement is published as **FLG-030** and **FLG-033**. It confirms
+nothing and invalidates nothing: FLG-003 (short-link compliance status) and FLG-009 (the fallback
+route) both stand, and the observed fields still rest on the observations that agreed. A new gate rule
+makes a disagreeing observation impossible to record silently.
+
+## 5 · The agent pipeline, with its refusals actually wired in
+`scripts/agent/` runs research → draft → publish → optimise. It refuses to write a price, a rating, a
+review count or a "we tested" claim; it refuses to report success on a gate violation or on a
+mismatch between the committed HTML and the generator's output; and with an empty ledger it prints
+which rows to collect and makes **no recommendation**. Running it rather than reading it found two
+defects: the research step read a flag field that does not exist, so every brief listed its flags
+blank, and one answer still claimed the mapping reproduced 5/5 every time — which observation #6 made
+false.
+
+## 6 · The deployment race was real, and it is fixed
+Three legacy Pages builds came back `errored` with `duration: 0` — an immediate abort, not a compile
+failure — on exactly the commits whose Actions deployment was cancelled at the same second. The
+repository had two publishers for one `github-pages` environment. GitHub's documentation describes the
+branch source and an Actions workflow as alternatives, and the Pages source cannot be changed from this
+token (`PUT /pages` → HTTP 403), so the repair had to be repository-side: the competing publish
+workflow is removed, the branch build is the only publisher, and a new read-only workflow verifies the
+live site after each build instead of publishing it.
+
+**Still open, and unchanged by this session:** the tracking ID's issuance, the one-link Associates test,
+the short links' compliance status, the analytics endpoint deployment, Search Console ownership, and the
+audience/marketplace decision. Each is an account-side action, and each is published on the *Flagged for
+review* page with the action that would settle it.
