@@ -69,7 +69,16 @@
         "Measure your counter depth against the listed 13.38\" and leave room in front for the drawer to pull out.",
         "Decide whether you cook two things at once. If you usually cook one, a single 8-quart basket is the simpler buy.",
         "Check on the listing which parts are dishwasher-safe before you plan on hand-washing them."
-      ]
+      ],
+      "associates_link_test": {
+        "special_link_url": "",
+        "destination_confirmed": false,
+        "tracking_report_confirmed": false,
+        "confirmation_date": "",
+        "source": "",
+        "report_reference": "",
+        "note": "Empty until the owner runs the enrolled Associates one-link test for this product: click the link, confirm the destination, then confirm the click in the tracking report. Until then the button renders as pending-verification and the site claims nothing about it (FLG-002, SG-01)."
+      }
     },
     {
       "id": "p2-emeril-26qt",
@@ -156,7 +165,16 @@
         "Measure depth against the listed 16.9\" and check the cabinet clearance above it, not just the footprint.",
         "Count the presets you will actually use. The listing disagrees with itself on how many there are — 24 in the title, 25 in the bullet copy (FLG-020) — so read the number on the page in front of you.",
         "Budget for the accessories — the listing counts them as six in its title and seven in its bullet copy (FLG-010), and more parts means more to wash."
-      ]
+      ],
+      "associates_link_test": {
+        "special_link_url": "",
+        "destination_confirmed": false,
+        "tracking_report_confirmed": false,
+        "confirmation_date": "",
+        "source": "",
+        "report_reference": "",
+        "note": "Empty until the owner runs the enrolled Associates one-link test for this product: click the link, confirm the destination, then confirm the click in the tracking report. Until then the button renders as pending-verification and the site claims nothing about it (FLG-002, SG-01)."
+      }
     },
     {
       "id": "p3-chefman-8qt",
@@ -248,7 +266,16 @@
         "Re-read the temperature range on the live listing before you rely on it — the copy on that page conflicts (FLG-005).",
         "Check both the 12.75\" depth and the 13.5\" width; the drawer needs clearance in front as well as behind.",
         "If you plan to check the food without stopping the cook, confirm the listing mentions a window for this model."
-      ]
+      ],
+      "associates_link_test": {
+        "special_link_url": "",
+        "destination_confirmed": false,
+        "tracking_report_confirmed": false,
+        "confirmation_date": "",
+        "source": "",
+        "report_reference": "",
+        "note": "Empty until the owner runs the enrolled Associates one-link test for this product: click the link, confirm the destination, then confirm the click in the tracking report. Until then the button renders as pending-verification and the site claims nothing about it (FLG-002, SG-01)."
+      }
     },
     {
       "id": "p4-thermomaven",
@@ -319,7 +346,16 @@
         "Confirm the accuracy figure on the live listing before you build a plan around ±0.5°F.",
         "Note what the reading is measuring: a thermometer is only as good as the spot you put it in.",
         "If you are cooking for hours, compare it against a leave-in probe before you rely on a single spot check."
-      ]
+      ],
+      "associates_link_test": {
+        "special_link_url": "",
+        "destination_confirmed": false,
+        "tracking_report_confirmed": false,
+        "confirmation_date": "",
+        "source": "",
+        "report_reference": "",
+        "note": "Empty until the owner runs the enrolled Associates one-link test for this product: click the link, confirm the destination, then confirm the click in the tracking report. Until then the button renders as pending-verification and the site claims nothing about it (FLG-002, SG-01)."
+      }
     },
     {
       "id": "p5-chefiq",
@@ -383,7 +419,16 @@
         "Confirm the probe count and the hub contents on the live listing — this model family is listed several ways (FLG-014).",
         "Plan where the hub sits so the signal actually reaches it, and check the app works before the holiday.",
         "Check how the probes are cleaned, and whether you would rather hand-wash three of them after every cook."
-      ]
+      ],
+      "associates_link_test": {
+        "special_link_url": "",
+        "destination_confirmed": false,
+        "tracking_report_confirmed": false,
+        "confirmation_date": "",
+        "source": "",
+        "report_reference": "",
+        "note": "Empty until the owner runs the enrolled Associates one-link test for this product: click the link, confirm the destination, then confirm the click in the tracking report. Until then the button renders as pending-verification and the site claims nothing about it (FLG-002, SG-01)."
+      }
     }
   ],
   "_note": "Per-product illustration fields added 2026-11-20 (session arena-70bd2fcc): these are original editorial illustrations in the site style — not product photographs, not seller images — so no product-image policy question applies. Captions say so on every page."

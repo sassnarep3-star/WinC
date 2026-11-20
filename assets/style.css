@@ -383,3 +383,5 @@ table td p{margin:4px 0 0}
 .deskline .bestfor,.deskline .catchline{margin:0}
 .deskline .catchline{margin-top:8px;border-left-color:#E4B7A0}
 ul.checks li{margin:0 0 7px;line-height:1.5}
+.linkstate{margin:8px 0 0;padding:9px 12px;border-left:4px solid #C9A227;background:#FDFBF4;border-radius:0 8px 8px 0}
+.linkstate-ok{border-left-color:#3F7D4E}

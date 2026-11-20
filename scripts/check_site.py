@@ -33,6 +33,32 @@ for p in products:
         fail(f"{p['id']}: price must stay blank (Program Policies)")
     if p["rating"]:
         fail(f"{p['id']}: rating must stay blank (unverified)")
+    # The one-link Associates test record must be a complete record or an empty one.
+    # A half-filled record is the dangerous case: it looks like a test happened.
+    test = p.get("associates_link_test")
+    if test is None:
+        fail(f"{p['id']}: associates_link_test record is missing — add it, empty if untested")
+    elif not isinstance(test, dict):
+        fail(f"{p['id']}: associates_link_test must be an object")
+    else:
+        confirmed = (test.get("destination_confirmed") is True
+                     and test.get("tracking_report_confirmed") is True)
+        if confirmed:
+            for field in ("special_link_url", "confirmation_date", "source", "report_reference"):
+                if not test.get(field):
+                    fail(f"{p['id']}: the one-link test is marked confirmed but '{field}' is empty")
+            url = str(test.get("special_link_url"))
+            if not url.startswith("https://"):
+                fail(f"{p['id']}: the tested Special Link must be an https URL")
+            if "amazon.com" not in url:
+                fail(f"{p['id']}: the tested Special Link must point at an amazon.com page")
+            if TAG not in url:
+                fail(f"{p['id']}: the tested Special Link must carry the tracking ID {TAG}")
+        else:
+            # nothing may be claimed as confirmed while the record is empty
+            for field in ("confirmation_date", "source", "report_reference"):
+                if test.get(field):
+                    fail(f"{p['id']}: the one-link test is not confirmed but '{field}' is filled in")
 
 # --- collect html pages ---
 html_files = []
@@ -78,6 +104,39 @@ for hf in html_files:
     # sponsored label near product links (at least one per page that has product links)
     if "amazon.com/dp/" in content and "Sponsored" not in content:
         fail(f"{hf}: has product links but no Sponsored label")
+    # A buy button must declare its link state, and the declared state must match the
+    # product's one-link test record. A button that calls itself verified without a
+    # completed test is a claim the register cannot back.
+    for m in re.finditer(r'<a\b[^>]*data-event="outbound_click"[^>]*>', content):
+        tag = m.group(0)
+        asin_m = re.search(r'data-asin="([^"]+)"', tag)
+        state_m = re.search(r'data-link-state="([^"]+)"', tag)
+        if not state_m:
+            fail(f"{hf}: a buy button has no data-link-state — it must say whether the "
+                 f"one-link Associates test has been completed")
+            continue
+        state = state_m.group(1)
+        if state not in ("verified", "pending-verification"):
+            fail(f"{hf}: data-link-state {state!r} is not a known state")
+            continue
+        if not asin_m:
+            continue
+        asin = asin_m.group(1)
+        owner = next((p for p in products if p["observed_asin"] == asin), None)
+        if owner is None:
+            fail(f"{hf}: buy button points at ASIN {asin}, which is not in the register")
+            continue
+        expected = "verified" if (owner.get("associates_link_test") or {}).get("destination_confirmed") is True \
+            and (owner.get("associates_link_test") or {}).get("tracking_report_confirmed") is True \
+            else "pending-verification"
+        if state != expected:
+            fail(f"{hf}: buy button for {asin} declares data-link-state={state!r} but its "
+                 f"one-link test record makes it {expected!r}")
+        if state == "verified":
+            url_m = re.search(r'href="([^"]+)"', tag)
+            tested = (owner.get("associates_link_test") or {}).get("special_link_url")
+            if url_m and tested and url_m.group(1) != tested:
+                fail(f"{hf}: verified buy button for {asin} does not point at the tested Special Link")
     # no prices rendered (allow $ in code samples? none expected)
     # strip script/style then check
     text = re.sub(r"<script.*?</script>", "", content, flags=re.S)

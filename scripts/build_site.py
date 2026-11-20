@@ -120,18 +120,56 @@ def blank(v):
     v = (v or "").strip()
     return v if v else '<span class="blank">— blank (unverified)</span>'
 
+def link_test(p):
+    """The per-product Associates one-link test record.
+
+    Empty until the owner runs the enrolled workflow test for this product: click the
+    link, confirm the destination, then confirm the click appears in the tracking report.
+    Until that record is complete the button is marked pending-verification and the site
+    claims nothing about it (FLG-002, SG-01). The intended_* fields stay blank regardless:
+    nothing public binds a short token to a product, so intent is confirmed by the owner,
+    not inferred from a redirect.
+    """
+    return p.get("associates_link_test") or {}
+
+def link_verified(p):
+    """True only when the one-link test record is complete for this product."""
+    t = link_test(p)
+    return bool(
+        t.get("destination_confirmed") is True
+        and t.get("tracking_report_confirmed") is True
+        and t.get("special_link_url", "").startswith("https://")
+        and t.get("confirmation_date")
+        and t.get("source")
+        and t.get("report_reference")
+    )
+
 def special_link(p):
+    """The URL the buy button points at.
+
+    A completed one-link test supplies the exact Special Link that was tested, so that is
+    what gets published. Without one, the link is constructed from the observed ASIN and
+    carries the tracking ID, and the button says so (data-link-state="pending-verification").
+    """
+    t = link_test(p)
+    if link_verified(p):
+        return t["special_link_url"]
     return f"https://www.amazon.com/dp/{p['observed_asin']}?tag={TAG}"
+
+def link_state(p):
+    return "verified" if link_verified(p) else "pending-verification"
 
 def buy_button(p, label=None):
     label = label or "Check price & details on Amazon"
     return (f'<a class="btn" href="{esc(special_link(p))}" rel="sponsored nofollow noopener" '
-            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}">{esc(label)}</a> '
+            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}" '
+            f'data-link-state="{link_state(p)}">{esc(label)}</a> '
             f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
 
 def buy_button_small(p):
     return (f'<a class="btn" href="{esc(special_link(p))}" rel="sponsored nofollow noopener" '
-            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}">Check on Amazon</a> '
+            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}" '
+            f'data-link-state="{link_state(p)}">Check on Amazon</a> '
             f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
 
 DISCLOSURE_STRIP = (
@@ -652,6 +690,20 @@ def product_body(p):
                        '<p class="meta">Each line is a check on the listing, not a verdict on the product. '
                        'Where the listing contradicts itself, the contradiction is named and flagged '
                        'rather than resolved here.</p>')
+    # The link-state line. While the one-link Associates test is outstanding, this says so in
+    # the reader's path rather than only in the register — the button still works and is still
+    # labelled sponsored, but nothing on this page claims the link has been validated.
+    verified = link_verified(p)
+    if verified:
+        t = link_test(p)
+        link_line = ('<p class="meta linkstate linkstate-ok">This link was tested in the Associates '
+                     f'workflow on {esc(t["confirmation_date"])}: the destination and the click in the '
+                     'tracking report were both confirmed.</p>')
+    else:
+        link_line = ('<p class="meta linkstate">Destination and click tracking for this link are not '
+                     'confirmed yet — we are testing one link per product before we scale. The button '
+                     'still takes you to the listing, and it is a sponsored link either way. '
+                     '<a href="../flagged-for-review.html#FLG-002">What is outstanding</a>.</p>')
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
@@ -661,6 +713,7 @@ def product_body(p):
 <p class="meta">Observed ASIN {esc(p['observed_asin'])} · Listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
 <p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
+{link_line}
 </section>
 {story_body(p)}
 {house_ad(depth=1)}
@@ -1061,8 +1114,10 @@ def flag_sources(f):
     return (links + " " + extra).strip()
 
 def flagged_body():
+    # Each flag row carries its id as an anchor so a page elsewhere can deep-link to the
+    # exact row it is talking about (e.g. the product page's link-state note -> FLG-002).
     rows = "".join(
-        f"<tr><td><strong>{esc(f['id'])}</strong></td><td>{esc(f['title'])}</td><td>{esc(f['detail'])}</td>"
+        f"<tr id=\"{esc(f['id'])}\"><td><strong>{esc(f['id'])}</strong></td><td>{esc(f['title'])}</td><td>{esc(f['detail'])}</td>"
         f"<td>{esc(f['action'])}</td><td>{flag_sources(f)}</td>"
         f"<td><span class='flagpill'>{esc(f['status'])}</span></td></tr>"
         for f in FLAGS)
@@ -1330,6 +1385,7 @@ def products_index_body():
 <div class="tablewrap"><table><thead><tr><th>Product</th><th>Category</th><th>Best for</th><th>Capacity</th><th>Footprint</th><th>Weight</th><th>Model</th><th>Temperature</th><th>Power</th><th>Price</th><th>Rating</th><th>Source</th></tr></thead><tbody>{rows}</tbody></table></div>
 <p class="legend"><strong>Reading the blanks:</strong> <code>—</code> means the field does not apply to that product type (a thermometer has no wattage). <span class="blank">— blank (unverified)</span> means we looked and could not confirm it, so we left it empty rather than estimate it. Both are answers; a guess would not be.</p>
 <div class="notice"><strong>The price and rating columns are blank by policy, not by accident.</strong> Amazon’s Program Policies bar static price display, and ratings move daily — either number would be stale the moment it was written. The button on each card takes you to the listing, where the live figure is. See <a href="{pfx}flagged-for-review.html">FLG-006</a>.</div>
+<div class="notice"><strong>About the buttons:</strong> every one is a sponsored link carrying the tracking ID, and every one is marked <em>pending verification</em> until we have run the enrolled Associates test on it — click it, confirm the destination, confirm the click in the tracking report. Until that record exists, this site does not claim any link here is a validated Special Link. Each product page says the same thing next to its own button, and the outstanding item is on the <a href="{pfx}flagged-for-review.html#FLG-002">Flagged for review</a> page.</div>
 <h2>Cards</h2>
 <div class="grid">{cards}</div>
 <h2>How these five got here</h2>

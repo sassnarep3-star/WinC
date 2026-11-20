@@ -12,7 +12,7 @@
     {
       "id": "FLG-002",
       "title": "Reader Special Links not yet tested in enrolled Associates workflow",
-      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session. Neither the supplied short links nor the constructed Special Links have been through the enrolled Associates workflow test (one link per product: click it, confirm the destination, then confirm the click appears in the tracking report). Until that test is recorded, no link on this site is claimed to be a validated Special Link.",
+      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session. Neither the supplied short links nor the constructed Special Links have been through the enrolled Associates workflow test (one link per product: click it, confirm the destination, then confirm the click appears in the tracking report). Until that test is recorded, no link on this site is claimed to be a validated Special Link. As of 2026-11-20 that is now enforced mechanically rather than only stated: every button carries data-link-state=\"pending-verification\", each product page says so next to its own button, and each product holds an empty associates_link_test record that the owner fills in when the test is run (SG-01).",
       "action": "Test one link per product in Associates workflow; confirm destination and tracking report before scaling.",
       "status": "needs review",
       "sources": [],
