@@ -1,7 +1,7 @@
 {
   "_note": "Independent re-observation of the five supplied links. Observed redirect targets are stored HERE and mirrored into products.json only as 'observed_*' fields. The intended identifier is never derived from these observations.",
-  "probe_method": "Live HTTP resolution through the fetch_page reader (no direct sandbox network), following redirects, recording the final URL and page <title>. Query-string flags are recorded verbatim because they describe the mechanism of the redirect. Third observation re-read each resolved listing's product-details table and bullet copy to check the recorded spec rows line by line.",
-  "probe_session": "arena-82d39deb (third observation; first by arena-23d7ed19 on the same date, first ever by the 2026-11-17 sessions)",
+  "probe_method": "Live HTTP resolution through the fetch_page reader (no direct sandbox network), following redirects, recording the final URL and page <title>. Query-string flags are recorded verbatim because they describe the mechanism of the redirect. Third observation re-read each resolved listing's product-details table and bullet copy to check the recorded spec rows line by line. Observation #5 (arena-70bd2fcc) re-read each listing page <title> and category breadcrumb through the fetch_page reader; no price, rating or availability value was copied from any page (S02 rule).",
+  "probe_session": "arena-70bd2fcc (fifth observation). Earlier: 2026-11-17 (prior sessions); 2026-11-20 observations #2 (arena-23d7ed19), #3 (arena-82d39deb), #4 (arena-c2123b9c).",
   "probe_date": "2026-11-20",
   "probes": [
     {
@@ -30,14 +30,23 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -67,14 +76,23 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -104,14 +122,23 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -141,14 +168,23 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Kitchen Utensils & Gadgets › Thermometers & Timers › Meat",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -179,14 +215,22 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Kitchen Utensils & Gadgets › Thermometers & Timers › Meat",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to a product listing (unchanged)",
+        "result": "redirect followed to a product listing (unchanged)",
         "final_asin": "B0DZFD6R9Z",
         "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5ed90c5aacfa7a7e&channelId=500&plpRedirect=mhFallback&th=1",
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
-        "matches_observation_4": true,
-        "note": "Same target and the same fallback flags as observations #2, #3 and #4. The only one of the five short links that still resolved to a product page on pass #5."
+        "agrees_with_observation_5": true,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)"
       }
     },
     {
@@ -208,15 +252,16 @@
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
-      "fifth_observation": {
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -239,15 +284,16 @@
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
       "note": "Title still reads 'Six Cooking Accessories Included' while captured bullet copy says 7 accessories - FLG-010 stands on a third capture.",
-      "fifth_observation": {
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -271,15 +317,16 @@
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
       "note": "Listing <title> again shows 'TurboFry® 4-in-1 ... 450°F Hi-Fry ... XL Nonstick Dishwasher-Safe Basket' against captured 200-400°F copy - FLG-005 stands on a third capture.",
-      "fifth_observation": {
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -302,15 +349,16 @@
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
       "agrees_with_prior_session": true,
       "note": "Fifth consecutive landing on B0DHZTCNR5 (weakens FLG-004 further; does not settle canonicality - fallback route, FLG-009). Listing <title> wording rotated again ('IP67 Waterproof ... Stocking Stuffers Gifts for Men' vs the captured 'Highly Waterproof for Grill BBQ Camping') - seller copy rotates between captures; consistent with FLG-014.",
-      "fifth_observation": {
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to the Amazon home page (not a product listing)",
+        "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "matches_observation_4": false,
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#4 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-026."
+        "agrees_with_observation_5": false,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
       }
     },
     {
@@ -334,30 +382,31 @@
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
       "agrees_with_prior_session": true,
       "note": "Carousel shows sibling variants (2-probe Gen3 B0FXBQ3KX1, USA-250 edition B0H2JP9YDM); the observed target remains the 3-probe Gen3 title. Variants recorded to show the listing family is active.",
-      "fifth_observation": {
+      "sixth_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
-        "http_result": "redirect followed to a product listing (unchanged)",
+        "result": "redirect followed to a product listing (unchanged)",
         "final_asin": "B0DZFD6R9Z",
         "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5ed90c5aacfa7a7e&channelId=500&plpRedirect=mhFallback&th=1",
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
-        "matches_observation_4": true,
-        "note": "Same target and the same fallback flags as observations #2, #3 and #4. The only one of the five short links that still resolved to a product page on pass #5."
+        "agrees_with_observation_5": true,
+        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)"
       }
     }
   ],
   "interpretation": {
-    "reproduced": "Observations #1-#4 (2026-11-17, and three passes on 2026-11-20 by arena-23d7ed19, arena-82d39deb and arena-c2123b9c) agreed 5/5 on the observed redirect targets. Observation #5 (2026-11-20, session b0920c92) diverged: four of the five submitted short links ended on the Amazon home page and only B0f3GKalj still resolved to a product listing. The earlier agreement therefore does not guarantee those short links resolve to those products at any given time.",
-    "what_reproduction_does_not_prove": "Every final URL ever observed carries lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback) - a fallback route, not a canonical resolution of the submitted token, which is why the intended_* fields stay blank. Observation #5 adds a second reason: the short links did not all resolve to product pages on the most recent pass, hours after a pass in which they all did. Nothing here says the short links are invalid - FLG-003 remains open and unresolved.",
-    "operational_consequence": "The reader-facing links on this site are NOT the submitted short links. They are built from the observed ASINs as direct https://www.amazon.com/dp/<ASIN> URLs. All five were re-opened directly on 2026-11-20 as a control (S31) and every one still served the product page and breadcrumb recorded in data/products.json. So the published links are unaffected by the short-link behaviour; what needs the owner's attention is confirming the intended destination for each product (Q-02) and the one-link Associates test (FLG-002)."
+    "reproduced": "Observations #1-#5 (2026-11-17, and four passes on 2026-11-20 by arena-23d7ed19, arena-82d39deb, arena-c2123b9c and arena-70bd2fcc) agreed 5/5 on the observed targets. Observation #6 (2026-11-20, session b0920c92) diverged: four of the five submitted short links ended on the Amazon home page and only B0f3GKalj still resolved to a product listing. The earlier agreement therefore does not guarantee those short links resolve to those products at any given time.",
+    "what_reproduction_does_not_prove": "Every final URL ever observed carries lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback) - a fallback route, not a canonical resolution of the submitted token, which is why the intended_* fields stay blank (FLG-009, FLG-029). Observation #6 adds a second reason: the short links did not all resolve to product pages on the most recent pass, hours after passes in which they all did. Nothing here says the short links are invalid - FLG-003 remains open and unresolved.",
+    "operational_consequence": "The reader-facing links on this site are NOT the submitted short links. They are built from the observed ASINs as direct https://www.amazon.com/dp/<ASIN> URLs. All five were re-opened directly on 2026-11-20 as a control (S36) and every one still served the product page and breadcrumb recorded in data/products.json. So the published links are unaffected by the short-link behaviour; what needs the owner's attention is confirming the intended destination for each product (Q-02) and the one-link Associates test (FLG-002)."
   },
   "probe_dates": [
     "2026-11-17 (prior sessions)",
     "2026-11-20 (arena-23d7ed19)",
     "2026-11-20 (arena-82d39deb)",
     "2026-11-20 observation #4: arena-c2123b9c",
-    "2026-11-20 observation #5: b0920c92 — divergent (4/5 home page)"
+    "2026-11-20 observation #5: arena-70bd2fcc",
+    "2026-11-20 observation #6: b0920c92 — divergent (4/5 home page)"
   ],
   "probe4_note": "Fourth independent observation (session arena-c2123b9c, 2026-11-20), via live HTTP resolution through the fetch_page reader, same method as observations #2 and #3. All five mappings reproduced 5/5 again. Per-row 'session'/'date'/'observation' fields mark which observation produced the row (rows without them are observation #3 by arena-82d39deb). Channel IDs varied (704/704/704/500/500) and two rows carried th=1 - recorded verbatim. Every row still carries lv=shuf and plpRedirect=mhFallback, so FLG-009's fallback-route reading stands. New per-listing observations: the Emeril <title> still says 'Six Cooking Accessories' (FLG-010 on a third capture); the Chefman 8 Qt <title> still shows the 450F Hi-Fry wording against captured 200-400F copy (FLG-005); the ThermoMaven <title> wording rotated again (consistent with FLG-014). Provenance row: S29.",
-  "probe5_note": "Fifth live pass (session b0920c92, 2026-11-20), after arena-c2123b9c's observation #4 had reproduced 5/5 product targets the same day. On this pass four of the five submitted short links ended on the Amazon home page; only B0f3GKalj still resolved to B0DZFD6R9Z. Two of the four re-fetched individually: identical. The direct /dp/ listings were re-opened as a control (S31) and all five still served the recorded products, so the published reader links are unaffected. Recorded as FLG-026; the short links' compliance status stays unresolved (FLG-003). The two passes together show the short-link behaviour is not stable over hours, which is itself a reason to treat them as unverified provenance rather than routing infrastructure."
+  "probe6_note": "Sixth live pass (session b0920c92, 2026-11-20, S36). Observation #4 (arena-c2123b9c) and observation #5 (arena-70bd2fcc, listing re-reads) had agreed 5/5 the same day. On this short-link pass, four of the five submitted links ended on the Amazon home page and only B0f3GKalj still resolved to a product. Two of the four re-fetched individually: identical. The /dp/ control in the same pass confirmed all five listings still serve the recorded products (S36), so the published reader links are unaffected. Recorded as FLG-030; the short links' compliance status stays unresolved (FLG-003). Passes #4/#5 vs #6 together show the short-link behaviour is not stable over hours."
 }

@@ -24,9 +24,21 @@
 | T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
 | T07 | Final integration: re-verified combined data, confirmed build + no broken links, PR opened to main, merged, Pages deploy confirmed | done | arena/a42979d2-winc | all (integration only) |
 | T08 | Marketing polish: catchy question-shaped topics, shop-framed suggestions, traffic channel decision question | done | 5fed90b2 | data/topics.json, data/suggestions.json, data/questions.json, COORDINATION.md |
+| T34 | Fifth-pass verification: re-read every official source + all 5 listings (observation #5), stamp the register rows actually re-read | done | arena-70bd2fcc | data/probes.json, data/sources.json, COORDINATION.md |
+| T35 | Seasonal publishing pass: 2 new question-shaped guides (turkey probe placement, Black Friday checklist) + computed season kicker fallback | done | arena-70bd2fcc | data/guides/*.json, scripts/build_site.py (kicker fallback only) |
+| T36 | Reader-facing polish: distinct per-product illustrations, product-page lede figures, thermometer card spec fallback | done | arena-70bd2fcc | data/products.json (image fields), assets/img/*, scripts/build_site.py |
+| T37 | Suggestions v3 + open-questions extension (SG-32 shipped, SG-35..38, Q-23) | done | arena-70bd2fcc | data/suggestions.json, data/questions.json |
+| T38 | Integration: build + gate green, PR to main, merged (PR #38), Pages deploy confirmed | done | arena-70bd2fcc | all (integration only) |
+
+> **Task-id collision note (arena-70bd2fcc):** this session claimed T29–T33 without seeing that
+> arena-c2123b9c had already renumbered its tasks to T29–T32 and arena-482d5832 to T33. Following the
+> repo's renumbering precedent, this session's tasks are **T34–T38**. Nothing in the other sessions'
+> rows, statuses or work was modified. The claim commit (c83b475) predates the discovery; the commits
+> named T29/T30+T31 in their messages are the tasks now recorded as T34/T35+T36 above.
 
 ## Session log
 
+- 2026-11-20 — **arena-70bd2fcc** (branch `arena/70bd2fcc-winc`, based on `main@ba0b838` = PR #15 merge, which already contains PR #16's work) claimed T29–T33 (later renumbered T34–T38, see collision note above). Arrival state: build + gate green (27 pages, 26 sitemap URLs, 6 guides), live Pages `built`. Open PRs from other sessions noted, not touched: #17 (`arena/04112b09-winc`), #18 (`arena/23428c9e-winc`, CONFLICTING). This session edits only the file scopes above; shared data files are appended to, never rewritten.
 - 2026-11-20 — 68dc5c3a claimed T01–T06 on branch arena/68dc5c3a-winc. Repo at start contained only README.md ("# WinC") on main (a6083c9). GitHub Pages already enabled (legacy, branch main, path /) at https://sassnarep3-star.github.io/WinC/ — verified via API.
 - 2026-11-20 — 68dc5c3a verified from official sources: Amazon ASIN = 10 characters (sell.amazon.com); Operating Agreement §5 disclosure wording (affiliate-program.amazon.com/help/operating/agreement, updated 2025-10-15); Program Policies price-display rule (affiliate-program.amazon.com/help/operating/policies, updated 2026-04-14 — prices only via Amazon-served link or Creators/PA API); FTC Endorsement Guides affiliate disclosure (ftc.gov); Google rel="sponsored" for affiliate links (developers.google.com/search/docs/crawling-indexing/qualify-outbound-links). All five submitted link.amazon tokens are 9 characters (not ASINs). Observed redirect ASINs from prior sessions' live resolutions (2026-11-17) + Amazon listing snippets: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. Intended fields left blank (nothing public binds a short code to a product); observed fields populated separately. Short-link compliance status NOT claimed invalid — see FLG-003.
 - Irregularities flagged (see flagged-for-review.html): FLG-001 tracking ID unconfirmed; FLG-002 observed ASINs need one-link Associates test; FLG-003 short-link status unresolved; FLG-004 B0DHZTCNR5 vs B0DMDQZTZN URL variance; FLG-005 B08DKYBTPH model/temp conflicts; FLG-006 prices/ratings left blank per policy; FLG-007 endpoint not deployed (Pages is static).
@@ -804,7 +816,6 @@ T01–T07 verified green. T07 integration (this session): PR → main → merge 
 - PR #27 https://github.com/sassnarep3-star/WinC/pull/27 from `arena/68db484a-winc` → `main`; merged: True (merge commit 7be495120008d97cb57477d89ee71ec7d51de7db).
 - Merge result: merged with `gh pr merge 27 --merge` → main @ 7be495120008d97cb57477d89ee71ec7d51de7db.
 - Pages deploy confirmed: `status: built`, `error: null`, `https_enforced: true` at https://sassnarep3-star.github.io/WinC/ (live front page serves the disclosure strip and five Sponsored-tagged product cards).
-
 - PR: opened from `arena/68db484a-winc` → `main` after this commit is pushed (number recorded below once created).
 - Merge result: pending.
 - Pages deploy: site already reports `status: built`, `https_enforced: true`, source `{main, /}` at https://sassnarep3-star.github.io/WinC/ ; re-confirmed after the merge commit builds (recorded below).
@@ -886,8 +897,83 @@ live Pages. Resolution, without discarding either side:
 | Time (UTC) | Result |
 | --- | --- |
 | 2026-11-20 | PR #18 opened: https://github.com/sassnarep3-star/WinC/pull/18 (`arena/23428c9e-winc` → `main`). |
-| 2026-11-20 | Merge attempts hit conflicts four times as `main` advanced mid-flight (PRs #1–#16, then #17–#21, then #22–#25, then #27–#30). Each round resolved with `main` as trunk: shared site files taken from `main`, `COORDINATION.md` union-merged (full session history + this session's section, nothing dropped), this edition archived under `archive/air-ember-edition/`, gate (`scripts/check_site.py`) re-run green each round (27→29 pages, no violations). |
+| 2026-11-20 | Merge attempts hit conflicts five times as `main` advanced mid-flight (PRs #1–#16, then #17–#21, then #22–#25, then #27–#30, then #36). Each round resolved with `main` as trunk: shared site files taken from `main`, `COORDINATION.md` union-merged (full session history + this session's section, nothing dropped), this edition archived under `archive/air-ember-edition/`, gate (`scripts/check_site.py`) re-run green each round (27→29 pages, no violations). |
 | 2026-11-20 | PR #18 merged to `main`; Pages deploy and live re-fetch confirmed — see the verification note appended after merge. |
+---
+
+# Session arena-70bd2fcc — fifth verification pass, seasonal publishing, imagery polish (T34–T38)
+
+Branch `arena/70bd2fcc-winc`, based on `main@ba0b838`. Board claims T34–T38 (originally T29–T33;
+**renumbered after an id collision** — arena-c2123b9c held T29–T32, arena-482d5832 held T33).
+
+## What was verified (T34) — all fetched live 2026-11-20
+
+| Source | Result |
+| --- | --- |
+| S01 Operating Agreement | "Updated: October 15, 2025" unchanged; §5 disclosure wording confirmed verbatim again. |
+| S02 Program Policies | "Updated: April 14, 2026" unchanged; price/availability rule (Amazon-served link or Creators/PA API) and Special Link tag rule (XXXXX-##) confirmed verbatim in chunk 3. |
+| S03 FTC Endorsement Guides | Reachable; "disclosed clearly and conspicuously" wording confirmed verbatim; links to 16 CFR Part 255 (eCFR). |
+| S04 Google qualify-outbound-links | rel="sponsored" guidance confirmed verbatim; "Last updated 2025-12-10 UTC" unchanged. |
+| S05 sell.amazon.com ASIN blog | "unique 10-character alphanumeric code" + "appears after /dp/" confirmed verbatim; dated Jun 4, 2025. |
+| S06 Application Review Process | "at least three within the first 180 days", "~10 posts" rule, tagged-links FAQ confirmed verbatim. |
+| S20 "Can I change my Associates ID" | "our software automatically adds \"-20\" to the end of all Associate IDs" confirmed verbatim. |
+| S08 GitHub Pages docs | "GitHub Pages turns any GitHub repository into a live website" confirmed verbatim. |
+| S16/S17 USDA FSIS | 165°F all-poultry row and the three-placement whole-poultry rule confirmed verbatim (chart "Last Updated: Apr 14, 2025"); the leave-in caution ("Do not leave your food thermometer in food while cooking unless the manufacturer's instructions specifically say it can withstand heat") confirmed verbatim. |
+| S09–S13 Amazon listings (5) | Each page re-read: verbatim `<title>` + category breadcrumb match the register (3 air fryers, 2 thermometers). Every response still carries `lv=shuf` + `plpRedirect=mhFallback` (FLG-009). B0DHZTCNR5 displayed "In Stock" and a price on-page — neither value copied to this site (S02/FLG-006). |
+
+**Observation #5** recorded in `data/probes.json` (5/5 mappings agree for the fifth time; FLG-008 stays closed;
+`intended_*` fields stay blank). **Register discipline note:** a scripted stamp initially touched ten
+source rows this session did not re-read (S07, S14, S15, S18, S21–S26); the stamps were removed in the
+same rebase resolution, so only the 16 rows actually re-read carry the fourth-read stamp. No stamp
+survives without the fetch behind it.
+
+## What was published (T35) — seasonal window (Thanksgiving / deal season 2026)
+
+- `guides/turkey-probe-placement.html` — "Cooking a turkey this week: where does the probe actually go?"
+  Safety numbers from S16/S17 (165°F all poultry; three placement spots; stuffing rule; leave-in caution);
+  the two thermometer listings' own claims used to map instant-read vs leave-in to those rules. No test claim.
+- `guides/black-friday-air-fryer-checklist.html` — "Black Friday air fryer deals: what should you check
+  before you click buy?" A pre-click checklist built on the live listing conflicts (FLG-005/010/020/023/024)
+  and the S02 price rule; explains why no deal price can appear here and why the guide carries no countdown.
+- Both guides carry season **Holiday cooking** (aligned with the site's existing convention), pass the
+  ≥3-FAQ and source-anchor gate checks, entered sitemap + RSS + search index automatically via the builder.
+
+## Polish (T36)
+
+- Per-product editorial illustrations (5 new images, matching the established style) registered in
+  `data/products.json`; captions state "Not a product photograph of this product" on every page.
+  Product pages gained lede figures; a builder bug (double `../` prefix on card images) was caught by
+  the gate's image-existence check and fixed in the builder.
+- ThermoMaven card previously rendered an empty specs list; cards now fall back to the reading spec
+  ("Reading: Accuracy ±0.5°F (NIST & NSF certified per listing)") when no physical spec exists.
+
+## Registers (T37) — review-before-implementing layer
+
+- **SG-32** (arena-c2123b9c's deal-season playbook) marked `shipped` with `status_detail_by: arena-70bd2fcc`.
+- **SG-35** seasonal band close-out rule (open-blocked on new **Q-23**) · **SG-36** per-product
+  illustrations (done-this-session) · **SG-37** thermometer card spec fallback (done-this-session) ·
+  **SG-38** seasonal↔evergreen cross-links (open, S).
+- **Q-23** appended: who closes a seasonal guide's measurement window, and when. No answer invented.
+
+## Coordination (merge) notes
+
+`main` moved three times while this session worked (PRs #22/#25/#27 merged: sessions c2123b9c,
+482d5832, 5fed90b2). Rebases conflicted in `COORDINATION.md`, `data/probes.json`, `data/sources.json`,
+`data/suggestions.json` and the generated HTML. Resolutions kept both lineages:
+- probes.json: c2123b9c's observation #4 (`probe4_note`) kept verbatim; this session's observation
+  recorded as **#5** (per-probe `fifth_observation`, probe_dates extended); interpretation updated to five observations.
+- sources.json: main's slimmer row schema kept; S27–S29 (c2123b9c) kept; this session's stamps layered
+  into `access` only on the rows actually re-read.
+- suggestions.json: SG-21/SG-22 (5fed90b2) kept; SG-32 status → shipped; SG-35–SG-38 appended.
+- Generated HTML regenerated from the merged data via `scripts/build_site.py` (single source of truth).
+- The remote branch was force-pushed once with `--force-with-lease` after an interrupted rebase had
+  pushed mid-rebase state; the final push reflects the completed rebase.
+
+## Gate status (T38)
+
+`python3 scripts/build_site.py` → `Built 31 pages, 30 sitemap URLs, 10 guides, 27 search rows.`
+`python3 scripts/check_site.py` → `OK: 31 pages checked, 30 sitemap URLs, no violations.`
+`npm test` → analytics contract tests OK (4 tests, worker contract OK).
 
 ---
 
@@ -935,135 +1021,211 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
 | --- | --- |
 | 2026-11-20 | (filled in at merge — see final section) |
 
+## Post-merge verification (appended after PR #18 merged)
+
+- **Merge:** PR #18 merged to `main` 2026-11-20 as merge commit `4c4ed1a` ("Merge pull request #18
+  from sassnarep3-star/arena/23428c9e-winc"). `origin/main` verified an ancestor of the branch head
+  `9f64a3c` before merging.
+- **Pages deploy:** `pages-build-deployment` run `44689391826` completed **success** (only a Node 20
+  deprecation annotation on `actions/upload-artifact`); `gh api /repos/sassnarep3-star/WinC/pages`
+  → `status: built`, `https_enforced: true`.
+- **Live re-fetch (page reader, 2026-11-20):**
+  `https://sassnarep3-star.github.io/WinC/` serves the merged homepage — disclosure strip first,
+  five product picks each with `?tag=shopnow047c-20` + "Sponsored · paid affiliate link", guide
+  cards, `Not a product photograph.` captions.
+  `https://sassnarep3-star.github.io/WinC/flagged-for-review.html` serves the full FLG register
+  (FLG-001…013+) with the same disclosure. Method note per prior sessions: sandbox `curl` to
+  `*.github.io` is refused (egress limit), so verification uses the page reader + Pages API, never
+  a refused curl read as failure.
+- **Archived edition completed:** `archive/air-ember-edition/` was missing its front page and a few
+  sibling targets after the trunk adoption (the root `index.html`, `questions.html`,
+  `verification.html`, `executive-summary.html`, `feed.xml`, `data/products.json` resolved to main's
+  canonicals). All seven restored from this branch's own history (`9f61f0d` / `125d5bc`), so the
+  archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
+  archive stays out of nav/sitemap/feed; gate re-run green.
+
+## PR / merge record (T38)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#38** https://github.com/sassnarep3-star/WinC/pull/38 opened from `arena/70bd2fcc-winc` → `main`. First readiness check read CONFLICTING because PRs #18 and #39 merged mid-flight; resolved by a fast-forward-equivalent merge of `origin/main` into this branch (registers union-merged, HTML regenerated from data, gate re-run green each round: 31→34 pages, 13 guides). |
+| 2026-11-20 06:43:12Z | `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN`; merged with `gh pr merge 38 --merge` → `main` @ `60422bd1e6f6c1f40c8de6717f439989e5772a31`. |
+| 2026-11-20 | Pages build for `60422bd`: `building` → **`built`**, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
+
+**Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
+
 ---
 
-# Session arena/b0920c92-winc — row-level sourcing, observation #5, decision desk, integration (renumbered T36–T42)
+# Session arena-038c0b80 — editorial conversion pass + decision section + line-by-line re-verification
 
-Branch `arena/b0920c92-winc`, originally based on `main@87f7284` (PR #17 merged); re-merged onto
-`main@a37c95b` on 2026-11-20 after PRs #18, #22–#30, #36 and #37 landed mid-flight.
+Branch `arena/038c0b80-winc`, based on `main@404cabc` (PR #24 merged). Started 2026-11-20.
+State on arrival: 29 pages / 28 sitemap URLs / 8 guides; `check_site.py` green; `node tools/audit.mjs`
+reporting 2 findings (A6, A7). `main` advanced twice while this session was reading the repo; the branch
+was fast-forwarded to `404cabc` before any edit, so nothing here forks an old base.
 
-**I-06 — task-ID collision and renumbering (recorded, not hidden).** This session claimed **T29–T35**
-against `main@87f7284` and pushed the claim (commit `884f67a`) before the newer sessions' PRs had
-merged. Meanwhile `arena-c2123b9c` claimed **T29–T32** (observation #4, seasonal editorial, register
-back-fill, integration) and `arena-482d5832` claimed **T33** (analytics privacy-boundary hardening)
-— both now merged into `main`. The two claim sets collided. This session's board rows are therefore
-**renumbered T36–T42**; nothing else about the claims changed, and no other session's board text was
-edited. The duplicate `first-air-fryer-six-checks` guide this session drafted in parallel with
-`arena/a81c0f0e-winc` was dropped in favour of their merged version (theirs was already published to
-`main` and live); this session's `probe-placement-whole-chicken` guide (TP-06) is the additive one.
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Story layer: maker profiles, 8 product narratives + 3 cluster guides (one per category), all claims tied to a listed spec (Claude) | in progress | arena-038c0b80 | `data/makers.json`, `data/stories.json`, `data/guides/*.json` (new files only), `scripts/build_site.py` (story/narrative renderers), `assets/style.css`, `assets/img/series-*` |
+| T34 | Decision section: suggestions → review → choose → evidence, rendered from the registers | in progress | arena-038c0b80 | `data/suggestions.json`, `data/questions.json`, `scripts/build_site.py` (direction/questions bodies), `direction.html`, `questions.html` |
+| T35 | Repo audit fixes: A6 anchor-quote mismatch, A7 capture-form transport, stale flags/source notes/typed counts, encoding artifacts (-143, °F), JSON-LD how-to scope | in progress | arena-038c0b80 | `scripts/build_site.py`, `scripts/check_site.py`, `tools/audit.mjs`, `data/flags.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Findability + imagery hygiene: compress 3.5 MB PNGs to WebP, add FAQPage scope, sitemap/feed check, honest "no measurement yet" language | in progress | arena-038c0b80 | `assets/img/*`, `scripts/build_site.py` |
+| T37 | Final integration: rebuild, gate green, independent audit clean, PR → main, merge, confirm Pages live | pending | arena-038c0b80 | all (integration only) |
+
+## Cross-session follow-ups observed (not mine to merge)
+
+- PR #17 (`arena/04112b09-winc`, OPEN) and PR #18 (`arena/23428c9e-winc`, OPEN) and PR #5
+  (`arena/70d8ad52-winc`, DRAFT) each ship a *different* site into the same repo. Only one can be the
+  published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
+  are already on `main` via PR #24 and are in use. This session did not touch those branches.
+
+## PR / merge record (T37 — merged)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
+| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
+| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
+
+### What was deliberately merged *from* main rather than over it
+
+- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
+- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
+- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
+- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
+
+### Two id collisions worth recording for the next session
+
+1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
+2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
+
+### Rounds where the gates were run after each merge
+
+38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+
+---
+
+# Session arena/b0920c92-winc — row-level sourcing site-wide, observation #6, decision desk, measurement proof (T43–T49)
+
+Branch `arena/b0920c92-winc`, based on `main@87f7284`; re-merged twice as `main` advanced
+(`a37c95b` via PR #37, then `6a989c0` via PRs #38–#45).
+
+**I-08 — ID collisions across three sessions, resolved by renumbering (recorded, not hidden).**
+This session claimed T29–T35 against `main@87f7284` (commit `884f67a`) before the newer sessions'
+PRs merged. `arena-c2123b9c` (T29–T32), `arena-482d5832` (T33), `arena-70bd2fcc` (T34–T38) and
+`arena-038c0b80` (T33–T37) all claimed overlapping numbers, and `arena-70bd2fcc` independently took
+FLG-026/FLG-027, S30–S34 and the "observation #5" slot for its listing re-reads. This session's
+records are therefore renumbered: **board rows T43–T49**, its divergent short-link observation
+**observation #6 (S36, FLG-030)**. A sibling-variant flag this session had drafted (old FLG-027) is
+**dropped as redundant**: `arena-70bd2fcc`'s FLG-026/FLG-027 record the same ThermoMaven and
+CHEF iQ sibling-listing findings with their own S33/S34 evidence. Nothing of the other sessions'
+was edited or discarded. A first-air-fryer guide this session drafted in parallel with
+`arena/a81c0f0e-winc` was likewise dropped in favour of their merged version.
 
 ## Board (this session, renumbered)
 
 | ID | Task | Status | Owner | Files |
 | --- | --- | --- | --- | --- |
-| T36 | *(was T29)* Restore the `COORDINATION.md` provenance trail dropped by PR #17 | closed as superseded | b0920c92 | `COORDINATION.md` |
-| T37 | *(was T30)* Independent verification pass over the 5 links, 5 listings and the policy pages | done | b0920c92 | `data/probes.json`, `data/sources.json` (S30, S31), `data/products.json`, `data/flags.json` (FLG-026, FLG-027) |
-| T38 | *(was T31)* Row-level source-link enforcement (gate + repairs, site-wide) | done | b0920c92 | `scripts/check_site.py`, `scripts/build_site.py`, `data/guides/*.json` |
-| T39 | *(was T32)* Decision-desk hardening (suggestions + questions) | done | b0920c92 | `data/suggestions.json`, `scripts/build_site.py`, `assets/style.css` |
-| T40 | *(was T33)* Measurement end-to-end proof against the hardened contract | done | b0920c92 | `scripts/verify_measurement.py` (new), `data/flags.json` (FLG-007), measurement.html, `package.json` |
-| T41 | *(was T34)* Reader-facing polish + TP-06 guide published; TP-10 duplicate de-duplicated | done | b0920c92 | `data/guides/probe-placement-whole-chicken.json`, `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
-| T42 | *(was T35)* Final integration (merge of all parallel work, gate, PR, Pages) | in progress | b0920c92 | all (integration only) |
+| T43 | *(was T29/T36)* Provenance-trail restore | closed as superseded (main's unions already restored the history) | b0920c92 | `COORDINATION.md` |
+| T44 | *(was T30/T37)* Independent verification pass over the 5 links, 5 listings and the policy pages — observation #6 | done | b0920c92 | `data/probes.json`, `data/sources.json` (S36), `data/products.json`, `data/flags.json` (FLG-030) |
+| T45 | *(was T31/T38)* Row-level source-link enforcement (gate + repairs, site-wide) | done | b0920c92 | `scripts/check_site.py`, `scripts/build_site.py`, `data/guides/*.json` |
+| T46 | *(was T32/T39)* Decision-desk hardening (paths, deciders, discovery) | done | b0920c92 | `data/suggestions.json`, `scripts/build_site.py`, `assets/style.css` |
+| T47 | *(was T33/T40)* Measurement end-to-end proof against the hardened contract | done | b0920c92 | `scripts/verify_measurement.py` (new), `data/flags.json` (FLG-007), `package.json` |
+| T48 | *(was T34/T41)* TP-06 guide published; TP-01/TP-02 register marks; duplicate TP-10 draft dropped | done | b0920c92 | `data/guides/probe-placement-whole-chicken.json`, `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
+| T49 | *(was T35/T42)* Final integration (three-way merges of all parallel work, gate, PR, Pages) | in progress | b0920c92 | all (integration only) |
 
-Note on T36: the provenance restore this session performed at `884f67a` turned out to be redundant —
-the COORDINATION unions merged by PRs #22–#30 had already restored the full history on `main`. The
-restore was therefore **not** re-applied in the merge; `main`'s version of the board stands. The
-truncation that prompted it is a closed incident.
+## Work record (T44–T47)
 
-## Work record (T37–T40, session b0920c92)
-
-### T37 — observation #5 of the five supplied links (divergent)
+### T44 — observation #6 of the five supplied links (divergent; S36, FLG-030)
 
 | Source | What was done |
 | --- | --- |
-| S30 (new) | All five `link.amazon` short links re-resolved live on 2026-11-20 via the fetch reader — the fifth pass of the day. **Divergent from observation #4** (arena-c2123b9c, S29, which had reproduced 5/5 earlier): four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon home page; B0f3GKalj still resolved to B0DZFD6R9Z with the same `lv=shuf` / `plpRedirect=mhFallback` flags. Two of the four re-fetched individually: identical. |
-| S31 (new) | Control: all five direct `/dp/` listings re-opened; every one still served the recorded `<title>` and breadcrumb, so the published reader links are unaffected. |
-| FLG-026 (new) | Records the divergence. Explicitly **not** a claim that the links are invalid — FLG-003 stays open. Cause not determinable from this environment. Together #4 and #5 show the behaviour is not stable over hours. |
-| FLG-027 (new) | Amazon lists sibling variants of both thermometers on the same pages (colour/speed/probe count); which variant was meant is unconfirmed, so `intended_*` stays blank. |
-| `data/probes.json` | `fifth_observation` appended per probe; `probe_dates` extended; `probe5_note` added; the interpretation block rewritten to state the #4/#5 divergence. Prior observations preserved untouched. |
+| S36 (new) | All five `link.amazon` short links re-resolved live on 2026-11-20 via the fetch reader — the fifth short-link pass of the day. **Divergent from observations #1–#5**: four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon home page; B0f3GKalj still resolved to B0DZFD6R9Z with the same `lv=shuf` / `plpRedirect=mhFallback` flags. Two of the four re-fetched individually: identical. Control in the same pass: all five direct `/dp/` listings re-opened; every one still served the recorded `<title>` and breadcrumb, so the published reader links are unaffected. |
+| FLG-030 (new) | Records the divergence. Explicitly **not** a claim that the links are invalid — FLG-003 stays open. Cause not determinable from this environment. Together, #4/#5 vs #6 show the short-link behaviour is not stable over hours. |
+| `data/probes.json` | `sixth_observation` appended per probe; `probe_dates` extended; `probe6_note` added; the interpretation block rewritten to state the divergence. Prior observations preserved untouched. |
 | Policy re-read | Google's *Qualify your outbound links* re-fetched 2026-11-20: `rel="sponsored"` for paid/affiliate links confirmed verbatim (page last updated 2025-12-10). The site already applies `rel="sponsored nofollow"` to every buy button. |
 
-### T38 — every table row on every page carries a source
+### T45 — every table row on every page carries a source
 
 The gate's row-source rule was extended from 4 register pages to **all** pages: a row passes if it
-links an official source, cites `verification.html#src-*`, or explicitly says its source is internal
-(linking the file) or explicitly blank (pointing at the register). First strict run: **61 violations**
-across 9 pages. Repairs: per-row Source columns on product specs, category comparisons, the guide
-tables of this session's guide (each cell cites the exact listing or the USDA page), the suggestion
-register (derived from the S/FLG/Q ids its own evidence cites), measurement tables and the exec
-summary. Deep-link anchors (`#src-*`, `#flag-*`, `#q-*`, `#t-*`) are now gate-checked to resolve. The
-`link.amazon` rule was narrowed to reader links only — a nofollow provenance citation of the submitted
-URL in the source register is legitimate. Final: gate green on the merged site.
+links an official source, cites `verification.html#src-*`, prints the source URL as text, or
+explicitly says its source is internal (linking the file) or explicitly blank (pointing at the
+register). First strict run: **61 violations** across 9 pages; after the second merge, the four
+guides other sessions published were repaired the same way (22 rows). Per-row Source columns were
+added to product specs, category comparisons, guide tables (each cell citing the exact listing or
+the USDA page), the suggestion register (derived from the S/FLG/Q ids its own evidence cites),
+measurement tables and the exec summary. Deep-link anchors (`#src-*`, `#flag-*`, `#q-*`, `#t-*`)
+are gate-checked to resolve. The `link.amazon` rule was narrowed to reader links only — a nofollow
+provenance citation of the submitted URL is legitimate.
 
-### T39 — decision desk names its deciders
+### T46 — decision desk names its deciders
 
-Every suggestion row in the **union** register (31 rows, both sessions') now carries `path` (A–D,
-matching the published paths), `decision_by` (**10 need the account owner**, not the site) and
-`discovery` (what would have to be known to decide it; derived defaults say so). The path chooser
-shows each path's suggestions with their deciders. Question rows with no answer say "not yet
-answered" instead of a bare blank.
+Every suggestion row in the union register (34 rows across both waves) now carries `path` (A–D,
+matching the published paths), `decision_by` (the rows that need the account owner, not the site:
+SG-01, SG-07, SG-08, SG-09, SG-10, SG-19, SG-20, SG-22, SG-29, SG-30) and `discovery` (what would
+have to be known to decide it; derived defaults say so). The path chooser shows each path's
+suggestions with their deciders. Question rows with no answer say "not yet answered".
 
-### T40 — measurement proven end to end, against the hardened contract
+### T47 — measurement proven end to end, against the hardened contract
 
 `scripts/verify_measurement.py` (new, stdlib-only) starts `analytics/collect.py` as a real server,
 posts all five events with the exact payload `assets/app.js` sends, and asserts: HTTP 202 ×5, HTTP
 422 for an undefined event and for path traversal, `/stats` and `/ledger` aggregates, the hardened
-row schema (server day + event + page + allow-listed props only — session arena-482d5832's contract),
-and that no IP / user agent / cookie / email / search query / client timestamp / client site ID is
-stored. History, recorded honestly: the first version of this test ran against the pre-hardening
-collector and **found a real defect** (the collector read the client timestamp from `ts` while the
-beacon sends `at`, so `ts_client` was always empty — fixed in commit `2ceba84`); arena-482d5832's
-hardened schema then superseded that field entirely, and the test was rewritten to assert the
-hardened contract. `npm run verify` now runs build + gate + the analytics contract tests + this
+row schema (server day + event + page + allow-listed props only), and that no IP / user agent /
+cookie / email / search query / client timestamp / client site ID is stored. History, recorded
+honestly: the first version ran against the pre-hardening collector and **found a real defect**
+(the collector read the client timestamp from `ts` while the beacon sends `at` — fixed), then
+arena-482d5832's hardened schema superseded that field entirely and the test was rewritten to
+assert the hardened contract. `npm run verify` = build + gate + analytics contract tests + this
 end-to-end proof. The campaign ledger stays empty — unchanged by design.
 
-### T41 — TP-06 published; TP-10 de-duplicated
+### T48 — TP-06 published; register marks reconciled
 
 - **`guides/probe-placement-whole-chicken.html`** (TP-06) — placement/stuffing/care wording quoted
-  from the USDA FSIS *Food Thermometers* factsheet (S17), **fetched and read 2026-11-20 by this
-  session**; the 165 °F poultry minimum from the FSIS safe-temperature chart (S16).
-- **`data/topics.json`**: TP-06 marked `published` with provenance; TP-10 marked `published` crediting
-  `arena/a81c0f0e-winc`'s merged guide (this session's parallel draft dropped — see I-06).
-- Sitemap/RSS/search/front-page rail updated automatically (33 pages, 32 sitemap URLs, 12 guides,
-  14 feed items).
-- `EXECUTIVE-SUMMARY.md`: a fifth-pass section appended; counts reconciled against the union.
+  from the USDA FSIS *Food Thermometers* factsheet (S17), fetched and read 2026-11-20; the 165 °F
+  poultry minimum from the FSIS safe-temperature chart (S16).
+- `data/topics.json`: TP-06 published (b0920c92); TP-01 and TP-02 marked published crediting
+  `arena/a81c0f0e-winc`'s merged guides; TP-10's note corrected to credit `arena/a81c0f0e-winc`
+  (this session's parallel draft dropped — see I-08).
 
-### Conflict resolution during the re-merge (recorded per the working agreement)
+### Conflict resolution (two merges, recorded per the working agreement)
 
-`git merge origin/main@a37c95b` into this branch. Conflicts: all generated HTML/sitemap/feed/search
-files (resolved by taking `main`'s and regenerating from the unioned data), plus COORDINATION.md,
-EXECUTIVE-SUMMARY.md, package.json, analytics/collect.py, assets/style.css,
-data/guides/first-air-fryer-six-checks.json, data/probes.json, data/sources.json,
-data/suggestions.json. Resolution: **union everywhere** — main's registers kept in full, this
-session's additions renumbered onto free IDs (S30/S31; FLG-026/027 were already free), collector
-taken from main's hardened version, style sheet union, package scripts union, board taken from main
-plus this block. Nothing from either side was discarded; the one intentional drop is the parallel
-TP-10 duplicate guide explained in I-06.
+`git merge origin/main` twice (at `a37c95b`, then at `6a989c0`). Conflicts resolved as **unions**:
+generated HTML/sitemap/feed/search files regenerated from the merged data; registers merged by ID
+with this session's additions renumbered onto free slots; `analytics/collect.py` taken from main's
+hardened version (the end-to-end test asserts that contract); `scripts/build_site.py` merged at
+function level (main's season rail, story layer, decision desk, publisher checklist kept; this
+session's per-row source columns, path boxes, measurement verification table and anchors re-applied
+on top); style sheets and package scripts unioned. Nothing from either side was discarded except the
+two duplicates explained in I-08.
 
 ### Sources used this session
 
 - Google, *Qualify your outbound links* — https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links (re-read 2026-11-20)
 - USDA FSIS, *Food Thermometers* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers (read 2026-11-20)
 - USDA FSIS, *Safe Temperature Chart* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart (cited; read by prior session, re-verified via S17's embedded chart)
-- Amazon listings S09–S13 (re-read as controls on 2026-11-20, recorded as S31)
-- The five submitted `link.amazon` links (observation #5, recorded as S30; contrasted with S29)
+- Amazon listings S09–S13 and S30–S34 (this session's independent control re-read recorded as S36)
+- The five submitted `link.amazon` links (observation #6, recorded as S36; contrasted with S29)
 
 ### Verification performed this session
 
-`python3 scripts/build_site.py` → 33 pages, 32 sitemap URLs, 12 guides.
+`python3 scripts/build_site.py` → pages/sitemap/guides rebuilt from the merged registers.
 `python3 scripts/check_site.py` → OK, no violations (row-source rule site-wide; deep links checked).
 `python3 scripts/test_analytics.py && node analytics/test_worker.mjs` → OK.
 `python3 scripts/verify_measurement.py` → 5 events accepted, 2 payloads rejected, nothing identity-bearing stored.
 
 ### Irregularities recorded this session
 
-- **I-03 — the measurement timestamp defect.** The pre-hardening collector silently dropped the
-  client timestamp on every event (field mismatch between the beacon and the collector). Found by
-  the new end-to-end test; fixed; then superseded by the hardened schema. The test now asserts the
-  hardened contract, so the class of bug cannot come back silently.
-- **I-04 — the row-source gate was advisory site-wide.** The brief's "every table row" rule was only
-  enforced on 4 pages; 61 rows elsewhere had no source. All repaired; the gate now enforces it everywhere.
-- **I-05 — observation #5 diverged from observation #4** (FLG-026): recorded as an observation, not a
-  verdict; FLG-003 (compliance status unresolved) is deliberately kept open.
-- **I-06 — task-ID collision with arena-c2123b9c (T29–T32) and arena-482d5832 (T33),** plus a parallel
-  TP-10 guide authoring by arena/a81c0f0e-winc. Renumbered T36–T42; duplicate guide dropped in favour
-  of the merged one; no other session's records edited.
+- **I-03 — the measurement timestamp defect.** The pre-hardening collector silently dropped the client
+  timestamp (field mismatch between beacon and collector). Found by the new end-to-end test; fixed;
+  superseded by the hardened schema; the test now asserts that contract.
+- **I-04 — the row-source gate was advisory site-wide.** 61 rows (then 22 more after the merge) had no
+  source. All repaired; the gate enforces it everywhere.
+- **I-05 — observation #6 diverged from observations #1–#5** (FLG-030): recorded as an observation,
+  not a verdict; FLG-003 deliberately stays open.
+- **I-08 — ID collisions across four sessions** (task IDs, flag IDs, source IDs, the "observation #5"
+  slot, a parallel TP-10 guide). Renumbered onto free slots; duplicates dropped in favour of merged
+  records; no other session's text edited.

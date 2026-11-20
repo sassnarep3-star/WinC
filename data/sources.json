@@ -218,19 +218,59 @@
     },
     {
       "id": "S30",
-      "title": "Independent redirect observation #5, session b0920c92 (2026-11-20)",
-      "url": "https://link.amazon/B0f3GKalj",
-      "what": "Session b0920c92 re-resolved all five submitted short links on 2026-11-20, the fifth live pass of the day. DIVERGENT from observation #4 (arena-c2123b9c, S29), which had reproduced 5/5 product targets earlier: on this pass four of the five (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) ended on the Amazon home page, and only B0f3GKalj still resolved to B0DZFD6R9Z with the same fallback flags. Two of the four were re-fetched individually and gave the same result, so this is not a parallel-request artefact. Recorded as an observation only - this does not establish that the links are invalid (FLG-003 stays open) and the cause is not determinable from this environment.",
+      "title": "Amazon listing — CHEFMAN 6 Quart Dual Basket Air Fryer (B0CDY277D3), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "Live page read 2026-11-20 by session arena-038c0b80: <title> is verbatim the stored title; breadcrumb Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers. Response again carried lv=shuf + plpRedirect=mhFallback (fallback route, FLG-009).",
       "date": "2026-11-20",
-      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92. Direct shell access to amazon.com is blocked by this sandbox's egress policy, so every observation is a reader fetch."
+      "access": "Fetched anonymously through the reader; publicly readable, no login."
     },
     {
       "id": "S31",
-      "title": "Control re-read of all five observed listings via their direct /dp/ URLs (2026-11-20)",
-      "url": "https://www.amazon.com/dp/B0CDY277D3",
-      "what": "Session b0920c92 opened https://www.amazon.com/dp/<ASIN> for each of the five observed ASINs (B0CDY277D3, B09B7SB46R, B08DKYBTPH, B0DHZTCNR5, B0DZFD6R9Z). Every listing served the <title> and the category breadcrumb already recorded in data/products.json, so the reader-facing links on this site still resolve to the products they name whatever the submitted short links do on this pass.",
+      "title": "Amazon listing — Emeril Lagasse 26QT French Door (B09B7SB46R), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B09B7SB46R",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; breadcrumb ... > Fryers > Air Fryers. Fallback route flags present again.",
       "date": "2026-11-20",
-      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92."
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S32",
+      "title": "Amazon listing — Chefman Air Fryer 8 Qt TurboFry (B08DKYBTPH), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B08DKYBTPH",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; breadcrumb ... > Fryers > Air Fryers; URL carried th=1 (size-variation selector), consistent with FLG-023.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S33",
+      "title": "Amazon listing — ThermoMaven 1 Sec instant-read (B0DHZTCNR5), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; breadcrumb ... > Thermometers & Timers > Meat. The 'also viewed' module surfaced a separate 0.5-sec ThermoMaven listing (B0DNMTK56N) with a different ASIN — recorded as FLG-026.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S34",
+      "title": "Amazon listing — CHEF iQ Sense Gen3 (B0DZFD6R9Z), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; 'also viewed' surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) — recorded as FLG-027.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S35",
+      "title": "Google Search Central — What's new: 'Removing documentation for the FAQ rich result feature' (June 2026)",
+      "url": "https://developers.google.com/search/updates#removing-faq-rich-result",
+      "what": "Google's own changelog lists the removal of the FAQ rich-result documentation in June 2026. FAQPage structured data is still valid schema.org markup, but it no longer produces a FAQ rich result in Google Search. This site keeps emitting it for machine readability and stops treating it as a findability win.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously 2026-11-20; changelog entry visible in the June 2026 section."
+    },
+    {
+      "id": "S36",
+      "title": "Independent observation #6 of the five submitted short links + /dp/ control, session b0920c92 (2026-11-20)",
+      "url": "https://link.amazon/B0f3GKalj",
+      "what": "Session b0920c92 re-resolved all five submitted link.amazon short links on 2026-11-20, after observation #4 (arena-c2123b9c, S29) and observation #5 (arena-70bd2fcc, listing re-reads S30-S34) had agreed 5/5. DIVERGENT: four of the five (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) ended on the Amazon home page, and only B0f3GKalj still resolved to B0DZFD6R9Z with the same fallback flags. Two of the four re-fetched individually: identical, so not a parallel-request artefact. Control in the same pass: all five direct /dp/ listings re-opened and every one still served the recorded <title> and breadcrumb, so the published reader links are unaffected. Recorded as an observation only - not a claim that the links are invalid (FLG-003 stays open); published as FLG-030.",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92. Direct shell access to amazon.com is blocked by this sandbox's egress policy, so every observation is a reader fetch."
     }
   ]
 }

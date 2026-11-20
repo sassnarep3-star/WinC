@@ -12,7 +12,7 @@
     {
       "id": "FLG-002",
       "title": "Reader Special Links not yet tested in enrolled Associates workflow",
-      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session.",
+      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session. Neither the supplied short links nor the constructed Special Links have been through the enrolled Associates workflow test (one link per product: click it, confirm the destination, then confirm the click appears in the tracking report). Until that test is recorded, no link on this site is claimed to be a validated Special Link.",
       "action": "Test one link per product in Associates workflow; confirm destination and tracking report before scaling.",
       "status": "needs review",
       "sources": [],
@@ -56,9 +56,9 @@
     },
     {
       "id": "FLG-007",
-      "title": "Analytics endpoint code verified end to end, still not deployed",
-      "detail": "GitHub Pages is static and cannot run a server endpoint. The endpoint code and the client beacon are shipped; events record locally until an endpoint URL is configured. On 2026-11-20 session b0920c92 added scripts/verify_measurement.py, which starts analytics/collect.py as a real server, posts all five defined events with the exact payload assets/app.js sends, and asserts the responses, the aggregates, and that no IP address, user agent, cookie, email address or search query is stored. It found a real defect: the collector read the client timestamp from 'ts' while the beacon sends 'at', so ts_client was always empty. Fixed. The code path is proven; what is still missing is a host.",
-      "action": "Deploy analytics/worker.js (or analytics/collect.py) on any host, set CONFIG.endpoint in assets/app.js, run python3 scripts/verify_measurement.py against it, then record the deploy date here and in COORDINATION.md. Orders still come only from an authorised first-party export.",
+      "title": "Analytics endpoint code provided, not deployed",
+      "detail": "GitHub Pages is static and cannot run a server endpoint. Worker code + client beacon are shipped; events record locally until endpoint URL is configured.",
+      "action": "Deploy analytics/worker.js, set endpoint in assets/app.js, then record events.",
       "status": "needs review",
       "sources": [],
       "source_note": "Internal only — no official external source applies to this item (site code, or a strategy decision only the owner can make)."
@@ -235,32 +235,73 @@
       "title": "Stored product titles drifted from live Amazon listing titles (4 of 5)",
       "detail": "On 2026-11-20 session arena/0458cd24-winc re-read every observed listing's <title> directly from amazon.com. Four of five stored titles differed from the live Amazon listing <title> (only B0CDY277D3 matched verbatim). Product identities were confirmed via the live <title> plus the category breadcrumb, so the stored titles in data/products.json were reconciled to the verbatim live listing titles. The underlying spec concerns (FLG-005, FLG-010, FLG-014) remain open and are unaffected by this title-only reconciliation.",
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
-      "status": "fixed in this session"
+      "status": "fixed in this session",
+      "sources": [
+        "S11",
+        "S23"
+      ],
+      "source_note": "Compares the stored titles against the live listing reads recorded in S11 and S23."
     },
     {
       "id": "FLG-026",
-      "title": "Observation #5: four of the five submitted short links landed on the Amazon home page",
-      "detail": "Fifth live pass of the submitted link.amazon URLs (session b0920c92, 2026-11-20, S30). B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the product listing recorded by observations #1-#4 — including observation #4 (arena-c2123b9c, S29) earlier the SAME day, which had reproduced 5/5 product targets. B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four were re-fetched individually: identical, so not a parallel-request artefact. Cause not determinable from this environment. This is NOT a claim that the short links are invalid — FLG-003 remains open and unresolved. It does mean the submitted links cannot be relied on to land on these five products at any given time.",
-      "action": "Open each of the five submitted links in a normal browser session on two different days and record where each lands. If the home page is what an ordinary reader gets, the owner must confirm the intended product per link (Q-02) and use a Special Link from Associates Central instead (FLG-002).",
+      "title": "ThermoMaven sells near-identical instant-read listings under different ASINs",
+      "detail": "Amazon's page for B0DHZTCNR5 surfaced a separate ThermoMaven '0.5 Sec' instant-read listing (B0DNMTK56N) in its 'Customers who viewed this item also viewed' module, with a different speed claim and a different colour. The shop's item is the one-second black model. A buyer following a saved link could land on the other one.",
+      "action": "Owner or reader: check the title and ASIN on the page reached from any external link before buying. No site change needed; recorded so the shop's product page can warn about it.",
       "status": "needs review",
       "sources": [
-        "S15",
-        "S29",
-        "S30",
-        "S31"
+        "S12",
+        "S33"
       ],
       "source_note": ""
     },
     {
       "id": "FLG-027",
-      "title": "Amazon's own pages list sibling variants of both thermometers under the same product page",
-      "detail": "On the 2026-11-20 control re-read, the B0DHZTCNR5 page's 'Customers who viewed this item also viewed' block lists B0GL7Z4KP4 (the same ThermoMaven 1 Sec in orange), B0DNMTK56N (a 0.5 Sec ThermoMaven) and B0F5X3NSR4. The B0DZFD6R9Z page lists B0FXBQ3KX1 (the same CHEF iQ Sense with 2 probes instead of 3) and B0H2JP9YDM (a USA 250 limited edition). The shop stocks one variant of each family. Which variant the owner meant cannot be read off a redirect.",
-      "action": "Ask the supplier which colour, speed and probe-count variants are in scope, then record the chosen ASIN in the product-intent record (data/products.json intended_asin / intended_listing_url) with a confirmation date. Until then the observed ASIN stays as it is and the intended field stays blank.",
+      "title": "CHEF iQ Sense is sold in 2-probe and 3-probe configurations under different ASINs",
+      "detail": "Amazon's page for B0DZFD6R9Z (3 probes) surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) in the same module. Probe count is a headline spec for this product, so the two configurations are easy to confuse and are not the same purchase.",
+      "action": "Owner or reader: confirm the probe count on the listing page reached. Recorded on the product page so the spec is not assumed from a family name.",
       "status": "needs review",
       "sources": [
-        "S12",
         "S13",
-        "S31"
+        "S34"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-028",
+      "title": "This site publishes no analytics numbers, and the ledger is empty by design",
+      "detail": "The measurement layer ships as code (assets/app.js five events, analytics/worker.js and analytics/collect.py endpoints) but no endpoint is deployed and no first-party report has been obtained, so data/campaign-ledger.json has zero rows. Every 'how we would know it worked' line in the suggestions register is therefore a hypothesis about a future measurement, not a result.",
+      "action": "Deploy one endpoint (FLG-007), then fill the ledger only from authorized first-party exports with a dated provenance row. Do not present a forecast in the meantime.",
+      "status": "needs review",
+      "sources": [
+        "S21"
+      ],
+      "source_note": "Endpoint state is verifiable from the repo; the absence of first-party data cannot be proven from here, which is why this is flagged rather than asserted."
+    },
+    {
+      "id": "FLG-029",
+      "title": "Amazon listing pages in this environment are served as a fallback summary route",
+      "detail": "Every one of the five listing URLs read on 2026-11-20 returned with lv=shuf and plpRedirect=mhFallback in the response URL (FLG-009). The <title> and breadcrumb are stable across four observations, but the page is a summary route, so detail-table fields read from it may differ from the full detail page a shopper sees in a normal browser.",
+      "action": "Owner: open each listing once in a normal browser and compare the spec table with the product page's rows; correct any drift in data/products.json.",
+      "status": "needs review",
+      "sources": [
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-030",
+      "title": "Observation #6: four of the five submitted short links landed on the Amazon home page",
+      "detail": "Fifth short-link pass of the day (session b0920c92, 2026-11-20, S36). B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the product listing recorded by observations #1-#4 and by observation #5's listing re-reads (arena-70bd2fcc). B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four re-fetched individually: identical. The /dp/ control in the same pass confirmed all five listings still serve the recorded products. Cause not determinable from this environment. This is NOT a claim that the short links are invalid - FLG-003 remains open and unresolved. It does mean the submitted links cannot be relied on to land on these five products at any given time, and that their behaviour is not stable over hours.",
+      "action": "Open each of the five submitted links in a normal browser session on two different days and record where each lands. If the home page is what an ordinary reader gets, the owner must confirm the intended product per link (Q-02) and use a Special Link from Associates Central instead (FLG-002).",
+      "status": "needs review",
+      "sources": [
+        "S15",
+        "S29",
+        "S36"
       ],
       "source_note": ""
     }
