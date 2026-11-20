@@ -1,9 +1,11 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena-23428c9e`** (branch `arena/23428c9e-winc`, PR #18) — integration of the
-> Air & Ember parallel edition; its board, sources and merge note are in the **last section** of
-> this file. Sections for `arena-c2123b9c` (T29–T32) and `arena-482d5832` (T33) plus every earlier
-> session are kept verbatim as the provenance trail — this round's conflict dropped none of them.
+> **Latest session: `arena/1c6908d1-winc`** — audit-clean pass (cleared A6/A7), verification pass #5
+> (S30/FLG-026/Q-24), review-prompt suggestions (SG-39/40); its board is in the **last section** of
+> this file. Prior latest was `arena-23428c9e` (branch `arena/23428c9e-winc`, PR #18), integration of
+> the Air & Ember parallel edition; Sections for `arena-c2123b9c` (T29–T32) and `arena-482d5832` (T33)
+> plus every earlier session are kept verbatim as the provenance trail — this round's conflict dropped
+> none of them.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -1054,3 +1056,50 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
 | 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
 
 **Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
+
+---
+
+# Session `arena/1c6908d1-winc` — audit-clean pass, verification #5, review-prompt suggestions
+
+Branch `arena/1c6908d1-winc`. Rebased onto current `main` (the session-start base `7426a0c` was on a
+divergent, retired lineage; the branch was reset to `main` and all work applied on top of the
+reconstructed lineage). Scope chosen to be non-overlapping with the sessions already merged and the
+PRs still open: this session did **not** duplicate the seasonal/deals/observation-#4 work (SG-32..38,
+S27..S29, Q-23) — it cleared the two audit findings those merges left in place, ran an independent
+verification pass #5, and added distinct suggestions (SG-39/40).
+
+## Task board (this session)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T33 | Clear independent-audit findings A6 (src-id quote style + search JS literal) and A7 (capture form GET email leak) | done | arena/1c6908d1-winc | scripts/build_site.py, assets/app.js, generated HTML |
+| T34 | Independent verification pass #5: re-read all 5 listings + re-fetch all 5 tokens; record S30, FLG-026, Q-24 | done | arena/1c6908d1-winc | data/sources.json, data/flags.json, data/questions.json |
+| T35 | Add review-prompt suggestions SG-39 (editorial voice / not AI slop), SG-40 (accept/reject workflow) | done | arena/1c6908d1-winc | data/suggestions.json, direction.html (generated) |
+| T36 | Final integration: build + check + audit strict green, PR to main, merge, confirm Pages, record here | in progress | arena/1c6908d1-winc | COORDINATION.md + integration |
+
+## Verification performed (every claim from an official source, fetched live 2026-11-20)
+
+| What | How | Result |
+| --- | --- | --- |
+| All 5 `amazon.com/dp/<ASIN>` listings | Fetched live via the page reader | Each `<title>` matched `data/products.json` verbatim; breadcrumb confirms category (3 Air Fryers, 2 Meat Thermometers). Fallback route `lv=shuf` + `plpRedirect=mhFallback` present on all 5 (FLG-009). No spec drift. |
+| The 5 supplied `link.amazon` tokens | Fetched live via the page reader | 4/5 (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage; B0f3GKalj returned HTTP 500 on two attempts. Prior token→ASIN mapping NOT reproduced via this path → FLG-026. |
+| Independent audit | `node tools/audit.mjs --strict` | Before: 2 findings (A6 fragments, A7 capture GET). After fixes: **0 findings**, all 10 rules pass. |
+| Site gate | `npm run verify` | Built 34 pages, 33 sitemap URLs / OK: 34 pages checked, 33 sitemap URLs, no violations. |
+
+## Findings recorded this session
+
+| ID | Finding | Status |
+| --- | --- | --- |
+| FLG-026 | The 5 supplied `link.amazon` tokens did not reproduce the prior ASIN mapping via this session's page-reader fetch (4/5 → homepage, 1/5 HTTP 500). Not claimed invalid (FLG-003 unchanged). Reproducibility across observation methods is in question; resolve by re-resolving in an enrolled Associates browser with cookies + region. | needs review (open, non-blocking) |
+| Q-24 | Do the tokens actually resolve to the 5 observed ASINs, and why did this fetch not reproduce the mapping? | open, non-blocking |
+| SG-39 | Editorial voice pass so copy reads like a publication, not generated text (the brief's "not AI slop"). | recommended-now |
+| SG-40 | Accept/reject/defer review workflow so the chosen path persists in-repo. | recommended-now |
+
+## Notes for the next session
+
+- `main` was carrying the two audit bugs (`method="get"` capture form, single-quoted `id='src-…'`)
+  despite 92 merged commits; this session's PR clears them. If other PRs merge first, rebase and re-run
+  `npm run verify` + `node tools/audit.mjs --strict` before merging (the A6/A7 fixes touch the shared
+  builder/`app.js`).
+- **ID collision avoidance:** main already uses S27..S29, FLG-025, Q-23, SG-35..38. This session used
+  S30, FLG-026, Q-24, SG-39, SG-40 — no collisions.

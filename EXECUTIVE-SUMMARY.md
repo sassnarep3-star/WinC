@@ -9,7 +9,7 @@ It leads with products, answers buyer questions, and keeps verification one clic
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
 - **Guides:** 8 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
+- **Trust:** verification register (intent vs. observed kept separate), 30-source register, 26 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`) + independent audit (`tools/audit.mjs`, 0 findings).
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 
 ## Key facts (all sourced)
@@ -293,3 +293,58 @@ explicit design directive to the build-prompt builder.
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
+
+---
+
+# Audit-clean pass + verification #5 (2026-11-20, session `arena/1c6908d1-winc`)
+
+This pass cleared the independent-audit findings that `main` was still carrying, re-ran the product
+verification line by line, and added review-prompt suggestions distinct from the site's existing
+seasonal/deals work.
+
+## The independent audit is now clean
+
+`tools/audit.mjs` was reporting two findings on `main`; both are fixed:
+
+- **A6 — unresolved `#src-*` fragment links.** Source-register rows on `verification.html` were
+  emitted with single-quoted ids (`id='src-…'`); the fragment links from the flagged and questions
+  pages use double quotes and the audit matches double-quoted ids, so 38 valid anchors were reported
+  unresolved. The builder now emits `id="src-…"`. All fragments resolve; A6 passes.
+- **A7 — capture form leaked the email into the URL.** The reader-capture form was `method="get"` and
+  the beacon never called `preventDefault()`, so submitting put the address in the query string (history
+  + request log) even with JavaScript on. Fixed: the form is now `method="post"` and the handler calls
+  `preventDefault()`. A7 passes.
+- **A6 (search) — a JS template literal read as a broken link.** Client-side search built result anchors
+  as `<a href="'+h.url+'">`, matched by the audit's link scanner. Rewrote result rendering with the DOM
+  API (`createElement`/`setAttribute`/`textContent`), removing the literal and closing a reflected-XSS
+  vector.
+
+`node tools/audit.mjs --strict` → **0 findings** (all ten rules). `npm run verify` → **Built 34 pages,
+33 sitemap URLs** / **OK: 34 pages checked, 33 sitemap URLs, no violations.**
+
+## Verification pass #5, and one new irregularity
+
+- **All five `amazon.com/dp/<ASIN>` listings re-read live on 2026-11-20.** Each `<title>` matched
+  `data/products.json` verbatim; breadcrumb confirms category (3 air fryers, 2 meat thermometers). The
+  `lv=shuf` + `plpRedirect=mhFallback` fallback route is present on all five (FLG-009). No spec value
+  drifted; no correction needed. Recorded as source **S30**.
+- **New irregularity — FLG-026.** Re-fetching the five supplied `link.amazon` tokens directly did **not**
+  reproduce the prior token→ASIN mapping via this fetch path: 4/5 resolved to the amazon.com homepage and
+  `B0f3GKalj` returned HTTP 500 on two attempts. This does **not** establish the links are invalid
+  (FLG-003 unchanged — never claimed invalid); it means the mapping's reproducibility across observation
+  methods is in question. Recorded as flag **FLG-026** and open question **Q-24**, with the resolution
+  action (re-resolve in an enrolled Associates browser with cookies + region).
+
+## New review-prompt suggestions (distinct from the existing seasonal/deals work)
+
+- **SG-39 — editorial voice pass.** Make reader copy read like a publication, not generated text, without
+  touching a single fact or source. Directly answers the brief's "should not read like AI slop."
+- **SG-40 — accept/reject/defer review workflow.** Record the review decision in-repo per suggestion so
+  the chosen path persists and gates the next build, rather than living only in the browser.
+
+## Still open (owner-side)
+
+Tracking-ID confirmation, the one-link Associates test, short-link compliance status, the
+manufacturer-page spec conflicts, analytics-endpoint deployment and Search Console — all require an
+enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
+forecast; the campaign ledger stays empty until first-party reports arrive.

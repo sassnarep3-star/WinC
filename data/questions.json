@@ -337,6 +337,17 @@
       "owner": "Owner/editorial decision; implementation can be any session once the dates exist.",
       "answer": "",
       "blocking": "no - the season labels keep pages honest on their own; but no seasonal-performance claim can be published until windows exist (Q-17's measurement bar)."
+    },
+    {
+      "id": "Q-24",
+      "question": "Do the five supplied link.amazon tokens actually resolve to the five observed ASINs, and why did this session's fetch not reproduce the mapping?",
+      "decision_it_gates": "Whether the observed_* ASINs can be trusted as the intended destinations, and whether the product-intent record's intended_* fields can ever be filled from the supplied links.",
+      "have": "All five amazon.com/dp/<ASIN> listings are live and each <title> matches data/products.json verbatim (S30). Prior sessions recorded a stable token->ASIN mapping across 2026-11-17 through a fourth observation on 2026-11-20 (S14/S18/S22/S29, data/probes.json), always carrying the lv=shuf + plpRedirect=mhFallback fallback route (FLG-009).",
+      "missing": "A reproducible, method-consistent resolution of each link.amazon token to its destination. This session's direct page-reader fetch sent 4/5 tokens to the amazon.com homepage and returned HTTP 500 for B0f3GKalj, so the mapping could not be re-confirmed via that path (FLG-026). The links are not claimed invalid (FLG-003).",
+      "discovery": "In an enrolled Associates browser (cookies + correct region), open each link.amazon/<token> and record the final URL and the tag/report behaviour per product in data/probes.json with a dated provenance line; compare against the prior mapping. If the mapping still holds in a real browser, the fetch-path divergence is a tooling artefact; if it does not, re-open FLG-009/Q-02 and treat the observed mapping as unconfirmed.",
+      "owner": "Account owner (enrolled Associates browser)",
+      "answer": "",
+      "blocking": "no — the observed ASINs are still valid product identities; only the token-to-ASIN mapping's reproducibility is in question"
     }
   ]
 }

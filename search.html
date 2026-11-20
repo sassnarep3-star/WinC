@@ -30,8 +30,20 @@ function run(){
   if(!q){box.innerHTML='<p class="meta">Type a query above.</p>';return;}
   var hits=INDEX.filter(function(x){return (x.title+' '+x.text).toLowerCase().indexOf(q)>-1;});
   if(!hits.length){box.innerHTML='<p>No matches for <strong>'+q+'</strong>. Try “air fryer” or “thermometer”.</p>';return;}
-  box.innerHTML='<p class="meta">'+hits.length+' result(s) for <strong>'+q+'</strong></p><div class="grid">'+
-    hits.map(function(h){return '<article class="card"><span class="cat">'+h.kind+'</span><h3><a href="'+h.url+'">'+h.title+'</a></h3><p>'+h.text.slice(0,180)+'…</p></article>';}).join('')+'</div>';
+  var frag=document.createDocumentFragment();
+  var count=document.createElement('p');count.className='meta';count.textContent=hits.length+' result(s) for: '+q;frag.appendChild(count);
+  var grid=document.createElement('div');grid.className='grid';
+  hits.forEach(function(h){
+    var card=document.createElement('article');card.className='card';
+    var cat=document.createElement('span');cat.className='cat';cat.textContent=h.kind;
+    var h3=document.createElement('h3');
+    var a=document.createElement('a');a.href=h.url;a.textContent=h.title;
+    var p=document.createElement('p');p.textContent=h.text.slice(0,180)+'…';
+    h3.appendChild(a);card.appendChild(cat);card.appendChild(h3);card.appendChild(p);
+    grid.appendChild(card);
+  });
+  frag.appendChild(grid);
+  box.innerHTML='';box.appendChild(frag);
 }
 </script>
 </main><footer><div class="wrap">

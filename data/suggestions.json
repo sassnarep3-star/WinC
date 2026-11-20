@@ -513,6 +513,38 @@
       "expected_effect": "Holiday traffic leaks into the evergreen cluster instead of bouncing when the season ends; supports the measured-arrivals loop once SG-07/SG-29 exist.",
       "evidence": "Guide bodies are data files (data/guides/*.json); the pairing is visible in the guides index; effort is one sentence per guide.",
       "feeds_prompt": "Add the three links in a single edit pass, rebuild, and let the gate verify the links resolve."
+    },
+    {
+      "id": "SG-39",
+      "title": "Editorial voice pass: make the reader copy read like a publication, not generated text",
+      "status": "recommended-now",
+      "area": "Editorial",
+      "problem": "The structure is sound and every fact is sourced, but the phrasing is even and templated across cards and guides — the same sentence shapes, the same hedges, the same rhythm. That is the 'AI slop' tell the brief calls out: a reader can feel the site was assembled from a template rather than written. Sourced facts do not fix voice; voice is a separate edit.",
+      "proposal": "Rewrite the reader-facing copy (hero ledes, guide intros, category intros, product FAQ answers) in a consistent but varied editorial voice: concrete nouns, active verbs, sentence lengths that change, and a point of view a real editor would hold. Keep every factual claim and every source link exactly as it is — voice is the only thing that changes. Add a voice/style note to the builder so the next generated page inherits the rules.",
+      "effort": "M",
+      "cost": "editor time; zero cash",
+      "risk": "Low. The risk is drifting into hype while 'improving' the voice — the gate's no-verdict and no-price checks stay as the guardrail, and any sentence that implies testing or superiority is rejected.",
+      "expected_effect": "The site reads as written rather than assembled, which is the stated goal. Measure: a qualitative read-through plus the existing outbound_click rate once the endpoint is deployed, and watch for a bounce rise as a voice-misfit signal.",
+      "evidence": "Read-through of the generated front page, category and guide copy on 2026-11-20 (session arena/1c6908d1-winc): repeated sentence-shape and hedge patterns across cards and guides; facts and sources are correct, so the gap is voice, not accuracy.",
+      "feeds_prompt": "Apply an editorial-voice pass to all reader-facing copy: vary sentence length and structure, use concrete nouns and active verbs, drop templated hedges, hold a calm editor's point of view. Do not change any factual claim, spec value, source link, disclosure, or sponsored label. Do not introduce superiority, testing, or ranking language (the gate blocks it). Add the voice rules to a style note in the builder so new pages inherit them.",
+      "status_detail": "New this session (arena/1c6908d1-winc, 2026-11-20). Directly answers the brief's 'should not read like AI slop' requirement; distinct from the site's existing seasonal/deals suggestions.",
+      "status_detail_by": "arena/1c6908d1-winc (2026-11-20)"
+    },
+    {
+      "id": "SG-40",
+      "title": "Accept/reject/defer review workflow so the chosen path persists in-repo",
+      "status": "recommended-now",
+      "area": "Machinery",
+      "problem": "The Direction board is a strong review surface — a register table, staged paths and a prompt builder — but 'choosing a path' is stored only in the visitor's browser and changes no recorded status. The brief asks for a section where someone can review suggestions and choose the best path before any change is implemented; that choice is currently invisible to the repo and to the next session.",
+      "proposal": "Add an explicit accept/reject/defer action per suggestion that writes a decision + reviewer + date into the suggestion record (e.g. data/suggestions.json gains a review field), so the chosen path is recorded in-repo and the next build prompt can read it. Keep the browser-local prompt builder as the quick path; the recorded decision is the one that persists. Nothing is implemented until a suggestion is accepted.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. Adds a review field; the gate should require that an accepted suggestion has a reviewer and a date, so 'accepted' cannot be recorded carelessly.",
+      "expected_effect": "The review decision is durable and reviewable instead of browser-local. Measure: count of suggestions with a recorded accept/reject decision; zero suggestions implemented without a recorded acceptance.",
+      "evidence": "direction.html's path chooser stores the choice in localStorage only (assets/app.js + the inline path-chooser script); data/suggestions.json has no review/decision field. Brief's 'create a section dedicated for suggestions so someone can review suggestions and choose the best path before implementing any changes'.",
+      "feeds_prompt": "Add a review field {decision: accept|reject|defer, reviewer, date, note} to each suggestion in data/suggestions.json, render an accept/reject/defer control on each suggestion card that writes it, and have the prompt builder read accepted suggestions from the record. Add a gate check that an 'accepted' suggestion carries a reviewer and a date. Implementation still only starts after acceptance.",
+      "status_detail": "New this session (arena/1c6908d1-winc, 2026-11-20). Builds on the existing Direction page rather than replacing it.",
+      "status_detail_by": "arena/1c6908d1-winc (2026-11-20)"
     }
   ]
 }

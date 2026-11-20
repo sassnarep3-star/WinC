@@ -339,7 +339,7 @@ def capture_block(depth=0):
     return f"""<section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
 <p>One email when a new guide publishes.</p>
-<form id="reader-capture" action="{pfx}measurement.html" method="get">
+<form id="reader-capture" action="{pfx}measurement.html" method="post">
 <label for="email">Email address</label>
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
@@ -753,7 +753,7 @@ def verification_body():
                         + "".join(specs_rows) + "</tbody></table></div>")
 
     src_rows = "".join(
-        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
+        f"<tr id=\"src-{esc(s['id'])}\"><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
         for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
@@ -1010,8 +1010,20 @@ function run(){{
   if(!q){{box.innerHTML='<p class="meta">Type a query above.</p>';return;}}
   var hits=INDEX.filter(function(x){{return (x.title+' '+x.text).toLowerCase().indexOf(q)>-1;}});
   if(!hits.length){{box.innerHTML='<p>No matches for <strong>'+q+'</strong>. Try “air fryer” or “thermometer”.</p>';return;}}
-  box.innerHTML='<p class="meta">'+hits.length+' result(s) for <strong>'+q+'</strong></p><div class="grid">'+
-    hits.map(function(h){{return '<article class="card"><span class="cat">'+h.kind+'</span><h3><a href="'+h.url+'">'+h.title+'</a></h3><p>'+h.text.slice(0,180)+'…</p></article>';}}).join('')+'</div>';
+  var frag=document.createDocumentFragment();
+  var count=document.createElement('p');count.className='meta';count.textContent=hits.length+' result(s) for: '+q;frag.appendChild(count);
+  var grid=document.createElement('div');grid.className='grid';
+  hits.forEach(function(h){{
+    var card=document.createElement('article');card.className='card';
+    var cat=document.createElement('span');cat.className='cat';cat.textContent=h.kind;
+    var h3=document.createElement('h3');
+    var a=document.createElement('a');a.href=h.url;a.textContent=h.title;
+    var p=document.createElement('p');p.textContent=h.text.slice(0,180)+'…';
+    h3.appendChild(a);card.appendChild(cat);card.appendChild(h3);card.appendChild(p);
+    grid.appendChild(card);
+  }});
+  frag.appendChild(grid);
+  box.innerHTML='';box.appendChild(frag);
 }}
 </script>
 """
