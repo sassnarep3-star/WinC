@@ -13,12 +13,12 @@ A five-product Amazon Associates publication in two categories — air fryers an
 |---|---|
 | Products | 5 (3 air fryers, 2 meat thermometers), each with a long-form narrative, a spec table, an FAQ, and flagged listing contradictions |
 | Series | 2 editorial series pages, generated from `data/stories.json` |
-| Guides | 10 question-shaped guides (one per category cluster plus seasonal and listing-literacy pieces) |
-| Topics | 13 in the published backlog — 2 now marked published with links to the guide each became |
+| Guides | 13 question-shaped guides across both categories, plus two series pages that tie each cluster together |
+| Topics | 15 in the published backlog — 4 marked published with links to the guide each became |
 | Sources | 35 register rows, each with URL, what it confirms, and a retrieval date |
 | Flags | 29 items, each with the action that would resolve it; all public on *Flagged for review* |
-| Open questions | 25, of which 8 are blocking; 4 of those can only be answered inside an enrolled Associates account |
-| Suggestions | 31, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
+| Open questions | 25, of which 8 are blocking; four of those can only be answered inside an enrolled Associates account |
+| Suggestions | 33, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
 | Measurement | 5 defined events; endpoint code (`analytics/worker.js`, `analytics/collect.py`) shipped and tested; **not deployed**; campaign ledger **empty** |
 | Gates | `scripts/check_site.py` (authority) and `tools/audit.mjs` (independent, written from the policy documents) — **both pass with zero findings** |
 
