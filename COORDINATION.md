@@ -970,4 +970,4 @@ No new irregularities found by this pass. Open irregularities carried forward (d
 | Time (UTC) | Result |
 | --- | --- |
 | 2026-11-20 | PR #34 https://github.com/sassnarep3-star/WinC/pull/34 opened from `arena/b7c411d6-winc` → `main` (supersedes closed PR #23). |
-| pending | Merge PR #34 with `gh pr merge 34 --merge`, confirm `pages/builds/latest` is `built` at the new main head, then record the result below (follow-up commit on `arena/b7c411d6-winc` → PR #35). |
+| done | PR #34 could not be merged cleanly: main advanced under this branch through PRs #18/#37/#38 (arena/23428c9e-winc, arena/a81c0f0e-winc, arena/70bd2fcc-winc), each union-merging `COORDINATION.md` without dropping anything. Main already carries the completed shop-first integration (gate green: 29 pages, 28 sitemap URLs, 8 guides, 25 search rows; Pages `built` at 60422bd with `error: null`). PR #34 closed without merging to avoid a conflicting duplicate record; this session's section is preserved on branch commit 360d062. `git show 360d062:COORDINATION.md` contains this section in full. |
