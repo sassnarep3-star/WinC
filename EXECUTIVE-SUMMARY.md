@@ -13,12 +13,12 @@ A five-product Amazon Associates publication in two categories — air fryers an
 |---|---|
 | Products | 5 (3 air fryers, 2 meat thermometers), each with a long-form narrative, a spec table, an FAQ, and flagged listing contradictions |
 | Series | 2 editorial series pages, generated from `data/stories.json` |
-| Guides | 13 question-shaped guides across both categories, plus two series pages that tie each cluster together |
-| Topics | 15 in the published backlog — 4 marked published with links to the guide each became |
+| Guides | 15 question-shaped guides across both categories, plus two series pages that tie each cluster together |
+| Topics | 18 in the published backlog — 4 marked published with links to the guide each became |
 | Sources | 35 register rows, each with URL, what it confirms, and a retrieval date |
 | Flags | 29 items, each with the action that would resolve it; all public on *Flagged for review* |
 | Open questions | 25, of which 8 are blocking; four of those can only be answered inside an enrolled Associates account |
-| Suggestions | 33, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
+| Suggestions | 38, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
 | Measurement | 5 defined events; endpoint code (`analytics/worker.js`, `analytics/collect.py`) shipped and tested; **not deployed**; campaign ledger **empty** |
 | Gates | `scripts/check_site.py` (authority) and `tools/audit.mjs` (independent, written from the policy documents) — **both pass with zero findings** |
 
@@ -297,22 +297,63 @@ explicit design directive to the build-prompt builder.
 authorised first-party reports arrive.
 >>>>>>> origin/main
 
+
+---
+
+# Session `arena-156c2ecf` — line-by-line re-verification, decision-register completion — 2026-11-20
+
+This pass re-verified the load-bearing claims against their official sources where the reader could
+reach them, recorded the one fetch that failed instead of papering over it, added the seasonal
+topic rows and the register rows this session owns, reconciled typed counts, and resolved two
+rebases against the parallel PR rounds without dropping anyone's work.
+
+## Re-verification this session (official sources, links for manual review)
+
+| Ref | Source (manual review link) | Re-read result, 2026-11-20 |
+|-----|------------------------------|-----------------------------|
+| S01 | [Associates Program Operating Agreement](https://affiliate-program.amazon.com/help/operating/agreement) | §5 disclosure sentence verbatim; §1 tagged Special Links; §6 §5-violation = material breach; stamp "Updated: October 15, 2025". **Confirmed live.** |
+| S02 | [Associates Program Policies](https://affiliate-program.amazon.com/help/operating/policies) | Price/availability rule verbatim ((a) Amazon-served link or (b) Creators/PA API only); tag format "(appearing as XXXXX-##)"; stamp "Updated: April 14, 2026". **Confirmed live.** |
+| S03 | [FTC Endorsement Guides FAQ](https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking) | "disclosed clearly and conspicuously"; affiliate section present. **Confirmed live.** |
+| S05 | [What is an ASIN?](https://sell.amazon.com/blog/what-is-an-asin) | "unique 10-character alphanumeric code"; found after /dp/. **Confirmed live** — the 9-character submitted tokens cannot be ASINs, so `intended_asin` stays blank. |
+| S09 | [Amazon listing B0CDY277D3](https://www.amazon.com/dp/B0CDY277D3) | `<title>` matched the stored product title verbatim; breadcrumb confirmed; `lv=shuf` + `plpRedirect=mhFallback` fallback observed again. **Identity confirmed live.** |
+| S16/S17 | USDA FSIS pages | **Re-fetch FAILED in this session's reader (two attempts).** Not re-confirmed here; they stand on prior sessions' direct reads. Re-check before any new guide quotes them. |
+
+## What changed
+
+- **Suggestion register: SG-39..SG-42 added** (house-style/slop gate as a shipped standard, counts
+  honesty, the dated re-read trail with recorded failures, and the next seasonal-publishing
+  proposal). SG-27..SG-30 kept as the parallel pass wrote them — they are the rows the brief names.
+- **Seasonal topic rows TP-16..TP-18** (Thanksgiving sizing, game-day timing, New Year counter
+  space): catchy, question-shaped, each labelled "editorial hypothesis" in `chosen_from` — no
+  popularity or search-volume claim, exactly as the topics page demands.
+- **Typed counts reconciled** (SG-40): the state table above now matches the registers (15 guides,
+  18 topics, 38 suggestions, 35 sources, 29 flags).
+- **Rebase unions:** the PRs #37–#39 and #40–#45 rounds both conflicted with this branch; both
+  sides kept every time (registers unioned, colliding IDs renumbered — T29–T32 became T39–T42,
+  this session's topics moved to TP-16..TP-18 — HTML rebuilt from the merged data). Details in
+  COORDINATION.md.
+
+## Unchanged, on purpose
+
+No price, rating, review count, revenue forecast or conversion score anywhere. Short links are
+never called invalid (FLG-003). Intended vs observed identifiers stay in separate fields. The
+campaign ledger stays empty until first-party reports exist.
+
 ---
 
 # Audit-clean pass + verification #5 (2026-11-20, session `arena/1c6908d1-winc`)
 
 This pass confirmed the independent-audit findings are cleared on `main`, re-ran the product
-verification line by line, and added review-prompt suggestions distinct from the site's existing
-seasonal/deals work.
+verification line by line, and added review-prompt suggestions distinct from the site's existing work.
 
 ## The independent audit is clean
 
-`tools/audit.mjs` reports **0 findings** (all ten rules pass) on the merged tree. The two findings it
-had been carrying are addressed: A6 (the `#src-*` fragment links resolve — `main` fixed the source-row
-id quote style and rewrote the client-side search with the DOM API), and A7 (the reader-capture form no
-longer puts the email in the URL — this session upgraded it to `method="post"`, more robust than
-`get`+`novalidate` for a JavaScript-blocked browser). `npm run verify` → **Built 38 pages, 37 sitemap
-URLs** / **OK: 38 pages checked, 37 sitemap URLs, no violations.**
+`tools/audit.mjs` reports **0 findings** (all ten rules pass) on the merged tree. A6 (the `#src-*`
+fragment links resolve — `main` fixed the source-row id quote style and rewrote the client-side search
+with the DOM API) and A7 (the reader-capture form no longer puts the email in the URL — this session
+upgraded it to `method="post"`, more robust than `get`+`novalidate` for a JavaScript-blocked browser)
+are both addressed. `npm run verify` → **Built 38 pages, 37 sitemap URLs** / **OK: 38 pages checked,
+37 sitemap URLs, no violations.**
 
 ## Verification pass #5, and one new irregularity
 
@@ -327,11 +368,11 @@ URLs** / **OK: 38 pages checked, 37 sitemap URLs, no violations.**
   methods is in question. Recorded as source **S36**, flag **FLG-030**, and open question **Q-26**, with
   the resolution action (re-resolve in an enrolled Associates browser with cookies + region).
 
-## New review-prompt suggestions (distinct from the existing seasonal/deals work)
+## New review-prompt suggestions (distinct from the site's existing suggestions)
 
-- **SG-39 — editorial voice pass.** Make reader copy read like a publication, not generated text, without
+- **SG-43 — editorial voice pass.** Make reader copy read like a publication, not generated text, without
   touching a single fact or source. Directly answers the brief's "should not read like AI slop."
-- **SG-40 — accept/reject/defer review workflow.** Record the review decision in-repo per suggestion so
+- **SG-44 — accept/reject/defer review workflow.** Record the review decision in-repo per suggestion so
   the chosen path persists and gates the next build, rather than living only in the browser.
 
 ## Still open (owner-side)

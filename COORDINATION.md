@@ -1,11 +1,12 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena/1c6908d1-winc`** — audit-clean pass (confirmed A6/A7 fixed), verification
-> pass #5 (S36/FLG-030/Q-26), review-prompt suggestions (SG-39/40); its board is in the **last section**
-> of this file. Prior latest was `arena-23428c9e` (branch `arena/23428c9e-winc`, PR #18), integration of
-> the Air & Ember parallel edition; sections for `arena-c2123b9c` (T29–T32) and `arena-482d5832` (T33)
-> plus every earlier session are kept verbatim as the provenance trail — this round's conflict dropped
-> none of them.
+> **Latest session: `arena/1c6908d1-winc`** — audit-clean pass (A6/A7 confirmed fixed, capture form
+> upgraded to `method="post"`), verification pass #5 (S36/FLG-030/Q-26), review-prompt suggestions
+> (SG-43/44); its board is in the **last section** of this file. Prior latest was `arena-156c2ecf`
+> (branch `arena-156c2ecf-winc`) — line-by-line re-verification plus decision-register completion.
+> Every earlier session section — `arena-23428c9e` (Air & Ember integration), `arena-c2123b9c` (T29–T32),
+> `arena-482d5832` (T33), `arena-038c0b80` and the rest — is kept
+> verbatim as the provenance trail; this round's conflicts dropped none of them.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -1108,25 +1109,85 @@ was fast-forwarded to `404cabc` before any edit, so nothing here forks an old ba
 
 38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
 
+
 ---
 
-# Session `arena/1c6908d1-winc` — audit-clean pass, verification #5, review-prompt suggestions
+# Session arena/156c2ecf-winc — line-by-line re-verification + decision-register completion (T39–T42)
 
-Branch `arena/1c6908d1-winc`. Rebased onto current `main`; the session-start base `7426a0c` was on a
-divergent, retired lineage, so the branch was reset to `main` and all work applied on top of the
-reconstructed lineage. A mid-flight merge conflict (main advanced 19 commits) was resolved by taking
-`main`'s version as the base and keeping this session's distinct additions, renumbered to avoid
-collisions with findings `main` had already recorded (main had independently added S30–S35,
-FLG-026–029, Q-24–25 for different items). This session's entries are **S36, FLG-030, Q-26, SG-39,
-SG-40**.
+Branch `arena/156c2ecf-winc`, branched from `main` at `ba0b838`. Started 2026-11-20. Scope claimed:
+source re-verification with dated access notes (failures recorded, not hidden), decision-register
+completion, seasonal topic backlog, typed-count reconciliation, and the integration close-out for
+this branch. Task rows drafted as T29–T32, renumbered to T39–T42 at the first rebase — sessions
+`arena-c2123b9c` / `arena-70bd2fcc` had already claimed T29–T38 on main. Same repair pattern as
+the earlier FLG renumbering.
 
 ## Task board (this session)
 
 | ID | Task | Status | Owner (session) | File scope |
 |----|------|--------|-----------------|------------|
-| T33 | Clear/confirm independent-audit findings A6 (src-id quote style + search JS literal) and A7 (capture form email leak) | done | arena/1c6908d1-winc | scripts/build_site.py, assets/app.js, generated HTML |
+| T39 | Line-by-line re-verification of load-bearing sources with dated access notes (failures recorded, not hidden) | done | arena-156c2ecf | `data/sources.json`, `EXECUTIVE-SUMMARY.md` |
+| T40 | Decision-register completion: house-style/counts/re-read-trail/seasonal-publishing rows (SG-39..SG-42) | done | arena-156c2ecf | `data/suggestions.json` |
+| T41 | Seasonal/trendy topic backlog rows TP-16..TP-18 + typed-count reconciliation | done | arena-156c2ecf | `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
+| T42 | Integration close-out: build + gate green on the union, PR to main, merge, confirm Pages, record result | done below | arena-156c2ecf | `COORDINATION.md` (integration only) |
+
+## Verification performed (official sources, fetched live 2026-11-20 via the page reader)
+
+| Ref | Source | Result |
+| --- | --- | --- |
+| S01 | affiliate-program.amazon.com/help/operating/agreement | **Re-read live.** §5 disclosure sentence, §1 tagged Special Links, §6 material-breach clause, "Updated: October 15, 2025" — re-confirmed. |
+| S02 | affiliate-program.amazon.com/help/operating/policies | **Re-read live.** Price/availability rule verbatim, tag format "(appearing as XXXXX-##)", "Updated: April 14, 2026". |
+| S03 | ftc.gov Endorsement Guides FAQ | **Re-read live.** "disclosed clearly and conspicuously". |
+| S05 | sell.amazon.com/blog/what-is-an-asin | **Re-read live.** 10-character ASIN rule, found after /dp/. |
+| S09 | amazon.com/dp/B0CDY277D3 | **Re-read live.** `<title>` matched stored title verbatim; breadcrumb + fallback-route behaviour confirmed. |
+| S16/S17 | fsis.usda.gov | **Re-fetch FAILED this session (two URL forms).** Not re-confirmed here; stand on prior sessions' reads. Recorded on the source rows. |
+
+## Coordination / merge note (this session, two rebases)
+
+`main` advanced twice while this session worked (PRs #37–#39 round and PRs #40–#45 round). Each
+rebase conflicted in `COORDINATION.md`, `EXECUTIVE-SUMMARY.md`, `data/sources.json`,
+`data/suggestions.json`, `data/topics.json` and four generated HTML files. Resolution without
+discarding either side, both times:
+
+- `data/sources.json`: kept main's rows (S01–S29 after round one, S01–S35 after round two);
+  appended this session's dated re-read notes to S01, S02, S03, S05, S09 and the failed-fetch
+  notes to S16/S17.
+- `data/suggestions.json`: kept main's rows exactly (SG-01–SG-38, including its SG-21/SG-22 and
+  the SG-27..SG-30 findability rows — those match the brief's named rows and stay canonical). This
+  session's rows are **SG-39..SG-42**. Its earlier duplicates of SG-27..SG-30 were folded away;
+  its seasons row was superseded by main's season rail + SG-35; its structured-data row deferred
+  to SG-33 after S28 recorded that Google removed the FAQ rich-result documentation (June 2026).
+- `data/topics.json`: kept main's rows (through TP-15 after round two); this session's seasonal
+  rows are **TP-16..TP-18** (renumbered twice as main's topic ids advanced).
+- Questions (Q-01..Q-25), flags (FLG-001..FLG-029), products, guides (15 files) and the series
+  data: auto-merged; main's versions kept.
+- Generated HTML: both sides' copies discarded and rebuilt from the merged data via
+  `scripts/build_site.py`, so every page reflects the union. Gate green after each union:
+  round two build = 38+ pages / 15 guides (final counts in the PR record below).
+
+## PR / merge record (T42)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round. |
+| 2026-11-20 | **PR #46 merged** (`gh pr merge 46 --merge`). Main HEAD = `afa86c7b` "Merge pull request #46 from sassnarep3-star/arena/156c2ecf-winc". GitHub Pages: `status: built`, source `main`, https://sassnarep3-star.github.io/WinC/ — live re-fetch confirms the merged build serves (topics page shows "18 in the backlog", including TP-16..TP-18). Build + gate before merge: `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` / `OK: 38 pages checked, 37 sitemap URLs, no violations.` |
+
+---
+
+# Session `arena/1c6908d1-winc` — audit-clean pass, verification #5, review-prompt suggestions
+
+Branch `arena/1c6908d1-winc`. Rebased onto current `main` through two rounds of mid-flight merges
+(main advanced in multiple sessions). Conflicts were resolved by taking `main`'s version as the base
+and keeping this session's distinct additions, renumbered to avoid collisions with findings `main`
+had independently recorded (main added S30–S35, FLG-026–030, Q-24–26, SG-39–42 for different items).
+This session's entries are **S36, FLG-030, Q-26, SG-43, SG-44**.
+
+## Task board (this session)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T33 | Confirm independent-audit A6 (src-id + search DOM-API) and A7 (capture form) are fixed; upgrade capture form to method=post | done | arena/1c6908d1-winc | scripts/build_site.py, assets/app.js, generated HTML |
 | T34 | Independent verification pass #5: re-read all 5 listings + re-fetch all 5 tokens; record S36, FLG-030, Q-26 | done | arena/1c6908d1-winc | data/sources.json, data/flags.json, data/questions.json |
-| T35 | Add review-prompt suggestions SG-39 (editorial voice / not AI slop), SG-40 (accept/reject workflow) | done | arena/1c6908d1-winc | data/suggestions.json, direction.html (generated) |
+| T35 | Add review-prompt suggestions SG-43 (editorial voice / not AI slop), SG-44 (accept/reject workflow) | done | arena/1c6908d1-winc | data/suggestions.json, direction.html (generated) |
 | T36 | Final integration: build + check + audit strict green, PR to main, merge, confirm Pages, record here | in progress | arena/1c6908d1-winc | COORDINATION.md + integration |
 
 ## Verification performed (every claim from an official source, fetched live 2026-11-20)
@@ -1135,7 +1196,7 @@ SG-40**.
 | --- | --- | --- |
 | All 5 `amazon.com/dp/<ASIN>` listings | Fetched live via the page reader | Each `<title>` matched `data/products.json` verbatim; breadcrumb confirms category (3 Air Fryers, 2 Meat Thermometers). Fallback route `lv=shuf` + `plpRedirect=mhFallback` present on all 5 (FLG-009/FLG-029). No spec drift. |
 | The 5 supplied `link.amazon` tokens | Fetched live via the page reader | 4/5 (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage; B0f3GKalj returned HTTP 500 on two attempts. Prior token→ASIN mapping NOT reproduced via this path → FLG-030. |
-| Independent audit | `node tools/audit.mjs --strict` | **0 findings**, all 10 rules pass (A6 src-id + search DOM-API, A7 capture form, confirmed after this session's merge). |
+| Independent audit | `node tools/audit.mjs --strict` | **0 findings**, all 10 rules pass. |
 | Site gate | `npm run verify` | Built 38 pages, 37 sitemap URLs / OK: 38 pages checked, 37 sitemap URLs, no violations. |
 
 ## Findings recorded this session
@@ -1144,15 +1205,13 @@ SG-40**.
 | --- | --- | --- |
 | FLG-030 | The 5 supplied `link.amazon` tokens did not reproduce the prior ASIN mapping via this session's page-reader fetch (4/5 → homepage, 1/5 HTTP 500). Not claimed invalid (FLG-003 unchanged). Reproducibility across observation methods is in question; resolve by re-resolving in an enrolled Associates browser with cookies + region. | needs review (open, non-blocking) |
 | Q-26 | Do the tokens actually resolve to the 5 observed ASINs, and why did this fetch not reproduce the mapping? | open, non-blocking |
-| SG-39 | Editorial voice pass so copy reads like a publication, not generated text (the brief's "not AI slop"). | recommended-now |
-| SG-40 | Accept/reject/defer review workflow so the chosen path persists in-repo. | recommended-now |
+| SG-43 | Editorial voice pass so copy reads like a publication, not generated text (the brief's "not AI slop"). | recommended-now |
+| SG-44 | Accept/reject/defer review workflow so the chosen path persists in-repo. | recommended-now |
 
 ## Notes for the next session
 
-- `main` had independently fixed A6 (src-id double-quotes + link.amazon text-rendering) and A7
-  (capture form `novalidate`) in its 19 advancing commits; this session's merge kept those and
-  upgraded the capture form to `method="post"` (more robust than `get`+`novalidate` for a JS-blocked
-  browser, which would otherwise still put the address in the URL). The independent audit is 0
-  findings on the merged tree.
-- **ID collision avoidance:** main uses S30–S35, FLG-026–029, Q-24–25, SG-32–38. This session used
-  S36, FLG-030, Q-26, SG-39, SG-40 — no collisions.
+- The independent audit is **0 findings** on the merged tree. `main` independently fixed A6 (src-id
+  quote style + link.amazon text-rendering) and A7 (capture form); this session upgraded the capture
+  form to `method="post"` (more robust than `get`+`novalidate` for a JS-blocked browser).
+- **ID collision avoidance:** main uses S30–S35, FLG-026–030, Q-24–26, SG-32–42. This session used
+  S36, FLG-030, Q-26, SG-43, SG-44 — no collisions.
