@@ -37,7 +37,7 @@ html_files = []
 for dirpath, _, files in os.walk(ROOT):
     # skip .git, node_modules, analytics (code, not pages)
     rel = os.path.relpath(dirpath, ROOT)
-    if rel.startswith(".git") or rel.startswith("analytics") or rel.startswith("scripts") or rel.startswith("data"):
+    if rel.startswith(".git") or rel.startswith("analytics") or rel.startswith("scripts") or rel.startswith("data") or rel.startswith("archive"):
         continue
     for fn in files:
         if fn.endswith(".html"):
