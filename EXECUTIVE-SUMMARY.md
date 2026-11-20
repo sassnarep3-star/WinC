@@ -53,9 +53,13 @@ the decision layer the brief asks for. Counts above were corrected to match the 
   blank. Logged as FLG-009.
 - **Two guides cited sources as bare text with no links** (capacity checklist, cleanup/counter
   space). Now linked, and the gate refuses an unlinked guide.
-- **Login-gated Amazon pages are labelled as such.** The Operating Agreement and Program Policies
-  text was taken from the indexed copy of the official page, not an authenticated read; sources.json
-  now says so instead of implying a verified read.
+- **Amazon policy pages were read in full, not via an indexed copy.** The Operating Agreement (§5
+  disclosure, §1 Special Links), the Program Policies (price/availability display rule, Special Link
+  tag requirement), and the Associates help pages were all fetched directly and anonymously on
+  2026-11-20; the FTC Endorsement Guides page is likewise reachable and was read directly.
+  `data/sources.json` records the direct read for each. An earlier pass over-marked these as
+  "login-gated / indexed copy" and ftc.gov as "unreachable"; that is corrected rather than left
+  silently wrong.
 
 ## What changed on the site
 

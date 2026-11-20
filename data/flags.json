@@ -229,6 +229,13 @@
         "S26"
       ],
       "source_note": ""
+    },
+    {
+      "id": "FLG-025",
+      "title": "ThermoMaven model 'HT07' blanked (sourced only from Amazon.fr, not the US listing)",
+      "detail": "Session dd79e08d (2026-11-20): HT07 appeared only in an Amazon.fr listing reference (S-row in sources.json). The US listing observed for B0DHZTCNR5 does not show it in the fields we captured. Under the verification rule the value is blank rather than carried over from another marketplace. Related: FLG-004 (ASIN canonicality).",
+      "action": "Confirm the model on the amazon.com listing for B0DHZTCNR5 or the manufacturer page; only then re-add it with its URL and date.",
+      "status": "needs review"
     }
   ]
 }
