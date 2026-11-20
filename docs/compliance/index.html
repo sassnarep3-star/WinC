@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compliance gate | WinC Kitchen Picks</title>
+<meta name="description" content="Compliance checks run on every build: disclosure, sponsored links, internal links, sources.">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="alternate" type="application/rss+xml" title="WinC Kitchen Picks feed" href="../feed.xml">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap mast-row">
+    <a class="brand" href="../index.html"><span class="brand-name">WinC Kitchen Picks</span><span class="brand-tag">Working name · Air fryers and meat thermometers, with every figure dated and sourced</span></a>
+    <nav class="primary" aria-label="Main"><a href="../index.html">Home</a><a href="../air-fryers/index.html">Air fryers</a><a href="../meat-thermometers/index.html">Meat thermometers</a><a href="../guides/index.html">Guides</a><a href="../about/index.html">About and method</a></nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap"><strong>Affiliate disclosure.</strong> As an Amazon Associate I earn from qualifying purchases. Links marked “Sponsored” go to Amazon. <span class="muted">Prices and ratings are dated snapshots, last checked 2026-11-20.</span></div>
+</div>
+<main class="wrap">
+
+<section>
+  <div class="kicker">Dashboard · publishing gate</div>
+  <h1>Compliance gate</h1>
+  <p class="lede">The build runs these checks before anything is written to the live site. If a check fails, the build stops and the previous version stays live.</p>
+</section>
+<section>
+  <div class="tablewrap"><table class="data"><thead><tr><th>ID</th><th>Requirement</th><th>Source</th><th>Result</th><th>Notes</th></tr></thead><tbody><tr><td>C-01</td><td>Associates statement stated clearly and prominently on the site</td><td><a href="https://affiliate-program.amazon.com/help/operating/agreement" rel="noopener" target="_blank" class="src">SRC-01</a></td><td><span class="badge pass">Pass: built, checked on every build</span></td><td>Exact text in the strip under the masthead on every page, repeated in the footer.</td></tr><tr><td>C-02</td><td>Disclosure placed where it is hard to miss, with the endorsement</td><td><a href="https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers" rel="noopener" target="_blank" class="src">SRC-04</a></td><td><span class="badge pass">Pass: built. Legal review open (F-10)</span></td><td>Strip sits directly under the masthead, above the content, not only on an About page.</td></tr><tr><td>C-03</td><td>Affiliate links marked as sponsored</td><td><a href="https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links" rel="noopener" target="_blank" class="src">SRC-05</a></td><td><span class="badge pass">Pass: checked on every build</span></td><td>Every link to an Amazon host (including link.amazon) has rel=&quot;sponsored&quot;.</td></tr><tr><td>C-04</td><td>Each Special Link carries the Associates tag</td><td><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="noopener" target="_blank" class="src">SRC-02</a> (2(b))</td><td><span class="badge flag">Flag: F-02</span></td><td>No tag observed in any redirect target.</td></tr><tr><td>C-05</td><td>No cloaking or obscured site URL</td><td><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="noopener" target="_blank" class="src">SRC-02</a> (2(v))</td><td><span class="badge pass">Pass: by design, with flag</span></td><td>Site links are direct. The submitted short links are redirects and are flagged (F-03).</td></tr><tr><td>C-06</td><td>No link shortener used unclearly</td><td><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="noopener" target="_blank" class="src">SRC-02</a> (2(w))</td><td><span class="badge flag">Unresolved: F-03</span></td><td>Status of link.amazon not determined. Not claimed invalid.</td></tr><tr><td>C-07</td><td>No claims that need proof the owner does not hold</td><td><a href="https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers" rel="noopener" target="_blank" class="src">SRC-04</a></td><td><span class="badge pass">Pass</span></td><td>No performance, ranking, or quality claims are made. Figures are dated snapshots.</td></tr><tr><td>C-08</td><td>Product imagery used only as permitted</td><td><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="noopener" target="_blank" class="src">SRC-02</a> (IP licence)</td><td><span class="badge pass">Pass: no Amazon images used (F-11)</span></td><td>IP licence not read in full.</td></tr><tr><td>C-09</td><td>Internal links and fragments resolve (no broken links)</td><td><a href="https://github.com/sassnarep3-star/WinC/blob/main/scripts/build.py" rel="noopener" target="_blank" class="src">Build check (scripts/build.py)</a></td><td><span class="badge pass">Pass: checked on every build</span></td><td>Every internal link and #anchor is resolved against the generated files.</td></tr><tr><td>C-10</td><td>Every table row cites an official source</td><td><a href="https://github.com/sassnarep3-star/WinC/blob/main/scripts/build.py" rel="noopener" target="_blank" class="src">Build check (scripts/build.py)</a></td><td><span class="badge pass">Pass: checked on every build</span></td><td>A row without an official source fails the build.</td></tr><tr><td>C-11</td><td>Blank values marked Unverified and linked to a flag</td><td><a href="https://github.com/sassnarep3-star/WinC/blob/main/scripts/build.py" rel="noopener" target="_blank" class="src">Build check (scripts/build.py)</a></td><td><span class="badge pass">Pass: checked on every build</span></td><td>A blank value with no flag fails the build.</td></tr><tr><td>C-12</td><td>Analytics: no data collected without a defined event list and host</td><td><a href="https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers" rel="noopener" target="_blank" class="src">SRC-04</a></td><td><span class="badge blocked">Blocked: F-08</span></td><td>Nothing installed. See Suggestions S-02 and S-03.</td></tr></tbody></table></div>
+</section>
+<section class="callout">
+  <h3>Not legal advice</h3>
+  <p>These checks confirm that the design follows the sources listed. They do not replace a review by counsel (Q-15).</p>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="disclosure-foot"><strong>Affiliate disclosure.</strong> As an Amazon Associate I earn from qualifying purchases. Links marked “Sponsored” go to Amazon. We may earn a commission on qualifying purchases. Prices change; check the Amazon page before you buy.</div>
+    <div class="foot-grid">
+      <div><h4>Shop</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../air-fryers/index.html">Air fryers</a></li><li><a href="../meat-thermometers/index.html">Meat thermometers</a></li><li><a href="../guides/index.html">Guides</a></li><li><a href="../about/index.html">About and method</a></li></ul></div>
+      <div><h4>Dashboard</h4><ul><li><a href="../products/index.html">All products</a></li><li><a href="../analysis/index.html">Analysis</a></li><li><a href="../executive-summary/index.html">Executive summary</a></li><li><a href="../questions/index.html">Questions</a></li><li><a href="../suggestions/index.html">Suggestions</a></li><li><a href="../compliance/index.html">Compliance gate</a></li><li><a href="../sources/index.html">Sources</a></li><li><a href="../ledger/index.html">Campaign ledger</a></li><li><a href="../flagged-for-review/index.html">Flagged for review</a></li></ul></div>
+      <div><h4>Site</h4><ul>
+        <li><a href="../feed.xml">RSS feed</a></li>
+        <li><a href="../sitemap.xml">Sitemap</a></li>
+        <li><a href="../about/index.html">About and method</a></li>
+        <li><a href="https://github.com/sassnarep3-star/WinC" rel="noopener" target="_blank">Repository</a></li>
+      </ul></div>
+    </div>
+    <p class="muted">Last verified 2026-11-20. Values marked Unverified could not be confirmed from an official source and are left blank on purpose.</p>
+  </div>
+</footer>
+</body>
+</html>

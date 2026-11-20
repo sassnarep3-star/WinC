@@ -31,7 +31,8 @@ Repository: `sassnarep3-star/WinC` · Site: https://sassnarep3-star.github.io/Wi
 | 2026-11-20 | T-01, T-02 | Five `link.amazon` links resolved with the fetch tool. Each landed on an `amazon.com/dp/` page. Titles, breadcrumbs, buy-box prices (and one rating) were read from those pages. | SRC-07…SRC-12 | F-01, F-02, F-03, F-04, F-06 |
 | 2026-11-20 | T-03 | Operating Agreement §5 disclosure text read on the official page. Policy clauses §2(b), 2(v), 2(w) read from official search excerpts (full-page confirmation pending). FTC Disclosures 101 and Google `rel="sponsored"` read on official pages. | SRC-01, SRC-02, SRC-04, SRC-05 | F-03, F-07, F-10 |
 | 2026-11-20 | T-02 | ASIN definition checked against PA-API 5.0 GetItems (official, search excerpt). Token lengths counted in code. | SRC-03 | F-01 |
-| 2026-11-20 | T-10 | Pending: merge, build check, Pages deploy. | — | — |
+| 2026-11-20 | T-04, T-06, T-07 | Build run from a fresh process: 14 pages written, validation passed. Negative tests confirmed the gate catches: a missing rel=sponsored, a missing disclosure, a broken internal link, a wrong tag flag, an unflagged blank, a row without an official source, and an ASIN that does not match its URL. | SRC-01 to SRC-13 | — |
+| 2026-11-20 | T-10 | Pending: pull request to `main`, merge, Pages source set to `main /docs`, live-site check. | — | — |
 
 ## Handoff / claim rules followed
 
