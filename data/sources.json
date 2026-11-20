@@ -224,6 +224,14 @@
       "what": "Verbatim: “You can publish your site when changes are pushed to a specific branch, or you can write a GitHub Actions workflow to publish your site.” — the two are alternatives. Also: “If you do not need any control over the build process for your site, we recommend that you publish your site when changes are pushed to a specific branch.” This repository commits its built HTML and needs no build step at publish time, so the branch source is the recommended one and the custom publish workflow was removed.",
       "date": "2026-11-20",
       "access": "Fetched and read directly on 2026-11-20 by session arena/6561e2ea-winc."
+    },
+    {
+      "id": "S31",
+      "title": "Fifth redirect observation — data/probes.json, observation #5",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "All five supplied link.amazon tokens re-resolved live on 2026-11-20 by session arena/6561e2ea-winc through the fetch_page reader, the same method as observations #2-#4. 5/5 mappings reproduced for the fifth consecutive time: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. Each resolved listing served its own title and breadcrumb, and each title matches data/products.json exactly. Every final URL still carries lv=shuf + plpRedirect=mhFallback, so the fallback-route reading (FLG-009) stands and the intended_* fields remain blank.",
+      "date": "2026-11-20",
+      "access": "Fetched directly on 2026-11-20 by session arena/6561e2ea-winc. Per-row markers are in data/probes.json under observation_5."
     }
   ]
 }

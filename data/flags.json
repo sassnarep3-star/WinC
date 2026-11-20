@@ -236,6 +236,18 @@
       "detail": "On 2026-11-20 session arena/0458cd24-winc re-read every observed listing's <title> directly from amazon.com. Four of five stored titles differed from the live Amazon listing <title> (only B0CDY277D3 matched verbatim). Product identities were confirmed via the live <title> plus the category breadcrumb, so the stored titles in data/products.json were reconciled to the verbatim live listing titles. The underlying spec concerns (FLG-005, FLG-010, FLG-014) remain open and are unaffected by this title-only reconciliation.",
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
       "status": "fixed in this session"
+    },
+    {
+      "id": "FLG-026",
+      "title": "Fifth redirect reproduction does not resolve what the supplied links were meant to point at",
+      "detail": "On 2026-11-20 session arena/6561e2ea-winc re-resolved all five supplied link.amazon tokens live through the fetch_page reader, the same method as observations #2, #3 and #4. All five mappings reproduced for the fifth consecutive time (B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z). Each resolved listing served its own title and category breadcrumb, and each title matches data/products.json exactly, so the five products in the shop are still the five products those tokens resolve to. Every final URL still carried lv=shuf and plpRedirect=mhFallback — a listing-page fallback route, not a canonical resolution of the submitted token (FLG-009). This is an observation about where a link goes, and it says nothing about what it was meant to point at.",
+      "action": "Nothing to do to the observation itself: it is stable and reproducible, and FLG-008 stays closed. The intended_asin / intended_listing_url / confirmation_date / intended_source fields stay blank until the person who supplied the links confirms the intent by hand (Q-02), or until the Associates one-link test (FLG-002) is run from inside the account. Do not merge the intended and observed fields (FLG-002, FLG-003).",
+      "status": "needs review",
+      "sources": [
+        "S31",
+        "S14",
+        "S05"
+      ]
     }
   ]
 }
