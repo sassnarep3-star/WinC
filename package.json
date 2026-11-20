@@ -1,0 +1,12 @@
+{
+  "name": "shopnow-kitchen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ShopNow Kitchen — Amazon affiliate publication. Zero-dependency static build; data/ is the source of truth, GitHub Pages serves the committed output.",
+  "scripts": {
+    "build": "python3 scripts/build_site.py",
+    "check": "python3 scripts/check_site.py",
+    "verify": "npm run build && npm run check",
+    "new-guide": "python3 scripts/new_guide.py"
+  }
+}
