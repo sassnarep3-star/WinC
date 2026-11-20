@@ -1,7 +1,7 @@
 {
   "_note": "The guide backlog, published as a page so the publishing pipeline is visible. These titles are editorial hypotheses — questions a reader would plausibly type — not claims about popularity, search volume or demand. `chosen_from` records exactly how each topic was chosen. Until a Search Console property exists (Q-13 / SG-08) there is no measured query data, so every planned topic says so in public rather than implying evidence it does not have.",
   "updated": "2026-11-20",
-  "how_topics_are_chosen": "1) A reader question that can be answered from listed specifications and published guidance — never from an opinion. 2) A question with a gap that a product page can close. 3) After the analytics endpoint and Search Console property exist, queries where the site ranks 8–25 with more than 50 impressions take priority over anything on this list.",
+  "how_topics_are_chosen": "1) A reader question that can be answered from listed specifications and published guidance — never from an opinion. 2) A question with a gap that a product page can close. 3) After the analytics endpoint and Search Console property exist, queries where the site ranks 8–25 with more than 50 impressions take priority over anything on this list. 4) A question that surfaced while writing a shipped guide is added here the same day it is noticed, so the backlog is a by-product of publishing, not a wish list.",
   "topics": [
     {
       "id": "TP-01",
@@ -45,13 +45,17 @@
       "question": "What size cook do you need before you start hosting?",
       "why": "The 26-quart listing states a 6-lb rotisserie chicken and a 12-inch pizza in its own bullet copy. That is a directly checkable claim a reader can hold the site to.",
       "needs": "The listing bullets for B09B7SB46R (already captured) and the USDA FSIS whole-poultry guidance for the temperature side.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — seasonal cluster already used by the holiday guide; no measured query data exists yet",
       "priority": "medium",
       "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B09B7SB46R",
-        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
-      ]
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"
+      ],
+      "status_note": "Published 2026-11-20 as “Can it fit a whole chicken?”. The pizza half stays open: the only supporting text is the listing's own bullet, so the guide quotes it as a seller claim (FLG-021) rather than answering it.",
+      "published_as": "guides/whole-chicken-air-fryer-fit.html"
     },
     {
       "id": "TP-04",
@@ -92,13 +96,15 @@
       "question": "Thigh, breast, or the wing — and how close to the bone?",
       "why": "USDA FSIS names the three places to check a whole bird and says to avoid bone. The instant-read listing cannot help with technique; a guide can, and the source is already in the register.",
       "needs": "USDA FSIS Food Thermometers page (S17) — already cited in the published probe guide; would need a cooking-technique section with per-step citations.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
       "priority": "high",
       "source": [
-        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
-        "https://www.amazon.com/dp/B0DHZTCNR5"
-      ]
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ],
+      "status_note": "Published 2026-11-20: the three-place bird check is carried by the whole-chicken guide and the placement rules by the listing-literacy guide, both quoting USDA FSIS.",
+      "published_as": "guides/whole-chicken-air-fryer-fit.html"
     },
     {
       "id": "TP-07",
@@ -124,12 +130,15 @@
       "question": "Is the number on the box a measurement or a marketing claim?",
       "why": "The instant-read listing states ±0.5°F and NIST & NSF certification; the wireless listing states no tolerance figure on the page read. Readers are comparing numbers that do not come from the same place.",
       "needs": "The listing's certification claim, and — if the owner wants to go further — a manufacturer calibration page. No claim about this site's own measurements is possible: nobody here has tested a probe.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis; no measured query data exists yet",
       "priority": "medium",
       "source": [
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
         "https://www.amazon.com/dp/B0DHZTCNR5"
-      ]
+      ],
+      "status_note": "Published 2026-11-20 as “Your thermometer claims ±0.5°F…”, built on FSIS's 2–4°F statement and its documented ice-water and boiling-water checks.",
+      "published_as": "guides/thermometer-accuracy-ice-cup-check.html"
     },
     {
       "id": "TP-09",
@@ -139,12 +148,16 @@
       "question": "Will the cable survive a small basket and a hot element?",
       "why": "The wireless listing names air fryer as a use and states a 1000°F probe heat limit. The cable rating is the part readers get wrong, and it is a check-the-listing question rather than a test result.",
       "needs": "Listing wording on probe heat limits and any cable rating the manufacturer publishes. No clearance measurement may be claimed without a source.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — cross-links the thermometer and air-fryer clusters; no measured query data exists yet",
       "priority": "medium",
       "source": [
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+        "https://www.amazon.com/dp/B0DHZTCNR5",
         "https://www.amazon.com/dp/B0DZFD6R9Z"
-      ]
+      ],
+      "status_note": "Published 2026-11-20 in the listing-literacy guide, which quotes FSIS's rule that a thermometer may stay in the food only if the manufacturer designed it to.",
+      "published_as": "guides/listing-wording-thermometer-claims.html"
     },
     {
       "id": "TP-10",
@@ -194,6 +207,103 @@
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-13",
+      "title": "“Dishwasher-safe” baskets: does that cover the pan, the tray and the coil?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Which parts of each of the three fryers are actually listed as dishwasher-safe, and which are not?",
+      "why": "Two of the three listing titles on this shelf put dishwasher-safe wording in the headline, and the 8-quart listing names the basket and the flat tray specifically. A buyer who assumes “the whole thing” will be disappointed by the part nobody claims.",
+      "needs": "Re-read each listing's bullet copy and details table for the exact part list; state only the parts named, and flag any listing that says “dishwasher safe” without naming parts.",
+      "status": "planned",
+      "chosen_from": "Editorial hypothesis from session ab951e4c (2026-11-20), raised while writing the whole-chicken guide. No query data exists — see the note at the top of this page.",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
+      ]
+    },
+    {
+      "id": "TP-14",
+      "title": "How much clearance does a countertop fryer need around it?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "The listings publish exterior dimensions — where does the ventilation allowance come from?",
+      "why": "Every capacity argument on this shelf uses numbers the listings publish, but the one number none of the three publishes is the clearance the vent needs. That is exactly the kind of gap that should be stated, not estimated.",
+      "needs": "Manufacturer manual or spec sheet per unit; if not obtainable, publish the absence of the figure rather than a guess.",
+      "status": "planned",
+      "chosen_from": "Editorial hypothesis from session ab951e4c, found while writing guides/whole-chicken-air-fryer-fit.html.",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
+      ]
+    },
+    {
+      "id": "TP-15",
+      "title": "What does “Sync Finish” claim to do — and how would you notice if it didn't?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "The twin-basket listing names Sync Finish and Hi-Fry in its title; what is each actually promising?",
+      "why": "Feature names sold in a title are the easiest claims for an affiliate site to repeat as facts. Naming them as the listing's wording, then asking what a buyer could check, is the honest version of a hype line.",
+      "needs": "The listing's own bullet copy for both features; no independent performance data exists and none should be implied.",
+      "status": "planned",
+      "chosen_from": "Editorial hypothesis from session ab951e4c, while writing shelf_line copy for the 6-quart listing.",
+      "priority": "low",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3"
+      ]
+    },
+    {
+      "id": "TP-16",
+      "title": "“1 second” versus the seconds FSIS lists per thermometer type",
+      "cluster": "Thermometers",
+      "season": "Everyday",
+      "question": "How fast is a reading, and does the type table publish a number you can compare a marketing claim with?",
+      "why": "USDA FSIS's types table gives read times by type (thermocouple 2–5 seconds, thermistor 10 seconds, oven-cord 10 seconds, bimetal 1–2 minutes). That is a citable yardstick for a “1 Sec” product name.",
+      "needs": "Nothing further — the FSIS table and the listing title are enough. Cite both, and do not convert read time into a quality judgement.",
+      "status": "planned",
+      "chosen_from": "Editorial hypothesis from session ab951e4c, taken from the FSIS Food Thermometers types table read on 2026-11-20.",
+      "priority": "high",
+      "source": [
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+        "https://www.amazon.com/dp/B0DHZTCNR5"
+      ]
+    },
+    {
+      "id": "TP-17",
+      "title": "Hub, app or alarm: who actually gets told when the probe hits temperature?",
+      "cluster": "Thermometers",
+      "season": "Holiday cooking",
+      "question": "On a long cook, what wakes the person who is not standing at the oven?",
+      "why": "The leave-in listing's value proposition is remote reporting, but the failure modes — silent phone, dead hub, pinched cable — decide whether a holiday cook lands. Each is a manual question, not a listing question.",
+      "needs": "Manufacturer manual pages for alarm behaviour and cable heat rating; the listing states probe heat safety, not cable or alarm behaviour.",
+      "status": "planned",
+      "chosen_from": "Editorial hypothesis from session ab951e4c, following the range/alarm gap named in guides/listing-wording-thermometer-claims.html.",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0DZFD6R9Z",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ]
+    },
+    {
+      "id": "TP-18",
+      "title": "Reheat, bake, dehydrate: which modes does each listing actually name?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Multi-function is a count on some listings and a list on others — what does each of the three commit to by name?",
+      "why": "The Emeril listing's title says 24 presets while its bullets say 25 and then name eleven modes (FLG-020). Counting presets is marketing; naming them is a specification. A guide that lists only the named modes is the honest artefact.",
+      "needs": "One more careful read of each listing's bullet copy, with the mode names transcribed verbatim and the count conflicts cross-linked to the flag register.",
+      "status": "planned",
+      "chosen_from": "Editorial hypothesis from session ab951e4c, from the FLG-020 count conflict recorded in data/flags.json.",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
       ]
     }
   ]

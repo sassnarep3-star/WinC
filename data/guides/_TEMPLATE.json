@@ -9,8 +9,13 @@
   "published": "YYYY-MM-DD",
   "updated": "YYYY-MM-DD",
   "season": "Everyday | Holiday cooking | Grilling",
-  "image": "assets/img/hero-counter.png",
-  "image_caption": "Editorial illustration. Not a product photograph.",
+  "image": "assets/img/hero-counter.jpg",
+  "image_caption": "Editorial illustration made for this site. Not a product photograph, and no Amazon listing imagery is reused.",
   "body": "<p>HTML. Use <div class=\"grid\">CARDS</div> where the builder should insert the matching products.</p>",
-  "faq": [["Question?", "Answer, sourced."]]
+  "faq": [
+    [
+      "Question?",
+      "Answer, sourced."
+    ]
+  ]
 }

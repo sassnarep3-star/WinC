@@ -125,8 +125,9 @@
       "id": "S17",
       "title": "USDA FSIS — Food Thermometers",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
-      "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F.",
-      "date": "2026-11-20"
+      "what": "Food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F. Also read on 2026-11-20 for the guides authored by session ab951e4c: 'Most food thermometers will give an accurate reading within 2 to 4 degrees F'; the ice-water calibration procedure (ice cubes + drinking water, stem ≥2 inches, ≥30 seconds, should read 32°F); the boiling-water procedure (212°F at sea level, distilled water for true accuracy, −2°F to −5°F at altitude, ask the local Cooperative Extension System office); 'If the thermometer doesn't allow manual calibration, you may need to replace it'; care wording ('Most thermometers should not be immersed in water', plastic faces can melt); and the types table (oven-cord and fork: 'Cannot be calibrated'; thermistor: 'Some models can be calibrated'; thermocouple: 'Can be calibrated'; wireless/smart: designed to remain in the food, at least 1 inch deep, live status, more costly; read times 2–5 s / 10 s / 1–2 min).",
+      "date": "2026-11-20",
+      "access": "Fetched 2026-11-20 by session ab951e4c through the reader, chunks 0 and 1; every quoted sentence above was read in that fetch, not transcribed from memory."
     },
     {
       "id": "S18",

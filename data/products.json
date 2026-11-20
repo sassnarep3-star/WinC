@@ -31,6 +31,10 @@
       "source_date": "2026-11-20",
       "page": "products/chefman-6qt-dual-basket-b0cdy277d3.html",
       "short_label": "Chefman 6 Qt Dual Basket (windows)",
+      "image": "assets/img/prod-dual-basket.jpg",
+      "image_caption": "Editorial illustration of a dual-basket fryer on a counter. Not a product photograph — the listing linked below shows the actual item.",
+      "shelf_line": "Two independent 3-quart baskets with easy-view windows, Sync Finish and Hi-Fry, named in the listing title — the shape you buy when two things have to finish at the same time.",
+      "decide_on": "Decide on the listed footprint before the capacity: this listing gives 13.38\"D x 11.81\"W x 10.63\"H and 13.3 pounds, so measure the strip of counter you can give up permanently before you read a single preset list.",
       "live_read": "2026-11-20 (session arena-82d39deb — third independent live read)",
       "live_read_fields": [
         "title",
@@ -90,6 +94,10 @@
       "source_date": "2026-11-20",
       "page": "products/emeril-26qt-french-door-b09b7sb46r.html",
       "short_label": "Emeril 26QT French Door oven",
+      "image": "assets/img/prod-oven-style.jpg",
+      "image_caption": "Editorial illustration of an oven-style fryer with French doors and a whole bird on the rack. Not a product photograph.",
+      "shelf_line": "A 26QT French-door oven cavity with one-touch presets and cooking accessories listed — the largest interior on this shelf by listed capacity (26QT against 8QT and 6QT), in a body the listing measures 16.9\" deep.",
+      "decide_on": "Decide on the cavity, not the preset count: 26QT (24.6 Liters) inside a 16.9\"D x 15.8\"W x 14.8\"H shell, so the question is whether your counter depth and cabinet clearance survive a 26.5-pound permanent appliance.",
       "live_read": "2026-11-20 (session arena-82d39deb — third independent live read)",
       "live_read_fields": [
         "title",
@@ -101,8 +109,6 @@
         "serves_claim",
         "rotisserie_claim"
       ],
-      "title_prior_capture": "Emeril Lagasse Extra Large French Door Air Fryer Toaster Oven Combo, 24 Cooking Functions and Digital Controls, 7 Accessories Included, Stainless Steel Finish, 26QT Capacity",
-      "title_prior_capture_note": "Earlier capture of the same listing read '7 Accessories Included'. The live <title> element read on 2026-11-20 says 'Six Cooking Accessories Included'. Both strings are kept; neither is silently dropped. See FLG-010.",
       "listing_notes": [
         {
           "flag": "FLG-010",
@@ -136,7 +142,9 @@
           "How large a cook can it handle?",
           "The listing's own bullet says the 26-quart cavity is sized for 4-6 people, can rotisserie a 6-lb chicken and bake a 12-inch pizza. That is the seller's sizing claim on the listing, quoted as a claim and not as advice from this desk (FLG-021)."
         ]
-      ]
+      ],
+      "title_prior_capture": "Emeril Lagasse Extra Large French Door Air Fryer Toaster Oven Combo, 24 Cooking Functions and Digital Controls, 7 Accessories Included, Stainless Steel Finish, 26QT Capacity",
+      "title_prior_capture_note": "Earlier capture of the same listing read '7 Accessories Included'. The live <title> element read on 2026-11-20 says 'Six Cooking Accessories Included'. Both strings are kept; neither is silently dropped. See FLG-010."
     },
     {
       "id": "p3-chefman-8qt",
@@ -167,6 +175,10 @@
       "source_date": "2026-11-20",
       "page": "products/chefman-8qt-turbofry-b08dkybtph.html",
       "short_label": "Chefman 8 Qt TurboFry (XL basket)",
+      "image": "assets/img/prod-xl-basket.jpg",
+      "image_caption": "Editorial illustration of a single-basket air fryer with the basket pulled forward. Not a product photograph.",
+      "shelf_line": "One 8-quart XL nonstick basket, listed as dishwasher-safe, with a 450°F Hi-Fry option named in the listing title — the tall-basket shape rather than an oven cavity.",
+      "decide_on": "Decide on one-layer cooking area, not the quart number: the listing gives a single 8-quart basket in a 12.75\"D x 13.5\"W x 10\"H body, so count how many hands-on layers your usual meals need before you compare it with a twin-basket unit.",
       "live_read": "2026-11-20 (session arena-82d39deb — third independent live read)",
       "live_read_fields": [
         "title",
@@ -178,10 +190,6 @@
         "size_variants",
         "newer_model_flag"
       ],
-      "title_prior_capture": "Chefman TurboFry Touch Air Fryer, XL 8-Qt Family Size, One-Touch Digital Control Presets, French Fries, Chicken, Meat, Fish, Nonstick Dishwasher-Safe Parts, Automatic Shutoff, Stainless Steel",
-      "title_prior_capture_note": "The earlier capture of this ASIN carried a different product-name string. The live <title> element read on 2026-11-20 is the one above; both are kept here rather than one being quietly deleted. See FLG-019.",
-      "power_prior_capture": "1700W / 120V",
-      "power_prior_capture_note": "Corrected on 2026-11-20. The live listing bullet reads '1000 Watts/120 Volts – RJ38-SQSS-8T'. The earlier capture carried 1700 W, which is the wattage stated on the 6-quart Chefman listing, not this one. See FLG-022.",
       "listing_notes": [
         {
           "flag": "FLG-005",
@@ -218,7 +226,11 @@
           "Does it really reach 450F?",
           "The page title says '450F Hi-Fry Option' while the bullet copy on the same page says a temperature range from 200-400F. Both strings are shown on the specs table rather than one of them being quietly chosen (FLG-005)."
         ]
-      ]
+      ],
+      "title_prior_capture": "Chefman TurboFry Touch Air Fryer, XL 8-Qt Family Size, One-Touch Digital Control Presets, French Fries, Chicken, Meat, Fish, Nonstick Dishwasher-Safe Parts, Automatic Shutoff, Stainless Steel",
+      "title_prior_capture_note": "The earlier capture of this ASIN carried a different product-name string. The live <title> element read on 2026-11-20 is the one above; both are kept here rather than one being quietly deleted. See FLG-019.",
+      "power_prior_capture": "1700W / 120V",
+      "power_prior_capture_note": "Corrected on 2026-11-20. The live listing bullet reads '1000 Watts/120 Volts – RJ38-SQSS-8T'. The earlier capture carried 1700 W, which is the wattage stated on the 6-quart Chefman listing, not this one. See FLG-022."
     },
     {
       "id": "p4-thermomaven",
@@ -249,6 +261,10 @@
       "source_date": "2026-11-20",
       "page": "products/thermomaven-1sec-b0dhztcnr5.html",
       "short_label": "ThermoMaven 1 Sec instant-read",
+      "image": "assets/img/prod-instant-read.jpg",
+      "image_caption": "Editorial illustration of a folding instant-read thermometer over a sliced steak. Not a product photograph.",
+      "shelf_line": "An instant-read the listing rates at 1 second with ±0.5℉ accuracy and IP67 waterproofing — the tool for FSIS's three-place bird check, taken near the end of cooking.",
+      "decide_on": "Decide on what the listing does not say: it states an accuracy figure, and USDA FSIS says most food thermometers read within 2 to 4°F, so the ice-cup check is the part you can do yourself.",
       "live_read": "2026-11-20 (session arena-82d39deb — third independent live read)",
       "live_read_fields": [
         "title",
@@ -257,8 +273,6 @@
         "waterproof_claim",
         "screen_claim"
       ],
-      "title_prior_capture": "ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified Food Thermometer, Auto-Rotate Bright LED Screen, Highly Waterproof for Grill BBQ Camping, Black",
-      "title_prior_capture_note": "Same product; the live title names 'IP67 Waterproof' where the earlier capture said 'Highly Waterproof ... Camping'. The IP67 rating is the checkable claim, so it is the one recorded.",
       "listing_notes": [
         {
           "flag": "FLG-004",
@@ -279,6 +293,8 @@
           "It is an instant-read device: you put the tip in the food for a second and read the number off the device. For a probe that stays in the food while it cooks, the other thermometer in this shop is the one whose listing names air-fryer use."
         ]
       ],
+      "title_prior_capture": "ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified Food Thermometer, Auto-Rotate Bright LED Screen, Highly Waterproof for Grill BBQ Camping, Black",
+      "title_prior_capture_note": "Same product; the live title names 'IP67 Waterproof' where the earlier capture said 'Highly Waterproof ... Camping'. The IP67 rating is the checkable claim, so it is the one recorded.",
       "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)"
     },
     {
@@ -310,6 +326,10 @@
       "source_date": "2026-11-20",
       "page": "products/chefiq-sense-gen3-b0dzfd6r9z.html",
       "short_label": "CHEF iQ Sense Gen3 (3 probes, WiFi)",
+      "image": "assets/img/prod-wireless-probe.jpg",
+      "image_caption": "Editorial illustration of leave-in probes cabled out of an oven to a charging hub. Not a product photograph.",
+      "shelf_line": "Three ultra-thin leave-in probes reporting to a hub over WiFi, with probes the listing calls heat-safe to 1000°F — built for the long cook somebody else has to stop.",
+      "decide_on": "Decide on the leave-in job, not the app: USDA FSIS lists wireless/smart thermometers as designed to remain in the food while cooking, at least 1\" deep in the thickest part.",
       "live_read": "2026-11-20 (session arena-82d39deb — third independent live read)",
       "live_read_fields": [
         "title",
@@ -318,8 +338,6 @@
         "wifi_claim",
         "uses_listing"
       ],
-      "title_prior_capture": "CHEF iQ Sense [2025 Model] | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3",
-      "title_prior_capture_note": "Same product; the '[2025 Model]' tag appeared in the earlier capture and is absent from the live title read on 2026-11-20. Marketing-string drift only — no spec changes.",
       "faq": [
         [
           "How many probes come with it?",
@@ -333,7 +351,9 @@
           "What does 'unlimited range' mean?",
           "It is a marketing phrase on the listing. What it means is that the hub reports over your network rather than over a short radio link; how far the hub can sit from the cooker is a question about your router and your house, not a published number."
         ]
-      ]
+      ],
+      "title_prior_capture": "CHEF iQ Sense [2025 Model] | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3",
+      "title_prior_capture_note": "Same product; the '[2025 Model]' tag appeared in the earlier capture and is absent from the live title read on 2026-11-20. Marketing-string drift only — no spec changes."
     }
   ]
 }
