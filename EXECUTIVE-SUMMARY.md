@@ -8,7 +8,8 @@ It leads with products, answers buyer questions, and keeps verification one clic
 ## What is live
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold. Every card now leads with a desk-written dek, a "best for" line and an honest "the catch" — the seller's keyword title no longer appears as body copy.
-- **Guides:** 11 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
+- **Guides:** 11 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy, air fryer vs.
+convection oven, first-air-fryer six checks, what 6 quarts actually holds) + a seasonal band on the front page.
 - **Trust:** verification register (intent vs. observed kept separate), 31-source register, 26 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`) **and** an independent audit (`tools/audit.mjs`) that currently reports 0 findings across 10 rules.
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 - **Decision layer:** 22 open questions, **11 answered / 10 partly answered / 1 still open**, 5 of them blocking. 37 suggestions, 6 of them about how decisions get made rather than about the site.
