@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction — Suggestions, questions, and the path chooser</title>
+<meta name="description" content="Review suggestions, open questions, and pick the next build path. Nothing is implemented until you choose.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/direction.html">
+<meta property="og:title" content="Direction — Suggestions, questions, and the path chooser">
+<meta property="og:description" content="Review suggestions, open questions, and pick the next build path. Nothing is implemented until you choose.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/direction.html">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" type="application/rss+xml" title="ShopNow Kitchen" href="feed.xml">
+
+</head><body data-page-type="page"><header class="masthead"><div class="wrap"><a class="brand" href="index.html">ShopNow <span>Kitchen</span></a><p class="tagline">Basket or oven-style? Compare before you buy.</p><span class="dateline">2026-11-20 · The Kitchen Desk</span></div></header><div class="disclosure-strip" role="note"><div class="wrap"><strong>As an Amazon Associate I earn from qualifying purchases.</strong> This site contains sponsored product links. Prices and availability are shown on Amazon — check Amazon for current details. <a href="disclosure.html">Full disclosure</a></div></div><nav class="mainnav" aria-label="Main"><div class="wrap"><a href="index.html">Home</a><a href="air-fryers.html">Air Fryers</a><a href="thermometers.html">Thermometers</a><a href="guides/basket-or-oven-style-air-fryer.html">Guides</a><a href="products/chefman-6qt-dual-basket-b0cdy277d3.html">Products</a><a href="direction.html" aria-current="page">Direction</a><a href="verification.html">Verification</a><a href="about.html">About</a></div></nav><main class="wrap">
+<section class="hero"><span class="kicker">Direction · Suggestions for review</span>
+<h1>Direction: suggestions, open questions, and the path chooser</h1>
+<p class="lede">Nothing here is implemented yet. Review the suggestions, answer the questions, and pick a path. Implementation starts only after you choose.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated 2026-11-20</p></section>
+
+<h2>Suggestions (choose one path)</h2>
+<div class="notice"><strong>How to choose:</strong> pick the path that matches your goal. Paths are mutually exclusive for the next build. Your choice is stored only in this browser (localStorage) — no data leaves the device.</div>
+<form class="chooser" id="path-chooser">
+<label><input type="radio" name="path" value="A"> <strong>Path A — Shop depth (recommended).</strong> Add one comparison page per category, real product photography (licensed), and a weekly guide cadence. Best for organic traffic from buyer questions.</label>
+<label><input type="radio" name="path" value="B"> <strong>Path B — Content volume.</strong> Publish 2 guides/week from the question backlog, add seasonal clusters (grilling, holiday baking). Best for search coverage; slower per-page quality.</label>
+<label><input type="radio" name="path" value="C"> <strong>Path C — Measurement first.</strong> Deploy the analytics endpoint, run the one-link Associates tests, and wait for first-party data before adding content. Best for data-driven decisions; slowest to grow.</label>
+<button class="btn" type="submit">Save my choice (this browser only)</button>
+<span id="chooser-msg" class="meta"></span>
+</form>
+<script>
+document.getElementById('path-chooser').addEventListener('submit',function(e){
+  e.preventDefault();
+  var v=document.querySelector('input[name=path]:checked');
+  if(!v){document.getElementById('chooser-msg').textContent='Pick a path first.';return;}
+  try{localStorage.setItem('sk_path',v.value);}catch(err){}
+  document.getElementById('chooser-msg').textContent='Saved: Path '+v.value+' (stored in this browser only).';
+});
+try{var s=localStorage.getItem('sk_path');if(s){var r=document.querySelector('input[name=path][value="'+s+'"]');if(r)r.checked=true;}}catch(err){}
+</script>
+
+<h2>Questions, information, and answers</h2>
+<p>What we know, what we do not, and how to discover the missing pieces. Blank means unverified — never inferred.</p>
+<div class="tablewrap"><table><thead><tr><th>#</th><th>Question</th><th>What we know (with source)</th><th>What we do not know</th><th>How to discover it</th></tr></thead><tbody>
+<tr><td>Q1</td><td>Is tracking ID shopnow047c-20 issued and active?</td><td>Shape matches abcd-20 pattern (S06).</td><td>Issued/active status — no public page confirms it (FLG-001).</td><td>Check Associates Central; record confirmation date.</td></tr>
+<tr><td>Q2</td><td>Do the five short links resolve to the observed ASINs?</td><td>Prior sessions resolved them live 2026-11-17 (S14); listings confirm the ASINs exist (S09–S13).</td><td>Re-observation in this session (sandbox blocked — FLG-008).</td><td>Re-observe from unrestricted network; update observed_date.</td></tr>
+<tr><td>Q3</td><td>Are link.amazon short links permitted Special Links?</td><td>Unresolved (FLG-003). Not claimed invalid.</td><td>Exact compliance status.</td><td>Confirm in Associates Central; keep short links out of reader buttons until confirmed.</td></tr>
+<tr><td>Q4</td><td>What are the current prices?</td><td>Policy: do not display static prices (S02).</td><td>Current prices (intentionally blank — FLG-006).</td><td>Read on Amazon; or Creators/PA API with timestamp.</td></tr>
+<tr><td>Q5</td><td>Which products convert?</td><td>Nothing — ledger is empty by design.</td><td>Clicks, orders, sessions (no first-party data yet).</td><td>Deploy endpoint + Associates Reports; fill ledger only from authorized reports.</td></tr>
+<tr><td>Q6</td><td>Which guides get searched?</td><td>Four question-shaped guides published; RSS + sitemap live.</td><td>Search queries, traffic (no Search Console data yet).</td><td>Submit sitemap in Search Console; read queries monthly.</td></tr>
+<tr><td>Q7</td><td>Which specs are wrong?</td><td>FLG-004 (ThermoMaven variant) + FLG-005 (Chefman model/temp) flagged.</td><td>Canonical model/temp for B08DKYBTPH; canonical ASIN for ThermoMaven.</td><td>Confirm on live listings + manufacturer pages.</td></tr>
+<tr><td>Q8</td><td>What imagery can we use?</td><td>No Amazon images used (IP License, S02).</td><td>Licensed photography.</td><td>Commission/license photos; never scrape Amazon images.</td></tr>
+</tbody></table></div>
+<p class="src">Sources: S01–S15 on the <a href="verification.html">Verification</a> page. Flags: <a href="flagged-for-review.html">Flagged for Review</a>.</p>
+
+<h2>Design-direction pack (for the next build prompt)</h2>
+<ul>
+<li><strong>Look:</strong> warm paper background, ink text, terracotta + green accents; product cards first, verification below the fold. No dark-mode dashboard, no chart-junk.</li>
+<li><strong>Voice:</strong> human buyer questions as headlines; short answers; checklists over adjectives. No “AI-powered” hype on reader pages.</li>
+<li><strong>Imagery:</strong> licensed lifestyle photos (counter, food, hands) + simple SVG icons. No Amazon product images, no logos.</li>
+<li><strong>Seasons &amp; clusters:</strong> “Countertop Cooking” season; clusters “Air Fryers” and “Meat Thermometers”; seasonal angles (grilling, holiday baking) as guides, not banners.</li>
+<li><strong>Findability:</strong> one sitemap, one RSS feed, question-shaped titles, FAQ schema, internal links from every guide to its category.</li>
+</ul>
+<section class="capture" aria-label="Reader capture">
+<h3>Get the next comparison — no hype, just the checklist.</h3>
+<p>One email when a new guide publishes. Double opt-in. No tracking pixel. Unsubscribe anytime.</p>
+<form id="reader-capture" action="measurement.html" method="get">
+<label for="email">Email address</label>
+<input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+<button class="btn" type="submit">Subscribe</button>
+</form>
+<small>Submitting records a <code>reader_capture_submit</code> event (see <a href="measurement.html">Measurement</a>). Your email is handled by the email provider you choose — this static site does not store it.</small>
+</section>
+</main><footer><div class="wrap">
+<div class="footer-disclosure"><strong>As an Amazon Associate I earn from qualifying purchases.</strong>
+This site contains sponsored product links (marked <span class="sponsored-tag">Sponsored</span>).
+Prices and availability are shown on Amazon — check Amazon for current details.
+<a href="disclosure.html">Full disclosure</a></div>
+<div class="cols">
+<div><h4>Shop</h4><ul>
+<li><a href="air-fryers.html">Air Fryers</a></li>
+<li><a href="thermometers.html">Meat Thermometers</a></li>
+<li><a href="products/chefman-6qt-dual-basket-b0cdy277d3.html">All products</a></li>
+</ul></div>
+<div><h4>Guides</h4><ul>
+<li><a href="guides/basket-or-oven-style-air-fryer.html">Basket or oven-style?</a></li>
+<li><a href="guides/air-fryer-capacity-checklist.html">Capacity checklist</a></li>
+<li><a href="guides/cleanup-and-counter-space.html">Cleanup &amp; counter space</a></li>
+<li><a href="guides/multi-function-appliance-questions.html">Multi-function questions</a></li>
+</ul></div>
+<div><h4>Dashboard</h4><ul>
+<li><a href="verification.html">Verification &amp; sources</a></li>
+<li><a href="flagged-for-review.html">Flagged for Review</a></li>
+<li><a href="measurement.html">Measurement &amp; ledger</a></li>
+<li><a href="executive-summary.html">Executive summary</a></li>
+<li><a href="direction.html">Direction &amp; suggestions</a></li>
+</ul></div>
+<div><h4>Site</h4><ul>
+<li><a href="about.html">About &amp; authorship</a></li>
+<li><a href="search.html">Search</a></li>
+<li><a href="sitemap.xml">Sitemap</a></li>
+<li><a href="feed.xml">RSS feed</a></li>
+<li><a href="disclosure.html">Disclosure &amp; privacy</a></li>
+</ul></div>
+</div>
+<p class="meta" style="color:#A8A29E">ShopNow Kitchen · 2026-11-20 · Tracking ID shopnow047c-20 (see Flagged for Review FLG-001). Product names and trademarks belong to their owners; this site is not endorsed by Amazon.</p>
+</div></footer><script src="assets/app.js" defer></script></body></html>

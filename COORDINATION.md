@@ -12,12 +12,12 @@
 | ID | Task | Status | Owner (session) | File scope |
 |----|------|--------|-----------------|------------|
 | T01 | Repo audit + official-source verification (ASIN rule, Operating Agreement, Program Policies, FTC, Google rel=sponsored) | done | 68dc5c3a | COORDINATION.md, data/sources.json |
-| T02 | Product-intent confirmation record + specs tables (intended vs observed kept separate) | in progress | 68dc5c3a | data/products.json, verification.html (via builder) |
-| T03 | Shop-first site build (front page, categories, product pages, guides, disclosure, SEO, sitemap, RSS) | in progress | 68dc5c3a | scripts/build_site.py, assets/, *.html (generated) |
-| T04 | Measurement layer (5 events, privacy-preserving counter, self-hosted endpoint code, empty campaign ledger) | in progress | 68dc5c3a | assets/app.js, analytics/, measurement.html |
-| T05 | Direction section (suggestions, Q&A, path chooser) + executive summary + flagged page | in progress | 68dc5c3a | direction.html, executive-summary.html, flagged-for-review.html |
-| T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | in progress | 68dc5c3a | scripts/check_site.py |
-| T07 | Final integration: re-verify combined data, confirm build + no broken links, PR to main, merge, confirm Pages deploy | unclaimed | — | all (integration only) |
+| T02 | Product-intent confirmation record + specs tables (intended vs observed kept separate) | done | 68dc5c3a | data/products.json, verification.html (via builder) |
+| T03 | Shop-first site build (front page, categories, product pages, guides, disclosure, SEO, sitemap, RSS) | done | 68dc5c3a | scripts/build_site.py, assets/, *.html (generated) |
+| T04 | Measurement layer (5 events, privacy-preserving counter, self-hosted endpoint code, empty campaign ledger) | done | 68dc5c3a | assets/app.js, analytics/, measurement.html |
+| T05 | Direction section (suggestions, Q&A, path chooser) + executive summary + flagged page | done | 68dc5c3a | direction.html, executive-summary.html, flagged-for-review.html |
+| T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
+| T07 | Final integration: re-verify combined data, confirm build + no broken links, PR to main, merge, confirm Pages deploy | in progress | 68dc5c3a | all (integration only) |
 
 ## Session log
 
@@ -31,4 +31,4 @@
 
 ## PR / merge record
 
-- (to be filled by T07: PR link, merge result, Pages deploy confirmation)
+- 2026-11-20 — 68dc5c3a (T07 integration): build + gate green (21 pages, 20 sitemap URLs). PR/merge/Pages result below.
