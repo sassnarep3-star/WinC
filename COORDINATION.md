@@ -897,7 +897,7 @@ live Pages. Resolution, without discarding either side:
 | Time (UTC) | Result |
 | --- | --- |
 | 2026-11-20 | PR #18 opened: https://github.com/sassnarep3-star/WinC/pull/18 (`arena/23428c9e-winc` → `main`). |
-| 2026-11-20 | Merge attempts hit conflicts four times as `main` advanced mid-flight (PRs #1–#16, then #17–#21, then #22–#25, then #27–#30). Each round resolved with `main` as trunk: shared site files taken from `main`, `COORDINATION.md` union-merged (full session history + this session's section, nothing dropped), this edition archived under `archive/air-ember-edition/`, gate (`scripts/check_site.py`) re-run green each round (27→29 pages, no violations). |
+| 2026-11-20 | Merge attempts hit conflicts five times as `main` advanced mid-flight (PRs #1–#16, then #17–#21, then #22–#25, then #27–#30, then #36). Each round resolved with `main` as trunk: shared site files taken from `main`, `COORDINATION.md` union-merged (full session history + this session's section, nothing dropped), this edition archived under `archive/air-ember-edition/`, gate (`scripts/check_site.py`) re-run green each round (27→29 pages, no violations). |
 | 2026-11-20 | PR #18 merged to `main`; Pages deploy and live re-fetch confirmed — see the verification note appended after merge. |
 ---
 
@@ -974,3 +974,72 @@ survives without the fetch behind it.
 `python3 scripts/build_site.py` → `Built 31 pages, 30 sitemap URLs, 10 guides, 27 search rows.`
 `python3 scripts/check_site.py` → `OK: 31 pages checked, 30 sitemap URLs, no violations.`
 `npm test` → analytics contract tests OK (4 tests, worker contract OK).
+
+---
+
+# Session arena/a81c0f0e-winc — publication polish + catchy guides + final integration
+
+Branch `arena/a81c0f0e-winc`, based on `ba0b838` (the merged `main` state at session start).
+Started 2026-11-20. Scope: the user's explicit ask that the site read like a **polished marketing
+affiliate publication** (not "AI slop"), with **catchy trendy articles/topics** that can draw organic
+traffic, plus the decision/suggestion layer, re-verification from official sources, build + gate, and
+PR → merge → Pages. This session did **not** rewrite the data model or relax the compliance gate; it
+added publication polish and published more question-shaped guides from the existing, already-verified
+backlog.
+
+## Task board (this session)
+
+| ID | Task | Status | Owner | File scope |
+|----|------|--------|-------|------------|
+| T-VER | Independent re-verification of the compliance backbone + all 5 product listings from official sources | done | arena/a81c0f0e-winc | COORDINATION.md, data/sources.json (access notes) |
+| T-POLISH | Publication-polish pass: masthead, season framing, trending rail, refined editorial typography | done | arena/a81c0f0e-winc | assets/style.css, scripts/build_site.py (home/category/guide templates) |
+| T-GUIDES | Publish 3 catchy, question-shaped, sourced guides from the verified backlog | done | arena/a81c0f0e-winc | data/guides/*.json, data/topics.json |
+| T-DECISION | Strengthen the suggestions/decision layer + design-prompt feed | done | arena/a81c0f0e-winc | data/suggestions.json, scripts/build_site.py (direction/prompt builder) |
+| T-EXEC | Reconcile executive summary + open-questions with this session's changes | done | arena/a81c0f0e-winc | EXECUTIVE-SUMMARY.md, data/questions.json, executive-summary.html (via builder) |
+| T-INT | Final integration: rebuild, gate green, PR → merge → confirm Pages, record | in progress | arena/a81c0f0e-winc | all (integration only) |
+
+## Re-verification performed this session (official sources, fetched live 2026-11-20)
+
+| Ref | Source | What was confirmed (verbatim where quoted) |
+| --- | --- | --- |
+| S01 | affiliate-program.amazon.com/help/operating/agreement | Reached and read anonymously. "**Updated: October 15, 2025**". §1 Special Links must "properly use the special 'tagged' link formats we provide". §5 disclosure wording confirmed. |
+| S02 | affiliate-program.amazon.com/help/operating/policies | Reached and read anonymously. "**Updated: April 14, 2026**". Price/availability display rule + Special Link tag requirement confirmed. |
+| S03 | ftc.gov — Endorsement Guides: What People Are Asking | Reached. "that connection should be disclosed clearly and conspicuously"; affiliate section confirms clear + conspicuous disclosure near the link; links to 16 CFR Part 255 (ecfr.gov). |
+| S04/S19 | developers.google.com/search/docs/crawling-indexing/qualify-outbound-links | "**Last updated 2025-12-10 UTC**". "`rel=\"sponsored\"` … Mark links that are advertisements or paid placements (commonly called paid links) with the `sponsored` value." Confirms the `rel="sponsored nofollow noopener"` on every buy button. |
+| S05 | sell.amazon.com/blog/what-is-an-asin | "ASIN stands for Amazon Standard Identification Number. It's a **unique 10-character alphanumeric code** assigned to every product listed in the Amazon store." "The ASIN appears after '/dp/'." Confirms the 9-character submitted tokens are not ASINs and the 10-char observed ASINs are. |
+| S16 | fsis.usda.gov — Safe Minimum Internal Temperature Chart | All temperatures confirmed verbatim: all poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + ≥3-min rest; uncooked ham 145°F + rest. "Last Updated: Apr 14, 2025." |
+| S17 | fsis.usda.gov — Food Thermometers | "Using a food thermometer is the **only reliable way** to ensure that foods have been cooked to a safe minimum internal temperature." Placement guidance (thickest part, away from bone) confirmed. |
+| S09–S13 | amazon.com listings (5) | Each observed ASIN re-read live 2026-11-20. Live `<title>` + breadcrumb confirm every stored product title verbatim and the category (3 Air Fryers, 2 Meat Thermometers). The fallback summary page (`lv=shuf` + `plpRedirect=mhFallback`) matches the prior note (FLG-009). ThermoMaven page shows the "Black" variant (a separate "Orange" variant ASIN appears in the carousel); CHEF iQ confirms 3 probes / 1000°F / Gen3. |
+
+No new irregularities found. One deliberate compliance note recorded: the ThermoMaven listing displayed a
+price in the live read; the site still leaves all prices blank per S02 (prices only via Amazon-served
+link or PA API). Not a gap — a policy choice, and it is not changed.
+
+## PR / merge record (this session)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | (filled in at merge — see final section) |
+
+## Post-merge verification (appended after PR #18 merged)
+
+- **Merge:** PR #18 merged to `main` 2026-11-20 as merge commit `4c4ed1a` ("Merge pull request #18
+  from sassnarep3-star/arena/23428c9e-winc"). `origin/main` verified an ancestor of the branch head
+  `9f64a3c` before merging.
+- **Pages deploy:** `pages-build-deployment` run `44689391826` completed **success** (only a Node 20
+  deprecation annotation on `actions/upload-artifact`); `gh api /repos/sassnarep3-star/WinC/pages`
+  → `status: built`, `https_enforced: true`.
+- **Live re-fetch (page reader, 2026-11-20):**
+  `https://sassnarep3-star.github.io/WinC/` serves the merged homepage — disclosure strip first,
+  five product picks each with `?tag=shopnow047c-20` + "Sponsored · paid affiliate link", guide
+  cards, `Not a product photograph.` captions.
+  `https://sassnarep3-star.github.io/WinC/flagged-for-review.html` serves the full FLG register
+  (FLG-001…013+) with the same disclosure. Method note per prior sessions: sandbox `curl` to
+  `*.github.io` is refused (egress limit), so verification uses the page reader + Pages API, never
+  a refused curl read as failure.
+- **Archived edition completed:** `archive/air-ember-edition/` was missing its front page and a few
+  sibling targets after the trunk adoption (the root `index.html`, `questions.html`,
+  `verification.html`, `executive-summary.html`, `feed.xml`, `data/products.json` resolved to main's
+  canonicals). All seven restored from this branch's own history (`9f61f0d` / `125d5bc`), so the
+  archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
+  archive stays out of nav/sitemap/feed; gate re-run green.
