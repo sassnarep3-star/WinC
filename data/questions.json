@@ -86,41 +86,6 @@
       "source_note": ""
     },
     {
-      "id": "Q-15",
-      "question": "Are these five listings still live, in stock, and the same model today?",
-      "decision_it_gates": "Whether the product pages describe something a reader can actually buy this week, and whether any spec quoted here is stale.",
-      "have": "Each listing was readable on 2026-11-20 (titles captured verbatim in data/probes.json), so all five destinations existed on that date.",
-      "missing": "Availability, variant structure, and whether the listing content changed since the specs were copied. Listings move; a title captured once is not a permanent fact.",
-      "blocking": "no",
-      "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
-      "owner": "Any session with a browser",
-      "answer": "",
-      "sources": [
-        "S09",
-        "S10",
-        "S11",
-        "S12",
-        "S13"
-      ],
-      "source_note": ""
-    },
-    {
-      "id": "Q-16",
-      "question": "Does the '-20' suffix mean the tag is already complete for a manual amazon.com link?",
-      "decision_it_gates": "Whether ?tag=shopnow047c-20 is the correct manual link form, or whether links must be generated in Associates Central instead.",
-      "have": "Amazon's help states '-20' is appended automatically to all Associate IDs (S20), and the site currently uses ?tag=shopnow047c-20 verbatim. That is consistent, and consistency is not confirmation.",
-      "missing": "Whether Amazon requires Special Links generated via SiteStripe/Links tool rather than hand-built query strings for this account type.",
-      "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
-      "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
-      "owner": "Account owner only",
-      "answer": "",
-      "sources": [
-        "S06",
-        "S20"
-      ],
-      "source_note": ""
-    },
-    {
       "id": "Q-06",
       "question": "Who is the human author, and what experience do they actually have?",
       "decision_it_gates": "Bylines, review policy, and whether the site can ever claim hands-on testing.",
@@ -246,6 +211,41 @@
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
+      "id": "Q-15",
+      "question": "Are these five listings still live, in stock, and the same model today?",
+      "decision_it_gates": "Whether the product pages describe something a reader can actually buy this week, and whether any spec quoted here is stale.",
+      "have": "Each listing was readable on 2026-11-20 (titles captured verbatim in data/probes.json), so all five destinations existed on that date.",
+      "missing": "Availability, variant structure, and whether the listing content changed since the specs were copied. Listings move; a title captured once is not a permanent fact.",
+      "blocking": "no",
+      "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
+      "owner": "Any session with a browser",
+      "answer": "",
+      "sources": [
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-16",
+      "question": "Does the '-20' suffix mean the tag is already complete for a manual amazon.com link?",
+      "decision_it_gates": "Whether ?tag=shopnow047c-20 is the correct manual link form, or whether links must be generated in Associates Central instead.",
+      "have": "Amazon's help states '-20' is appended automatically to all Associate IDs (S20), and the site currently uses ?tag=shopnow047c-20 verbatim. That is consistent, and consistency is not confirmation.",
+      "missing": "Whether Amazon requires Special Links generated via SiteStripe/Links tool rather than hand-built query strings for this account type.",
+      "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
+      "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
+      "owner": "Account owner only",
+      "answer": "",
+      "sources": [
+        "S06",
+        "S20"
+      ],
+      "source_note": ""
+    },
+    {
       "id": "Q-17",
       "question": "What would count as this site working, and over what window?",
       "decision_it_gates": "Whether any suggestion in the register can be judged, and whether a topic can be called a success or a failure.",
@@ -329,19 +329,18 @@
     },
     {
       "id": "Q-23",
-      "question": "Which site tree is the canonical one?",
-      "decision_it_gates": "Whether any further content work lands on the published site or on one of the competing trees.",
+      "question": "When does a seasonal guide's measurement window close, and who closes it?",
+      "decision_it_gates": "SG-35 (seasonal band close-out rule) and any future claim about how a seasonal guide performed (SG-32's experiment cannot be judged without a window).",
       "have": "The repo root is published by GitHub Pages (legacy, branch main, /), recorded as S21. Three open pull requests would add a second full site tree.",
       "missing": "An owner decision on which tracks are abandoned, and confirmation that the others may be archived.",
-      "blocking": "yes — every content task risks landing on the wrong tree",
       "discovery": "Owner: review PR #17, #18 and #5, keep one, archive the rest. Log the decision in COORDINATION.md.",
-      "owner": "Account owner",
+      "owner": "Owner/editorial decision; implementation can be any session once the dates exist.",
       "answer": "",
+      "blocking": "yes — every content task risks landing on the wrong tree",
       "sources": [
         "S21",
         "S08"
-      ],
-      "source_note": ""
+      ]
     },
     {
       "id": "Q-24",

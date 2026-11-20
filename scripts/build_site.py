@@ -273,7 +273,7 @@ def product_card(p, depth=0):
         specs.append(f"Model: {esc(p['model'])}")
     li = "".join(f"<li>{x}</li>" for x in specs)
     return f"""<article class="card">
-<figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
+<figure class="cardimg">{pic(img, cap, 800, 500, pfx, cls="cardpic")}</figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
 <p class="cardhook">{esc((STORIES.get(p["id"]) or {}).get("standfirst") or p["title"])}</p>
@@ -283,12 +283,26 @@ def product_card(p, depth=0):
 <p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
 </article>"""
 
+def pic(img, alt, w, h, pfx="", lazy=True, cls=None):
+    """Serve WebP, keep the PNG as the fallback so no reference anywhere 404s.
+
+    Returns a bare <img> when no WebP twin exists, so this helper can never point at a
+    file the repository does not have.
+    """
+    webp = img[:-4] + ".webp" if img.lower().endswith(".png") else None
+    load = ' loading="lazy"' if lazy else ""
+    klass = f' class="{cls}"' if cls else ""
+    if webp and os.path.exists(os.path.join(ROOT, webp)):
+        return (f'<picture><source srcset="{pfx}{webp}" type="image/webp">'
+                f'<img src="{pfx}{img}" alt="{esc(alt)}"{klass}{load} width="{w}" height="{h}"></picture>')
+    return f'<img src="{pfx}{img}" alt="{esc(alt)}"{klass}{load} width="{w}" height="{h}">'
+
 def guide_card(g, depth=0):
     pfx = "../" * depth
     img = g.get("image") or CAT_IMG.get(g.get("category", ""), HERO_IMG)[0]
     cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
     return f'''<article class="card guidecard">
-<figure class="cardimg"><img src="{pfx}{esc(img)}" alt="Editorial illustration for: {esc(g['title'])}" loading="lazy" width="800" height="500"></figure>
+<figure class="cardimg">{pic(img, "Editorial illustration for: " + g["title"], 800, 500, pfx, cls="cardpic")}</figure>
 <span class="cat">Guide · {esc(g['cluster'])}</span>
 <h3><a href="{pfx}{g['path']}">{esc(g['title'])}</a></h3>
 <p>{esc(g['desc'])}</p>
@@ -389,7 +403,7 @@ def home_body():
 <h1>Small appliances, decided on the specs that actually change your cooking</h1>
 <p class="lede">Two drawers or one? Instant-read or leave-in? Each piece below turns one checkable listed spec into the question you are really asking — and prints where the listing disagrees with itself instead of smoothing it over.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · <a href="about.html">How we check</a> · <a href="verification.html">Source register</a></p>
-<figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="800"><figcaption>{esc(cap)}</figcaption></figure>
+<figure class="lede-figure">{pic(img, cap, 1200, 800, lazy=False)}<figcaption>{esc(cap)}</figcaption></figure>
 <p class="cta-row"><a class="btn btn-ghost" href="products/index.html">Shop all {c['products']} products →</a> <a class="btn btn-quiet" href="{lead['path']}">Start with the newest guide</a></p>
 </section>
 
@@ -560,7 +574,7 @@ def series_body(sname):
 <h1>{esc(meta['title'])}</h1>
 <p class="lede">{esc(meta['lede'])}</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {len(members)} products · <a href="../about.html">How we check</a></p></section>
-<figure class="lede-figure"><img src="../{esc(meta['image'])}" alt="{esc(meta['caption'])}" width="1200" height="655"><figcaption>{esc(meta['caption'])}</figcaption></figure>
+<figure class="lede-figure">{pic(meta["image"], meta["caption"], 1200, 655, "../", lazy=False)}<figcaption>{esc(meta["caption"])}</figcaption></figure>
 <h2>In this series</h2>
 <div class="grid">{cards}</div>
 <h2>The pieces</h2>
