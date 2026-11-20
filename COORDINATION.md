@@ -63,3 +63,11 @@ This checkout has no session identifier beyond the active Arena branch (`arena/9
 ### Integration note (68dc5c3a, 2026-11-20)
 
 Session 9471c338's Counter Notes stub (decision.html, review.html, ledger.html, styles.css) is preserved under `archive/counter-notes/` as historical record. The live site is ShopNow Kitchen (this branch), which implements the full brief: verified products, measurement, guides. Their `.github/workflows/pages.yml` is kept; live deploy remains legacy Pages (branch main, path /).
+
+## Final integration result — 2026-11-20 (session 68dc5c3a)
+
+- Resolved PR #1 integration conflicts: retained ShopNow Kitchen root index/feed/sitemap/COORDINATION; preserved Counter Notes pages under `archive/counter-notes/`; retained `.github/workflows/pages.yml`.
+- Build + compliance gate: `python3 scripts/build_site.py` and `python3 scripts/check_site.py` — OK (21 pages, 20 sitemap URLs, no violations).
+- Merge commit on this branch: `195d0e6`; PR #2 merged to `main` as `c2a5823dab7e4160e3a6e24543a3262483faaeb3`; https://github.com/sassnarep3-star/WinC/pull/2
+- GitHub Pages API reports `built`; configured URL https://sassnarep3-star.github.io/WinC/ (legacy branch `main`, root). Direct HTTP probe from sandbox failed TLS (`SSL_ERROR_SYSCALL`), so browser-level availability was not independently confirmed here.
+- Remaining review flags FLG-001–FLG-008 are published on Flagged for Review and do not block publication.
