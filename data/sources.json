@@ -54,7 +54,7 @@
       "url": "https://affiliate-program.amazon.com/help/node/topic/GPXFHVYZMTGPUMPE",
       "what": "Link-level disclosure must be clear + conspicuous near link; Operating Agreement statement must appear clearly and conspicuously on Site",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S08",
@@ -110,7 +110,7 @@
       "url": "https://github.com/kanlerxz87-cyber/Zone2/pull/160",
       "what": "B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z; also Zone3 #153, Prod3 #11",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S15",
@@ -118,7 +118,7 @@
       "url": "https://link.amazon/B04G1MEwY",
       "what": "Five tokens (9 chars each): B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj. Compliance status unresolved (FLG-003) — not claimed invalid.",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S16",
@@ -142,7 +142,7 @@
       "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
       "what": "All five link.amazon tokens resolved live; 5/5 targets match the 2026-11-17 prior-session mapping (S14). Every final URL carried lv=shuf and plpRedirect=mhFallback. Re-observed a third time on 2026-11-20 by session arena-82d39deb (S22) with identical 5/5 results. Raw query strings + page titles recorded in data/probes.json.",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S19",
@@ -166,7 +166,7 @@
       "url": "https://api.github.com/repos/sassnarep3-star/WinC/pages",
       "what": "build_type=legacy, source branch main path /, public true, https enforced, html_url https://sassnarep3-star.github.io/WinC/. Basis for generating the site into the repo root (F-04).",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S22",
@@ -174,7 +174,7 @@
       "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
       "what": "All five supplied link.amazon tokens re-resolved live on 2026-11-20 in a third session: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. 5/5 identical to the 2026-11-17 mapping and to the 2026-11-20 second observation. Every final URL again carried lv=shuf and plpRedirect=mhFallback.",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S23",
@@ -182,7 +182,7 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Re-read of the live product-details tables and bullet copy for all five observed ASINs. Confirmed: B0CDY277D3 13.38\"D x 11.81\"W x 10.63\"H, 200-450°F, 120V/1700W, dishwasher-safe baskets, details-cell capacity '6 liters' (FLG-018). B08DKYBTPH 12.75\"D x 13.5\"W x 10\"H, 8 quarts, model RJ38-SQSS-8T, '1000 Watts/120 Volts', bullets 200-400°F vs title 450°F, 6/8/9-quart size selector, 'newer model' notice (FLG-005, FLG-019, FLG-022, FLG-023, FLG-024). B09B7SB46R 16.9\"D x 15.8\"W x 14.8\"H, 24.6 liters, stainless steel, 25 pre-sets in bullets vs 24 in title, serving claim '4-6 people' (FLG-010, FLG-020, FLG-021). B0DHZTCNR5 title re-read (±0.5°F, NIST&NSF, IP67). B0DZFD6R9Z title re-read (3 probes, 1000°F heat safe, 5 sensors).",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S24",
@@ -190,7 +190,7 @@
       "url": "https://www.amazon.com/dp/B0CDY277D3",
       "what": "Details table read 2026-11-20: Special Feature '2Min Button, Automatic Shut-Off, Dual Zone Features, Hi-Fry, Mute'; Product Dimensions 13.38\"D x 11.81\"W x 10.63\"H; Capacity 6 liters (see FLG-018); bullets 'Digital air fryer dual basket temperature settings from 200-450°F' and '120 Volts/1700 Watts'.",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S25",
@@ -198,7 +198,7 @@
       "url": "https://www.amazon.com/dp/B09B7SB46R",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, Programmable, Temperature Control, Timer'; Product Dimensions 16.9\"D x 15.8\"W x 14.8\"H; Capacity 24.6 liters; bullets '25 COOKING PRE-SETS', '26-QUART CAPACITY ... suitable for preparing food for 4–6 people with capacity to rotisserie a 6-lb chicken, bake a 12\" pizza'.",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S26",
@@ -206,7 +206,7 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, LED Shake Reminder, Programmable'; Product Dimensions 12.75\"D x 13.5\"W x 10\"H; Capacity 8 quarts; size selector 6/8/9 quarts; bullet 'presets ... a temperature range from 200-400°F'; bullet 'cETL approved ... 1000 Watts/120 Volts – RJ38-SQSS-8T'; page states 'There is a newer model of this item'.",
       "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": null
     },
     {
       "id": "S27",
