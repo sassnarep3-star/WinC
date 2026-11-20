@@ -210,3 +210,12 @@ Rebase note: `main` moved to `d8b1a85` (PR #10, session dd79e08d) while this ses
 Still open (cannot be claimed from this sandbox; see questions.html): Q-01 tracking-ID issuance, FLG-002 one-link Associates test, FLG-003 short-link status, FLG-004/FLG-005 spec conflicts, FLG-007 analytics endpoint deploy, Search Console submission.
 
 PR / merge record for this session is appended below once it has run.
+
+### Session 4ca9e665 — PR / merge record
+
+| Time (UTC) | Result |
+|---|---|
+| 2026-11-20 06:02 | PR **#13** https://github.com/sassnarep3-star/WinC/pull/13 from `arena/4ca9e665-winc` → `main`; `mergeable: MERGEABLE`, `mergeStateStatus: CLEAN`. |
+| 2026-11-20 06:02:29 | Merged with `gh pr merge 13 --merge` → `main` @ `259fb9f`. |
+| 2026-11-20 06:02:50 | Pages build for `259fb9f`: `built`, `error: null`. |
+| 2026-11-20 | Live re-read: `https://sassnarep3-star.github.io/WinC/products/chefman-6qt-dual-basket-b0cdy277d3.html` shows "Sponsored · paid affiliate link" beside the tagged Amazon button. |
