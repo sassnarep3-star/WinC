@@ -21,5 +21,6 @@
     ]
   ],
   "_provenance": "migrated verbatim from scripts/build_site.py GUIDES list by session arena-23d7ed19, 2026-11-20. No copy changes. category field added by arena-23d7ed19 so CARDS filters to this cluster and cluster counts are computed.",
-  "category": "Air Fryers"
+  "category": "Air Fryers",
+  "weight": 60
 }

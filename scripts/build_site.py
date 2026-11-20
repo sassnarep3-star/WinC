@@ -34,7 +34,7 @@ def load_guides():
         g.setdefault("updated", TODAY)
         g.setdefault("season", "Everyday")
         out.append(g)
-    out.sort(key=lambda g: (g["published"], g.get("slug", "")), reverse=True)
+    out.sort(key=lambda g: (g.get("published", ""), int(g.get("weight", 0) or 0), g.get("slug", "")), reverse=True)
     return out
 
 GUIDES = load_guides()
@@ -867,7 +867,7 @@ def questions_body():
 <h1>What has to be answered before the next decision is reasonable</h1>
 <p class="lede">Not a to-do list — a register. Each row states what we already know and can cite, what is genuinely missing, which decision that gap blocks, and the concrete action that produces the answer. A blank answer cell means nobody has it yet, not that we skipped it.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · evidence in <a href="verification.html">the source register</a>, consequences in <a href="flagged-for-review.html">Flagged for review</a></p></section>
-<div class="notice"><strong>Read it this way:</strong> the five blocking rows are worth more than any content decision. Three of them (Q-01, Q-02, Q-04, Q-16) can only be answered inside an enrolled Amazon Associates account, which this environment cannot reach — that is a fact about the tools, not an excuse. When you have each answer, paste it into <code>answer</code> in <code>data/questions.json</code> and the table updates on the next build.</div>
+<div class="notice"><strong>Read it this way:</strong> the {c['blocking']} blocking rows are worth more than any content decision. Four of them — Q-01, Q-02, Q-04 and Q-16 — can only be answered inside an enrolled Amazon Associates account, which this environment cannot reach. That is a fact about the tooling, not an excuse, and it is why the site ships with links gated rather than links guessed. When you have an answer, paste it into <code>answer</code> in <code>data/questions.json</code>: the table updates on the next build, and the matching flag closes.</div>
 <div class="tablewrap"><table class="qtable"><thead><tr><th>ID</th><th>Question</th><th>What we have (and its source)</th><th>What we do not have</th><th>How to discover it</th><th>Who can answer</th><th>Answer</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>Copy-ready question pack</h2>
 <p>The blocking rows, as a message you can send to whoever owns the account.</p>
