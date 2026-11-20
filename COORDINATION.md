@@ -933,4 +933,28 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
 
 | Time (UTC) | Result |
 | --- | --- |
-| 2026-11-20 | (filled in at merge — see final section) |
+| 2026-11-20 | Build + gate green before opening: `Built 32 pages, 31 sitemap URLs, 11 guides, 28 search rows.` / `OK: 32 pages checked, 31 sitemap URLs, no violations.` |
+| 2026-11-20 | PR **#37** https://github.com/sassnarep3-star/WinC/pull/37 opened from `arena/a81c0f0e-winc` → `main`. Rebased onto advanced `main` twice (multi-session race: `main` advanced 12 commits during the first rebase; re-resolved COORDINATION.md and rebuilt). Final state `mergeable: MERGEABLE`, `mergeStateStatus: CLEAN`. |
+| 2026-11-20 | **Merged** to `main` at 06:41:08Z (merge commit `a37c95b`). GitHub Pages legacy build re-ran; `status: built`; live site re-fetched to confirm the merged content serves (home page + new guide `first-air-fryer-six-checks.html` both serve with disclosure above the fold, Sponsored buttons, source links). |
+
+### Integration notes (rebase conflicts, resolved without loss)
+
+`main` advanced by other sessions while this session worked (PRs #36, #18 and others merged between the
+session's first push and the merge). `git rebase origin/main` produced content conflicts in
+`COORDINATION.md` on each pass. Resolution, without discarding either side's work:
+- `COORDINATION.md`: kept the incoming `main` board verbatim and re-appended this session's
+  "Session arena/a81c0f0e-winc" record (additive). No other session's record was dropped.
+- Generated HTML / sitemap / feed: after each rebase, the working tree was restored from `main` for
+  any conflicted generated file and the site was rebuilt from the combined source via
+  `scripts/build_site.py`, so the committed HTML is consistent with `data/` + the builder. The
+  rebuild produced no diff against the auto-merged tree on the final pass (working tree clean).
+- Source files: this session's additive edits to `scripts/build_site.py` (season pill helper +
+  guide-card badge + category season lead + design directive in the prompt builder), `data/suggestions.json`
+  (SG-35), `EXECUTIVE-SUMMARY.md` (session section) and `README.md` (guide count) were re-applied
+  onto `main`'s versions. The three new guide JSON files are additive and present on `main`.
+
+### Merge result
+
+PR #37 merged; Pages `built`; live at https://sassnarep3-star.github.io/WinC/. Flagged irregularities
+and unverified items do not block the merge — they are published on the Flagged for Review page with
+source links for the owner to review after the site is live.
