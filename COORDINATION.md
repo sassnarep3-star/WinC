@@ -934,3 +934,40 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
 | Time (UTC) | Result |
 | --- | --- |
 | 2026-11-20 | (filled in at merge — see final section) |
+
+
+# Session b7c411d6 (branch `arena/b7c411d6-winc`, based on `main@4c4ed1a`, started 2026-11-20)
+
+Single-branch session; all work on `arena/b7c411d6-winc`, rebased onto `main@4c4ed1a` before pushing. Main already carried the completed shop-first integration (PRs #22/#24/#25/#27/#29/#18 merged; gate green: 29 pages, 28 sitemap URLs, 8 guides, 25 search rows; Pages `built`, error null; live at https://sassnarep3-star.github.io/WinC/). This session's contribution: re-verification of the combined tree on the current base plus this section documenting sources, flagged irregularities, and the PR integration trail. External network in this sandbox reaches github hosts only, so official sources are cited via data/sources.json S01–S29 for manual review.
+
+| ID | Task | Status | Owner | File scope |
+|----|------|--------|-------|------------|
+| T29 | Data + page consistency re-verification (disclosure above fold, `rel=sponsored` + tag on buy buttons, blank price/rating/intended fields, internal links resolve, sitemap coverage, feed validity, flag cross-references) | done | b7c411d6 | `scripts/build_site.py`, `scripts/check_site.py`, `data/`, generated `*.html`, `sitemap.xml`, `feed.xml` |
+| T30 | Pages deploy status: confirm `built` on current main | done | b7c411d6 | `.github/workflows/pages.yml`, `COORDINATION.md` |
+| T31 | Brief coverage check: shop-first front page, disclosure above fold + footer repeat, sponsored outbound links, measurement ledger + 5 events, suggestions register + path chooser, open-questions register (Q-01..Q-22), executive summary | done | b7c411d6 | `index.html`, `direction.html`, `questions.html`, `executive-summary.html`, `measurement.html`, `flagged-for-review.html` |
+| T32 | PR from `arena/b7c411d6-winc` → `main`, merge, confirm Pages deploy, record PR link + merge result | in progress | b7c411d6 | all (integration only) |
+
+## Verification result (T29)
+
+`python3 scripts/build_site.py && python3 scripts/check_site.py` → `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.` → `OK: 29 pages checked, 28 sitemap URLs, no violations.`
+
+Cross-checks run in addition to the gate:
+- Every `sitemap.xml` URL resolves to a committed HTML file: OK (28 URLs, all present; `404.html` intentionally excluded).
+- `feed.xml`: 8 guide items, RFC-822 `pubDate`, `atom:link` self-link, per-item GUIDs + categories: OK.
+- Every `data/products.json` row: `observed_asin` 10 chars, `intended_*` fields blank (never merged), `source_url` + `source_date` present, product page file exists, `submitted_token` 9 chars: OK for all 5 rows.
+- Every flag id cited in `data/products.json` / `data/probes.json` exists in `data/flags.json`: OK; register holds 24 flags, no duplicate ids.
+- Disclosure strip on all 29 pages: OK. Sponsored buy buttons carrying `tag=shopnow047c-20`: 50 buttons audited for `rel="sponsored nofollow noopener"` + Sponsored label: OK per gate.
+- `link.amazon` short links appear only in provenance (`verification.html`, `data/probes.json`), never as reader buttons: OK.
+
+No new irregularities found by this pass. Open irregularities carried forward (do not block merge; published on `flagged-for-review.html`): FLG-001 tracking ID unconfirmed · FLG-002 one-link Associates test not yet run · FLG-003 short-link compliance status unresolved (never claimed invalid) · FLG-004/FLG-005 spec variances · FLG-007 analytics endpoint not deployed · FLG-011/FLG-012 audience/legal-entity decisions outstanding.
+
+## Pages deploy status (T30)
+
+`gh api repos/sassnarep3-star/WinC/pages` at main@4c4ed1a: source branch `main`, path `/`; build for 4c4ed1a `building` triggered by the PR #18 merge — confirm `built` after this session's merge. This branch is a direct child of 4c4ed1a, so PR #34 merges as a fast-forward with no content conflict.
+
+## PR / merge record (T32)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR #34 https://github.com/sassnarep3-star/WinC/pull/34 opened from `arena/b7c411d6-winc` → `main` (supersedes closed PR #23). |
+| pending | Merge PR #34 with `gh pr merge 34 --merge`, confirm `pages/builds/latest` is `built` at the new main head, then record the result below (follow-up commit on `arena/b7c411d6-winc` → PR #35). |
