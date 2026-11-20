@@ -1,7 +1,7 @@
 {
   "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20); SG-01 updated by arena/d49143e1-winc (purchase-link release gate implemented)",
+  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20); SG-21/SG-22 marketing polish kept (session arena/5fed90b2); SG-01 updated by arena/d49143e1-winc (purchase-link release gate implemented)",
   "suggestions": [
     {
       "id": "SG-01",
@@ -425,6 +425,36 @@
       "expected_effect": "No dead sponsored link survives a build. Measure: gate check passes with a retired-listing fixture in the test set.",
       "evidence": "FLG-005 (two-version listing conflict), FLG-010 (accessory-count conflict), FLG-014 (seller-copy caveat), FLG-024 (newer-model notice), and probe observation #4 notes on title rotation (data/probes.json, S29).",
       "feeds_prompt": "Answer Q-22, then implement the retired-listing state in scripts/build_site.py (hide buy buttons, dated note), extend scripts/check_site.py to fail on a live sponsored link whose listing is marked retired, and document the decision in README under 'Rules that never bend'."
+    },
+    {
+      "id": "SG-21",
+      "title": "Write comparison headlines that sound like a buyer asking, not a brand claiming",
+      "status": "open",
+      "area": "Editorial",
+      "problem": "Some headlines read like product descriptions instead of buyer questions. The question-shaped ones earn more trust and match how people actually search.",
+      "proposal": "Rewrite product-card headlines and page titles to lead with the buyer's question, not the manufacturer's name string. Keep the full listing title where it appears (it's sourced), but let the editorial headline do the selling.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. No claims change; only the framing of existing copy.",
+      "expected_effect": "Headlines read like a shop, not a data dump. Measure: outbound_click rate on question-shaped vs name-shaped cards once the endpoint exists.",
+      "evidence": "Front page card headings vs guide headings; guide titles are already question-shaped.",
+      "feeds_prompt": "Audit every product-card heading on index.html, air-fryers.html and thermometers.html; where a heading is a manufacturer name string, replace it with a buyer question that the listed specs answer.",
+      "status_detail": "Open. This is the shop-framing pass — the framing layer, not the data layer."
+    },
+    {
+      "id": "SG-22",
+      "title": "Let Search Console queries pick topic six and beyond",
+      "status": "open",
+      "area": "Findability",
+      "problem": "All topics are editorial hypotheses. None is backed by measured query data because no Search Console property exists yet. The site cannot yet choose topics from real demand.",
+      "proposal": "Verify Search Console ownership (SG-08), export the query list, and rank topics by impressions + position. Any topic the site already ranks 8–25 for with 50+ impressions gets promoted to 'write next'.",
+      "effort": "M",
+      "cost": "none",
+      "risk": "None. Search Console is read-only; it informs the backlog, it does not change any page.",
+      "expected_effect": "Topics chosen from demand instead of taste. Measure: number of topics whose 'chosen_from' changes from hypothesis to measured query.",
+      "evidence": "data/topics.json — every topic says 'no measured query data exists yet'.",
+      "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
+      "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification)."
     }
   ]
 }

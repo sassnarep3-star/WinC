@@ -336,15 +336,19 @@ def specs_table(p):
 
 def capture_block(depth=0):
     pfx = "../" * depth
+    # No <form> on purpose. A GET form would put the reader's address into the URL (history and
+    # the host's request log) on any browser with JavaScript disabled, while the page says the
+    # address is never sent anywhere. The button records the press locally and stops there.
     return f"""<section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
 <p>One email when a new guide publishes.</p>
-<form id="reader-capture" action="{pfx}measurement.html" method="get">
+<div class="capturebox" id="reader-capture">
 <label for="email">Email address</label>
-<input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
-<button class="btn" type="submit">Subscribe</button>
-</form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+<button class="btn" type="button" id="reader-capture-submit">Subscribe</button>
+</div>
+<p class="capturestatus" id="reader-capture-status" role="status"></p>
+<small>There is no newsletter running yet. Pressing Subscribe records the click in your own browser and sends your address nowhere — no address is stored on this site and nothing is transmitted. With JavaScript turned off, the button does nothing at all. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
 </section>"""
 
 # ---------- HOME ----------
@@ -747,8 +751,19 @@ def verification_body():
     specs_table_html = ('<div class="tablewrap"><table><thead><tr><th>Product</th><th>Brand</th><th>Model</th><th>Capacity</th><th>Dimensions</th><th>Weight</th><th>Temp/accuracy</th><th>Power</th><th>UPC</th><th>Price</th><th>Source</th></tr></thead><tbody>'
                         + "".join(specs_rows) + "</tbody></table></div>")
 
+    # A redirect intermediary (link.amazon / amzn.to) is recorded as plain text, never as a live
+    # anchor: Program Policies §6 forbids redirecting links on the site, and the token is
+    # provenance, not a destination a reader should be sent through.
+    def src_cell(s):
+        host = urlparse(s["url"]).hostname or ""
+        if host in ("link.amazon", "amzn.to", "www.amzn.to") or "/s?" in s["url"]:
+            return (f"{esc(s['title'])}<br><span class=\"src\">{esc(s['url'])}</span>"
+                    "<br><span class=\"meta\">shown as text: redirect links are not published (Policies §6)</span>")
+        return (f"{esc(s['title'])}<br><a class=\"src\" href=\"{esc(s['url'])}\" "
+                f"rel=\"nofollow noopener\" target=\"_blank\">{esc(s['url'])}</a>")
+
     src_rows = "".join(
-        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
+        f"<tr id=\"src-{esc(s['id'])}\"><td>{esc(s['id'])}</td><td>{src_cell(s)}</td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
         for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
@@ -757,9 +772,9 @@ def verification_body():
         ("Read like a shop, not an audit", "Front page leads with 5 product cards; verification below the fold", "index.html"),
         ("Findable (one site to index)", "Sitemap, RSS, canonicals, JSON-LD, internal search", "sitemap.xml, feed.xml, search.html"),
         ("Disclosure above the fold, every page", "Strip under masthead + footer repeat + per-link Sponsored label", "all pages (gate-checked)"),
-        ("Every outbound product link sponsored", "rel=sponsored nofollow + Sponsored tag + data-event", "all product links (gate-checked)"),
+        ("Every outbound product link sponsored", "rel=sponsored nofollow + Sponsored tag + data-event, and only on a link backed by a completed test record", "all product links (gate-checked)"),
         ("Product-intent record (separate fields)", "Intended blank; observed populated; never merged", "this page"),
-        ("Validated Special Links (one-link test)", "Constructed links pending Associates test (FLG-002); short links not claimed invalid (FLG-003)", "flagged-for-review.html"),
+        ("Validated Special Links (one-link test)", "No purchase CTA renders until the intended listing and the tested Special Link are recorded (FLG-002); short links not claimed invalid (FLG-003)", "flagged-for-review.html"),
         ("Question-shaped guides + measure", f"{len(GUIDES)} guides published; {len(TOPICS)} topics queued; 5 events defined; ledger empty", "guides/, topics.html, measurement.html"),
         ("Click/conversion measurement first", "Beacon + Worker code; local-only until deployed (FLG-007)", "assets/app.js, analytics/"),
         ("Campaign ledger (evidence-based)", "Empty, well-defined; first-party reports only", "measurement.html"),

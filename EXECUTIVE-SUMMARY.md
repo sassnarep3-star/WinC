@@ -27,7 +27,11 @@ It leads with products, answers buyer questions, and keeps verification one clic
 
 ## Purchase-link release gate (current state)
 
-All five product CTAs are non-clickable. The site no longer derives a purchase link from an observed redirect or appends the supplied tracking ID to an ASIN URL. A CTA can render only when that product has a complete intent record (intended ASIN, official listing URL, confirmation date, source) and the exact Special Link plus destination and tracking-report confirmation from the enrolled Associates workflow. Those records are currently empty; the gate and UI make this explicit. The supplied short links remain unresolved, not declared invalid (FLG-003).
+All five product CTAs are non-clickable. The site no longer derives a purchase link from an observed redirect or appends the supplied tracking ID to an ASIN URL. A CTA can render only when that product has a complete intent record (intended ASIN, official listing URL, confirmation date, source) and the exact Special Link plus destination and tracking-report confirmation from the enrolled Associates workflow. Those records are currently empty; the gate and UI make this explicit. The supplied short links remain unresolved, not declared invalid (FLG-003) — and they are now shown as plain text rather than live links, because Program Policies §6 forbids redirect intermediaries on the site.
+
+## Open audit findings: 2 → 0
+
+The independent gate (`node tools/audit.mjs`) is written against the policy documents rather than this repo's checker. On the merged tree it now reports **no findings**: every internal link, fragment and image resolves, no redirect intermediary is published, no capture control can put a reader's address into a URL, and every product row's populated claims carry a source. Two findings that were open on `main` were closed in this pass — a quoting inconsistency that hid a real defect (the submitted short link published as a live anchor), and the capture form's GET fallback.
 
 ## What happens next (needs review)
 

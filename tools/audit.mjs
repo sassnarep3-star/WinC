@@ -108,7 +108,11 @@ const add = (rule, msg) => findings.push({ rule, msg });
   const idsOf = (f) => { if (!idCache.has(f)) idCache.set(f, new Set([...read(f).matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]))); return idCache.get(f); };
   for (const f of html) {
     const h = read(f);
-    for (const m of h.matchAll(/<(?:a|link|img)\b[^>]*?(?:href|src)="([^"]+)"/g)) {
+    // Anchor scanning looks at the published document only: inline <script> blocks build
+    // hrefs at runtime (e.g. the search page's result cards), and their template fragments
+    // are not published references.
+    const doc = h.replace(/<script\b[\s\S]*?<\/script>/gi, "");
+    for (const m of doc.matchAll(/<(?:a|link|img)\b[^>]*?(?:href|src)="([^"]+)"/g)) {
       const u = m[1];
       if (/^(https?:|mailto:|javascript:|data:)/i.test(u)) continue;
       const [path, frag] = u.split("#");
