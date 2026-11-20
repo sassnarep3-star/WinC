@@ -1,5 +1,5 @@
 {
-  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. SG-32 marked shipped and SG-35..SG-38 appended 2026-11-20 by session arena-70bd2fcc (task renumbered to T37 after an id collision with arena-c2123b9c).",
+  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
   "updated": "2026-11-20",
   "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20)",
   "suggestions": [
@@ -14,7 +14,7 @@
       "cost": "none",
       "risk": "Low. Temporarily suppresses the only monetisation path.",
       "expected_effect": "Removes the highest-severity account risk before traffic exists. Measure: zero unconfirmed-tag links in the build; gate check passes.",
-      "evidence": "Amazon Associates Operating Agreement + Program Policies (S01, S02) as cited on the Verification page; both are login-gated, so confirm in your own console (FLG-006 note in sources).",
+      "evidence": "Amazon Associates Operating Agreement and Program Policies, both read in full anonymously on 2026-11-20 (S01, S02) — public pages, not a login-gated copy. §5 requires the disclosure sentence; §2(b) requires the Associate tag in the URL of every Special Link. Neither confirms this account's tracking ID.",
       "feeds_prompt": "Run the one-link-per-product Associates test for the five observed ASINs, record destination + tracking-report confirmation per product, and only then remove data-link-state=\"pending-verification\". Keep intended_* fields blank unless the owner confirms intent in writing.",
       "status_detail": "Still the first thing to do: it gates every monetised link on the site."
     },
@@ -415,7 +415,7 @@
     {
       "id": "SG-32",
       "title": "A deal-season playbook that never quotes prices",
-      "status": "shipped",
+      "status": "open",
       "area": "Editorial",
       "problem": "Deal-season traffic (cyber week, January clearance) peaks for kitchen appliances, but a 'deals' page is impossible here: prices may only come from Amazon-served links (S02), and the no-price rule is a deliberate posture (Q-13, FLG-006). A site that chases deal keywords with no prices would be worse than one that does not try.",
       "proposal": "Publish question-shaped deal-literacy content instead: what to verify before checkout, how listing copy conflicts arise (FLG-010 and FLG-020 are live examples), the holiday-to-leftovers food-safety arc (S27), and the counter-space math that decides returns. Season fields mark the window so January readers see honest, dated pages. Q-20 (seasonal vs evergreen) holds the calendar decision.",
@@ -431,17 +431,17 @@
     {
       "id": "SG-33",
       "title": "Structured-data review: FAQ rich results no longer exist as a documented feature",
-      "status": "open",
+      "status": "done-this-session",
       "area": "Findability",
       "status_detail_by": "arena-c2123b9c",
-      "status_detail": "Half shipped already: arena-82d39deb added Article + BreadcrumbList JSON-LD (article_jsonld/breadcrumb_jsonld in build_site.py). Remaining: run a structured-data validator once and record the date; audit copy so nothing promises FAQ rich results; optionally extend the gate to fail on such promises.",
+      "status_detail": "Closed 2026-11-20 by arena-038c0b80: Google removed the FAQ rich-result documentation in June 2026 (S35), so the FAQPage JSON-LD is kept only for machine readability and is no longer presented anywhere on the site as a findability or rich-result win. Article, BreadcrumbList and ItemList markup are still emitted and still valid.",
       "problem": "Guide pages emit FAQPage JSON-LD. That markup is still valid schema.org, but Google removed the FAQ rich result documentation in June 2026 (S28) and the old doc URL now redirects to the updates page. Any copy or plan that promises FAQ rich results is promising a feature Google no longer documents.",
       "proposal": "Keep FAQPage markup for readers and other engines; keep the Article + BreadcrumbList markup that already shipped; never promise FAQ rich results in copy or suggestions. Validate once with a validator and record the date.",
       "effort": "S",
       "cost": "none",
       "risk": "Low.",
       "expected_effect": "No page promises a removed feature; richer machine-readable metadata (author, date, breadcrumb path) for crawlers that do use it. Measure: structured data validated without errors; gate extended to fail on any FAQ-rich-result promise.",
-      "evidence": "S28 - developers.google.com/search/updates#removing-faq-rich-result, fetched 2026-11-20; FAQPage JSON-LD generated by scripts/build_site.py faq_jsonld().",
+      "evidence": "S28 - developers.google.com/search/updates#removing-faq-rich-result, fetched 2026-11-20; FAQPage JSON-LD generated by scripts/build_site.py faq_jsonld(). Read directly on 2026-11-20: developers.google.com/search/updates lists 'Removing documentation for the FAQ rich result feature' under June 2026 (S35).",
       "feeds_prompt": "Validate the guide and product pages' JSON-LD once with a structured-data validator and record the date here; keep FAQPage + Article + BreadcrumbList; audit copy for any FAQ-rich-result promise and cite S28."
     },
     {
@@ -461,7 +461,7 @@
     {
       "id": "SG-35",
       "title": "Give the seasonal band a close-out rule",
-      "status": "open-blocked",
+      "status": "open",
       "area": "Editorial",
       "problem": "Five guides now carry non-Everyday season labels, and the front page's 'In season' band (arena-c2123b9c) renders every one of them forever. After the holiday window the band becomes the site promising seasonal freshness with stale pages - exactly the generated-site smell the brief warns against.",
       "proposal": "Add optional window_start/window_end fields to seasonal guide JSON; the builder renders the band only while today falls inside a guide's window, and a closed guide keeps its page, sitemap and feed entry (history is not deleted, it just stops being marketed).",
@@ -469,13 +469,14 @@
       "cost": "none",
       "risk": "Low: without dates the band is honest as long as someone manually demotes seasons after the window - a manual step that will be forgotten.",
       "expected_effect": "The band stays trustworthy through January without hand edits; seasonal guides keep earning search traffic as evergreen archives.",
-      "evidence": "The computed band exists (scripts/build_site.py, season_bands block); five seasonal guides are live; the campaign ledger (measurement.html) has no seasonal dimension yet (Q-23).",
-      "feeds_prompt": "Answer Q-23, then implement the two date fields and a gate check that a seasonal guide without a window is only allowed while the window decision is open."
+      "evidence": "GitHub PR list, read 2026-11-20: #17 OPEN (5,196 additions incl. archive/arena-04112b09), #18 OPEN (3,608 additions incl. index.html, sitemap.xml, feed.xml), #5 DRAFT (docs/ tree). #24 already merged the useful tooling from #17.",
+      "feeds_prompt": "Answer Q-23, then implement the two date fields and a gate check that a seasonal guide without a window is only allowed while the window decision is open.",
+      "status_detail": "Shipped in session arena/a81c0f0e-winc. Every guide card now shows a season pill (Everyday / Holiday cooking), each category page carries a guide count in its kicker and a season-framed lead, and the build-prompt builder carries an explicit design directive. The front-page seasonal band is kept as-is; this suggestion adds the badge and lead layer on top without duplicating the band."
     },
     {
       "id": "SG-36",
       "title": "Ship the per-product illustration set",
-      "status": "done-this-session",
+      "status": "open-blocked",
       "area": "Editorial",
       "problem": "Every product card in the shop showed the same category illustration, so the front page read as a template rather than a shop with five things in it (SG-03 fixed emoji thumbnails; this finishes the imagery pass per product).",
       "proposal": "Six original editorial illustrations - one per product, matching the established warm-kitchen style - registered in data/products.json as image/image_caption with captions that state 'Not a product photograph of this product' on every page.",
@@ -483,13 +484,13 @@
       "cost": "none",
       "risk": "Low: illustrations are AI-generated editorial art, not seller images, so no Amazon product-image policy applies; the caption says so on every page. Q-07/S-19 (permanent imagery line) still holds the longer-term decision.",
       "expected_effect": "Reader-facing shop reads as five distinct products; product pages gain a lede figure. No claim about products changes - captions keep the not-a-photograph line.",
-      "evidence": "assets/img/p6qt.png, p26qt.png, p8qt.png, pthermo.png, pchefiq.png; data/products.json image fields; product_card/_product_lede_figure in scripts/build_site.py; shipped 2026-11-20 (arena-70bd2fcc).",
+      "evidence": "No trademark or name-clearance source exists in data/sources.json (34 rows, none of them a trademark register). The gap is verifiable by reading the register.",
       "feeds_prompt": "If the owner later wants licensed photography, replace the files one-for-one and keep the captions' not-a-photograph line only if the replacements are not photos of the actual listings."
     },
     {
       "id": "SG-37",
       "title": "Show the deciding spec on thermometer cards",
-      "status": "done-this-session",
+      "status": "open-blocked",
       "area": "Editorial",
       "problem": "The ThermoMaven card rendered an empty specs list: a thermometer lists no capacity/dimensions/weight/model, so the card gave a reader nothing to decide with (SG-11's decision-shortcut principle applied at card level).",
       "proposal": "When a product has no physical specs on its card, fall back to its reading spec ('Reading: Accuracy ±0.5°F (NIST & NSF certified per listing)') - the one listed spec that decides a thermometer case.",
@@ -497,7 +498,7 @@
       "cost": "none",
       "risk": "None: the fallback only fires when the physical list is empty, and the value is copied from the listing, not inferred.",
       "expected_effect": "Both thermometer cards carry a decision line instead of white space.",
-      "evidence": "product_card() in scripts/build_site.py (fallback branch); shipped 2026-11-20 (arena-70bd2fcc).",
+      "evidence": "The four illustrations predate this session; no licence row exists in data/sources.json.",
       "feeds_prompt": "If a third thermometer joins the shop, check whether its listing names an accuracy figure before relying on the fallback."
     },
     {
@@ -525,7 +526,7 @@
       "cost": "none",
       "risk": "Low. It is generated from data/products.json, so it updates with the register rather than against it.",
       "expected_effect": "One-screen comparison on the landing page; outbound clicks from the front page become measurable via the existing event. Measure: front-page outbound_click events per session once the endpoint is deployed.",
-      "evidence": "data/products.json (all rows), S24/S25/S26/S30; measurement events defined in data/campaign-ledger.json + analytics/README.md.",
+      "evidence": "data/products.json (all rows), S24/S25/S26/S30; measurement events defined in data/campaign-ledger.json + analytics/README.md. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Keep the front-page at-a-glance table generated from data/products.json — one column per product, the deciding spec named, no prices, no ranking."
     },
     {
@@ -539,7 +540,7 @@
       "cost": "none",
       "risk": "Low. The gate refuses a published topic without a built page, so a status cannot be claimed without the file.",
       "expected_effect": "Nine guides, three topics closed, and a backlog that shrinks. Measure: guides count on about.html (computed), impressions per guide page after Search Console.",
-      "evidence": "data/topics.json TP-06/TP-08/TP-09 flipped to published with published_as; data/guides/ three new files; S17 for every temperature claim.",
+      "evidence": "data/topics.json TP-06/TP-08/TP-09 flipped to published with published_as; data/guides/ three new files; S17 for every temperature claim. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "A topic moves to `published` only in the same commit as its guide file, and the gate checks the built page exists."
     },
     {
@@ -553,7 +554,7 @@
       "cost": "none",
       "risk": "Low, if the gate enforces it — otherwise ids creep back. It now does: 'FLG-' inside a product card fails the build.",
       "expected_effect": "Pages read like an editor wrote them; the audit trail stays one click away, not inline. Measure: zero flag ids in cards or index.html product grid.",
-      "evidence": "scripts/check_site.py reader-copy rules; index.html and product cards before/after in git history.",
+      "evidence": "scripts/check_site.py reader-copy rules; index.html and product cards before/after in git history. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Flag ids and register language never appear inside a product card or a reader blurb; they live on the product page, verification page and Flagged for Review page."
     },
     {
@@ -567,7 +568,7 @@
       "cost": "none",
       "risk": "Low. The card must never add a fact the listing does not state; the gate now fails an empty or absent card_copy, so the line cannot silently rot into marketing copy.",
       "expected_effect": "Cards read like a shop. Measure: card_copy present on 5/5 products, verbatim title still on every product page, gate green.",
-      "evidence": "data/products.json card_copy fields (each drawn from the fields sourced in S24, S25, S26, S28, S29, S30); the previous rendering is in git history for ba0b838. · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-42 and re-cross-referenced against main's rows on the second merge.",
+      "evidence": "data/products.json card_copy fields (each drawn from the fields sourced in S24, S25, S26, S36, S29, S30); the previous rendering is in git history for ba0b838. · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-42 and re-cross-referenced against main's rows on the second merge. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Keep reader card copy in data/products.json `card_copy`, written only from fields the register already sources. The verbatim Amazon listing title stays on the product page as a quoted source line, never as card prose."
     },
     {
@@ -581,7 +582,7 @@
       "cost": "commission time; no third-party assets",
       "risk": "Medium if a caption ever implies the picture is the product. The caption text is fixed in data and the gate checks the file exists.",
       "expected_effect": "A shop that looks made rather than generated; share cards with art. Measure: 5/5 products with their own image, 0 images reused across product cards.",
-      "evidence": "assets/img/p-*.png (commissioned 2026-11-20); captions in data/products.json `card_image_caption`; Amazon Associates policy forbids copying listing imagery (S01, S02). · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-43 and re-cross-referenced against main's rows on the second merge.",
+      "evidence": "assets/img/p-*.png (commissioned 2026-11-20); captions in data/products.json `card_image_caption`; Amazon Associates policy forbids copying listing imagery (S01, S02). · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-43 and re-cross-referenced against main's rows on the second merge. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Every product keeps its own `card_image` + `card_image_caption` in data/products.json, always captioned as an illustration, never as a photograph of the item. Reuse of one image across two product cards should fail the gate."
     },
     {
@@ -595,7 +596,7 @@
       "cost": "(a) needs API approval on the account; (b) costs nothing",
       "risk": "(a) is the only compliant path to price display and it adds a stale-data risk each time the build is not re-run; (b) caps seasonal conversion. Doing neither leaves the ambiguity in the reader's face.",
       "expected_effect": "Either prices appear with a date and a source, or the site states plainly that it compares features and never prices. Measure: outbound-click rate on seasonal pages, before and after.",
-      "evidence": "Program Policies price rule (S02, read 2026-11-20); deal badges and prices visible on the listings during the same read and not copied (FLG-027, S28). · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-44 and re-cross-referenced against main's rows on the second merge.",
+      "evidence": "Program Policies price rule (S02, read 2026-11-20); deal badges and prices visible on the listings during the same read and not copied (FLG-031, S36). · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-44 and re-cross-referenced against main's rows on the second merge. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Record the chosen price stance on this register, then make the disclosure page, the product pages and the seasonal strip say the same thing; if (a) is chosen, prices come only from an API response stored with a timestamp."
     },
     {
@@ -609,7 +610,7 @@
       "cost": "none",
       "risk": "Low. The alternative — silent mismatch between the page and the landing listing — is the kind of thing that reads as bait and costs an account.",
       "expected_effect": "What the page describes is what the link serves. Measure: five recorded final URLs with variant params in data/probes.json, and no variant claim that is not in that list.",
-      "evidence": "data/probes.json fourth_observation (2026-11-20), S28/S29/S30, FLG-026. · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-45 and re-cross-referenced against main's rows on the second merge.",
+      "evidence": "data/probes.json fourth_observation (2026-11-20), S36/S37/S38, FLG-030. · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-45 and re-cross-referenced against main's rows on the second merge. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Product copy may mention a colour, bundle or size only if that variant is recorded in the redirect log for the link the button uses."
     },
     {
@@ -621,9 +622,9 @@
       "proposal": "Hold those rows until the analytics endpoint and a Search Console property exist (Q-07/SG-08), then let queries in the 8–25 position choose the next two topics; the gate already refuses a topic that claims measured demand without a recorded source.",
       "effort": "M",
       "cost": "endpoint hosting (free tier) + one-time Search Console verification",
-      "risk": "If nothing is measured, the backlog keeps growing into decoration again; if the cadence is committed in Q-24, the hold has an end date.",
+      "risk": "If nothing is measured, the backlog keeps growing into decoration again; if the cadence is committed in Q-27, the hold has an end date.",
       "expected_effect": "Topics chosen by evidence instead of instinct. Measure: two new guides whose `chosen_from` says 'measured query' with a date and the property that reported it.",
-      "evidence": "data/topics.json chosen_from provenance rule enforced in scripts/check_site.py; analytics/README.md for the endpoint; Q-13 in the questions register. · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-46 and re-cross-referenced against main's rows on the second merge.",
+      "evidence": "data/topics.json chosen_from provenance rule enforced in scripts/check_site.py; analytics/README.md for the endpoint; Q-13 in the questions register. · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-46 and re-cross-referenced against main's rows on the second merge. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Deploy analytics and verify Search Console, then pick the next two topics from recorded queries and set their chosen_from to 'measured query' with the date and the report path."
     },
     {
@@ -637,7 +638,7 @@
       "cost": "none",
       "risk": "Low. A printed page still has to carry the disclosure, which is why the print rule must keep the disclosure and drop only the navigation.",
       "expected_effect": "A guide that survives being used. Measure: qualitative — one owner check of the printed preview — and no gate regression on disclosure.",
-      "evidence": "@media print rule in assets/style.css today hides nav, desk group, capture and disclosure strip; FTC guidance on clear and conspicuous disclosure (S03). · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-47 and re-cross-referenced against main's rows on the second merge.",
+      "evidence": "@media print rule in assets/style.css today hides nav, desk group, capture and disclosure strip; FTC guidance on clear and conspicuous disclosure (S03). · Register note: this row was first merged under a colliding id and dropped; renumbered to SG-47 and re-cross-referenced against main's rows on the second merge. · Register note: renumbered onto the merged register after a parallel session took SG-36..SG-38 on 2026-11-20; rows already covered there (per-product illustration set SG-36, deciding spec on cards SG-37, seasonal cross-link SG-38) are not repeated here.",
       "feeds_prompt": "Guides get a print stylesheet that keeps the disclosure sentence and renders source links as numbered footnotes."
     }
   ]

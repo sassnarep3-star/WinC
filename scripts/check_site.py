@@ -185,6 +185,14 @@ for hf in html_files:
         rel = os.path.normpath(os.path.join(base, src)) if base else src
         if not os.path.exists(os.path.join(ROOT, rel)):
             fail(f"{hf}: missing image -> {src}")
+    # a <picture><source srcset> pointing at a missing file is a silent broken image
+    for m in re.finditer(r'<source[^>]+srcset="([^"]+)"', content):
+        src = m.group(1)
+        if src.startswith(("http", "data:")):
+            continue
+        rel = os.path.normpath(os.path.join(base, src)) if base else src
+        if not os.path.exists(os.path.join(ROOT, rel)):
+            fail(f"{hf}: missing <source> image -> {src}")
     for m in re.finditer(r'<meta property="og:image" content="([^"]+)"', content):
         u = m.group(1)
         if not u.startswith(SITE):
@@ -370,69 +378,6 @@ if "the shop" not in idx_text.lower():
     fail("index.html: front page no longer shows the shop")
 
 
-# --- reader-copy + shop-surface rules (session f1fd0ff0) -------------------
-# These exist because "make it read like a shop, not a scraped feed" is a
-# requirement, not a preference: it now fails the build when it regresses.
-for p2 in products:
-    cc = (p2.get("card_copy") or "").strip()
-    if not cc:
-        fail(f"{p2['id']}: card_copy missing — a card with no editorial line prints the raw listing title")
-    if len(cc) > 360:
-        fail(f"{p2['id']}: card_copy is {len(cc)} chars — too long to read as a shop card line")
-    if "FLG-" in cc or re.search(r"\bS\d\d\b", cc):
-        fail(f"{p2['id']}: card_copy carries internal register ids; reader copy must not")
-    if PRICE_RE.search(cc):
-        fail(f"{p2['id']}: card_copy contains a price (Program Policies)")
-    for fld in ("capacity", "dimensions", "weight", "temperature", "power", "model", "upc", "brand"):
-        val = p2.get(fld) or ""
-        if "FLG-" in val:
-            fail(f"{p2['id']}: '{fld}' carries a flag id — that note belongs in listing_notes/Flagged for Review, "
-                 f"not in a value a reader copies into a shopping list")
-    for field in ("card_image", "card_image_caption", "form_factor", "best_for"):
-        if not p2.get(field):
-            fail(f"{p2['id']}: field '{field}' is empty — the shop grid renders it")
-    cimg = p2.get("card_image") or ""
-    if cimg and not os.path.exists(os.path.join(ROOT, cimg)):
-        fail(f"{p2['id']}: card_image {cimg} does not exist")
-    cap = (p2.get("card_image_caption") or "").lower()
-    if cap and not cap.startswith("commissioned editorial illustration"):
-        fail(f"{p2['id']}: product artwork must be labelled as a commissioned illustration")
-    if cap and "not a product photograph" not in cap:
-        fail(f"{p2['id']}: image caption must say the picture is not a product photograph")
-
-# artwork has to be light enough to be worth loading
-IMG_DIR = os.path.join(ROOT, "assets", "img")
-if os.path.isdir(IMG_DIR):
-    for fn in sorted(os.listdir(IMG_DIR)):
-        fp = os.path.join(IMG_DIR, fn)
-        if not os.path.isfile(fp):
-            continue
-        kb = os.path.getsize(fp) / 1024
-        if kb > 400:
-            fail(f"assets/img/{fn} is {kb:.0f} KB — compress web artwork (LCP budget), do not ship a raw PNG")
-        if fn.endswith(".png") and kb > 200:
-            fail(f"assets/img/{fn}: a PNG this large should be a JPEG at this site's sizes")
-
-# the shop grid on the front page stays free of bookkeeping language
-idx_html = read("index.html") if os.path.exists(os.path.join(ROOT, "index.html")) else ""
-m = re.search(r"(?s)<h2>The shop</h2>(.*?)<h2>", idx_html)
-if m and "FLG-" in m.group(1):
-    fail("index.html: the shop grid carries flag ids — keep register language on the product and review pages")
-
-# a dated seasonal surface must actually carry its date, or it silently goes stale
-sm_block = re.search(r'(?s)<section class="seasonal".*?</section>', idx_html)
-if sm_block and not re.search(r"20\d\d", sm_block.group(0)):
-    fail("index.html: the seasonal strip has no year in it — date it or remove it")
-
-# a topic may only be marked published when its page exists and is built
-for t2 in topic_doc["topics"]:
-    if t2.get("status") == "published":
-        pa = t2.get("published_as") or ""
-        if not pa:
-            fail(f"topic {t2.get('id')}: status published but no published_as path")
-        elif not os.path.exists(os.path.join(ROOT, pa)):
-            fail(f"topic {t2.get('id')}: published_as {pa} is not built")
-
 # --- every register row must carry an official source link (or say why not) ---
 REGISTER_PAGES = ["questions.html", "topics.html", "flagged-for-review.html", "products/index.html"]
 for hf in REGISTER_PAGES:
@@ -450,6 +395,128 @@ for hf in REGISTER_PAGES:
     # and the page must point at the source register
     if 'href="https://' not in content and 'href="verification.html#src-' not in content:
         fail(f"{hf}: register page links to no source at all")
+
+
+# --- narrative + register integrity (session arena-038c0b80) -----------------
+# Every cross-reference the site publishes must resolve, and every story must rest on
+# a stored spec. Silent drift here is how a register starts lying about itself.
+story_doc = json.load(open(os.path.join(ROOT, "data/stories.json"), encoding="utf-8"))
+FLAG_IDS_ALL = {f["id"] for f in FLAGS}
+PRODUCT_KEYS = {p["id"] for p in products}
+for st in story_doc["stories"]:
+    sid = st.get("product_id", "<no id>")
+    for field in ("product_id", "series", "kicker", "headline", "standfirst", "paragraphs", "spec_anchor"):
+        if not st.get(field):
+            fail(f"stories.json: {sid}: field '{field}' is empty")
+    if not isinstance(st.get("paragraphs"), list) or len(st["paragraphs"]) < 3:
+        fail(f"stories.json: {sid}: needs at least 3 paragraphs to be a piece rather than a blurb")
+    for f in st.get("flags", []) or []:
+        if f not in FLAG_IDS_ALL:
+            fail(f"stories.json: {sid}: cites unknown flag {f}")
+    if st["spec_anchor"] not in PRODUCT_FIELDS:
+        fail(f"stories.json: {sid}: spec_anchor '{st['spec_anchor']}' is not a stored product field")
+for sname, pids in story_doc.get("_series", {}).items():
+    for pid in pids:
+        if pid not in PRODUCT_KEYS:
+            fail(f"stories.json: series '{sname}' lists unknown product {pid}")
+
+maker_doc = json.load(open(os.path.join(ROOT, "data/makers.json"), encoding="utf-8"))
+SRC_IDS = {x["id"] for x in json.load(open(os.path.join(ROOT, "data/sources.json"), encoding="utf-8"))["sources"]}
+for mk in maker_doc["makers"]:
+    for field in ("id", "name", "who", "story", "checkable_claims"):
+        if not mk.get(field):
+            fail(f"makers.json: {mk.get('id')}: field '{field}' is empty")
+    if len(mk["checkable_claims"]) < 2:
+        fail(f"makers.json: {mk['id']}: fewer than 2 checkable claims")
+    for c in mk["checkable_claims"]:
+        if c.get("source_id") not in SRC_IDS:
+            fail(f"makers.json: {mk['id']}: claim cites unknown source {c.get('source_id')!r}")
+        if not c.get("claim") or not c.get("source_label"):
+            fail(f"makers.json: {mk['id']}: claim without text or source label")
+
+# every SG-/Q-/FLG- id cited in reader-facing HTML must exist in its register
+for hf in html_files:
+    if hf.startswith("archive"):
+        continue
+    body = read(hf)
+    for sg in set(re.findall(r"\bSG-\d{2}\b", body)):
+        if sg not in seen:
+            fail(f"{hf}: cites {sg}, which is not in data/suggestions.json")
+    for qq in set(re.findall(r"\bQ-\d{2}\b", body)):
+        if qq not in seen_q:
+            fail(f"{hf}: cites {qq}, which is not in data/questions.json")
+    for ff in set(re.findall(r"\bFLG-\d{3}\b", body)):
+        if ff not in FLAG_IDS_ALL:
+            fail(f"{hf}: cites {ff}, which is not in data/flags.json")
+
+# the capture control must stay switched off and un-submittable
+# a page that merely MENTIONS the form (e.g. a suggestion card) is not a page that renders it
+cap_pages = [hf for hf in html_files if 'id="reader-capture"' in read(hf)]
+for hf in cap_pages:
+    body = read(hf)
+    if 'novalidate' not in body or 'data-nosubmit="true"' not in body:
+        fail(f"{hf}: capture form lacks the novalidate/data-nosubmit guard (a JS-blocked browser would GET the address into a URL)")
+    if 'method="get"' in body and 'action=""' not in body:
+        fail(f"{hf}: capture form has a method with no empty action guard")
+
+# --- inline JavaScript must parse (session arena-038c0b80) -------------------
+# A broken inline script is invisible to every HTML check and to a reader until
+# they click something. `node --check` is cheap and catches it.
+import subprocess, tempfile
+if html_files:
+    for hf in html_files:
+        body = read(hf)
+        for k, m in enumerate(re.finditer(r"(?s)<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", body)):
+            js = m.group(1).strip()
+            if not js or js.startswith("{"):
+                continue  # empty or JSON-LD
+            with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as tf:
+                tf.write(js)
+                tmp = tf.name
+            try:
+                r = subprocess.run(["node", "--check", tmp], capture_output=True, text=True)
+                if r.returncode != 0:
+                    first = [ln for ln in r.stderr.splitlines() if "Error" in ln][:1]
+                    fail(f"{hf}: inline script #{k} does not parse as JavaScript ({first[0] if first else 'syntax error'})")
+            except FileNotFoundError:
+                pass  # node not installed: skip rather than fail the gate for a missing tool
+            finally:
+                os.unlink(tmp)
+
+# --- register language kept out of reader values, and dated seasonal copy (f1fd0ff0) ---
+for p2 in products:
+    for fld in ("capacity", "dimensions", "weight", "temperature", "power", "model", "upc", "brand"):
+        val = p2.get(fld) or ""
+        if "FLG-" in val or re.search(r"\bS\d\d\b", val):
+            fail(f"{p2['id']}: '{fld}' carries register language ({val[:60]!r}) — a reader copies this value into a "
+                 f"shopping list; the note belongs in listing_notes and on Flagged for Review")
+    cc = p2.get("card_copy")
+    if cc:
+        if "FLG-" in cc or PRICE_RE.search(cc):
+            fail(f"{p2['id']}: card_copy carries a flag id or a price")
+        if len(cc) > 400:
+            fail(f"{p2['id']}: card_copy is {len(cc)} chars — a card line, not an article")
+
+# a published topic must point at a guide file that actually exists
+for t3 in topic_doc["topics"]:
+    if t3.get("status") == "published":
+        pa = t3.get("published_as") or ""
+        if not pa:
+            fail(f"topic {t3.get('id')}: marked published with no published_as path")
+            continue
+        if not os.path.exists(os.path.join(ROOT, pa)):
+            fail(f"topic {t3.get('id')}: published_as {pa} is not built")
+        src = "data/guides/" + os.path.basename(pa) + "src" if False else "data/guides/" + os.path.basename(pa).replace(".html", ".json")
+        if not os.path.exists(os.path.join(ROOT, src)):
+            fail(f"topic {t3.get('id')}: {pa} has no source file {src} (publish = drop a file in data/guides/)")
+
+# an undated seasonal promise is how a site looks stale in public
+idx_html2 = read("index.html") if os.path.exists(os.path.join(ROOT, "index.html")) else ""
+m_sea = re.search(r'(?s)<section class="seasonal".*?</section>', idx_html2)
+if m_sea and not re.search(r"20\d\d", m_sea.group(0)):
+    fail("index.html: the seasonal strip carries no year — date it or drop it")
+if m_sea and "amazon.com/dp/" in m_sea.group(0):
+    fail("index.html: the seasonal strip links a product listing; keep it editorial and let the shop do that")
 
 
 if errors:

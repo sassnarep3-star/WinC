@@ -12,7 +12,7 @@
     {
       "id": "FLG-002",
       "title": "Reader Special Links not yet tested in enrolled Associates workflow",
-      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session.",
+      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session. Neither the supplied short links nor the constructed Special Links have been through the enrolled Associates workflow test (one link per product: click it, confirm the destination, then confirm the click appears in the tracking report). Until that test is recorded, no link on this site is claimed to be a validated Special Link.",
       "action": "Test one link per product in Associates workflow; confirm destination and tracking report before scaling.",
       "status": "needs review",
       "sources": [],
@@ -235,38 +235,92 @@
       "title": "Stored product titles drifted from live Amazon listing titles (4 of 5)",
       "detail": "On 2026-11-20 session arena/0458cd24-winc re-read every observed listing's <title> directly from amazon.com. Four of five stored titles differed from the live Amazon listing <title> (only B0CDY277D3 matched verbatim). Product identities were confirmed via the live <title> plus the category breadcrumb, so the stored titles in data/products.json were reconciled to the verbatim live listing titles. The underlying spec concerns (FLG-005, FLG-010, FLG-014) remain open and are unaffected by this title-only reconciliation.",
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
-      "status": "fixed in this session"
+      "status": "fixed in this session",
+      "sources": [
+        "S11",
+        "S23"
+      ],
+      "source_note": "Compares the stored titles against the live listing reads recorded in S11 and S23."
     },
     {
       "id": "FLG-026",
-      "title": "Sibling variant listings: a reader can land on a different listing than the row this site records",
-      "detail": "On the 2026-11-20 sixth read, two of the five resolved URLs carried a variant parameter (th=1) in addition to lv=shuf + plpRedirect=mhFallback, and Amazon's own rails on the recorded pages showed near-identical listings at different ASINs — Chefman 6 Qt dual basket at B0B7C327LK, ThermoMaven 1 Sec in Orange at B0GL7Z4KP4, a CHEF iQ Sense at B0DZFNQXGL. The five rows this site publishes are the listings that were observed, not a claim that every reader sees the same colourway or bundle.",
-      "action": "During the one-link Associates test (FLG-002), record the exact variant each link serves for each of the five products, pin the reader link to that variant, and leave intended_* blank until the owner confirms which listing was meant (FLG-003, FLG-009).",
+      "title": "ThermoMaven sells near-identical instant-read listings under different ASINs",
+      "detail": "Amazon's page for B0DHZTCNR5 surfaced a separate ThermoMaven '0.5 Sec' instant-read listing (B0DNMTK56N) in its 'Customers who viewed this item also viewed' module, with a different speed claim and a different colour. The shop's item is the one-second black model. A buyer following a saved link could land on the other one.",
+      "action": "Owner or reader: check the title and ASIN on the page reached from any external link before buying. No site change needed; recorded so the shop's product page can warn about it.",
       "status": "needs review",
       "sources": [
-        "S29",
-        "S30"
+        "S12",
+        "S33"
       ],
-      "source_urls": [
-        "https://www.amazon.com/dp/B0CDY277D3",
-        "https://www.amazon.com/dp/B0DHZTCNR5",
-        "https://www.amazon.com/dp/B0DZFD6R9Z"
-      ]
+      "source_note": ""
     },
     {
       "id": "FLG-027",
-      "title": "Prices, ratings and deal badges were on the pages and were not copied — so the site cannot speak about seasonal discounts",
-      "detail": "The listings read on 2026-11-20 displayed dollar amounts, star ratings, review counts and 'Black Friday Deal' badges. Amazon's Program Policies permit price and availability display only through an Amazon-served link or the Creator/PA API (S02), and a static build cannot keep those values current, so every such cell stays blank (FLG-006). The consequence is editorial as well as legal: in the one season when readers most want price context, this site can only send them to Amazon and say so.",
-      "action": "Decide on direction.html (SG-27): either wire the Creator/PA API into a build step that serves prices at request time with the required freshness note, or keep the no-price rule and publish seasonal guides that compare the listing's stated features instead. Until a decision is recorded, the CTA stays 'Check price & details on Amazon' and no discount is claimed anywhere.",
+      "title": "CHEF iQ Sense is sold in 2-probe and 3-probe configurations under different ASINs",
+      "detail": "Amazon's page for B0DZFD6R9Z (3 probes) surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) in the same module. Probe count is a headline spec for this product, so the two configurations are easy to confuse and are not the same purchase.",
+      "action": "Owner or reader: confirm the probe count on the listing page reached. Recorded on the product page so the spec is not assumed from a family name.",
       "status": "needs review",
       "sources": [
-        "S02",
-        "S06",
-        "S30"
+        "S13",
+        "S34"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-028",
+      "title": "This site publishes no analytics numbers, and the ledger is empty by design",
+      "detail": "The measurement layer ships as code (assets/app.js five events, analytics/worker.js and analytics/collect.py endpoints) but no endpoint is deployed and no first-party report has been obtained, so data/campaign-ledger.json has zero rows. Every 'how we would know it worked' line in the suggestions register is therefore a hypothesis about a future measurement, not a result.",
+      "action": "Deploy one endpoint (FLG-007), then fill the ledger only from authorized first-party exports with a dated provenance row. Do not present a forecast in the meantime.",
+      "status": "needs review",
+      "sources": [
+        "S21"
+      ],
+      "source_note": "Endpoint state is verifiable from the repo; the absence of first-party data cannot be proven from here, which is why this is flagged rather than asserted."
+    },
+    {
+      "id": "FLG-029",
+      "title": "Amazon listing pages in this environment are served as a fallback summary route",
+      "detail": "Every one of the five listing URLs read on 2026-11-20 returned with lv=shuf and plpRedirect=mhFallback in the response URL (FLG-009). The <title> and breadcrumb are stable across four observations, but the page is a summary route, so detail-table fields read from it may differ from the full detail page a shopper sees in a normal browser.",
+      "action": "Owner: open each listing once in a normal browser and compare the spec table with the product page's rows; correct any drift in data/products.json.",
+      "status": "needs review",
+      "sources": [
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-030",
+      "title": "Two of five redirect responses served a variant (th=1), so a button can land on a different listing than the row describes",
+      "detail": "Observation #6 (session f1fd0ff0, 2026-11-20): B08DKYBTPH and B0DZFD6R9Z resolved with an added th=1 variant parameter on top of lv=shuf + plpRedirect=mhFallback, while the same product names appear at other ASINs (already recorded on this register as FLG-026 and FLG-027 for the ThermoMaven and CHEF iQ siblings, and FLG-029 for the fallback route). What this row adds: the mechanism is a per-request variant parameter on the resolved URL, not only a second listing id, so a stable ASIN mapping does not by itself pin the colour, size or bundle a reader sees.",
+      "action": "During the one-link Associates test (FLG-002), record each link's final URL including every query parameter for all five products; if a variant parameter appears, either pin the Special Link to that variant or keep the bare /dp/<ASIN> form and leave variant wording out of the product copy. Keep intended_* blank until the owner confirms intent (FLG-003).",
+      "status": "needs review",
+      "sources": [
+        "S29",
+        "S36",
+        "S22"
       ],
       "source_urls": [
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ]
+    },
+    {
+      "id": "FLG-031",
+      "title": "Deal season arrives and this site still cannot say anything about price: the stance is undecided",
+      "detail": "The listings read on 2026-11-20 displayed dollar amounts, list-price strikethroughs, review counts and 'Black Friday Deal' badges. None were copied, because a static build cannot keep them current and Program Policies restrict price display to an Amazon-served link or the Creator/PA API (S02, FLG-006). The unresolved part is editorial, not legal: the site publishes seasonal guides that answer 'what should you check before you click buy' while having no sanctioned way to describe the only variable readers weigh that week. SG-32 (deal-season playbook) and SG-35 (seasonal close-out rule) both assume this is settled.",
+      "action": "Choose a stance on the direction register (SG-44 / Q-26): either wire the Creator/PA API into a timestamped build step with the freshness note, or adopt a permanent no-price editorial position and say so on the disclosure page and in the seasonal guides. Recorded decision, then the copy follows it.",
+      "status": "needs review",
+      "sources": [
+        "S02",
+        "S06",
+        "S36"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B0CDY277D3"
       ]
     }
   ]

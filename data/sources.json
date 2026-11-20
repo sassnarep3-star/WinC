@@ -6,7 +6,7 @@
       "url": "https://affiliate-program.amazon.com/help/operating/agreement",
       "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats; §6: a §5 violation is a material breach",
       "date": "2026-11-20",
-      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. §5 disclosure wording confirmed verbatim; §1 Special Links 'tagged' format confirmed. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note was over-cautious and is retired. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. §5 disclosure wording confirmed verbatim; §1 Special Links 'tagged' format confirmed. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note was over-cautious and is retired."
     },
     {
       "id": "S02",
@@ -14,7 +14,7 @@
       "url": "https://affiliate-program.amazon.com/help/operating/policies",
       "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; Special Links must carry the Associate ID/tag (XXXXX-##); no inaccurate price/product claims; disclosure + privacy requirements",
       "date": "2026-11-20",
-      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. The price/availability rule and the Special Link tag requirement were confirmed verbatim. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note is retired. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. The price/availability rule and the Special Link tag requirement were confirmed verbatim. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note is retired."
     },
     {
       "id": "S03",
@@ -22,23 +22,21 @@
       "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking",
       "what": "Verbatim, fetched 2026-11-20: 'that connection should be disclosed clearly and conspicuously'; affiliate section: 'You should disclose your relationship to the retailer clearly and conspicuously on your site'; 'The closer the disclosure is to your recommendation, the better.'; 'Consumers might not understand that \"affiliate link\" means ... a \"buy now\" button would not be adequate.'; '\"Paid link\" right next to an affiliate link should be an adequate disclosure'.",
       "date": "2026-11-20",
-      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov). Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov)."
     },
     {
       "id": "S04",
       "title": "Google — Qualify your outbound links to Google (rel=sponsored)",
       "url": "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links",
       "what": "Mark ads/paid placements with rel=sponsored; affiliate links qualify",
-      "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "date": "2026-11-20"
     },
     {
       "id": "S05",
       "title": "Sell on Amazon — What is an ASIN?",
       "url": "https://sell.amazon.com/blog/what-is-an-asin",
       "what": "ASIN is a unique 10-character alphanumeric code; found after /dp/ in product URL",
-      "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "date": "2026-11-20"
     },
     {
       "id": "S06",
@@ -46,23 +44,21 @@
       "url": "https://affiliate-program.amazon.com/help/node/topic/G8TW5AE9XL2VX9VM",
       "what": "Special links are identifiers (e.g. abcd-20) embedded in Amazon product links and must be embedded on declared sites; review requires at least 3 qualified sales within the first 180 days (personal orders do not qualify); a good rule of thumb is at least 10 posts; sites must be publicly available",
       "date": "2026-11-20",
-      "access": "Directly fetched on 2026-11-20 by session arena/0458cd24-winc; the special-link identifier and the review criteria confirmed verbatim. Publicly readable without login — the earlier 'login-gated' note is retired. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Directly fetched on 2026-11-20 by session arena/0458cd24-winc; the special-link identifier and the review criteria confirmed verbatim. Publicly readable without login — the earlier 'login-gated' note is retired."
     },
     {
       "id": "S07",
       "title": "Amazon Associates — Why do I have to identify myself as an Associate?",
       "url": "https://affiliate-program.amazon.com/help/node/topic/GPXFHVYZMTGPUMPE",
       "what": "Link-level disclosure must be clear + conspicuous near link; Operating Agreement statement must appear clearly and conspicuously on Site",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S08",
       "title": "GitHub Pages documentation",
       "url": "https://docs.github.com/en/pages",
       "what": "GitHub Pages turns a repository into a live website; site URL https://sassnarep3-star.github.io/WinC/",
-      "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "date": "2026-11-20"
     },
     {
       "id": "S09",
@@ -70,7 +66,7 @@
       "url": "https://www.amazon.com/dp/B0CDY277D3",
       "what": "Title, brand, model RJ38-SQPF-3TDB-2W, 6 Qt, dimensions, weight, temp, UPC",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the listing <title> matched the stored product title verbatim. Detailed spec cells (model/UPC/dimensions/weight/power) remain sourced to the listing body and are re-checked at the workflow test. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the listing <title> matched the stored product title verbatim. Detailed spec cells (model/UPC/dimensions/weight/power) remain sourced to the listing body and are re-checked at the workflow test."
     },
     {
       "id": "S10",
@@ -78,7 +74,7 @@
       "url": "https://www.amazon.com/dp/B09B7SB46R",
       "what": "Title, brand, model 4-00675-02X-VN, 26QT, dimensions, weight, UPC; title vs bullets accessory-count conflict flagged (FLG-010)",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads '...Six Cooking Accessories Included' while the listing body bullets say 7 accessories (FLG-010). The stored title was reconciled to the live <title>. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads '...Six Cooking Accessories Included' while the listing body bullets say 7 accessories (FLG-010). The stored title was reconciled to the live <title>."
     },
     {
       "id": "S11",
@@ -86,7 +82,7 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Title, brand, 8 Qt, dimensions, weight, power, UPC; model/temp conflicts flagged (FLG-005)",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads 'TurboFry 4-in-1 ... 450°F Hi-Fry', which supports the 450°F mention behind FLG-005. The stored title was reconciled to the live <title>. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> reads 'TurboFry 4-in-1 ... 450°F Hi-Fry', which supports the 450°F mention behind FLG-005. The stored title was reconciled to the live <title>."
     },
     {
       "id": "S12",
@@ -94,7 +90,7 @@
       "url": "https://www.amazon.com/dp/B0DHZTCNR5",
       "what": "Title, ±0.5°F accuracy, NIST&NSF certified, auto-rotate LED, IP67 waterproof; model HT07 via Amazon.fr (FLG-004)",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms ±0.5°F, NIST&NSF Certified and IP67 Waterproof. The stored title was reconciled to the live <title>. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms ±0.5°F, NIST&NSF Certified and IP67 Waterproof. The stored title was reconciled to the live <title>."
     },
     {
       "id": "S13",
@@ -102,55 +98,49 @@
       "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
       "what": "Title, 3 probes + hub, WiFi, 1000°F, model CQ60-3C-Z1-E, UPC, package dims",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms 3 Ultra-Thin Probes, 1000°F Heat Safe and Gen3. The stored title was reconciled to the live <title>. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the live <title> confirms 3 Ultra-Thin Probes, 1000°F Heat Safe and Gen3. The stored title was reconciled to the live <title>."
     },
     {
       "id": "S14",
       "title": "Prior sessions — live link resolutions 2026-11-17 (provenance, not official)",
       "url": "https://github.com/kanlerxz87-cyber/Zone2/pull/160",
       "what": "B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z; also Zone3 #153, Prod3 #11",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S15",
       "title": "Submitted short links (as supplied in brief)",
       "url": "https://link.amazon/B04G1MEwY",
       "what": "Five tokens (9 chars each): B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj. Compliance status unresolved (FLG-003) — not claimed invalid.",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S16",
       "title": "USDA FSIS — Safe Minimum Internal Temperature Chart",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
       "what": "All poultry (incl. ground poultry, giblets, stuffing) 165°F; ground meats 160°F; beef/pork/veal/lamb steaks, chops, roasts 145°F + rest ≥3 min; fresh/ham uncooked 145°F + rest. Used as the only numeric food-safety claims in the two new guides.",
-      "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "date": "2026-11-20"
     },
     {
       "id": "S17",
       "title": "USDA FSIS — Food Thermometers",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
       "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F. Calibration section read in full 2026-11-20 (session f1fd0ff0): ice-water method — fill a glass with ice, add drinking water, stir, immerse the stem a minimum of 2 inches without touching the sides or bottom, wait a minimum of 30 seconds, the reading should be 32°F; boiling-water method — 2 inches deep, 30 seconds, 212°F at sea level, and boiling point falls by at least 2°F (possibly 5°F) at altitude. Care: wash by hand, most thermometers should not be immersed, and 'Do not leave your food thermometer in food while cooking unless the manufacturer's instructions specifically say it can withstand heat'. Type table: oven-cord, fork-combination and thermistor types are listed as 'Cannot be calibrated'; thermocouple can; most food thermometers read accurate within 2 to 4°F.",
-      "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "date": "2026-11-20"
     },
     {
       "id": "S18",
       "title": "Redirect re-observation — two sessions, three dates, 5/5 reproducible",
       "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
       "what": "All five link.amazon tokens resolved live; 5/5 targets match the 2026-11-17 prior-session mapping (S14). Every final URL carried lv=shuf and plpRedirect=mhFallback. Re-observed a third time on 2026-11-20 by session arena-82d39deb (S22) with identical 5/5 results. Raw query strings + page titles recorded in data/probes.json.",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S19",
       "title": "Google — Make your links crawlable / qualify outbound links",
       "url": "https://developers.google.com/search/docs/crawling-indexing/links-crawlable",
       "what": "Fetched directly: 'If you were paid in some way for the link, qualify these links with sponsored or nofollow.' Basis for rel=\"sponsored nofollow noopener\" on every reader button.",
-      "date": "2026-11-20",
-      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "date": "2026-11-20"
     },
     {
       "id": "S20",
@@ -158,55 +148,49 @@
       "url": "https://affiliate-program.amazon.com/help/node/topic/GM6CHU93RDXZV7D8",
       "what": "'our software automatically adds \"-20\" to the end of all Associate IDs' — supports treating shopnow047c-20 as a US-marketplace-shaped tracking ID. Does not confirm issuance (FLG-001).",
       "date": "2026-11-20",
-      "access": "Directly fetched on 2026-11-20 by session arena/0458cd24-winc; the '-20' suffix statement confirmed verbatim. Publicly readable without login — the earlier 'login-gated' note is retired. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim."
+      "access": "Directly fetched on 2026-11-20 by session arena/0458cd24-winc; the '-20' suffix statement confirmed verbatim. Publicly readable without login — the earlier 'login-gated' note is retired."
     },
     {
       "id": "S21",
       "title": "GitHub Pages API record for this repository",
       "url": "https://api.github.com/repos/sassnarep3-star/WinC/pages",
       "what": "build_type=legacy, source branch main path /, public true, https enforced, html_url https://sassnarep3-star.github.io/WinC/. Basis for generating the site into the repo root (F-04).",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S22",
       "title": "Third independent redirect observation, session arena-82d39deb (2026-11-20)",
       "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
       "what": "All five supplied link.amazon tokens re-resolved live on 2026-11-20 in a third session: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. 5/5 identical to the 2026-11-17 mapping and to the 2026-11-20 second observation. Every final URL again carried lv=shuf and plpRedirect=mhFallback.",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S23",
       "title": "Amazon listing re-read, session arena-82d39deb (2026-11-20) — product-details tables",
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Re-read of the live product-details tables and bullet copy for all five observed ASINs. Confirmed: B0CDY277D3 13.38\"D x 11.81\"W x 10.63\"H, 200-450°F, 120V/1700W, dishwasher-safe baskets, details-cell capacity '6 liters' (FLG-018). B08DKYBTPH 12.75\"D x 13.5\"W x 10\"H, 8 quarts, model RJ38-SQSS-8T, '1000 Watts/120 Volts', bullets 200-400°F vs title 450°F, 6/8/9-quart size selector, 'newer model' notice (FLG-005, FLG-019, FLG-022, FLG-023, FLG-024). B09B7SB46R 16.9\"D x 15.8\"W x 14.8\"H, 24.6 liters, stainless steel, 25 pre-sets in bullets vs 24 in title, serving claim '4-6 people' (FLG-010, FLG-020, FLG-021). B0DHZTCNR5 title re-read (±0.5°F, NIST&NSF, IP67). B0DZFD6R9Z title re-read (3 probes, 1000°F heat safe, 5 sensors).",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S24",
       "title": "Amazon listing — live product-details table for B0CDY277D3 (Chefman 6 Qt dual basket)",
       "url": "https://www.amazon.com/dp/B0CDY277D3",
       "what": "Details table read 2026-11-20: Special Feature '2Min Button, Automatic Shut-Off, Dual Zone Features, Hi-Fry, Mute'; Product Dimensions 13.38\"D x 11.81\"W x 10.63\"H; Capacity 6 liters (see FLG-018); bullets 'Digital air fryer dual basket temperature settings from 200-450°F' and '120 Volts/1700 Watts'.",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S25",
       "title": "Amazon listing — live product-details table for B09B7SB46R (Emeril 26QT French Door)",
       "url": "https://www.amazon.com/dp/B09B7SB46R",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, Programmable, Temperature Control, Timer'; Product Dimensions 16.9\"D x 15.8\"W x 14.8\"H; Capacity 24.6 liters; bullets '25 COOKING PRE-SETS', '26-QUART CAPACITY ... suitable for preparing food for 4–6 people with capacity to rotisserie a 6-lb chicken, bake a 12\" pizza'.",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S26",
       "title": "Amazon listing — live product-details table for B08DKYBTPH (Chefman 8 Qt TurboFry)",
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, LED Shake Reminder, Programmable'; Product Dimensions 12.75\"D x 13.5\"W x 10\"H; Capacity 8 quarts; size selector 6/8/9 quarts; bullet 'presets ... a temperature range from 200-400°F'; bullet 'cETL approved ... 1000 Watts/120 Volts – RJ38-SQSS-8T'; page states 'There is a newer model of this item'.",
-      "date": "2026-11-20",
-      "access": null
+      "date": "2026-11-20"
     },
     {
       "id": "S27",
@@ -234,6 +218,54 @@
     },
     {
       "id": "S30",
+      "title": "Amazon listing — CHEFMAN 6 Quart Dual Basket Air Fryer (B0CDY277D3), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "Live page read 2026-11-20 by session arena-038c0b80: <title> is verbatim the stored title; breadcrumb Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers. Response again carried lv=shuf + plpRedirect=mhFallback (fallback route, FLG-009).",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously through the reader; publicly readable, no login."
+    },
+    {
+      "id": "S31",
+      "title": "Amazon listing — Emeril Lagasse 26QT French Door (B09B7SB46R), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B09B7SB46R",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; breadcrumb ... > Fryers > Air Fryers. Fallback route flags present again.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S32",
+      "title": "Amazon listing — Chefman Air Fryer 8 Qt TurboFry (B08DKYBTPH), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B08DKYBTPH",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; breadcrumb ... > Fryers > Air Fryers; URL carried th=1 (size-variation selector), consistent with FLG-023.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S33",
+      "title": "Amazon listing — ThermoMaven 1 Sec instant-read (B0DHZTCNR5), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; breadcrumb ... > Thermometers & Timers > Meat. The 'also viewed' module surfaced a separate 0.5-sec ThermoMaven listing (B0DNMTK56N) with a different ASIN — recorded as FLG-026.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S34",
+      "title": "Amazon listing — CHEF iQ Sense Gen3 (B0DZFD6R9Z), read 2026-11-20",
+      "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "what": "Live page read 2026-11-20: <title> verbatim the stored title; 'also viewed' surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) — recorded as FLG-027.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S35",
+      "title": "Google Search Central — What's new: 'Removing documentation for the FAQ rich result feature' (June 2026)",
+      "url": "https://developers.google.com/search/updates#removing-faq-rich-result",
+      "what": "Google's own changelog lists the removal of the FAQ rich-result documentation in June 2026. FAQPage structured data is still valid schema.org markup, but it no longer produces a FAQ rich result in Google Search. This site keeps emitting it for machine readability and stops treating it as a findability win.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously 2026-11-20; changelog entry visible in the June 2026 section."
+    },
+    {
+      "id": "S36",
       "title": "Sixth independent live read of all five resolved listings + re-resolution record (session f1fd0ff0, 2026-11-20)",
       "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
       "what": "All five recorded ASINs were re-read through the same reader on 2026-11-20 by a session that had not seen them before. 5/5 page <title> values match the stored titles verbatim; the Emeril details table re-confirmed dimensions, capacity, model, UPC, wattage and its own ASIN row. Two of five resolved URLs additionally carried th=1 (a variant parameter) on top of lv=shuf + plpRedirect=mhFallback. Prices, star ratings, review counts, Best-Sellers-Rank and 'Black Friday Deal' badges were visible on these pages and were deliberately not copied (S02, FLG-006, FLG-027).",
@@ -241,7 +273,7 @@
       "access": "Read live through the fetch_page reader; the redirect target is a reproducible observation, not a confirmation of intent (FLG-009)."
     },
     {
-      "id": "S31",
+      "id": "S37",
       "title": "Amazon listing — live page for B0DHZTCNR5 (ThermoMaven 1 Sec instant-read), fourth read",
       "url": "https://www.amazon.com/dp/B0DHZTCNR5",
       "what": "<title> 2026-11-20: 'ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black' — verbatim match with data/products.json. The ±0.5°F figure and the NIST/NSF certification are the seller's claims in the listing title, which is why the accuracy guide explains how to test the reading at home instead of repeating the claim as a measurement.",
@@ -249,7 +281,7 @@
       "access": "Read live; model number not shown in the fields captured, so it stays blank (FLG-025)."
     },
     {
-      "id": "S32",
+      "id": "S38",
       "title": "Amazon listing — live page for B0DZFD6R9Z (CHEF iQ Sense Gen3), fourth read",
       "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
       "what": "<title> 2026-11-20: 'CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3' — verbatim match. The 1000°F heat-safe figure and the air-fryer use case are the listing's own words; FSIS guidance on leaving a thermometer in food is quoted alongside them in the placement guide (S17).",

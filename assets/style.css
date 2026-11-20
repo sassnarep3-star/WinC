@@ -271,80 +271,126 @@ table td p{margin:4px 0 0}
 @media (max-width:640px){.brand{font-size:27px}.masthead{padding:20px 0 14px}}
 
 /* ============================================================
-   Fourth pass (session f1fd0ff0, 2026-11-20)
-   Shop-first front page: product artwork, chips, at-a-glance
-   table, seasonal strip, quoted listing title. Still no
-   external fonts, no framework, no third-party requests.
+   Editorial layer (session arena-038c0b80, 2026-11-20)
+   Series tiles, product narratives, maker boxes, decision desk.
+   No external fonts, no tracking, no framework.
    ============================================================ */
 
-/* front page hero: copy beside the artwork on wide screens */
-.hero-shop{display:grid;gap:22px;align-items:center;padding:30px 0 6px}
-.hero-shop .lede{margin:0}
-.hero-shop .lede-figure{margin:0}
-@media (min-width:900px){
-  .hero-shop{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);column-gap:34px}
-  .hero-shop h1{font-size:clamp(30px,3.4vw,42px)}
-  .hero-shop .cta-row,.hero-shop .byline{grid-column:1/-1}
-  .hero-shop .lede{max-width:52ch}
-}
-.byline{font-size:13.5px;color:var(--muted);margin:6px 0 0}
+/* --- series tiles on the front page --- */
+.seriesgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:16px 0 4px}
+.seriestile{display:block;position:relative;border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;background:var(--card);text-decoration:none;color:var(--ink)}
+.seriestile img{display:block;width:100%;height:auto;aspect-ratio:1200/655;object-fit:cover;transition:transform .5s ease}
+.seriestile:hover img{transform:scale(1.03)}
+.seriestile .sname{display:block;font-family:ui-serif,Georgia,serif;font-size:22px;font-weight:700;
+  padding:14px 16px 2px;letter-spacing:-.01em}
+.seriestile .scount{display:block;padding:0 16px 16px;font-size:13.5px;color:var(--muted)}
+.seriestile:hover .sname{color:var(--accent)}
+.seclede{color:#44403C;max-width:70ch;margin:2px 0 0}
+
+/* --- cards: the one-line hook, series badge, source tail --- */
+.cardhook{font-size:14.5px;color:#44403C}
+.cardfoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+  margin-top:2px;padding-top:9px;border-top:1px dashed var(--line)}
+.seriesbadge{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  background:#F0FDF4;border:1px solid #BBF7D0;color:#166534;padding:3px 9px;border-radius:999px;text-decoration:none}
+.seriesbadge:hover{background:#DCFCE7}
+.sourcetail{font-size:12px;color:var(--muted);text-decoration:none}
+.sourcetail:hover{color:var(--accent);text-decoration:underline}
+
+/* --- the product narrative: a published piece, not a spec dump --- */
+.story{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 28px 20px;margin:20px 0 8px;max-width:none}
+.story h2{font-size:30px;line-height:1.2;margin:6px 0 10px;letter-spacing:-.015em}
+.story .standfirst{font-size:19px;line-height:1.55;color:#33302E;margin:0 0 14px;
+  padding-left:14px;border-left:4px solid var(--accent2)}
+.seriesline{margin:0;font-size:13px;color:var(--muted)}
+.seriesmark{font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:11.5px;color:var(--accent2)}
+.story p{font-size:17px;line-height:1.72;color:#292524;max-width:72ch}
+.anchorline{background:#FCF8F1;border:1px solid var(--line);border-radius:10px;padding:10px 13px;
+  font-size:14.5px !important;color:#44403C !important}
+.flagchip{display:inline-block;font-size:11.5px;font-weight:800;background:var(--warn);border:1px solid #FECACA;
+  color:#991B1B;padding:2px 8px;border-radius:999px;text-decoration:none;margin-right:5px}
+.flagchip:hover{background:#FEE2E2}
+
+/* --- maker box --- */
+.makerbox{margin:22px 0 4px;border:1px solid var(--line);border-top:4px solid var(--gold);
+  border-radius:12px;background:#FCF8F1;padding:16px 18px}
+.makerbox h3{margin:0 0 6px;font-size:19px}
+.makerbox p{font-size:15.5px;line-height:1.65;color:#33302E;max-width:70ch}
+.makerclaims{margin:10px 0 6px;padding-left:18px}
+.makerclaims li{font-size:14.5px;line-height:1.6;color:#33302E;margin:6px 0}
+
+/* --- series page --- */
+.serieslist{display:grid;gap:14px;margin:16px 0}
+.seriespiece{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:15px 18px}
+.seriespiece h3{margin:2px 0 6px;font-size:20px;line-height:1.3}
+.seriespiece p{font-size:15px;color:#33302E;max-width:72ch}
+
+/* --- house ad: a quiet, honest in-shop promo --- */
+.housead{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
+  background:#1C1917;color:#FFF9F0;border-radius:var(--radius);padding:18px 22px;margin:24px 0}
+.housead h3{color:#fff;margin:0 0 4px;font-size:21px}
+.housead p{margin:0;color:#D6D3D1;font-size:14.5px;max-width:60ch}
+.housead a.btn{background:#FBBF24;color:#1C1917 !important}
+.housead a.btn:hover{background:#F59E0B}
+
+/* --- decision desk --- */
+.desksteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0}
+.deskstep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.deskstep .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:999px;
+  background:var(--ink);color:#FBBF24;font-weight:800;font-size:13px;margin-bottom:6px}
+.deskstep h4{margin:4px 0 4px;font-size:16px}
+.deskstep p{margin:0;font-size:14px;color:#44403C}
+.deskstep a{font-weight:700}
+.pickpath{display:grid;gap:10px;margin:14px 0}
+.pickrow{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px}
+.pickrow input{margin-top:5px}
+.pickrow strong{display:block}
+.pickrow span.meta{display:block;margin-top:2px}
+.pathresult{border-left:5px solid var(--accent2);background:#F0FDF4;border-radius:10px;padding:14px 16px;margin:14px 0}
+.pathresult h4{margin:0 0 6px;font-size:17px}
+.pathresult ol{margin:6px 0 0;padding-left:22px}
+.pathresult li{font-size:15px;margin:5px 0}
+
+/* the verbatim Amazon listing title: evidence, shown small under the editorial lede */
+.aslisted{font-size:13.5px;line-height:1.55;color:var(--muted);max-width:78ch;margin:6px 0 2px}
+.aslabel{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  background:#F5F0E6;border:1px solid var(--line);color:#57534E;border-radius:4px;padding:1px 6px;margin-right:6px}
+@media (max-width:640px){.story{padding:18px 16px}.story h2{font-size:25px}.story .standfirst{font-size:17px}}
+/* dual-format images: <picture> wraps the img, so the visual rules must reach through */
+.cardimg picture{display:block}
+.lede-figure picture{display:block}
+.seriestile picture{display:block}
+.cattile picture{display:block}
+
+/* ============================================================
+   f1fd0ff0 graft (2026-11-20): front-page glance table + dated
+   seasonal strip. Added on top of the current stylesheet; no
+   framework, no external fonts, no third-party requests.
+   ============================================================ */
 .kicker-warm{background:#FFEAD5;border-color:#FBCD9B;color:#8A3B0B}
-.hero-product{padding:26px 0 4px}
-.hero-product .lede{max-width:66ch;font-size:20px}
-.hero-product .lede-figure{max-width:820px}
 
-/* product card: artwork, one editorial line, the numbers, one button */
-.productcard{gap:10px;padding:0 0 14px;overflow:hidden;background:var(--card)}
-.productcard .cardimg{border:0;border-bottom:1px solid var(--line);border-radius:0;margin:0 -0px 0}
-.productcard .cardimg img{aspect-ratio:3/2}
-.productcard > .cat,.productcard > h3,.productcard > p,.productcard > .chips,.productcard > .actions,.productcard > .meta{margin-left:16px;margin-right:16px}
-.productcard > h3{font-size:20px}
-.productcard > p{font-size:15.5px;line-height:1.55;color:#33302E;margin:0}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.spec{display:inline-flex;gap:6px;align-items:baseline;background:#FBF6EC;border:1px solid var(--line);
-  border-radius:8px;padding:4px 9px;font-size:13px;color:#33302E;line-height:1.35}
-.spec b{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:800}
-.productcard .meta,.card .meta{font-size:12.5px;letter-spacing:.01em;color:var(--muted)}
-.productcard:hover{transform:translateY(-2px)}
-
-/* the listing's own words, quoted and attributed */
-.listingtitle{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:12px;background:#FCF8F1;
-  padding:12px 16px;margin:16px 0 4px}
-.listingtitle span{display:block;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.listingtitle p{margin:6px 0 2px;font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:15.5px;line-height:1.5;color:#44403C}
-
-/* front-page at-a-glance table */
 .glance table{font-size:13.5px}
-.glance th,.glance td{padding:9px 11px}
+.glance th,.glance td{padding:9px 11px;vertical-align:top}
 .glance thead th{background:#1C1917;color:#FFF9F0;border-bottom:0}
 .glance tbody tr:nth-child(even){background:#FCF8F1}
 .glance tbody td:first-child{font-weight:700;white-space:nowrap}
 .glance tbody td:first-child a{color:var(--ink);text-decoration:none;border-bottom:1px solid #E7C9AE}
 .glance tbody td:first-child a:hover{color:var(--accent)}
+.legend{font-size:12.8px;color:var(--muted);margin:8px 0 0}
+.footnote{font-size:13px;color:var(--muted);background:#FCF8F1;border:1px solid var(--line);
+  border-radius:10px;padding:9px 12px;margin:10px 0 0}
 
-/* dated seasonal strip */
-.seasonal{margin:26px 0 4px;border:1px solid #FBCD9B;border-left:6px solid var(--gold);border-radius:var(--radius);
+.seasonal{margin:26px 0 4px;border:1px solid #FBCD9B;border-left:6px solid #C98A2B;border-radius:var(--radius);
   background:linear-gradient(180deg,#FFF6E9 0%,#FFFBF4 100%);padding:18px 20px}
 .seasonal h2{margin:8px 0 6px;font-size:23px}
 .seasonal p{margin:0 0 10px;font-size:15.5px;color:#33302E;max-width:74ch}
 .seasonallist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .seasonallist li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:15px}
-.seasonallist a{font-weight:700;text-decoration:none;font-family:ui-serif,Georgia,serif;font-size:16.5px}
+.seasonallist a{font-weight:700;text-decoration:none;font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:16.5px}
 .seasonallist a:hover{text-decoration:underline}
+@media (max-width:640px){.glance table{font-size:12.5px}.seasonal h2{font-size:20px}}
 
-/* sign-up block: one card, one sentence, no engineering confession */
-.capture{display:grid;gap:18px;padding:20px}
-@media (min-width:820px){.capture{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center}
-  .capture small{grid-column:1/-1}}
-.capture h3{font-size:21px;margin:0 0 4px}
-.capture p{margin:0;font-size:15px;color:#D6D3D1}
-.capture form{display:flex;gap:8px;flex-wrap:wrap;margin:0}
-.capture label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-.capture input{flex:1 1 220px;margin:0}
-.capture .btn{padding:12px 18px}
-.capture small{display:block;font-size:12.5px;line-height:1.6;color:#BDB8B3}
-.capture small a{color:#FBBF24}
-
-/* a touch more breathing room between the shop grid and its heading */
-h2{margin:38px 0 12px}
-.grid{margin:16px 0 10px}

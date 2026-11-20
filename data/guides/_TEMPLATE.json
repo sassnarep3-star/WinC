@@ -9,7 +9,7 @@
   "published": "YYYY-MM-DD",
   "updated": "YYYY-MM-DD",
   "season": "Everyday | Holiday cooking | Grilling",
-  "image": "assets/img/hero-counter.jpg",
+  "image": "assets/img/hero-counter.webp",
   "image_caption": "Editorial illustration. Not a product photograph.",
   "body": "<p>HTML. Use <div class=\"grid\">CARDS</div> where the builder should insert the matching products.</p>",
   "faq": [["Question?", "Answer, sourced."]]

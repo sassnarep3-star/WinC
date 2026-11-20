@@ -60,15 +60,15 @@
           "The listed footprint is 13.38\"D x 11.81\"W x 10.63\"H and the listed weight is 13.3 lb. Measure the depth of your counter and the clearance above the unit, not just the square footage you have free."
         ]
       ],
-      "image": "assets/img/p-chefman-dual-basket.jpg",
-      "image_caption": "Commissioned editorial illustration of a two-basket fryer mid-cook. Not a product photograph — it does not show this exact unit.",
+      "image": "assets/img/p6qt.png",
+      "image_caption": "Commissioned editorial illustration: a dual-basket fryer with both baskets pulled out. Not a product photograph, and not a photograph of this exact unit.",
       "card_copy": "Two independent 3-quart baskets inside one 11.8-inch-wide shell, with a window on each so you can see both without opening them. Sync finish is the listing's own answer to two dishes landing at the same time; the baskets are listed dishwasher-safe.",
-      "card_image": "assets/img/p-chefman-dual-basket.jpg",
-      "card_image_caption": "Commissioned editorial illustration of a two-basket fryer mid-cook. Not a product photograph — it does not show this exact unit.",
+      "card_image": "assets/img/p6qt.png",
+      "card_image_caption": "Commissioned editorial illustration: a dual-basket fryer with both baskets pulled out. Not a product photograph, and not a photograph of this exact unit.",
       "form_factor": "Two independent baskets, one shell",
       "best_for": "A main and a side finishing together — the listing's own 'Sync Finish'",
-      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim; breadcrumb Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers; final URL still carried lv=shuf + plpRedirect=mhFallback. Amazon's own 'also viewed' rail on the same page showed a sibling 6 Qt dual-basket listing at B0B7C327LK (FLG-026).",
-      "sixth_read_source": "S30"
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim; breadcrumb Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers; final URL still carried lv=shuf + plpRedirect=mhFallback. Amazon's own 'also viewed' rail on the same page showed a sibling 6 Qt dual-basket listing at B0B7C327LK (FLG-030).",
+      "sixth_read_source": "S36"
     },
     {
       "id": "p2-emeril-26qt",
@@ -146,15 +146,15 @@
           "The listing's own bullet says the 26-quart cavity is sized for 4-6 people, can rotisserie a 6-lb chicken and bake a 12-inch pizza. That is the seller's sizing claim on the listing, quoted as a claim and not as advice from this desk (FLG-021)."
         ]
       ],
-      "image": "assets/img/p-emeril-french-door.jpg",
-      "image_caption": "Commissioned editorial illustration of an oven-style fryer with two glass doors and wire racks. Not a product photograph — it does not show this exact unit.",
+      "image": "assets/img/p26qt.png",
+      "image_caption": "Commissioned editorial illustration: an oven-style fryer with twin glass doors open over wire racks. Not a product photograph, and not a photograph of this exact unit.",
       "card_copy": "An oven instead of a drawer: twin glass doors, wire racks, and a 24.6-litre cavity the listing says takes a 12-inch pizza. It is 14.8 inches tall and 26.5 lb, so this is the one that stays on the counter, not in a cupboard.",
-      "card_image": "assets/img/p-emeril-french-door.jpg",
-      "card_image_caption": "Commissioned editorial illustration of an oven-style fryer with two glass doors and wire racks. Not a product photograph — it does not show this exact unit.",
+      "card_image": "assets/img/p26qt.png",
+      "card_image_caption": "Commissioned editorial illustration: an oven-style fryer with twin glass doors open over wire racks. Not a product photograph, and not a photograph of this exact unit.",
       "form_factor": "Oven-style, twin glass doors, racks",
       "best_for": "A whole bird on the rotisserie or a 12-inch pizza, as the listing states",
       "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — details table re-read: Item Dimensions 16.9\"D x 15.8\"W x 14.8\"H, Capacity 24.6 liters, Model Number 4-00675-02X-VN, UPC 752356835682, Wattage 1700 W, 75–500°F, ASIN row B09B7SB46R — all match this register. 'Configuration' reads '24 Functions and 7 Accessories' while 'Item Highlight' reads 'Six Cooking Accessories Included' (FLG-010 confirmed again).",
-      "sixth_read_source": "S30"
+      "sixth_read_source": "S36"
     },
     {
       "id": "p3-chefman-8qt",
@@ -237,15 +237,15 @@
           "The page title says '450F Hi-Fry Option' while the bullet copy on the same page says a temperature range from 200-400F. Both strings are shown on the specs table rather than one of them being quietly chosen (FLG-005)."
         ]
       ],
-      "image": "assets/img/p-chefman-turbofry.jpg",
-      "image_caption": "Commissioned editorial illustration of a single-basket air fryer with the drawer pulled open. Not a product photograph — it does not show this exact unit.",
+      "image": "assets/img/p8qt.png",
+      "image_caption": "Commissioned editorial illustration: a single-basket air fryer with the drawer pulled open. Not a product photograph, and not a photograph of this exact unit.",
       "card_copy": "One 8-quart basket rather than two, so a single bigger batch fits in one go. The listing names a 450°F high-fry option, a shake reminder and dishwasher-safe nonstick parts, in a shell 13.5 inches wide.",
-      "card_image": "assets/img/p-chefman-turbofry.jpg",
-      "card_image_caption": "Commissioned editorial illustration of a single-basket air fryer with the drawer pulled open. Not a product photograph — it does not show this exact unit.",
+      "card_image": "assets/img/p8qt.png",
+      "card_image_caption": "Commissioned editorial illustration: a single-basket air fryer with the drawer pulled open. Not a product photograph, and not a photograph of this exact unit.",
       "form_factor": "One deep basket, pull-out drawer",
       "best_for": "A single large batch of the thing you cook most",
-      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim; the resolved URL added a variant parameter (th=1) on top of lv=shuf + plpRedirect=mhFallback (FLG-026).",
-      "sixth_read_source": "S30"
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim; the resolved URL added a variant parameter (th=1) on top of lv=shuf + plpRedirect=mhFallback (FLG-030).",
+      "sixth_read_source": "S36"
     },
     {
       "id": "p4-thermomaven",
@@ -307,15 +307,15 @@
         ]
       ],
       "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)",
-      "image": "assets/img/p-thermomaven-instant-read.jpg",
-      "image_caption": "Commissioned editorial illustration of a folding instant-read probe in the thickest part of a steak. Not a product photograph.",
+      "image": "assets/img/pthermo.png",
+      "image_caption": "Commissioned editorial illustration: a folding instant-read probe in the thickest part of a steak. Not a product photograph.",
       "card_copy": "The probe you hold and check at the end of the cook. Its listing title claims a one-second reading, ±0.5°F accuracy and IP67 waterproofing — we quote those claims, we have not measured them, and the accuracy claim is the one worth testing at home.",
-      "card_image": "assets/img/p-thermomaven-instant-read.jpg",
-      "card_image_caption": "Commissioned editorial illustration of a folding instant-read probe in the thickest part of a steak. Not a product photograph.",
+      "card_image": "assets/img/pthermo.png",
+      "card_image_caption": "Commissioned editorial illustration: a folding instant-read probe in the thickest part of a steak. Not a product photograph.",
       "form_factor": "Instant-read you hold",
       "best_for": "A spot check you take yourself, in the thickest part",
-      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim (Black colourway); the same page's rails showed the identical ThermoMaven title in Orange at B0GL7Z4KP4 (FLG-026). Model stays blank (FLG-015).",
-      "sixth_read_source": "S30"
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim (Black colourway); the same page's rails showed the identical ThermoMaven title in Orange at B0GL7Z4KP4 (FLG-030). Model stays blank (FLG-015).",
+      "sixth_read_source": "S36"
     },
     {
       "id": "p5-chefiq",
@@ -370,15 +370,15 @@
           "It is a marketing phrase on the listing. What it means is that the hub reports over your network rather than over a short radio link; how far the hub can sit from the cooker is a question about your router and your house, not a published number."
         ]
       ],
-      "image": "assets/img/p-chefiq-wireless-probe.jpg",
-      "image_caption": "Commissioned editorial illustration of a leave-in probe running from a smoker to a counter hub. Not a product photograph.",
+      "image": "assets/img/pchefiq.png",
+      "image_caption": "Commissioned editorial illustration: a leave-in probe running from a smoker to a counter hub. Not a product photograph.",
       "card_copy": "The probe you leave in. Three ultra-thin probes wire to a hub that reports over WiFi, and the listing says the probes are heat-safe to 1000°F — that combination is what lets you walk away and still know when to stop.",
-      "card_image": "assets/img/p-chefiq-wireless-probe.jpg",
-      "card_image_caption": "Commissioned editorial illustration of a leave-in probe running from a smoker to a counter hub. Not a product photograph.",
+      "card_image": "assets/img/pchefiq.png",
+      "card_image_caption": "Commissioned editorial illustration: a leave-in probe running from a smoker to a counter hub. Not a product photograph.",
       "form_factor": "Leave-in probes with a hub",
       "best_for": "Three probes reporting over WiFi while the food cooks, per the listing",
-      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim ('… | Gen3: Home & Kitchen'); resolved URL carried th=1 + lv=shuf + plpRedirect=mhFallback, and a sibling CHEF iQ Sense listing (B0DZFNQXGL) appeared in the rails (FLG-026).",
-      "sixth_read_source": "S30"
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim ('… | Gen3: Home & Kitchen'); resolved URL carried th=1 + lv=shuf + plpRedirect=mhFallback, and a sibling CHEF iQ Sense listing (B0DZFNQXGL) appeared in the rails (FLG-030).",
+      "sixth_read_source": "S36"
     }
   ],
   "_note": "Per-product illustration fields added 2026-11-20 (session arena-70bd2fcc): these are original editorial illustrations in the site style — not product photographs, not seller images — so no product-image policy question applies. Captions say so on every page."

@@ -1044,7 +1044,68 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
   archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
   archive stays out of nav/sitemap/feed; gate re-run green.
 
-<<<<<<< HEAD
+## PR / merge record (T38)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#38** https://github.com/sassnarep3-star/WinC/pull/38 opened from `arena/70bd2fcc-winc` → `main`. First readiness check read CONFLICTING because PRs #18 and #39 merged mid-flight; resolved by a fast-forward-equivalent merge of `origin/main` into this branch (registers union-merged, HTML regenerated from data, gate re-run green each round: 31→34 pages, 13 guides). |
+| 2026-11-20 06:43:12Z | `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN`; merged with `gh pr merge 38 --merge` → `main` @ `60422bd1e6f6c1f40c8de6717f439989e5772a31`. |
+| 2026-11-20 | Pages build for `60422bd`: `building` → **`built`**, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
+
+**Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
+
+---
+
+# Session arena-038c0b80 — editorial conversion pass + decision section + line-by-line re-verification
+
+Branch `arena/038c0b80-winc`, based on `main@404cabc` (PR #24 merged). Started 2026-11-20.
+State on arrival: 29 pages / 28 sitemap URLs / 8 guides; `check_site.py` green; `node tools/audit.mjs`
+reporting 2 findings (A6, A7). `main` advanced twice while this session was reading the repo; the branch
+was fast-forwarded to `404cabc` before any edit, so nothing here forks an old base.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Story layer: maker profiles, 8 product narratives + 3 cluster guides (one per category), all claims tied to a listed spec (Claude) | in progress | arena-038c0b80 | `data/makers.json`, `data/stories.json`, `data/guides/*.json` (new files only), `scripts/build_site.py` (story/narrative renderers), `assets/style.css`, `assets/img/series-*` |
+| T34 | Decision section: suggestions → review → choose → evidence, rendered from the registers | in progress | arena-038c0b80 | `data/suggestions.json`, `data/questions.json`, `scripts/build_site.py` (direction/questions bodies), `direction.html`, `questions.html` |
+| T35 | Repo audit fixes: A6 anchor-quote mismatch, A7 capture-form transport, stale flags/source notes/typed counts, encoding artifacts (-143, °F), JSON-LD how-to scope | in progress | arena-038c0b80 | `scripts/build_site.py`, `scripts/check_site.py`, `tools/audit.mjs`, `data/flags.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Findability + imagery hygiene: compress 3.5 MB PNGs to WebP, add FAQPage scope, sitemap/feed check, honest "no measurement yet" language | in progress | arena-038c0b80 | `assets/img/*`, `scripts/build_site.py` |
+| T37 | Final integration: rebuild, gate green, independent audit clean, PR → main, merge, confirm Pages live | pending | arena-038c0b80 | all (integration only) |
+
+## Cross-session follow-ups observed (not mine to merge)
+
+- PR #17 (`arena/04112b09-winc`, OPEN) and PR #18 (`arena/23428c9e-winc`, OPEN) and PR #5
+  (`arena/70d8ad52-winc`, DRAFT) each ship a *different* site into the same repo. Only one can be the
+  published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
+  are already on `main` via PR #24 and are in use. This session did not touch those branches.
+
+## PR / merge record (T37 — merged)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
+| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
+| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
+
+### What was deliberately merged *from* main rather than over it
+
+- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
+- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
+- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
+- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
+
+### Two id collisions worth recording for the next session
+
+1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
+2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
+
+### Rounds where the gates were run after each merge
+
+38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+
 ---
 
 # Session f1fd0ff0 — shop polish pass, 4th verification observation, parallel-PR reconciliation (2026-11-20)
@@ -1144,3 +1205,36 @@ Claim committed and pushed before any other edit.
 
 **Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
 >>>>>>> origin/main
+
+### Third merge of `main` the same day (PRs #40, #43, #45 by session `arena-038c0b80`) — and why this session adopted their renderer
+
+`main` moved twice more while this branch was being reconciled. The arriving work was not cosmetic: a
+narrative layer (`data/stories.json`, `data/makers.json`), series pages, an honest house ad, a WebP+PNG
+`<picture>` pipeline with an 800 px fallback, a stronger gate (register cross-reference existence,
+`<source srcset>` existence, inline-JS parse check, DOM-verified builder) and three more guides.
+
+Decision, recorded so the next session does not re-litigate it: **this session's renderer was withdrawn in
+favour of `main`'s**, because theirs is the more capable one, and a shop has one front page. What was kept from
+this session, grafted onto their renderer rather than pasted over it:
+
+| Kept | How it now lives |
+| --- | --- |
+| Front-page at-a-glance comparison (form · capacity · footprint · weight · what the listing sets it up for · source link) | `glance_table()` in their `home_body()`, after the shop grid — built from `data/products.json`, so it cannot drift |
+| Dated seasonal strip for the holiday cook | `seasonal_strip()`, computed from guides whose season starts “Holiday”, carrying its year in its own sentence; their `current_season()` drives the kicker |
+| Editorial card line instead of the scraped listing title | `product_card()` now prefers `card_copy`, then their story `standfirst`, then the listing title — the anti-slop rule, not a fork of their card |
+| Sixth redirect observation | `sixth_observation` per row + `probe6_note` in `data/probes.json`; their observations #4 and #5 are untouched; the verification table gained a *Latest re-read* column and an observation count instead of one session's date |
+| Two guides | `guides/probe-accuracy-check.html` (FSIS calibration + the ±0.5 °F claim) and `guides/counter-fit-before-you-order.html` (the three listed footprints; ventilation clearance refused). Their `one-second-or-all-night` covers style choice, not accuracy testing, so these are not duplicates |
+| Registers | sources S36–S38 (after main's S35), flags FLG-030/031 (their FLG-026/027 already record the sibling-ASIN half, so mine were re-scoped to the `th=1` variant parameter and to the undecided price stance), suggestions SG-39…SG-47, questions Q-26…Q-28, topic TP-16, topics TP-06/08/09 flipped to their published pages |
+| Gate rules, additive | no flag id or source id inside a reader-copied spec value; `card_copy` hygiene; a `published` topic must point at a built page **with** a `data/guides/` source file; an undated seasonal strip fails, and it may not link a product listing |
+
+Withdrawn rather than merged, so the record is honest:
+- **`guides/probe-placement-holiday-cook.html` was deleted.** Their `turkey-probe-placement.html` answers the
+  same question; two near-identical holiday guides is the failure mode the brief asks to remove.
+- **My five product JPEGs were deleted** in favour of their PNG+WebP pairs, and the seven orphan JPEGs my
+  conversion left behind were removed too. One artwork set per subject, their srcset pipeline, their sizes.
+- My rewrite of `product_card`/`home_body` and my stylesheet block are gone; only the two blocks main lacked
+  were appended to `assets/style.css`.
+
+**Build + gate + tests at close of this reconciliation:** `Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` →
+`OK: 40 pages checked, 39 sitemap URLs, no violations.` · `npm run verify` (gate + `scripts/test_analytics.py` +
+`analytics/test_worker.mjs`) green.

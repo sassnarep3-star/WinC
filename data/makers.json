@@ -1,0 +1,87 @@
+{
+  "_note": "Maker profiles for the shop. Every sentence in `story` and every entry in `checkable_claims` must be traceable to an official source: an Amazon listing for the brand (linked via source_id -> data/sources.json), or the brand's own site. Nothing here is a judgement about quality, popularity, sales volume or value. A maker's other products are cited only to explain what the brand is known for manufacturing, never to imply that this shop's item shares those properties.",
+  "_rule": "If a claim cannot be traced to a source_id, it does not go in this file. Describe what the maker lists and makes; never rank, never infer reliability from a brand name.",
+  "updated": "2026-11-20",
+  "makers": [
+    {
+      "id": "chefman",
+      "name": "Chefman",
+      "who": "A countertop-appliance brand whose air fryers, toaster ovens and small kitchen electrics are sold under its own name.",
+      "story": "Chefman sells a broad family of countertop cooking appliances rather than one flagship machine. That matters to a buyer in one specific way: within the brand's air-fryer line the basket shape and the numbering change between models, so two listings that both say 'Chefman air fryer' can differ in exactly the spec you are comparing.",
+      "checkable_claims": [
+        {
+          "claim": "Chefman manufactures air fryers under its own brand name on Amazon.",
+          "source_id": "S09",
+          "source_label": "B0CDY277D3 listing, brand field"
+        },
+        {
+          "claim": "The brand's air-fryer listings use a model-number scheme (RJ38-…) instead of a consumer-facing generation name.",
+          "source_id": "S09",
+          "source_label": "Model field on the 6 Qt listing"
+        }
+      ],
+      "official_site": "https://www.chefman.com/",
+      "official_site_note": "Brand domain, not read in this session. Listed so a reader can check the manufacturer's own documentation; nothing on this site quotes it."
+    },
+    {
+      "id": "emeril",
+      "name": "Emeril Lagasse (licensed countertop appliances)",
+      "who": "The Emeril Lagasse name is licensed onto countertop cooking appliances; this shop's oven-style unit is sold under that name.",
+      "story": "An oven-style air fryer is a different machine from a basket fryer: a cavity with doors, racks and accessories instead of a pull-out drawer. The Emeril listing leans on that difference hard — French doors, a very large cavity, a long preset list. The part worth reading carefully is the accessory and preset counts, because the same listing gives more than one number for each.",
+      "checkable_claims": [
+        {
+          "claim": "The listing describes a French-door, 26-quart multi-function countertop oven rather than a drawer-style fryer.",
+          "source_id": "S10",
+          "source_label": "B09B7SB46R listing title"
+        },
+        {
+          "claim": "The listing's title says 24 one-touch presets while its bullet copy gives a different count, and the title says six accessories while the bullets say seven.",
+          "source_id": "S10",
+          "source_label": "B09B7SB46R listing body (recorded as FLG-010, FLG-020)"
+        }
+      ],
+      "official_site": "",
+      "official_site_note": "No manufacturer page was read for this brand in any session. Left blank rather than guessed."
+    },
+    {
+      "id": "thermomaven",
+      "name": "ThermoMaven",
+      "who": "A thermometer brand; this shop's item is its one-second instant-read probe.",
+      "story": "ThermoMaven's Amazon catalogue is a series of overlapping instant-read models that differ by claim: one second, half a second, colour, and accuracy figure. They are separate listings with separate ASINs, and the differences that matter to a buyer — speed and the accuracy statement — sit in the title text rather than in a comparison table.",
+      "checkable_claims": [
+        {
+          "claim": "The shop's unit is listed as a one-second instant-read with a stated accuracy of plus or minus 0.5°F.",
+          "source_id": "S12",
+          "source_label": "B0DHZTCNR5 listing title"
+        },
+        {
+          "claim": "A closely related, differently-labelled ThermoMaven instant-read listing exists on Amazon with a different speed claim and a different ASIN.",
+          "source_id": "S12",
+          "source_label": "B0DHZTCNR5 listing page, 'Customers who viewed this item also viewed' module, read 2026-11-20"
+        }
+      ],
+      "official_site": "",
+      "official_site_note": "No manufacturer page was read for this brand. The model number is deliberately left blank on the product page because the US listing does not state one (FLG-015)."
+    },
+    {
+      "id": "chefiq",
+      "name": "CHEF iQ",
+      "who": "A smart-kitchen brand built around app-connected cooking thermometers and cookware.",
+      "story": "CHEF iQ's thermometers are wireless probes in a charging hub, paired with a phone app that runs the cook. That design changes the practical question: instead of 'how fast does it read', it becomes 'can your phone and the hub stay in range of where the food is'. The probe count is the other thing to pin down, because the same model family is sold in two-probe and three-probe configurations.",
+      "checkable_claims": [
+        {
+          "claim": "The listing describes a WiFi/wireless hub-and-probe system with three probes and an app, not a handheld instant-read.",
+          "source_id": "S13",
+          "source_label": "B0DZFD6R9Z listing title"
+        },
+        {
+          "claim": "A two-probe configuration of the same 'Sense' model family is sold as a separate listing with a different ASIN.",
+          "source_id": "S13",
+          "source_label": "B0DZFD6R9Z listing page, 'Customers who viewed this item also viewed' module, read 2026-11-20"
+        }
+      ],
+      "official_site": "https://www.chefiq.com/",
+      "official_site_note": "Brand domain, not read in this session. Listed for the reader's own check only."
+    }
+  ]
+}
