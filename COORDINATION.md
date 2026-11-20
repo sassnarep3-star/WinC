@@ -191,3 +191,22 @@ State on arrival: `main` = `358dd0c` (PR #9), gate green (26 pages, 25 sitemap U
 **Not done (no access in sandbox):** Associates Central tracking-ID confirmation and one-link workflow test (FLG-001, FLG-002, Q-01, Q-16). These remain owner-side.
 
 **PR / merge record (T18, session dd79e08d):** PR #10 https://github.com/sassnarep3-star/WinC/pull/10 (`arena/dd79e08d-winc` → `main`), `gh pr merge 10 --merge` → merged, merge commit `d8b1a85`. Pages build for `d8b1a85`: `status: built`, `error: null`. Live check via the browser reader: `flagged-for-review.html` lists FLG-015. Build/gate on the merged tree: `Built 26 pages, 25 sitemap URLs` / `OK: 26 pages checked, 25 sitemap URLs, no violations.`
+
+---
+
+## Session 4ca9e665 (branch `arena/4ca9e665-winc`, 2026-11-20)
+
+Single-branch session: all work stays on `arena/4ca9e665-winc`; no other branches were created or pushed.
+Rebase note: `main` moved to `d8b1a85` (PR #10, session dd79e08d) while this session worked. The rebase conflicted, so it was aborted; the session's edits were reapplied on top of `d8b1a85` with no lines of the other session's work removed. Its FLG-015/FLG-016 were kept; this session's flag is FLG-017 to avoid an ID collision.
+
+| Task | Status | Owner | Files | Sources / verification / irregularities |
+|---|---|---|---|---|
+| Re-verify Operating Agreement §5 wording | done | arena/4ca9e665-winc | — | Fetched `https://affiliate-program.amazon.com/help/operating/agreement` 2026-11-20: "As an Amazon Associate I earn from qualifying purchases." matches the disclosure strip. |
+| Re-verify FTC affiliate-link guidance | done | arena/4ca9e665-winc | `data/sources.json` (S03), `data/flags.json` (FLG-017) | Fetched `https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking` 2026-11-20. The "unreachable" note on S03 is superseded. Irregularity: bare "Sponsored" tag next to buy buttons → wording changed to "Sponsored · paid affiliate link". |
+| Buy-button tag wording | done | arena/4ca9e665-winc | `scripts/build_site.py`, generated HTML | Tag text only; `rel="sponsored nofollow noopener"`, tracking ID and `data-event` unchanged. Gate green. |
+| Pages state check | done | arena/4ca9e665-winc | — | `gh api repos/sassnarep3-star/WinC/pages/builds/latest`: `built`, commit `358dd0c`, no error. |
+| Gate + build | done | arena/4ca9e665-winc | — | `python3 scripts/build_site.py` → 26 pages, 25 sitemap URLs, 6 guides; `python3 scripts/check_site.py` → no violations. |
+
+Still open (cannot be claimed from this sandbox; see questions.html): Q-01 tracking-ID issuance, FLG-002 one-link Associates test, FLG-003 short-link status, FLG-004/FLG-005 spec conflicts, FLG-007 analytics endpoint deploy, Search Console submission.
+
+PR / merge record for this session is appended below once it has run.

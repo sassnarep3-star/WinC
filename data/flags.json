@@ -111,6 +111,13 @@
       "detail": "Session dd79e08d (2026-11-20): the label 'single basket' was an inference. The observed listing title for B08DKYBTPH names an 'XL Nonstick Dishwasher-Safe Basket' and a 8 Qt capacity; it does not state a basket count. Labels and guide copy now read 'XL basket' (the listing's own wording). Source: https://www.amazon.com/dp/B08DKYBTPH (observed 2026-11-20; fallback route, see FLG-009).",
       "action": "None beyond FLG-005 (model/temperature conflict on the same listing).",
       "status": "fixed in this session"
+    },
+    {
+      "id": "FLG-017",
+      "title": "Buy-button disclosure wording: bare 'Sponsored' tag replaced with 'Sponsored · paid affiliate link'",
+      "detail": "FTC affiliate guidance (S03, fetched 2026-11-20) says 'affiliate link' alone and 'buy now' buttons are not adequate disclosures, and that 'paid link' next to an affiliate link is adequate. The tag next to every Amazon button previously read only 'Sponsored'. Changed in scripts/build_site.py on 2026-11-20 (tag text only; rel=sponsored, tracking tag and data attributes unchanged). Gate still passes. Numbered FLG-017 because FLG-015/016 were added on main by session dd79e08d.",
+      "action": "Owner: confirm wording against the current Operating Agreement / Program Policies in your own Associates Central console (login-gated copy, FLG-006).",
+      "status": "fixed in this session"
     }
   ]
 }

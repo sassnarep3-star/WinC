@@ -89,12 +89,12 @@ def buy_button(p, label=None):
     label = label or "Check price & details on Amazon"
     return (f'<a class="btn" href="{esc(special_link(p))}" rel="sponsored nofollow noopener" '
             f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}">{esc(label)}</a> '
-            f'<span class="sponsored-tag">Sponsored</span>')
+            f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
 
 def buy_button_small(p):
     return (f'<a class="btn" href="{esc(special_link(p))}" rel="sponsored nofollow noopener" '
             f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}">Check on Amazon</a> '
-            f'<span class="sponsored-tag">Sponsored</span>')
+            f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
 
 DISCLOSURE_STRIP = (
     '<div class="disclosure-strip" role="note"><div class="wrap">'

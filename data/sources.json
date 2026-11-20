@@ -20,9 +20,9 @@
       "id": "S03",
       "title": "FTC Endorsement Guides: What People Are Asking",
       "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking",
-      "what": "Affiliate commission relationship must be disclosed clearly and conspicuously; closer to recommendation is better",
+      "what": "Verbatim, fetched 2026-11-20: 'that connection should be disclosed clearly and conspicuously'; affiliate section: 'You should disclose your relationship to the retailer clearly and conspicuously on your site'; 'The closer the disclosure is to your recommendation, the better.'; 'Consumers might not understand that \"affiliate link\" means ... a \"buy now\" button would not be adequate.'; '\"Paid link\" right next to an affiliate link should be an adequate disclosure'.",
       "date": "2026-11-20",
-      "access": "ftc.gov HTML page returned an error from this sandbox. Use the CFR/FTC PDF text instead (S22) for the quoted standard."
+      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov)."
     },
     {
       "id": "S04",
