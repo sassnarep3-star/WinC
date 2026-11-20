@@ -318,16 +318,14 @@
     },
     {
       "id": "Q-22",
-      "question": "How does the site get its first real visitors, and which channel comes first?",
-      "decision_it_gates": "Whether the first ten guides are written for search, for social, or for an email list — and whether the capture form is worth wiring up before any traffic exists.",
-      "have": "A local-only reader capture block (no provider, no sending), a sitemap, an RSS feed, and 14 planned topics. No Search Console property, no analytics endpoint deployed, no backlinks, no social accounts.",
-      "missing": "A channel decision, a traffic target, and a date by which the first measured visitor should arrive.",
-      "blocking": "no",
-      "discovery": "Owner picks one: (a) search-first (publish topics, submit sitemap, wait for indexing), (b) social-first (build a presence off-site and link in), (c) email-first (configure the capture provider and drive sign-ups). Record the choice in this row's answer field.",
-      "owner": "Account owner",
-      "answer": "",
-      "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "question": "What is the runbook when an observed listing dies, goes unavailable, or rotates into a different model?",
+      "decision_it_gates": "Whether a product page can stay live while its listing is gone, and how fast a sponsored link is hidden. Gates SG-34.",
+      "have": "Evidence the risk is real: listing titles rotated between captures (ThermoMaven wording changed across observations; data/probes.json observation #4), the Chefman 8 Qt listing carries a two-version conflict on its own page (FLG-005), and Amazon now states a newer model exists on that listing (FLG-024).",
+      "missing": "An owner decision between (a) retired state - page stays, buttons hidden, dated note; (b) replacement via a fresh product-intent record with new intended_* fields, never reusing the old slug; plus who monitors listings and how often.",
+      "blocking": "no - but it must be decided before the first 404, not after",
+      "discovery": "Owner decision in one sitting. Then implement via SG-34 (builder retired state + gate check). If replacement is chosen, the new record follows the same intended-vs-observed rule as everything else.",
+      "owner": "Account owner (decision); any session can implement it once made",
+      "answer": ""
     }
   ]
 }
