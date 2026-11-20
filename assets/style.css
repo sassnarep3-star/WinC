@@ -1,0 +1,94 @@
+/* ShopNow Kitchen — publication stylesheet (no external fonts, no tracking) */
+:root{
+  --paper:#FFF9F0; --card:#FFFFFF; --ink:#1C1917; --muted:#57534E;
+  --line:#E7E0D4; --accent:#9A3412; --accent2:#166534; --gold:#B45309;
+  --chip:#FEF3C7; --warn:#FEF2F2; --ok:#F0FDF4;
+  --radius:14px; --max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;font-size:17px}
+a{color:var(--accent);text-underline-offset:3px}
+a:hover{color:#7C2D12}
+img,svg{max-width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+/* Masthead */
+.masthead{background:#1C1917;color:#FFF9F0;padding:18px 0 14px}
+.masthead .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between}
+.brand{font-size:28px;font-weight:800;letter-spacing:-.02em;color:#FFF9F0;text-decoration:none}
+.brand span{color:#FBBF24}
+.tagline{color:#D6D3D1;font-size:15px;margin:0}
+.dateline{font-size:13px;color:#A8A29E}
+/* Disclosure strip — above the fold on every page */
+.disclosure-strip{background:#FFFBEB;border-bottom:2px solid #F59E0B;padding:10px 0;font-size:14px}
+.disclosure-strip strong{color:#92400E}
+.disclosure-strip a{font-weight:700}
+/* Nav — single navigation group */
+.mainnav{background:#292524;position:sticky;top:0;z-index:20}
+.mainnav .wrap{display:flex;flex-wrap:wrap;gap:4px;padding-top:8px;padding-bottom:8px}
+.mainnav a{color:#E7E5E4;text-decoration:none;padding:8px 12px;border-radius:999px;font-size:15px;font-weight:600}
+.mainnav a:hover{background:#44403C;color:#fff}
+.mainnav a[aria-current="page"]{background:var(--accent);color:#fff}
+/* Layout */
+.hero{padding:34px 0 10px}
+.kicker{display:inline-block;background:var(--chip);border:1px solid #FDE68A;color:#92400E;
+  font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.06em}
+h1{font-size:clamp(30px,4.5vw,48px);line-height:1.12;letter-spacing:-.02em;margin:12px 0 10px}
+h2{font-size:26px;letter-spacing:-.01em;margin:34px 0 10px}
+h3{font-size:20px;margin:24px 0 8px}
+.lede{font-size:19px;color:#44403C;max-width:760px}
+.meta{font-size:14px;color:var(--muted)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:8px}
+.card h3{margin:0;font-size:19px;line-height:1.35}
+.card .cat{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2)}
+.card p{margin:0;color:#44403C;font-size:15px}
+.card .actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{display:inline-block;background:var(--accent);color:#fff!important;text-decoration:none;font-weight:800;
+  padding:11px 16px;border-radius:10px;border:0;cursor:pointer;font-size:15px}
+.btn:hover{background:#7C2D12}
+.btn.ghost{background:#fff;color:var(--accent)!important;border:1px solid var(--accent)}
+.sponsored-tag{font-size:12px;font-weight:800;background:#1C1917;color:#FBBF24;padding:3px 8px;border-radius:999px}
+.specs{font-size:14px;color:var(--muted);margin:0;padding-left:18px}
+.specs li{margin:2px 0}
+.icon{width:44px;height:44px;border-radius:12px;background:#FFF7ED;border:1px solid var(--line);display:grid;place-items:center;font-size:24px}
+/* Tables */
+.tablewrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#FAFAF9;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#44403C}
+tr:last-child td{border-bottom:0}
+.blank{color:#B45309;font-weight:700}
+.flagpill{display:inline-block;background:var(--warn);border:1px solid #FECACA;color:#991B1B;font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px}
+.okpill{display:inline-block;background:var(--ok);border:1px solid #BBF7D0;color:#166534;font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px}
+.src{font-size:13px;word-break:break-word}
+/* Guides */
+.guide-hero{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:16px 0}
+.faq{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:6px 18px;margin:12px 0}
+.faq details{padding:10px 0;border-bottom:1px solid var(--line)}
+.faq details:last-child{border-bottom:0}
+.faq summary{font-weight:700;cursor:pointer}
+/* Forms */
+.capture{background:#1C1917;color:#FFF9F0;border-radius:var(--radius);padding:20px;margin:22px 0}
+.capture h3{color:#fff;margin-top:0}
+.capture input{width:100%;padding:12px;border-radius:10px;border:0;margin:8px 0;font-size:16px}
+.capture small{color:#D6D3D1}
+.notice{background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:10px;padding:14px 16px;margin:14px 0}
+.notice.warn{border-left-color:#DC2626;background:var(--warn)}
+.notice.ok{border-left-color:#16A34A;background:var(--ok)}
+/* Footer */
+footer{background:#1C1917;color:#D6D3D1;padding:28px 0 40px;margin-top:44px}
+footer a{color:#FBBF24}
+footer h4{color:#fff;margin:18px 0 8px;font-size:15px;text-transform:uppercase;letter-spacing:.08em}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+footer .cols{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.footer-disclosure{background:#292524;border:1px solid #44403C;border-radius:10px;padding:12px 14px;font-size:14px;margin:14px 0}
+/* Search */
+.searchbox{display:flex;gap:8px;margin:14px 0}
+.searchbox input{flex:1;padding:12px;border-radius:10px;border:1px solid var(--line);font-size:16px}
+/* Chooser */
+.chooser label{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.chooser input{margin-right:8px}
+@media (max-width:640px){body{font-size:16px}.brand{font-size:24px}}
