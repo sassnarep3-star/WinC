@@ -393,6 +393,11 @@ ROW_BLANK_MARKERS = ("blank (unverified)", "not confirmed", "not shown (policy)"
                      "no external source", "not applicable")
 
 def row_is_sourced(row):
+    # A row also passes when it prints the source URL as text (not a link) - the
+    # verification register deliberately records short-link redirect hops as
+    # non-clickable text (FLG-029), and the URL is still the manual-review source.
+    if re.search(r"https?://[A-Za-z0-9._~:/?#\[\]@!$&'()*+,;=%-]+", re.sub(r"<[^>]+>", " ", row)):
+        return True
     if any(k in row for k in ROW_OK_LINK):
         return True
     if ROW_OK_CITE in row:

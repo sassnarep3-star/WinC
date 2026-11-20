@@ -899,8 +899,9 @@ def decision_desk(c):
 </div>
 <h3 id="paths">The four paths</h3>
 <div class="pickpath">{paths}</div>
-<div class="tablewrap"><table><thead><tr><th>Path</th><th>What you spend</th><th>What can go wrong</th><th>Done when</th></tr></thead><tbody>
-{''.join(f'<tr><td><strong>{esc(p["name"])}</strong><br><span class="meta">{esc(p["what"])}</span></td><td>{esc(p["cost"])}</td><td>{esc(p["risk"])}</td><td>{esc(p["done_when"])}</td></tr>' for p in DECISION_PATHS.values())}
+<div class="tablewrap"><table><thead><tr><th>Path</th><th>What you spend</th><th>What can go wrong</th><th>Done when</th><th>Source</th></tr></thead><tbody>
+{''.join(f'<tr><td><strong>{esc(p["name"])}</strong><br><span class="meta">{esc(p["what"])}</span></td><td>{esc(p["cost"])}</td><td>{esc(p["risk"])}</td><td>{esc(p["done_when"])}</td>'
+                 f'<td class="src">Internal — assembled from the <a href="#suggestions">suggestion register</a> on this page</td></tr>' for p in DECISION_PATHS.values())}
 </tbody></table></div>
 <div class="notice warn"><strong>What no path can promise.</strong> Not one number on this site is a traffic, click, conversion or revenue forecast. The ledger is empty (FLG-028), no endpoint is deployed (FLG-007), and no Search Console property exists (SG-29) — so every “done when” above is a measurement you will take, not a result this page has seen.</div>
 """
@@ -1175,13 +1176,13 @@ def measurement_body():
 
 <h2>The five defined events</h2>
 <div class="tablewrap"><table><thead><tr><th>#</th><th>Event</th><th>When it fires</th><th>What is stored</th><th>What is never stored</th><th>Source</th></tr></thead><tbody>
-<tr><td>1</td><td><code>page_view</code></td><td>Once per page load</td><td>Day + page (aggregate)</td><td>IP, user agent, cookies</td><td class="src">Internal — <a href="../assets/app.js">assets/app.js</a></td></tr>
-<tr><td>2</td><td><code>outbound_click</code></td><td>Click on a Sponsored Amazon link</td><td>Day + page + observed ASIN</td><td>Identity, full URL, query</td><td class="src">Internal — <a href="../assets/app.js">assets/app.js</a></td></tr>
-<tr><td>3</td><td><code>guide_read</code></td><td>Reader reaches 50%+ on a guide</td><td>Day + page + depth bucket</td><td>Reading content, identity</td><td class="src">Internal — <a href="../assets/app.js">assets/app.js</a></td></tr>
-<tr><td>4</td><td><code>reader_capture_submit</code></td><td>Newsletter form submitted</td><td>Day + page count</td><td>Email address (provider handles it)</td><td class="src">Internal — <a href="../assets/app.js">assets/app.js</a></td></tr>
-<tr><td>5</td><td><code>search_submit</code></td><td>Internal search submitted</td><td>Day + page count</td><td>Search query text</td><td class="src">Internal — <a href="../assets/app.js">assets/app.js</a></td></tr>
+<tr><td>1</td><td><code>page_view</code></td><td>Once per page load</td><td>Day + page (aggregate)</td><td>IP, user agent, cookies</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>2</td><td><code>outbound_click</code></td><td>Click on a Sponsored Amazon link</td><td>Day + page + observed ASIN</td><td>Identity, full URL, query</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>3</td><td><code>guide_read</code></td><td>Reader reaches 50%+ on a guide</td><td>Day + page + depth bucket</td><td>Reading content, identity</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>4</td><td><code>reader_capture_submit</code></td><td>Newsletter form submitted</td><td>Day + page count</td><td>Email address (provider handles it)</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>5</td><td><code>search_submit</code></td><td>Internal search submitted</td><td>Day + page count</td><td>Search query text</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
 </tbody></table></div>
-<p class="src">These five events are defined by this site's own code, so the source of each row is the code that implements it — not an outside page. The receiving end is <a href="../analytics/worker.js">analytics/worker.js</a> (Cloudflare Worker) or <a href="../analytics/collect.py">analytics/collect.py</a> (any Python 3 host).</p>
+<p class="src">These five events are defined by this site's own code, so the source of each row is the code that implements it — not an outside page. The receiving end is <a href="analytics/worker.js">analytics/worker.js</a> (Cloudflare Worker) or <a href="analytics/collect.py">analytics/collect.py</a> (any Python 3 host).</p>
 <p>Client: <code>assets/app.js</code> · Endpoint code: <code>analytics/worker.js</code> (deploy separately — GitHub Pages is static, FLG-007). Until <code>CONFIG.endpoint</code> is set, counts live only in the reader’s browser (localStorage).</p>
 
 <h2>Campaign ledger (empty by design)</h2>
@@ -1193,12 +1194,12 @@ def measurement_body():
 
 <h2>Findability status (SG-27..SG-30)</h2>
 <div class="tablewrap"><table><thead><tr><th>Item</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
-<tr><td>Nav labels (SG-27)</td><td><span class="okpill">shipped</span></td><td>Single navigation group on every page</td></tr>
-<tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td><a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
-<tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record date here</td></tr>
-<tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see FLG-013</td></tr>
+<tr><td>Nav labels (SG-27)</td><td><span class="okpill">shipped</span></td><td>Single navigation group on every page. Internal — <a href="index.html">index.html</a></td></tr>
+<tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td>Internal — <a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
+<tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record the date in <code>data/suggestions.json</code>. Internal — <a href="robots.txt">robots.txt</a></td></tr>
+<tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see <a href="flagged-for-review.html#flag-FLG-013">FLG-013</a>. Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
 <tr><td>Structured data</td><td><span class="okpill">shipped, with one honest caveat</span></td><td>Article, BreadcrumbList and ItemList JSON-LD are emitted and valid. FAQPage markup is still emitted for machine readability, but Google removed the FAQ rich-result feature in June 2026 (<a href="verification.html#src-S35">S35</a>) — this site does not count it as a rich-snippet win.</td></tr>
-<tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td><a href="search.html">search.html</a> (client-side, no server)</td></tr>
+<tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td>Internal — <a href="search.html">search.html</a> (client-side, no server)</td></tr>
 </tbody></table></div>
 {capture_block()}
 """
