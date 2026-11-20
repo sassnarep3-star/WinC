@@ -389,6 +389,27 @@ for pr in PROBES["probes"]:
     if pr["final_asin"] not in {p["observed_asin"] for p in products}:
         fail(f"probes: {pr['submitted_token']} resolves to {pr['final_asin']}, which is not a recorded product")
 
+# A redirect observation that disagrees with the recorded mapping must be recorded, not hidden.
+# The observed_* fields in products.json rest on the observations that agreed; a later session
+# that saw a different destination has to say so in probes.json, and the flag register has to
+# carry it. A silent divergence would leave the register describing a link that no longer
+# behaves the way the page says it does.
+for pr in PROBES["probes"]:
+    for obs_key, obs in pr.items():
+        if not (obs_key.endswith("_observation") and isinstance(obs, dict)):
+            continue
+        if "matches_prior_observations" not in obs:
+            continue
+        if obs["matches_prior_observations"]:
+            continue
+        token = pr["submitted_token"]
+        # a disagreement must be visible in the flag register, not only in the probe log
+        flagged = any(token in json.dumps(f, ensure_ascii=False)
+                      for f in FLAGS)
+        if not flagged:
+            fail(f"probes: {token} has a disagreeing {obs_key} but no flag mentions it — "
+                 f"record the divergence on the Flagged for review page")
+
 # guides: FAQ depth and a source anchor per published page
 for g in guides:
     if len(g.get("faq") or []) < 3:

@@ -291,6 +291,21 @@
         "S34"
       ],
       "source_note": ""
+    },
+    {
+      "id": "FLG-030",
+      "title": "One supplied short link stopped resolving to its recorded listing; observed by two independent sessions",
+      "detail": "On 2026-11-20 two separate sessions re-resolved the five supplied link.amazon tokens through the same page reader and got the same divergence: B00hJ57DV landed on https://www.amazon.com/ (page title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/B08DKYBTPH target. The other four tokens reproduced their recorded targets, each still through the summary/fallback route (lv=shuf + plpRedirect=mhFallback). Session arena/9a3bb152 saw four of five land on the homepage; session arena/ceced4d0-winc saw one of five do so. The cause cannot be separated here: it may be reader-side degradation, a change in the short-link service, or a change at Amazon. This confirms nothing and invalidates nothing — FLG-003 (the short links' compliance status) and FLG-009 (the fallback route) both stand, and the observed_* fields continue to rest on the four observations that did reproduce.",
+      "action": "Owner: open all five supplied links once in a normal browser and record the final URL for each. If any lands on the homepage, contact Associates support before the links are used at scale, and run the enrolled one-link workflow test (FLG-002). No site change is needed until that is known — the shop's own buttons are constructed /dp/ links, not these short links.",
+      "status": "needs review",
+      "sources": [
+        "S14",
+        "S18",
+        "S22",
+        "S29",
+        "S36"
+      ],
+      "source_note": ""
     }
   ]
 }
