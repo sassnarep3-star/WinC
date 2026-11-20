@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kitchen Shortlist</title>
+    <link>https://sassnarep3-star.github.io/WinC/</link>
+    <description>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 20 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://sassnarep3-star.github.io/WinC/rss.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://sassnarep3-star.github.io/WinC/assets/favicon.svg</url>
+      <title>Kitchen Shortlist</title>
+      <link>https://sassnarep3-star.github.io/WinC/</link>
+    </image>
+    <item>
+      <title>Questions to ask before buying a multi-function kitchen appliance</title>
+      <link>https://sassnarep3-star.github.io/WinC/guides/multi-function-appliance-questions.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/multi-function-appliance-questions.html</guid>
+      <description>Six functions on the box, three in your week. Eight questions for toaster-oven hybrids, combo fryers and gift purchases — every row sourced.</description>
+      <pubDate>Wed, 20 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>How to assess cleanup and counter-space trade-offs</title>
+      <link>https://sassnarep3-star.github.io/WinC/guides/cleanup-counter-space.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/cleanup-counter-space.html</guid>
+      <description>The appliance you'll actually use is the one you'll actually clean. Measure the counter and the parts, not the marketing.</description>
+      <pubDate>Wed, 20 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>A no-hype checklist for comparing air fryer capacity</title>
+      <link>https://sassnarep3-star.github.io/WinC/guides/air-fryer-capacity-checklist.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/air-fryer-capacity-checklist.html</guid>
+      <description>Quarts are a marketing number. Surface area, load height and batch count are the ones you'll live with.</description>
+      <pubDate>Wed, 20 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Basket or oven-style air fryer: what should you compare?</title>
+      <link>https://sassnarep3-star.github.io/WinC/guides/basket-vs-oven-air-fryer.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/basket-vs-oven-air-fryer.html</guid>
+      <description>Two shapes, two habits. Compare the workflow before the wattage — with a comparison table you can check against live listings.</description>
+      <pubDate>Wed, 20 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

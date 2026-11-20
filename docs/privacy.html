@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · Kitchen Shortlist</title>
+<meta name="description" content="No cookies, no third-party trackers, no raw IP storage. What this site records, what it never records, and how the self-hosted endpoint works.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/privacy.html">
+<meta property="og:title" content="Privacy · Kitchen Shortlist">
+<meta property="og:description" content="Cookieless, first-party, minimal — the measurement design in plain language.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/privacy.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Kitchen Shortlist RSS" href="rss.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ANALYTICS_ENDPOINT = null; /* local mode — FLG-006 */</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span><span class="brand-name">Kitchen Shortlist</span><span class="brand-tag">Buyer-first appliance guides</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guides/index.html">Guides</a></li>
+        <li><a href="products.html">The Shortlist</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Before You Decide</a></li>
+        <li><a href="executive-summary.html">Summary</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap">
+    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+    <span class="sep">·</span> If you buy through a product link on this page we may earn a commission at no extra cost to you.
+    <span class="sep">·</span> Product links carry <code>rel="sponsored"</code>.
+    <a href="compliance.html">How we disclose</a>
+  </div>
+</div>
+
+<main id="main">
+  <article class="wrap prose" style="padding-top:2rem">
+    <p class="crumbs"><a href="index.html">Home</a> / Privacy</p>
+    <h1>Privacy</h1>
+    <div class="byline"><span>Version 1.0 · 20 November 2026</span><span>·</span><span>Applies to this entire site</span></div>
+
+    <p>The short version: <strong>this site sets no cookies, loads no third-party trackers, and sends nothing to ad networks.</strong> Measurement is first-party, minimal and under your control.</p>
+
+    <h2>What is stored on your device</h2>
+    <ul>
+      <li><span class="code">ks_session_v1</span> — a random session identifier (e.g. <span class="code">s-m1x2k8-ab73f2q9</span>). Not derived from you; meaningless outside this browser.</li>
+      <li><span class="code">ks_events_v1</span> — a ring buffer of up to 500 events you generated (page views, link clicks, searches), so the <a href="measurement.html">Measurement page</a> can show them. Clear it any time with the button on that page.</li>
+    </ul>
+
+    <h2>What is never collected</h2>
+    <ul>
+      <li>Cookies of any kind — session or advertising.</li>
+      <li>Raw IP addresses, device fingerprints, or precise location.</li>
+      <li>Names, emails or payment data (this site has no accounts and no forms today).</li>
+      <li>Cross-site browsing history or data shared with third parties.</li>
+    </ul>
+
+    <h2>If an analytics endpoint is enabled</h2>
+    <p>Today the endpoint is unset (<a href="flagged.html#flg-006">FLG-006</a>) — events stay in your browser. If a self-hosted endpoint is deployed later, it will receive: the event name, timestamp, path, truncated referrer, session id and the event detail shown on the <a href="measurement.html">Measurement page</a>. The shipped endpoint code discards IP addresses beyond transient request handling, aggregates by day, and stores no raw identifiers. This page will be updated before any endpoint goes live.</p>
+
+    <h2>Amazon's role</h2>
+    <p>Product links go to Amazon. When you click a sponsored link, Amazon's own <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=468496" rel="nofollow noopener" target="_blank">Privacy Notice</a> governs what happens on their side — including their Associates tracking mechanisms. Amazon requires associates to disclose their use of cookies and third-party technologies; that requirement is why this page and the site's <a href="compliance.html">compliance notes</a> exist.</p>
+
+    <h2>Your choices</h2>
+    <ul>
+      <li>Block JavaScript → the site works; measurement simply doesn't run.</li>
+      <li>Clear site data → the local session id and event buffer are deleted.</li>
+      <li>Use an ad/tracker blocker → nothing here will break; we load zero third-party scripts.</li>
+    </ul>
+
+    <h2>Changes</h2>
+    <p>Material changes (a new endpoint, a subscribe form, a new data field) get published here <em>before</em> they ship, and flagged in the <a href="flagged.html">flag list</a> while pending review. Related decisions: <a href="suggestions.html#sg-list">SG-12</a> (endpoint hosting), <a href="suggestions.html#sg-list">SG-30</a> (reader capture).</p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Kitchen Shortlist</span>
+        <p>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul class="footer-nav">
+          <li><a href="guides/index.html">All guides</a></li>
+          <li><a href="products.html">The Shortlist</a></li>
+          <li><a href="index.html#seasonal">Seasonal clusters</a></li>
+          <li><a href="rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Dashboard</h4>
+        <ul>
+          <li><a href="source-register.html">Source register</a></li>
+          <li><a href="flagged.html">Flagged for review</a></li>
+          <li><a href="measurement.html">Measurement</a></li>
+          <li><a href="ledger.html">Campaign ledger</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="executive-summary.html">Executive summary</a></li>
+          <li><a href="suggestions.html">Suggestions</a></li>
+          <li><a href="questions.html">Before you decide</a></li>
+          <li><a href="about.html">About &amp; editorial policy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclosure">
+      <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. If you buy through links on this page we may earn a commission at no extra cost to you. Product links are marked <code>rel="sponsored"</code>; we only recommend what our source register can support, and unverified values are published as blank rather than filled in.
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Kitchen Shortlist</span>
+      <a href="sitemap.xml">Sitemap</a>
+      <a href="robots.txt">Robots</a>
+      <a href="privacy.html">Privacy</a>
+      <span>Prices and availability change; check the listing for current terms.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/analytics.js" defer></script>
+</body>
+</html>
