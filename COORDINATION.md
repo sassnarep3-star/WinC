@@ -528,13 +528,13 @@ and repeated by `arena-82d39deb` and `arena/0458cd24-winc`).
 
 | ID | Task | Status | Owner | Files |
 | --- | --- | --- | --- | --- |
-| T29 | Restore the `COORDINATION.md` provenance trail dropped by PR #17 | in progress | b0920c92 | `COORDINATION.md` |
-| T30 | Fourth independent verification pass over the 5 links, 5 listings and the policy pages | in progress | b0920c92 | `data/probes.json`, `data/sources.json`, `data/products.json` |
-| T31 | Row-level source-link enforcement (gate + repairs) | pending | b0920c92 | `scripts/check_site.py`, `scripts/build_site.py`, `data/*.json` |
-| T32 | Decision-desk hardening (suggestions + questions) | pending | b0920c92 | `data/suggestions.json`, `data/questions.json` |
-| T33 | Measurement end-to-end proof | pending | b0920c92 | `analytics/`, `assets/app.js`, `data/campaign-ledger.json` |
-| T34 | Reader-facing publication polish | pending | b0920c92 | `scripts/build_site.py`, `assets/style.css`, `data/categories.json` |
-| T35 | Final integration | pending | b0920c92 | all (integration only) |
+| T29 | Restore the `COORDINATION.md` provenance trail dropped by PR #17 | done | b0920c92 | `COORDINATION.md` (commit 884f67a) |
+| T30 | Fourth independent verification pass over the 5 links, 5 listings and the policy pages | done | b0920c92 | `data/probes.json`, `data/sources.json` (S27, S28), `data/products.json`, `data/flags.json` (FLG-026, FLG-027) |
+| T31 | Row-level source-link enforcement (gate + repairs) | done | b0920c92 | `scripts/check_site.py`, `scripts/build_site.py`, `data/guides/*.json` |
+| T32 | Decision-desk hardening (suggestions + questions) | done | b0920c92 | `data/suggestions.json`, `scripts/build_site.py`, `assets/style.css` |
+| T33 | Measurement end-to-end proof | done | b0920c92 | `analytics/collect.py` (ts_client fix), `scripts/verify_measurement.py` (new), `data/flags.json` (FLG-007), measurement.html |
+| T34 | Reader-facing publication polish + two new guides (TP-10, TP-06) | done | b0920c92 | `data/guides/first-air-fryer-six-checks.json`, `data/guides/probe-placement-whole-chicken.json`, `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
+| T35 | Final integration | in progress | b0920c92 | all (integration only) |
 
 ## Irregularity found on arrival (recorded, not hidden)
 
@@ -553,3 +553,84 @@ that were merged while the workflow deploy was in flight. Nothing in the tree is
 deploy paths racing on one branch is how a real site ends up serving a stale build. Recorded;
 the workflow deploy is left as-is because it is what the `ci.yml` + `pages.yml` pair expects and
 it is the path that produced the successful `87f7284` build.
+
+## Work record (T30–T35, session b0920c92)
+
+### T30 — fourth live observation of the five supplied links (commit 30be459)
+
+| Source | What was done |
+| --- | --- |
+| S27 (new) | All five `link.amazon` short links re-resolved live on 2026-11-20 via the fetch reader. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon home page; B0f3GKalj still resolved to B0DZFD6R9Z with the same `lv=shuf` / `plpRedirect=mhFallback` flags. Two of the four re-fetched individually: identical. |
+| S28 (new) | Control: all five direct `/dp/` listings re-opened; every one still served the recorded `<title>` and breadcrumb, so the published reader links are unaffected. |
+| FLG-026 (new) | Records the observation. Explicitly **not** a claim that the links are invalid — FLG-003 stays open. Cause not determinable from this environment. |
+| FLG-027 (new) | Amazon lists sibling variants of both thermometers on the same pages (colour/speed/probe count); which variant was meant is unconfirmed, so `intended_*` stays blank. |
+| `data/probes.json` | Fourth observation appended per probe (`fourth_observation`), `probe_dates` extended; the interpretation block rewritten to state the disagreement instead of claiming 5/5 agreement. Prior observations preserved untouched. |
+| Policy re-read | Google's *Qualify your outbound links* re-fetched 2026-11-20: `rel="sponsored"` for paid/affiliate links confirmed verbatim (page last updated 2025-12-10). Recorded on S04's basis; the site already applies `rel="sponsored nofollow"` to every buy button. |
+
+### T31 — every table row on every page carries a source (commit d286090)
+
+The gate's row-source rule was extended from 4 register pages to **all** pages: a row passes if it
+links an official source, cites `verification.html#src-*`, or explicitly says its source is internal
+(linking the file) or explicitly blank (pointing at the register). First strict run: **61 violations**
+across 9 pages. Repairs: per-row Source columns on product specs, category comparisons, all guide
+tables (each cell cites the exact listing or the USDA page), the suggestion register (derived from
+the S/FLG/Q ids its own evidence cites), measurement tables, and the exec summary. Deep-link anchors
+(`#src-*`, `#flag-*`, `#q-*`, `#t-*`) are now gate-checked to resolve. The `link.amazon` rule was
+narrowed to reader links only — a nofollow provenance citation of the submitted URL in the source
+register is legitimate. Final: `OK: 29 pages checked, 28 sitemap URLs, no violations.`
+
+### T32 — decision desk names its deciders (commit b10e352)
+
+Every suggestion row now carries `path` (A–D, matching the published paths), `decision_by`
+(**7 of 20 need the account owner**, not the site) and `discovery` (what would have to be known to
+decide it — rows with no missing information say so). The path chooser shows each path's suggestions
+with their deciders. Question rows with no answer say "not yet answered" instead of a bare blank.
+No new suggestion was invented; the annotations are derived from each row's own evidence.
+
+### T33 — measurement proven end to end (commit 2ceba84)
+
+`scripts/verify_measurement.py` (new, stdlib-only) starts `analytics/collect.py` as a real server,
+posts all five events with the exact payload `assets/app.js` sends, and asserts: HTTP 202 ×5, HTTP
+422 for an undefined event, `/stats` and `/ledger` aggregates, and that no IP / user agent / cookie /
+email / search query is stored. **It found a real defect:** the collector read the client timestamp
+from `ts` while the beacon sends `at`, so `ts_client` was always empty. Fixed in
+`analytics/collect.py`. FLG-007 updated: code verified end to end, host still missing. The
+Measurement page now carries a "Is the measurement layer actually wired up?" table with per-row
+sources. `npm run verify` now includes the measurement check. The campaign ledger stays empty —
+unchanged by design.
+
+### T34 — two backlog guides published + summary refreshed (commit ff482f1 and later)
+
+- **TP-10 → `guides/first-air-fryer-six-checks.html`** — six checks, each a listed spec with a
+  per-row listing source; the no-price row cites the Program Policies (S02).
+- **TP-06 → `guides/probe-placement-whole-chicken.html`** — placement/stuffing/care wording quoted
+  from the USDA FSIS *Food Thermometers* factsheet (S17), **fetched and read 2026-11-20 by this
+  session**; the 165 °F poultry minimum from the FSIS safe-temperature chart (S16).
+- Topics TP-10/TP-06 marked `published` with provenance. Sitemap/RSS/search/front-page rail updated
+  automatically (29 pages, 28 URLs, 13 feed items).
+- `EXECUTIVE-SUMMARY.md` counts corrected (8 guides, 28 sources, 27 flags) and a fourth-pass section
+  appended; the stale "5/5 identical" redirect row replaced with the four-observation record.
+
+### Sources used this session
+
+- Google, *Qualify your outbound links* — https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links (re-read 2026-11-20)
+- USDA FSIS, *Food Thermometers* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers (read 2026-11-20)
+- USDA FSIS, *Safe Temperature Chart* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart (cited; read by prior session, re-verified via S17's embedded chart)
+- Amazon listings S09–S13 (re-read as controls on 2026-11-20, recorded as S28)
+- The five submitted `link.amazon` links (fourth observation, recorded as S27)
+
+### Verification performed this session
+
+`python3 scripts/build_site.py` → 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.
+`python3 scripts/check_site.py` → OK, no violations (row-source rule now site-wide; deep links checked).
+`python3 scripts/verify_measurement.py` → 5 events accepted, 1 rejected, nothing identity-bearing stored.
+
+### Irregularities recorded this session
+
+- **I-03 — the measurement timestamp defect.** The shipped collector silently dropped the client
+  timestamp on every event because of a one-word field mismatch between the beacon and the
+  collector. Found by the new end-to-end test, not by review. Fixed; the test is part of `npm run verify`.
+- **I-04 — the row-source gate was advisory site-wide.** The brief's "every table row" rule was only
+  enforced on 4 pages; 61 rows elsewhere had no source. All repaired; the gate now enforces it everywhere.
+- **I-05 — four short links landing on the Amazon home page** (FLG-026): recorded as an observation,
+  not a verdict; FLG-003 (compliance status unresolved) is deliberately kept open.

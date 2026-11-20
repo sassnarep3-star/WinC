@@ -8,9 +8,9 @@ It leads with products, answers buyer questions, and keeps verification one clic
 ## What is live
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
-- **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
-- **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
+- **Guides:** 8 question-shaped guides (basket vs. oven-style, first-air-fryer six checks, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, probe placement in a whole bird, holiday crowd cook).
+- **Trust:** verification register (intent vs. observed kept separate), 28-source register, 27 flagged items, redirect re-observation log (four observations), compliance gate (`scripts/check_site.py`).
+- **Measurement:** 5-event beacon + endpoint code verified end to end (`scripts/verify_measurement.py`); empty campaign ledger; sitemap + RSS + internal search.
 
 ## Key facts (all sourced)
 
@@ -19,7 +19,7 @@ It leads with products, answers buyer questions, and keeps verification one clic
 | Submitted links | 5 link.amazon short links (9-char tokens) | Verification §1 |
 | Observed ASINs | B0CDY277D3 · B09B7SB46R · B08DKYBTPH · B0DHZTCNR5 · B0DZFD6R9Z | Verification §1–2, §4 |
 | Intended ASINs | Blank (9-char tokens are not ASINs) | S05 (ASIN = 10 chars) |
-| Redirect targets, re-observed 2026-11-20 | 5/5 identical to 2026-11-17; every response carried `lv=shuf` + `plpRedirect=mhFallback` | S18, `data/probes.json` |
+| Redirect targets, four observations | 2026-11-17 and twice 2026-11-20: 5/5 identical. Fourth observation 2026-11-20: four of five landed on the Amazon home page; B0f3GKalj still resolved to B0DZFD6R9Z (FLG-026 — observation, not a verdict) | S18, S27, S28, `data/probes.json` |
 | Food-safety figures in the two new guides | Poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest | S16, S17 (USDA FSIS) |
 | Prices / ratings | Blank by policy + volatility | S02 (FLG-006) |
 | Tracking ID | shopnow047c-20 (as supplied; unconfirmed — FLG-001) | Flagged for Review |
@@ -187,8 +187,8 @@ fields and an explicit (possibly empty) `answer` key; every category needs at le
 whose deciding spec exists in the product data and whose source is a recorded listing; every topic
 needs a stated provenance; products' listing notes must cite a flag that exists; the redirect log
 and the product records must not drift apart; and the front page must not reintroduce process
-furniture (a regression guard for the rebuild). `npm run verify` → **OK: 27 pages checked, 26
-sitemap URLs, no violations.**
+furniture (a regression guard for the rebuild). `npm run verify` → **OK: 29 pages checked, 28
+sitemap URLs, no violations**, plus the measurement layer verified end to end.
 
 ## What has to happen before any of this earns anything
 
@@ -202,3 +202,56 @@ sitemap URLs, no violations.**
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
+
+---
+
+# Fourth pass — row-level sourcing, measured-proof, two new guides — 2026-11-20 (session `b0920c92`)
+
+## 1 · Every table row on every page now carries its source
+
+The brief's hard rule — every table row must have a source link, and unconfirmed values stay blank —
+was enforced on four register pages and *advisory* everywhere else. The gate now applies it to all
+29 pages: a row passes if it links an official source, cites the source register, or explicitly says
+its source is internal (linking the file) or explicitly says it is blank (pointing at the register
+where the gap is published). Deep links (`#src-*`, `#flag-*`, `#q-*`, `#t-*`) are checked to resolve.
+Sixty-one rows failed the first run of the stricter rule; every one now carries a real source.
+
+## 2 · The fourth observation of the five supplied links (FLG-026)
+
+Four of the five `link.amazon` short links (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on
+the Amazon home page on 2026-11-20 instead of the product listings the first three observations
+recorded; B0f3GKalj still resolved to B0DZFD6R9Z. Two of the four were re-fetched individually to
+rule out a parallel-request artefact. Recorded as an **observation, not a verdict**: FLG-003 stays
+open and the links are not called invalid. Control: all five direct `/dp/` listings were re-opened
+the same day and still serve the recorded products (S28), so the published reader links are
+unaffected. A related finding (FLG-027): Amazon lists sibling variants of both thermometers on the
+same pages, so which variant was meant is genuinely unconfirmed — intended fields stay blank.
+
+## 3 · The measurement layer is proven, not just shipped
+
+`scripts/verify_measurement.py` runs the shipped collector as a real server, posts all five events
+with the beacon's own payload, and asserts the responses, the aggregates and the absence of anything
+identity-bearing. It found a real defect — the collector read the client timestamp from `ts` while
+`assets/app.js` sends `at`, so every stored row had an empty client timestamp — now fixed. The
+Measurement page states what is verified and what is still missing (a host for the endpoint; orders
+from a first-party export).
+
+## 4 · The decision desk names its deciders
+
+Each of the 20 suggestions now carries the path (A–D) it belongs to, **who can decide it** (7 of 20
+need the account owner, not the site) and what would have to be known to decide it. The path chooser
+shows each path's suggestions. Question rows with no answer say "not yet answered".
+
+## 5 · Two backlog guides published through the cadence
+
+- **Your first air fryer: the six checks before you buy** (TP-10) — every check is a listed spec
+  with a per-row listing source; the no-price rule cites the Program Policies (S02).
+- **Where exactly do you put the probe in a chicken?** (TP-06) — placement, stuffing and care wording
+  quoted from the USDA FSIS *Food Thermometers* factsheet, fetched and read 2026-11-20 (S17); the
+  165 °F poultry minimum from the FSIS safe-temperature chart (S16).
+
+Sitemap, RSS, search index, the front-page rail and the About cluster counts all updated from the
+two new guide files — no hand edits.
+
+**Gate: 29 pages, 28 sitemap URLs, no violations. Measurement: 5 events accepted, 1 rejected,
+nothing identity-bearing stored.**
