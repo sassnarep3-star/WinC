@@ -436,6 +436,33 @@ reconciled. Resolution:
 `Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
 `npm run verify` green (gate + `scripts/test_analytics.py` + `analytics/test_worker.mjs`).
 
+### Fifth merge of `main` the same day (PR #49, session `arena/1c6908d1-winc`) — and a contradiction between observations, recorded rather than resolved
+
+This pass merged with `-X theirs` (main wins every conflicting hunk), then re-registered this session's rows at free ids
+rather than reusing taken ones. Outcome, in the order it matters:
+
+- **What main's side kept:** its renderer, stylesheet, registers and its own new rows (S36, SG-43/SG-44, FLG-030, Q-26).
+  This branch's topics flips (TP-06/TP-08/TP-09 → published pages), `sixth_observation` + `probe6_note`, the two new guides,
+  `card_copy`, the glance table, the dated seasonal strip and the two gate rules all survived the merge — verified after it,
+  not assumed.
+- **What this session re-added at free ids:** sources S37 (the sixth observation) and the S17 calibration/care/types passages;
+  flags FLG-031 (the undecided no-price stance), FLG-032 (the `th=1` variant parameter) and FLG-033 (below); questions
+  Q-27/Q-28/Q-29; suggestions SG-45…SG-53 (nine records of the shop pass, with their cross-references repointed to the ids
+  main actually uses, so no row cites an id that now means something else). SG-36/SG-37/SG-38/SG-43 are cross-referenced
+  instead of duplicated, and the artwork row was rewritten to describe main's PNG+WebP pipeline rather than the JPEG set this
+  session first drafted.
+- **A real disagreement between observations, published:** FLG-030 records that `arena/1c6908d1`'s fetch path did *not*
+  reproduce the five-token → five-ASIN mapping. Six observations by four sessions (2026-11-17 and five on 2026-11-20) map all
+  five tokens to the same five ASINs every time, with the page titles matching verbatim. Neither side is overwritten: **FLG-033**
+  states that the discrepancy is about the fetch path, not about the links, and sets the action that settles it — FLG-002's
+  one-link test inside the enrolled Associates workflow, which is the only route that determines what a reader actually receives.
+  The supplied short links are still not called invalid (FLG-003 unchanged).
+- Duplication avoided rather than litigated: the two per-listing source rows this session had registered were dropped in favour
+  of main's S32/S33/S34 (same listings, same date), and the duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green.
+
 ---
 
 # Session `arena-156c2ecf` — line-by-line re-verification, decision-register completion — 2026-11-20
