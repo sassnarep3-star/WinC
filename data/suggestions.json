@@ -1,7 +1,7 @@
 {
-  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
+  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. Statuses are re-checked against the code on every pass: a register that misstates its own status is worse than no register.",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass; statuses repaired against the code, new suggestions added)",
+  "reviewed_by_session": "ab951e4c (fourth pass; SG-19 decided and shipped, SG-03/SG-15 status details extended, SG-21..SG-27 added)",
   "suggestions": [
     {
       "id": "SG-01",
@@ -46,7 +46,7 @@
       "expected_effect": "Higher click-through from social/messaging shares; warmer read. Measure: outbound_click per session on illustrated vs pre-change pages, and share-click rate once the endpoint exists.",
       "evidence": "assets/ contained no image files (verified by directory listing); head() emitted no og:image.",
       "feeds_prompt": "Commission licensed lifestyle photography for the five products and both categories; keep the 'no Amazon product images' rule, keep the illustration captions, and swap files in without touching copy. Never scrape Amazon imagery.",
-      "status_detail": "Illustrations shipped; the licensed-photography decision (Q-07) is still open."
+      "status_detail": "Illustrations shipped; the licensed-photography decision (Q-07) is still open. Second pass, session ab951e4c (2026-11-20): each of the five products now carries its own editorial illustration, so the shelf is no longer three copies of one category image. The category art survives only as the fallback for a product with no image field."
     },
     {
       "id": "SG-04",
@@ -221,7 +221,7 @@
       "title": "Front page should sell the shop, not describe the process",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped in this session. The front page no longer counts its own sources and flags; the audit furniture moved to the Desk.",
+      "status_detail": "Shipped in this session. The front page no longer counts its own sources and flags; the audit furniture moved to the Desk. Second pass, session ab951e4c (2026-11-20): the front page dropped its process prose (‘every number is copied from…’ as a wall of text) in favour of a three-item trust rail, and product cards no longer print flag IDs, model strings or ASINs. Evidence links stay on the card as one line in the footer.",
       "area": "Design",
       "problem": "The front page led with 'Why the numbers here are boring in a good way' — four bullets counting sources, flags and open questions — and the newsletter block explained its own broken implementation in reader copy ('records a count inside your own browser'). The brief asks for a publication front page that leads with the products, with every dashboard surface reachable from the footer and one navigation group. A visitor who arrived from a search was asked to read about our bookkeeping before seeing anything to buy.",
       "proposal": "Rebuild the front page in the order a reader moves: hero (one question), the shop (cards with specs and a sponsored button), the guides that answer that question, the two categories, then one short honest line about how the site works with a link to the full method. Move the counts, the flags and the questions to the Desk pages, where they belong.",
@@ -283,16 +283,16 @@
     {
       "id": "SG-19",
       "title": "Decide the imagery line: licensed photography or the illustration set",
-      "status": "open",
-      "status_detail": "Still open. Illustrations are shipped and honestly captioned; this is the decision about replacing them with real product photography.",
+      "status": "done-this-session",
+      "status_detail": "Decision taken by session ab951e4c on 2026-11-20 without waiting for a photography budget: the illustration line was completed (5 new original images, one per product) and the whole set was converted to optimized JPEG — 9 files, 1.4 MB total, against 15 MB for the 4 PNGs it replaced. Owner photography stays on the table under Q-07; the site no longer depends on a stock provider or on reusing Amazon listing imagery.",
       "area": "Design",
       "problem": "The current illustrations are honest and consistent, but a buyer's first question about an affiliate page is 'what does it actually look like'. Illustrations answer the mood, not the product. Amazon's IP licence restricts the use of Amazon-hosted product imagery, so the answer is licensed photography, a shoot, or nothing.",
-      "proposal": "Either commission a small set of licensed lifestyle shots for the five products and two categories (and replace the illustration captions with real credits), or decide to stay with the illustration line and say so on the About page as a standing editorial rule. Do not scrape Amazon images.",
-      "effort": "L",
-      "cost": "cash for licensed photography; zero for staying with illustrations",
-      "risk": "Cash and time if commissioned; a credibility gap if scraped imagery appears without rights.",
-      "expected_effect": "Better trust and click-through if photography ships; nothing measurable if the decision is to stay with illustrations. Measure: outbound_click per product page, once the endpoint exists.",
-      "evidence": "assets/img/ holds four original illustrations; About → Methodology states the no-Amazon-imagery rule; Q-07 asks where the images come from permanently.",
+      "proposal": "Ship the illustration set now (each product gets its own art, captioned as an illustration and never as a product photograph), keep the compression step in the pipeline, and revisit licensed photography only if a reader trust problem shows up in measured behaviour.",
+      "effort": "S",
+      "cost": "none — no provider, no licence fee, generated in-repo",
+      "risk": "Illustrations cannot show the actual item, so a reader who wants photographic proof still has to open Amazon. Mitigated by captions that say ‘not a product photograph’ and by the listing link beside every spec.",
+      "expected_effect": "Front-page payload drops by roughly an order of magnitude and the shelf stops looking machine-assembled. Measurable with any page-speed tool once one is run against the live URL; no score is claimed here.",
+      "evidence": "assets/img before: 4 PNGs, 15,184 KB total (each ~3.7 MB, reused across cards). After: 9 JPEGs at 1200×750 q82, 1,381 KB total. Alt text and captions state the imagery is editorial, not photographic.",
       "feeds_prompt": "Decide the imagery line once, in writing, and either commission licensed photography with credits or record 'illustrations by policy' as the standing rule. Never use Amazon-hosted product images."
     },
     {
@@ -309,6 +309,105 @@
       "expected_effect": "One decision that unblocks topic choice, link format, and the imprint question. Measure: nothing to measure — this is a decision, not an experiment.",
       "evidence": "FLG-011 (locale unresolved), Q-10 (audience), and the fact that all five links resolve to amazon.com listings while the owner operates in NL.",
       "feeds_prompt": "Record the audience, marketplace and language decision in data/questions.json answers and on the About page, then re-check every outbound link format against that decision."
+    },
+    {
+      "id": "SG-21",
+      "title": "Keep the asset compression step in the pipeline, not in someone's memory",
+      "status": "done-this-session",
+      "area": "performance",
+      "effort": "S",
+      "cost": "none",
+      "problem": "The repo shipped full-size PNGs straight from the generator. Four of them were 15 MB of front-page payload, and the same file was reused across five cards, which is both slow and the exact look of a machine-assembled site.",
+      "proposal": "Convert every illustration to a 1200×750 JPEG at q82 as part of the asset step, reference the compressed file from data, and let the gate fail any page that points at a missing or oversized asset.",
+      "risk": "JPEG artefacts on flat illustration fills; acceptable at this size, and a WebP pass can follow if a real page-speed measurement asks for it.",
+      "expected_effect": "Front-page image weight falls from ~15 MB to ~1.4 MB. Nothing is claimed about a Lighthouse score until one is actually run against the live URL.",
+      "evidence": "`convert` run over assets/img on 2026-11-20: 9 files, 1,381 KB total, all referenced from data/*.json; the gate resolves every <img> and og:image against the filesystem.",
+      "feeds_prompt": "Add an asset step: every image in assets/img must be ≤200 KB at display size (1200px wide, q82 JPEG) and every reference must resolve. Gate fails on a missing or unreferenced asset.",
+      "status_detail": "Shipped 2026-11-20 by session ab951e4c: images optimized in place, all data references updated to .jpg, no PNG remains in assets/img."
+    },
+    {
+      "id": "SG-22",
+      "title": "Cut audit vocabulary out of reader-facing copy",
+      "status": "done-this-session",
+      "area": "reader experience",
+      "effort": "S",
+      "cost": "none",
+      "problem": "Shelf cards printed model strings, flag IDs (‘see FLG-005’) and ASINs. Those are register fields, not selling copy: a buyer does not read an internal flag identifier, and its presence on a card is the strongest ‘generated site’ tell left on the page.",
+      "proposal": "Keep the registers complete but move the audit vocabulary off the reader path: cards carry what the item is, the spec that decides it, the button and one evidence line; flags, model conflicts and ASINs live on the product page and the verification/flag registers.",
+      "risk": "A reader sees less of the uncertainty up front. Mitigated by the decide-on line, which names the deciding spec, and by the trust rail that says blank beats guessed.",
+      "expected_effect": "Cards read like a shop. If the framing works, outbound click rate on product cards should rise once the counter is deployed — unmeasured until then.",
+      "evidence": "index.html and category pages before this pass printed `see FLG-005` and `ASIN B0…` inside the product grid; after it, cards print no flag ID and no model string (gate rule added).",
+      "feeds_prompt": "Reader-facing cards must not contain flag identifiers, model strings or ASINs; keep those on product pages and registers. Add a gate rule that fails a card block containing /FLG-\\d{3}/."
+    },
+    {
+      "id": "SG-23",
+      "title": "One sourced answer per backlog row, at a rate a person can keep",
+      "status": "open",
+      "area": "editorial cadence",
+      "effort": "M",
+      "cost": "time only",
+      "problem": "The backlog is honest but unbounded: 18 rows and no rule for how many become guides per build. Volume without measured demand is guessing at scale.",
+      "proposal": "Cap the cadence at two or three guides per build, each added to sitemap and feed by the builder alone, and convert the published row in topics.json in the same commit so the backlog never lies about what exists.",
+      "risk": "Publishing faster than the traffic can arrive means nobody reads it. The mitigation is the same one already in the brief: choose topic six from Search Console queries when the property exists, not from the backlog.",
+      "expected_effect": "A visible pipeline that stays truthful. Measured per-guide impressions after 28 days in Search Console; until then this is a hypothesis about cadence, not about demand.",
+      "evidence": "This session published 3 guides and marked 4 backlog rows (TP-03, TP-06, TP-08, TP-09) as published in data/topics.json with a pointer to the guide that answers each — the mechanism works, the rate is the decision.",
+      "feeds_prompt": "Publishing cadence: at most 3 guides per build, each from data/guides/*.json, each with a source link per figure, and the matching topics.json row updated to published in the same commit."
+    },
+    {
+      "id": "SG-24",
+      "title": "A seasonal collection URL that reads like a shop window",
+      "status": "open-blocked",
+      "area": "merchandising",
+      "effort": "M",
+      "cost": "none",
+      "problem": "The site has season tags on guides and one holiday illustration, but no seasonal landing page — nothing to point a November query or a newsletter subject line at. Holiday intent is the single most obvious seasonal demand these two categories share.",
+      "proposal": "Build `seasons/holiday-counter.html` from existing data: the whole-bird capacity question, the leave-in probe question, the two guides that answer them, and the four products that survive the checks — no new claims, only re-assembled ones with their sources attached.",
+      "risk": "Seasonal pages rot publicly. Mitigation: the page carries its season window and the builder marks it stale after the season passes rather than letting it look evergreen.",
+      "expected_effect": "A second entry point for the same verified facts. Measured as entrances and outbound clicks on that URL once the counter exists.",
+      "evidence": "Blocked by Q-20: nobody has decided whether the site is seasonal or evergreen, and a season the owner will not maintain is worse than no season.",
+      "feeds_prompt": "Blocked on Q-20 (seasonal vs evergreen). If seasonal is chosen: build a seasons/ landing page from existing guide and product data, date-stamp the season window, and add it to sitemap and nav."
+    },
+    {
+      "id": "SG-25",
+      "title": "Head-to-head comparison URLs for pairs that share comparable fields",
+      "status": "open",
+      "area": "SEO structure",
+      "effort": "M",
+      "cost": "none",
+      "problem": "The highest-intent queries in this niche are “A vs B”. The site answers them inside category tables, which no one searching a pair will find as a dedicated document.",
+      "proposal": "Generate one comparison page per product pair that shares at least three comparable listed fields, built from the same verified spec rows with a source per cell, and no verdict: the page states what differs and what is identical, never which is better.",
+      "risk": "Comparison pages are the classic doorway-page trap. Mitigated by refusing to emit a page when the fields do not line up, and by never publishing a winner.",
+      "expected_effect": "Three or four extra indexable documents that match exact-intent queries. Whether they earn impressions is measurable in Search Console; it is not claimed here.",
+      "evidence": "The three air fryers share capacity, exterior dimensions, weight, model and price-blank rows — enough for genuine pair pages; the two thermometers share almost no comparable fields, so they should not get one.",
+      "feeds_prompt": "Add a comparison generator for product pairs with ≥3 comparable non-blank fields; each cell keeps its own source link; no verdict, no winner, no fabricated attribute."
+    },
+    {
+      "id": "SG-26",
+      "title": "Audit structured data against Google's current rich-result rules",
+      "status": "open",
+      "area": "SEO technical",
+      "effort": "S",
+      "cost": "none",
+      "problem": "The builder emits Article, FAQPage, BreadcrumbList and ItemList today. Whether Google still surfaces FAQPage and how HowTo is treated right now has not been re-read from Google's own documentation in this environment — the sandbox can reach developers.google.com only through the reader, and that check has not been done for those two types.",
+      "proposal": "Fetch Google's structured-data docs for FAQ and HowTo, keep only the types Google says it can display, add HowTo to the ice-cup calibration guide if it qualifies, and record the doc date in the source register.",
+      "risk": "Emitting markup Google ignores is harmless but misleading to the next operator, who reads it as a feature. The gate should therefore only accept schema types with a dated source row.",
+      "expected_effect": "Structured data that matches what search actually consumes. Success signal: rich-result impressions in Search Console, which requires the property (Q-13/SG-08).",
+      "evidence": "scripts/build_site.py currently emits four schema types; no source row in data/sources.json covers Google's HowTo or FAQ documentation, so this session left the markup as-is rather than claiming it is optimal.",
+      "feeds_prompt": "Before adding or keeping any schema type, add a dated source row citing Google's own structured-data documentation for that type; the gate should fail a schema type with no source row."
+    },
+    {
+      "id": "SG-27",
+      "title": "Decide the reader-capture question or remove the form",
+      "status": "open-blocked",
+      "area": "trust / list building",
+      "effort": "S",
+      "cost": "provider cost if a list is chosen",
+      "problem": "The capture form on every page records a count in the visitor's own browser and sends the address nowhere. The copy now says so honestly, which is the right posture — but an honest dead form is still a dead form on a site that wants repeat readers.",
+      "proposal": "Either stand up a provider with a real consent flow (confirmed opt-in) and replace the form's action, or delete the form and offer the RSS URL as the only follow mechanism the site can actually honour.",
+      "risk": "Keeping it indefinitely converts a trust signal into a lie by omission. Choosing ‘no list’ is a legitimate answer and should be recorded as one.",
+      "expected_effect": "One fewer thing on the page that does not do what it looks like it does. Measurable as subscription starts only if a provider is chosen.",
+      "evidence": "Blocked by Q-21 (who owns the reader list and which provider handles addresses); the site's disclosure page already states what is and is not collected.",
+      "feeds_prompt": "Blocked on Q-21. Decision either way: (a) provider + confirmed opt-in flow + retention note, form action wired to it, or (b) remove the form entirely and link feed.xml as the follow mechanism. Update the disclosure page in the same commit."
     }
   ]
 }

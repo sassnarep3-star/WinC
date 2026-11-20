@@ -192,6 +192,22 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, LED Shake Reminder, Programmable'; Product Dimensions 12.75\"D x 13.5\"W x 10\"H; Capacity 8 quarts; size selector 6/8/9 quarts; bullet 'presets ... a temperature range from 200-400°F'; bullet 'cETL approved ... 1000 Watts/120 Volts – RJ38-SQSS-8T'; page states 'There is a newer model of this item'.",
       "date": "2026-11-20"
+    },
+    {
+      "id": "S27",
+      "title": "Amazon Associates Program Policies — operating restrictions (§2–§6), verbatim detail read",
+      "url": "https://affiliate-program.amazon.com/help/operating/policies",
+      "what": "Clauses read on 2026-11-20 and not previously recorded in this register: §2(b) 'You must not make inaccurate, overbroad, deceptive or otherwise misleading claims about any Product, an Amazon Site, or any of our policies, promotions, or prices'; §2(b) requires 'additional original content' on the Site when a link points at a page with Product lists; §2(b) price rule again — 'your Site may only show prices and availability if: (a) we serve the link in which that price and availability data are displayed, or (b) you obtain Product pricing and availability data via Creators API or PA API'; §4 'You may include Special Links in emails, SMS and direct messaging from your social media Sites; provided, that such communications are solicited (i.e., opted into by the receiving customer)'; §5 'You will not, without or express prior written approval, use, or allow any third party to use, any Special Links or Program Content to develop machine learning models or related technology'; §6(a) 'You will not add to, delete from, or otherwise alter any Program Content in any way … except that you may … truncate Program Content consisting of text in a manner that does not materially alter the meaning of the text'; §6(c) 'You will promptly remove from your Site and delete or otherwise destroy any Program Content that is no longer displayed on an Amazon Site'; §6(d) no use of Program Content 'in a manner that implies a person's or company's endorsement or sponsorship of, or commercial tie-in or other association with, any product, service, party, or cause'.",
+      "date": "2026-11-20",
+      "access": "Fetched 2026-11-20 by session ab951e4c through the reader (chunks 3 and 4 of 11 of the policies page, which renders its full text anonymously). Page stamped 'Updated: April 14, 2026' in the register's earlier read (S02); this session read further into the document than S02 recorded."
+    },
+    {
+      "id": "S28",
+      "title": "Google Search Central documentation updates — FAQ rich result removal and HowTo deprecation",
+      "url": "https://developers.google.com/search/updates",
+      "what": "Changelog entries read 2026-11-20: June 2026 — 'Removing documentation for the FAQ rich result feature' (anchor #removing-faq-rich-result). The same page carries a #how-to-deprecation anchor. Observed mechanism: the documentation URLs /search/docs/appearance/structured-data/faqpage and /search/docs/appearance/structured-data/how-to both now redirect to this updates page with those anchors, i.e. the feature pages no longer exist as documentation. Consequence for this site: FAQPage markup on guides is kept for machine-readable parsing but no SERP feature is claimed from it, and no HowTo markup is added.",
+      "date": "2026-11-20",
+      "access": "Fetched 2026-11-20 by session ab951e4c through the reader; the redirect target and the changelog entry titles are what was observed. No claim is made about how Google renders this site."
     }
   ]
 }

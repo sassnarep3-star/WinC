@@ -236,6 +236,72 @@
       "detail": "Session dd79e08d (2026-11-20): HT07 appeared only in an Amazon.fr listing reference (S-row in sources.json). The US listing observed for B0DHZTCNR5 does not show it in the fields we captured. Under the verification rule the value is blank rather than carried over from another marketplace. Related: FLG-004 (ASIN canonicality).",
       "action": "Confirm the model on the amazon.com listing for B0DHZTCNR5 or the manufacturer page; only then re-add it with its URL and date.",
       "status": "needs review"
+    },
+    {
+      "id": "FLG-026",
+      "title": "Brand-endorsement statement missing while brand names sit next to buy buttons",
+      "detail": "Program Policies §6(d) forbids using Program Content 'in a manner that implies a person's or company's endorsement or sponsorship of, or commercial tie-in or other association with, any product, service, party, or cause'. Every product page and card on this site reproduces the seller's listing title — which contains brand and celebrity names (Emeril Lagasse, Chefman, ThermoMaven, CHEF iQ) — next to a sponsored buy button. The site's disclosure covered the Amazon relationship but said nothing about the brands, so a reader could infer an endorsement that does not exist.",
+      "action": "Fixed the same day: a one-line 'not endorsed by the brands' statement added to the disclosure page, the About page and the site-wide footer, worded as the policy's own concept. Review the wording against the Operating Agreement before any brand-relations contact.",
+      "status": "fixed by this session (2026-11-20), review the wording",
+      "sources": [
+        "S27"
+      ],
+      "source_note": "Clause read verbatim from the Amazon Associates Program Policies on 2026-11-20 — see S27 in the source register for the quoted text and the URL."
+    },
+    {
+      "id": "FLG-027",
+      "title": "No process for promptly removing Program Content that Amazon has taken down",
+      "detail": "Program Policies §6(c): 'You will promptly remove from your Site and delete or otherwise destroy any Program Content that is no longer displayed on an Amazon Site or that we notify you is no longer available for your use.' The site records a source_date per product and re-reads listings when a session happens to run, but nothing checks the age of a recorded read or removes a listing that has gone away. FLG-024 (Amazon showing a newer model of B08DKYBTPH) is exactly the signal this rule is about.",
+      "action": "scripts/freshness.py reports every recorded read older than the threshold and exits non-zero past the hard limit; run it before a publish. Owner-side: the actual takedown check needs a browser and a decision about who acts on it.",
+      "status": "mitigated by tooling, open as a process",
+      "sources": [
+        "S27"
+      ],
+      "source_note": "Clause read verbatim 2026-11-20 — see S27. The tooling measures the age of a recorded read; it cannot see Amazon's site."
+    },
+    {
+      "id": "FLG-028",
+      "title": "'AI-powered' scope limit: Program Content may not be used to develop machine-learning models",
+      "detail": "Program Policies §5: 'You will not, without or express prior written approval, use, or allow any third party to use, any Special Links or Program Content to develop machine learning models or related technology.' The project brief asks for an 'AI-powered Amazon affiliate marketing platform' that automates product research. Automation of publishing, formatting, gate checks and topic bookkeeping is unaffected; collecting listing content into a corpus for model training is not permitted without Amazon's express prior written approval.",
+      "action": "Recorded in the executive summary, the disclosure page and the direction register so no future session builds a scraper-for-training step into the pipeline. If the owner wants model training on Program Content, the gate is a written approval from Amazon, not a code change.",
+      "status": "open by design — a scope boundary, not a bug",
+      "sources": [
+        "S27"
+      ],
+      "source_note": "Clause read verbatim 2026-11-20 — see S27."
+    },
+    {
+      "id": "FLG-029",
+      "title": "Email with Special Links is only permitted for solicited recipients",
+      "detail": "Program Policies §4: 'You may include Special Links in emails, SMS and direct messaging from your social media Sites; provided, that such communications are solicited (i.e., opted into by the receiving customer) and are otherwise in compliance with the Agreement, the Trademark Guidelines, and the Amazon Brand Usage Guidelines.' The reader-capture form on every page records a press in the visitor's own browser and sends nothing anywhere, so no email is being sent and no rule is broken today. It also means no list can be started from that form's data.",
+      "action": "Before any list is started: real consent capture with a timestamped opt-in record, a provider, and the disclosure updated in the same commit. Keep affiliate links out of unsolicited mail permanently.",
+      "status": "open — gated by Q-21",
+      "sources": [
+        "S27"
+      ],
+      "source_note": "Clause read verbatim 2026-11-20 — see S27."
+    },
+    {
+      "id": "FLG-030",
+      "title": "FAQ rich-result documentation removed by Google; schema is parsed, not displayed",
+      "detail": "Google's Search Central changelog entry of June 2026 reads 'Removing documentation for the FAQ rich result feature', and the FAQPage and HowTo documentation URLs now redirect to that updates page (anchors #removing-faq-rich-result and #how-to-deprecation). This site emits FAQPage markup on every guide and product page. That markup is still machine-readable, but no rich result should be expected from it, and no HowTo markup is worth adding.",
+      "action": "Keep the FAQ content because it answers real questions; delete any copy, register row or roadmap item that promises a FAQ rich result. Re-check the changelog before the next schema decision.",
+      "status": "open — expectation corrected, markup kept",
+      "sources": [
+        "S28"
+      ],
+      "source_note": "Google Search Central changelog and the redirect behaviour of the FAQPage/HowTo documentation URLs, read 2026-11-20 — see S28."
+    },
+    {
+      "id": "FLG-031",
+      "title": "Short product labels truncate the listing title — permitted only while meaning is unchanged",
+      "detail": "Program Policies §6(a) bars adding to or altering Program Content but allows truncating text 'in a manner that does not materially alter the meaning of the text'. The shelf uses short labels ('Chefman 8 Qt TurboFry (XL basket)', 'Emeril 26QT French Door oven') while the product pages publish the full listing title verbatim. The labels drop marketing qualifiers and add a parenthetical shape descriptor, which is the kind of judgement §6(a) asks a human to review.",
+      "action": "The verbatim title is displayed on every product page under the label, and the label field is now listed on the verification page so a reviewer can compare the two strings side by side.",
+      "status": "open — needs a human comparison, not a code change",
+      "sources": [
+        "S27"
+      ],
+      "source_note": "Clause read verbatim 2026-11-20 — see S27. No claim is made that any specific label is or is not compliant."
     }
   ]
 }
