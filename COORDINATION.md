@@ -1215,3 +1215,23 @@ This session's entries are **S36, FLG-030, Q-26, SG-43, SG-44**.
   form to `method="post"` (more robust than `get`+`novalidate` for a JS-blocked browser).
 - **ID collision avoidance:** main uses S30–S35, FLG-026–030, Q-24–26, SG-32–42. This session used
   S36, FLG-030, Q-26, SG-43, SG-44 — no collisions.
+
+## PR / merge record (this session)
+
+- **PR #49** — https://github.com/sassnarep3-star/WinC/pull/49 — "Audit-clean pass, verification #5,
+  review-prompt suggestions (SG-43/44) — session arena/1c6908d1-winc" — opened from
+  `arena/1c6908d1-winc` → `main`. Rebased through two rounds of mid-flight merges as `main` advanced.
+- **Merged:** yes — `gh pr merge 49 --merge` → merge commit `513917acddfd9dd0729f607e87f5c30f9a81972`,
+  merged 2026-11-20T07:01:57Z. `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN` at merge time.
+- **Pages deploy confirmed:** `gh api /pages/builds/latest` → `status: built`, `error: null`, commit
+  `513917acdd`. Live re-fetch of `/WinC/flagged-for-review.html` serves the disclosure above the fold
+  and the flagged table (including this session's FLG-030).
+- **Gate on the merged tree:** `npm run verify` → Built 38 pages, 37 sitemap URLs / OK: 38 pages
+  checked, 37 sitemap URLs, no violations; `node tools/audit.mjs --strict` → 0 findings.
+- **Findings published, not blocking:** FLG-030 (token mapping non-reproduction) and Q-26 are on the
+  Flagged for Review and Open Questions pages with source links. They did not block the merge, per the
+  standing rule.
+
+**Task status:** T33–T35 done. T36 (integration) done. Open owner-side items unchanged
+(FLG-001/002/003, FLG-007, Q-01/Q-02, and the audience/legal decisions) — all require an enrolled
+Associates account or an owner decision this environment cannot reach.
