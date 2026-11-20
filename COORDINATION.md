@@ -212,3 +212,36 @@ rewritten; earlier registers are appended to, never replaced.
 | A-05 | `scripts/check_site.py` checks rendered HTML only. It never validates the registers it depends on (`suggestions.json`, `questions.json`), so a missing key or an invented status passes silently. | fixed this session (T26) |
 | A-06 | `products.json` carried `observed_*` values that were re-observable but never re-read against the live listing in this session; no third observation date existed. | addressed this session (T20) |
 
+
+## Session arena-82d39deb — results
+
+**Verification performed (every claim below links to an official source):**
+
+| What | How | Result |
+| --- | --- | --- |
+| All 5 supplied `link.amazon` links | Live re-resolution through the reader (redirects followed, final URL + `<title>` recorded) | 5/5 destinations identical across **three** observations (2026-11-17, and twice on 2026-11-20 by `arena-23d7ed19` and `arena-82d39deb`). Sources: S22, `data/probes.json` |
+| The redirect mechanism | Query strings read verbatim | `lv=shuf` + `plpRedirect=mhFallback` on all 5 again — a fallback route, not a canonical resolution (FLG-009). `intended_*` fields stay blank |
+| Spec rows for all 5 products | Each listing's product-details table + bullet copy re-read | 1 row wrong → corrected (FLG-019); 4 listing-internal contradictions confirmed live (FLG-005, FLG-010, FLG-015, FLG-017); 2 buyer-relevant facts found (FLG-020, FLG-021); 1 Amazon name-string variance (FLG-016) |
+| Decision blocks | `data/categories.json` profile sources | Every profile's source checked against the recorded listings; gate now fails a profile that cites an unrecorded listing |
+| Registers | `data/suggestions.json`, `data/questions.json`, `data/topics.json`, `data/products.json`, `data/probes.json` | Schema + provenance + drift checks added to `scripts/check_site.py` and run green |
+| Site build | `python3 scripts/build_site.py && python3 scripts/check_site.py` | `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` → `OK: 27 pages checked, 26 sitemap URLs, no violations.` |
+
+**Findings recorded on the site** (`flagged-for-review.html`, 21 items): FLG-015 (6-Qt capacity unit
+conflict), FLG-016 (Amazon name-string variance for B08DKYBTPH), FLG-017 (Emeril preset count
+24 vs 25), FLG-018 (seller-written serving/rotisserie/pizza claims, quoted as claims), FLG-019
+(wrong wattage, corrected), FLG-020 (6/8/9-quart size family under one ASIN), FLG-021 (Amazon flags
+a newer model of the 8-Qt item).
+
+**Sources added this session:** S22 (third redirect observation) · S23 (listing re-read summary) ·
+S24 (B0CDY277D3 details table) · S25 (B09B7SB46R details table) · S26 (B08DKYBTPH details table).
+Official pages only: amazon.com listings, sell.amazon.com, affiliate-program.amazon.com,
+ftc.gov, developers.google.com, fsis.usda.gov, docs.github.com, api.github.com.
+
+**Irregularities still open (do not block the merge):** FLG-001 tracking ID unconfirmed ·
+FLG-002 reader links not yet tested in the enrolled Associates workflow · FLG-003 short-link
+compliance status unresolved (never claimed invalid) · FLG-007 analytics endpoint code shipped but
+not deployed · FLG-011/FLG-012 audience and legal-entity decisions outstanding ·
+Q-17 "what does success look like" still unanswered, so every expected-effect line is a hypothesis.
+
+**Task status:** T20–T26 done · T27 done (executive summary + README reconciled with the repo) ·
+T28 integration in progress (see the PR/merge record below).
