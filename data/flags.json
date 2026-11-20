@@ -56,9 +56,9 @@
     },
     {
       "id": "FLG-007",
-      "title": "Analytics endpoint code provided, not deployed",
-      "detail": "GitHub Pages is static and cannot run a server endpoint. Worker code + client beacon are shipped; events record locally until endpoint URL is configured.",
-      "action": "Deploy analytics/worker.js, set endpoint in assets/app.js, then record events.",
+      "title": "Analytics endpoint code verified end to end, still not deployed",
+      "detail": "GitHub Pages is static and cannot run a server endpoint. The endpoint code and the client beacon are shipped; events record locally until an endpoint URL is configured. On 2026-11-20 session b0920c92 added scripts/verify_measurement.py, which starts analytics/collect.py as a real server, posts all five defined events with the exact payload assets/app.js sends, and asserts the responses, the aggregates, and that no IP address, user agent, cookie, email address or search query is stored. It found a real defect: the collector read the client timestamp from 'ts' while the beacon sends 'at', so ts_client was always empty. Fixed. The code path is proven; what is still missing is a host.",
+      "action": "Deploy analytics/worker.js (or analytics/collect.py) on any host, set CONFIG.endpoint in assets/app.js, run python3 scripts/verify_measurement.py against it, then record the deploy date here and in COORDINATION.md. Orders still come only from an authorised first-party export.",
       "status": "needs review",
       "sources": [],
       "source_note": "Internal only — no official external source applies to this item (site code, or a strategy decision only the owner can make)."

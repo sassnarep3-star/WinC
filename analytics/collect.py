@@ -8,7 +8,7 @@ have" option, so that measuring is never blocked on choosing a hosting product.
     python3 analytics/collect.py --port 8080 --out /var/log/shopnow-events.jsonl
     # then in assets/app.js:  CONFIG.endpoint = "http://HOST:8080/collect"
 
-Contract (matches assets/app.js):  POST /collect  {"site","event","page","props","ts"}
+Contract (matches assets/app.js):  POST /collect  {"site","event","page","at","props"}
 Only the five defined events are accepted. No cookies, no IP logging, no user-agent storage,
 no cross-page session stitching. Each line written is one event, timestamped by the client,
 with the server receipt time alongside it so a clock skew is visible rather than hidden.
@@ -122,7 +122,9 @@ class Handler(BaseHTTPRequestHandler):
             page = "rejected" if d.get("page") else ""
         props = d.get("props") if isinstance(d.get("props"), dict) else {}
         keep = {k: str(v)[:64] for k, v in list(props.items())[:8]}
-        row = {"ts_client": str(d.get("ts") or "")[:32],
+        # The shipped beacon (assets/app.js) sends the client timestamp as "at";
+        # "ts" is accepted too so an older payload still records a timestamp.
+        row = {"ts_client": str(d.get("at") or d.get("ts") or "")[:32],
                "ts_server": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                "site": str(d.get("site") or "")[:64], "event": event,
                "page": page, "props": keep}

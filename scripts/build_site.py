@@ -907,6 +907,18 @@ def measurement_body():
 </tbody></table></div>
 <p class="src">These five events are defined by this site's own code, so the source of each row is the code that implements it — not an outside page. The receiving end is <a href="analytics/worker.js">analytics/worker.js</a> (Cloudflare Worker) or <a href="analytics/collect.py">analytics/collect.py</a> (any Python 3 host).</p>
 <p>Client: <code>assets/app.js</code> · Endpoint code: <code>analytics/worker.js</code> (deploy separately — GitHub Pages is static, FLG-007). Until <code>CONFIG.endpoint</code> is set, counts live only in the reader’s browser (localStorage).</p>
+<h2>Is the measurement layer actually wired up?</h2>
+<div class="tablewrap"><table><thead><tr><th>Check</th><th>Result</th><th>Source</th></tr></thead><tbody>
+<tr><td>All five events accepted by the endpoint</td><td><span class="okpill">verified</span> &mdash; HTTP 202 for each, HTTP 422 for an event outside the defined set</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a></td></tr>
+<tr><td>Aggregates come back correctly</td><td><span class="okpill">verified</span> &mdash; <code>/stats</code> and <code>/ledger</code> report the posted counts</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a></td></tr>
+<tr><td>Nothing identity-bearing is stored</td><td><span class="okpill">verified</span> &mdash; no IP, no user agent, no cookie, no email address, no search query; six fields per row</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a></td></tr>
+<tr><td>The endpoint is reachable from the live site</td><td><span class="flagpill">not deployed</span> &mdash; GitHub Pages cannot host a server endpoint</td><td class="src">Internal — <a href="flagged-for-review.html#flag-FLG-007">FLG-007</a></td></tr>
+<tr><td>Orders and revenue</td><td><span class="flagpill">not collected</span> &mdash; these come only from an authorised first-party Associates export, never from the beacon</td><td class="src">Internal — <a href="data/campaign-ledger.json">data/campaign-ledger.json</a></td></tr>
+</tbody></table></div>
+<p class="src">The first three rows were checked by running the shipped collector as a real server and posting the
+beacon's own payload shape at it. That test found a genuine defect &mdash; the collector read the client timestamp
+from a field the beacon never sends, so every stored row had an empty client timestamp &mdash; which is now fixed.
+Running <code>python3 scripts/verify_measurement.py</code> reproduces the whole check in about a second.</p>
 
 <h2>Campaign ledger (empty by design)</h2>
 <p>Timestamp, source, channel, eligible sessions, clicks, and reported orders are recorded <strong>only</strong> when obtained from authorized first-party reports (Associates Reports). Keep a dated provenance trail. No conversion score or revenue forecast is presented here.</p>
