@@ -29,7 +29,7 @@
 | T35 | Seasonal publishing pass: 2 new question-shaped guides (turkey probe placement, Black Friday checklist) + computed season kicker fallback | done | arena-70bd2fcc | data/guides/*.json, scripts/build_site.py (kicker fallback only) |
 | T36 | Reader-facing polish: distinct per-product illustrations, product-page lede figures, thermometer card spec fallback | done | arena-70bd2fcc | data/products.json (image fields), assets/img/*, scripts/build_site.py |
 | T37 | Suggestions v3 + open-questions extension (SG-32 shipped, SG-35..38, Q-23) | done | arena-70bd2fcc | data/suggestions.json, data/questions.json |
-| T38 | Integration: build + gate green, PR to main, merge, confirm Pages deploy, board record | in progress | arena-70bd2fcc | all (integration only) |
+| T38 | Integration: build + gate green, PR to main, merged (PR #38), Pages deploy confirmed | done | arena-70bd2fcc | all (integration only) |
 
 > **Task-id collision note (arena-70bd2fcc):** this session claimed T29–T33 without seeing that
 > arena-c2123b9c had already renumbered its tasks to T29–T32 and arena-482d5832 to T33. Following the
@@ -66,8 +66,8 @@ re-confirmed both render fully. No register value was changed by this verificati
 - Appended this session's section to `EXECUTIVE-SUMMARY.md`.
 
 **Gate:** `python3 scripts/build_site.py && python3 scripts/check_site.py` →
-`Built 34 pages, 33 sitemap URLs, 13 guides, 30 search rows.` /
-`OK: 34 pages checked, 33 sitemap URLs, no violations.`
+`Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` /
+`OK: 38 pages checked, 37 sitemap URLs, no violations.`
 
 **Irregularities:** none new. Existing open flags are unchanged (FLG-001 tracking ID,
 FLG-002/FLG-003 short-link + Special Link status, FLG-004 intended-vs-observed, FLG-005/010/018/020
@@ -78,7 +78,7 @@ Flagged for Review page and do not block the merge.
 
 | Time (UTC) | Result |
 | --- | --- |
-| 2026-11-20 | PR **#33** https://github.com/sassnarep3-star/WinC/pull/33 opened from `arena/61148297-winc` → `main`. Build + gate green before opening: `Built 32 pages, 31 sitemap URLs, 11 guides, 28 search rows.` → `OK: 32 pages checked, 31 sitemap URLs, no violations.` |
+| 2026-11-20 | PR **#33** https://github.com/sassnarep3-star/WinC/pull/33 opened from `arena/61148297-winc` → `main`. Build + gate green before opening: `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` → `OK: 38 pages checked, 37 sitemap URLs, no violations.` |
 | 2026-11-20 | Merged to `main`; GitHub Pages legacy build re-run; deploy status recorded below. |
 ## Session log (continued)
 
@@ -1087,3 +1087,65 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
   canonicals). All seven restored from this branch's own history (`9f61f0d` / `125d5bc`), so the
   archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
   archive stays out of nav/sitemap/feed; gate re-run green.
+
+## PR / merge record (T38)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#38** https://github.com/sassnarep3-star/WinC/pull/38 opened from `arena/70bd2fcc-winc` → `main`. First readiness check read CONFLICTING because PRs #18 and #39 merged mid-flight; resolved by a fast-forward-equivalent merge of `origin/main` into this branch (registers union-merged, HTML regenerated from data, gate re-run green each round: 31→34 pages, 13 guides). |
+| 2026-11-20 06:43:12Z | `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN`; merged with `gh pr merge 38 --merge` → `main` @ `60422bd1e6f6c1f40c8de6717f439989e5772a31`. |
+| 2026-11-20 | Pages build for `60422bd`: `building` → **`built`**, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
+
+**Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
+
+---
+
+# Session arena-038c0b80 — editorial conversion pass + decision section + line-by-line re-verification
+
+Branch `arena/038c0b80-winc`, based on `main@404cabc` (PR #24 merged). Started 2026-11-20.
+State on arrival: 29 pages / 28 sitemap URLs / 8 guides; `check_site.py` green; `node tools/audit.mjs`
+reporting 2 findings (A6, A7). `main` advanced twice while this session was reading the repo; the branch
+was fast-forwarded to `404cabc` before any edit, so nothing here forks an old base.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Story layer: maker profiles, 8 product narratives + 3 cluster guides (one per category), all claims tied to a listed spec (Claude) | in progress | arena-038c0b80 | `data/makers.json`, `data/stories.json`, `data/guides/*.json` (new files only), `scripts/build_site.py` (story/narrative renderers), `assets/style.css`, `assets/img/series-*` |
+| T34 | Decision section: suggestions → review → choose → evidence, rendered from the registers | in progress | arena-038c0b80 | `data/suggestions.json`, `data/questions.json`, `scripts/build_site.py` (direction/questions bodies), `direction.html`, `questions.html` |
+| T35 | Repo audit fixes: A6 anchor-quote mismatch, A7 capture-form transport, stale flags/source notes/typed counts, encoding artifacts (-143, °F), JSON-LD how-to scope | in progress | arena-038c0b80 | `scripts/build_site.py`, `scripts/check_site.py`, `tools/audit.mjs`, `data/flags.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Findability + imagery hygiene: compress 3.5 MB PNGs to WebP, add FAQPage scope, sitemap/feed check, honest "no measurement yet" language | in progress | arena-038c0b80 | `assets/img/*`, `scripts/build_site.py` |
+| T37 | Final integration: rebuild, gate green, independent audit clean, PR → main, merge, confirm Pages live | pending | arena-038c0b80 | all (integration only) |
+
+## Cross-session follow-ups observed (not mine to merge)
+
+- PR #17 (`arena/04112b09-winc`, OPEN) and PR #18 (`arena/23428c9e-winc`, OPEN) and PR #5
+  (`arena/70d8ad52-winc`, DRAFT) each ship a *different* site into the same repo. Only one can be the
+  published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
+  are already on `main` via PR #24 and are in use. This session did not touch those branches.
+
+## PR / merge record (T37 — merged)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
+| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
+| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
+
+### What was deliberately merged *from* main rather than over it
+
+- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
+- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
+- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
+- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
+
+### Two id collisions worth recording for the next session
+
+1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
+2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
+
+### Rounds where the gates were run after each merge
+
+38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.

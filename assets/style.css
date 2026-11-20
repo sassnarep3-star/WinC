@@ -281,3 +281,99 @@ table td p{margin:4px 0 0}
 /* a touch more breathing room for the shop grid on the home page */
 .home-shop .grid{margin-top:6px}
 @media (max-width:640px){.brand{font-size:27px}.masthead{padding:20px 0 14px}}
+
+/* ============================================================
+   Editorial layer (session arena-038c0b80, 2026-11-20)
+   Series tiles, product narratives, maker boxes, decision desk.
+   No external fonts, no tracking, no framework.
+   ============================================================ */
+
+/* --- series tiles on the front page --- */
+.seriesgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:16px 0 4px}
+.seriestile{display:block;position:relative;border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;background:var(--card);text-decoration:none;color:var(--ink)}
+.seriestile img{display:block;width:100%;height:auto;aspect-ratio:1200/655;object-fit:cover;transition:transform .5s ease}
+.seriestile:hover img{transform:scale(1.03)}
+.seriestile .sname{display:block;font-family:ui-serif,Georgia,serif;font-size:22px;font-weight:700;
+  padding:14px 16px 2px;letter-spacing:-.01em}
+.seriestile .scount{display:block;padding:0 16px 16px;font-size:13.5px;color:var(--muted)}
+.seriestile:hover .sname{color:var(--accent)}
+.seclede{color:#44403C;max-width:70ch;margin:2px 0 0}
+
+/* --- cards: the one-line hook, series badge, source tail --- */
+.cardhook{font-size:14.5px;color:#44403C}
+.cardfoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+  margin-top:2px;padding-top:9px;border-top:1px dashed var(--line)}
+.seriesbadge{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  background:#F0FDF4;border:1px solid #BBF7D0;color:#166534;padding:3px 9px;border-radius:999px;text-decoration:none}
+.seriesbadge:hover{background:#DCFCE7}
+.sourcetail{font-size:12px;color:var(--muted);text-decoration:none}
+.sourcetail:hover{color:var(--accent);text-decoration:underline}
+
+/* --- the product narrative: a published piece, not a spec dump --- */
+.story{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 28px 20px;margin:20px 0 8px;max-width:none}
+.story h2{font-size:30px;line-height:1.2;margin:6px 0 10px;letter-spacing:-.015em}
+.story .standfirst{font-size:19px;line-height:1.55;color:#33302E;margin:0 0 14px;
+  padding-left:14px;border-left:4px solid var(--accent2)}
+.seriesline{margin:0;font-size:13px;color:var(--muted)}
+.seriesmark{font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:11.5px;color:var(--accent2)}
+.story p{font-size:17px;line-height:1.72;color:#292524;max-width:72ch}
+.anchorline{background:#FCF8F1;border:1px solid var(--line);border-radius:10px;padding:10px 13px;
+  font-size:14.5px !important;color:#44403C !important}
+.flagchip{display:inline-block;font-size:11.5px;font-weight:800;background:var(--warn);border:1px solid #FECACA;
+  color:#991B1B;padding:2px 8px;border-radius:999px;text-decoration:none;margin-right:5px}
+.flagchip:hover{background:#FEE2E2}
+
+/* --- maker box --- */
+.makerbox{margin:22px 0 4px;border:1px solid var(--line);border-top:4px solid var(--gold);
+  border-radius:12px;background:#FCF8F1;padding:16px 18px}
+.makerbox h3{margin:0 0 6px;font-size:19px}
+.makerbox p{font-size:15.5px;line-height:1.65;color:#33302E;max-width:70ch}
+.makerclaims{margin:10px 0 6px;padding-left:18px}
+.makerclaims li{font-size:14.5px;line-height:1.6;color:#33302E;margin:6px 0}
+
+/* --- series page --- */
+.serieslist{display:grid;gap:14px;margin:16px 0}
+.seriespiece{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:15px 18px}
+.seriespiece h3{margin:2px 0 6px;font-size:20px;line-height:1.3}
+.seriespiece p{font-size:15px;color:#33302E;max-width:72ch}
+
+/* --- house ad: a quiet, honest in-shop promo --- */
+.housead{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
+  background:#1C1917;color:#FFF9F0;border-radius:var(--radius);padding:18px 22px;margin:24px 0}
+.housead h3{color:#fff;margin:0 0 4px;font-size:21px}
+.housead p{margin:0;color:#D6D3D1;font-size:14.5px;max-width:60ch}
+.housead a.btn{background:#FBBF24;color:#1C1917 !important}
+.housead a.btn:hover{background:#F59E0B}
+
+/* --- decision desk --- */
+.desksteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0}
+.deskstep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.deskstep .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:999px;
+  background:var(--ink);color:#FBBF24;font-weight:800;font-size:13px;margin-bottom:6px}
+.deskstep h4{margin:4px 0 4px;font-size:16px}
+.deskstep p{margin:0;font-size:14px;color:#44403C}
+.deskstep a{font-weight:700}
+.pickpath{display:grid;gap:10px;margin:14px 0}
+.pickrow{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px}
+.pickrow input{margin-top:5px}
+.pickrow strong{display:block}
+.pickrow span.meta{display:block;margin-top:2px}
+.pathresult{border-left:5px solid var(--accent2);background:#F0FDF4;border-radius:10px;padding:14px 16px;margin:14px 0}
+.pathresult h4{margin:0 0 6px;font-size:17px}
+.pathresult ol{margin:6px 0 0;padding-left:22px}
+.pathresult li{font-size:15px;margin:5px 0}
+
+/* the verbatim Amazon listing title: evidence, shown small under the editorial lede */
+.aslisted{font-size:13.5px;line-height:1.55;color:var(--muted);max-width:78ch;margin:6px 0 2px}
+.aslabel{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  background:#F5F0E6;border:1px solid var(--line);color:#57534E;border-radius:4px;padding:1px 6px;margin-right:6px}
+@media (max-width:640px){.story{padding:18px 16px}.story h2{font-size:25px}.story .standfirst{font-size:17px}}
+/* dual-format images: <picture> wraps the img, so the visual rules must reach through */
+.cardimg picture{display:block}
+.lede-figure picture{display:block}
+.seriestile picture{display:block}
+.cattile picture{display:block}
