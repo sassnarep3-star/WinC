@@ -59,7 +59,20 @@
           "What should I measure before buying?",
           "The listed footprint is 13.38\"D x 11.81\"W x 10.63\"H and the listed weight is 13.3 lb. Measure the depth of your counter and the clearance above the unit, not just the square footage you have free."
         ]
-      ]
+      ],
+      "dek": "Two 3-quart baskets that can finish at the same time, in the space one basket usually takes.",
+      "best_for": "Cooking a main and a side together",
+      "catch": "Each basket is 3 quarts, so one large item — a whole bird, a full sheet pan — will not fit in either one.",
+      "check_before_buying": [
+        "Measure your counter depth against the listed 13.38\" and leave room in front for the drawer to pull out.",
+        "Decide whether you cook two things at once. If you usually cook one, a single 8-quart basket is the simpler buy.",
+        "Check on the listing which parts are dishwasher-safe before you plan on hand-washing them."
+      ],
+      "image": "assets/img/product-chefman-6qt.png",
+      "image_caption": "Editorial illustration of a dual-basket air fryer with both baskets pulled open. Not a photograph of this product.",
+      "editorial_source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "editorial_source_date": "2026-11-20",
+      "editorial_note": "Written by the desk from this listing and the register. It adds no price, no rating, no test result and no spec that is not already recorded above."
     },
     {
       "id": "p2-emeril-26qt",
@@ -136,7 +149,20 @@
           "How large a cook can it handle?",
           "The listing's own bullet says the 26-quart cavity is sized for 4-6 people, can rotisserie a 6-lb chicken and bake a 12-inch pizza. That is the seller's sizing claim on the listing, quoted as a claim and not as advice from this desk (FLG-021)."
         ]
-      ]
+      ],
+      "dek": "A real countertop oven — French doors, wire racks, a cavity you can put a tray in — and the biggest one in the shop.",
+      "best_for": "Baking, roasting, and cooking for more than four",
+      "catch": "26.5 lb and 16.9 inches deep. It is the heaviest and the largest thing here, and it needs the most counter and the most cleaning.",
+      "check_before_buying": [
+        "Measure depth against the listed 16.9\" and check the cabinet clearance above it, not just the footprint.",
+        "Count the presets you will actually use. Twenty-four options only help if they match your week.",
+        "Budget for the racks, pan and accessories the listing says are included — more parts means more to wash."
+      ],
+      "image": "assets/img/product-emeril-26qt.png",
+      "image_caption": "Editorial illustration of a stainless French-door countertop oven. Not a photograph of this product.",
+      "editorial_source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "editorial_source_date": "2026-11-20",
+      "editorial_note": "Written by the desk from this listing and the register. It adds no price, no rating, no test result and no spec that is not already recorded above."
     },
     {
       "id": "p3-chefman-8qt",
@@ -218,7 +244,20 @@
           "Does it really reach 450F?",
           "The page title says '450F Hi-Fry Option' while the bullet copy on the same page says a temperature range from 200-400F. Both strings are shown on the specs table rather than one of them being quietly chosen (FLG-005)."
         ]
-      ]
+      ],
+      "dek": "One large basket with a wide opening — the simplest footprint of the three fryers here.",
+      "best_for": "One big batch of one thing",
+      "catch": "The listing's own title and bullet copy disagree about the top temperature (FLG-005), and it does not mention viewing windows the way the 6-quart model does.",
+      "check_before_buying": [
+        "Re-read the temperature range on the live listing before you rely on it — the copy on that page conflicts (FLG-005).",
+        "Check both the 12.75\" depth and the 13.5\" width; the drawer needs clearance in front as well as behind.",
+        "If you plan to check the food without stopping the cook, confirm the listing mentions a window for this model."
+      ],
+      "image": "assets/img/product-chefman-8qt.png",
+      "image_caption": "Editorial illustration of a single-basket air fryer with the drawer partly open. Not a photograph of this product.",
+      "editorial_source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "editorial_source_date": "2026-11-20",
+      "editorial_note": "Written by the desk from this listing and the register. It adds no price, no rating, no test result and no spec that is not already recorded above."
     },
     {
       "id": "p4-thermomaven",
@@ -279,7 +318,20 @@
           "It is an instant-read device: you put the tip in the food for a second and read the number off the device. For a probe that stays in the food while it cooks, the other thermometer in this shop is the one whose listing names air-fryer use."
         ]
       ],
-      "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)"
+      "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)",
+      "dek": "A spot-check thermometer: pull it, press it, read it, put it back in the drawer.",
+      "best_for": "Checking doneness without committing to a cook",
+      "catch": "It tells you where the food is at the moment you ask. Nothing is watching it while you are doing something else.",
+      "check_before_buying": [
+        "Confirm the accuracy figure on the live listing before you build a plan around ±0.5°F.",
+        "Note what the reading is measuring: a thermometer is only as good as the spot you put it in.",
+        "If you are cooking for hours, compare it against a leave-in probe before you rely on a single spot check."
+      ],
+      "image": "assets/img/product-thermomaven.png",
+      "image_caption": "Editorial illustration of an instant-read probe thermometer beside a sliced steak. Not a photograph of this product.",
+      "editorial_source": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "editorial_source_date": "2026-11-20",
+      "editorial_note": "Written by the desk from this listing and the register. It adds no price, no rating, no test result and no spec that is not already recorded above."
     },
     {
       "id": "p5-chefiq",
@@ -333,7 +385,20 @@
           "What does 'unlimited range' mean?",
           "It is a marketing phrase on the listing. What it means is that the hub reports over your network rather than over a short radio link; how far the hub can sit from the cooker is a question about your router and your house, not a published number."
         ]
-      ]
+      ],
+      "dek": "Three probes, a wireless hub and alerts — the only product in the shop that keeps cooking while you walk away.",
+      "best_for": "A whole bird plus sides, with a notification when it is done",
+      "catch": "It is the only thing here that needs a hub, a network and a phone to tell you anything. Without those it is three expensive sticks.",
+      "check_before_buying": [
+        "Confirm the probe count and the hub contents on the live listing — this model family is listed several ways (FLG-014).",
+        "Plan where the hub sits so the signal actually reaches it, and check the app works before the holiday.",
+        "Check how the probes are cleaned, and whether you would rather hand-wash three of them after every cook."
+      ],
+      "image": "assets/img/product-chefiq.png",
+      "image_caption": "Editorial illustration of a wireless thermometer base with probes running into a pan. Not a photograph of this product.",
+      "editorial_source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "editorial_source_date": "2026-11-20",
+      "editorial_note": "Written by the desk from this listing and the register. It adds no price, no rating, no test result and no spec that is not already recorded above."
     }
   ]
 }

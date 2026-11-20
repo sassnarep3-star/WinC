@@ -3,7 +3,7 @@
 Run: python3 scripts/build_site.py
 No third-party dependencies. Generated HTML is committed for GitHub Pages (legacy build).
 """
-import json, html, os, datetime, re, glob
+import json, html, os, datetime, re, glob, struct
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
@@ -90,6 +90,19 @@ def blank(v):
     v = (v or "").strip()
     return v if v else '<span class="blank">— blank (unverified)</span>'
 
+def img_dim(rel_path, default=(800, 500)):
+    """True pixel size of a PNG, so width/height attributes match the file (no layout shift)."""
+    path = os.path.join(ROOT, rel_path)
+    try:
+        with open(path, "rb") as f:
+            head = f.read(24)
+        if head[:8] != b"\x89PNG\r\n\x1a\n":
+            return default
+        w, h = struct.unpack(">II", head[16:24])
+        return int(w), int(h)
+    except Exception:
+        return default
+
 def special_link(p):
     return f"https://www.amazon.com/dp/{p['observed_asin']}?tag={TAG}"
 
@@ -100,9 +113,12 @@ def buy_button(p, label=None):
             f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
 
 def buy_button_small(p):
+    # "Sponsored" + "paid link" together: the first for the reader, the second is the wording the
+    # FTC Endorsement Guides call adequate next to an affiliate link (S03, S07). Kept short so a
+    # row of cards does not read as five identical warnings.
     return (f'<a class="btn" href="{esc(special_link(p))}" rel="sponsored nofollow noopener" '
             f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}">Check on Amazon</a> '
-            f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
+            f'<span class="sponsored-tag">Sponsored · paid link</span>')
 
 DISCLOSURE_STRIP = (
     '<div class="disclosure-strip" role="note"><div class="wrap">'
@@ -229,9 +245,18 @@ def page_html(path, title, desc, body, page_type="page", extra_head="", image=""
         f'<main class="wrap">{body}</main>' + footer_html(depth) +
         f'<script src="{"../"*depth}assets/app.js" defer></script></body></html>')
 
+def product_img(p):
+    """Per-product artwork if the desk assigned one, otherwise the category plate."""
+    img = p.get("image")
+    if img and os.path.exists(os.path.join(ROOT, img)):
+        cap = p.get("image_caption") or "Editorial illustration. Not a product photograph."
+        return img, cap
+    return CAT_IMG.get(p["category"], HERO_IMG)
+
 def product_card(p, depth=0):
     pfx = "../" * depth
-    img, cap = CAT_IMG.get(p["category"], HERO_IMG)
+    img, cap = product_img(p)
+    w, h = img_dim(img)
     specs = []
     if p["capacity"] and p["capacity"] != "—":
         specs.append(f"Capacity: {esc(p['capacity'])}")
@@ -242,12 +267,19 @@ def product_card(p, depth=0):
     if p["model"]:
         specs.append(f"Model: {esc(p['model'])}")
     li = "".join(f"<li>{x}</li>" for x in specs)
+    dek = p.get("dek") or p["title"]
+    best = p.get("best_for")
+    catch = p.get("catch")
+    best_html = f'<p class="bestfor"><strong>Best for</strong> {esc(best)}</p>' if best else ""
+    catch_html = f'<p class="catch"><strong>The catch:</strong> {esc(catch)}</p>' if catch else ""
     return f"""<article class="card">
-<figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
+<figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="{w}" height="{h}"></figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
-<p>{esc(p['title'])}</p>
+<p class="dek">{esc(dek)}</p>
+{best_html}
 <ul class="specs">{li}</ul>
+{catch_html}
 <div class="actions">{buy_button_small(p)}</div>
 <p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
 </article>"""
@@ -259,12 +291,20 @@ def season_pill(season):
 
 def guide_card(g, depth=0):
     pfx = "../" * depth
-    img = g.get("image") or CAT_IMG.get(g.get("category", ""), HERO_IMG)[0]
-    cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
+    own = g.get("image")
+    if own:
+        img = own
+        cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
+        alt = "Editorial illustration for: %s" % g["title"]
+    else:
+        img, cap = CAT_IMG.get(g.get("category", ""), HERO_IMG)
+        cap = cap + " Shown as the category illustration for this guide."
+        alt = "Category illustration for %s: %s" % (g.get("category", "this guide"), cap)
+    w, h = img_dim(img)
     season = g.get("season", "Everyday")
     sp = season_pill(season) + " "
     return f'''<article class="card guidecard">
-<figure class="cardimg"><img src="{pfx}{esc(img)}" alt="Editorial illustration for: {esc(g['title'])}" loading="lazy" width="800" height="500"></figure>
+<figure class="cardimg"><img src="{pfx}{esc(img)}" alt="{esc(alt)}" loading="lazy" width="{w}" height="{h}"></figure>
 <span class="cat">Guide · {esc(g['cluster'])}</span>
 <h3><a href="{pfx}{g['path']}">{esc(g['title'])}</a></h3>
 <p>{esc(g['desc'])}</p>
@@ -468,16 +508,43 @@ def product_body(p):
     if faq:
         rows = "".join(f'<details class="faqitem"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)
         faq_html = f'<h2>Questions readers ask about this one</h2><div class="faqlist">{rows}</div>'
+    # --- editorial voice: what the desk says, and what it says against -----------------------
+    dek = p.get("dek") or p["title"]
+    best = p.get("best_for")
+    catch = p.get("catch")
+    checks = p.get("check_before_buying") or []
+    img, cap = product_img(p)
+    iw, ih = img_dim(img)
+    best_html = f'<li><strong>Best for:</strong> {esc(best)}</li>' if best else ""
+    catch_html = (f'<div class="callout catch-callout"><h3>The catch</h3><p>{esc(catch)}</p></div>'
+                  if catch else "")
+    check_html = ""
+    if checks:
+        lis = "".join(f"<li>{esc(c)}</li>" for c in checks)
+        check_html = ('<h2>Before you buy, check these three things</h2>'
+                      f'<ul class="checklist">{lis}</ul>')
+    listing_title = (f'<details class="listingtitle"><summary>What the listing calls it (verbatim)</summary>'
+                     f'<p>{esc(p["title"])}</p>'
+                     f'<p class="src">Source: <a href="{esc(p["source_url"])}" rel="nofollow noopener" '
+                     f'target="_blank">{esc(p["source_url"])}</a> · read {esc(p["source_date"])}. '
+                     'The wording above is Amazon’s, not ours; we keep it so you can match it against '
+                     'the page you land on.</p></details>')
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
-<p class="lede">{esc(p['title'])}</p>
+<p class="lede">{esc(dek)}</p>
 <p class="meta">Observed ASIN {esc(p['observed_asin'])} · Listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
+<figure class="lede-figure"><img src="../{esc(img)}" alt="{esc(cap)}" width="{iw}" height="{ih}"><figcaption>{esc(cap)}</figcaption></figure>
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
 <p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
 </section>
+<h2>Why it is in the shop</h2>
+<div class="callout"><p>{esc(dek)}</p><ul>{best_html}</ul></div>
+{catch_html}
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
+{listing_title}
+{check_html}
 <h2>What to compare before you buy</h2>
 <ul>
 <li><strong>Capacity vs. your actual meals:</strong> {esc(p['capacity'] or 'see listing')} — measure the tray or bird you cook most often.</li>
@@ -503,7 +570,8 @@ def guide_body(g):
     cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
     fig = ""
     if g.get("image"):
-        fig = (f'<figure class="lede-figure"><img src="../{esc(g["image"])}" alt="{esc(cap)}" width="1200" height="750">'
+        fig = (f'<figure class="lede-figure"><img src="../{esc(g["image"])}" alt="{esc(cap)}" '
+               f'width="{img_dim(g["image"])[0]}" height="{img_dim(g["image"])[1]}">'
                f'<figcaption>{esc(cap)}</figcaption></figure>')
     cat_href = dict(CATEGORIES).get(g.get("category"), "guides/index.html")
     return f"""
