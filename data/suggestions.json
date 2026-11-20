@@ -1,7 +1,7 @@
 {
   "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20)",
+  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20); arena/61148297-winc (editorial-voice pass; SG-35 added)",
   "suggestions": [
     {
       "id": "SG-01",
@@ -455,6 +455,21 @@
       "evidence": "data/topics.json — every topic says 'no measured query data exists yet'.",
       "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
       "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification)."
+    },
+    {
+      "id": "SG-35",
+      "title": "Write shop copy that reads like a shop, not a scraped listing",
+      "status": "done-this-session",
+      "status_detail": "Shipped by session arena/61148297-winc on 2026-11-20: blurbs added to all five products and rendered on cards and product pages; verbatim listing titles kept in a labelled block.",
+      "area": "Editorial",
+      "problem": "Product cards and product pages led with the manufacturer's full listing title as the body text. It is accurate, but it reads like a data dump, not a shop: a wall of marketing capitals where a buyer expects one sentence about the decision they are weighing.",
+      "proposal": "Add a one-line human description (the blurb) to each product that names the product's shape and the trade-off a buyer actually weighs. Render it as the card body and as the page lede, and keep the manufacturer's own title verbatim in a clearly labelled block so the desk copy is never the only record of what the listing says. No rankings, no superiority claims, no prices.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. Descriptive copy only; every claim stays within what the listing states. Must avoid the banned hype register the gate already rejects.",
+      "expected_effect": "Reads like a publication instead of a register. Measure: nothing yet — no analytics endpoint exists; once it does, outbound_click per product page is the signal.",
+      "evidence": "Session arena/61148297-winc: blurb added to all five products in data/products.json; scripts/build_site.py product_card/product_body render the blurb with the title kept verbatim; scripts/check_site.py still green (27 pages, no violations).",
+      "feeds_prompt": "When adding a product, write a one-line blurb that states the product's shape and the trade-off a buyer weighs, render it as the card body and lede, and keep the verbatim listing title in a labelled block. Never let the raw listing title be the only reader-facing copy."
     }
   ]
 }

@@ -246,7 +246,7 @@ def product_card(p, depth=0):
 <figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="800" height="500"></figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
-<p>{esc(p['title'])}</p>
+<p class="cardblurb">{esc(p.get('blurb') or p['title'])}</p>
 <ul class="specs">{li}</ul>
 <div class="actions">{buy_button_small(p)}</div>
 <p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
@@ -462,11 +462,12 @@ def product_body(p):
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
-<p class="lede">{esc(p['title'])}</p>
+<p class="lede">{esc(p.get('blurb') or p['title'])}</p>
 <p class="meta">Observed ASIN {esc(p['observed_asin'])} · Listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
 <p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
 </section>
+<p class="listtitle"><span class="listtitle-k">Listing title, verbatim</span>{esc(p['title'])}</p>
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
 <h2>What to compare before you buy</h2>

@@ -23,8 +23,52 @@
 | T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
 | T07 | Final integration: re-verified combined data, confirmed build + no broken links, PR opened to main, merged, Pages deploy confirmed | done | arena/a42979d2-winc | all (integration only) |
 | T08 | Marketing polish: catchy question-shaped topics, shop-framed suggestions, traffic channel decision question | done | 5fed90b2 | data/topics.json, data/suggestions.json, data/questions.json, COORDINATION.md |
+| T09 | Editorial-voice pass (shop copy, not scraped listing text) + line-by-line official re-verification + integration | done | arena/61148297-winc | data/products.json, scripts/build_site.py, assets/style.css, data/suggestions.json, EXECUTIVE-SUMMARY.md, COORDINATION.md |
 
 ## Session log
+
+- 2026-11-20 — **arena/61148297-winc** claimed T09 on branch `arena/61148297-winc` (which sat at
+  the merged `main` commit `7426a0c`, PR #21). Scope: a reader-facing editorial-voice pass plus a
+  line-by-line re-verification of the load-bearing compliance sources, then integration.
+
+### Session arena/61148297-winc — editorial voice + official re-verification (T09)
+
+**Verified directly from the publisher, fetched live 2026-11-20 (all render full text anonymously):**
+ASIN = "unique 10-character alphanumeric code" (sell.amazon.com, S05); Operating Agreement §1
+Special Links / §5 exact disclosure sentence / §6 material breach (updated 2025-10-15, S01);
+Program Policies tag format `XXXXX-##`, price/availability only via Amazon-served link or
+Creators/PA API, no inaccurate product descriptions (updated 2026-04-14, S02); Google
+`rel="sponsored"` for paid/affiliate links (developers.google.com, updated 2025-12-10, S04/S19);
+FTC Endorsement Guides material-connection disclosure (ftc.gov, S03). The prior passes had
+over-marked the Amazon policy pages as login-gated and ftc.gov as unreachable; this session
+re-confirmed both render fully. No register value was changed by this verification.
+
+**What changed (reader-facing only, nothing in the verification machinery was weakened):**
+- Added a one-line human `blurb` to all five products in `data/products.json`; `product_card` and
+  `product_body` now render the blurb as the card body and page lede. The manufacturer's own
+  title is kept verbatim in a labelled **"Listing title, verbatim"** block on each product page.
+  This removes the raw listing-title-as-body-text feel; no ranking, superiority or price claim.
+- Added `.cardblurb` / `.listtitle` styles to `assets/style.css`.
+- Added suggestion **SG-21** ("Write shop copy that reads like a shop, not a scraped listing",
+  done-this-session) to `data/suggestions.json`; updated `reviewed_by_session`.
+- Appended this session's section to `EXECUTIVE-SUMMARY.md`.
+
+**Gate:** `python3 scripts/build_site.py && python3 scripts/check_site.py` →
+`Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` /
+`OK: 27 pages checked, 26 sitemap URLs, no violations.`
+
+**Irregularities:** none new. Existing open flags are unchanged (FLG-001 tracking ID,
+FLG-002/FLG-003 short-link + Special Link status, FLG-004 intended-vs-observed, FLG-005/010/018/020
+spec conflicts, FLG-006 blank prices, FLG-007 endpoint not deployed). All remain published on the
+Flagged for Review page and do not block the merge.
+
+### PR / merge record (arena/61148297-winc)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | (recorded after the PR is opened and merged — see below) |
+
+## Session log (continued)
 
 - 2026-11-20 — 68dc5c3a claimed T01–T06 on branch arena/68dc5c3a-winc. Repo at start contained only README.md ("# WinC") on main (a6083c9). GitHub Pages already enabled (legacy, branch main, path /) at https://sassnarep3-star.github.io/WinC/ — verified via API.
 - 2026-11-20 — 68dc5c3a verified from official sources: Amazon ASIN = 10 characters (sell.amazon.com); Operating Agreement §5 disclosure wording (affiliate-program.amazon.com/help/operating/agreement, updated 2025-10-15); Program Policies price-display rule (affiliate-program.amazon.com/help/operating/policies, updated 2026-04-14 — prices only via Amazon-served link or Creators/PA API); FTC Endorsement Guides affiliate disclosure (ftc.gov); Google rel="sponsored" for affiliate links (developers.google.com/search/docs/crawling-indexing/qualify-outbound-links). All five submitted link.amazon tokens are 9 characters (not ASINs). Observed redirect ASINs from prior sessions' live resolutions (2026-11-17) + Amazon listing snippets: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. Intended fields left blank (nothing public binds a short code to a product); observed fields populated separately. Short-link compliance status NOT claimed invalid — see FLG-003.
