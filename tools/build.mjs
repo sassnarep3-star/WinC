@@ -15,6 +15,12 @@ const warnings = [];
 const readText = (p) => readFileSync(p, "utf8");
 const loadGuide = (f) => JSON.parse(readText(f));
 const GUIDE_REL = "../../";
+// intrinsic sizes so the browser can reserve the box (no layout shift on a slow phone)
+const IMG_DIMS = { "hero.png": [1200, 654], "og.png": [1200, 633], "capacity.png": [1100, 600] };
+// rich(): for HTML this file authored (tables that carry inline <code>/<a>). Data-file prose goes
+// through inline(), which escapes; build-authored markup must survive.
+const rich = (v) => String(v ?? "").replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+const dims = (name) => { const d = IMG_DIMS[name] || [1200, 675]; return `width="${d[0]}" height="${d[1]}"`; };
 
 // ---------- small view helpers ----------
 const relrootOf = (dir) => (dir ? "../".repeat(dir.split("/").length) : "./");
@@ -129,8 +135,11 @@ function emit(dir, p) {
   // paths, so a sibling link on /guides/ (./capacity-checklist/) is left alone while /about/'s
   // ./picks/ becomes ../picks/.
   const ROOT_PATHS = /^(picks|guides|sources|suggestions|questions|flagged|how-it-works|measurement|executive-summary|disclosure|privacy|about|data|assets|feed\.xml|sitemap\.xml|robots\.txt)/;
-  const body = relroot === "./" ? p.body
-    : p.body.replace(/\.\/([^"']*)/g, (m, rest) => (rest === "" || ROOT_PATHS.test(rest)) ? relroot + rest : m);
+  const depthFix = (str) => str.replace(/(['"])\.\/([^'"]*)\1/g, (m, q, rest) =>
+    (rest === "" || ROOT_PATHS.test(rest)) ? q + relroot + rest + q : m);
+  // single-quoted attributes normalise to double quotes so the link gate can see every href
+  const body = (relroot === "./" ? p.body : depthFix(p.body))
+    .replace(/href='([^']*)'/g, (m, v) => `href="${v.replace(/"/g, "&quot;")}"`);
   const html = shell({ ...p, relroot, canonical: urlOf(dir), body });
   const file = join(ROOT, dir, "index.html");
   if (dir) mkdirSync(dirname(file), { recursive: true });
@@ -156,7 +165,7 @@ function renderBlocks(blocks) {
       case "table": return table(b.head, b.rows.map((r) => row(r.map((c) => inline(c)))), { caption: b.caption });
       case "callout": return `<aside class="callout callout-${b.kind || "note"}"><p>${inline(b.x)}</p>${b.src ? `<p class="callout-src">Related: ${b.src.map((s) => `<a href="${GUIDE_REL}${/^SRC-/.test(s) ? "sources" : "flagged"}/#${s.toLowerCase()}">${s}</a>`).join(", ")}</p>` : ""}</aside>`;
       case "quote": return `<figure class="quote"><blockquote>${esc(b.x)}</blockquote><figcaption>${esc(b.cite)} ${b.src ? `<a href="${GUIDE_REL}sources/#${b.src.toLowerCase()}">${b.src}</a>` : ""}</figcaption></figure>`;
-      case "figure": return `<figure class="fig"><img src="${GUIDE_REL}assets/img/${b.src}" alt="${esc(b.alt)}" loading="lazy" width="1200" height="630"><figcaption>${inline(b.cap)} <span class="fig-tag">illustration, not product imagery</span></figcaption></figure>`;
+      case "figure": return `<figure class="fig"><img src="${GUIDE_REL}assets/img/${b.src}" alt="${esc(b.alt)}" loading="lazy" ${dims(b.src)}><figcaption>${inline(b.cap)} <span class="fig-tag">illustration, not product imagery</span></figcaption></figure>`;
       case "unverified": return `<section class="unver"><h3>Not answered by this page</h3><ul>${b.items.map((i) => `<li>${inline(i)}</li>`).join("")}</ul></section>`;
       default: warnings.push(`unknown block type ${b.t}`); return "";
     }
@@ -231,21 +240,24 @@ emit("", {
 </section>
 
 <figure class="fig fig-lead">
-  <img src="./assets/img/hero.png" alt="Illustration: a basket-style air fryer with its drawer pulled open, beside a cross-section diagram showing air circulating over a single layer of food, a folded towel and a tape measure on the counter." width="1200" height="630">
+  <img src="./assets/img/hero.png" alt="Illustration: a basket-style air fryer with its drawer pulled open, beside a cross-section diagram showing air circulating over a single layer of food, a folded towel and a tape measure on the counter." width="1200" ${dims("hero.png")}>
   <figcaption>The one comparison that matters is air reaching food. Our diagrams are drawn for this publication — <span class="fig-tag">illustration, not product imagery</span>, because reusing a store's photographs is a rights question we have not settled.</figcaption>
 </figure>
 
 <section class="band">
   <div class="band-head"><h2>On the desk now</h2><a class="more" href="./picks/">Full register →</a></div>
-  ${table(["Row", "Identifier we were given", "What we can say", "Status", "Address as supplied"],
-    D.intent.records.map((r) => row([
-      `<code>${r.id}</code>`,
-      `<code class="tok">${esc(r.token_as_supplied)}</code> <span class="dim">${r.token_length} chars</span>`,
-      esc("We can report the string and its length. We cannot report the product behind it: no listing was reachable from the build environment, and no confirmed identifier exists in the register."),
-      pill(r.status === "unresolved" ? "unresolved" : "verified"),
-      `<code class="mono-xs">${esc(r.supplied_link.replace("https://", ""))}</code>`,
-    ])))}
-  <p class="hint">We print the supplied address rather than linking it: the destination is unconfirmed, the URL carries no tracking tag, and a reader should never be sent somewhere we cannot vouch for. Copy it to check it yourself.</p>
+  <div class="verdict">
+    <p class="verdict-line"><strong>${D.intent.records.length} links were supplied for marketing.</strong>
+      All five are in the same state: the identifier measures ${D.intent.records[0].token_length} characters,
+      no tracking tag is present in the address, and none of the four product fields
+      (title, listing, price, rating) could be confirmed from an official source.</p>
+    <ul class="chips">
+      ${D.intent.records.map((r) => `<li><code>${esc(r.token_as_supplied)}</code><span>${r.token_length} chars · ${r.intended_asin_confirmed ? "confirmed" : "unresolved"}</span></li>`).join("")}
+    </ul>
+    <p class="verdict-foot">${counts.unresolved} of ${counts.rows} rows are blocked on three questions the account owner can answer in about fifteen minutes —
+      <a href="./questions/#q-01">Q-01</a>, <a href="./questions/#q-02">Q-02</a>, <a href="./questions/#q-03">Q-03</a>.
+      When they are answered, the titles below fill themselves and the guides gain a product link beside a “(paid link)” label.</p>
+  </div>
 </section>
 
 <section class="band">
@@ -385,6 +397,7 @@ emit("picks", {
     };
     return row(cols.map((c) => cell(c)));
   }))}
+  <p class="blanks"><strong>About the address column.</strong> We print each supplied address instead of linking it: the destination is unconfirmed, the URL carries no tracking tag, and a reader should never be sent somewhere we cannot vouch for. Copy it to check it yourself, then confirm it with <a href="https://affiliate-program.amazon.com/help/operating/policies" rel="noopener">the linking requirements</a> open.</p>
   <p class="blanks"><strong>Why the empty columns are empty.</strong> Title, listing URL, price, rating and redirect target all require opening a listing. Egress from the build environment to the store is refused (see <a href="./flagged/#flg-003">FLG-003</a>), and price and rating fields are additionally restricted by the program rules (<a href="./flagged/#flg-005">FLG-005</a>). We did not fill any of them in.</p>
 </section>
 
@@ -562,7 +575,7 @@ emit("how-it-works", {
       ["Optimise campaigns", "not built, on purpose", "t-none", "No campaign logic exists that could act on unverified data; the ledger starts empty by design.", "—"],
     ];
     return table(["Stage", "Automated?", "How it works here", "Rule"], P.map(([a, b, cls, c, d]) => row([
-      `<strong>${esc(a)}</strong>`, `<span class="ptag ${cls}">${esc(b)}</span>`, `<span>${inline(c)}</span>`, esc(d).replace(/ · /g, "<br>"),
+      `<strong>${esc(a)}</strong>`, `<span class="ptag ${cls}">${esc(b)}</span>`, rich(c), rich(d).replace(/ · /g, "<br>"),
     ])), { caption: "Read the middle column as the promise and the last column as the reason the promise is shaped that way." });
   })()}
 </section>
@@ -670,7 +683,7 @@ emit("executive-summary", {
     ["5", "Decide authorship (a named human) before any claim gets stronger than method", "The disclosure sentence is first-person; endorsements need an endorser", "<a href='./suggestions/#sg-12'>SG-12</a>"],
     ["6", "After ten qualifying sales in thirty days, unlock the API and only then build price-aware comparison tables and a staleness bot", "This is the sequence the rules force: content earns the data access, the data access earns the automation", "<a href='./suggestions/#sg-05'>SG-05</a>, <a href='./suggestions/#sg-07'>SG-07</a>"],
     ["7", "Keep the domain decision open until ten guides exist, then move with one commit", "Canonicals and the sitemap are generated; flip them once, deliberately", "<a href='./suggestions/#sg-10'>SG-10</a>"],
-  ].map((r) => row(r.map((c, i) => i === 0 ? `<span class="stepno">${c}</span>` : `<span>${inline(c)}</span>`))))}
+  ].map((r) => row(r.map((c, i) => i === 0 ? `<span class="stepno">${c}</span>` : rich(c)))))}
   <h2>6 · What this summary does not claim</h2>
   <ul class="plain">
     <li>It does not claim traffic, rankings, conversions or revenue. There is no measurement history in this repository, and the ledger is empty on purpose.</li>
@@ -690,12 +703,26 @@ emit("disclosure", {
   body: `
 <header class="page-head"><p class="kicker">Disclosure</p><h1>Who pays for what, here</h1></header>
 <p class="lede"><strong>${esc(CFG.monetization.earnings_statement)}</strong> That sentence is the wording the Associates Program Operating Agreement requires, and we reproduce it without changing it. It appears at the top of every page, again in the footer of every page, and again at the end of every guide.</p>
-${table(["What", "Where it appears", "Why"], [
-  ["The required sentence", "Strip under the masthead on every page; repeated in the footer; repeated on each guide", "The agreement requires it to be clearly and prominently stated on the site, and a reader should not have to scroll to find out who may be paid"],
-  ["A link-level label", "Immediately beside each store link, reading “${esc(CFG.monetization.link_level_label)}”", "Amazon's own help separates the site-wide sentence from the label that sits next to a link"],
-  ["<code>rel=\"sponsored\"</code>", "Every store link's markup", "Google documents <code>sponsored</code> as the value for paid placements; it costs us no traffic, because attribution is carried by the tag parameter, not by a search engine"],
-  ["<code>tag=${esc(CFG.monetization.tracking_id)}</code>", "Every store link's URL", "The agreement permits only the tagged link formats Amazon provides, and an untagged link does not accrue"],
-].map((r) => row(r.map((c, i) => i === 0 ? `<strong>${inline(c)}</strong>` : inline(c)))) , { caption: "There are currently no store links to any product on this site, because no product is confirmed. The rules above are implemented in the generator and asserted by the gate so that the first real link is compliant on the day it appears." })}
+${(() => {
+  const LL = CFG.monetization.link_level_label, TID = CFG.monetization.tracking_id;
+  const R = [
+    ["The required sentence",
+     "Strip under the masthead on every page; repeated in the footer; repeated on each guide",
+     "The agreement requires it to be clearly and prominently stated on the site, and a reader should not have to scroll to find out who may be paid"],
+    ["A link-level label",
+     `Immediately beside each store link, reading “${LL}”`,
+     "Amazon's own help separates the site-wide sentence from the label that sits next to a link"],
+    ["The sponsored value",
+     "In the markup of every store link: <code>rel=“sponsored nofollow”</code>",
+     "Google documents <code>sponsored</code> as the value for paid placements; it costs us no traffic, because attribution is carried by the tag parameter, not by a search engine"],
+    ["The tracking tag",
+     `In the URL of every store link: <code>tag=${TID}</code>`,
+     "The agreement permits only the tagged link formats Amazon provides, and an untagged link does not accrue"],
+  ];
+  return table(["What", "Where it appears", "Why"], R.map(([a, b, c]) =>
+    row([`<strong>${esc(a)}</strong>`, rich(b), rich(c)])),
+    { caption: "There are currently no store links to any product on this site, because no product is confirmed. The rules above are implemented in the generator and asserted by the gate, so the first real link is compliant on the day it appears." });
+  })()}
 <h2>What we will not do to earn a commission</h2>
 <ul class="plain">
   <li>No prices, availability, star ratings or review text — only an Amazon-served link or the approved API may carry those, and we have neither.</li>
@@ -719,7 +746,7 @@ ${table(["Recorded", "Where", "Retention", "Sent to us?"], [
   ["Your IP address", "GitHub Pages, for security, per its own documentation", "as the host's policy states", "Not by us — by the host. We do not receive it."],
   ["Cookies", "— none set by this site", "—", "n/a"],
   ["Email address", "not collected; there is no signup form that transmits anything", "—", "n/a"],
-].map((r) => row(r.map(inline))))}
+].map((r) => row(r.map(rich))))}
 <h2>If you turn the collector on</h2>
 <p>The plan, in <a href="./suggestions/#sg-06">SG-06</a>, is an aggregate counter on infrastructure the operator runs, with a short retention window, no IP capture, and no per-visitor identifier. Two of those are not merely taste: the Associates terms bar associating a sub-tag or programme reporting with a specific end user, and they bar generating clicks or sessions artificially — so the collector is written to count events, never to invent them, and to refuse a visitor key outright.</p>
 <p class="dim small">Readers in the EU: this site has no consent banner because it sets no cross-site trackers; the disclosure here is the notice. That position depends on the collector staying off, and it is <a href="./questions/#q-11">an open question (Q-11)</a> for the operator, not a legal conclusion.</p>`,

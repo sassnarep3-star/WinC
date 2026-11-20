@@ -33,7 +33,13 @@ const relOf = (p) => relative(ROOT, p).replace(/\\/g, "/");
 
 // ---------- G-01 / G-02: disclosure above the fold and in the footer ----------
 {
-  const req = CFG.monetization.earnings_statement;
+  // The canonical wording is fixed HERE, not read from site.config.json: a gate that takes its expected
+  // value from the file it polices can be switched off by editing that file. This string is quoted from
+  // Section 5 of the Associates Program Operating Agreement (SRC-01), read 2026-11-20.
+  const CANONICAL = "As an Amazon Associate I earn from qualifying purchases.";
+  const req = CANONICAL;
+  if (CFG.monetization.earnings_statement !== CANONICAL)
+    fail("G-01", `site.config.json monetization.earnings_statement has drifted from the required wording (SRC-01 §5): got “${CFG.monetization.earnings_statement}”`);
   let bad = [];
   for (const f of files) {
     const h = read(f);
@@ -69,7 +75,7 @@ function hostOf(href) { try { return new URL(href, "https://x.invalid").hostname
   for (const f of files) {
     const h = read(f);
     for (const m of h.matchAll(/<a\b([^>]*)>/g)) {
-      const attrs = m[1];
+      const attrs = m[0];
       const href = (attrs.match(/href="([^"]+)"/) || [])[1] || "";
       if (!/^https?:/i.test(href)) continue;
       const host = hostOf(href);
@@ -274,8 +280,8 @@ function hostOf(href) { try { return new URL(href, "https://x.invalid").hostname
   for (const f of files) {
     const h = read(f);
     const dir = dirname(f);
-    for (const m of h.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)) {
-      const href = m[1];
+    for (const m of h.matchAll(/<a\b[^>]*href=(?:"([^"]*)"|'([^']*)')[^>]*>/g)) {
+      const href = m[1] ?? m[2];
       if (/^(mailto:|javascript:|#)/i.test(href)) continue;
       if (/^https?:/i.test(href)) {
         const host = hostOf(href);
@@ -295,8 +301,8 @@ function hostOf(href) { try { return new URL(href, "https://x.invalid").hostname
         problems.push(`${relOf(f)}: fragment #${frag} not found in ${relOf(target)}`);
     }
     // assets referenced by this page must exist too
-    for (const a of h.matchAll(/<(?:link|script|img)\b[^>]*?(?:href|src)="([^"]+)"/g)) {
-      const u = a[1];
+    for (const a of h.matchAll(/<(?:link|script|img)\b[^>]*?(?:href|src)=(?:"([^"]*)"|'([^']*)')/g)) {
+      const u = a[1] ?? a[2];
       if (/^https?:/i.test(u)) continue;
       const t = resolve(dir, u.split("#")[0]);
       if (!existsSync(t)) problems.push(`${relOf(f)}: missing asset ${u}`);
@@ -324,7 +330,12 @@ function hostOf(href) { try { return new URL(href, "https://x.invalid").hostname
     const want = dir ? `${BASE}/${dir}/` : `${BASE}/`;
     if (canon !== want && r !== "404.html") problems.push(`${r}: canonical ${canon} ≠ ${want}`);
     if (/<img\b(?![^>]*\salt=)/.test(h)) problems.push(`${r}: an <img> without alt`);
-    if (/TODO|TBD|Lorem ipsum|PLACEHOLDER/i.test(h.replace(/<[^>]+>/g, " "))) problems.push(`${r}: placeholder text left in`);
+    for (const im of h.matchAll(/<img\b[^>]*>/g))
+      if (!/width="\d+"/.test(im[0]) || !/height="\d+"/.test(im[0])) problems.push(`${r}: <img> without intrinsic width/height (layout shift)`);
+    const bare = h.replace(/<[^>]+>/g, " ");
+    if (/TODO|TBD|Lorem ipsum|PLACEHOLDER/i.test(bare)) problems.push(`${r}: placeholder text left in`);
+    if (/\$\{/.test(h)) problems.push(`${r}: un-interpolated template expression leaked into the page`);
+    if (/&lt;(code|strong|em|a)\b/.test(h)) problems.push(`${r}: escaped HTML tag in output (double-escaped string)`);
   }
   // data hygiene
   const dup = {};
