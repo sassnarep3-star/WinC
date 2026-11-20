@@ -64,7 +64,7 @@ def main():
         "published": today,
         "updated": today,
         "season": a.season,
-        "image": "assets/img/hero-counter.png",
+        "image": "assets/img/hero-counter.webp",
         "image_caption": "Editorial illustration. Not a product photograph.",
         "body": BODY,
         "faq": FAQ,

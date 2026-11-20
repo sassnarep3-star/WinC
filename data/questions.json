@@ -1,5 +1,5 @@
 {
-  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped. Q-23 appended 2026-11-20 by session arena-70bd2fcc (task renumbered to T37 after an id collision with arena-c2123b9c).",
+  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped.",
   "updated": "2026-11-20",
   "blocking_count": 5,
   "questions": [
@@ -82,41 +82,6 @@
         "S11",
         "S12",
         "S23"
-      ],
-      "source_note": ""
-    },
-    {
-      "id": "Q-15",
-      "question": "Are these five listings still live, in stock, and the same model today?",
-      "decision_it_gates": "Whether the product pages describe something a reader can actually buy this week, and whether any spec quoted here is stale.",
-      "have": "Each listing was readable on 2026-11-20 (titles captured verbatim in data/probes.json), so all five destinations existed on that date.",
-      "missing": "Availability, variant structure, and whether the listing content changed since the specs were copied. Listings move; a title captured once is not a permanent fact.",
-      "blocking": "no",
-      "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
-      "owner": "Any session with a browser",
-      "answer": "",
-      "sources": [
-        "S09",
-        "S10",
-        "S11",
-        "S12",
-        "S13"
-      ],
-      "source_note": ""
-    },
-    {
-      "id": "Q-16",
-      "question": "Does the '-20' suffix mean the tag is already complete for a manual amazon.com link?",
-      "decision_it_gates": "Whether ?tag=shopnow047c-20 is the correct manual link form, or whether links must be generated in Associates Central instead.",
-      "have": "Amazon's help states '-20' is appended automatically to all Associate IDs (S20), and the site currently uses ?tag=shopnow047c-20 verbatim. That is consistent, and consistency is not confirmation.",
-      "missing": "Whether Amazon requires Special Links generated via SiteStripe/Links tool rather than hand-built query strings for this account type.",
-      "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
-      "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
-      "owner": "Account owner only",
-      "answer": "",
-      "sources": [
-        "S06",
-        "S20"
       ],
       "source_note": ""
     },
@@ -246,6 +211,41 @@
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
+      "id": "Q-15",
+      "question": "Are these five listings still live, in stock, and the same model today?",
+      "decision_it_gates": "Whether the product pages describe something a reader can actually buy this week, and whether any spec quoted here is stale.",
+      "have": "Each listing was readable on 2026-11-20 (titles captured verbatim in data/probes.json), so all five destinations existed on that date.",
+      "missing": "Availability, variant structure, and whether the listing content changed since the specs were copied. Listings move; a title captured once is not a permanent fact.",
+      "blocking": "no",
+      "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
+      "owner": "Any session with a browser",
+      "answer": "",
+      "sources": [
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-16",
+      "question": "Does the '-20' suffix mean the tag is already complete for a manual amazon.com link?",
+      "decision_it_gates": "Whether ?tag=shopnow047c-20 is the correct manual link form, or whether links must be generated in Associates Central instead.",
+      "have": "Amazon's help states '-20' is appended automatically to all Associate IDs (S20), and the site currently uses ?tag=shopnow047c-20 verbatim. That is consistent, and consistency is not confirmation.",
+      "missing": "Whether Amazon requires Special Links generated via SiteStripe/Links tool rather than hand-built query strings for this account type.",
+      "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
+      "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
+      "owner": "Account owner only",
+      "answer": "",
+      "sources": [
+        "S06",
+        "S20"
+      ],
+      "source_note": ""
+    },
+    {
       "id": "Q-17",
       "question": "What would count as this site working, and over what window?",
       "decision_it_gates": "Whether any suggestion in the register can be judged, and whether a topic can be called a success or a failure.",
@@ -331,23 +331,59 @@
       "id": "Q-23",
       "question": "When does a seasonal guide's measurement window close, and who closes it?",
       "decision_it_gates": "SG-35 (seasonal band close-out rule) and any future claim about how a seasonal guide performed (SG-32's experiment cannot be judged without a window).",
-      "have": "Five guides carry season labels (Holiday cooking / Everyday) and the front page computes an 'In season' band from them; the campaign ledger schema has date and channel fields but no notion of a seasonal window.",
-      "missing": "Window start/end dates per seasonal guide; the rule for what happens when a window closes (band demotion? archive note?); who makes the call.",
-      "discovery": "One decision on the suggestions review desk (direction.html): pick the windows with dates, then implement the two fields from SG-35 and re-run the gate.",
+      "have": "The repo root is published by GitHub Pages (legacy, branch main, /), recorded as S21. Three open pull requests would add a second full site tree.",
+      "missing": "An owner decision on which tracks are abandoned, and confirmation that the others may be archived.",
+      "discovery": "Owner: review PR #17, #18 and #5, keep one, archive the rest. Log the decision in COORDINATION.md.",
       "owner": "Owner/editorial decision; implementation can be any session once the dates exist.",
       "answer": "",
-      "blocking": "no - the season labels keep pages honest on their own; but no seasonal-performance claim can be published until windows exist (Q-17's measurement bar)."
+      "blocking": "yes — every content task risks landing on the wrong tree",
+      "sources": [
+        "S21",
+        "S08"
+      ]
     },
     {
       "id": "Q-24",
+      "question": "Is the site name free to use where the owner operates?",
+      "decision_it_gates": "Brand assets, domain purchase, and whether to invest in the current name at all.",
+      "have": "Nothing. The name appears in the site copy and in the tracking ID's 'shopnow' stem; no register has been checked.",
+      "missing": "A trademark / business-name search result, with the register named and the date recorded.",
+      "blocking": "yes — a rename after indexing discards earned ranking",
+      "discovery": "Owner or counsel: search the relevant national trademark register and the domain; record the result and date in data/sources.json.",
+      "owner": "Account owner",
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal decision — no external source applies until the search is run."
+    },
+    {
+      "id": "Q-25",
+      "question": "Under what terms may the site's generated illustrations be published commercially?",
+      "decision_it_gates": "Whether the current imagery can stay, and whether a licensed-photography budget is needed (SG-19).",
+      "have": "The illustrations exist, are captioned as illustrations, and contain no Amazon product imagery or logos.",
+      "missing": "The generator's commercial-use clause, any attribution requirement, and a dated record of the read.",
+      "blocking": "yes for scaling the imagery set; no for the site as it stands",
+      "discovery": "Owner: read the tool's terms, quote the clause, record the date in data/sources.json.",
+      "owner": "Account owner",
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal/licensing decision — no public source covers this account's terms."
+    },
+    {
+      "id": "Q-26",
       "question": "Do the five supplied link.amazon tokens actually resolve to the five observed ASINs, and why did this session's fetch not reproduce the mapping?",
       "decision_it_gates": "Whether the observed_* ASINs can be trusted as the intended destinations, and whether the product-intent record's intended_* fields can ever be filled from the supplied links.",
-      "have": "All five amazon.com/dp/<ASIN> listings are live and each <title> matches data/products.json verbatim (S30). Prior sessions recorded a stable token->ASIN mapping across 2026-11-17 through a fourth observation on 2026-11-20 (S14/S18/S22/S29, data/probes.json), always carrying the lv=shuf + plpRedirect=mhFallback fallback route (FLG-009).",
-      "missing": "A reproducible, method-consistent resolution of each link.amazon token to its destination. This session's direct page-reader fetch sent 4/5 tokens to the amazon.com homepage and returned HTTP 500 for B0f3GKalj, so the mapping could not be re-confirmed via that path (FLG-026). The links are not claimed invalid (FLG-003).",
+      "have": "All five amazon.com/dp/<ASIN> listings are live and each <title> matches data/products.json verbatim (S30-S34, S36). Prior sessions recorded a stable token->ASIN mapping across 2026-11-17 through a fourth observation on 2026-11-20 (S14/S18/S22/S29, data/probes.json), always carrying the lv=shuf + plpRedirect=mhFallback fallback route (FLG-009/FLG-029).",
+      "missing": "A reproducible, method-consistent resolution of each link.amazon token to its destination. This session's direct page-reader fetch sent 4/5 tokens to the amazon.com homepage and returned HTTP 500 for B0f3GKalj, so the mapping could not be re-confirmed via that path (FLG-030). The links are not claimed invalid (FLG-003).",
       "discovery": "In an enrolled Associates browser (cookies + correct region), open each link.amazon/<token> and record the final URL and the tag/report behaviour per product in data/probes.json with a dated provenance line; compare against the prior mapping. If the mapping still holds in a real browser, the fetch-path divergence is a tooling artefact; if it does not, re-open FLG-009/Q-02 and treat the observed mapping as unconfirmed.",
       "owner": "Account owner (enrolled Associates browser)",
       "answer": "",
-      "blocking": "no — the observed ASINs are still valid product identities; only the token-to-ASIN mapping's reproducibility is in question"
+      "blocking": "no - the observed ASINs are still valid product identities; only the token-to-ASIN mapping's reproducibility is in question",
+      "sources": [
+        "S15",
+        "S18",
+        "S36"
+      ],
+      "source_note": ""
     }
   ]
 }

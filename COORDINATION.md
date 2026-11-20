@@ -1,9 +1,9 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena/1c6908d1-winc`** — audit-clean pass (cleared A6/A7), verification pass #5
-> (S30/FLG-026/Q-24), review-prompt suggestions (SG-39/40); its board is in the **last section** of
-> this file. Prior latest was `arena-23428c9e` (branch `arena/23428c9e-winc`, PR #18), integration of
-> the Air & Ember parallel edition; Sections for `arena-c2123b9c` (T29–T32) and `arena-482d5832` (T33)
+> **Latest session: `arena/1c6908d1-winc`** — audit-clean pass (confirmed A6/A7 fixed), verification
+> pass #5 (S36/FLG-030/Q-26), review-prompt suggestions (SG-39/40); its board is in the **last section**
+> of this file. Prior latest was `arena-23428c9e` (branch `arena/23428c9e-winc`, PR #18), integration of
+> the Air & Ember parallel edition; sections for `arena-c2123b9c` (T29–T32) and `arena-482d5832` (T33)
 > plus every earlier session are kept verbatim as the provenance trail — this round's conflict dropped
 > none of them.
 
@@ -1059,21 +1059,73 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
 
 ---
 
+# Session arena-038c0b80 — editorial conversion pass + decision section + line-by-line re-verification
+
+Branch `arena/038c0b80-winc`, based on `main@404cabc` (PR #24 merged). Started 2026-11-20.
+State on arrival: 29 pages / 28 sitemap URLs / 8 guides; `check_site.py` green; `node tools/audit.mjs`
+reporting 2 findings (A6, A7). `main` advanced twice while this session was reading the repo; the branch
+was fast-forwarded to `404cabc` before any edit, so nothing here forks an old base.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Story layer: maker profiles, 8 product narratives + 3 cluster guides (one per category), all claims tied to a listed spec (Claude) | in progress | arena-038c0b80 | `data/makers.json`, `data/stories.json`, `data/guides/*.json` (new files only), `scripts/build_site.py` (story/narrative renderers), `assets/style.css`, `assets/img/series-*` |
+| T34 | Decision section: suggestions → review → choose → evidence, rendered from the registers | in progress | arena-038c0b80 | `data/suggestions.json`, `data/questions.json`, `scripts/build_site.py` (direction/questions bodies), `direction.html`, `questions.html` |
+| T35 | Repo audit fixes: A6 anchor-quote mismatch, A7 capture-form transport, stale flags/source notes/typed counts, encoding artifacts (-143, °F), JSON-LD how-to scope | in progress | arena-038c0b80 | `scripts/build_site.py`, `scripts/check_site.py`, `tools/audit.mjs`, `data/flags.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Findability + imagery hygiene: compress 3.5 MB PNGs to WebP, add FAQPage scope, sitemap/feed check, honest "no measurement yet" language | in progress | arena-038c0b80 | `assets/img/*`, `scripts/build_site.py` |
+| T37 | Final integration: rebuild, gate green, independent audit clean, PR → main, merge, confirm Pages live | pending | arena-038c0b80 | all (integration only) |
+
+## Cross-session follow-ups observed (not mine to merge)
+
+- PR #17 (`arena/04112b09-winc`, OPEN) and PR #18 (`arena/23428c9e-winc`, OPEN) and PR #5
+  (`arena/70d8ad52-winc`, DRAFT) each ship a *different* site into the same repo. Only one can be the
+  published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
+  are already on `main` via PR #24 and are in use. This session did not touch those branches.
+
+## PR / merge record (T37 — merged)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
+| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
+| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
+
+### What was deliberately merged *from* main rather than over it
+
+- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
+- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
+- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
+- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
+
+### Two id collisions worth recording for the next session
+
+1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
+2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
+
+### Rounds where the gates were run after each merge
+
+38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+
+---
+
 # Session `arena/1c6908d1-winc` — audit-clean pass, verification #5, review-prompt suggestions
 
-Branch `arena/1c6908d1-winc`. Rebased onto current `main` (the session-start base `7426a0c` was on a
-divergent, retired lineage; the branch was reset to `main` and all work applied on top of the
-reconstructed lineage). Scope chosen to be non-overlapping with the sessions already merged and the
-PRs still open: this session did **not** duplicate the seasonal/deals/observation-#4 work (SG-32..38,
-S27..S29, Q-23) — it cleared the two audit findings those merges left in place, ran an independent
-verification pass #5, and added distinct suggestions (SG-39/40).
+Branch `arena/1c6908d1-winc`. Rebased onto current `main`; the session-start base `7426a0c` was on a
+divergent, retired lineage, so the branch was reset to `main` and all work applied on top of the
+reconstructed lineage. A mid-flight merge conflict (main advanced 19 commits) was resolved by taking
+`main`'s version as the base and keeping this session's distinct additions, renumbered to avoid
+collisions with findings `main` had already recorded (main had independently added S30–S35,
+FLG-026–029, Q-24–25 for different items). This session's entries are **S36, FLG-030, Q-26, SG-39,
+SG-40**.
 
 ## Task board (this session)
 
 | ID | Task | Status | Owner (session) | File scope |
 |----|------|--------|-----------------|------------|
-| T33 | Clear independent-audit findings A6 (src-id quote style + search JS literal) and A7 (capture form GET email leak) | done | arena/1c6908d1-winc | scripts/build_site.py, assets/app.js, generated HTML |
-| T34 | Independent verification pass #5: re-read all 5 listings + re-fetch all 5 tokens; record S30, FLG-026, Q-24 | done | arena/1c6908d1-winc | data/sources.json, data/flags.json, data/questions.json |
+| T33 | Clear/confirm independent-audit findings A6 (src-id quote style + search JS literal) and A7 (capture form email leak) | done | arena/1c6908d1-winc | scripts/build_site.py, assets/app.js, generated HTML |
+| T34 | Independent verification pass #5: re-read all 5 listings + re-fetch all 5 tokens; record S36, FLG-030, Q-26 | done | arena/1c6908d1-winc | data/sources.json, data/flags.json, data/questions.json |
 | T35 | Add review-prompt suggestions SG-39 (editorial voice / not AI slop), SG-40 (accept/reject workflow) | done | arena/1c6908d1-winc | data/suggestions.json, direction.html (generated) |
 | T36 | Final integration: build + check + audit strict green, PR to main, merge, confirm Pages, record here | in progress | arena/1c6908d1-winc | COORDINATION.md + integration |
 
@@ -1081,25 +1133,26 @@ verification pass #5, and added distinct suggestions (SG-39/40).
 
 | What | How | Result |
 | --- | --- | --- |
-| All 5 `amazon.com/dp/<ASIN>` listings | Fetched live via the page reader | Each `<title>` matched `data/products.json` verbatim; breadcrumb confirms category (3 Air Fryers, 2 Meat Thermometers). Fallback route `lv=shuf` + `plpRedirect=mhFallback` present on all 5 (FLG-009). No spec drift. |
-| The 5 supplied `link.amazon` tokens | Fetched live via the page reader | 4/5 (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage; B0f3GKalj returned HTTP 500 on two attempts. Prior token→ASIN mapping NOT reproduced via this path → FLG-026. |
-| Independent audit | `node tools/audit.mjs --strict` | Before: 2 findings (A6 fragments, A7 capture GET). After fixes: **0 findings**, all 10 rules pass. |
-| Site gate | `npm run verify` | Built 34 pages, 33 sitemap URLs / OK: 34 pages checked, 33 sitemap URLs, no violations. |
+| All 5 `amazon.com/dp/<ASIN>` listings | Fetched live via the page reader | Each `<title>` matched `data/products.json` verbatim; breadcrumb confirms category (3 Air Fryers, 2 Meat Thermometers). Fallback route `lv=shuf` + `plpRedirect=mhFallback` present on all 5 (FLG-009/FLG-029). No spec drift. |
+| The 5 supplied `link.amazon` tokens | Fetched live via the page reader | 4/5 (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage; B0f3GKalj returned HTTP 500 on two attempts. Prior token→ASIN mapping NOT reproduced via this path → FLG-030. |
+| Independent audit | `node tools/audit.mjs --strict` | **0 findings**, all 10 rules pass (A6 src-id + search DOM-API, A7 capture form, confirmed after this session's merge). |
+| Site gate | `npm run verify` | Built 38 pages, 37 sitemap URLs / OK: 38 pages checked, 37 sitemap URLs, no violations. |
 
 ## Findings recorded this session
 
 | ID | Finding | Status |
 | --- | --- | --- |
-| FLG-026 | The 5 supplied `link.amazon` tokens did not reproduce the prior ASIN mapping via this session's page-reader fetch (4/5 → homepage, 1/5 HTTP 500). Not claimed invalid (FLG-003 unchanged). Reproducibility across observation methods is in question; resolve by re-resolving in an enrolled Associates browser with cookies + region. | needs review (open, non-blocking) |
-| Q-24 | Do the tokens actually resolve to the 5 observed ASINs, and why did this fetch not reproduce the mapping? | open, non-blocking |
+| FLG-030 | The 5 supplied `link.amazon` tokens did not reproduce the prior ASIN mapping via this session's page-reader fetch (4/5 → homepage, 1/5 HTTP 500). Not claimed invalid (FLG-003 unchanged). Reproducibility across observation methods is in question; resolve by re-resolving in an enrolled Associates browser with cookies + region. | needs review (open, non-blocking) |
+| Q-26 | Do the tokens actually resolve to the 5 observed ASINs, and why did this fetch not reproduce the mapping? | open, non-blocking |
 | SG-39 | Editorial voice pass so copy reads like a publication, not generated text (the brief's "not AI slop"). | recommended-now |
 | SG-40 | Accept/reject/defer review workflow so the chosen path persists in-repo. | recommended-now |
 
 ## Notes for the next session
 
-- `main` was carrying the two audit bugs (`method="get"` capture form, single-quoted `id='src-…'`)
-  despite 92 merged commits; this session's PR clears them. If other PRs merge first, rebase and re-run
-  `npm run verify` + `node tools/audit.mjs --strict` before merging (the A6/A7 fixes touch the shared
-  builder/`app.js`).
-- **ID collision avoidance:** main already uses S27..S29, FLG-025, Q-23, SG-35..38. This session used
-  S30, FLG-026, Q-24, SG-39, SG-40 — no collisions.
+- `main` had independently fixed A6 (src-id double-quotes + link.amazon text-rendering) and A7
+  (capture form `novalidate`) in its 19 advancing commits; this session's merge kept those and
+  upgraded the capture form to `method="post"` (more robust than `get`+`novalidate` for a JS-blocked
+  browser, which would otherwise still put the address in the URL). The independent audit is 0
+  findings on the merged tree.
+- **ID collision avoidance:** main uses S30–S35, FLG-026–029, Q-24–25, SG-32–38. This session used
+  S36, FLG-030, Q-26, SG-39, SG-40 — no collisions.
