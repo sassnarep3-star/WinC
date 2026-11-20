@@ -185,6 +185,14 @@ for hf in html_files:
         rel = os.path.normpath(os.path.join(base, src)) if base else src
         if not os.path.exists(os.path.join(ROOT, rel)):
             fail(f"{hf}: missing image -> {src}")
+    # a <picture><source srcset> pointing at a missing file is a silent broken image
+    for m in re.finditer(r'<source[^>]+srcset="([^"]+)"', content):
+        src = m.group(1)
+        if src.startswith(("http", "data:")):
+            continue
+        rel = os.path.normpath(os.path.join(base, src)) if base else src
+        if not os.path.exists(os.path.join(ROOT, rel)):
+            fail(f"{hf}: missing <source> image -> {src}")
     for m in re.finditer(r'<meta property="og:image" content="([^"]+)"', content):
         u = m.group(1)
         if not u.startswith(SITE):
