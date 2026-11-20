@@ -1,22 +1,22 @@
 {
   "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20)",
+  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20); SG-21/SG-22 marketing polish kept (session arena/5fed90b2); SG-01 updated by arena/d49143e1-winc (purchase-link release gate implemented)",
   "suggestions": [
     {
       "id": "SG-01",
       "title": "Gate reader links until the Associates one-link test is done",
-      "status": "recommended-now",
+      "status": "done-this-session",
       "area": "Compliance",
-      "problem": "Every buy button is built as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20 from a fallback redirect target, and the tracking ID itself is unconfirmed (FLG-001, FLG-002). A monetised link whose tracking ID is not issued is worse than no link: it earns nothing and it is the classic reason accounts get closed.",
-      "proposal": "Ship the site with the buy buttons present but marked `data-link-state=\"pending-verification\"` and a visible line on each product page: 'Destination and tracking not yet confirmed — we are testing one link per product before we scale.' Turn buttons into plain text only if the owner prefers zero risk.",
+      "problem": "The five rendered purchase buttons were constructed directly from observed redirect targets and the tracking ID supplied in the brief. No per-product record showed that the intended product, approved Special Link destination, or attribution report had been confirmed in the enrolled Associates workflow (FLG-001, FLG-002, FLG-009).",
+      "proposal": "Keep purchase controls visibly disabled until the product-intent record is complete and the exact Special Link, destination, date, source, and tracking-report reference have been confirmed. Never derive a purchase URL from the observed redirect alone. Keep the original submitted short URL and observed target in their separate provenance fields.",
       "effort": "S",
       "cost": "none",
-      "risk": "Low. Temporarily suppresses the only monetisation path.",
-      "expected_effect": "Removes the highest-severity account risk before traffic exists. Measure: zero unconfirmed-tag links in the build; gate check passes.",
-      "evidence": "Amazon Associates Operating Agreement + Program Policies (S01, S02) as cited on the Verification page; both are login-gated, so confirm in your own console (FLG-006 note in sources).",
-      "feeds_prompt": "Run the one-link-per-product Associates test for the five observed ASINs, record destination + tracking-report confirmation per product, and only then remove data-link-state=\"pending-verification\". Keep intended_* fields blank unless the owner confirms intent in writing.",
-      "status_detail": "Still the first thing to do: it gates every monetised link on the site."
+      "risk": "Low. The site temporarily has no active purchase buttons. Re-enable only after the owner completes the authorized Associates workflow; this repository cannot access that account.",
+      "expected_effect": "Prevents unconfirmed destination or attribution links from appearing as live purchase buttons. Measure the gate: no outbound purchase anchor is emitted for any incomplete record; after a valid record, only the exact tested URL is rendered with rel=\"sponsored\".",
+      "evidence": "data/products.json has blank intended_asin, intended_listing_url, confirmation_date, and intended_source fields for all five products; FLG-001/002 remain needs review. The check is reproducible with npm run verify.",
+      "feeds_prompt": "For each product, obtain the intended ASIN and official listing URL from the owner or source, then use the enrolled Associates workflow to create and test one Special Link. Record confirmation date, source, destination result, tracking-report reference and exact link in the separate fields. Do not enable the CTA until both records are complete; keep observed redirect targets separate.",
+      "status_detail": "Implemented in session arena/d49143e1-winc: product CTAs are non-clickable until the intent record and Associates destination/tracking test are complete. Since account access and the owner’s intended product mapping are unavailable here, all five stay disabled. The compliance gate now enforces this release condition."
     },
     {
       "id": "SG-02",

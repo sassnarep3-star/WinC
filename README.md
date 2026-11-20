@@ -29,7 +29,8 @@ No third-party dependencies: Python standard library only.
 ## Rules that never bend
 
 - Disclosure above the fold on every page + footer repeat.
-- Every buy button is `rel="sponsored"` + Sponsored label + tracking ID.
+- Every active outbound product link is `rel="sponsored"` + Sponsored label and uses the exact Special Link recorded after the Associates test.
+- Purchase buttons remain non-clickable until both intended product identity and Associates destination + tracking report are confirmed per product (FLG-001/002).
 - No prices, ratings, or invented facts. Blank + flagged beats inferred.
 - Every decision block names the one listed spec it rests on. No ranking, no preference.
 - Intended vs. observed ASINs live in separate fields, never merged.

@@ -7,9 +7,9 @@ It leads with products, answers buyer questions, and keeps verification one clic
 
 ## What is live
 
-- **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
+- **Shop:** front page + 2 category pages + 5 product pages, with disclosure above the fold. Purchase CTAs are visibly disabled on all five products until the intended listing and Associates destination + tracking report have been confirmed per product; no unverified purchase link is active.
 - **Guides:** 8 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
+- **Trust:** verification register (intent vs. observed kept separate), 29-source register, 25 flagged items, redirect re-observation log (4 independent observations), compliance gate (`scripts/check_site.py`).
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 
 ## Key facts (all sourced)
@@ -25,9 +25,17 @@ It leads with products, answers buyer questions, and keeps verification one clic
 | Tracking ID | shopnow047c-20 (as supplied; unconfirmed — FLG-001) | Flagged for Review |
 | Site URL | https://sassnarep3-star.github.io/WinC/ | S08 |
 
+## Purchase-link release gate (current state)
+
+All five product CTAs are non-clickable. The site no longer derives a purchase link from an observed redirect or appends the supplied tracking ID to an ASIN URL. A CTA can render only when that product has a complete intent record (intended ASIN, official listing URL, confirmation date, source) and the exact Special Link plus destination and tracking-report confirmation from the enrolled Associates workflow. Those records are currently empty; the gate and UI make this explicit. The supplied short links remain unresolved, not declared invalid (FLG-003) — and they are now shown as plain text rather than live links, because Program Policies §6 forbids redirect intermediaries on the site.
+
+## Open audit findings: 2 → 0
+
+The independent gate (`node tools/audit.mjs`) is written against the policy documents rather than this repo's checker. On the merged tree it now reports **no findings**: every internal link, fragment and image resolves, no redirect intermediary is published, no capture control can put a reader's address into a URL, and every product row's populated claims carry a source. Two findings that were open on `main` were closed in this pass — a quoting inconsistency that hid a real defect (the submitted short link published as a live anchor), and the capture form's GET fallback.
+
 ## What happens next (needs review)
 
-1. Confirm tracking ID + run one-link Associates tests (FLG-001, FLG-002).
+1. Confirm tracking ID + intended product mapping, then run one-link Associates tests (FLG-001, FLG-002).
 2. Re-observe redirects + resolve FLG-004/FLG-005 spec conflicts.
 3. Deploy analytics endpoint; submit sitemap to Search Console.
 4. Pick a path on the Direction page before the next build.
@@ -94,6 +102,9 @@ the decision layer the brief asks for. Counts above were corrected to match the 
 - No testing, ranking or endorsement claim. No hands-on language: nobody has used these products.
 - Short links are never called invalid; their status stays flagged (FLG-003) exactly as instructed.
 - Reader buy buttons remain, but flagged as untested for destination and attribution (FLG-002).
+  *Superseded by the current gate: the buttons are now disabled outright until the intent record
+  and the Associates destination + tracking report are both complete — see “Purchase-link release
+  gate” above.*
 
 ## Remaining risk, stated plainly
 

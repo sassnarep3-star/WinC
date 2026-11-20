@@ -72,11 +72,26 @@
   }
   document.addEventListener("scroll", onScroll, { passive: true });
 
-  // 4) reader_capture_submit — newsletter form (double opt-in handled by provider; no tracking pixel)
+  // 4) reader_capture_submit — reader signup button (no form, so nothing can be submitted
+  //    into a URL; the click is counted locally and the address is never read, stored or sent)
   var form = document.getElementById("reader-capture");
-  if (form){
-    form.addEventListener("submit", function(){
+  if (form && form.tagName === "FORM"){
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
       send("reader_capture_submit", { form: "newsletter" });
+    });
+  }
+  var capBtn = document.getElementById("reader-capture-submit");
+  if (capBtn){
+    capBtn.addEventListener("click", function(){
+      var field = document.getElementById("email");
+      var status = document.getElementById("reader-capture-status");
+      if (field && field.value && !field.checkValidity()){
+        if (status) status.textContent = "That does not look like an email address — nothing was sent.";
+        return;
+      }
+      send("reader_capture_submit", { form: "newsletter" });
+      if (status) status.textContent = "Noted in your own browser — no address was sent anywhere.";
     });
   }
 

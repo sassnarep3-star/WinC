@@ -4,6 +4,7 @@ Run: python3 scripts/build_site.py
 No third-party dependencies. Generated HTML is committed for GitHub Pages (legacy build).
 """
 import json, html, os, datetime, re, glob
+from urllib.parse import urlparse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
@@ -91,17 +92,45 @@ def blank(v):
     return v if v else '<span class="blank">— blank (unverified)</span>'
 
 def special_link(p):
-    return f"https://www.amazon.com/dp/{p['observed_asin']}?tag={TAG}"
+    """Only return the exact URL supplied by a completed Associates workflow test."""
+    test = p.get("associates_link_test", {})
+    intended_asin = p.get("intended_asin", "")
+    listing_url = p.get("intended_listing_url", "")
+    listing = urlparse(listing_url)
+    intent_complete = (all(p.get(k) for k in (
+        "intended_asin", "intended_listing_url", "confirmation_date", "intended_source"))
+        and intended_asin == p.get("observed_asin")
+        and listing.scheme == "https"
+        and listing.hostname in ("amazon.com", "www.amazon.com")
+        and f"/dp/{intended_asin}" in listing.path)
+    test_url = test.get("special_link_url", "")
+    test_complete = (test.get("destination_confirmed") is True
+                     and test.get("tracking_report_confirmed") is True
+                     and all(test.get(k) for k in (
+                         "confirmation_date", "source", "report_reference"))
+                     and test_url.startswith("https://"))
+    if intent_complete and test_complete:
+        return test_url
+    return ""
 
 def buy_button(p, label=None):
     label = label or "Check price & details on Amazon"
-    return (f'<a class="btn" href="{esc(special_link(p))}" rel="sponsored nofollow noopener" '
-            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}">{esc(label)}</a> '
+    url = special_link(p)
+    if not url:
+        return ('<span class="btn btn-pending" aria-disabled="true">Purchase link not yet verified</span> '
+                '<span class="link-state">Destination and tracking report must be confirmed before this link is enabled. '
+                '<a href="../flagged-for-review.html#FLG-002">See the review gate</a>.</span>')
+    return (f'<a class="btn" href="{esc(url)}" rel="sponsored nofollow noopener" '
+            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["intended_asin"])}">{esc(label)}</a> '
             f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
 
 def buy_button_small(p):
-    return (f'<a class="btn" href="{esc(special_link(p))}" rel="sponsored nofollow noopener" '
-            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["observed_asin"])}">Check on Amazon</a> '
+    url = special_link(p)
+    if not url:
+        return ('<span class="btn btn-pending" aria-disabled="true">Link under review</span> '
+                '<span class="flagpill">Purchase link not enabled</span>')
+    return (f'<a class="btn" href="{esc(url)}" rel="sponsored nofollow noopener" '
+            f'target="_blank" data-event="outbound_click" data-asin="{esc(p["intended_asin"])}">Check on Amazon</a> '
             f'<span class="sponsored-tag">Sponsored · paid affiliate link</span>')
 
 DISCLOSURE_STRIP = (
@@ -307,15 +336,19 @@ def specs_table(p):
 
 def capture_block(depth=0):
     pfx = "../" * depth
+    # No <form> on purpose. A GET form would put the reader's address into the URL (history and
+    # the host's request log) on any browser with JavaScript disabled, while the page says the
+    # address is never sent anywhere. The button records the press locally and stops there.
     return f"""<section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
 <p>One email when a new guide publishes.</p>
-<form id="reader-capture" action="{pfx}measurement.html" method="get">
+<div class="capturebox" id="reader-capture">
 <label for="email">Email address</label>
-<input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
-<button class="btn" type="submit">Subscribe</button>
-</form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+<button class="btn" type="button" id="reader-capture-submit">Subscribe</button>
+</div>
+<p class="capturestatus" id="reader-capture-status" role="status"></p>
+<small>There is no newsletter running yet. Pressing Subscribe records the click in your own browser and sends your address nowhere — no address is stored on this site and nothing is transmitted. With JavaScript turned off, the button does nothing at all. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
 </section>"""
 
 # ---------- HOME ----------
@@ -459,13 +492,16 @@ def product_body(p):
     if faq:
         rows = "".join(f'<details class="faqitem"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)
         faq_html = f'<h2>Questions readers ask about this one</h2><div class="faqlist">{rows}</div>'
+    link_note = ("You will go to Amazon. Price and availability are shown there. This is a sponsored link."
+                 if special_link(p) else
+                 "No purchase link is active yet. We have not confirmed the intended listing and the Associates tracking report for this product; see the <a href=\"../flagged-for-review.html#FLG-002\">review gate</a>.")
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
 <p class="lede">{esc(p['title'])}</p>
 <p class="meta">Observed ASIN {esc(p['observed_asin'])} · Listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
-<p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
+<p class="meta">{link_note}</p>
 </section>
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
@@ -715,8 +751,19 @@ def verification_body():
     specs_table_html = ('<div class="tablewrap"><table><thead><tr><th>Product</th><th>Brand</th><th>Model</th><th>Capacity</th><th>Dimensions</th><th>Weight</th><th>Temp/accuracy</th><th>Power</th><th>UPC</th><th>Price</th><th>Source</th></tr></thead><tbody>'
                         + "".join(specs_rows) + "</tbody></table></div>")
 
+    # A redirect intermediary (link.amazon / amzn.to) is recorded as plain text, never as a live
+    # anchor: Program Policies §6 forbids redirecting links on the site, and the token is
+    # provenance, not a destination a reader should be sent through.
+    def src_cell(s):
+        host = urlparse(s["url"]).hostname or ""
+        if host in ("link.amazon", "amzn.to", "www.amzn.to") or "/s?" in s["url"]:
+            return (f"{esc(s['title'])}<br><span class=\"src\">{esc(s['url'])}</span>"
+                    "<br><span class=\"meta\">shown as text: redirect links are not published (Policies §6)</span>")
+        return (f"{esc(s['title'])}<br><a class=\"src\" href=\"{esc(s['url'])}\" "
+                f"rel=\"nofollow noopener\" target=\"_blank\">{esc(s['url'])}</a>")
+
     src_rows = "".join(
-        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
+        f"<tr id=\"src-{esc(s['id'])}\"><td>{esc(s['id'])}</td><td>{src_cell(s)}</td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
         for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
@@ -725,9 +772,9 @@ def verification_body():
         ("Read like a shop, not an audit", "Front page leads with 5 product cards; verification below the fold", "index.html"),
         ("Findable (one site to index)", "Sitemap, RSS, canonicals, JSON-LD, internal search", "sitemap.xml, feed.xml, search.html"),
         ("Disclosure above the fold, every page", "Strip under masthead + footer repeat + per-link Sponsored label", "all pages (gate-checked)"),
-        ("Every outbound product link sponsored", "rel=sponsored nofollow + Sponsored tag + data-event", "all product links (gate-checked)"),
+        ("Every outbound product link sponsored", "rel=sponsored nofollow + Sponsored tag + data-event, and only on a link backed by a completed test record", "all product links (gate-checked)"),
         ("Product-intent record (separate fields)", "Intended blank; observed populated; never merged", "this page"),
-        ("Validated Special Links (one-link test)", "Constructed links pending Associates test (FLG-002); short links not claimed invalid (FLG-003)", "flagged-for-review.html"),
+        ("Validated Special Links (one-link test)", "No purchase CTA renders until the intended listing and the tested Special Link are recorded (FLG-002); short links not claimed invalid (FLG-003)", "flagged-for-review.html"),
         ("Question-shaped guides + measure", f"{len(GUIDES)} guides published; {len(TOPICS)} topics queued; 5 events defined; ledger empty", "guides/, topics.html, measurement.html"),
         ("Click/conversion measurement first", "Beacon + Worker code; local-only until deployed (FLG-007)", "assets/app.js, analytics/"),
         ("Campaign ledger (evidence-based)", "Empty, well-defined; first-party reports only", "measurement.html"),
@@ -782,7 +829,7 @@ def flag_sources(f):
 
 def flagged_body():
     rows = "".join(
-        f"<tr><td><strong>{esc(f['id'])}</strong></td><td>{esc(f['title'])}</td><td>{esc(f['detail'])}</td>"
+        f"<tr id=\"{esc(f['id'])}\"><td><strong>{esc(f['id'])}</strong></td><td>{esc(f['title'])}</td><td>{esc(f['detail'])}</td>"
         f"<td>{esc(f['action'])}</td><td>{flag_sources(f)}</td>"
         f"<td><span class='flagpill'>{esc(f['status'])}</span></td></tr>"
         for f in FLAGS)
@@ -911,6 +958,7 @@ def about_body():
 def exec_body():
     c = counts()
     total_pages = 4 + len(CATEGORIES) + len(PRODUCTS) + len(GUIDES) + len(NAV_DESK)
+    active_links = sum(1 for p in PRODUCTS if special_link(p))
     return f"""
 <section class="hero"><span class="kicker">Executive summary · for the owner, not for readers</span>
 <h1>Executive summary: {c['products']} products, {c['guides']} guides, {c['flags']} flags, nothing invented</h1>
@@ -922,6 +970,7 @@ def exec_body():
 <tr><td>Shop</td><td>{c['products']} product pages, {len(CATEGORIES)} category pages, 1 shop index, each with a decision block or a decision shortcut</td><td><a href="products/index.html">The shop</a></td></tr>
 <tr><td>Editorial</td><td>{c['guides']} question-shaped guides, {c['topics']} planned topics, {c['profiles']} reader situations that name their deciding spec</td><td><a href="guides/index.html">Guides</a> · <a href="topics.html">Topics</a></td></tr>
 <tr><td>Trust</td><td>{c['sources']} sources, {c['flags']} flagged items, intended vs observed kept in separate fields</td><td><a href="verification.html">Verification</a> · <a href="flagged-for-review.html">Flagged</a></td></tr>
+<tr><td>Purchase-link gate</td><td>{active_links} of {len(PRODUCTS)} links active. Remaining CTAs stay disabled until intended listing + Associates destination and tracking report are recorded (FLG-001, FLG-002).</td><td><a href="flagged-for-review.html#FLG-001">Review gates</a></td></tr>
 <tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open) + {c['questions']} questions, {c['blocking']} blocking</td><td><a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
 <tr><td>Measurement</td><td>5 events defined, beacon shipped, endpoint <strong>not deployed</strong>, ledger empty by design</td><td><a href="measurement.html">Measurement</a></td></tr>
 <tr><td>Findability</td><td>{total_pages} pages in the sitemap, RSS, canonicals, Article + FAQ + Breadcrumb schema, robots scoping internals out</td><td><code>sitemap.xml</code></td></tr>
