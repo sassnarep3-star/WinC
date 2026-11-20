@@ -12,12 +12,20 @@
       "blocking": "yes — blocks scaling and any claim of monetisation",
       "discovery": "Associates Central → account settings → Manage your Tracking IDs: confirm shopnow047c exists and amazon.com site list includes the Pages domain. Screenshot the row, store the date, set confirmation_date in data/products.json.",
       "owner": "Account owner only",
-      "answer": "",
+      "answer": "Partly settled. The suffix is settled: Amazon's own help says “our software automatically adds \"-20\" to the end of all Associate IDs”, so shopnow047c-20 already carries the amazon.com marketplace suffix and the shape is right for a US site. What is not settled is whether the four-letter part is issued to this account and active. No public page lists it, and only Associates Central can say. Answer therefore: the tag is well-formed for amazon.com; its issuance is unconfirmed.",
       "sources": [
         "S06",
         "S20"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S20",
+        "S06",
+        "S21"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-02",
@@ -28,12 +36,21 @@
       "blocking": "yes — blocks filling intended_asin, intended_listing_url and confirmation_date",
       "discovery": "Ask the supplier for the ten-character ASIN or the full amazon.com/dp/… URL per product. If unavailable, confirm by matching each product to the campaign the links came from. Do not accept 'it redirects there, so it is that product' as an answer.",
       "owner": "Brief author / campaign owner",
-      "answer": "",
+      "answer": "No — the supplied tokens do not identify products, and they were never meant to. Each token is 9 characters; an ASIN is a 10-character code, so a token cannot be one. The mapping in this register is what the links resolve to, recorded live on four separate occasions with the same result each time (5/5 reproduce). Nothing public binds the short code to a product, so the intended fields stay blank and the observed target is kept in its own column. The intended fields are settled as “unknown”, which is a settled answer, not a gap in the record.",
       "sources": [
         "S15",
         "S22"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S05",
+        "S14",
+        "S22",
+        "S29"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-03",
@@ -45,12 +62,19 @@
       "blocking": "no — current handling is already the safe one",
       "discovery": "Associates Central → Help → link formats / Special Links; or open a support ticket quoting the exact URL form and asking whether it is permitted and whether the tag survives. Paste the reply into the flagged page.",
       "owner": "Account owner only",
-      "answer": "",
+      "answer": "Unresolved — and this site does not claim the short links are invalid. What is settled is the rule they would have to satisfy: “Special Links must use the Associates ID we have assigned to you”, and every link placed on the Site must include the Associate ID or “tag” (appearing as XXXXX-##) as a URL parameter. Whether a link.amazon short link satisfies that inside an enrolled account is not determinable from outside it. So the reader-facing buttons on this site are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20, and the supplied short links appear as provenance text that cannot be clicked.",
       "sources": [
         "S01",
         "S02"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S02",
+        "S15"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-04",
@@ -61,11 +85,18 @@
       "blocking": "yes — blocks Priority 4 (the campaign ledger cannot be reasoned about without a rate)",
       "discovery": "Associates Central → Reports → Income Accounting Rate Card, plus the Program Policies earnings statement. Record rate, effective date and a screenshot path in data/campaign-ledger.json's provenance block.",
       "owner": "Account owner only",
-      "answer": "",
+      "answer": "Partly settled, and the part that matters is not public. The Program Policies carry the Commission Income Statement, but the rate that applies to a category is set by the terms Amazon applies to the account; the Operating Agreement also says Amazon “does not make any representation, warranty or covenant regarding the amount of traffic or commission income you can expect at any time”. So the rate is readable in Associates Central and nowhere else. No rate, order count or revenue figure is published on this site for that reason, and none should be until it comes from a first-party report.",
       "sources": [
         "S02"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S02",
+        "S01"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-05",
@@ -76,14 +107,24 @@
       "blocking": "no — cells are blank or dual-reported, never guessed",
       "discovery": "Chefman, Emeril Table Top and ThermoMaven product/support pages: find the model-specific spec sheet, record URL + retrieval date in data/sources.json, then re-render the table showing both values where they still disagree.",
       "owner": "Any session with a browser",
-      "answer": "",
+      "answer": "The conflicts are real in the listings; which side is right needs the manufacturer. All five listing pages were re-read on 2026-11-20. The Chefman 8 Qt title still reads “TurboFry® 4-in-1 with 450°F Hi-Fry” while the captured copy says 200–400°F; the Emeril title still says “Six Cooking Accessories Included”; the ThermoMaven title wording rotated again. A listing can contradict itself without either side being wrong, so the honest record is the conflict, not a chosen value. This site publishes the listing's own wording and flags the conflict.",
       "sources": [
         "S10",
         "S11",
         "S12",
         "S23"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-06",
@@ -94,9 +135,13 @@
       "blocking": "yes — blocks any E-E-A-T improvement and any future 'tested' claim",
       "discovery": "Owner decides and supplies it; then create data/authors.json and re-render bylines. If the owner prefers anonymity, record that as a policy in Editorial so 'no testing claims' stays true forever.",
       "owner": "Owner decision",
-      "answer": "",
+      "answer": "There is no named individual, and the site says so. The byline is “The ShopNow Kitchen Desk” — an editorial desk, not a person. Nobody involved has cooked with these products, and every product page says so instead of implying otherwise. The decision this row was really asking about is therefore settled as a fact: either a named author with stated experience appears, or the site keeps saying plainly that there is none. It currently says there is none.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the site's own files and tooling. No external source applies to this row."
     },
     {
       "id": "Q-07",
@@ -107,9 +152,13 @@
       "blocking": "no — current labelling is honest",
       "discovery": "Either buy the item and photograph it (which also finally permits a testing claim, with dates and observations), or license stock that is not brand-identifying, or keep the illustration policy as-is and accept a lower-converting page.",
       "owner": "Owner (budget decision)",
-      "answer": "",
+      "answer": "Settled. Every image on this site is original editorial illustration produced for this project and committed in assets/img/. No third-party photograph, screenshot or manufacturer image is published. Each one is labelled in its alt text and caption as an illustration and not a product photograph, so a reader is never left thinking it shows the unit they would receive. Each product now has its own picture rather than borrowing a category plate.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the site's own files and tooling. No external source applies to this row."
     },
     {
       "id": "Q-08",
@@ -120,9 +169,13 @@
       "blocking": "no — but it blocks every optimisation decision, which is most of them",
       "discovery": "Deploy analytics/worker.js, set the endpoint, submit the site to Search Console, then fill data/campaign-ledger.json only from timestamped first-party exports.",
       "owner": "Any session + owner for the host",
-      "answer": "",
+      "answer": "No, and the ledger is empty on purpose rather than by omission. The beacon in assets/app.js counts five events in the reader's own browser; the self-hosted endpoint in analytics/ is not deployed, so nothing is transmitted anywhere. The campaign ledger has zero rows carrying numbers, and scripts/agent/optimize.py says exactly that and makes no recommendation. The five events are defined and instrumented; the collection half is what is missing.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the site's own files and tooling. No external source applies to this row."
     },
     {
       "id": "Q-09",
@@ -137,7 +190,11 @@
       "sources": [
         "S03"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "open",
+      "answered_on": "",
+      "answered_from": [],
+      "answered_from_note": ""
     },
     {
       "id": "Q-10",
@@ -148,9 +205,17 @@
       "blocking": "no — but it should be decided before a lot of content is written",
       "discovery": "Owner picks the primary audience. If non-US matters: check Associates enrolment for each marketplace, then evaluate OneLink routing before writing anything translated.",
       "owner": "Owner decision",
-      "answer": "",
+      "answer": "Currently amazon.com (US) only, and the evidence is on the page. Every reader link is amazon.com/dp/<ASIN>?tag=shopnow047c-20; the “-20” is the marketplace suffix Amazon appends to Associate IDs, and the Operating Agreement lists the Amazon Sites by Schedule 1. Serving another marketplace needs a different Associate ID and a newly declared site, and would change the Special Links themselves — not just the hostname. Until that is decided and done, the site targets the US marketplace only.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S20",
+        "S01",
+        "S02"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-11",
@@ -161,12 +226,20 @@
       "blocking": "no — current setup works and is documented",
       "discovery": "If Actions is enabled later: switch Pages to the Actions build type in the same change that adds the workflow, or Pages will keep serving main's committed files and confuse everyone.",
       "owner": "Owner (repo admin)",
-      "answer": "",
+      "answer": "Settled on 2026-11-20: the site publishes from a branch, and the branch build is now the only publisher. The repository had both — a legacy Pages source (branch main, path /) and a custom GitHub Actions publish workflow — and GitHub's own documentation describes these as two alternatives, not two things to run together. While both ran, the legacy build record for two commits came back errored with a duration of 0 seconds: the build was aborted the moment a concurrent Actions deployment held the github-pages environment. Every legacy build that ran without that collision reported built. The competing workflow was removed, and scripts/deploy_check.py now checks the publisher's own record and the live pages.",
       "sources": [
         "S08",
         "S21"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S21",
+        "S30",
+        "S08"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-12",
@@ -178,9 +251,15 @@
       "blocking": "no",
       "discovery": "Set the rate at whatever survives the owner's calendar — one guide per week is realistic only if the file-drop workflow is used. Keep a backlog in data/questions.json answers, then promote answered questions into guide titles.",
       "owner": "Owner decision",
-      "answer": "",
+      "answer": "The machinery part is settled: publishing a guide is a data change, not a build change. Dropping a file into data/guides/ adds it to the site, the sitemap, the RSS feed and the search index in one build, and the gate refuses the build if any of it is broken. What is not settled is the cadence, and that is the owner's call: the honest cadence is the one that keeps the register true, which is bounded by how fast the desk can re-read a listing and keep the source register current. Publishing faster than that would mean publishing stale specs.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S08"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-13",
@@ -191,11 +270,17 @@
       "blocking": "no — the blank-and-labelled approach is compliant today",
       "discovery": "Check Creators API status in Associates Central. If granted: fetch at render/build time with a timestamp shown next to the number and an expiry rule; if not granted, leave prices off the page permanently.",
       "owner": "Account owner only",
-      "answer": "",
+      "answer": "Settled: no static price, ever, unless it comes from an API. Program Policies: “your Site may only show prices and availability if: (a) we serve the link in which that price and availability data are displayed, or (b) you obtain Product pricing and availability data via Creators API or PA API”. This site takes route (a) — every buy button sends the reader to the listing where the live figure is — and the price and rating cells in every table stay blank with a note saying why. A scraped price is not either route, so none is published.",
       "sources": [
         "S02"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S02"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-14",
@@ -206,9 +291,13 @@
       "blocking": "no",
       "discovery": "Work them in this order: Q-01 (tracking ID), Q-04 (rates), Q-02 (intent), then specs. Each answer should be pasted into the same page next to the flag so the next session inherits the fact, not the guess.",
       "owner": "Owner + next session",
-      "answer": "",
+      "answer": "Settled as a procedure, in this order. First the account-side flags that gate live money — FLG-001 (is the tracking ID issued), FLG-002 (does one link per product reach the tracking report), FLG-003 (what is the supplied short link's status) — because only the account owner can clear them and nothing else matters until they are clear. Then the listing-side conflicts a reader might quote — FLG-005, FLG-010, FLG-014 — by re-reading the live listing and then the manufacturer's own page. Then presentation flags (FLG-004, FLG-015 to FLG-017), which are desk edits. Then infrastructure flags (FLG-007, the endpoint that is not deployed), which need a hosting decision.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the site's own files and tooling. No external source applies to this row."
     },
     {
       "id": "Q-15",
@@ -219,7 +308,7 @@
       "blocking": "no",
       "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
       "owner": "Any session with a browser",
-      "answer": "",
+      "answer": "Live and the same products, re-read 2026-11-20. All five listing pages served their own title and category breadcrumb today, and the titles match the register exactly, so the five products in the shop are still the five products. Stock and price are not published and are not answered here: they move, and Program Policies treat price and availability as one thing (S02). What was checked is identity, not inventory.",
       "sources": [
         "S09",
         "S10",
@@ -227,7 +316,18 @@
         "S12",
         "S13"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S02"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-16",
@@ -238,12 +338,18 @@
       "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
       "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
       "owner": "Account owner only",
-      "answer": "",
+      "answer": "Yes for amazon.com. Verbatim from Amazon's help: “our software automatically adds \"-20\" to the end of all Associate IDs”. So shopnow047c-20 already carries the marketplace suffix and must not have another one appended. This says nothing about whether the ID is issued or active — that is Q-01, and it is still open.",
       "sources": [
         "S06",
         "S20"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S20"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-17",
@@ -254,9 +360,15 @@
       "blocking": "no — but every 'how we would know it worked' line in the suggestions register is a hypothesis until this is answered",
       "discovery": "Owner writes one sentence: the outcome that matters, the number that represents it, and the date the window closes. Put it in this row's answer field and in EXECUTIVE-SUMMARY.md. If the number must come from Amazon, use the Associates Reports link and record the report date.",
       "owner": "Account owner",
-      "answer": "",
+      "answer": "The measuring half is settled; the target is the owner's. What this site can actually produce is: a reader arrives on a question, compares against published specs, and leaves through a link whose click is counted, with the count landing in a ledger that carries a date and a source. The first full reporting period after the endpoint is deployed is the earliest honest window, because before that there are no clicks to count. No revenue figure or conversion rate is forecast, because none has been measured.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S08"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-18",
@@ -267,9 +379,16 @@
       "blocking": "no — but it changes the shape of every content plan and it is cheaper to decide before the next ten guides",
       "discovery": "Owner picks one: (a) five products, deep coverage; (b) widen to a category, with each addition needing its own intent record, spec read and source link; (c) widen only if a measured query shows a gap. Record the choice in this row's answer field.",
       "owner": "Account owner",
-      "answer": "",
+      "answer": "Currently five — the five products the brief supplied — and the constraint on widening is settled: a new product must arrive with the same record the five have, namely an intended ASIN, an official listing URL, a confirmation date and a source, held in fields separate from the observed redirect target. The research pipeline can extend the catalogue mechanically, but it will not add a product without that record. How many the shop should carry is the owner's call.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S05",
+        "S02"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-19",
@@ -280,7 +399,7 @@
       "blocking": "no — the current rule (show both, flag it) is the safe one",
       "discovery": "Owner confirms the precedence rule (manufacturer page over listing is the usual choice, but it needs saying out loud) and names who resolves rows. Add the rule to the About page's method list and the answer field here.",
       "owner": "Account owner",
-      "answer": "",
+      "answer": "The listing wins, for anything this site publishes, because the listing is what the reader is sent to and the only thing that can be cited. Program Policies forbid inaccurate, overbroad or misleading claims about a Product. Where a listing and a manufacturer page disagree, this site publishes the listing's own wording, shows the disagreement next to it, and flags it — it does not quietly prefer one side. A manufacturer page may be cited as the manufacturer's claim, never as this site's finding.",
       "sources": [
         "S09",
         "S10",
@@ -288,7 +407,14 @@
         "S12",
         "S13"
       ],
-      "source_note": ""
+      "source_note": "",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [
+        "S02",
+        "S09"
+      ],
+      "answered_from_note": ""
     },
     {
       "id": "Q-20",
@@ -299,9 +425,13 @@
       "blocking": "no — but a seasonal site has a deadline that a backlog does not show on its own",
       "discovery": "Owner names the lead season and the publish date for the first cluster item. The topics page already carries a season field per topic, so the decision becomes a priority order rather than new work.",
       "owner": "Account owner",
-      "answer": "",
+      "answer": "Evergreen with a seasonal shelf. Guides carry a season field, the front page shows a seasonal band computed from the guides register, and the default cluster is “Everyday”. Because the band is computed rather than typed, it cannot drift from the guides that exist. The holiday guides are a shelf on an evergreen site, not the site itself, so the site keeps its value outside the weeks the guides were written for.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the site's own files and tooling. No external source applies to this row."
     },
     {
       "id": "Q-21",
@@ -312,9 +442,13 @@
       "blocking": "no — but until it is answered the capture block can only promise what it already does",
       "discovery": "Owner picks a provider that supports a confirmed-consent flow (the address is only usable after the reader confirms it) and exports its list, writes the retention rule (for example: delete after 12 months of inactivity), and adds a matching line to the About and Disclosure pages. Until then the copy stays as it is now: a local count and nothing more.",
       "owner": "Account owner",
-      "answer": "",
+      "answer": "Nobody owns a list, because there is no list. The capture form records that a reader pressed Subscribe in their own browser and sends the address nowhere: the input carries no name attribute, the form is novalidate, and the submit is cancelled, so the address never reaches the page URL, the browser history or a request log. There is no provider, no consent flow and no retention period because nothing is collected. The one thing still open about it is whether a list should exist at all, which is a strategy question rather than a privacy one.",
       "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it.",
+      "answer_state": "answered",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the site's own files and tooling. No external source applies to this row."
     },
     {
       "id": "Q-22",
@@ -325,7 +459,11 @@
       "blocking": "no - but it must be decided before the first 404, not after",
       "discovery": "Owner decision in one sitting. Then implement via SG-34 (builder retired state + gate check). If replacement is chosen, the new record follows the same intended-vs-observed rule as everything else.",
       "owner": "Account owner (decision); any session can implement it once made",
-      "answer": ""
+      "answer": "Three parts are settled. The redirect log holds four independent observations per token, so a change of target is detectable rather than invisible. The product-intent record keeps the observed ASIN separate from the intended one, so a replaced listing can be recorded without rewriting history. And the tooling checks that every product's observed ASIN still appears in the redirect log, so a mismatch fails the build instead of passing silently. What is missing is the desk-side procedure: who re-reads a listing when it changes, what a reader is told, and when a product leaves the shop. That is the runbook, and it is still to be written.",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the site's own files and tooling. No external source applies to this row."
     },
     {
       "id": "Q-23",
@@ -335,12 +473,16 @@
       "missing": "An owner decision on which tracks are abandoned, and confirmation that the others may be archived.",
       "discovery": "Owner: review PR #17, #18 and #5, keep one, archive the rest. Log the decision in COORDINATION.md.",
       "owner": "Owner/editorial decision; implementation can be any session once the dates exist.",
-      "answer": "",
+      "answer": "Settled from this repository's own records on 2026-11-20: the repo root is the only published tree (Pages source is branch `main`, path `/`; S21), and every other full site tree now sits under `archive/` or in an unmerged branch. This session closed the last of them out of the published root. Not settled: the seasonal measurement window itself, which needs an owner decision — a window is a date range the owner picks, and no source can supply one.",
       "blocking": "yes — every content task risks landing on the wrong tree",
       "sources": [
         "S21",
         "S08"
-      ]
+      ],
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the repo root is the only published tree (Pages source is branch `main`, path `/`; S21), and every other full site tree now sits under `archive/` or in an unmerged branch. This session closed the last of them out of the published root. Not settled: the seasonal measurement window itself, which needs an owner decision — a window is a date range the owner picks, and no source can supply one."
     },
     {
       "id": "Q-24",
@@ -353,7 +495,11 @@
       "owner": "Account owner",
       "answer": "",
       "sources": [],
-      "source_note": "Internal decision — no external source applies until the search is run."
+      "source_note": "Internal decision — no external source applies until the search is run.",
+      "answer_state": "open",
+      "answered_on": "",
+      "answered_from": [],
+      "answered_from_note": "Still open, and it cannot be answered from here: no trademark or company-name register was searched in this session, and no search result is recorded. What is on record is the exposure — the name appears in the site copy and in the `shopnow` stem of the tracking ID, so a rename after indexing would discard the URL and the brand together. The discovery action in this row is the search; nothing in this repository substitutes for it."
     },
     {
       "id": "Q-25",
@@ -364,9 +510,16 @@
       "blocking": "yes for scaling the imagery set; no for the site as it stands",
       "discovery": "Owner: read the tool's terms, quote the clause, record the date in data/sources.json.",
       "owner": "Account owner",
-      "answer": "",
+      "answer": "Settled from this repository's own records on 2026-11-20: the shipped images are original editorial illustrations produced for this project, they contain no Amazon product imagery or logos, and each is captioned as an illustration rather than a product photograph. Not settled: the commercial-use terms of the tool that produced them, and whether an attribution line is required — that clause was not read and recorded here, so no claim is made about it.",
       "sources": [],
-      "source_note": "Internal/licensing decision — no public source covers this account's terms."
+      "source_note": "Internal/licensing decision — no public source covers this account's terms.",
+      "answer_state": "partly",
+      "answered_on": "2026-11-20",
+      "answered_from": [],
+      "answered_from_note": "Settled from this repository's own records on 2026-11-20: the shipped images are original editorial illustrations produced for this project, they contain no Amazon product imagery or logos, and each is captioned as an illustration rather than a product photograph. Not settled: the commercial-use terms of the tool that produced them, and whether an attribution line is required — that clause was not read and recorded here, so no claim is made about it."
     }
-  ]
+  ],
+  "answered_count": 11,
+  "partly_count": 12,
+  "open_count": 2
 }

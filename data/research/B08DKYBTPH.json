@@ -1,0 +1,163 @@
+{
+  "generated": "2026-11-20",
+  "generated_by": "scripts/agent/research.py",
+  "asin": "B08DKYBTPH",
+  "product_id": "p3-chefman-8qt",
+  "title_as_listed": "Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel",
+  "editorial": {
+    "dek": "One large basket with a wide opening — the simplest footprint of the three fryers here.",
+    "best_for": "One big batch of one thing",
+    "catch": "The listing's own title and bullet copy disagree about the top temperature (FLG-005), and it does not mention viewing windows the way the 6-quart model does.",
+    "check_before_buying": [
+      "Re-read the temperature range on the live listing before you rely on it — the copy on that page conflicts (FLG-005).",
+      "Check both the 12.75\" depth and the 13.5\" width; the drawer needs clearance in front as well as behind.",
+      "If you plan to check the food without stopping the cook, confirm the listing mentions a window for this model."
+    ]
+  },
+  "identity": {
+    "submitted_url": "https://link.amazon/B00hJ57DV",
+    "submitted_token": "B00hJ57DV",
+    "submitted_token_length": 9,
+    "intended_asin": "",
+    "intended_listing_url": "",
+    "intended_confirmation_date": "",
+    "intended_source": "",
+    "observed_asin": "B08DKYBTPH",
+    "observed_listing_url": "https://www.amazon.com/dp/B08DKYBTPH",
+    "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20",
+    "observed_source": "Prior sessions' live resolutions + Amazon listing snippet",
+    "note": "The intended and observed identifiers are kept in separate fields on purpose. Nothing public binds the submitted short token to a product, so the intended field stays blank until the product-intent confirmation is done by hand (FLG-002, FLG-003)."
+  },
+  "specs": {
+    "brand": {
+      "value": "Chefman",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "model": {
+      "value": "RJ38-SQSS-8T (listing also shows 'Large Air Fryer' — see FLG-005)",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "category": {
+      "value": "Air Fryers",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "capacity": {
+      "value": "8 Quarts",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "dimensions": {
+      "value": "12.75\"D x 13.5\"W x 10\"H",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "weight": {
+      "value": "12.8 Pounds",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "temperature": {
+      "value": "200-400°F (listing also mentions 450°F Hi-Fry — see FLG-005)",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "power": {
+      "value": "1000W / 120V",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    },
+    "upc": {
+      "value": "816458024518",
+      "source": "https://www.amazon.com/dp/B08DKYBTPH",
+      "source_date": "2026-11-20"
+    }
+  },
+  "unknown_specs": [],
+  "price_live": null,
+  "price_live_note": "No Product Advertising API credentials in the environment, so no live price was fetched. Program Policies allow a price to be displayed only when the link Amazon serves shows it, or when it comes from the Creators/PA API (S02). Until then the price stays blank and the reader is sent to Amazon.",
+  "rating_live": null,
+  "rating_live_note": "Ratings are not published here. They move daily, and the Program Policies price/availability rule (S02) is the reason a static copy of one would be misleading.",
+  "open_flags": [
+    {
+      "id": "FLG-005",
+      "issue": "",
+      "action": "Confirm model + temp range on live listing and manufacturer page; correct specs table."
+    },
+    {
+      "id": "FLG-016",
+      "issue": "",
+      "action": "None beyond FLG-005 (model/temperature conflict on the same listing)."
+    },
+    {
+      "id": "FLG-019",
+      "issue": "",
+      "action": "Both strings are stored in data/products.json (title + title_prior_capture) and the live one is displayed. No reconciliation is possible without the manufacturer page."
+    },
+    {
+      "id": "FLG-022",
+      "issue": "",
+      "action": "Nothing further. If the product's own wattage label differs from the listing, correct again with the manufacturer's spec sheet."
+    },
+    {
+      "id": "FLG-023",
+      "issue": "",
+      "action": "Mention the size selector on the product page and the guide that covers capacity; do not treat the ASIN as a single fixed size."
+    }
+  ],
+  "blocking_questions": [
+    {
+      "id": "Q-02",
+      "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
+      "answer": ""
+    },
+    {
+      "id": "Q-05",
+      "question": "Which of the observed spec conflicts are real: B08DKYBTPH model and max temperature, ThermoMaven canonical ASIN, Emeril accessory count?",
+      "answer": ""
+    }
+  ],
+  "redirect_observation": {
+    "submitted_token": "B00hJ57DV",
+    "final_asin": "B08DKYBTPH",
+    "session": null,
+    "date": null,
+    "note": "This page's own title reads 'TurboFry 4-in-1 ... 450°F Hi-Fry', which conflicts with the products.json title string ('TurboFry Touch ... 8-Qt Family Size') and supports FLG-005 (model + max-temp conflict on B08DKYBTPH)."
+  },
+  "listing_conflicts": [
+    {
+      "flag": "FLG-005",
+      "note": "Maximum temperature: the page title says '450°F Hi-Fry Option'; the bullet copy on the same page says 'a temperature range from 200-400°F'. Both readings are from the same listing on the same day."
+    },
+    {
+      "flag": "FLG-019",
+      "note": "Product-name string: the live <title> element ('TurboFry 4-in-1 with 450°F Hi-Fry') differs from the name captured for this ASIN earlier ('TurboFry Touch ... One-Touch Digital Control Presets'). Amazon serves different name strings for the same detail page depending on the variant shown."
+    },
+    {
+      "flag": "FLG-023",
+      "note": "Size variations: the page offers 6 / 8 / 9 quart variants under one ASIN and currently shows 8 quarts selected. A buyer can land on a different size from the same link, so check the size selector on the page you are sent to."
+    },
+    {
+      "flag": "FLG-024",
+      "note": "Amazon's own page states 'There is a newer model of this item' and shows the Chefman Air Fryer 6 QT Compact (B0CNY1YVDD). Worth reading before paying for an older generation."
+    }
+  ],
+  "faq": [
+    [
+      "Which size will I actually get?",
+      "The ASIN is a size family: the page offers 6, 8 and 9 quarts and was showing 8 quarts selected on 2026-11-20, with the details table reading 'Capacity: 8 quarts'. Check the size selector on the page you land on, because the same link can carry a different size (FLG-023)."
+    ],
+    [
+      "How much power does it draw?",
+      "The listing bullet reads '1000 Watts/120 Volts - RJ38-SQSS-8T'. An earlier capture of this page in this repo carried 1700 W, which is the wattage printed on the 6-quart Chefman listing; it was corrected on 2026-11-20 and the earlier value is kept beside the correction (FLG-022)."
+    ],
+    [
+      "Does it really reach 450F?",
+      "The page title says '450F Hi-Fry Option' while the bullet copy on the same page says a temperature range from 200-400F. Both strings are shown on the specs table rather than one of them being quietly chosen (FLG-005)."
+    ]
+  ],
+  "listing_url": "https://www.amazon.com/dp/B08DKYBTPH",
+  "site": "https://sassnarep3-star.github.io/WinC/"
+}

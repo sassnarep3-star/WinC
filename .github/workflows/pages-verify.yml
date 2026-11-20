@@ -1,0 +1,49 @@
+name: verify pages deploy
+
+# This workflow does NOT publish. It only checks, after the publisher has run, that what is
+# live is what the repository says should be live.
+#
+# Why it exists: the repository carried two publishers at once — the legacy Pages build
+# (source: branch `main`, path `/`) and a custom Actions deploy workflow — and both
+# targeted the same `github-pages` environment. GitHub's own documentation describes the
+# branch source and an Actions workflow as alternatives, not as two things to run together.
+# The evidence in this repository's own build history: three legacy builds came back
+# `errored` with `duration: 0` — an immediate abort, not a compile failure — on exactly the
+# commits whose Actions deployment was cancelled at the same second.
+#
+# The custom publish workflow has therefore been removed and the branch build is the only
+# publisher. This workflow observes that build and verifies its output.
+#
+# It must never write to the `github-pages` environment; it only reads.
+
+on:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Confirm the publisher succeeded
+        if: github.event_name == 'workflow_run'
+        run: |
+          if [ "${{ github.event.workflow_run.conclusion }}" != "success" ]; then
+            echo "::error::the Pages build workflow concluded '${{ github.event.workflow_run.conclusion }}'"
+            exit 1
+          fi
+
+      # Reads the publisher's own record (build status + published commit) and then fetches
+      # the published pages: HTTP 200, the Agreement §5 disclosure above the fold,
+      # rel="sponsored" on every reader buy link, canonicals pointing at this site, and no
+      # price-like string in any body.
+      - name: Verify the live site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/deploy_check.py

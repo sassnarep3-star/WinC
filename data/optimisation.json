@@ -1,0 +1,53 @@
+{
+  "generated": "2026-11-20",
+  "generated_by": "scripts/agent/optimize.py",
+  "ledger_rows": 0,
+  "ledger_rows_with_numbers": 0,
+  "first_party_events_present": false,
+  "recommendations": [],
+  "collection_plan": [
+    {
+      "column": "timestamp",
+      "meaning": "When the row was written (ISO date)",
+      "why": "Without this column a later row cannot be interpreted."
+    },
+    {
+      "column": "source",
+      "meaning": "Where the number came from, e.g. 'Associates Central order report'",
+      "why": "Without this column a later row cannot be interpreted."
+    },
+    {
+      "column": "channel",
+      "meaning": "Which surface: page, guide, product page, search, newsletter",
+      "why": "Without this column a later row cannot be interpreted."
+    },
+    {
+      "column": "url",
+      "meaning": "The exact page the click was on",
+      "why": "Without this column a later row cannot be interpreted."
+    },
+    {
+      "column": "eligible_sessions",
+      "meaning": "Sessions that were eligible under the reporting definition",
+      "why": "Without this column a later row cannot be interpreted."
+    },
+    {
+      "column": "clicks",
+      "meaning": "Outbound clicks on a sponsored link",
+      "why": "Without this column a later row cannot be interpreted."
+    },
+    {
+      "column": "reported_orders",
+      "meaning": "Orders reported by the authorised first-party report",
+      "why": "Without this column a later row cannot be interpreted."
+    },
+    {
+      "column": "notes",
+      "meaning": "Anything a reader of the ledger needs to interpret the row",
+      "why": "Without this column a later row cannot be interpreted."
+    }
+  ],
+  "policy": "A recommendation needs a first-party number and a date. Until the ledger has rows, this step reports what to collect and makes no claim about revenue, conversion rate or which product performs best.",
+  "headline": "No measured data yet. No recommendation can be made, and none is made.",
+  "next_step": "Turn on the click counter (assets/app.js) and the self-hosted endpoint in analytics/, then fill one row per (date, channel, page) with numbers taken from the endpoint and the Associates Central order report. See measurement.html for the five recorded events and the open questions that gate the endpoint."
+}

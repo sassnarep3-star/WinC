@@ -1308,6 +1308,61 @@ def question_sources(q):
         return '<span class="meta">' + esc(q.get("source_note") or "Internal only — no external source applies.") + "</span>"
     return " ".join(f'<a href="verification.html#src-{sid}">{sid}</a>' for sid in ids if sid in SRC)
 
+ANSWER_STATE = {
+    "answered": ("answered", "ok"),
+    "partly": ("partly answered", "act"),
+    "open": ("still open", "wait"),
+}
+
+def answer_cell(q):
+    """Render one answer cell: the state, the answer, and where the answer rests.
+
+    An answer with no state is a claim nobody has sourced, so it stays blank. An answer
+    that is not 'open' carries the date it was answered and either the source ids it
+    rests on or a note saying it rests on this repository's own records — the gate in
+    scripts/check_site.py refuses an answer that has neither.
+    """
+    state = q.get("answer_state")
+    if not state:
+        return blank(q.get("answer"))
+    label, kind = ANSWER_STATE.get(state, (state, "note"))
+    out = [pill(label, kind)]
+    answer = (q.get("answer") or "").strip()
+    if answer:
+        out.append(f'<p class="answertxt">{esc(answer)}</p>')
+    meta = []
+    if q.get("answered_on"):
+        meta.append(f'answered {esc(q["answered_on"])}')
+    froms = q.get("answered_from") or []
+    if froms:
+        links = " ".join(
+            f'<a href="verification.html#src-{esc(sid)}">{esc(sid)}</a>'
+            for sid in froms if sid in SRC)
+        if links:
+            meta.append(f"rests on {links}")
+    elif q.get("answered_from_note"):
+        meta.append("rests on this repository’s own records")
+    if meta:
+        out.append(f'<p class="meta">{" · ".join(meta)}</p>')
+    return "".join(out)
+
+def answer_provenance(q):
+    """The source column for a panel row: the source ids, or the internal-evidence note.
+
+    A row that cannot name where its answer comes from would be a claim, so it says so
+    in the row rather than in a footnote nobody reads.
+    """
+    froms = q.get("answered_from") or []
+    if froms:
+        links = " ".join(
+            f'<a href="verification.html#src-{esc(sid)}">{esc(sid)}</a>'
+            for sid in froms if sid in SRC)
+        if links:
+            return links
+    if q.get("answered_from_note"):
+        return '<span class="meta">Internal only — no external source applies.</span>'
+    return '<span class="meta">Internal only — no external source applies.</span>'
+
 def questions_body():
     c = counts()
     rows = ""
@@ -1318,15 +1373,35 @@ def questions_body():
                  f'<td><strong>{esc(q["question"])}</strong><p class="meta">Gates: {esc(q["decision_it_gates"])}</p></td>'
                  f'<td>{link_source_ids(esc(q["have"]))}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
                  f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}<br><span class="meta">Internal only — no external source applies.</span></td>'
-                 f'<td class="answercell">{blank(q["answer"])}</td></tr>')
+                 f'<td class="answercell">{answer_cell(q)}</td></tr>')
+    # The panel a reviewer reads first: what is settled enough to act on, and what is still
+    # waiting on an account this environment cannot reach.
+    settled = [q for q in QUESTIONS if q.get("answer_state") in ("answered", "partly")]
+    still_open = [q for q in QUESTIONS if q.get("answer_state") == "open"]
+    decidable = [q for q in settled if not q.get("blocking", "no").startswith("yes")]
+    decide_rows = "".join(
+        f'<tr><td><strong>{esc(q["id"])}</strong></td><td>{esc(q["question"])}</td>'
+        f'<td>{esc(q.get("answer") or "")}</td>'
+        f'<td>{answer_provenance(q)}</td></tr>' for q in decidable)
+    open_rows = "".join(
+        f'<tr><td><strong>{esc(q["id"])}</strong></td><td>{esc(q["question"])}</td>'
+        f'<td>{esc(q.get("owner") or "")}</td><td>{esc(q.get("discovery") or "")}</td>'
+        f'<td><span class="meta">Internal only — no external source applies.</span></td></tr>'
+        for q in still_open)
     pack = "\n\n".join(f'{q["id"]}. {q["question"]}\nWhat we need: {q["missing"]}\nHow to get it: {q["discovery"]}'
                         for q in QUESTIONS if q.get("blocking", "no").startswith("yes"))
     return f"""
 <section class="hero"><span class="kicker">Open questions · {c['questions']} rows, {c['blocking']} blocking</span>
 <h1>What has to be answered before the next decision is reasonable</h1>
-<p class="lede">Not a to-do list — a register. Each row states what we already know and can cite, what is genuinely missing, which decision that gap blocks, and the concrete action that produces the answer. A blank answer cell means nobody has it yet, not that we skipped it.</p>
+<p class="lede">Not a to-do list — a register. Each row states what we already know and can cite, what is genuinely missing, which decision that gap blocks, and the concrete action that produces the answer. Every row also carries an answer state: what is settled, what is only partly settled, and what is still open.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · evidence in <a href="verification.html">the source register</a>, consequences in <a href="flagged-for-review.html">Flagged for review</a></p></section>
 <div class="notice"><strong>Read it this way:</strong> the {c['blocking']} blocking rows are worth more than any content decision. Four of them — Q-01, Q-02, Q-04 and Q-16 — can only be answered inside an enrolled Amazon Associates account, which this environment cannot reach. That is a fact about the tooling, not an excuse, and it is why the site ships with links gated rather than links guessed. When you have an answer, paste it into <code>answer</code> in <code>data/questions.json</code>: the table updates on the next build, and the matching flag closes.</div>
+<h2>Decisions you can make now</h2>
+<p>{len(decidable)} of the {c['questions']} rows are answered well enough to act on without waiting for the account owner. Each answer below is dated and names the source it rests on, so a reviewer can check it rather than take it on trust.</p>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Question</th><th>Answer</th><th>What it rests on</th></tr></thead><tbody>{decide_rows}</tbody></table></div>
+<h2>Still open</h2>
+<p>{len(still_open)} row(s) remain unanswered, and each says who can answer and how to find out. These are the gaps the register exists to expose — an open row is a real answer, not an omission.</p>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Question</th><th>Who can answer</th><th>How to discover it</th><th>Source</th></tr></thead><tbody>{open_rows}</tbody></table></div>
 <div class="tablewrap"><table class="qtable"><thead><tr><th>ID</th><th>Question</th><th>What we have (and its source)</th><th>What we do not have</th><th>How to discover it</th><th>Who can answer</th><th>Official sources</th><th>Answer</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>Before you publish anything else: the checklist</h2>
 <p>Seven things a publisher usually settles before the eighth guide. Each row says why it matters here, what this repo already has, and where the answer has to come from. None of them is a technical task, which is exactly why they keep getting deferred behind the next article.</p>

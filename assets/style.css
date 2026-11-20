@@ -182,6 +182,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .blank{color:#A8A29E;font-style:italic;font-size:.92em}
 .qtable td{vertical-align:top;font-size:14.5px}
 .answercell{min-width:120px;background:#FCF8F1}
+.answercell .answertxt{margin:7px 0 0;font-size:14.5px;line-height:1.55;color:#33302E}
+.answercell .pill{white-space:nowrap}
 .footnote{margin-top:16px;font-size:12.5px;line-height:1.55}
 td.src,td .src{min-width:110px}
 @media print{.mainnav,.deskgroup,.capture,.disclosure-strip{display:none}}

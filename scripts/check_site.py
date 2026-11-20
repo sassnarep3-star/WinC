@@ -258,6 +258,7 @@ if not os.path.exists(os.path.join(ROOT, "COORDINATION.md")):
 
 
 # --- register schema (session arena-82d39deb) -------------------------------
+ANSWER_STATES = {"answered", "partly", "open"}
 # The registers the pages are built from are checked as data, not only as HTML.
 # A missing key or an invented status used to pass silently.
 SUG_STATUSES = {"recommended-now", "open", "open-blocked", "shipped", "done-this-session"}
@@ -278,6 +279,7 @@ for s in suggestions:
     if s.get("effort") not in ("S", "M", "L"):
         fail(f"suggestion {sid}: effort {s.get('effort')!r} must be S, M or L")
 
+SRC_IDS = {x["id"] for x in json.load(open(os.path.join(ROOT, "data/sources.json"), encoding="utf-8"))["sources"]}
 q_doc = json.load(open(os.path.join(ROOT, "data/questions.json"), encoding="utf-8"))
 seen_q = set()
 for q in q_doc["questions"]:
@@ -292,6 +294,30 @@ for q in q_doc["questions"]:
         fail(f"question {qid}: 'answer' key missing (use an empty string, never omit it)")
     if not str(q.get("blocking", "")).startswith(("yes", "no")):
         fail(f"question {qid}: blocking must start with 'yes' or 'no'")
+    # An answer must be traceable. Either it names the sources it rests on, or it says
+    # explicitly that it rests on this repository's own records. An answer with neither is
+    # a claim, and the whole point of the register is that it is not one.
+    state = q.get("answer_state")
+    if state not in ANSWER_STATES:
+        fail(f"question {qid}: answer_state must be one of {sorted(ANSWER_STATES)}, got {state!r}")
+    ans = str(q.get("answer") or "").strip()
+    if state == "open" and ans:
+        fail(f"question {qid}: answer_state 'open' must have an empty answer cell")
+    if state and state != "open":
+        if not ans:
+            fail(f"question {qid}: answer_state {state!r} but the answer is empty")
+        if not q.get("answered_on"):
+            fail(f"question {qid}: an answered row needs the date it was answered")
+        froms = q.get("answered_from")
+        if not isinstance(froms, list):
+            fail(f"question {qid}: answered_from must be a list (may be empty only with a note)")
+        else:
+            for sid in froms:
+                if sid not in SRC_IDS:
+                    fail(f"question {qid}: answered_from cites unknown source {sid!r}")
+            if not froms and not q.get("answered_from_note"):
+                fail(f"question {qid}: an answered row needs either a cited source or an "
+                     f"answered_from_note saying it rests on this repository's own records")
 
 FLAG_IDS = {f["id"] for f in FLAGS}
 for p in products:
@@ -421,7 +447,6 @@ for sname, pids in story_doc.get("_series", {}).items():
             fail(f"stories.json: series '{sname}' lists unknown product {pid}")
 
 maker_doc = json.load(open(os.path.join(ROOT, "data/makers.json"), encoding="utf-8"))
-SRC_IDS = {x["id"] for x in json.load(open(os.path.join(ROOT, "data/sources.json"), encoding="utf-8"))["sources"]}
 for mk in maker_doc["makers"]:
     for field in ("id", "name", "who", "story", "checkable_claims"):
         if not mk.get(field):

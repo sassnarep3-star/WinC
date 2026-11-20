@@ -2,6 +2,5 @@
 __pycache__/
 analytics/events.jsonl
 
-# dependencies for local DOM tests only — never committed
-node_modules/
-package-lock.json
+# agent pipeline staging area — drafts are generated on demand, not published artefacts
+data/drafts/
