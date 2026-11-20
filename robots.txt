@@ -1,0 +1,7 @@
+# Air & Ember — robots.txt
+User-agent: *
+Allow: /
+
+# Review-desk pages are public (transparency policy) but not promoted
+# Sitemap
+Sitemap: https://sassnarep3-star.github.io/WinC/sitemap.xml
