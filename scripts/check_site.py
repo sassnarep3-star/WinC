@@ -20,6 +20,8 @@ def read(path):
 
 # --- data sanity ---
 products = json.load(open(os.path.join(ROOT, "data/products.json"), encoding="utf-8"))["products"]
+PROBES = json.load(open(os.path.join(ROOT, "data/probes.json"), encoding="utf-8"))
+FLAGS = json.load(open(os.path.join(ROOT, "data/flags.json"), encoding="utf-8"))["flags"]
 for p in products:
     if len(p["submitted_token"]) != 9:
         fail(f"{p['id']}: submitted token must be 9 chars, got {p['submitted_token']}")
@@ -245,6 +247,146 @@ for label, target in (("Guides", "guides/index.html"), ("The shop", "products/in
 # process file the brief requires
 if not os.path.exists(os.path.join(ROOT, "COORDINATION.md")):
     fail("COORDINATION.md missing — shared task board is required by the working agreement")
+
+
+# --- register schema (session arena-82d39deb) -------------------------------
+# The registers the pages are built from are checked as data, not only as HTML.
+# A missing key or an invented status used to pass silently.
+SUG_STATUSES = {"recommended-now", "open", "open-blocked", "shipped", "done-this-session"}
+sug_doc = json.load(open(os.path.join(ROOT, "data/suggestions.json"), encoding="utf-8"))
+suggestions = sug_doc["suggestions"]
+seen = set()
+for s in suggestions:
+    sid = s.get("id", "<no id>")
+    if sid in seen:
+        fail(f"suggestions.json: duplicate id {sid}")
+    seen.add(sid)
+    for field in ("id", "title", "status", "area", "problem", "proposal", "risk",
+                  "expected_effect", "evidence", "feeds_prompt", "effort", "cost"):
+        if not s.get(field):
+            fail(f"suggestion {sid}: field '{field}' is empty")
+    if s.get("status") not in SUG_STATUSES:
+        fail(f"suggestion {sid}: status {s.get('status')!r} is not one of {sorted(SUG_STATUSES)}")
+    if s.get("effort") not in ("S", "M", "L"):
+        fail(f"suggestion {sid}: effort {s.get('effort')!r} must be S, M or L")
+
+q_doc = json.load(open(os.path.join(ROOT, "data/questions.json"), encoding="utf-8"))
+seen_q = set()
+for q in q_doc["questions"]:
+    qid = q.get("id", "<no id>")
+    if qid in seen_q:
+        fail(f"questions.json: duplicate id {qid}")
+    seen_q.add(qid)
+    for field in ("id", "question", "decision_it_gates", "have", "missing", "discovery", "owner"):
+        if not q.get(field):
+            fail(f"question {qid}: field '{field}' is empty")
+    if "answer" not in q:
+        fail(f"question {qid}: 'answer' key missing (use an empty string, never omit it)")
+    if not str(q.get("blocking", "")).startswith(("yes", "no")):
+        fail(f"question {qid}: blocking must start with 'yes' or 'no'")
+
+FLAG_IDS = {f["id"] for f in FLAGS}
+for p in products:
+    for note in p.get("listing_notes", []) or []:
+        if note.get("flag") not in FLAG_IDS:
+            fail(f"{p['id']}: listing_note cites unknown flag {note.get('flag')!r}")
+        if not note.get("note"):
+            fail(f"{p['id']}: listing_note without text")
+    faq = p.get("faq") or []
+    if len(faq) < 2:
+        fail(f"{p['id']}: needs at least 2 FAQ pairs (a product page with no reader questions is not a decision shortcut)")
+    for qa in faq:
+        if not isinstance(qa, list) or len(qa) != 2 or not qa[0] or not qa[1]:
+            fail(f"{p['id']}: malformed FAQ pair {qa!r}")
+
+cat_doc = json.load(open(os.path.join(ROOT, "data/categories.json"), encoding="utf-8"))
+PRODUCT_FIELDS = {"capacity", "dimensions", "weight", "temperature", "power", "model",
+                   "title", "brand", "upc", "listing_claims", "observed_asin"}
+LISTING_URLS = {p["source_url"] for p in products}
+for c in cat_doc["categories"]:
+    if c["category"] not in CATS:
+        fail(f"categories.json: {c['category']!r} is not a shop category")
+    profs = c.get("profiles") or []
+    if len(profs) < 2:
+        fail(f"categories.json: category {c['category']} has {len(profs)} profiles (need at least 2)")
+    for pr in profs:
+        for field in ("situation", "deciding_spec", "what_the_listings_say", "answer", "source"):
+            if not pr.get(field):
+                fail(f"categories.json: {c['category']} profile {pr.get('situation')!r}: '{field}' is empty")
+        if pr.get("deciding_spec") not in PRODUCT_FIELDS:
+            fail(f"categories.json: {c['category']} profile {pr.get('situation')!r} names deciding spec "
+                 f"{pr.get('deciding_spec')!r}, which is not a field in data/products.json")
+        if not str(pr.get("source", "")).startswith("https://"):
+            fail(f"categories.json: {c['category']} profile {pr.get('situation')!r} has no https source link")
+        if not any(p["observed_asin"] in pr.get("source", "") for p in products):
+            fail(f"categories.json: {c['category']} profile {pr.get('situation')!r} cites a source that is not one of "
+                 f"the recorded listings: {pr.get('source')}")
+
+topic_doc = json.load(open(os.path.join(ROOT, "data/topics.json"), encoding="utf-8"))
+seen_t = set()
+for t in topic_doc["topics"]:
+    tid = t.get("id", "<no id>")
+    if tid in seen_t:
+        fail(f"topics.json: duplicate id {tid}")
+    seen_t.add(tid)
+    for field in ("id", "title", "cluster", "question", "why", "needs", "status", "chosen_from"):
+        if not t.get(field):
+            fail(f"topic {tid}: field '{field}' is empty")
+    if t.get("status") not in ("planned", "blocked", "published"):
+        fail(f"topic {tid}: status {t.get('status')!r} must be planned, blocked or published")
+    allowed_clusters = set(CATS) | {g.get("cluster", "") for g in guides} | {"Cross-cluster"}
+    if t.get("cluster") not in allowed_clusters:
+        fail(f"topic {tid}: cluster {t.get('cluster')!r} is not a shop category, a published cluster, or 'Cross-cluster'")
+    # a topic may only claim measured demand if it says where the measurement came from
+    cf = str(t.get("chosen_from", "")).lower()
+    if not any(m in cf for m in ("hypothesis", "measured quer", "verification", "search console")):
+        fail(f"topic {tid}: 'chosen_from' must state its provenance (an editorial hypothesis, a measured query, "
+             f"or a verification finding) — got {t.get('chosen_from')!r}")
+
+# probes and products must not drift apart
+probe_tokens = {pr["submitted_token"] for pr in PROBES["probes"]}
+probe_asins = {pr["final_asin"] for pr in PROBES["probes"]}
+for p in products:
+    if p["submitted_token"] not in probe_tokens:
+        fail(f"{p['id']}: submitted token {p['submitted_token']} has no redirect observation in data/probes.json")
+    if p["observed_asin"] not in probe_asins:
+        fail(f"{p['id']}: observed_asin {p['observed_asin']} does not appear in the redirect log")
+for pr in PROBES["probes"]:
+    if pr["final_asin"] not in {p["observed_asin"] for p in products}:
+        fail(f"probes: {pr['submitted_token']} resolves to {pr['final_asin']}, which is not a recorded product")
+
+# guides: FAQ depth and a source anchor per published page
+for g in guides:
+    if len(g.get("faq") or []) < 3:
+        fail(f"guide {g.get('slug')}: fewer than 3 FAQ entries")
+
+# reader-path regression guard: the front page must stay a shop, not a status report
+idx_text = scan_text("index.html") if os.path.exists(os.path.join(ROOT, "index.html")) else ""
+for phrase in ("why the numbers here are boring", "records a count inside your own browser",
+               "items we could not confirm, published on"):
+    if phrase in idx_text.lower():
+        fail(f"index.html: front page carries process furniture ({phrase!r}) — the reader path must lead with products")
+if "the shop" not in idx_text.lower():
+    fail("index.html: front page no longer shows the shop")
+
+
+# --- every register row must carry an official source link (or say why not) ---
+REGISTER_PAGES = ["questions.html", "topics.html", "flagged-for-review.html", "products/index.html"]
+for hf in REGISTER_PAGES:
+    if not os.path.exists(os.path.join(ROOT, hf)):
+        fail(f"{hf}: register page missing")
+        continue
+    content = read(hf)
+    for m in re.finditer(r"(?s)<tr[^>]*>(.*?)</tr>", content):
+        row = m.group(1)
+        if "<td" not in row:
+            continue  # header row
+        has_source = ('href="https://' in row) or ('href="verification.html#src-' in row)
+        if not has_source and "Internal only" not in row:
+            fail(f"{hf}: a table row carries no official source link and no 'internal only' note")
+    # and the page must point at the source register
+    if 'href="https://' not in content and 'href="verification.html#src-' not in content:
+        fail(f"{hf}: register page links to no source at all")
 
 
 if errors:

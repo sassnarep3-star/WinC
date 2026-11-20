@@ -1,0 +1,137 @@
+{
+  "_note": "Reader profiles per category. Each profile names the ONE listed spec that decides the case, states what the listings actually say about that spec, and gives the answer with its source link. No profile ranks a product 'best' — the deciding spec is named so a reader can check it themselves. Spec names must match a field in data/products.json (capacity, dimensions, weight, temperature, power, model, title, listing_claims) or the compliance gate fails.",
+  "updated": "2026-11-20",
+  "read_from": "Amazon listings read live on 2026-11-20 (see data/products.json → source_url / live_read)",
+  "categories": [
+    {
+      "category": "Air Fryers",
+      "page": "air-fryers.html",
+      "profiles": [
+        {
+          "situation": "Two of you, most weeknights",
+          "deciding_spec": "capacity",
+          "what_the_listings_say": "The 6-quart Chefman lists two 3-quart baskets. The 8-quart Chefman names one XL basket and an 8-quart capacity. The 26-quart Emeril oven-style unit lists a 26-quart cavity, and its own bullet copy says that cavity is sized for 4–6 people.",
+          "answer": "Start with one of the two Chefman fryers — the deciding spec is listed capacity, and the oven-style unit is sized by its own listing for a bigger table than yours.",
+          "source": "https://www.amazon.com/dp/B0CDY277D3",
+          "products": [
+            "p1-chefman-6qt",
+            "p3-chefman-8qt",
+            "p2-emeril-26qt"
+          ]
+        },
+        {
+          "situation": "Two dishes, ready at the same time",
+          "deciding_spec": "title",
+          "what_the_listings_say": "Only the 6-quart Chefman's listing names two independent baskets and a Sync Finish that lets them finish together. The 8-quart lists one 8-quart basket. The Emeril's two-way capability is rotisserie plus convection, not two baskets.",
+          "answer": "If finishing two foods at once is the goal, the dual-basket listing is the one that names the feature — check that the Sync Finish wording is on the page you are actually sent to.",
+          "source": "https://www.amazon.com/dp/B0CDY277D3",
+          "products": [
+            "p1-chefman-6qt"
+          ]
+        },
+        {
+          "situation": "You want oven functions, not just frying",
+          "deciding_spec": "listing_claims",
+          "what_the_listings_say": "The Emeril listing describes a French-door toaster oven and names cooking modes including toast, ribs, slow cook, roast and keep warm; its bullets say 25 pre-sets while its title says 24. The two Chefman listings describe fryer, bake and dehydrate functions.",
+          "answer": "The oven-style listing is the only one of the three that names toaster-oven modes such as toast and rotisserie. Treat its preset count as unsettled until you see which number the page gives you.",
+          "source": "https://www.amazon.com/dp/B09B7SB46R",
+          "products": [
+            "p2-emeril-26qt"
+          ]
+        },
+        {
+          "situation": "Counter space is the constraint",
+          "deciding_spec": "dimensions",
+          "what_the_listings_say": "Listed footprints: 12.75\"D × 13.5\"W × 10\"H for the 8-quart fryer, 13.38\"D × 11.81\"W × 10.63\"H for the 6-quart dual basket, and 16.9\"D × 15.8\"W × 14.8\"H for the 26-quart oven-style unit. Listed weights: 12.8 lb, 13.3 lb and 26.5 lb.",
+          "answer": "Measure depth before you measure anything else. The oven-style unit's listed depth is 4.15 inches deeper than the 8-quart fryer's, and it weighs more than twice as much to lift.",
+          "source": "https://www.amazon.com/dp/B08DKYBTPH",
+          "products": [
+            "p1-chefman-6qt",
+            "p2-emeril-26qt",
+            "p3-chefman-8qt"
+          ]
+        },
+        {
+          "situation": "You need a high-heat sear or bake",
+          "deciding_spec": "temperature",
+          "what_the_listings_say": "The 6-quart Chefman's bullet copy states a 200–450°F digital temperature range. The 8-quart Chefman's title says 450°F Hi-Fry while the same page's bullet copy says 200–400°F — the listing contradicts itself.",
+          "answer": "The deciding spec here is the maximum temperature, and only one of the three listings states a range without contradiction. Check the range on the product page, not on a comparison table.",
+          "source": "https://www.amazon.com/dp/B0CDY277D3",
+          "products": [
+            "p1-chefman-6qt",
+            "p3-chefman-8qt"
+          ]
+        },
+        {
+          "situation": "You are buying for someone who cooks a lot",
+          "deciding_spec": "listing_claims",
+          "what_the_listings_say": "Amazon's 8-quart Chefman page states there is a newer model of that item and shows a 6-quart Compact as the newer one. The same ASIN also offers 6, 8 and 9 quart size variants.",
+          "answer": "Before you pay for the 8-quart, open the listing and check the size selector and the 'newer model' note. Both are on the page, and both change what you are buying.",
+          "source": "https://www.amazon.com/dp/B08DKYBTPH",
+          "products": [
+            "p3-chefman-8qt"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Meat Thermometers",
+      "page": "thermometers.html",
+      "profiles": [
+        {
+          "situation": "Quick weeknight protein, and you are standing at the stove anyway",
+          "deciding_spec": "title",
+          "what_the_listings_say": "The ThermoMaven listing is an instant-read device: ±0.5°F accuracy claimed, NIST & NSF certification stated, an auto-rotating LED screen on the device itself, IP67 waterproof.",
+          "answer": "The deciding spec is who takes the reading. If you will be at the stove, the instant-read listing does the job without an app, a hub or a second device.",
+          "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+          "products": [
+            "p4-thermomaven"
+          ]
+        },
+        {
+          "situation": "A long cook you will walk away from",
+          "deciding_spec": "listing_claims",
+          "what_the_listings_say": "The CHEF iQ Sense listing states 3 ultra-thin probes, WiFi reporting, a 1000°F heat-safe probe and a rechargeable hub. USDA FSIS advises checking a whole bird in three places — thickest breast, innermost thigh, innermost wing.",
+          "answer": "Three probes map exactly onto the three places USDA asks you to check. That is the deciding spec for a long cook, and it is why multi-probe kits exist.",
+          "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+          "products": [
+            "p5-chefiq"
+          ]
+        },
+        {
+          "situation": "You cook in the air fryer specifically",
+          "deciding_spec": "temperature",
+          "what_the_listings_say": "The CHEF iQ Sense listing names air fryer among its uses and states a 1000°F heat-safe probe. The instant-read listing states no heat limit because it does not stay in the food.",
+          "answer": "The deciding spec is how close the probe and its cable sit to the element. A listing that names air fryer use and a heat limit for the probe is the one to read carefully before you buy.",
+          "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+          "products": [
+            "p5-chefiq",
+            "p4-thermomaven"
+          ]
+        },
+        {
+          "situation": "You refuse to install an app",
+          "deciding_spec": "title",
+          "what_the_listings_say": "The instant-read listing puts the reading on the device screen and names no connectivity. The wireless listing's name leads with WiFi.",
+          "answer": "The deciding spec is listed connectivity. If the reading has to arrive on a phone, you are signing up for the app, the hub, the charging and the router.",
+          "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+          "products": [
+            "p4-thermomaven",
+            "p5-chefiq"
+          ]
+        },
+        {
+          "situation": "You are comparing on accuracy",
+          "deciding_spec": "temperature",
+          "what_the_listings_say": "The instant-read listing states a ±0.5°F tolerance and NIST & NSF certification. On the wireless listing, the page read on 2026-11-20 states 5 sensors and a 1000°F heat-safe probe, and no tolerance figure in the name or bullets captured.",
+          "answer": "Read the tolerance claim off the page, not off a spec sheet written by a seller. One listing states its tolerance and its certification; for the other, open the listing and look before you rely on a number.",
+          "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+          "products": [
+            "p4-thermomaven",
+            "p5-chefiq"
+          ]
+        }
+      ]
+    }
+  ]
+}
