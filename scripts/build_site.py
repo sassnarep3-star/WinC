@@ -358,16 +358,22 @@ document.getElementById('reader-capture').addEventListener('submit', function(e)
 def home_body():
     c = counts()
     cards = "".join(product_card(x) for x in PRODUCTS)
-    rail = "".join(guide_card(g) for g in GUIDES)
+    rail = "".join(guide_card(g) for g in GUIDES[:4])
     img, cap = HERO_IMG
     lead = GUIDES[0]
+    # series rail, built from the series register so it cannot drift
+    series_cards = ""
+    for sname, meta in SERIES_META.items():
+        n = len(SERIES.get(sname, []))
+        series_cards += (f'<a class="seriestile" href="{esc(meta["slug"])}">'
+                         f'<img src="{esc(meta["image"])}" alt="{esc(meta["caption"])}" loading="lazy" width="1200" height="655">'
+                         f'<span class="sname">{esc(sname)}</span>'
+                         f'<span class="scount">{n} products · read closely</span></a>')
     tiles = ""
     for name, href in CATEGORIES:
         cimg, ccap = CAT_IMG[name]
         tiles += (f'<a class="cattile" href="{href}"><img src="{cimg}" alt="{esc(ccap)}" loading="lazy" width="800" height="500">'
                   f'<span class="catname">{esc(name)}</span><span class="catcount">{len(prods(name))} in the shop · {len(guides_for(name))} guides</span></a>')
-    # Seasonal band: guides whose season is set, grouped by season. Computed from the
-    # guides register so it cannot drift from data (F-11 lesson). (arena-c2123b9c)
     by_season = {}
     for g in GUIDES:
         s = (g.get("season") or "Everyday").strip()
@@ -379,21 +385,26 @@ def home_body():
         season_bands += f'<h2>In season · {esc(sname)}</h2>\n<div class="grid">{scards}</div>\n'
     return f"""
 <section class="hero">
-<span class="kicker">Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
-<h1>{esc(lead['title'])}</h1>
-<p class="lede">{esc(lead['desc'])}</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {read_min(lead)} min read · <a href="about.html">How we check</a> · <a href="verification.html">Sources</a></p>
-<figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="750"><figcaption>{esc(cap)}</figcaption></figure>
-<p class="cta-row"><a class="btn btn-ghost" href="{lead['path']}">Read the guide →</a> <a class="btn btn-quiet" href="products/index.html">See all {c['products']} products</a></p>
+<span class="kicker">The Kitchen Desk · {len(GUIDES)} guides, {c['products']} products, every figure sourced</span>
+<h1>Small appliances, decided on the specs that actually change your cooking</h1>
+<p class="lede">Two drawers or one? Instant-read or leave-in? Each piece below turns one checkable listed spec into the question you are really asking — and prints where the listing disagrees with itself instead of smoothing it over.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · <a href="about.html">How we check</a> · <a href="verification.html">Source register</a></p>
+<figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="800"><figcaption>{esc(cap)}</figcaption></figure>
+<p class="cta-row"><a class="btn btn-ghost" href="products/index.html">Shop all {c['products']} products →</a> <a class="btn btn-quiet" href="{lead['path']}">Start with the newest guide</a></p>
 </section>
 
+<h2>The series</h2>
+<p class="seclede">Each series reads one category's listings closely — the shape decision, the trades each design makes, and the numbers the listing contradicts.</p>
+<div class="seriesgrid">{series_cards}</div>
+
+{house_ad()}
 <h2>The shop</h2>
 <div class="grid">{cards}</div>
 <p class="seclink"><a class="btn btn-quiet" href="products/index.html">Compare every spec in one table →</a></p>
 
 <h2>Start with a question, not a brand</h2>
 <div class="grid">{rail}</div>
-<p><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a> <a class="btn btn-quiet" href="topics.html">What we are writing next →</a></p>
+<p class="seclink"><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a> <a class="btn btn-quiet" href="topics.html">What we are writing next →</a></p>
 
 {season_bands}<h2>Or start with a category</h2>
 <div class="catgrid">{tiles}</div>
@@ -464,6 +475,18 @@ def category_body(cat, title, intro, guide_links):
 <ul>{guide_links}</ul>
 {capture_block()}
 """
+
+def house_ad(depth=0):
+    """A quiet in-shop promo. Not a pop-up, not a countdown: one line, one link, clearly ours."""
+    lead = GUIDES[0] if GUIDES else None
+    if not lead:
+        return ""
+    pfx = "../" * depth
+    return f"""<aside class="housead" aria-label="From the Kitchen Desk">
+<div><h3>Can one listed spec decide it for you?</h3>
+<p>Start with “{esc(lead['title'])}” — {read_min(lead)} minutes, every figure linked, no price quoted anywhere.</p></div>
+<a class="btn" href="{pfx}{esc(lead['path'])}">Read the guide →</a>
+</aside>"""
 
 # ---------- STORY LAYER: series + product narratives ----------
 def series_link(p, depth=0):
@@ -587,6 +610,7 @@ def product_body(p):
 <p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
 </section>
 {story_body(p)}
+{house_ad(depth=1)}
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
 <h2>What to compare before you buy</h2>
@@ -706,6 +730,84 @@ def suggestion_stages():
             + block("Already shipped", shipped, "Done in an earlier session or this one — kept so the reasoning is not lost."))
 
 
+DECISION_PATHS = {
+    "A": {
+        "name": "Path A — Trust the money path first",
+        "when": "Choose this if any commission at all depends on these links working.",
+        "what": "Confirm the tracking ID, run the one-link Associates test per product, keep every link gated until it passes.",
+        "steps": [
+            "Q-01: confirm <code>shopnow047c-20</code> is issued and the Pages domain is on the site list (Associates Central → Tracking IDs).",
+            "FLG-002: run one link through the enrolled workflow — click it, confirm the destination, then confirm the click appears in the report.",
+            "Record the result in <code>data/products.json</code> → <code>intended_*</code> and <code>confirmation_date</code>; never merge it into <code>observed_*</code>.",
+            "Re-run <code>npm run verify</code>; the gate refuses an intended ASIN that is not confirmed."],
+        "cost": "No money. One owner session inside the Associates account.",
+        "risk": "Temporarily suppresses the only monetisation path. That is the point: an untested tagged link is the classic reason accounts get closed.",
+        "done_when": "Every buy button traces to a confirmed tracking ID and a recorded one-link test.",
+    },
+    "B": {
+        "name": "Path B — Shop depth",
+        "when": "Choose this if conversion matters more than reach right now.",
+        "what": "Deepen the decision blocks, settle the imagery question, and add per-row source dates to every spec.",
+        "steps": [
+            "SG-10: resolve the two live listing conflicts (8-Qt temperature, Emeril accessory count) against the manufacturer page, not a sibling listing.",
+            "SG-19 / Q-25: decide the imagery line — generated illustrations with a recorded licence, or licensed photography.",
+            "SG-16: extend the reader-situation blocks so each one names its deciding spec and its source date.",
+            "Re-read every spec row in a normal browser and correct any drift (FLG-029)."],
+        "cost": "A photography budget if SG-19 goes that way; otherwise none.",
+        "risk": "Depth on five products does not create reach. Pair it with Path D or the site stays a well-documented secret.",
+        "done_when": "Every spec row has a dated read, and the imagery licence is on record.",
+    },
+    "C": {
+        "name": "Path C — Content volume",
+        "when": "Choose this if reach is the bottleneck and the links are known to work.",
+        "what": "Two guides a week from the published topic backlog, one seasonal cluster at a time.",
+        "steps": [
+            "Pick topics from <code>data/topics.json</code> — the ones whose status is <code>planned</code>, not <code>blocked</code>.",
+            "Scaffold each one with <code>python3 scripts/new_guide.py &quot;the question&quot;</code>; the index, sitemap, feed and search all follow from the file.",
+            "Keep the rule: a row without an official source stays blank and gets a flag.",
+            "Run the gate before every publish."],
+        "cost": "Time only — roughly one session per two guides.",
+        "risk": "Without measurement you are guessing which topic to write next, and the backlog's 'chosen from' column will stay honest but useless.",
+        "done_when": "Four weeks of guides with the same gate discipline.",
+    },
+    "D": {
+        "name": "Path D — Measure first",
+        "when": "Choose this if you cannot say which page earns anything.",
+        "what": "Deploy one analytics endpoint, verify the five events land, and add nothing until four weeks of real data exist.",
+        "steps": [
+            "FLG-007: deploy <code>analytics/worker.js</code> (or <code>analytics/collect.py</code>) and set <code>CONFIG.endpoint</code> in <code>assets/app.js</code>.",
+            "SG-29: verify the Search Console property and submit <code>sitemap.xml</code>; record the date on the Measurement page.",
+            "Watch <code>outbound_click</code> per ASIN, not page views. Clicks are the only number this site can currently see.",
+            "Transcribe orders only from an authorised Associates report, into <code>data/campaign-ledger.json</code>, with the export date."],
+        "cost": "One endpoint host; several free tiers exist, and <code>collect.py</code> needs only a box you already own.",
+        "risk": "Four weeks of no new content. The compensation is that the fifth week's topic is chosen from queries instead of taste.",
+        "done_when": "The ledger has its first first-party row with a provenance string.",
+    },
+}
+
+def decision_desk(c):
+    paths = ""
+    for key, p in DECISION_PATHS.items():
+        paths += (f'<div class="pickrow"><span class="n" style="display:inline-grid;place-items:center;width:26px;height:26px;'
+                  f'border-radius:999px;background:#1C1917;color:#FBBF24;font-weight:800;font-size:13px">{key}</span>'
+                  f'<div><strong>{esc(p["name"])}</strong><span class="meta">{esc(p["when"])}</span></div></div>')
+    return f"""
+<h2 id="decide">Choose a path — and see the consequences before you commit</h2>
+<p>This is the section for deciding, not for browsing. Four paths, each with what it costs, what it risks and how you will know it worked. Nothing below changes the site by itself: a path is a decision, and the build applies it afterwards.</p>
+<div class="desksteps">
+<div class="deskstep"><span class="n">1</span><h4>Read the suggestions</h4><p>{c['open_sug']} open items, each with evidence, effort, risk and a way to measure it. <a href="#suggestions">Jump to the register</a></p></div>
+<div class="deskstep"><span class="n">2</span><h4>Answer what blocks you</h4><p>{c['blocking']} blocking questions cannot be answered from this repo — they need the enrolled account. <a href="questions.html">Open the questions register</a></p></div>
+<div class="deskstep"><span class="n">3</span><h4>Pick one path</h4><p>Paths are mutually exclusive for a single build. <a href="#paths">Compare the four</a></p></div>
+<div class="deskstep"><span class="n">4</span><h4>Copy the prompt</h4><p>Tick the suggestions you accept and the page assembles the next build instruction. <a href="#prompt-builder">Build the prompt</a></p></div>
+</div>
+<h3 id="paths">The four paths</h3>
+<div class="pickpath">{paths}</div>
+<div class="tablewrap"><table><thead><tr><th>Path</th><th>What you spend</th><th>What can go wrong</th><th>Done when</th></tr></thead><tbody>
+{''.join(f'<tr><td><strong>{esc(p["name"])}</strong><br><span class="meta">{esc(p["what"])}</span></td><td>{esc(p["cost"])}</td><td>{esc(p["risk"])}</td><td>{esc(p["done_when"])}</td></tr>' for p in DECISION_PATHS.values())}
+</tbody></table></div>
+<div class="notice warn"><strong>What no path can promise.</strong> Not one number on this site is a traffic, click, conversion or revenue forecast. The ledger is empty (FLG-028), no endpoint is deployed (FLG-007), and no Search Console property exists (SG-29) — so every “done when” above is a measurement you will take, not a result this page has seen.</div>
+"""
+
 def direction_body():
     c = counts()
     cards = ""
@@ -731,8 +833,9 @@ def direction_body():
 <p class="lede">Each suggestion states the evidence for it, what it changes, the risk, and how to tell whether it worked. Ticking boxes here changes nothing on the site — it stores your selection in this browser and assembles a copy-paste instruction block for whoever builds next. Implementation only starts after you choose.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {c['open_sug']} still open, {c['done_sug']} shipped this session</p></section>
 
-<h2>The register at a glance</h2>
+<h2 id="suggestions">The register at a glance</h2>
 {suggestion_table()}
+{decision_desk(c)}
 
 <h2>Recommended sequence</h2>
 <p>One build at a time. The order below is the order that keeps the site honest first and productive second.</p>
@@ -1165,6 +1268,7 @@ def products_index_body():
 <h1>Everything in the shop, in one table</h1>
 <p class="lede">Three air fryers, two thermometers. This is the honest version of a shop window: what the listing states, where we read it, and which cells we will not fill in for you.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Specs read {TODAY} · <a href="{pfx}verification.html">Verification</a></p></section>
+{house_ad(depth=1)}
 <div class="tablewrap"><table><thead><tr><th>Product</th><th>Category</th><th>Capacity</th><th>Footprint</th><th>Weight</th><th>Model</th><th>Temperature</th><th>Power</th><th>Price</th><th>Rating</th><th>Source</th></tr></thead><tbody>{rows}</tbody></table></div>
 <p class="legend"><strong>Reading the blanks:</strong> <code>—</code> means the field does not apply to that product type (a thermometer has no wattage). <span class="blank">— blank (unverified)</span> means we looked and could not confirm it, so we left it empty rather than estimate it. Both are answers; a guess would not be.</p>
 <div class="notice"><strong>The price and rating columns are blank by policy, not by accident.</strong> Amazon’s Program Policies bar static price display, and ratings move daily — either number would be stale the moment it was written. The button on each card takes you to the listing, where the live figure is. See <a href="{pfx}flagged-for-review.html">FLG-006</a>.</div>
@@ -1191,7 +1295,7 @@ def questions_body():
         rows += (f'<tr><td><strong>{esc(q["id"])}</strong><br>{pill("blocking" if bl.startswith("yes") else "non-blocking", kind)}</td>'
                  f'<td><strong>{esc(q["question"])}</strong><p class="meta">Gates: {esc(q["decision_it_gates"])}</p></td>'
                  f'<td>{link_source_ids(esc(q["have"]))}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
-                 f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}</td>'
+                 f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}<br><span class="meta">Internal only — no external source applies.</span></td>'
                  f'<td class="answercell">{blank(q["answer"])}</td></tr>')
     pack = "\n\n".join(f'{q["id"]}. {q["question"]}\nWhat we need: {q["missing"]}\nHow to get it: {q["discovery"]}'
                         for q in QUESTIONS if q.get("blocking", "no").startswith("yes"))
@@ -1202,6 +1306,17 @@ def questions_body():
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · evidence in <a href="verification.html">the source register</a>, consequences in <a href="flagged-for-review.html">Flagged for review</a></p></section>
 <div class="notice"><strong>Read it this way:</strong> the {c['blocking']} blocking rows are worth more than any content decision. Four of them — Q-01, Q-02, Q-04 and Q-16 — can only be answered inside an enrolled Amazon Associates account, which this environment cannot reach. That is a fact about the tooling, not an excuse, and it is why the site ships with links gated rather than links guessed. When you have an answer, paste it into <code>answer</code> in <code>data/questions.json</code>: the table updates on the next build, and the matching flag closes.</div>
 <div class="tablewrap"><table class="qtable"><thead><tr><th>ID</th><th>Question</th><th>What we have (and its source)</th><th>What we do not have</th><th>How to discover it</th><th>Who can answer</th><th>Official sources</th><th>Answer</th></tr></thead><tbody>{rows}</tbody></table></div>
+<h2>Before you publish anything else: the checklist</h2>
+<p>Seven things a publisher usually settles before the eighth guide. Each row says why it matters here, what this repo already has, and where the answer has to come from. None of them is a technical task, which is exactly why they keep getting deferred behind the next article.</p>
+<div class="tablewrap"><table><thead><tr><th>#</th><th>What to settle</th><th>Why it decides something</th><th>What the repo has today</th><th>Where the answer lives</th></tr></thead><tbody>
+<tr><td>1</td><td>Tracking ID issued and active</td><td>Without it, no click can attribute to this site and every buy button is decoration</td><td>A well-formed string; nothing confirms issuance</td><td><a href="verification.html">Q-01</a> · <a href="https://affiliate-program.amazon.com/help/node/topic/GM6CHU93RDXZV7D8" rel="nofollow noopener" target="_blank">Associates ID help (S20)</a></td></tr>
+<tr><td>2</td><td>One link tested through the enrolled workflow</td><td>A tagged link that was never tested can point somewhere unintended and still look correct</td><td>Observed destinations recorded for all five; none tested in the workflow</td><td><a href="verification.html">FLG-002</a> · <a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies §2(b) (S02)</a></td></tr>
+<tr><td>3</td><td>The disclosure sentence in place on every page</td><td>Operating Agreement §5 makes it a material term; FTC treats a buried disclosure as no disclosure</td><td>Shipped: strip under the masthead, repeat in the footer, per-link label</td><td><a href="https://affiliate-program.amazon.com/help/operating/agreement" rel="nofollow noopener" target="_blank">Agreement §5 (S01)</a> · <a href="https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking" rel="nofollow noopener" target="_blank">FTC guides (S03)</a></td></tr>
+<tr><td>4</td><td>Which site tree is canonical</td><td>Two published trees means two sitemaps, split signals, and a crawler that has to guess</td><td>Repo root is published; three other trees sit in open PRs</td><td><a href="questions.html">Q-23</a> · <a href="direction.html#SG-35">SG-35</a><br><span class="meta">Internal only — no external source applies.</span></td></tr>
+<tr><td>5</td><td>The name is free to use</td><td>A rename after indexing discards what the URL and the brand earned</td><td>No trademark or domain check is recorded</td><td><a href="questions.html">Q-24</a> · <a href="direction.html#SG-36">SG-36</a><br><span class="meta">Internal only — no external source applies.</span></td></tr>
+<tr><td>6</td><td>Imagery licence on record</td><td>Publishing an asset you cannot show rights for is the same failure as an unsourced spec</td><td>Illustrations shipped and captioned; no licence row in the register</td><td><a href="questions.html">Q-25</a> · <a href="direction.html#SG-37">SG-37</a><br><span class="meta">Internal only — no external source applies.</span></td></tr>
+<tr><td>7</td><td>One measurement deployed</td><td>Without a number, the next topic is chosen by taste and the ledger stays empty forever</td><td>Endpoint code shipped and tested; unlocked but not deployed</td><td><a href="measurement.html">FLG-007</a> · <a href="direction.html#SG-07">SG-07</a><br><span class="meta">Internal only — no external source applies.</span></td></tr>
+</tbody></table></div>
 <h2>Copy-ready question pack</h2>
 <p>The blocking rows, as a message you can send to whoever owns the account.</p>
 <pre><code>{esc(pack)}</code></pre>
