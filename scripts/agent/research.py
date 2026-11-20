@@ -101,7 +101,7 @@ def brief_for(p, flags, questions, probes):
         "rating_live_note": ("Ratings are not published here. They move daily, and the Program "
                              "Policies price/availability rule (S02) is the reason a static copy of "
                              "one would be misleading."),
-        "open_flags": [{"id": f["id"], "issue": f.get("issue", ""),
+        "open_flags": [{"id": f["id"], "issue": f.get("title", ""),
                         "action": f.get("action", "")} for f in open_flags],
         "blocking_questions": [{"id": q["id"], "question": q.get("question", ""),
                                 "answer": q.get("answer", "")} for q in blocking],

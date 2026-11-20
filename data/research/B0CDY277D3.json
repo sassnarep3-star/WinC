@@ -5,9 +5,9 @@
   "product_id": "p1-chefman-6qt",
   "title_as_listed": "CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black",
   "editorial": {
-    "dek": "Two 3-quart baskets that can finish at the same time, in the space one basket usually takes.",
+    "dek": "Two 3-quart baskets that can finish at the same time, in a smaller footprint than the single-basket 8-quart beside it.",
     "best_for": "Cooking a main and a side together",
-    "catch": "Each basket is 3 quarts, so one large item — a whole bird, a full sheet pan — will not fit in either one.",
+    "catch": "Each basket is 3 quarts, so one large item does not fit in either one — the two baskets divide into two things, not one big thing.",
     "check_before_buying": [
       "Measure your counter depth against the listed 13.38\" and leave room in front for the drawer to pull out.",
       "Decide whether you cook two things at once. If you usually cook one, a single 8-quart basket is the simpler buy.",
@@ -83,7 +83,7 @@
   "open_flags": [
     {
       "id": "FLG-025",
-      "issue": "",
+      "issue": "Stored product titles drifted from live Amazon listing titles (4 of 5)",
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again."
     }
   ],
@@ -91,7 +91,7 @@
     {
       "id": "Q-02",
       "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
-      "answer": ""
+      "answer": "No — the supplied tokens do not identify products, and they were never meant to. Each token is 9 characters; an ASIN is a 10-character code, so a token cannot be one. The mapping in this register is what the links resolve to, recorded live on five separate occasions, four of which reproduced the mapping exactly (5/5 each time). The fifth, on 2026-11-20, saw one token land on the Amazon homepage instead of its recorded listing — logged as FLG-030, which neither confirms nor invalidates the mapping. Nothing public binds the short code to a product, so the intended fields stay blank and the observed target is kept in its own column. The intended fields are settled as “unknown”, which is a settled answer, not a gap in the record."
     }
   ],
   "redirect_observation": {

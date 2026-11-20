@@ -5,13 +5,13 @@
   "product_id": "p2-emeril-26qt",
   "title_as_listed": "Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included",
   "editorial": {
-    "dek": "A real countertop oven — French doors, wire racks, a cavity you can put a tray in — and the biggest one in the shop.",
+    "dek": "A real countertop oven — French doors and an extra-large interior — and the biggest cavity in the shop.",
     "best_for": "Baking, roasting, and cooking for more than four",
     "catch": "26.5 lb and 16.9 inches deep. It is the heaviest and the largest thing here, and it needs the most counter and the most cleaning.",
     "check_before_buying": [
       "Measure depth against the listed 16.9\" and check the cabinet clearance above it, not just the footprint.",
-      "Count the presets you will actually use. Twenty-four options only help if they match your week.",
-      "Budget for the racks, pan and accessories the listing says are included — more parts means more to wash."
+      "Count the presets you will actually use. The listing disagrees with itself on how many there are — 24 in the title, 25 in the bullet copy (FLG-020) — so read the number on the page in front of you.",
+      "Budget for the accessories — the listing counts them as six in its title and seven in its bullet copy (FLG-010), and more parts means more to wash."
     ]
   },
   "identity": {
@@ -83,7 +83,7 @@
   "open_flags": [
     {
       "id": "FLG-010",
-      "issue": "",
+      "issue": "Emeril 26QT listing: 'Six Cooking Accessories' (title) vs '7 Accessories Included' (bullets)",
       "action": "Confirm on the manufacturer's own page; if still ambiguous, render 'per listing: 6 or 7 (title vs bullets)' instead of choosing silently."
     }
   ],
@@ -91,7 +91,7 @@
     {
       "id": "Q-02",
       "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
-      "answer": ""
+      "answer": "No — the supplied tokens do not identify products, and they were never meant to. Each token is 9 characters; an ASIN is a 10-character code, so a token cannot be one. The mapping in this register is what the links resolve to, recorded live on five separate occasions, four of which reproduced the mapping exactly (5/5 each time). The fifth, on 2026-11-20, saw one token land on the Amazon homepage instead of its recorded listing — logged as FLG-030, which neither confirms nor invalidates the mapping. Nothing public binds the short code to a product, so the intended fields stay blank and the observed target is kept in its own column. The intended fields are settled as “unknown”, which is a settled answer, not a gap in the record."
     }
   ],
   "redirect_observation": {

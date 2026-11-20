@@ -5,8 +5,8 @@
   "product_id": "p5-chefiq",
   "title_as_listed": "CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3",
   "editorial": {
-    "dek": "Three probes, a wireless hub and alerts — the only product in the shop that keeps cooking while you walk away.",
-    "best_for": "A whole bird plus sides, with a notification when it is done",
+    "dek": "Three probes and a WiFi hub that reports the reading — the only product in the shop that keeps cooking while you walk away.",
+    "best_for": "A whole bird plus sides, with the reading reported to your phone",
     "catch": "It is the only thing here that needs a hub, a network and a phone to tell you anything. Without those it is three expensive sticks.",
     "check_before_buying": [
       "Confirm the probe count and the hub contents on the live listing — this model family is listed several ways (FLG-014).",
@@ -81,12 +81,18 @@
   "price_live_note": "No Product Advertising API credentials in the environment, so no live price was fetched. Program Policies allow a price to be displayed only when the link Amazon serves shows it, or when it comes from the Creators/PA API (S02). Until then the price stays blank and the reader is sent to Amazon.",
   "rating_live": null,
   "rating_live_note": "Ratings are not published here. They move daily, and the Program Policies price/availability rule (S02) is the reason a static copy of one would be misleading.",
-  "open_flags": [],
+  "open_flags": [
+    {
+      "id": "FLG-027",
+      "issue": "CHEF iQ Sense is sold in 2-probe and 3-probe configurations under different ASINs",
+      "action": "Owner or reader: confirm the probe count on the listing page reached. Recorded on the product page so the spec is not assumed from a family name."
+    }
+  ],
   "blocking_questions": [
     {
       "id": "Q-02",
       "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
-      "answer": ""
+      "answer": "No — the supplied tokens do not identify products, and they were never meant to. Each token is 9 characters; an ASIN is a 10-character code, so a token cannot be one. The mapping in this register is what the links resolve to, recorded live on five separate occasions, four of which reproduced the mapping exactly (5/5 each time). The fifth, on 2026-11-20, saw one token land on the Amazon homepage instead of its recorded listing — logged as FLG-030, which neither confirms nor invalidates the mapping. Nothing public binds the short code to a product, so the intended fields stay blank and the observed target is kept in its own column. The intended fields are settled as “unknown”, which is a settled answer, not a gap in the record."
     }
   ],
   "redirect_observation": {

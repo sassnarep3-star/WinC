@@ -84,25 +84,30 @@
   "open_flags": [
     {
       "id": "FLG-004",
-      "issue": "",
+      "issue": "ThermoMaven ASIN variant URL (B0DHZTCNR5 vs B0DMDQZTZN)",
       "action": "Re-observe redirect; confirm canonical ASIN on live listing."
     },
     {
       "id": "FLG-015",
-      "issue": "",
+      "issue": "ThermoMaven model 'HT07' blanked (sourced only from Amazon.fr, not the US listing)",
       "action": "Confirm the model on the amazon.com listing for B0DHZTCNR5 or the manufacturer page; only then re-add it with its URL and date."
+    },
+    {
+      "id": "FLG-026",
+      "issue": "ThermoMaven sells near-identical instant-read listings under different ASINs",
+      "action": "Owner or reader: check the title and ASIN on the page reached from any external link before buying. No site change needed; recorded so the shop's product page can warn about it."
     }
   ],
   "blocking_questions": [
     {
       "id": "Q-02",
       "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
-      "answer": ""
+      "answer": "No — the supplied tokens do not identify products, and they were never meant to. Each token is 9 characters; an ASIN is a 10-character code, so a token cannot be one. The mapping in this register is what the links resolve to, recorded live on five separate occasions, four of which reproduced the mapping exactly (5/5 each time). The fifth, on 2026-11-20, saw one token land on the Amazon homepage instead of its recorded listing — logged as FLG-030, which neither confirms nor invalidates the mapping. Nothing public binds the short code to a product, so the intended fields stay blank and the observed target is kept in its own column. The intended fields are settled as “unknown”, which is a settled answer, not a gap in the record."
     },
     {
       "id": "Q-05",
       "question": "Which of the observed spec conflicts are real: B08DKYBTPH model and max temperature, ThermoMaven canonical ASIN, Emeril accessory count?",
-      "answer": ""
+      "answer": "The conflicts are real in the listings; which side is right needs the manufacturer. All five listing pages were re-read on 2026-11-20. The Chefman 8 Qt title still reads “TurboFry® 4-in-1 with 450°F Hi-Fry” while the captured copy says 200–400°F; the Emeril title still says “Six Cooking Accessories Included”; the ThermoMaven title wording rotated again. A listing can contradict itself without either side being wrong, so the honest record is the conflict, not a chosen value. This site publishes the listing's own wording and flags the conflict."
     }
   ],
   "redirect_observation": {

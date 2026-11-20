@@ -5,9 +5,9 @@
   "product_id": "p3-chefman-8qt",
   "title_as_listed": "Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel",
   "editorial": {
-    "dek": "One large basket with a wide opening — the simplest footprint of the three fryers here.",
+    "dek": "One large basket with the shallowest footprint of the three fryers — 12.75 inches deep.",
     "best_for": "One big batch of one thing",
-    "catch": "The listing's own title and bullet copy disagree about the top temperature (FLG-005), and it does not mention viewing windows the way the 6-quart model does.",
+    "catch": "The listing's own title and bullet copy disagree about the top temperature (FLG-005), and its title does not mention a viewing window the way the 6-quart model's does.",
     "check_before_buying": [
       "Re-read the temperature range on the live listing before you rely on it — the copy on that page conflicts (FLG-005).",
       "Check both the 12.75\" depth and the 13.5\" width; the drawer needs clearance in front as well as behind.",
@@ -83,40 +83,45 @@
   "open_flags": [
     {
       "id": "FLG-005",
-      "issue": "",
+      "issue": "Chefman 8 Qt (B08DKYBTPH) model / max-temp conflicts",
       "action": "Confirm model + temp range on live listing and manufacturer page; correct specs table."
     },
     {
       "id": "FLG-016",
-      "issue": "",
+      "issue": "Chefman 8 Qt labelled 'single basket' — wording removed (corrected)",
       "action": "None beyond FLG-005 (model/temperature conflict on the same listing)."
     },
     {
       "id": "FLG-019",
-      "issue": "",
+      "issue": "Amazon serves more than one product-name string for the same ASIN (B08DKYBTPH)",
       "action": "Both strings are stored in data/products.json (title + title_prior_capture) and the live one is displayed. No reconciliation is possible without the manufacturer page."
     },
     {
       "id": "FLG-022",
-      "issue": "",
+      "issue": "Power row for the Chefman 8-Qt was wrong in this repo and has been corrected",
       "action": "Nothing further. If the product's own wattage label differs from the listing, correct again with the manufacturer's spec sheet."
     },
     {
       "id": "FLG-023",
-      "issue": "",
+      "issue": "The Chefman 8-Qt ASIN is a size-variation family (6 / 8 / 9 quarts under one link)",
       "action": "Mention the size selector on the product page and the guide that covers capacity; do not treat the ASIN as a single fixed size."
+    },
+    {
+      "id": "FLG-030",
+      "issue": "One supplied short link stopped resolving to its recorded listing; observed by two independent sessions",
+      "action": "Owner: open all five supplied links once in a normal browser and record the final URL for each. If any lands on the homepage, contact Associates support before the links are used at scale, and run the enrolled one-link workflow test (FLG-002). No site change is needed until that is known — the shop's own buttons are constructed /dp/ links, not these short links."
     }
   ],
   "blocking_questions": [
     {
       "id": "Q-02",
       "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
-      "answer": ""
+      "answer": "No — the supplied tokens do not identify products, and they were never meant to. Each token is 9 characters; an ASIN is a 10-character code, so a token cannot be one. The mapping in this register is what the links resolve to, recorded live on five separate occasions, four of which reproduced the mapping exactly (5/5 each time). The fifth, on 2026-11-20, saw one token land on the Amazon homepage instead of its recorded listing — logged as FLG-030, which neither confirms nor invalidates the mapping. Nothing public binds the short code to a product, so the intended fields stay blank and the observed target is kept in its own column. The intended fields are settled as “unknown”, which is a settled answer, not a gap in the record."
     },
     {
       "id": "Q-05",
       "question": "Which of the observed spec conflicts are real: B08DKYBTPH model and max temperature, ThermoMaven canonical ASIN, Emeril accessory count?",
-      "answer": ""
+      "answer": "The conflicts are real in the listings; which side is right needs the manufacturer. All five listing pages were re-read on 2026-11-20. The Chefman 8 Qt title still reads “TurboFry® 4-in-1 with 450°F Hi-Fry” while the captured copy says 200–400°F; the Emeril title still says “Six Cooking Accessories Included”; the ThermoMaven title wording rotated again. A listing can contradict itself without either side being wrong, so the honest record is the conflict, not a chosen value. This site publishes the listing's own wording and flags the conflict."
     }
   ],
   "redirect_observation": {
