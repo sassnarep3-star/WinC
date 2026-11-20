@@ -72,18 +72,31 @@
   }
   document.addEventListener("scroll", onScroll, { passive: true });
 
-  // 4) reader_capture_submit — newsletter form (double opt-in handled by provider; no tracking pixel)
+  // 4) reader_capture_submit — newsletter form.
+  //    The address must never reach the URL, the history or the host's request log. The form
+  //    itself carries no `name` attribute and novalidate is set, so even a browser with this
+  //    script blocked has nothing to submit; here we stop the navigation and keep the value
+  //    in the page. No address is transmitted, and no pixel or double-opt-in provider exists
+  //    yet (see the open questions on questions.html).
   var form = document.getElementById("reader-capture");
   if (form){
-    form.addEventListener("submit", function(){
+    form.addEventListener("submit", function(e){
+      if (e && e.preventDefault) e.preventDefault();
+      if (form.reportValidity && !form.reportValidity()) return;
       send("reader_capture_submit", { form: "newsletter" });
     });
   }
 
-  // 5) search_submit — internal search (query itself is NOT transmitted; only that a search happened)
+  // 5) search_submit — internal search. The query itself is NOT sent to the measurement
+  //    endpoint; only the fact that a search happened. The term does stay in the page address,
+  //    because the results page reads it from there — so it is in the URL the browser asks for.
+  //    The disclosure page says so. The navigation is deliberately NOT cancelled: the results
+  //    are rendered on the next load, and sendBeacon survives that navigation.
   var sform = document.getElementById("site-search");
   if (sform){
-    sform.addEventListener("submit", function(){ send("search_submit", { form: "internal" }); });
+    sform.addEventListener("submit", function(){
+      send("search_submit", { form: "internal" });
+    });
   }
 
   // Expose for debugging (counts only, no PII)

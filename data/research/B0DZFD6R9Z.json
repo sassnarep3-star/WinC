@@ -1,0 +1,116 @@
+{
+  "generated": "2026-11-20",
+  "generated_by": "scripts/agent/research.py",
+  "asin": "B0DZFD6R9Z",
+  "product_id": "p5-chefiq",
+  "title_as_listed": "CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3",
+  "editorial": {
+    "dek": "Three probes, a wireless hub and alerts — the only product in the shop that keeps cooking while you walk away.",
+    "best_for": "A whole bird plus sides, with a notification when it is done",
+    "catch": "It is the only thing here that needs a hub, a network and a phone to tell you anything. Without those it is three expensive sticks.",
+    "check_before_buying": [
+      "Confirm the probe count and the hub contents on the live listing — this model family is listed several ways (FLG-014).",
+      "Plan where the hub sits so the signal actually reaches it, and check the app works before the holiday.",
+      "Check how the probes are cleaned, and whether you would rather hand-wash three of them after every cook."
+    ]
+  },
+  "identity": {
+    "submitted_url": "https://link.amazon/B0f3GKalj",
+    "submitted_token": "B0f3GKalj",
+    "submitted_token_length": 9,
+    "intended_asin": "",
+    "intended_listing_url": "",
+    "intended_confirmation_date": "",
+    "intended_source": "",
+    "observed_asin": "B0DZFD6R9Z",
+    "observed_listing_url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+    "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20",
+    "observed_source": "Prior sessions' live resolutions + Amazon listing snippet",
+    "note": "The intended and observed identifiers are kept in separate fields on purpose. Nothing public binds the submitted short token to a product, so the intended field stays blank until the product-intent confirmation is done by hand (FLG-002, FLG-003)."
+  },
+  "specs": {
+    "brand": {
+      "value": "CHEF iQ",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    },
+    "model": {
+      "value": "CQ60-3C-Z1-E",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    },
+    "category": {
+      "value": "Meat Thermometers",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    },
+    "capacity": {
+      "value": "3 probes + hub",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    },
+    "dimensions": {
+      "value": "8.43 x 4.69 x 1.93 inches (package); 14.07 ounces",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    },
+    "weight": {
+      "value": "",
+      "note": "<blank: not confirmed from an official source>"
+    },
+    "temperature": {
+      "value": "Heat safe to 1000°F (per listing)",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    },
+    "power": {
+      "value": "Rechargeable (hub charges probes)",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    },
+    "upc": {
+      "value": "810170921148",
+      "source": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "source_date": "2026-11-20"
+    }
+  },
+  "unknown_specs": [
+    "weight"
+  ],
+  "price_live": null,
+  "price_live_note": "No Product Advertising API credentials in the environment, so no live price was fetched. Program Policies allow a price to be displayed only when the link Amazon serves shows it, or when it comes from the Creators/PA API (S02). Until then the price stays blank and the reader is sent to Amazon.",
+  "rating_live": null,
+  "rating_live_note": "Ratings are not published here. They move daily, and the Program Policies price/availability rule (S02) is the reason a static copy of one would be misleading.",
+  "open_flags": [],
+  "blocking_questions": [
+    {
+      "id": "Q-02",
+      "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
+      "answer": ""
+    }
+  ],
+  "redirect_observation": {
+    "submitted_token": "B0f3GKalj",
+    "final_asin": "B0DZFD6R9Z",
+    "session": null,
+    "date": null,
+    "note": "Page title omits '[2025 Model]' and says 3 probes; products.json title includes '[2025 Model]'. Marketing-string drift only, no spec conflict."
+  },
+  "listing_conflicts": [],
+  "faq": [
+    [
+      "How many probes come with it?",
+      "The listing names 3 ultra-thin probes and a hub with 5 sensors, reporting over WiFi, with probes stated heat safe to 1000F. It also lists BBQ, grill, oven, smoker and air fryer among its uses."
+    ],
+    [
+      "Does it need an app?",
+      "The headline feature on the listing is WiFi reporting, so the reading arrives on a phone - which means the app, the hub and the router are part of the product. If you would rather not install an app, the instant-read in this shop is the other shape."
+    ],
+    [
+      "What does 'unlimited range' mean?",
+      "It is a marketing phrase on the listing. What it means is that the hub reports over your network rather than over a short radio link; how far the hub can sit from the cooker is a question about your router and your house, not a published number."
+    ]
+  ],
+  "listing_url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+  "site": "https://sassnarep3-star.github.io/WinC/"
+}

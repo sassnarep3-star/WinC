@@ -354,15 +354,18 @@ def specs_table(p):
 
 def capture_block(depth=0):
     pfx = "../" * depth
+    # The input carries no `name`, so there is nothing for a browser to put in a query string,
+    # and novalidate means even a JS-blocked browser has no address to submit. The address
+    # never reaches the URL, the history or a request log (A7 in the independent audit).
     return f"""<section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
 <p>One email when a new guide publishes.</p>
-<form id="reader-capture" action="{pfx}measurement.html" method="get">
+<form id="reader-capture" action="" method="get" novalidate>
 <label for="email">Email address</label>
-<input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+<input id="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere — not to the site, not to a provider, not into the page address. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
 </section>"""
 
 # ---------- HOME ----------
@@ -792,8 +795,21 @@ def verification_body():
     specs_table_html = ('<div class="tablewrap"><table><thead><tr><th>Product</th><th>Brand</th><th>Model</th><th>Capacity</th><th>Dimensions</th><th>Weight</th><th>Temp/accuracy</th><th>Power</th><th>UPC</th><th>Price</th><th>Source</th></tr></thead><tbody>'
                         + "".join(specs_rows) + "</tbody></table></div>")
 
+    def src_cell(s):
+        """A source URL is rendered as a link, except the supplied link.amazon short links:
+        those are provenance, and a reader must not be able to click a redirect we have not
+        validated (FLG-003). The token is still shown, as text."""
+        u = s["url"]
+        if u.startswith("https://link.amazon/"):
+            return ('<code>%s</code><br><span class="meta">Shown as text: this is the short link as '
+                    'supplied in the brief. It is provenance, not a reader link, and its compliance '
+                    'status is unresolved (FLG-003).</span>' % esc(u))
+        return ('<a class="src" href="%s" rel="nofollow noopener" target="_blank">%s</a>'
+                % (esc(u), esc(u)))
+
     src_rows = "".join(
-        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
+        f'<tr id="src-{esc(s["id"])}"><td>{esc(s["id"])}</td><td>{esc(s["title"])}<br>{src_cell(s)}</td>'
+        f'<td>{esc(s["what"])}</td><td>{esc(s["date"])}</td></tr>'
         for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
@@ -1044,14 +1060,33 @@ def search_body():
 <script>
 var INDEX=null;
 fetch('assets/search-index.json').then(function(r){{return r.json();}}).then(function(d){{INDEX=d;run();}});
+function el(tag,cls){{var n=document.createElement(tag);if(cls)n.className=cls;return n;}}
 function run(){{
   var q=(new URLSearchParams(location.search).get('q')||'').toLowerCase().trim();
   var box=document.getElementById('results');
-  if(!q){{box.innerHTML='<p class="meta">Type a query above.</p>';return;}}
+  box.textContent='';
+  if(!q){{box.appendChild(el('p','meta')).textContent='Type a query above.';return;}}
   var hits=INDEX.filter(function(x){{return (x.title+' '+x.text).toLowerCase().indexOf(q)>-1;}});
-  if(!hits.length){{box.innerHTML='<p>No matches for <strong>'+q+'</strong>. Try “air fryer” or “thermometer”.</p>';return;}}
-  box.innerHTML='<p class="meta">'+hits.length+' result(s) for <strong>'+q+'</strong></p><div class="grid">'+
-    hits.map(function(h){{return '<article class="card"><span class="cat">'+h.kind+'</span><h3><a href="'+h.url+'">'+h.title+'</a></h3><p>'+h.text.slice(0,180)+'…</p></article>';}}).join('')+'</div>';
+  if(!hits.length){{
+    var np=el('p');np.appendChild(document.createTextNode('No matches for '));
+    var nb=el('strong');nb.textContent=q;np.appendChild(nb);
+    np.appendChild(document.createTextNode('. Try “air fryer” or “thermometer”.'));
+    box.appendChild(np);return;
+  }}
+  var head=el('p','meta');
+  head.appendChild(document.createTextNode(hits.length+' result(s) for '));
+  var hb=el('strong');hb.textContent=q;head.appendChild(hb);
+  box.appendChild(head);
+  var grid=el('div','grid');
+  hits.forEach(function(h){{
+    var art=el('article','card');
+    var cat=el('span','cat');cat.textContent=h.kind;art.appendChild(cat);
+    var h3=el('h3');var a=el('a');a.setAttribute('href',h.url);a.textContent=h.title;
+    h3.appendChild(a);art.appendChild(h3);
+    var body=el('p');body.textContent=h.text.slice(0,180)+'…';art.appendChild(body);
+    grid.appendChild(art);
+  }});
+  box.appendChild(grid);
 }}
 </script>
 """

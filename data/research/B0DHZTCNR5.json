@@ -1,0 +1,137 @@
+{
+  "generated": "2026-11-20",
+  "generated_by": "scripts/agent/research.py",
+  "asin": "B0DHZTCNR5",
+  "product_id": "p4-thermomaven",
+  "title_as_listed": "ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black",
+  "editorial": {
+    "dek": "A spot-check thermometer: pull it, press it, read it, put it back in the drawer.",
+    "best_for": "Checking doneness without committing to a cook",
+    "catch": "It tells you where the food is at the moment you ask. Nothing is watching it while you are doing something else.",
+    "check_before_buying": [
+      "Confirm the accuracy figure on the live listing before you build a plan around ±0.5°F.",
+      "Note what the reading is measuring: a thermometer is only as good as the spot you put it in.",
+      "If you are cooking for hours, compare it against a leave-in probe before you rely on a single spot check."
+    ]
+  },
+  "identity": {
+    "submitted_url": "https://link.amazon/B0c8moW59",
+    "submitted_token": "B0c8moW59",
+    "submitted_token_length": 9,
+    "intended_asin": "",
+    "intended_listing_url": "",
+    "intended_confirmation_date": "",
+    "intended_source": "",
+    "observed_asin": "B0DHZTCNR5",
+    "observed_listing_url": "https://www.amazon.com/dp/B0DHZTCNR5",
+    "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20",
+    "observed_source": "Prior sessions' live resolutions + Amazon listing snippet (see FLG-004 variant URL)",
+    "note": "The intended and observed identifiers are kept in separate fields on purpose. Nothing public binds the submitted short token to a product, so the intended field stays blank until the product-intent confirmation is done by hand (FLG-002, FLG-003)."
+  },
+  "specs": {
+    "brand": {
+      "value": "ThermoMaven",
+      "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "source_date": "2026-11-20"
+    },
+    "model": {
+      "value": "",
+      "note": "<blank: not confirmed from an official source>"
+    },
+    "category": {
+      "value": "Meat Thermometers",
+      "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "source_date": "2026-11-20"
+    },
+    "capacity": {
+      "value": "—",
+      "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "source_date": "2026-11-20"
+    },
+    "dimensions": {
+      "value": "",
+      "note": "<blank: not confirmed from an official source>"
+    },
+    "weight": {
+      "value": "",
+      "note": "<blank: not confirmed from an official source>"
+    },
+    "temperature": {
+      "value": "Accuracy ±0.5°F (NIST & NSF certified per listing)",
+      "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "source_date": "2026-11-20"
+    },
+    "power": {
+      "value": "—",
+      "source": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "source_date": "2026-11-20"
+    },
+    "upc": {
+      "value": "",
+      "note": "<blank: not confirmed from an official source>"
+    }
+  },
+  "unknown_specs": [
+    "model",
+    "dimensions",
+    "weight",
+    "upc"
+  ],
+  "price_live": null,
+  "price_live_note": "No Product Advertising API credentials in the environment, so no live price was fetched. Program Policies allow a price to be displayed only when the link Amazon serves shows it, or when it comes from the Creators/PA API (S02). Until then the price stays blank and the reader is sent to Amazon.",
+  "rating_live": null,
+  "rating_live_note": "Ratings are not published here. They move daily, and the Program Policies price/availability rule (S02) is the reason a static copy of one would be misleading.",
+  "open_flags": [
+    {
+      "id": "FLG-004",
+      "issue": "",
+      "action": "Re-observe redirect; confirm canonical ASIN on live listing."
+    },
+    {
+      "id": "FLG-015",
+      "issue": "",
+      "action": "Confirm the model on the amazon.com listing for B0DHZTCNR5 or the manufacturer page; only then re-add it with its URL and date."
+    }
+  ],
+  "blocking_questions": [
+    {
+      "id": "Q-02",
+      "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
+      "answer": ""
+    },
+    {
+      "id": "Q-05",
+      "question": "Which of the observed spec conflicts are real: B08DKYBTPH model and max temperature, ThermoMaven canonical ASIN, Emeril accessory count?",
+      "answer": ""
+    }
+  ],
+  "redirect_observation": {
+    "submitted_token": "B0c8moW59",
+    "final_asin": "B0DHZTCNR5",
+    "session": null,
+    "date": null,
+    "note": "Observed target is B0DHZTCNR5, not the B0DMDQZTZN variant URL — this reduces but does not close FLG-004, because the redirect carries a fallback flag rather than a canonical resolution."
+  },
+  "listing_conflicts": [
+    {
+      "flag": "FLG-004",
+      "note": "Model number: the US listing's product-details table did not show it in the 2026-11-20 read. The 'HT07' string seen on an Amazon.fr listing is not carried over to this page, so the cell stays blank (FLG-015) and the canonical-ASIN question stays open (FLG-004)."
+    }
+  ],
+  "faq": [
+    [
+      "What accuracy is claimed?",
+      "The listing states a tolerance of +/-0.5F, names NIST and NSF certification, and describes an auto-rotating LED screen and IP67 waterproofing. Those are the listing's claims; nobody on this desk has tested the device, so no measured figure appears anywhere on this site."
+    ],
+    [
+      "What is the model number?",
+      "It is not shown on the US listing's product-details table in the read of 2026-11-20. An 'HT07' model string appears on the brand's French listing, which is why the specs table marks the model unconfirmed for the US page instead of asserting it (FLG-004)."
+    ],
+    [
+      "Does it work in an air fryer?",
+      "It is an instant-read device: you put the tip in the food for a second and read the number off the device. For a probe that stays in the food while it cooks, the other thermometer in this shop is the one whose listing names air-fryer use."
+    ]
+  ],
+  "listing_url": "https://www.amazon.com/dp/B0DHZTCNR5",
+  "site": "https://sassnarep3-star.github.io/WinC/"
+}

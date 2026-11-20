@@ -1,3 +1,6 @@
 *.pyc
 __pycache__/
 analytics/events.jsonl
+
+# agent pipeline staging area — drafts are generated on demand, not published artefacts
+data/drafts/

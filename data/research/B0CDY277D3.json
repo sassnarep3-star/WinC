@@ -1,0 +1,126 @@
+{
+  "generated": "2026-11-20",
+  "generated_by": "scripts/agent/research.py",
+  "asin": "B0CDY277D3",
+  "product_id": "p1-chefman-6qt",
+  "title_as_listed": "CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black",
+  "editorial": {
+    "dek": "Two 3-quart baskets that can finish at the same time, in the space one basket usually takes.",
+    "best_for": "Cooking a main and a side together",
+    "catch": "Each basket is 3 quarts, so one large item — a whole bird, a full sheet pan — will not fit in either one.",
+    "check_before_buying": [
+      "Measure your counter depth against the listed 13.38\" and leave room in front for the drawer to pull out.",
+      "Decide whether you cook two things at once. If you usually cook one, a single 8-quart basket is the simpler buy.",
+      "Check on the listing which parts are dishwasher-safe before you plan on hand-washing them."
+    ]
+  },
+  "identity": {
+    "submitted_url": "https://link.amazon/B04G1MEwY",
+    "submitted_token": "B04G1MEwY",
+    "submitted_token_length": 9,
+    "intended_asin": "",
+    "intended_listing_url": "",
+    "intended_confirmation_date": "",
+    "intended_source": "",
+    "observed_asin": "B0CDY277D3",
+    "observed_listing_url": "https://www.amazon.com/dp/B0CDY277D3",
+    "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20",
+    "observed_source": "Prior sessions' live resolutions (Zone3 #153, Zone2 #154/#160) + Amazon listing snippet",
+    "note": "The intended and observed identifiers are kept in separate fields on purpose. Nothing public binds the submitted short token to a product, so the intended field stays blank until the product-intent confirmation is done by hand (FLG-002, FLG-003)."
+  },
+  "specs": {
+    "brand": {
+      "value": "Chefman",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "model": {
+      "value": "RJ38-SQPF-3TDB-2W",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "category": {
+      "value": "Air Fryers",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "capacity": {
+      "value": "6 Quart (two 3-Qt baskets)",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "dimensions": {
+      "value": "13.38\"D x 11.81\"W x 10.63\"H",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "weight": {
+      "value": "13.3 pounds",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "temperature": {
+      "value": "200-450°F",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "power": {
+      "value": "1700W / 120V",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    },
+    "upc": {
+      "value": "810087845025",
+      "source": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+      "source_date": "2026-11-20"
+    }
+  },
+  "unknown_specs": [],
+  "price_live": null,
+  "price_live_note": "No Product Advertising API credentials in the environment, so no live price was fetched. Program Policies allow a price to be displayed only when the link Amazon serves shows it, or when it comes from the Creators/PA API (S02). Until then the price stays blank and the reader is sent to Amazon.",
+  "rating_live": null,
+  "rating_live_note": "Ratings are not published here. They move daily, and the Program Policies price/availability rule (S02) is the reason a static copy of one would be misleading.",
+  "open_flags": [
+    {
+      "id": "FLG-025",
+      "issue": "",
+      "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again."
+    }
+  ],
+  "blocking_questions": [
+    {
+      "id": "Q-02",
+      "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
+      "answer": ""
+    }
+  ],
+  "redirect_observation": {
+    "submitted_token": "B04G1MEwY",
+    "final_asin": "B0CDY277D3",
+    "session": null,
+    "date": null,
+    "note": ""
+  },
+  "listing_conflicts": [
+    {
+      "flag": "FLG-018",
+      "note": "The listing's own details table gives Capacity: 6 liters, while the title and the bullet copy say 6-quart / two 3-quart baskets. The quart figure is the one the product name and the two-basket claim use, so that is what this site records. Units disagree on the source page."
+    }
+  ],
+  "faq": [
+    [
+      "Is this a dual-basket air fryer?",
+      "Yes. The listing's title names two independent 3-quart baskets, and its bullet copy describes a combined 6-quart capacity with a Sync Finish so the baskets can finish together. That is the feature that separates it from the single-basket 8-quart in the same shop."
+    ],
+    [
+      "How hot does it get?",
+      "The listing's bullet copy states a digital temperature range of 200-450F, and the title names a Hi-Fry setting. Note that the same page's details table gives the capacity as '6 liters' while the title says 6 quart - the two units disagree on one page (FLG-018)."
+    ],
+    [
+      "What should I measure before buying?",
+      "The listed footprint is 13.38\"D x 11.81\"W x 10.63\"H and the listed weight is 13.3 lb. Measure the depth of your counter and the clearance above the unit, not just the square footage you have free."
+    ]
+  ],
+  "listing_url": "https://www.amazon.com/CHEFMAN-Windows-Independent-Nonstick-Dishwasher/dp/B0CDY277D3",
+  "site": "https://sassnarep3-star.github.io/WinC/"
+}

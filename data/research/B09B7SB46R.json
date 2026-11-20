@@ -1,0 +1,134 @@
+{
+  "generated": "2026-11-20",
+  "generated_by": "scripts/agent/research.py",
+  "asin": "B09B7SB46R",
+  "product_id": "p2-emeril-26qt",
+  "title_as_listed": "Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included",
+  "editorial": {
+    "dek": "A real countertop oven — French doors, wire racks, a cavity you can put a tray in — and the biggest one in the shop.",
+    "best_for": "Baking, roasting, and cooking for more than four",
+    "catch": "26.5 lb and 16.9 inches deep. It is the heaviest and the largest thing here, and it needs the most counter and the most cleaning.",
+    "check_before_buying": [
+      "Measure depth against the listed 16.9\" and check the cabinet clearance above it, not just the footprint.",
+      "Count the presets you will actually use. Twenty-four options only help if they match your week.",
+      "Budget for the racks, pan and accessories the listing says are included — more parts means more to wash."
+    ]
+  },
+  "identity": {
+    "submitted_url": "https://link.amazon/B02NbDxp3",
+    "submitted_token": "B02NbDxp3",
+    "submitted_token_length": 9,
+    "intended_asin": "",
+    "intended_listing_url": "",
+    "intended_confirmation_date": "",
+    "intended_source": "",
+    "observed_asin": "B09B7SB46R",
+    "observed_listing_url": "https://www.amazon.com/dp/B09B7SB46R",
+    "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20",
+    "observed_source": "Prior sessions' live resolutions + Amazon listing snippet",
+    "note": "The intended and observed identifiers are kept in separate fields on purpose. Nothing public binds the submitted short token to a product, so the intended field stays blank until the product-intent confirmation is done by hand (FLG-002, FLG-003)."
+  },
+  "specs": {
+    "brand": {
+      "value": "Emeril",
+      "source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "source_date": "2026-11-20"
+    },
+    "model": {
+      "value": "4-00675-02X-VN",
+      "source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "source_date": "2026-11-20"
+    },
+    "category": {
+      "value": "Air Fryers",
+      "source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "source_date": "2026-11-20"
+    },
+    "capacity": {
+      "value": "26QT (24.6 Liters)",
+      "source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "source_date": "2026-11-20"
+    },
+    "dimensions": {
+      "value": "16.9\"D x 15.8\"W x 14.8\"H",
+      "source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "source_date": "2026-11-20"
+    },
+    "weight": {
+      "value": "26.5 Pounds",
+      "source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "source_date": "2026-11-20"
+    },
+    "temperature": {
+      "value": "",
+      "note": "does not apply to this product type"
+    },
+    "power": {
+      "value": "",
+      "note": "<blank: not confirmed from an official source>"
+    },
+    "upc": {
+      "value": "752356835682",
+      "source": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+      "source_date": "2026-11-20"
+    }
+  },
+  "unknown_specs": [
+    "power"
+  ],
+  "price_live": null,
+  "price_live_note": "No Product Advertising API credentials in the environment, so no live price was fetched. Program Policies allow a price to be displayed only when the link Amazon serves shows it, or when it comes from the Creators/PA API (S02). Until then the price stays blank and the reader is sent to Amazon.",
+  "rating_live": null,
+  "rating_live_note": "Ratings are not published here. They move daily, and the Program Policies price/availability rule (S02) is the reason a static copy of one would be misleading.",
+  "open_flags": [
+    {
+      "id": "FLG-010",
+      "issue": "",
+      "action": "Confirm on the manufacturer's own page; if still ambiguous, render 'per listing: 6 or 7 (title vs bullets)' instead of choosing silently."
+    }
+  ],
+  "blocking_questions": [
+    {
+      "id": "Q-02",
+      "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
+      "answer": ""
+    }
+  ],
+  "redirect_observation": {
+    "submitted_token": "B02NbDxp3",
+    "final_asin": "B09B7SB46R",
+    "session": null,
+    "date": null,
+    "note": "The <title> says 26QT / six accessories; the products.json title field (from the listing body) says 26QT capacity and 7 accessories. Accessory count differs between title and bullet copy on the same page — logged as FLG-010."
+  },
+  "listing_conflicts": [
+    {
+      "flag": "FLG-010",
+      "note": "Accessory count: the page title says 'Six Cooking Accessories Included'; the bullet copy in the same read said '7 Accessories Included'. This site does not pick one — it links the listing and states both."
+    },
+    {
+      "flag": "FLG-020",
+      "note": "Preset count: the page title says '24 One-Touch Preset Options'; the bullet list on the same page says '25 COOKING PRE-SETS' and then names eleven modes (ribs, defrost, bake, toast, chicken, pizza, pastry, slow cook, roast, reheat, keep warm). Neither number is used as a headline on this site."
+    },
+    {
+      "flag": "FLG-021",
+      "note": "Serving claim: the bullet copy says the 26-quart cavity is 'suitable for preparing food for 4–6 people', can rotisserie a 6-lb chicken and bake a 12\" pizza. That is the manufacturer's own sizing claim on the listing, quoted as such."
+    }
+  ],
+  "faq": [
+    [
+      "Is it an air fryer or an oven?",
+      "The listing describes both: a 26-quart French-door air fryer toaster oven whose bullets name cooking modes including toast, ribs, slow cook and roast. Its details table lists 16.9\"D x 15.8\"W x 14.8\"H and a capacity of 24.6 liters."
+    ],
+    [
+      "How many presets and accessories does it come with?",
+      "The listing disagrees with itself. The page title says 24 one-touch preset options and six cooking accessories, while the bullet heading says 25 cooking pre-sets, and an earlier capture of the same page read 7 accessories. Both readings are published on the Flagged for review page; this site picks neither (FLG-010, FLG-020)."
+    ],
+    [
+      "How large a cook can it handle?",
+      "The listing's own bullet says the 26-quart cavity is sized for 4-6 people, can rotisserie a 6-lb chicken and bake a 12-inch pizza. That is the seller's sizing claim on the listing, quoted as a claim and not as advice from this desk (FLG-021)."
+    ]
+  ],
+  "listing_url": "https://www.amazon.com/Emeril-Lagasse-Convection-Toaster-Stainless/dp/B09B7SB46R",
+  "site": "https://sassnarep3-star.github.io/WinC/"
+}
