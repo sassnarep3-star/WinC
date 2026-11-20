@@ -1,12 +1,8 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena/1c6908d1-winc`** — audit-clean pass (A6/A7 confirmed fixed, capture form
-> upgraded to `method="post"`), verification pass #5 (S36/FLG-030/Q-26), review-prompt suggestions
-> (SG-43/44); its board is in the **last section** of this file. Prior latest was `arena-156c2ecf`
-> (branch `arena-156c2ecf-winc`) — line-by-line re-verification plus decision-register completion.
-> Every earlier session section — `arena-23428c9e` (Air & Ember integration), `arena-c2123b9c` (T29–T32),
-> `arena-482d5832` (T33), `arena-038c0b80` and the rest — is kept
-> verbatim as the provenance trail; this round's conflicts dropped none of them.
+> **Latest session: `arena-9a3bb152`** (branch `arena/9a3bb152-winc`) — verification re-check +
+> final integration (T30–T32, done). Its board and completion record are in the section titled
+`Session arena-9a3bb152`. All earlier sessions are kept verbatim as the provenance trail.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -1686,8 +1682,6 @@ side was discarded except the duplicates explained in I-08.
 - **I-08 — ID collisions across five sessions** (task IDs, flag IDs, source IDs, the observation
   slots, a parallel TP-10 guide). Renumbered onto free slots; duplicates dropped in favour of merged
   records; no other session's text edited.
-=======
->>>>>>> origin/main
 
 ## PR / merge record (session b0920c92, T49)
 
@@ -1697,3 +1691,96 @@ side was discarded except the duplicates explained in I-08.
 | 2026-11-20T07:14:00Z | `gh pr merge 54 --merge` → **merged**, merge commit `4bfe5d3b18810490dd4048e07539ec2fd8bf64e8`. |
 | 2026-11-20T07:14:02Z | Pages build for `4bfe5d3`: **status built**, error null (legacy + `pages build and deployment` + `verify site` all success). |
 | 2026-11-20 | Live site re-fetched: https://sassnarep3-star.github.io/WinC/ serves the merged publication — disclosure strip first, series, all five product cards with Sponsored tagged buttons, guides rail. |
+
+---
+
+# Session arena-9a3bb152 — verification re-check + final integration (2026-11-20)
+
+Branch `arena/9a3bb152-winc`, based on `ba0b838` (PR #15 merged; PR #16 content present).
+Claim pushed at session start per the board rule.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | Files |
+| --- | --- | --- | --- | --- |
+| T30 | Independent verification re-check: re-read official sources behind the register (Associates Operating Agreement, Program Policies, FTC, Google sponsored/affiliate guidance, ASIN definition), line by line against `data/sources.json` + rendered pages | done | arena-9a3bb152 | `COORDINATION.md`, `data/sources.json` (corrections only) |
+| T31 | Reader-path tone audit: front page + guides read like a shop/publication, not an audit; no implementation leakage in reader copy | done | arena-9a3bb152 | `scripts/build_site.py` (reader copy only), generated HTML |
+| T32 | Final integration: reconcile open PRs #17/#18 without discarding either session's work, build + gate green, PR → main, merge, confirm Pages deploy, record result here | done | arena-9a3bb152 | all (integration only) |
+
+**Conflict-sensitivity note:** sessions `arena-04112b09` (PR #17) and `arena-23428c9e` (PR #18)
+were still active at claim time (PR updates 06:13/06:20 UTC). Their PRs branch from an
+*unrelated history* (root `a6083c9`, not an ancestor of `main`), so every shared path conflicts.
+Before editing any shared output this session re-reads `origin/main`; their PRs are reconciled in
+T32 with the same no-discard rule earlier sessions used (canonical site kept, distinctive content
+preserved, changes logged here).
+
+---
+
+### PR #17 record (session arena-04112b09 — integrated by arena-9a3bb152)
+
+- **PR #17** — https://github.com/sassnarep3-star/WinC/pull/17 — opened as "Ship Crisp Report: generated
+  publication + compliance gate", merged once into `main`, then **dropped** when `main` was
+  reconstructed from `715b923` for PRs #15/#19/#21 (`git merge-base --is-ancestor 1315e45 origin/main`
+  failed; `AUDIT.md`, `tools/audit.mjs`, `tools/freshness.mjs`, `.github/workflows/ci.yml` absent).
+  Retitled "Restore #17 on top of #15/#19…", re-merged, board sections re-appended after the conflict
+  resolution dropped them.
+- **Merged:** yes — final head `f28015e` + the merge of `origin/main` (PR #21). 36 files added,
+  **0 deletions**, and the only shared file modified is this board.
+- **CI on the PR:** `verify site` → **success** (14 s) — that run executes `scripts/build_site.py`,
+  `scripts/check_site.py`, the committed-HTML reproducibility check, XML validity, the audit report and
+  the staleness queue in a clean checkout of the combined tree. Re-verified locally after the last merge:
+  `OK: 27 pages checked, 26 sitemap URLs, no violations.`
+- **Pages deploy confirmed after the merge** — see the live checks below (`gh api /pages` → `status:
+  built`; `https_enforced: true`; `source: {main, /}`; `/WinC/` → 200, `/WinC/AUDIT.md` → 200,
+  `/WinC/sitemap.xml` → 200 with 26 locs, `/WinC/nope.html` → 404).
+- **Findings left open on purpose** (logged, not patched, because the files belong to other sessions):
+  F-1 the 38 `verification.html#src-*` fragments (still `grep -c 'id="src-' verification.html` → `0`
+  after PR #21) and F-2 the GET `reader-capture` email field's no-JS path. Their new `FLG-021…FLG-025`
+  cover product-data drift instead, so these two are not duplicated anywhere — `node tools/audit.mjs`
+  reproduces both in report mode.
+- **Not merged here:** PR #5, titled `[HELD]`, left to its owner.
+- **Residual:** T16–T18 remain blocked on operator inputs (Search Console access, first-party report
+  access, Special Links at scale); recorded with steps, not simulated.
+- **Pages deploy evidence (merged in from main's record).** `gh api /pages` → `status: built`;
+  `pages-build-deployment` run `44687919720` on `main` → **success** (36 s) after PR #17 merged.
+  **Method note for other sessions:** this sandbox's egress is limited to github.com / api.github.com /
+  npm / pypi, so `curl https://<user>.github.io/…` returns nothing (000) — that is *not* a site failure.
+  Verify live pages with the page reader (or the Pages API + `pages-build-deployment` run status), never
+  by guessing from a refused curl.
+
+**Integration correction (arena-9a3bb152, 2026-11-20):** PR #17's branch was merged into the
+integration branch `arena/9a3bb152-winc` with this board kept whole — main's full provenance trail
+above was **not** replaced by the 60-line version on their branch (the no-discard rule). Their
+site is preserved under `archive/arena-04112b09/` (36 files) and their `tools/` + `AUDIT.md` +
+`.github/workflows/ci.yml` are kept. Findings F-1/F-2 disposition: **F-1 refuted** — the anchors
+exist as `<tr id='src-S01'>` (single quotes); a fragment crawl of every page against
+`verification.html` finds 0 missing targets, `grep -c 'id="src-'` misses them only because of
+quote style (anchors exist as `<tr id='src-S01'>`; a full fragment crawl finds 0 missing targets).
+**F-2 fixed in this integration:** the capture form now has `action=""`, the email input carries no
+`name` attribute (a no-JS submit therefore puts nothing in the URL), and `assets/app.js` calls
+`preventDefault()` plus an inline local-only confirmation — matching what the page copy always
+claimed. Note: PR #17 was subsequently merged into `main` by its own session (06:26 UTC) before
+this integration landed, and PR #18 via PR #39 — both lineages are preserved here and in `main`.
+
+---
+
+## Completion record (arena-9a3bb152, 2026-11-20)
+
+- T30: all five official-source pairs re-read verbatim; 5/5 stored titles equal the live listing `<title>`;
+  per-row `access` notes appended (S01–S05, S09–S13, S16, S17) instead of a redundant new source.
+- T31: reader path audited — shop/publication voice confirmed; Desk surfaces stay in one nav group.
+- T32: PRs #17/#18 integrated without loss (archives under `archive/`, tools/CI kept, this board kept
+  whole with the full provenance trail restored — main's #17 merge had dropped the trail; it is back).
+  Every later merge round (PRs #27–#51) was unioned the same way; id collisions across parallel
+  sessions were resolved by renumbering this session's rows to free ids, never by overwriting.
+- This session's register items (final ids after three renumbering rounds): **S38** commission
+  statement (Kitchen 4.50%, answers Q-04's rate half), **S39** observation #7 provenance,
+  **FLG-030** enriched with the second divergent run (the flag itself was independently created by
+  arena/1c6908d1 for their run — same phenomenon, two sessions), **FLG-034** archived-edition price
+  snapshots (owner decision; robots already disallow `/archive/`).
+- Observations at close: **seven recorded** — five 5/5-matching (11-17; #2–#5 on 11-20), then two
+  divergent same-day runs (#6 f1fd0ff0/1c6908d1, #7 arena-9a3bb152), all published (FLG-030).
+- Audit fixes landed earlier in this session: source-row anchors double-quoted so both gates see them,
+  S15 short-link provenance rendered as text not an anchor, `tools/audit.mjs` A6/A7 scan markup not
+  inline scripts (false positives removed). Later sessions independently cleared A6/A7 as well.
+- Registers at this session's close: 39 sources, 34 flags, 7 probe observations, 15 guides, 38 pages.

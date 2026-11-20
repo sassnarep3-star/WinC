@@ -422,7 +422,7 @@ def capture_block(depth=0):
 <p>One email when a new guide publishes.</p>
 <form id="reader-capture" action="" method="post" novalidate data-nosubmit="true">
 <label for="email">Email address</label>
-<input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+<input id="email" type="email" autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
 <script>
@@ -1086,8 +1086,7 @@ def verification_body():
             f'<code class="src">{esc(s["url"])}</code> <span class="meta">(recorded as text: a short-link redirect hop is not republished — FLG-003)</span>'
             if "link.amazon" in s["url"] else
             f'<a class="src" href="{esc(s["url"])}" rel="nofollow noopener" target="_blank">{esc(s["url"])}</a>')
-        + f'</td><td>{esc(s["what"])}</td><td>{esc(s["date"])}</td></tr>'
-        for s in SOURCES)
+        + f'</td><td>{esc(s["what"])}</td><td>{esc(s["date"])}</td></tr>'        for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
 
@@ -1312,14 +1311,15 @@ def exec_body():
          f'<td>{blank(p["intended_asin"])} &middot; <a href="verification.html#src-S05">S05</a></td></tr>'
          for p in PRODUCTS)}
 </tbody></table></div>
-<p class="src">Observed live three times (2026-11-17, and twice on 2026-11-20 by sessions arena-23d7ed19 and arena-82d39deb): 5/5 destinations identical every time, and every final URL carried <code>lv=shuf</code> + <code>plpRedirect=mhFallback</code> — a fallback route, so “observed” is not “intended” (FLG-009). Log: <a href="verification.html#probes">Verification §4</a>.</p>
+<p class="src">Observed live eight times. The first five (2026-11-17; 2026-11-20 by arena-23d7ed19, arena-82d39deb, arena-c2123b9c and arena-70bd2fcc) agreed 5/5, and every final URL in those runs carried <code>lv=shuf</code> + <code>plpRedirect=mhFallback</code> — a fallback route, so “observed” is not “intended” (FLG-009). Three later runs diverged: observation #6 (f1fd0ff0 / 1c6908d1), #7 (b0920c92) and #8 (arena-9a3bb152) each landed B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 on the Amazon homepage — recorded under <a href="flagged-for-review.html">FLG-030 / FLG-033 / FLG-034</a> with the re-check action; B0f3GKalj reproduced in #7 and #8 (HTTP 500 twice in #6), and no link is claimed invalid (FLG-003). Log: <a href="verification.html#probes">Verification §4</a>.</p>
 
 <h2>What the latest verification pass changed</h2>
 <div class="tablewrap"><table><thead><tr><th>Finding</th><th>What changed</th><th>Where</th></tr></thead><tbody>
-<tr><td>One spec row was wrong</td><td>The 8-quart Chefman was recorded at 1700 W / 120 V. Its live bullet reads “1000 Watts/120 Volts – RJ38-SQSS-8T” — 1700 W is the 6-quart model's number. Corrected, and the earlier capture kept beside it.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-019">FLG-019</a> · <a href="verification.html">Verification</a></td></tr>
-<tr><td>Four listing-internal contradictions confirmed live</td><td>8-Qt temperature (title 450°F vs bullets 200–400°F) · Emeril accessory count (title 6 vs bullets 7) · Emeril preset count (title 24 vs bullets 25) · 6-Qt capacity unit (details “6 liters” vs title “6 quart”)</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-005">FLG-005</a>, <a href="flagged-for-review.html#flag-FLG-010">FLG-010</a>, <a href="flagged-for-review.html#flag-FLG-015">FLG-015</a>, <a href="flagged-for-review.html#flag-FLG-017">FLG-017</a></td></tr>
-<tr><td>One Amazon product-name string differs from the earlier capture</td><td>B08DKYBTPH serves “TurboFry 4-in-1 … 450°F Hi-Fry” now and a different name string earlier. Both are stored; the live one is displayed.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-016">FLG-016</a></td></tr>
-<tr><td>Two buyer-relevant facts found in the live pages</td><td>The 8-Qt ASIN is a 6/8/9-quart size family, and Amazon's own page states there is a newer model of that item. Both are now on the product page.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-020">FLG-020</a>, <a href="flagged-for-review.html#flag-FLG-021">FLG-021</a></td></tr>
+<tr><td>One spec row was wrong</td><td>The 8-quart Chefman was recorded at 1700 W / 120 V. Its live bullet reads “1000 Watts/120 Volts – RJ38-SQSS-8T” — 1700 W is the 6-quart model's number. Corrected, and the earlier capture kept beside it.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-022">FLG-022</a> · <a href="verification.html">Verification</a></td></tr>
+<tr><td>Four listing-internal contradictions confirmed live</td><td>8-Qt temperature (title 450°F vs bullets 200–400°F) · Emeril accessory count (title 6 vs bullets 7) · Emeril preset count (title 24 vs bullets 25) · 6-Qt capacity unit (details “6 liters” vs title “6 quart”)</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-005">FLG-005</a>, <a href="flagged-for-review.html#flag-FLG-010">FLG-010</a>, <a href="flagged-for-review.html#flag-FLG-020">FLG-020</a>, <a href="flagged-for-review.html#flag-FLG-018">FLG-018</a></td></tr>
+<tr><td>One Amazon product-name string differs from the earlier capture</td><td>B08DKYBTPH serves “TurboFry 4-in-1 … 450°F Hi-Fry” now and a different name string earlier. Both are stored; the live one is displayed.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-019">FLG-019</a></td></tr>
+<tr><td>Two buyer-relevant facts found in the live pages</td><td>The 8-Qt ASIN is a 6/8/9-quart size family, and Amazon's own page states there is a newer model of that item. Both are now on the product page.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-023">FLG-023</a>, <a href="flagged-for-review.html#flag-FLG-024">FLG-024</a></td></tr>
+<tr><td>Probe runs #6–#8 diverged (2026-11-20)</td><td>Observation #6 (f1fd0ff0 / arena/1c6908d1), #7 (b0920c92) and #8 (arena-9a3bb152) each landed four tokens on the Amazon homepage instead of the recorded /dp/ targets (B0f3GKalj matched in #7 and #8; HTTP 500 twice in #6). Four independent divergent sessions the same day — cause unresolved, browser re-check + Associates one-link test required before any link is scaled. Earlier in this pass, stale flag references in this table were corrected and FLG-025 restored to its documented title-drift content after a merge duplicated FLG-015.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-030">FLG-030</a>, <a href="flagged-for-review.html#flag-FLG-033">FLG-033</a>, <a href="flagged-for-review.html#flag-FLG-034">FLG-034</a>, <a href="verification.html#probes">Verification §4</a></td></tr>
 </tbody></table></div>
 
 <h2>What has to happen before any of this earns anything</h2>
@@ -1490,7 +1490,7 @@ def probes_section():
         flags = " ".join(f"<code>{esc(f)}</code>" for f in pr.get("observed_flags", []))
         note = f'<p class="meta">{esc(pr["note"])}</p>' if pr.get("note") else ""
         latest = ""
-        for key in ("sixth_observation", "fifth_observation", "fourth_observation", "third_observation"):
+        for key in ("eighth_observation", "seventh_observation", "sixth_observation", "fifth_observation", "fourth_observation", "third_observation"):
             if pr.get(key):
                 o = pr[key]
                 ok = o.get("matches_prior_observations", True)
@@ -1512,8 +1512,9 @@ def probes_section():
 <h2 id="probes">4 · Redirect re-observation log</h2>
 <p>{n_obs} independent observations of all five supplied links, recorded in <code>data/probes.json</code>. Most recent: {esc(PROBES['probe_session'])} on {esc(PROBES['probe_date'])} — the pass that closed FLG-008, the note that no session in this repo had observed the redirects directly. Method: {esc(PROBES['probe_method'])}</p>
 {f'<p class="meta">{esc(PROBES["probe6_note"])}</p>' if PROBES.get('probe6_note') else ''}
-<div class="tablewrap"><table><thead><tr><th>Supplied token</th><th>Result</th><th>Final listing</th><th>Query flags on the response</th><th>vs prior session</th><th>Latest re-read</th><th>Browse path / note</th></tr></thead><tbody>{rows}</tbody></table></div>
-<h3>What this proves</h3>
+{f'<p class="meta">{esc(PROBES["probe7_note"])}</p>' if PROBES.get('probe7_note') else ''}
+{f'<p class="meta">{esc(PROBES["probe8_note"])}</p>' if PROBES.get('probe8_note') else ''}
+<div class="tablewrap"><table><thead><tr><th>Supplied token</th><th>Result</th><th>Final listing</th><th>Query flags on the response</th><th>vs prior session</th><th>Latest re-read</th><th>Browse path / note</th></tr></thead><tbody>{rows}</tbody></table></div><h3>What this proves</h3>
 <p>{esc(interp['reproduced'])}</p>
 <h3>What it does not prove</h3>
 <p>{esc(interp['what_reproduction_does_not_prove'])}</p>
