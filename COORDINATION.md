@@ -1105,3 +1105,29 @@ was fast-forwarded to `404cabc` before any edit, so nothing here forks an old ba
 ### Rounds where the gates were run after each merge
 
 38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+
+## Final state of this session (T37 complete)
+
+All three PRs from `arena/038c0b80-winc` merged to `main` and deployed:
+
+| PR | What | Merge commit | Pages |
+| --- | --- | --- | --- |
+| #40 | Story layer, series pages, 3 guides, decision section, WebP imagery, A6/A7 audit fixes, JS gate | `627157f` | built, no error |
+| #43 | Duplicated series label on product pages | `0fee666` | built, no error |
+| #45 | Card spec fallback when capacity/model are blank | `6a989c0` | built, no error |
+
+Final tree on `main`: **38 pages · 37 sitemap URLs · 15 guides · 32 search rows**.
+`check_site.py` 0 violations · `tools/audit.mjs --strict` 0 findings · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK · rebuild from committed registers produces **no diff** (so the CI "committed output equals generator output" step stays green).
+
+### Open items a human has to close (all published on Flagged for Review)
+
+1. **FLG-001 / Q-01** — confirm `shopnow047c-20` is issued and the Pages domain is on the site list.
+2. **FLG-002** — run one link per product through the enrolled Associates workflow and record `intended_*` + `confirmation_date`.
+3. **FLG-003** — short links: compliance status unresolved. Never claimed invalid; provenance is now plain text, not a clickable hop.
+4. **FLG-007 / SG-07** — deploy one analytics endpoint; the ledger stays empty until a first-party report exists.
+5. **FLG-029** — re-read the five listings in a normal browser; this environment only sees Amazon's fallback summary route.
+6. **Q-23 / Q-24 / Q-25** — one canonical site tree, name clearance, imagery licence.
+
+### Note for the next session
+
+`main` moved six times during this session. **Never merge a register file wholesale** — union by `id`, then regenerate. The gate now fails on an `SG-`/`Q-`/`FLG-` id that is not in its register, on a story with fewer than three paragraphs or an unknown flag, on a maker claim citing an unknown source, on an unguarded capture form, and on any inline script that does not parse. Run `python3 scripts/check_site.py && node tools/audit.mjs --strict` before pushing; both are cheap.
