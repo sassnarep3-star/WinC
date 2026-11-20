@@ -455,6 +455,21 @@
       "evidence": "data/topics.json — every topic says 'no measured query data exists yet'.",
       "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
       "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification)."
-    }
+    },
+  {
+   "id": "SG-35",
+   "title": "Publication polish: season badges on guide cards and a season lead on category pages",
+   "status": "done-this-session",
+   "status_detail": "Shipped in session arena/a81c0f0e-winc. Every guide card now shows a season pill (Everyday / Holiday cooking), each category page carries a guide count in its kicker and a season-framed lead, and the build-prompt builder carries an explicit design directive. The front-page seasonal band is kept as-is; this suggestion adds the badge and lead layer on top without duplicating the band.",
+   "area": "Editorial / design",
+   "problem": "The site read like a careful verification dashboard rather than a polished marketing publication. The reader-facing surfaces lacked the season framing on individual cards and category pages that make an affiliate shop feel published rather than generated.",
+   "proposal": "Add a publication-polish layer: a season pill on every guide card, a guide count and season-framed lead on each category page, and an explicit design directive in the build-prompt builder so the suggestions feed a polished-marketing-publication build. Keep every compliance rule intact (disclosure above the fold, sponsored marking, blank prices).",
+   "effort": "S",
+   "cost": "none",
+   "risk": "Low. Cosmetic and additive only; no data or compliance rule changed. Risk is over-claiming if a 'trending' label implied measured data, which is why the framing is explicitly editorial.",
+   "expected_effect": "The site reads as a published marketing publication, which is the condition for organic traffic and click-through. Measure: outbound_click rate and guide views once the endpoint and Search Console are live (Q-08, Q-13).",
+   "evidence": "User brief: 'Make suggestions that will feed into the prompt to design the site so it should look like a polished marketing affiliate website... It should not read like some AI slop website.' Layered on the existing seasonal band and publication-polish pass.",
+   "feeds_prompt": "Design direction: the site must read like a polished marketing affiliate publication — catchy, human-sounding buyer questions as titles, editorial season framing, clean single-group navigation. It must NOT read like a generated dashboard. Keep disclosure above the fold on every page, mark every outbound product link Sponsored with rel=\"sponsored nofollow noopener\", and never print a price or rating."
+  }
   ]
 }
