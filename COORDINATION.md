@@ -1010,12 +1010,28 @@ Claim committed and pushed before any other edit.
 - **FLG-027** — price/rating/deal data cannot be shown by a static build under S02, which is also an editorial limit for the holiday season; decision recorded as SG-27 / Q-23 rather than left implicit.
 - Carry-overs still open, unchanged and not re-litigated: FLG-001 (tracking ID issuance), FLG-002 (one-link Associates test), FLG-003 (short-link compliance status — *not* claimed invalid), FLG-004/005/010 (listing-internal contradictions), FLG-007 (analytics endpoint not deployed), Q-13 (no Search Console property).
 
-### Parallel-session note: open PRs #17 and #18 (T32)
+### Parallel-session note: PRs #17 and #18 (T32) — how it resolved
 
-- Both are **whole-site rebuilds under different brands** (`arena/04112b09-winc` → "Crisp Report", `arena/23428c9e-winc` → "Air & Ember"), each `CONFLICTING` against `main`.
-- Diff names show they re-create `data/products.json`, `data/flags.json`, `data/sources.json`, `data/suggestions.json`, `data/questions.json`, `index.html`, `sitemap.xml`, `robots.txt`, `feed.xml` and the stylesheet from scratch. Merging either would **replace** the registers, the compliance gate, the redirect log and the measurement layer that `main` already carries — a net loss of verified data, not an addition.
-- Decision: **not merged by this session.** Their content ideas are recorded here for the owner: #18 carries a Black-Friday reading guide (`guide-black-friday-reading.html`) — the same ground is now covered by `guides/probe-placement-holiday-cook.html` plus FLG-027's price decision; #17 adds `assets/js/clicks.js` and `data/ledger.csv`, both already present in more complete form (`assets/app.js` with the five events, `data/campaign-ledger.json` with a schema and provenance trail).
-- Owners of those branches should rebase onto `main` and re-run `npm run verify`, or close their PRs. This is recorded instead of silently discarded, per the working agreement.
+- At claim time (start of this session) both were **whole-site rebuilds under different brands**
+  (`arena/04112b09-winc` → “Crisp Report”, `arena/23428c9e-winc` → “Air & Ember”), each reported
+  `CONFLICTING` against `main`, and each re-creating `data/products.json`, `data/sources.json`,
+  `data/flags.json`, `data/suggestions.json`, `data/questions.json`, `index.html`, `sitemap.xml`,
+  `robots.txt`, `feed.xml` and the stylesheet from scratch. Merging either as-is would have
+  replaced the registers, the gate, the redirect log and the measurement layer.
+- Decision recorded then: do not merge from this session; leave them to their owners and note it
+  here. That is what happened — `main` absorbed #17 (PR #17), #18 (PR #18, whose own record says
+  “adopt main as trunk, archive Air & Ember edition”) and later PR #39, plus the parallel passes
+  of `a81c0f0e`, `c2123b9c`, `68db484a`, `482d5832`, `5fed90b2`, `04112b09` and others.
+- This session therefore **merged `origin/main` into its branch and reconciled by hand** rather
+  than rebasing over it: main's registers, tools (`tools/audit.mjs`, `tools/freshness.mjs`,
+  `tools/serve.mjs`, `scripts/test_analytics.py`, `analytics/test_worker.mjs`), season rail and
+  four new guides are all kept; this session's rows were renumbered onto main's ids
+  (sources S30–S32, suggestions SG-36–SG-45, questions Q-23–Q-25, topic TP-15, flag FLG-026/027)
+  and its fifth redirect observation was appended to main's fourth rather than replacing it.
+- One collision was a real correctness issue, not a cosmetic one: main had **repurposed FLG-025**
+  (title reconciliation) and moved the ThermoMaven `HT07` note to FLG-015. This session's product
+  note cited FLG-025 for the blank model; it now cites FLG-015, so the reader-facing note points at
+  the flag that actually describes it.
 
 ### Repo changes this session (all on `arena/f1fd0ff0-winc`)
 
