@@ -1,5 +1,5 @@
 {
-  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped.",
+  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped. Rows Q-22..Q-26 were opened by session ab951e4c on 2026-11-20 after a verbatim read of Program Policies §2–§6 (S27); four earlier rows gained answers from that same read.",
   "updated": "2026-11-20",
   "blocking_count": 5,
   "questions": [
@@ -94,7 +94,7 @@
       "blocking": "no",
       "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
       "owner": "Any session with a browser",
-      "answer": "",
+      "answer": "Partly, from the register. All five destinations rendered on 2026-11-20 across three independent reads (data/probes.json), and two of them showed signals that change a buying decision: the 8-Qt page displayed a newer-model notice (FLG-024) and a 6/8/9-quart size selector under one ASIN (FLG-023). Stock, price and availability were deliberately not recorded. What nobody can answer from a repo is whether a listing is still live tomorrow — scripts/freshness.py now publishes the age of every recorded read so a stale row is visible instead of invisible (FLG-027).",
       "sources": [
         "S09",
         "S10",
@@ -142,9 +142,11 @@
       "blocking": "no — current labelling is honest",
       "discovery": "Either buy the item and photograph it (which also finally permits a testing claim, with dates and observations), or license stock that is not brand-identifying, or keep the illustration policy as-is and accept a lower-converting page.",
       "owner": "Owner (budget decision)",
-      "answer": "",
-      "sources": [],
-      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+      "answer": "Answered in part on 2026-11-20: every image on the site is now original artwork made for this publication (9 files in assets/img, each captioned as an illustration and never as a product photograph), so nothing on the page depends on a stock licence and no Amazon listing image is reused. Program Policies §6(a) would allow resizing a Program Content graphic but forbids altering it (S27); this site does not rely on that permission. The open half is unchanged and owner-only: photograph the physical items, which is also the only route to a dated, honest testing claim.",
+      "sources": [
+        "S27"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-08",
@@ -213,7 +215,7 @@
       "blocking": "no",
       "discovery": "Set the rate at whatever survives the owner's calendar — one guide per week is realistic only if the file-drop workflow is used. Keep a backlog in data/questions.json answers, then promote answered questions into guide titles.",
       "owner": "Owner decision",
-      "answer": "",
+      "answer": "Rate demonstrated rather than promised. On 2026-11-20 one session published three guides (accuracy/ice-cup, whole-chicken fit, listing literacy) by dropping three JSON files and running one build, and marked the four backlog rows they close in the same commit. That is the ceiling the machinery supports per focused pass, not a weekly commitment — SG-23 proposes two to three per build, and only the owner can pick a rate the calendar survives.",
       "sources": [],
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
@@ -226,9 +228,10 @@
       "blocking": "no — the blank-and-labelled approach is compliant today",
       "discovery": "Check Creators API status in Associates Central. If granted: fetch at render/build time with a timestamp shown next to the number and an expiry rule; if not granted, leave prices off the page permanently.",
       "owner": "Account owner only",
-      "answer": "",
+      "answer": "No — and the rule is now quoted rather than paraphrased. Program Policies §2(b): 'your Site may only show prices and availability if: (a) we serve the link in which that price and availability data are displayed, or (b) you obtain Product pricing and availability data via Creators API or PA API' (S27, confirming S02). Static prices stay off every page; the only route to a live number is Creators/PA API access on the owner's account, which this environment cannot check.",
       "sources": [
-        "S02"
+        "S02",
+        "S27"
       ],
       "source_note": ""
     },
@@ -280,13 +283,9 @@
       "blocking": "no — the current rule (show both, flag it) is the safe one",
       "discovery": "Owner confirms the precedence rule (manufacturer page over listing is the usual choice, but it needs saying out loud) and names who resolves rows. Add the rule to the About page's method list and the answer field here.",
       "owner": "Account owner",
-      "answer": "",
+      "answer": "Not resolvable in this sandbox: brand and manufacturer sites are outside the hosts this environment can reach, so no session here has read a spec sheet. What was read instead is the clause that governs our side — Program Policies §2(b) forbids 'inaccurate, overbroad, deceptive or otherwise misleading claims about any Product' (S27). That is why contested cells show both strings with their dates and a flag, and never pick a winner.",
       "sources": [
-        "S09",
-        "S10",
-        "S11",
-        "S12",
-        "S13"
+        "S27"
       ],
       "source_note": ""
     },
@@ -308,13 +307,88 @@
       "question": "Who owns the reader list, and which provider handles the addresses?",
       "decision_it_gates": "Whether the newsletter block can ever do more than count a local event, and what the privacy wording is allowed to promise.",
       "have": "A form that records a local reader_capture_submit count and nothing else. No list, no provider, no consent record, no sending.",
-      "missing": "A provider decision, a confirmed-consent flow, a retention rule and a named owner — plus the legal basis for storing addresses if the audience is in the EU.",
+      "missing": "Who owns the list, which provider holds the addresses, what consent is captured and retained, and how long addresses are kept. One constraint is now sourced: Program Policies §4 permits Special Links in email only where 'such communications are solicited (i.e., opted into by the receiving customer)' (S27, FLG-029), so a purchased or scraped list is not a variant worth discussing.",
       "blocking": "no — but until it is answered the capture block can only promise what it already does",
-      "discovery": "Owner picks a provider that supports a confirmed-consent flow (the address is only usable after the reader confirms it) and exports its list, writes the retention rule (for example: delete after 12 months of inactivity), and adds a matching line to the About and Disclosure pages. Until then the copy stays as it is now: a local count and nothing more.",
+      "discovery": "Decide provider + retention + consent record first, then wire the form's action to it and update the disclosure page in the same commit. Until a real list exists, the form must not imply one (it currently says plainly that it records nothing and sends nothing).",
       "owner": "Account owner",
       "answer": "",
       "sources": [],
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+    },
+    {
+      "id": "Q-22",
+      "question": "Do the brand names we reproduce next to buy buttons imply an endorsement the policies forbid?",
+      "decision_it_gates": "Whether the site needs a standing no-endorsement statement, and whether the brand-name usage has to stop anywhere.",
+      "have": "Program Policies §6(d) verbatim: no use of Program Content, 'including any name or likeness embodied in that Program Content, in a manner that implies a person's or company's endorsement or sponsorship of, or commercial tie-in or other association with, any product, service, party, or cause' (S27). Every card and product page reproduces a listing title containing brand and celebrity names (Emeril Lagasse, Chefman, CHEF iQ, ThermoMaven).",
+      "missing": "Whether the statement added on 2026-11-20 (footer, disclosure, About) is sufficient, and what Amazon's Trademark Guidelines and Non-Exhaustive Trademark Table require of name usage — neither page was read in this session.",
+      "blocking": "no — the disclaimer is in place; the guideline read is not done",
+      "discovery": "Read the Trademark Guidelines and the Non-Exhaustive Trademark Table linked from the policies page, then have the owner approve or extend the wording. Record the fetch date in the source register.",
+      "owner": "Owner (with a legal read if the site takes on sponsors)",
+      "answer": "",
+      "sources": [
+        "S27"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-23",
+      "question": "Are our shortened product labels materially different from the listing titles they come from?",
+      "decision_it_gates": "Whether the shelf copy can stay, or whether every card has to carry the full listing string.",
+      "have": "§6(a) forbids altering Program Content but allows truncating text 'in a manner that does not materially alter the meaning of the text' (S27). Each label here drops marketing qualifiers ('Professional', 'Digital', 'for Grill BBQ') and adds one shape descriptor in parentheses; the verbatim title is published on the product page directly underneath, so a reader can compare the two strings without leaving the site.",
+      "missing": "A human comparison of the five pairs, and a decision about the parenthetical descriptors, which are additions rather than truncations.",
+      "blocking": "no — the verbatim title is always present, which is the mitigating design",
+      "discovery": "Compare each label with its title on the verification page (both columns are now rendered); if any descriptor could be read as a claim the listing does not make, replace the label with a straight truncation of the title.",
+      "owner": "Owner or any session with a browser and the listing open",
+      "answer": "",
+      "sources": [
+        "S27"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-24",
+      "question": "How old is every recorded read right now, and what fires when a listing disappears?",
+      "decision_it_gates": "Whether the site is re-verified on a clock or only when a session happens to run, and whether a takedown prompt happens at all.",
+      "have": "§6(c) requires Prompt removal of Program Content 'that is no longer displayed on an Amazon Site' (S27). Every product row carries source_date, the redirect log carries three dated observations, and scripts/freshness.py now computes the age of each recorded read against today and exits non-zero past the hard limit.",
+      "missing": "A scheduled run of that check (nothing here can run on a calendar), and a named person who removes content when the check goes red.",
+      "blocking": "no — the measurement exists, the cadence and the owner do not",
+      "discovery": "Add `python3 scripts/freshness.py` to the publish checklist and to CI if Actions is enabled for this repo; decide the threshold (14 days is the current soft warning, 45 the hard failure).",
+      "owner": "Owner (cadence) + any session that edits the workflow",
+      "answer": "",
+      "sources": [
+        "S27"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-25",
+      "question": "Does any automation in this repo touch Program Content in a way the policies forbid?",
+      "decision_it_gates": "Whether an 'AI-powered product research' step can be added to the pipeline at all without written approval from Amazon.",
+      "have": "§5 verbatim: 'You will not, without or express prior written approval, use, or allow any third party to use, any Special Links or Program Content to develop machine learning models or related technology' (S27). What the repo does today: a builder that renders committed JSON, a compliance gate, a freshness clock, and a stdlib click collector. There is no crawler, no corpus export, and no model in this repository.",
+      "missing": "Nothing to answer today; the row exists so a future session cannot quietly add a scraper-to-training step. If that is wanted, the missing artefact is Amazon's written approval, which no code change substitutes for.",
+      "blocking": "no",
+      "discovery": "Keep the ban in the standing rules: README 'Rules that never bend', the feeds_prompt text of SG-23..SG-27, and this row. Re-read §5 before any data-collection step is proposed.",
+      "owner": "Owner (scope decision)",
+      "answer": "",
+      "sources": [
+        "S27"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-26",
+      "question": "Do FAQ or HowTo rich results still exist, and should the roadmap keep assuming they do?",
+      "decision_it_gates": "Whether any future SEO work targets SERP features Google no longer offers.",
+      "have": "Google's Search Central changelog carries a June 2026 entry titled 'Removing documentation for the FAQ rich result feature', and both the FAQPage and HowTo documentation URLs now redirect to that updates page (anchors #removing-faq-rich-result, #how-to-deprecation) — read 2026-11-20 (S28). This site emits FAQPage markup on guides and product pages, which stays useful for machine parsing.",
+      "missing": "How this site actually appears in search, which needs the Search Console property (Q-08/SG-08) before anyone can speak about SERP features at all.",
+      "blocking": "no",
+      "discovery": "Do not add HowTo markup on the strength of old advice. After the property exists, read the rich-result reports and correct this row with the date and the numbers.",
+      "owner": "Owner (Search Console) after the property exists",
+      "answer": "",
+      "sources": [
+        "S28"
+      ],
+      "source_note": ""
     }
   ]
 }

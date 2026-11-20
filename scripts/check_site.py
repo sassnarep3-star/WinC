@@ -2,7 +2,10 @@
 """Compliance + integrity gate for ShopNow Kitchen. Exit 1 on violation.
 Run: python3 scripts/check_site.py
 Checks: disclosure strip on every page, sponsored links, no prices, sitemap coverage,
-internal links resolve, product data sanity (9-char tokens, 10-char ASINs, blank intended).
+internal links resolve, product data sanity (9-char tokens, 10-char ASINs, blank intended),
+guide completeness and cluster filtering, register-schema validity for suggestions/questions/topics,
+category decision profiles, claim-drift (banned phrasing), imagery uniqueness and reader-path hygiene,
+campaign-ledrow schema (first-party figures only), and the age-of-a-recorded-read data-quality clock.
 """
 import os, re, json, sys, html as _html, xml.etree.ElementTree as ET
 
@@ -22,6 +25,7 @@ def read(path):
 products = json.load(open(os.path.join(ROOT, "data/products.json"), encoding="utf-8"))["products"]
 PROBES = json.load(open(os.path.join(ROOT, "data/probes.json"), encoding="utf-8"))
 FLAGS = json.load(open(os.path.join(ROOT, "data/flags.json"), encoding="utf-8"))["flags"]
+ledger = json.load(open(os.path.join(ROOT, "data/campaign-ledger.json"), encoding="utf-8"))
 for p in products:
     if len(p["submitted_token"]) != 9:
         fail(f"{p['id']}: submitted token must be 9 chars, got {p['submitted_token']}")
@@ -387,6 +391,96 @@ for hf in REGISTER_PAGES:
     # and the page must point at the source register
     if 'href="https://' not in content and 'href="verification.html#src-' not in content:
         fail(f"{hf}: register page links to no source at all")
+
+
+# --- reader-path hygiene + imagery + ledger schema (session ab951e4c) --------
+# 1. A shelf card is selling copy with sources attached. Register vocabulary
+#    (flag IDs, model strings, ASINs) belongs on the product page and the
+#    registers; on a card it reads as an audit that forgot to become a shop.
+CARD_PAGES = ["index.html", "air-fryers.html", "thermometers.html", "products/index.html"] + \
+             [g["path"] for g in guides]
+for hf in CARD_PAGES:
+    if not os.path.exists(os.path.join(ROOT, hf)):
+        fail(f"{hf}: page missing")
+        continue
+    content = read(hf)
+    for m in re.finditer(r'(?s)<article class="card productcard">(.*?)</article>', content):
+        block = m.group(1)
+        for pat, why in ((r"FLG-\d{3}", "a flag ID on a shelf card"),
+                         (r"\bASIN\b", "an ASIN on a shelf card"),
+                         (r"<li>Model:", "a model number on a shelf card")):
+            if re.search(pat, block):
+                fail(f"{hf}: {why} — keep register vocabulary on the product page")
+
+# 2. Imagery: each product needs its own art, a caption that says it is an
+#    illustration, and the two decision lines. Reusing one image across cards is
+#    the strongest generated-site tell on the page, so it is a failure, not a taste note.
+for p in products:
+    for field in ("image", "image_caption", "shelf_line", "decide_on"):
+        if not p.get(field):
+            fail(f"{p['id']}: {field} is empty (a card with no shelf line is a spec sheet, not a shop)")
+    if p.get("image") and not os.path.exists(os.path.join(ROOT, p["image"])):
+        fail(f"{p['id']}: image {p['image']} does not exist")
+    if p.get("image", "").endswith(".png"):
+        fail(f"{p['id']}: {p['image']} is an uncompressed PNG — run the asset step (see SG-21)")
+seen_img = {}
+for p in products:
+    seen_img.setdefault(p.get("image", ""), []).append(p["id"])
+for img, owners in seen_img.items():
+    if len(owners) > 1:
+        fail(f"imagery: {img} is reused by {len(owners)} products ({', '.join(owners)}) — give each product its own art")
+if not os.path.exists(os.path.join(ROOT, "data", "freshness.json")):
+    fail("data/freshness.json missing — the freshness thresholds are configuration, not code")
+else:
+    fcfg = json.load(open(os.path.join(ROOT, "data", "freshness.json"), encoding="utf-8"))
+    for k in ("soft_days", "hard_days"):
+        if not isinstance(fcfg.get(k), int) or fcfg[k] <= 0:
+            fail(f"data/freshness.json: {k} must be a positive integer")
+    if fcfg.get("soft_days", 0) >= fcfg.get("hard_days", 0):
+        fail("data/freshness.json: soft_days must be below hard_days")
+
+# 3. The campaign ledger may hold only first-party figures. A row with an extra
+#    key, a float, a rate, or an estimating word is the beginning of a fake number.
+LEDGER_KEYS = {"timestamp", "source", "channel", "eligible_sessions", "clicks", "reported_orders", "provenance"}
+EST = re.compile(r"\b(estimat\w*|forecast\w*|project(ing|ion|ed)?|assum\w*|backfill\w*|extrapolat\w*|approximat\w*)\b", re.I)
+for i, r in enumerate(ledger.get("rows", [])):
+    extra = set(r) - LEDGER_KEYS
+    if extra:
+        fail(f"campaign-ledger row {i}: keys {sorted(extra)} are not in the ledger schema (revenue and rate fields are never stored here)")
+    for k in ("eligible_sessions", "clicks", "reported_orders"):
+        if k in r and r[k] is not None and not isinstance(r[k], int):
+            fail(f"campaign-ledger row {i}: {k} must be an integer or null, not {type(r[k]).__name__} — a value the report did not state stays blank")
+    for k in ("source", "channel", "provenance"):
+        v = str(r.get(k, ""))
+        if EST.search(v):
+            fail(f"campaign-ledger row {i}: {k} contains {EST.search(v).group(0)!r} — the ledger holds figures read out of a report, nothing else")
+    if r.get("provenance") and not re.search(r"\d{4}-\d{2}-\d{2}", str(r["provenance"])):
+        fail(f"campaign-ledger row {i}: provenance carries no YYYY-MM-DD date, so the row cannot be re-checked")
+
+# 4. Program Policies §6(d): brand names sit next to buy buttons, so the
+#    not-endorsed-by-the-brand statement has to stay on the disclosure page.
+disc = read("disclosure.html")
+if "not endorsed by, sponsored by or affiliated with any brand" not in disc:
+    fail("disclosure.html: the §6(d) brand-endorsement statement is gone (Program Policies, S27)")
+
+# 5. Freshness data quality: every recorded read must carry a parseable,
+#    non-future date. Aging itself is reported, not failed, so the gate stays
+#    deterministic and a reader is never blocked by the passage of time.
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
+try:
+    import freshness as _fr
+    import datetime as _dt
+    as_of = _dt.date.today()
+    rs = _fr.rows(as_of)
+    for r in rs:
+        if r["state"] in ("no date recorded", "unparseable date") or r["state"].startswith("date is in the future"):
+            fail(f"freshness: {r['id']} / {r['field']} — {r['state']}")
+    aged = sum(1 for r in rs if r["state"].startswith("past"))
+    if aged:
+        print(f"note: {aged} of {len(rs)} recorded reads are past the freshness threshold — "
+              f"run `python3 scripts/freshness.py` and re-read before publishing (FLG-027).")
+except ImportError:
+    fail("scripts/freshness.py missing or unimportable — the age-of-read check is part of the gate")
 
 
 if errors:

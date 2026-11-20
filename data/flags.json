@@ -302,6 +302,26 @@
         "S27"
       ],
       "source_note": "Clause read verbatim 2026-11-20 — see S27. No claim is made that any specific label is or is not compliant."
+    },
+    {
+      "id": "FLG-032",
+      "title": "The disclosure claimed ‘Amazon product descriptions are never copied’ while product pages publish the verbatim listing title",
+      "detail": "Found by session ab951e4c on 2026-11-20 while adding the §6(a) citation. The disclosure page asserted that no Amazon product description is copied, yet every product page reproduces the listing's title string verbatim and every spec cell is copied from the listing's details table. Both practices are what the site's whole method depends on — a spec without the seller's exact words is not verifiable — so the sentence was wrong, not the practice. A reader or an Amazon reviewer checking the claim against the page would have found the contradiction first.",
+      "action": "Replaced with a precise statement of what is taken from a listing (title and detail values, each with URL and read date), what is never taken (listing images, banners, description paragraphs), and the §6(a) truncation rule the labels rely on. Q-23 asks the human question the policy leaves open.",
+      "status": "fixed by this session",
+      "sources": [
+        "S27"
+      ],
+      "source_note": "Program Policies §6(a), read verbatim 2026-11-20 (S27). No external source speaks to our own wording; the contradiction was internal."
+    },
+    {
+      "id": "FLG-033",
+      "title": "The measurement page labelled a table ‘Findability status (SG-27..SG-30)’ when those IDs name different rows",
+      "detail": "The suggestion register has grown to 31 rows, and SG-27 is now the reader-capture decision, not a nav-label row. The heading on measurement.html still pointed at SG-27..SG-30 for a table about nav labels, RSS, Search Console and capture — an ID citation that had quietly gone stale while the register moved under it. Cross-references by ID across two registers are exactly the kind of link that rots without failing loudly.",
+      "action": "Heading changed to describe its own contents (‘What is wired, and what is only code so far’) and the rows now cite files and flags rather than suggestion IDs. The gate no longer has to police this class of drift because the page no longer makes the claim.",
+      "status": "fixed by this session",
+      "sources": [],
+      "source_note": "Internal only — a stale cross-reference inside the repository, found and removed in the same pass that added the rows it would have misled a reader about."
     }
   ]
 }

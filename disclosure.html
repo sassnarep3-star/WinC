@@ -22,8 +22,9 @@
 <ul>
 <li><strong>Sponsored links:</strong> every outbound product link carries <code>rel="sponsored nofollow"</code> (Google, S04) and a visible Sponsored label.</li>
 <li><strong>Prices:</strong> this site does not display prices. Prices and availability are shown on Amazon (Program Policies, S02). “Check price on Amazon” is the only price action.</li>
-<li><strong>No endorsement:</strong> an affiliate relationship does not mean Amazon endorses this site or its content.</li>
-<li><strong>Original content:</strong> guides and comparisons are original. Amazon product descriptions are never copied.</li>
+<li><strong>No endorsement, in either direction:</strong> an affiliate relationship does not mean Amazon endorses this site, and this site is not endorsed by, sponsored by or affiliated with any brand it names. Program Policies §6(d) forbids using Program Content — “including any name or likeness embodied in that Program Content” — in a way that implies an endorsement or a commercial tie-in (S27). Brand names appear here to identify products, and nothing else.</li>
+<li><strong>What we take from a listing, exactly:</strong> the title string and the product-detail values, each reproduced with the URL and the date it was read. Program Policies §6(a) allows truncating that text where the meaning is unchanged and forbids altering it, so the verbatim title always sits under the shortened shelf label (S27, Q-23). No listing image, banner or description paragraph is copied, and no Amazon graphic is resized and reused.</li>
+<li><strong>Guides are original:</strong> the analysis, the checklists and the questions are written here. What is quoted is marked as a quote and linked.</li>
 <li><strong>Privacy:</strong> no cookies, no fingerprinting, no email storage on this static site. Measurement counts aggregates only (see <a href="measurement.html">Measurement</a>). Reader-capture emails are handled by the email provider you choose.</li>
 </ul>
 <h2>Compliance gate</h2>
@@ -34,6 +35,13 @@
 <li><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies (S02)</a></li>
 <li><a href="https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking" rel="nofollow noopener" target="_blank">FTC Endorsement Guides (S03)</a></li>
 <li><a href="https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links" rel="nofollow noopener" target="_blank">Google rel=sponsored (S04)</a></li>
+<li><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies §2(b) prices, §4 email, §5 machine-learning limit, §6(a)/(c)/(d) content rules — read verbatim 2026-11-20 (S27)</a></li>
+<li><a href="https://developers.google.com/search/updates" rel="nofollow noopener" target="_blank">Google Search Central changelog — FAQ rich-result documentation removed, HowTo deprecated (S28)</a></li>
+</ul>
+<h2>Two obligations this page now states out loud</h2>
+<ul>
+<li><strong>If Amazon takes a listing down, the copy here has to go.</strong> Program Policies §6(c) requires prompt removal of Program Content “that is no longer displayed on an Amazon Site” (S27). <code>scripts/freshness.py</code> publishes how old every recorded read is and fails past a hard limit, so a stale page is visible rather than quietly trusted. The takedown itself is a human action, and that is recorded as an open process (<a href="flagged-for-review.html#FLG-027">FLG-027</a>, <a href="questions.html">Q-24</a>).</li>
+<li><strong>Nothing collected here trains a model.</strong> Program Policies §5 bars using Special Links or Program Content “to develop machine learning models or related technology” without Amazon’s express prior written approval (S27). This repository automates rendering, checking and record-keeping; it contains no crawler and no corpus export, and the ban is written into the standing rules so a future pass cannot drift past it (Q-25).</li>
 </ul>
 <section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
@@ -43,7 +51,7 @@
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="questions.html">questions page</a>, and the <a href="disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="questions.html">questions page</a>, and the <a href="disclosure.html">disclosure</a> says exactly what this site does and does not collect. One rule is already settled: Amazon's Program Policies permit affiliate links in email only where the recipient asked for the message, so no link here will ever go out uninvited. One rule is already settled: Amazon's Program Policies permit Special Links in email only where the message was solicited by the recipient, so no affiliate link ever goes out uninvited.</small>
 </section>
 </main><footer><div class="wrap">
 <div class="footer-disclosure"><strong>As an Amazon Associate I earn from qualifying purchases.</strong>
@@ -70,5 +78,5 @@ Prices and availability are shown on Amazon — check Amazon for current details
 <li><a href="index.html">Front page</a></li>
 </ul></div>
 </div>
-<p class="meta footnote">ShopNow Kitchen · 2026-11-20 · Tracking ID shopnow047c-20 (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners; this site is not endorsed by or affiliated with Amazon beyond Associates participation. No testing, ranking or price claim is made without a stated source.</p>
+<p class="meta footnote">ShopNow Kitchen · 2026-11-20 · Tracking ID shopnow047c-20 (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners and appear here only to identify the items being discussed: this site is not endorsed by or affiliated with Amazon beyond Associates participation, and it is not endorsed by, sponsored by or affiliated with any brand named on a page (Program Policies §6(d), S27). No testing, ranking or price claim is made without a stated source.</p>
 </div></footer><script src="assets/app.js" defer></script></body></html>

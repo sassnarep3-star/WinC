@@ -3,7 +3,12 @@
 Run: python3 scripts/build_site.py
 No third-party dependencies. Generated HTML is committed for GitHub Pages (legacy build).
 """
-import json, html, os, datetime, re, glob
+import json, html, os, datetime, re, glob, sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
+try:
+    import freshness as _freshness  # scripts/freshness.py — the age-of-a-recorded-read clock
+except Exception:
+    _freshness = None
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
@@ -191,7 +196,7 @@ Prices and availability are shown on Amazon — check Amazon for current details
 <li><a href="{p}index.html">Front page</a></li>
 </ul></div>
 </div>
-<p class="meta footnote">ShopNow Kitchen · {TODAY} · Tracking ID {TAG} (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners; this site is not endorsed by or affiliated with Amazon beyond Associates participation. No testing, ranking or price claim is made without a stated source.</p>
+<p class="meta footnote">ShopNow Kitchen · {TODAY} · Tracking ID {TAG} (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners and appear here only to identify the items being discussed: this site is not endorsed by or affiliated with Amazon beyond Associates participation, and it is not endorsed by, sponsored by or affiliated with any brand named on a page (Program Policies §6(d), S27). No testing, ranking or price claim is made without a stated source.</p>
 </div></footer>"""
 
 
@@ -316,7 +321,7 @@ def capture_block(depth=0):
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect. One rule is already settled: Amazon's Program Policies permit affiliate links in email only where the recipient asked for the message, so no link here will ever go out uninvited. One rule is already settled: Amazon's Program Policies permit Special Links in email only where the message was solicited by the recipient, so no affiliate link ever goes out uninvited.</small>
 </section>"""
 
 # ---------- HOME ----------
@@ -581,6 +586,39 @@ def suggestion_stages():
             + block("Already shipped", shipped, "Done in an earlier session or this one — kept so the reasoning is not lost."))
 
 
+PATHS = [
+ ("A", "Trust the money path first",
+  ["SG-01", "SG-10", "SG-18"],
+  ["Q-01", "Q-02", "Q-16", "Q-04"],
+  "Nothing scales before one link is proven to attribute. This path is small, boring, and the only one that can close FLG-002."),
+ ("B", "Shop depth — make the page a buyer can act on",
+  ["SG-11", "SG-16", "SG-19", "SG-22", "SG-25"],
+  ["Q-07", "Q-23"],
+  "Imagery, decision blocks, comparison URLs. Everything here is bounded by what a listing states, so it converts without inventing."),
+ ("C", "Content volume — publish the backlog",
+  ["SG-23", "SG-06", "SG-17"],
+  ["Q-12", "Q-20", "Q-05"],
+  "Two to three guides a build, each added to sitemap and feed automatically. Without measurement this is educated guessing, and the pages say so."),
+ ("D", "Measure first, then decide",
+  ["SG-07", "SG-08", "SG-21", "SG-26", "SG-27"],
+  ["Q-08", "Q-13", "Q-21", "Q-24", "Q-26"],
+  "Deploy the endpoint, verify Search Console, run the freshness clock on a schedule. The next five topics come from queries, not from this board."),
+]
+
+def path_table():
+    by_id = {x["id"]: x for x in SUGGESTIONS}
+    q_by_id = {x["id"]: x for x in QUESTIONS}
+    rows = ""
+    for key, name, sugs, qs, note in PATHS:
+        cells = " · ".join(f'<a href="#{sid}">{sid}</a>' if sid in by_id else f"{sid} <span class=blank>(not in the register)</span>" for sid in sugs)
+        waits = " · ".join(
+            f'<a href="questions.html">{qid}</a> — {esc(q_by_id[qid]["question"])}' if qid in q_by_id else esc(qid)
+            for qid in qs)
+        rows += (f'<tr><td><strong>Path {key}</strong><br><span class="meta">{esc(name)}</span></td>'
+                 f'<td>{cells}</td><td>{waits}</td><td>{esc(note)}</td></tr>')
+    return ('<div class="tablewrap"><table><thead><tr><th>Path</th><th>Register rows it comprises</th>'
+            '<th>Questions it waits on</th><th>Why this order</th></tr></thead><tbody>' + rows + '</tbody></table></div>')
+
 def direction_body():
     c = counts()
     cards = ""
@@ -614,6 +652,7 @@ def direction_body():
 {suggestion_stages()}
 
 <h2>Choose the next path</h2>
+<p class="sectionlede">Each path is a set of register rows, not a mood. The rows it comprises and the questions it waits on are listed under the buttons, so a choice can be checked before it is made.</p>
 <div class="notice"><strong>How to choose:</strong> pick the path that matches what you want in the next month, not the one that sounds most ambitious. Paths are mutually exclusive for one build. Your choice is stored only in this browser (localStorage); no data leaves the device and nothing is sent anywhere.</div>
 <form class="chooser" id="path-chooser">
 <label><input type="radio" name="path" value="A"> <strong>Path A — Trust the money path first (recommended).</strong> Run the one-link Associates tests, confirm the tracking ID, keep links gated until they pass. Nothing grows until the click actually attributes.</label>
@@ -632,6 +671,8 @@ m.textContent='Saved: Path '+v.value+' (this browser only, nothing transmitted).
 f.addEventListener('submit',function(e){{e.preventDefault();save();}});
 try{{var s=localStorage.getItem('sk_path');if(s){{var r=document.querySelector('input[name=path][value="'+s+'"]');if(r)r.checked=true;}}}}catch(e){{}}}})();
 </script>
+<h2>What each path actually consists of</h2>
+{path_table()}
 <h2>The register, one card at a time</h2>
 <p>Tick the ones you want, then copy the block at the bottom of the page. Anything marked <em>open-blocked</em> cannot start until the matching question on the <a href="questions.html">open-questions register</a> is answered.</p>
 <div class="suglist">{cards}</div>
@@ -803,8 +844,9 @@ def disclosure_body():
 <ul>
 <li><strong>Sponsored links:</strong> every outbound product link carries <code>rel="sponsored nofollow"</code> (Google, S04) and a visible Sponsored label.</li>
 <li><strong>Prices:</strong> this site does not display prices. Prices and availability are shown on Amazon (Program Policies, S02). “Check price on Amazon” is the only price action.</li>
-<li><strong>No endorsement:</strong> an affiliate relationship does not mean Amazon endorses this site or its content.</li>
-<li><strong>Original content:</strong> guides and comparisons are original. Amazon product descriptions are never copied.</li>
+<li><strong>No endorsement, in either direction:</strong> an affiliate relationship does not mean Amazon endorses this site, and this site is not endorsed by, sponsored by or affiliated with any brand it names. Program Policies §6(d) forbids using Program Content — “including any name or likeness embodied in that Program Content” — in a way that implies an endorsement or a commercial tie-in (S27). Brand names appear here to identify products, and nothing else.</li>
+<li><strong>What we take from a listing, exactly:</strong> the title string and the product-detail values, each reproduced with the URL and the date it was read. Program Policies §6(a) allows truncating that text where the meaning is unchanged and forbids altering it, so the verbatim title always sits under the shortened shelf label (S27, Q-23). No listing image, banner or description paragraph is copied, and no Amazon graphic is resized and reused.</li>
+<li><strong>Guides are original:</strong> the analysis, the checklists and the questions are written here. What is quoted is marked as a quote and linked.</li>
 <li><strong>Privacy:</strong> no cookies, no fingerprinting, no email storage on this static site. Measurement counts aggregates only (see <a href="measurement.html">Measurement</a>). Reader-capture emails are handled by the email provider you choose.</li>
 </ul>
 <h2>Compliance gate</h2>
@@ -815,6 +857,13 @@ def disclosure_body():
 <li><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies (S02)</a></li>
 <li><a href="https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking" rel="nofollow noopener" target="_blank">FTC Endorsement Guides (S03)</a></li>
 <li><a href="https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links" rel="nofollow noopener" target="_blank">Google rel=sponsored (S04)</a></li>
+<li><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies §2(b) prices, §4 email, §5 machine-learning limit, §6(a)/(c)/(d) content rules — read verbatim 2026-11-20 (S27)</a></li>
+<li><a href="https://developers.google.com/search/updates" rel="nofollow noopener" target="_blank">Google Search Central changelog — FAQ rich-result documentation removed, HowTo deprecated (S28)</a></li>
+</ul>
+<h2>Two obligations this page now states out loud</h2>
+<ul>
+<li><strong>If Amazon takes a listing down, the copy here has to go.</strong> Program Policies §6(c) requires prompt removal of Program Content “that is no longer displayed on an Amazon Site” (S27). <code>scripts/freshness.py</code> publishes how old every recorded read is and fails past a hard limit, so a stale page is visible rather than quietly trusted. The takedown itself is a human action, and that is recorded as an open process (<a href="flagged-for-review.html#FLG-027">FLG-027</a>, <a href="questions.html">Q-24</a>).</li>
+<li><strong>Nothing collected here trains a model.</strong> Program Policies §5 bars using Special Links or Program Content “to develop machine learning models or related technology” without Amazon’s express prior written approval (S27). This repository automates rendering, checking and record-keeping; it contains no crawler and no corpus export, and the ban is written into the standing rules so a future pass cannot drift past it (Q-25).</li>
 </ul>
 {capture_block()}
 """
@@ -833,6 +882,13 @@ def ledger_rows_html():
     return "\n".join(out)
 
 def measurement_body():
+    hard = 45
+    total = 0
+    try:
+        hard = int(load("data/freshness.json").get("hard_days", 45))
+        total = len(_freshness.rows(datetime.date.fromisoformat(TODAY)))
+    except Exception:
+        pass
     return f"""
 <section class="hero"><span class="kicker">Measurement · Evidence-based iteration</span>
 <h1>Measurement: clicks and conversions, counted honestly</h1>
@@ -856,13 +912,16 @@ def measurement_body():
 </tbody></table></div>
 <p class="meta">Source file: <a href="https://github.com/sassnarep3-star/WinC/blob/main/data/campaign-ledger.json">data/campaign-ledger.json</a> · rows: {len(LEDGER.get("rows", []))} · provenance entries: {len(LEDGER.get("provenance_trail", []))}</p>
 
-<h2>Findability status (SG-27..SG-30)</h2>
+<h2>What is wired, and what is only code so far</h2>
 <div class="tablewrap"><table><thead><tr><th>Item</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
 <tr><td>Nav labels (SG-27)</td><td><span class="okpill">shipped</span></td><td>Single navigation group on every page</td></tr>
 <tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td><a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
 <tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record date here</td></tr>
 <tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see FLG-013</td></tr>
 <tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td><a href="search.html">search.html</a> (client-side, no server)</td></tr>
+<tr><td>Ledger ingest gate</td><td><span class="okpill">shipped</span></td><td><code>scripts/ledger_add.py</code> appends a row only with <code>--authorized</code>, an integer-or-null per field, and a dated provenance string; it refuses estimating words and will not derive a rate from another column. Exercised on {TODAY} with a throwaway row, rendered, then reverted — the ledger is empty because no first-party report has been obtained.</td></tr>
+<tr><td>Freshness clock (Program Policies §6(c))</td><td><span class="okpill">shipped</span></td><td><code>npm run fresh</code> reports the age of <strong>{total}</strong> recorded reads against today and exits non-zero past {hard} days (thresholds in <code>data/freshness.json</code>, not in the script). Re-reading is a human action, and removing content Amazon no longer displays stays a human decision — see <a href="flagged-for-review.html">FLG-027</a>.</td></tr>
+<tr><td>What the counter cannot see</td><td><span class="warnpill">by design</span></td><td>The collector counts clicks and reads; it cannot observe an order. Orders enter this site only through a first-party Associates report, appended by hand with provenance — never inferred from a click count.</td></tr>
 </tbody></table></div>
 {capture_block()}
 """

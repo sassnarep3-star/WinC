@@ -35,13 +35,16 @@
 </tbody></table></div>
 <p class="meta">Source file: <a href="https://github.com/sassnarep3-star/WinC/blob/main/data/campaign-ledger.json">data/campaign-ledger.json</a> · rows: 0 · provenance entries: 1</p>
 
-<h2>Findability status (SG-27..SG-30)</h2>
+<h2>What is wired, and what is only code so far</h2>
 <div class="tablewrap"><table><thead><tr><th>Item</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
 <tr><td>Nav labels (SG-27)</td><td><span class="okpill">shipped</span></td><td>Single navigation group on every page</td></tr>
 <tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td><a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
 <tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record date here</td></tr>
 <tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see FLG-013</td></tr>
 <tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td><a href="search.html">search.html</a> (client-side, no server)</td></tr>
+<tr><td>Ledger ingest gate</td><td><span class="okpill">shipped</span></td><td><code>scripts/ledger_add.py</code> appends a row only with <code>--authorized</code>, an integer-or-null per field, and a dated provenance string; it refuses estimating words and will not derive a rate from another column. Exercised on 2026-11-20 with a throwaway row, rendered, then reverted — the ledger is empty because no first-party report has been obtained.</td></tr>
+<tr><td>Freshness clock (Program Policies §6(c))</td><td><span class="okpill">shipped</span></td><td><code>npm run fresh</code> reports the age of <strong>56</strong> recorded reads against today and exits non-zero past 45 days (thresholds in <code>data/freshness.json</code>, not in the script). Re-reading is a human action, and removing content Amazon no longer displays stays a human decision — see <a href="flagged-for-review.html">FLG-027</a>.</td></tr>
+<tr><td>What the counter cannot see</td><td><span class="warnpill">by design</span></td><td>The collector counts clicks and reads; it cannot observe an order. Orders enter this site only through a first-party Associates report, appended by hand with provenance — never inferred from a click count.</td></tr>
 </tbody></table></div>
 <section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
@@ -51,7 +54,7 @@
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="questions.html">questions page</a>, and the <a href="disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
+<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="questions.html">questions page</a>, and the <a href="disclosure.html">disclosure</a> says exactly what this site does and does not collect. One rule is already settled: Amazon's Program Policies permit affiliate links in email only where the recipient asked for the message, so no link here will ever go out uninvited. One rule is already settled: Amazon's Program Policies permit Special Links in email only where the message was solicited by the recipient, so no affiliate link ever goes out uninvited.</small>
 </section>
 </main><footer><div class="wrap">
 <div class="footer-disclosure"><strong>As an Amazon Associate I earn from qualifying purchases.</strong>
@@ -78,5 +81,5 @@ Prices and availability are shown on Amazon — check Amazon for current details
 <li><a href="index.html">Front page</a></li>
 </ul></div>
 </div>
-<p class="meta footnote">ShopNow Kitchen · 2026-11-20 · Tracking ID shopnow047c-20 (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners; this site is not endorsed by or affiliated with Amazon beyond Associates participation. No testing, ranking or price claim is made without a stated source.</p>
+<p class="meta footnote">ShopNow Kitchen · 2026-11-20 · Tracking ID shopnow047c-20 (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners and appear here only to identify the items being discussed: this site is not endorsed by or affiliated with Amazon beyond Associates participation, and it is not endorsed by, sponsored by or affiliated with any brand named on a page (Program Policies §6(d), S27). No testing, ranking or price claim is made without a stated source.</p>
 </div></footer><script src="assets/app.js" defer></script></body></html>

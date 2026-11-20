@@ -1,0 +1,7 @@
+{
+  "soft_days": 14,
+  "hard_days": 45,
+  "note": "Thresholds for scripts/freshness.py, the age-of-a-recorded-read clock. Soft = worth re-reading the official source; hard = do not publish the row until it is re-read or removed. Basis: Amazon Associates Program Policies §6(c) requires prompt removal of Program Content that is no longer displayed on an Amazon Site (S27, FLG-027). Changed here, not in the script.",
+  "updated": "2026-11-20",
+  "updated_by_session": "ab951e4c"
+}
