@@ -447,6 +447,11 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 - `data/flags.json`: kept `main`'s FLG-018–FLG-024; appended this session's title-drift flag as
   **FLG-025** (renumbered to avoid collision).
 - All generated HTML/feed/search-index regenerated from the combined data via `scripts/build_site.py`.
+- **Post-merge correction:** the second rebase's flag merge briefly duplicated the ThermoMaven
+  flag as FLG-025 and dropped this session's title-drift flag (a `next()` selector matched
+  FLG-015 instead of the title-drift entry). Fixed in a follow-up commit: the title-drift finding
+  is restored as **FLG-025**, and the duplicate ThermoMaven flag removed (ThermoMaven remains at
+  FLG-004 and FLG-015 only). Gate re-run green.
 
 ## PR / merge record (T07)
 
