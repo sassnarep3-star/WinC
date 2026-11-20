@@ -171,3 +171,32 @@ collector counts clicks and reads only — it cannot see an order, by design.
 
 New session note for whoever picks this up: `pkill -f collect.py` / `pgrep -f 'collect\.py'` will
 kill your own shell if the same string appears in the running command. Use `fuser -k <port>/tcp`.
+
+---
+
+## Session 5c2f1a2c (branch `arena/5c2f1a2c-winc`, 2026-11-20)
+
+Based on `main@358dd0c` (after PR #9). Read the board on `main` before editing. Open draft PR #5 (`arena/70d8ad52-winc`, "HELD", parallel `docs/` site) is **not** touched by this session.
+
+| ID | Task | Status | Owner | Files |
+|----|------|--------|-------|-------|
+| T18 | Re-verify the 5 observed redirect targets + Operating Agreement against live sources; create the empty, schema-defined campaign ledger (`data/campaign-ledger.json`) and render it on `measurement.html` from the file instead of a hard-coded row; final gate + PR → main + Pages check | done | 5c2f1a2c | `data/campaign-ledger.json`, `scripts/build_site.py` (measurement section only), `measurement.html` (generated), `COORDINATION.md` |
+
+### Verification performed (T18)
+
+- `https://affiliate-program.amazon.com/help/operating/agreement` — fetched 2026-11-20; page header reads "Updated: October 15, 2025", matching the Operating Agreement date already cited (S-register). Login-gated pages are not read beyond the public agreement text.
+- Live fetch of each observed target (`https://www.amazon.com/dp/<ASIN>`) on 2026-11-20, titles compared to `data/probes.json`:
+  - B0CDY277D3 — Chefman 6 Quart Dual Basket (matches)
+  - B09B7SB46R — Emeril Lagasse 26QT French Door (matches; title says "Six Cooking Accessories" — FLG-010 stands)
+  - B08DKYBTPH — Chefman Air Fryer 8 Qt TurboFry 4-in-1, 450°F Hi-Fry (matches; FLG-005 stands)
+  - B0DHZTCNR5 — ThermoMaven 1 Sec (matches; FLG-004 stands)
+  - B0DZFD6R9Z — CHEF iQ Sense Gen3 (matches)
+- All five pages still carry `lv=shuf` and `plpRedirect=mhFallback` (FLG-009): the observed target is stable, the intended ASIN stays blank.
+- Prices visible in the fetched pages are **not** copied anywhere (policy FLG-006).
+
+### Irregularities (no new flags beyond existing ones)
+
+- The campaign ledger had been described in measurement.html, questions.json and analytics/collect.py as a file, but `data/campaign-ledger.json` did not exist. Fixed by this task.
+- Tracking ID `shopnow047c-20` is stored in products.json, but FLG-001 remains open: issuance is not confirmed from Associates Central (login required; not reachable from this sandbox).
+- Short links remain unresolved per FLG-003; not called invalid.
+
