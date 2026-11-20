@@ -291,6 +291,19 @@
         "S34"
       ],
       "source_note": ""
+    },
+    {
+      "id": "FLG-030",
+      "title": "Supplied link.amazon tokens did not reproduce the prior ASIN mapping via this fetch path (2026-11-20)",
+      "detail": "Session arena/1c6908d1-winc re-fetched all five supplied link.amazon tokens directly on 2026-11-20. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts — i.e. the token->ASIN mapping recorded by prior sessions (S14/S18/S22/S29, data/probes.json) was NOT reproduced through this fetch path. This does NOT establish the links are invalid (FLG-003 unchanged, never claimed invalid). The likely causes are a difference in redirect/cookie/region handling between the page-reader fetch and the prior sessions' browser/curl resolution, or session-dependent redirect behaviour. The observed_* ASIN values remain valid product identities (the /dp/ listings are live and titles match), but the token-to-ASIN mapping's reproducibility across observation methods is now in question.",
+      "action": "Re-resolve each token in a real enrolled-Associates browser context (cookies + region) and record the final URL per token in data/probes.json with a dated provenance line; reconcile against the prior mapping. Do not claim the links are invalid until that is done.",
+      "status": "needs review",
+      "sources": [
+        "S15",
+        "S18",
+        "S36"
+      ],
+      "source_note": ""
     }
   ]
 }
