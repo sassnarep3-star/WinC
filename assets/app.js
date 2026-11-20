@@ -72,11 +72,21 @@
   }
   document.addEventListener("scroll", onScroll, { passive: true });
 
-  // 4) reader_capture_submit — newsletter form (double opt-in handled by provider; no tracking pixel)
+  // 4) reader_capture_submit — no backend exists; count locally, send nothing, keep the address out of the URL.
   var form = document.getElementById("reader-capture");
   if (form){
-    form.addEventListener("submit", function(){
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
       send("reader_capture_submit", { form: "newsletter" });
+      var note = document.getElementById("capture-status");
+      if (!note){
+        note = document.createElement("small");
+        note.id = "capture-status";
+        note.setAttribute("role", "status");
+        form.parentNode.insertBefore(note, form.nextSibling);
+      }
+      note.textContent = "Recorded in this browser only — nothing was sent anywhere.";
+      form.reset();
     });
   }
 

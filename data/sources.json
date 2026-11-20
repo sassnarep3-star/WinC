@@ -203,6 +203,14 @@
       "what": "Fourth observation, 2026-11-20: B0f3GKalj → /dp/B0DZFD6R9Z (matches all prior observations, same lv=shuf + plpRedirect=mhFallback flags); B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. 1/5 matched. Divergence published as FLG-026; no claim that any link is invalid (FLG-003).",
       "date": "2026-11-20",
       "access": "Fetched 2026-11-20 through the same reader as the earlier observations. Per-request behavior differs from the first three runs; reader-side degradation and a change in short-link behavior cannot be separated from this environment, hence FLG-026 with a browser re-check action."
+    },
+    {
+      "id": "S28",
+      "title": "Amazon Associates — Standard Commission Income Statement (Table 1 rate card)",
+      "url": "https://affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ",
+      "what": "Table 1 fixed rates, fetched verbatim 2026-11-20: 'Physical Books, Kitchen, Automotive | 4.50%'; 'All Other Categories | 4.00%'. Publicly readable without login. Answers the rate half of Q-04; per-ASIN commission-category assignment is not stated on this page and stays unconfirmed.",
+      "date": "2026-11-20",
+      "access": "Directly fetched anonymously on 2026-11-20 by session arena-9a3bb152; Table 1 read in full."
     }
   ]
 }

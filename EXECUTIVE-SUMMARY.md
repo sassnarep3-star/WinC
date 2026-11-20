@@ -9,7 +9,7 @@ It leads with products, answers buyer questions, and keeps verification one clic
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
 - **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
-- **Trust:** verification register (intent vs. observed kept separate), 27-source register, 26 flagged items, redirect re-observation log (four observations), compliance gate (`scripts/check_site.py`).
+- **Trust:** verification register (intent vs. observed kept separate), 28-source register, 27 flagged items, redirect re-observation log (five observations), compliance gate (`scripts/check_site.py`).
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 
 ## Key facts (all sourced)

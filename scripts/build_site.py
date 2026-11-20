@@ -308,9 +308,9 @@ def capture_block(depth=0):
     return f"""<section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
 <p>One email when a new guide publishes.</p>
-<form id="reader-capture" action="{pfx}measurement.html" method="get">
+<form id="reader-capture" action="" method="get">
 <label for="email">Email address</label>
-<input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+<input id="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
 <small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
@@ -703,7 +703,10 @@ def verification_body():
                         + "".join(specs_rows) + "</tbody></table></div>")
 
     src_rows = "".join(
-        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
+        (f"<tr id=\"src-{esc(s['id'])}\"><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br>"
+         + (f"<code>{esc(s['url'])}</code>" if "link.amazon" in s["url"] or "amzn.to" in s["url"]
+            else f"<a class=\"src\" href=\"{esc(s['url'])}\" rel=\"nofollow noopener\" target=\"_blank\">{esc(s['url'])}</a>")
+         + f"</td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>")
         for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")

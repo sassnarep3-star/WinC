@@ -108,7 +108,9 @@ const add = (rule, msg) => findings.push({ rule, msg });
   const idsOf = (f) => { if (!idCache.has(f)) idCache.set(f, new Set([...read(f).matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]))); return idCache.get(f); };
   for (const f of html) {
     const h = read(f);
-    for (const m of h.matchAll(/<(?:a|link|img)\b[^>]*?(?:href|src)="([^"]+)"/g)) {
+    // Scan markup only: inline <script> legitimately builds hrefs like '<a href="'+h.url+'">' at runtime.
+    const markup = h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, "");
+    for (const m of markup.matchAll(/<(?:a|link|img)\b[^>]*?(?:href|src)="([^"]+)"/g)) {
       const u = m[1];
       if (/^(https?:|mailto:|javascript:|data:)/i.test(u)) continue;
       const [path, frag] = u.split("#");

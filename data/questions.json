@@ -56,16 +56,17 @@
       "id": "Q-04",
       "question": "What are the commission rates for these two categories, and are these items even eligible?",
       "decision_it_gates": "Whether the niche is worth a publishing cadence at all, and which category to write for first.",
-      "have": "Nothing. The rate card is published only inside Associates Central and no authorized first-party source was reachable from this environment.",
-      "missing": "Current category rate for Home/Kitchen small appliances, cookie window, and any exclusions that apply to these five listings.",
+      "have": "The rate card is publicly readable without login (S28, fetched 2026-11-20): Kitchen = 4.50% fixed Standard Commission Income, All Other Categories = 4.00%. The category breadcrumbs of all five observed listings run Home & Kitchen › Kitchen & Dining (S09–S13), which is consistent with Kitchen but is not a commission-category assignment.",
+      "missing": "Amazon's own commission-category assignment and eligibility for each of the five ASINs — only Associates Central reporting (or an official statement naming the category per ASIN) settles it.",
       "blocking": "yes — blocks Priority 4 (the campaign ledger cannot be reasoned about without a rate)",
       "discovery": "Associates Central → Reports → Income Accounting Rate Card, plus the Program Policies earnings statement. Record rate, effective date and a screenshot path in data/campaign-ledger.json's provenance block.",
       "owner": "Account owner only",
       "answer": "",
       "sources": [
-        "S02"
+        "S02",
+        "S28"
       ],
-      "source_note": ""
+      "source_note": "Rate verified from the public statement; the earlier note that the rate card lives only inside Associates Central is retired (same over-caution class as the S01/S02 access notes)."
     },
     {
       "id": "Q-05",

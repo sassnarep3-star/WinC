@@ -255,6 +255,17 @@
         "S27"
       ],
       "source_note": ""
+    },
+    {
+      "id": "FLG-027",
+      "title": "Archived parallel edition hardcodes dated price snapshots on the Pages domain",
+      "detail": "archive/air-ember-edition/ (session 23428c9e, preserved as provenance) contains guide pages with multiple hardcoded US-dollar price figures dated 2026-11-20 (the amounts themselves are kept out of this register on purpose — the site's gate bans price text, see S02). The canonical site keeps every price blank because Program Policies §2(b) allows prices only via Amazon-served links or Creators/PA API (S02). The archive is excluded from the nav, sitemap, feed and robots (Disallow: /archive/) and its README documents the snapshots, but GitHub Pages still serves the files on this domain. Whether dated archival snapshots may remain is an owner/policy decision, not this session's call.",
+      "action": "Owner decision: keep the archived edition served as dated provenance, strip the price figures from the archived pages (keeping the rest verbatim), or move the edition out of the Pages tree (e.g. git history only / Jekyll exclude). No reader-facing page links into archive/.",
+      "status": "needs review",
+      "sources": [
+        "S02"
+      ],
+      "source_note": "Policy basis read verbatim 2026-11-20 (S02 price/availability rule)."
     }
   ]
 }
