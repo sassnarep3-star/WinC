@@ -1688,3 +1688,12 @@ side was discarded except the duplicates explained in I-08.
   records; no other session's text edited.
 =======
 >>>>>>> origin/main
+
+## PR / merge record (session b0920c92, T49)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR #54 opened from `arena/b0920c92-winc` → `main`: row-level sourcing site-wide, observation #7 (S38, FLG-034), decision desk (paths/deciders/discovery), measurement end-to-end proof, TP-06 guide, five-wave union of all parallel work. |
+| 2026-11-20T07:14:00Z | `gh pr merge 54 --merge` → **merged**, merge commit `4bfe5d3b18810490dd4048e07539ec2fd8bf64e8`. |
+| 2026-11-20T07:14:02Z | Pages build for `4bfe5d3`: **status built**, error null (legacy + `pages build and deployment` + `verify site` all success). |
+| 2026-11-20 | Live site re-fetched: https://sassnarep3-star.github.io/WinC/ serves the merged publication — disclosure strip first, series, all five product cards with Sponsored tagged buttons, guides rail. |

@@ -596,3 +596,6 @@ strip grafted onto main's renderer, `card_copy` on all five products, and four a
 this session's duplicate holiday guide, its two per-listing source rows, its JPEG artwork set, and its rewrite of the renderer
 and stylesheet. Full reconciliation and handoff notes are in the `f1fd0ff0` section of `COORDINATION.md`.
 >>>>>>> origin/main
+
+
+**Integration record (T49):** PR #54 merged as `4bfe5d3` (2026-11-20T07:14:00Z); Pages build `built`, live site verified.
