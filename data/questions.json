@@ -1,7 +1,7 @@
 {
   "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped.",
   "updated": "2026-11-20",
-  "blocking_count": 5,
+  "blocking_count": 8,
   "questions": [
     {
       "id": "Q-01",
@@ -56,7 +56,7 @@
       "id": "Q-04",
       "question": "What are the commission rates for these two categories, and are these items even eligible?",
       "decision_it_gates": "Whether the niche is worth a publishing cadence at all, and which category to write for first.",
-      "have": "The rate card is publicly readable without login (S37, fetched 2026-11-20): Kitchen = 4.50% fixed Standard Commission Income, All Other Categories = 4.00%. The category breadcrumbs of all five observed listings run Home & Kitchen › Kitchen & Dining (S09–S13), which is consistent with Kitchen but is not a commission-category assignment.",
+      "have": "The rate card is publicly readable without login (S38, fetched 2026-11-20): Kitchen = 4.50% fixed Standard Commission Income, All Other Categories = 4.00%. The category breadcrumbs of all five observed listings run Home & Kitchen › Kitchen & Dining (S09–S13), which is consistent with Kitchen but is not a commission-category assignment.",
       "missing": "Amazon's own commission-category assignment, the cookie window, and any exclusions that apply to these five listings — only Associates Central reporting (or an official statement naming the category per ASIN) settles it.",
       "blocking": "yes — blocks Priority 4 (the campaign ledger cannot be reasoned about without a rate)",
       "discovery": "Associates Central → Reports → Income Accounting Rate Card, plus the Program Policies earnings statement. Record rate, effective date and a screenshot path in data/campaign-ledger.json's provenance block.",
@@ -64,7 +64,7 @@
       "answer": "",
       "sources": [
         "S02",
-        "S37"
+        "S38"
       ],
       "source_note": "Rate verified from the public statement; the earlier note that the rate card lives only inside Associates Central is retired (same over-caution class as the S01/S02 access notes)."
     },
@@ -368,6 +368,73 @@
       "answer": "",
       "sources": [],
       "source_note": "Internal/licensing decision — no public source covers this account's terms."
+    },
+    {
+      "id": "Q-26",
+      "question": "Do the five supplied link.amazon tokens actually resolve to the five observed ASINs, and why did this session's fetch not reproduce the mapping?",
+      "decision_it_gates": "Whether the observed_* ASINs can be trusted as the intended destinations, and whether the product-intent record's intended_* fields can ever be filled from the supplied links.",
+      "have": "All five amazon.com/dp/<ASIN> listings are live and each <title> matches data/products.json verbatim (S30-S34, S36). Prior sessions recorded a stable token->ASIN mapping across 2026-11-17 through a fourth observation on 2026-11-20 (S14/S18/S22/S29, data/probes.json), always carrying the lv=shuf + plpRedirect=mhFallback fallback route (FLG-009/FLG-029).",
+      "missing": "A reproducible, method-consistent resolution of each link.amazon token to its destination. This session's direct page-reader fetch sent 4/5 tokens to the amazon.com homepage and returned HTTP 500 for B0f3GKalj, so the mapping could not be re-confirmed via that path (FLG-030). The links are not claimed invalid (FLG-003).",
+      "discovery": "In an enrolled Associates browser (cookies + correct region), open each link.amazon/<token> and record the final URL and the tag/report behaviour per product in data/probes.json with a dated provenance line; compare against the prior mapping. If the mapping still holds in a real browser, the fetch-path divergence is a tooling artefact; if it does not, re-open FLG-009/Q-02 and treat the observed mapping as unconfirmed.",
+      "owner": "Account owner (enrolled Associates browser)",
+      "answer": "",
+      "blocking": "no - the observed ASINs are still valid product identities; only the token-to-ASIN mapping's reproducibility is in question",
+      "sources": [
+        "S15",
+        "S18",
+        "S36"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-27",
+      "question": "Do we want seasonal price context, and are we willing to run the Creator/PA API for it?",
+      "decision_it_gates": "Whether the site may show or reference price and deal context at all — the difference between a holiday buying guide that converts and one that only compares listed features.",
+      "have": "Amazon's Program Policies rule as re-read on 2026-11-20: price and availability may be displayed only through an Amazon-served link or the Creator/PA API (S02). The listings read that day carry dollar amounts and 'Black Friday Deal' badges; none of it is copied here (FLG-006, FLG-031).",
+      "missing": "Whether this account has Creator/PA API access approved, what it returns for the five ASINs, and who re-runs the build when the values change.",
+      "blocking": "no — the site is compliant as it stands; it simply cannot answer the question readers actually ask in November",
+      "discovery": "In Associates Central check Account Management → API access for this site; if enabled, request the five ASINs, store the raw response under data/ with a timestamp, and only then design a display that carries a freshness note. If it is not enabled, record the permanent no-price stance on the direction register.",
+      "owner": "Account owner (API approval) + whoever runs the build",
+      "answer": "",
+      "sources": [
+        "S02",
+        "S37"
+      ],
+      "source_note": "Published as FLG-031; the option to act on it is SG-47."
+    },
+    {
+      "id": "Q-28",
+      "question": "What publishing cadence can this site actually sustain, and who owns it?",
+      "decision_it_gates": "Whether the topic backlog is a schedule or a wish list — which decides how many guides to scaffold now and when measured queries start choosing topics.",
+      "have": "Seventeen guides are live, all written from the same two source families (the listings' stated specs, USDA FSIS guidance), and scripts/new_guide.py reduces the mechanical part of publishing to one command. The backlog page states, per row, what each remaining topic would need.",
+      "missing": "A commitment: guides per week, for how many weeks, and who checks sources before publish. Nothing in the repo records an owner or a cadence, so any 'we publish weekly' line would be invented.",
+      "blocking": "no — cadence is a decision rather than a data gap",
+      "discovery": "Pick the number you can sustain, record it on the direction register, and let about.html render it from that row. The gate keeps the page honest by refusing counts that are typed instead of computed.",
+      "owner": "Site owner",
+      "answer": "",
+      "sources": [
+        "S16",
+        "S17",
+        "S37"
+      ],
+      "source_note": "Backlog: topics.html · scaffold: scripts/new_guide.py"
+    },
+    {
+      "id": "Q-29",
+      "question": "Which variant of each product should each reader link point at?",
+      "decision_it_gates": "Whether the five buttons promise the listing the register describes, and whether product pages may mention a colour, bundle or size at all.",
+      "have": "Six independent observations of the same five tokens (2026-11-17 and five on 2026-11-20 by four sessions) map them to the same five ASINs, with titles matching verbatim; two responses served a th=1 variant parameter, and Amazon's rails showed sibling listings (B0B7C327LK, B0GL7Z4KP4, B0DZFNQXGL). One session's path did not reproduce the mapping at all (FLG-030, answered by FLG-033).",
+      "missing": "The variant intended by whoever supplied the five short links, and the variant the enrolled Associates workflow actually serves.",
+      "blocking": "no — but it caps what any product page may promise, so no colour or bundle claim is made anywhere",
+      "discovery": "Run the FLG-002 one-link test through the enrolled workflow; record the final URL with every query parameter per product; if a variant parameter appears, pin the link to it or keep the bare /dp/<ASIN> form and drop variant wording. Keep intended_* blank until the owner confirms.",
+      "owner": "Account owner, with whoever chose the five links",
+      "answer": "",
+      "sources": [
+        "S29",
+        "S37",
+        "S22"
+      ],
+      "source_note": "Published as FLG-032 (variant) and FLG-033 (path disagreement)."
     }
   ]
 }

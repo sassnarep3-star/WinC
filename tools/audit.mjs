@@ -92,7 +92,11 @@ const add = (rule, msg) => findings.push({ rule, msg });
     const isQuoted = (idx) => text.slice(Math.max(0, idx - 220), idx).includes("Amazon shows") || /as listed on Amazon|quote|Amazon’s own/i.test(text.slice(Math.max(0, idx - 220), idx));
     for (const m of text.matchAll(PRICE)) if (!isQuoted(m.index)) p.push(`${rel(f)}: “${m[0]}”`);
     for (const m of text.matchAll(RATING)) if (!isQuoted(m.index)) r.push(`${rel(f)}: “${m[0]}”`);
-    const vm = text.match(VERDICT); if (vm) v.push(`${rel(f)}: “${vm[0]}”`);
+    // Verdict-shaped strings inside a negation/reporting sentence ("badges were visible …
+    // deliberately not copied") are descriptions of what was seen, not claims we make.
+    const notAVerdict = (idx) => /not copied|deliberately|were visible on these pages|as (?:listed|shown) on Amazon|quote/i.test(text.slice(Math.max(0, idx - 220), idx + 160));
+    const VG = new RegExp(VERDICT.source, "gi");
+    for (const vm of text.matchAll(VG)) if (!notAVerdict(vm.index)) v.push(`${rel(f)}: “${vm[0]}”`);
   }
   if (p.length) add("A4", `price figures outside a quotation (§2(b) reserves prices to Amazon-served links/API): ${p.slice(0, 5).join("; ")}`);
   if (r.length) add("A4", `rating or review-count text published (§6(t)): ${r.slice(0, 5).join("; ")}`);

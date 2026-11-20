@@ -237,14 +237,10 @@
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
       "status": "fixed in this session",
       "sources": [
-        "S09",
-        "S10",
         "S11",
-        "S12",
-        "S13",
         "S23"
       ],
-      "source_note": "Re-confirmed 2026-11-20 by session arena-9a3bb152: 5/5 stored titles now equal the live listing <title> (minus Amazon's prefix/suffix). Compares the stored titles against the live listing reads recorded in S11 and S23."
+      "source_note": "Compares the stored titles against the live listing reads recorded in S11 and S23."
     },
     {
       "id": "FLG-026",
@@ -298,25 +294,75 @@
     },
     {
       "id": "FLG-030",
-      "title": "Sixth recorded observation matched only 1 of 5: four supplied tokens landed on the Amazon homepage",
-      "detail": "On 2026-11-20 session arena-9a3bb152 re-resolved all five supplied link.amazon tokens through the same reader used for the first three observations. B0f3GKalj resolved to /dp/B0DZFD6R9Z and matched every prior observation (same lv=shuf + plpRedirect=mhFallback flags). B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (page title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. Cause unresolved: reader-side degradation and a change in the short-link behavior cannot be separated from this environment. This neither confirms nor invalidates any link — FLG-003 stands, and the observed_* fields continue to rest on the three earlier matching observations (S14, S18, S22).",
-      "action": "Re-run all five resolutions from a normal browser (record final URL + screenshot), then perform the enrolled Associates one-link workflow test (FLG-002). If homepage landing reproduces in a normal browser, contact Associates support before any link is used at scale.",
+      "title": "Supplied link.amazon tokens did not reproduce the prior ASIN mapping via this fetch path (2026-11-20)",
+      "detail": "Session arena/1c6908d1-winc re-fetched all five supplied link.amazon tokens directly on 2026-11-20. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts — i.e. the token->ASIN mapping recorded by prior sessions (S14/S18/S22/S29, data/probes.json) was NOT reproduced through this fetch path. This does NOT establish the links are invalid (FLG-003 unchanged, never claimed invalid). The likely causes are a difference in redirect/cookie/region handling between the page-reader fetch and the prior sessions' browser/curl resolution, or session-dependent redirect behaviour. The observed_* ASIN values remain valid product identities (the /dp/ listings are live and titles match), but the token-to-ASIN mapping's reproducibility across observation methods is now in question. Independently corroborated the same day by session arena-9a3bb152 (observation #7, S39, data/probes.json): that run also landed B04G1MEwY/B02NbDxp3/B00hJ57DV/B0c8moW59 on the amazon.com homepage, while B0f3GKalj reproduced /dp/B0DZFD6R9Z — so the divergence is reproducible across two sessions on 2026-11-20 (fetch-path/client behavior, not one reader's glitch).",
+      "action": "Re-resolve each token in a real enrolled-Associates browser context (cookies + region) and record the final URL per token in data/probes.json with a dated provenance line; reconcile against the prior mapping. Do not claim the links are invalid until that is done.",
       "status": "needs review",
       "sources": [
-        "S36"
+        "S15",
+        "S18",
+        "S36",
+        "S39"
       ],
       "source_note": ""
     },
     {
       "id": "FLG-031",
-      "title": "Archived parallel edition hardcodes dated price snapshots on the Pages domain",
-      "detail": "archive/air-ember-edition/ (session 23428c9e, preserved as provenance) contains guide pages with multiple hardcoded US-dollar price figures dated 2026-11-20 (the amounts themselves are kept out of this register on purpose — the site's gate bans price text, see S02). The canonical site keeps every price blank because Program Policies §2(b) allows prices only via Amazon-served links or Creators/PA API (S02). The archive is excluded from the nav, sitemap, feed and robots (Disallow: /archive/) and its README documents the snapshots, but GitHub Pages still serves the files on this domain. Whether dated archival snapshots may remain is an owner/policy decision, not this session's call.",
-      "action": "Owner decision: keep the archived edition served as dated provenance, strip the price figures from the archived pages (keeping the rest verbatim), or move the edition out of the Pages tree (e.g. git history only / Jekyll exclude). No reader-facing page links into archive/.",
+      "title": "Deal season is here and the no-price stance is still a habit, not a policy",
+      "detail": "The listings read on 2026-11-20 displayed dollar amounts, list-price strikethroughs, review counts and 'Black Friday Deal' badges. None were copied, because a static build cannot keep them current and Program Policies restrict price display to an Amazon-served link or the Creator/PA API (S02, FLG-006). The unresolved part is editorial: the site publishes seasonal guides that answer 'what should you check before you click buy' while having no sanctioned way to talk about the one variable readers weigh that week, and SG-32 (deal-season playbook) and SG-35 (seasonal close-out rule) both assume this is settled.",
+      "action": "Record the stance on the direction register (SG-47 / Q-27): either wire the Creator/PA API into a timestamped build step with the required freshness note, or adopt a permanent no-price position and say so on the disclosure page and in the seasonal copy. Whichever is chosen, the site states it instead of implying it.",
       "status": "needs review",
       "sources": [
-        "S02"
+        "S02",
+        "S06",
+        "S37"
       ],
-      "source_note": "Policy basis read verbatim 2026-11-20 (S02 price/availability rule)."
+      "source_urls": [
+        "https://www.amazon.com/dp/B0CDY277D3"
+      ]
+    },
+    {
+      "id": "FLG-032",
+      "title": "Two of five redirect responses served a th=1 variant, so a stable ASIN still does not pin what the reader sees",
+      "detail": "Observation #6 (2026-11-20, session f1fd0ff0): B08DKYBTPH and B0DZFD6R9Z resolved with an added th=1 variant parameter on top of lv=shuf + plpRedirect=mhFallback. This is a different mechanism from the sibling-ASIN findings already on this register (FLG-026 ThermoMaven, FLG-027 CHEF iQ) and from the fallback-route note (FLG-029): the same ASIN can be served at a different colour, size or bundle depending on the request, so a link can land on a listing this site does not describe.",
+      "action": "During the one-link Associates test (FLG-002), record each link's final URL including every query parameter for all five products. If a variant parameter appears, either pin the Special Link to that variant or keep the bare /dp/<ASIN> form and leave variant wording out of the product copy. intended_* stays blank until the owner confirms intent (FLG-003).",
+      "status": "needs review",
+      "sources": [
+        "S29",
+        "S37",
+        "S22"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ]
+    },
+    {
+      "id": "FLG-033",
+      "title": "Observations of the same five links now disagree across fetch paths (FLG-030 vs 5/5 reproduction six times over)",
+      "detail": "FLG-030 records that session arena/1c6908d1's pass did not reproduce the prior ASIN mapping 'via this fetch path'. Six other observations — 2026-11-17 and four separate sessions on 2026-11-20, including this session's #6 through the fetch_page reader — map all five tokens to the same five ASINs with matching page titles every time. The disagreement is therefore about the observation method, not about the links: one path returns a redirect, another returns a summary or an error page. Nothing has been resolved in favour of either, because the register's rule is that an observation only describes its own path.",
+      "action": "Treat FLG-030 and this row as one question with two answers until the Associates workflow settles it: run FLG-002's one-link test inside the enrolled workflow (the only route that determines what a reader actually receives), record the final URL per product with its fetch path named, then mark both rows fixed in the same commit. Until then keep the reader links as they are and keep intended_* blank.",
+      "status": "needs review",
+      "sources": [
+        "S29",
+        "S37",
+        "S22"
+      ],
+      "source_urls": [
+        "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json"
+      ]
+    },
+    {
+      "id": "FLG-034",
+      "title": "CHEF iQ Sense is sold in 2-probe and 3-probe configurations under different ASINs",
+      "detail": "Amazon's page for B0DZFD6R9Z (3 probes) surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) in the same module. Probe count is a headline spec for this product, so the two configurations are easy to confuse and are not the same purchase.",
+      "action": "Owner or reader: confirm the probe count on the listing page reached. Recorded on the product page so the spec is not assumed from a family name.",
+      "status": "needs review",
+      "sources": [
+        "S13",
+        "S34"
+      ],
+      "source_note": ""
     }
   ]
 }

@@ -6,7 +6,7 @@
       "url": "https://affiliate-program.amazon.com/help/operating/agreement",
       "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats; §6: a §5 violation is a material breach",
       "date": "2026-11-20",
-      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. §5 disclosure wording confirmed verbatim; §1 Special Links 'tagged' format confirmed. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note was over-cautious and is retired."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. §5 disclosure wording confirmed verbatim; §1 Special Links 'tagged' format confirmed. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note was over-cautious and is retired. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim. Re-read 2026-11-20 by session arena/156c2ecf-winc: §5 disclosure sentence, §1 Special Links 'tagged' formats, §6 material-breach clause and the 'Updated: October 15, 2025' stamp all re-confirmed from the live page."
     },
     {
       "id": "S02",
@@ -14,7 +14,7 @@
       "url": "https://affiliate-program.amazon.com/help/operating/policies",
       "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; Special Links must carry the Associate ID/tag (XXXXX-##); no inaccurate price/product claims; disclosure + privacy requirements",
       "date": "2026-11-20",
-      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. The price/availability rule and the Special Link tag requirement were confirmed verbatim. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note is retired."
+      "access": "Directly fetched and read in full, anonymously, on 2026-11-20 by session arena/0458cd24-winc. The price/availability rule and the Special Link tag requirement were confirmed verbatim. The page is publicly readable without login — the earlier 'login-gated / indexed copy' note is retired. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim. Re-read 2026-11-20 by session arena/156c2ecf-winc: price/availability rule re-confirmed verbatim ('your Site may only show prices and availability if: (a) we serve the link… or (b) you obtain Product pricing and availability data via Creators API or PA API'); tag format '(appearing as XXXXX-##)' and the misleading-claims clause confirmed; 'Updated: April 14, 2026' stamp confirmed."
     },
     {
       "id": "S03",
@@ -22,7 +22,7 @@
       "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking",
       "what": "Verbatim, fetched 2026-11-20: 'that connection should be disclosed clearly and conspicuously'; affiliate section: 'You should disclose your relationship to the retailer clearly and conspicuously on your site'; 'The closer the disclosure is to your recommendation, the better.'; 'Consumers might not understand that \"affiliate link\" means ... a \"buy now\" button would not be adequate.'; '\"Paid link\" right next to an affiliate link should be an adequate disclosure'.",
       "date": "2026-11-20",
-      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov)."
+      "access": "Reachable and fetched directly on 2026-11-20 (earlier note that ftc.gov was unreachable is superseded). Quoted text is from the FTC page; the Endorsement Guides themselves are at 16 CFR Part 255 (ecfr.gov). Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim. Re-read 2026-11-20 by session arena/156c2ecf-winc: 'that connection should be disclosed clearly and conspicuously' re-confirmed from the live page intro; the affiliate section is present at #affiliateornetwork."
     },
     {
       "id": "S04",
@@ -36,7 +36,8 @@
       "title": "Sell on Amazon — What is an ASIN?",
       "url": "https://sell.amazon.com/blog/what-is-an-asin",
       "what": "ASIN is a unique 10-character alphanumeric code; found after /dp/ in product URL",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim.Re-read 2026-11-20 by session arena/156c2ecf-winc: 'unique 10-character alphanumeric code'; 'The ASIN appears after \"/dp/\"' — confirmed verbatim from the live page."
     },
     {
       "id": "S06",
@@ -66,7 +67,7 @@
       "url": "https://www.amazon.com/dp/B0CDY277D3",
       "what": "Title, brand, model RJ38-SQPF-3TDB-2W, 6 Qt, dimensions, weight, temp, UPC",
       "date": "2026-11-20",
-      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the listing <title> matched the stored product title verbatim. Detailed spec cells (model/UPC/dimensions/weight/power) remain sourced to the listing body and are re-checked at the workflow test."
+      "access": "Listing <title> + category breadcrumb re-read live on 2026-11-20; the listing <title> matched the stored product title verbatim. Detailed spec cells (model/UPC/dimensions/weight/power) remain sourced to the listing body and are re-checked at the workflow test. Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim. Re-read again 2026-11-20 by session arena/156c2ecf-winc: listing <title> matched the stored product title verbatim; breadcrumb Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers confirms category; the response again carried lv=shuf + plpRedirect=mhFallback (fallback summary, consistent with S18/probes)."
     },
     {
       "id": "S10",
@@ -119,14 +120,16 @@
       "title": "USDA FSIS — Safe Minimum Internal Temperature Chart",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
       "what": "All poultry (incl. ground poultry, giblets, stuffing) 165°F; ground meats 160°F; beef/pork/veal/lamb steaks, chops, roasts 145°F + rest ≥3 min; fresh/ham uncooked 145°F + rest. Used as the only numeric food-safety claims in the two new guides.",
-      "date": "2026-11-20"
+      "date": "2026-11-20",
+      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim. Re-fetch attempted 2026-11-20 by session arena/156c2ecf-winc (two URL forms); the page failed to load in that session's reader. These figures were NOT re-confirmed in this session — they stand on the 2026-11-20 direct read by session arena/0458cd24-winc recorded above. Re-check before any new guide quotes them (see SG-24, SG-25)."
     },
     {
       "id": "S17",
       "title": "USDA FSIS — Food Thermometers",
       "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
-      "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F.",
-      "date": "2026-11-20"
+      "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F. Calibration section read in full 2026-11-20 (session f1fd0ff0): ice-water method — fill a glass with ice, add drinking water, stir, immerse the stem a minimum of 2 inches without touching the sides or bottom, wait a minimum of 30 seconds, the reading should be 32°F; boiling-water method — 2 inches deep, 30 seconds, 212°F at sea level, and boiling point falls by at least 2°F (possibly 5°F) at altitude. Care: wash by hand, most thermometers should not be immersed, and 'Do not leave your food thermometer in food while cooking unless the manufacturer's instructions specifically say it can withstand heat'. Type table: oven-cord, fork-combination and thermistor types are listed as 'Cannot be calibrated'; thermocouple can; most food thermometers read accurate within 2 to 4°F.",
+      "date": "2026-11-20",
+      "access": "Fourth read 2026-11-20 by session arena-70bd2fcc: page re-fetched live and the recorded claims re-confirmed verbatim. Re-fetch attempted 2026-11-20 by session arena/156c2ecf-winc; failed to load in that session's reader. Not re-confirmed in this session; stands on the 2026-11-20 direct read by session arena/0458cd24-winc."
     },
     {
       "id": "S18",
@@ -222,7 +225,7 @@
       "url": "https://www.amazon.com/dp/B0CDY277D3",
       "what": "Live page read 2026-11-20 by session arena-038c0b80: <title> is verbatim the stored title; breadcrumb Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers. Response again carried lv=shuf + plpRedirect=mhFallback (fallback route, FLG-009).",
       "date": "2026-11-20",
-      "access": "Fetched anonymously through the reader; publicly readable, no login. Fetched 2026-11-20 through the same reader as the earlier observations. Per-request behavior differs from the first three runs; reader-side degradation and a change in short-link behavior cannot be separated from this environment, hence FLG-026 with a browser re-check action."
+      "access": "Fetched anonymously through the reader; publicly readable, no login."
     },
     {
       "id": "S31",
@@ -230,7 +233,7 @@
       "url": "https://www.amazon.com/dp/B09B7SB46R",
       "what": "Live page read 2026-11-20: <title> verbatim the stored title; breadcrumb ... > Fryers > Air Fryers. Fallback route flags present again.",
       "date": "2026-11-20",
-      "access": "Fetched anonymously; publicly readable. Directly fetched anonymously on 2026-11-20 by session arena-9a3bb152; Table 1 read in full."
+      "access": "Fetched anonymously; publicly readable."
     },
     {
       "id": "S32",
@@ -266,19 +269,35 @@
     },
     {
       "id": "S36",
-      "title": "Sixth recorded observation of the five supplied link.amazon tokens (session arena-9a3bb152)",
-      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
-      "what": "Observation #6, 2026-11-20: B0f3GKalj → /dp/B0DZFD6R9Z (matches all prior observations, same lv=shuf + plpRedirect=mhFallback flags); B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. 1/5 matched. Divergence published as FLG-030; no claim that any link is invalid (FLG-003).",
+      "title": "Independent verification pass #5, session arena/1c6908d1-winc (2026-11-20)",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "All five amazon.com/dp/<ASIN> listings re-read live on 2026-11-20 via the page reader: B0CDY277D3, B09B7SB46R, B08DKYBTPH, B0DHZTCNR5, B0DZFD6R9Z. Each listing <title> matched data/products.json verbatim; category confirmed by breadcrumb (3 Air Fryers, 2 Meat Thermometers). Every final URL again carried lv=shuf + plpRedirect=mhFallback (FLG-009/FLG-029). Separately, re-fetching the five supplied link.amazon tokens (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj) did NOT reproduce the prior-session ASIN mapping via this fetch path: 4/5 resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts. Recorded as FLG-030; the links are not claimed invalid (FLG-003 unchanged).",
       "date": "2026-11-20",
-      "access": "Fetched 2026-11-20 through the same reader as the earlier observations. Per-request behavior differs from the first three runs; reader-side degradation and a change in short-link behavior cannot be separated from this environment, hence FLG-026 with a browser re-check action."
+      "access": "Fetched directly on 2026-11-20 by session arena/1c6908d1-winc. Listing reads via https://www.amazon.com/dp/<ASIN>; token reads via https://link.amazon/<token>."
     },
     {
       "id": "S37",
+      "title": "Sixth independent live read of all five resolved listings + re-resolution record (session f1fd0ff0, 2026-11-20)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "All five recorded ASINs were re-read through the same reader on 2026-11-20 by a session that had not seen them before. 5/5 page <title> values match the stored titles verbatim; the Emeril details table re-confirmed dimensions, capacity, model, UPC, wattage and its own ASIN row. Two of five resolved URLs additionally carried th=1 (a variant parameter) on top of lv=shuf + plpRedirect=mhFallback. Prices, star ratings, review counts, Best-Sellers-Rank and 'Black Friday Deal' badges were visible on these pages and were deliberately not copied (S02, FLG-006, FLG-031).",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader; the redirect target is a reproducible observation, not a confirmation of intent (FLG-009)."
+    },
+    {
+      "id": "S38",
       "title": "Amazon Associates — Standard Commission Income Statement (Table 1 rate card)",
       "url": "https://affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ",
       "what": "Table 1 fixed rates, fetched verbatim 2026-11-20: 'Physical Books, Kitchen, Automotive | 4.50%'; 'All Other Categories | 4.00%'. Publicly readable without login. Answers the rate half of Q-04; per-ASIN commission-category assignment is not stated on this page and stays unconfirmed.",
       "date": "2026-11-20",
       "access": "Directly fetched anonymously on 2026-11-20 by session arena-9a3bb152; Table 1 read in full."
+    },
+    {
+      "id": "S39",
+      "title": "Seventh recorded observation of the five supplied link.amazon tokens (session arena-9a3bb152)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "Observation #7, 2026-11-20: B0f3GKalj → /dp/B0DZFD6R9Z (matches all prior observations, same lv=shuf + plpRedirect=mhFallback flags); B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. 1/5 matched. Second independent divergent run; details folded into FLG-030; no claim that any link is invalid (FLG-003).",
+      "date": "2026-11-20",
+      "access": "Fetched 2026-11-20 through the same reader as the earlier observations. Per-request behavior differs from the first three runs; reader-side degradation and a change in short-link behavior cannot be separated from this environment, hence FLG-026 with a browser re-check action."
     }
   ]
 }

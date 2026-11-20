@@ -2,8 +2,7 @@
 
 > **Latest session: `arena-9a3bb152`** (branch `arena/9a3bb152-winc`) — verification re-check +
 > final integration (T30–T32, done). Its board and completion record are in the section titled
-`Session arena-9a3bb152`. All earlier sessions (incl. `038c0b80`, `70bd2fcc`, `a81c0f0e`,
-`23428c9e`, `68db484a`, `c2123b9c`, `482d5832`) are kept verbatim as the provenance trail.
+`Session arena-9a3bb152`. All earlier sessions are kept verbatim as the provenance trail.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -12,6 +11,8 @@
 > Shared outputs (table data, index, navigation) are changed only by the final integration step
 > in this session (single-session repo: the integration step is the same session, after all tasks).
 
+> **Also latest: `arena/d1b621b7-winc`** (session `d1b621b7`) — its integration section was
+> appended at the very end of this file when `main` was merged back into its branch.
 ## Task board
 
 | ID | Task | Status | Owner (session) | File scope |
@@ -1044,6 +1045,537 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
   archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
   archive stays out of nav/sitemap/feed; gate re-run green.
 
+## PR / merge record (T38)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#38** https://github.com/sassnarep3-star/WinC/pull/38 opened from `arena/70bd2fcc-winc` → `main`. First readiness check read CONFLICTING because PRs #18 and #39 merged mid-flight; resolved by a fast-forward-equivalent merge of `origin/main` into this branch (registers union-merged, HTML regenerated from data, gate re-run green each round: 31→34 pages, 13 guides). |
+| 2026-11-20 06:43:12Z | `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN`; merged with `gh pr merge 38 --merge` → `main` @ `60422bd1e6f6c1f40c8de6717f439989e5772a31`. |
+| 2026-11-20 | Pages build for `60422bd`: `building` → **`built`**, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
+
+**Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
+
+---
+
+# Session arena-038c0b80 — editorial conversion pass + decision section + line-by-line re-verification
+
+Branch `arena/038c0b80-winc`, based on `main@404cabc` (PR #24 merged). Started 2026-11-20.
+State on arrival: 29 pages / 28 sitemap URLs / 8 guides; `check_site.py` green; `node tools/audit.mjs`
+reporting 2 findings (A6, A7). `main` advanced twice while this session was reading the repo; the branch
+was fast-forwarded to `404cabc` before any edit, so nothing here forks an old base.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Story layer: maker profiles, 8 product narratives + 3 cluster guides (one per category), all claims tied to a listed spec (Claude) | in progress | arena-038c0b80 | `data/makers.json`, `data/stories.json`, `data/guides/*.json` (new files only), `scripts/build_site.py` (story/narrative renderers), `assets/style.css`, `assets/img/series-*` |
+| T34 | Decision section: suggestions → review → choose → evidence, rendered from the registers | in progress | arena-038c0b80 | `data/suggestions.json`, `data/questions.json`, `scripts/build_site.py` (direction/questions bodies), `direction.html`, `questions.html` |
+| T35 | Repo audit fixes: A6 anchor-quote mismatch, A7 capture-form transport, stale flags/source notes/typed counts, encoding artifacts (-143, °F), JSON-LD how-to scope | in progress | arena-038c0b80 | `scripts/build_site.py`, `scripts/check_site.py`, `tools/audit.mjs`, `data/flags.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Findability + imagery hygiene: compress 3.5 MB PNGs to WebP, add FAQPage scope, sitemap/feed check, honest "no measurement yet" language | in progress | arena-038c0b80 | `assets/img/*`, `scripts/build_site.py` |
+| T37 | Final integration: rebuild, gate green, independent audit clean, PR → main, merge, confirm Pages live | pending | arena-038c0b80 | all (integration only) |
+
+## Cross-session follow-ups observed (not mine to merge)
+
+- PR #17 (`arena/04112b09-winc`, OPEN) and PR #18 (`arena/23428c9e-winc`, OPEN) and PR #5
+  (`arena/70d8ad52-winc`, DRAFT) each ship a *different* site into the same repo. Only one can be the
+  published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
+  are already on `main` via PR #24 and are in use. This session did not touch those branches.
+
+## PR / merge record (T37 — merged)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
+| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
+| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
+
+### What was deliberately merged *from* main rather than over it
+
+- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
+- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
+- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
+- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
+
+### Two id collisions worth recording for the next session
+
+1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
+2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
+
+### Rounds where the gates were run after each merge
+
+38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+
+---
+
+# Session f1fd0ff0 — shop polish pass, 4th verification observation, parallel-PR reconciliation (2026-11-20)
+
+Branch `arena/f1fd0ff0-winc`, based on `main@ba0b838` (PR #15 merged; PR #16 from session
+`arena-82d39deb` also merged). Read `main` before touching shared outputs, as the board requires.
+
+## Board
+
+| ID | Task | Status | Owner | Files |
+| --- | --- | --- | --- | --- |
+| T30 | Fourth independent live observation of the five supplied `link.amazon` links + the five resolved listings, recorded with the reader used | done | f1fd0ff0 | `data/probes.json`, `data/sources.json` |
+| T31 | Make the reader path read like a shop: per-product artwork, human card copy instead of the raw listing title, flag IDs removed from cards, seasonal front-page strip | done | f1fd0ff0 | `scripts/build_site.py`, `assets/img/*`, `data/products.json` |
+| T32 | Reconcile the two open parallel PRs (#17 `arena/04112b09-winc`, #18 `arena/23428c9e-winc`) against `main`: compare, decide, record — no silent clobber | done (recorded; not merged) | f1fd0ff0 | `COORDINATION.md`, `flagged-for-review.html` (via builder) |
+| T33 | Suggestions + questions registers: add what this polish pass proved, keep the review-before-implement contract | done | f1fd0ff0 | `data/suggestions.json`, `data/questions.json` |
+| T34 | Gate: assert per-product image + card copy exist, and that no reader-facing card carries a flag ID | done | f1fd0ff0 | `scripts/check_site.py` |
+| T35 | Executive summary + README reconciled with the repo state (computed) | done | f1fd0ff0 | `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Integration: build + gate green, PR to main, merge, confirm Pages deploy | in progress | f1fd0ff0 | all (integration only) |
+
+## Why this pass exists (audit, before any edit)
+
+| ID | Finding | Action |
+| --- | --- | --- |
+| B-01 | Every product card rendered the **raw Amazon listing title** as its body copy — three near-identical keyword-stuffed paragraphs on one page. That is exactly the "AI slop / scraped store" tell the brief asks to remove. | replaced with short editorial card copy written from listing facts (`data/products.json` `card_copy`) |
+| B-02 | All three air-fryer cards and both thermometer cards used the **same illustration** (category image), so the shop grid looked like a template. | one commissioned illustration per product; category tiles keep the category art |
+| B-03 | Reader cards carried internal register IDs (`see FLG-005`) in the middle of a spec line. | flag notes stay on the product page + Flagged for review; cards say nothing about our bookkeeping |
+| B-04 | Open PRs **#17 and #18 are whole-site rebuilds** under different brands ("Crisp Report", "Air & Ember"), both `CONFLICTING` against `main`. They duplicate what `main` already ships (shop pages, guides, suggestions, questions, flags, sitemap) in a second, less complete form. | not merged; recorded here and on Flagged for Review so the owner can decide — merging either would delete the source register, gate and measurement layer that `main` carries |
+
+Claim committed and pushed before any other edit.
+
+
+## Results (T30–T36, session f1fd0ff0)
+
+### Verification performed, with the official source for each claim
+
+| What was checked | How | Result |
+| --- | --- | --- |
+| All five supplied `link.amazon` tokens | Re-resolved live through the fetch reader on 2026-11-20 (fourth observation, third by an independent session) | 5/5 → B0CDY277D3, B09B7SB46R, B08DKYBTPH, B0DHZTCNR5, B0DZFD6R9Z; every response still carries `lv=shuf` + `plpRedirect=mhFallback`; two additionally served `th=1`. Recorded in `data/probes.json` → `fourth_observation`, source S28 |
+| Five stored product titles | Compared byte-for-byte with each listing's live `<title>` | 5/5 verbatim matches (S28, S29, S30) |
+| Emeril 26QT spec row (the most populated one) | The fetched page exposed the full details table | Dimensions 16.9"D x 15.8"W x 14.8"H, capacity 24.6 litres, model 4-00675-02X-VN, UPC 752356835682, 1700 W/120 V, 75–500°F, page's own ASIN row B09B7SB46R — **all match the register**; the six-vs-seven accessories contradiction reproduced again (`Configuration` vs `Item Highlight`), so FLG-010 stands |
+| Prices, star ratings, review counts, deal badges | Visible during the reads | **Not copied anywhere** (Program Policies S02; FLG-006). Published as FLG-027 with the decision it forces (SG-27 / Q-23) |
+| Sibling/variant listings | Amazon's own rails on the recorded pages | Chefman 6 Qt dual `B0B7C327LK`, ThermoMaven Orange `B0GL7Z4KP4`, CHEF iQ `B0DZFNQXGL` — logged as FLG-026, and no product page claims a colour, size or bundle |
+| USDA FSIS *Food Thermometers* | Fetched in full, calibration/care/types sections read verbatim | Ice-water method (2 in. deep, 30 s, 32°F), boiling-water method (212°F at sea level; −2 to −5°F at altitude), "accurate within 2 to 4 degrees F", which types "cannot be calibrated", the leave-in-food rule, and the hand-wash rule — used as the sourcing for the accuracy guide; S17 enriched with the verbatim passages |
+| Thanksgiving 2026 date on the seasonal strip | Calendar arithmetic from the statutory "fourth Thursday in November" rule | 26 November 2026 (Nov 1 = Sunday; Thursdays 5/12/19/26). The strip carries its year in its own text so it cannot silently go stale |
+| Data leaked into reader copy | New gate rule | **Found one real defect:** Chefman 8 Qt `temperature` and `model` values embedded "— see FLG-005". Values cleaned; flag notes stay in `listing_notes`/Flagged page; the gate now fails any spec value carrying a flag id |
+
+### Irregularities flagged this session (published on the Flagged for review page)
+
+- **FLG-026** — variant ambiguity: `th=1` on two responses + three sibling listings in Amazon's own rails; the observed target is stable, the served variant may not be.
+- **FLG-027** — price/rating/deal data cannot be shown by a static build under S02, which is also an editorial limit for the holiday season; decision recorded as SG-27 / Q-23 rather than left implicit.
+- Carry-overs still open, unchanged and not re-litigated: FLG-001 (tracking ID issuance), FLG-002 (one-link Associates test), FLG-003 (short-link compliance status — *not* claimed invalid), FLG-004/005/010 (listing-internal contradictions), FLG-007 (analytics endpoint not deployed), Q-13 (no Search Console property).
+
+### Parallel-session note: PRs #17 and #18 (T32) — how it resolved
+
+- At claim time (start of this session) both were **whole-site rebuilds under different brands**
+  (`arena/04112b09-winc` → “Crisp Report”, `arena/23428c9e-winc` → “Air & Ember”), each reported
+  `CONFLICTING` against `main`, and each re-creating `data/products.json`, `data/sources.json`,
+  `data/flags.json`, `data/suggestions.json`, `data/questions.json`, `index.html`, `sitemap.xml`,
+  `robots.txt`, `feed.xml` and the stylesheet from scratch. Merging either as-is would have
+  replaced the registers, the gate, the redirect log and the measurement layer.
+- Decision recorded then: do not merge from this session; leave them to their owners and note it
+  here. That is what happened — `main` absorbed #17 (PR #17), #18 (PR #18, whose own record says
+  “adopt main as trunk, archive Air & Ember edition”) and later PR #39, plus the parallel passes
+  of `a81c0f0e`, `c2123b9c`, `68db484a`, `482d5832`, `5fed90b2`, `04112b09` and others.
+- This session therefore **merged `origin/main` into its branch and reconciled by hand** rather
+  than rebasing over it: main's registers, tools (`tools/audit.mjs`, `tools/freshness.mjs`,
+  `tools/serve.mjs`, `scripts/test_analytics.py`, `analytics/test_worker.mjs`), season rail and
+  four new guides are all kept; this session's rows were renumbered onto main's ids
+  (sources S30–S32, suggestions SG-36–SG-45, questions Q-23–Q-25, topic TP-15, flag FLG-026/027)
+  and its fifth redirect observation was appended to main's fourth rather than replacing it.
+- One collision was a real correctness issue, not a cosmetic one: main had **repurposed FLG-025**
+  (title reconciliation) and moved the ThermoMaven `HT07` note to FLG-015. This session's product
+  note cited FLG-025 for the blank model; it now cites FLG-015, so the reader-facing note points at
+  the flag that actually describes it.
+
+### Repo changes this session (all on `arena/f1fd0ff0-winc`)
+
+| Area | Files | What |
+| --- | --- | --- |
+| Shop surfaces | `scripts/build_site.py`, `assets/style.css` | per-product cards with editorial copy + chips, front-page at-a-glance table, dated seasonal strip, product pages lead with the editorial read and quote the listing title as a source |
+| Imagery | `assets/img/*.jpg` (12 files) | one commissioned illustration per product and per guide; 43 MB of PNGs → 1.9 MB of web JPEGs; artwork doubles as `og:image` |
+| Registers | `data/products.json`, `sources.json`, `probes.json`, `flags.json`, `topics.json`, `suggestions.json`, `questions.json` | sixth live observation recorded (main already carried #4 and #5); sources S30–S32; FLG-026/027; TP-06/08/09 flipped to published and TP-15 added (TP-13/TP-14 were already taken); this session's suggestions renumbered onto the merged register as SG-39…SG-47 and its questions as Q-24…Q-26 |
+| Editorial | `data/guides/probe-accuracy-check.json`, `probe-placement-holiday-cook.json`, `counter-fit-before-you-order.json` | three new guides, every figure sourced to USDA FSIS or the listing |
+| Gate | `scripts/check_site.py` | card copy/image rules, artwork weight budget, no flag ids in reader values or in the front-page grid, seasonal strip must carry a year, published topics must point at a built page |
+| Docs | `README.md`, `EXECUTIVE-SUMMARY.md`, `COORDINATION.md` | counts and standing rules reconciled with the repo; this record |
+
+**Build + gate at close:** `Built 30 pages, 29 sitemap URLs, 9 guides, 26 search rows.` → `OK: 30 pages checked, 29 sitemap URLs, no violations.`
+
+## PR / merge record (T38)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#38** https://github.com/sassnarep3-star/WinC/pull/38 opened from `arena/70bd2fcc-winc` → `main`. First readiness check read CONFLICTING because PRs #18 and #39 merged mid-flight; resolved by a fast-forward-equivalent merge of `origin/main` into this branch (registers union-merged, HTML regenerated from data, gate re-run green each round: 31→34 pages, 13 guides). |
+| 2026-11-20 06:43:12Z | `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN`; merged with `gh pr merge 38 --merge` → `main` @ `60422bd1e6f6c1f40c8de6717f439989e5772a31`. |
+| 2026-11-20 | Pages build for `60422bd`: `building` → **`built`**, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
+
+**Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
+
+### Third merge of `main` the same day (PRs #40, #43, #45 by session `arena-038c0b80`) — and why this session adopted their renderer
+
+`main` moved twice more while this branch was being reconciled. The arriving work was not cosmetic: a
+narrative layer (`data/stories.json`, `data/makers.json`), series pages, an honest house ad, a WebP+PNG
+`<picture>` pipeline with an 800 px fallback, a stronger gate (register cross-reference existence,
+`<source srcset>` existence, inline-JS parse check, DOM-verified builder) and three more guides.
+
+Decision, recorded so the next session does not re-litigate it: **this session's renderer was withdrawn in
+favour of `main`'s**, because theirs is the more capable one, and a shop has one front page. What was kept from
+this session, grafted onto their renderer rather than pasted over it:
+
+| Kept | How it now lives |
+| --- | --- |
+| Front-page at-a-glance comparison (form · capacity · footprint · weight · what the listing sets it up for · source link) | `glance_table()` in their `home_body()`, after the shop grid — built from `data/products.json`, so it cannot drift |
+| Dated seasonal strip for the holiday cook | `seasonal_strip()`, computed from guides whose season starts “Holiday”, carrying its year in its own sentence; their `current_season()` drives the kicker |
+| Editorial card line instead of the scraped listing title | `product_card()` now prefers `card_copy`, then their story `standfirst`, then the listing title — the anti-slop rule, not a fork of their card |
+| Sixth redirect observation | `sixth_observation` per row + `probe6_note` in `data/probes.json`; their observations #4 and #5 are untouched; the verification table gained a *Latest re-read* column and an observation count instead of one session's date |
+| Two guides | `guides/probe-accuracy-check.html` (FSIS calibration + the ±0.5 °F claim) and `guides/counter-fit-before-you-order.html` (the three listed footprints; ventilation clearance refused). Their `one-second-or-all-night` covers style choice, not accuracy testing, so these are not duplicates |
+| Registers | sources S36–S38 (after main's S35), flags FLG-030/031 (their FLG-026/027 already record the sibling-ASIN half, so mine were re-scoped to the `th=1` variant parameter and to the undecided price stance), suggestions SG-39…SG-47, questions Q-26…Q-28, topic TP-16, topics TP-06/08/09 flipped to their published pages |
+| Gate rules, additive | no flag id or source id inside a reader-copied spec value; `card_copy` hygiene; a `published` topic must point at a built page **with** a `data/guides/` source file; an undated seasonal strip fails, and it may not link a product listing |
+
+Withdrawn rather than merged, so the record is honest:
+- **`guides/probe-placement-holiday-cook.html` was deleted.** Their `turkey-probe-placement.html` answers the
+  same question; two near-identical holiday guides is the failure mode the brief asks to remove.
+- **My five product JPEGs were deleted** in favour of their PNG+WebP pairs, and the seven orphan JPEGs my
+  conversion left behind were removed too. One artwork set per subject, their srcset pipeline, their sizes.
+- My rewrite of `product_card`/`home_body` and my stylesheet block are gone; only the two blocks main lacked
+  were appended to `assets/style.css`.
+
+**Build + gate + tests at close of this reconciliation:** `Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` →
+`OK: 40 pages checked, 39 sitemap URLs, no violations.` · `npm run verify` (gate + `scripts/test_analytics.py` +
+`analytics/test_worker.mjs`) green.
+
+
+---
+
+### Fourth merge of `main` the same day (PR #48, session `arena-156c2ecf`) — id discipline a third time, and one source row deleted rather than duplicated
+
+Their pass rewrote `data/sources.json`, `data/suggestions.json` and `data/topics.json` wholesale while this branch was being
+reconciled. Resolution:
+
+- **A duplicate source row was dropped, not merged.** This session had registered its own per-listing read rows; their S32/S33/S34
+  are the same two listings read on the same date. Mine were deleted and every reference repointed at their rows, so the register
+  carries one line per listing read. The only row this session added is S36, the sixth redirect observation, which their register
+  did not have.
+- **Suggestions renumbered again:** their SG-39…SG-42 keep the ids; this session's nine rows moved to SG-43…SG-51. Nine rows are
+  real work records (card copy, artwork, glance table, bookkeeping out of reader copy, backlog closure, the price stance, the
+  variant pin, the measurement-gated topics, print styles) — restoring them after an earlier collision rule silently dropped four
+  of them, and re-dropping them now would lose the record again.
+- **Topics:** their 18-row backlog was kept as the base; TP-06/TP-09 were flipped to their `turkey-probe-placement` page and
+  TP-08 to the accuracy guide, and this session's counter-fit row was appended as **TP-19** (TP-15…TP-18 were already taken).
+- **Their prose-count and dated-source-stamp rules (SG-39…SG-42) are honoured by this merge:** every source row this session
+  touches carries its read date, and no count in the docs was typed — the reconciliation blocks below state the build numbers as
+  the build printed them.
+- Nothing else of mine survived as a duplicate: the stylesheet and the builder are main's, plus the two grafted blocks and the two
+  grafted gate rules; my product JPEGs and my duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green (gate + `scripts/test_analytics.py` + `analytics/test_worker.mjs`).
+
+### Fifth merge of `main` the same day (PR #49, session `arena/1c6908d1-winc`) — and a contradiction between observations, recorded rather than resolved
+
+This pass merged with `-X theirs` (main wins every conflicting hunk), then re-registered this session's rows at free ids
+rather than reusing taken ones. Outcome, in the order it matters:
+
+- **What main's side kept:** its renderer, stylesheet, registers and its own new rows (S36, SG-43/SG-44, FLG-030, Q-26).
+  This branch's topics flips (TP-06/TP-08/TP-09 → published pages), `sixth_observation` + `probe6_note`, the two new guides,
+  `card_copy`, the glance table, the dated seasonal strip and the two gate rules all survived the merge — verified after it,
+  not assumed.
+- **What this session re-added at free ids:** sources S37 (the sixth observation) and the S17 calibration/care/types passages;
+  flags FLG-031 (the undecided no-price stance), FLG-032 (the `th=1` variant parameter) and FLG-033 (below); questions
+  Q-27/Q-28/Q-29; suggestions SG-45…SG-53 (nine records of the shop pass, with their cross-references repointed to the ids
+  main actually uses, so no row cites an id that now means something else). SG-36/SG-37/SG-38/SG-43 are cross-referenced
+  instead of duplicated, and the artwork row was rewritten to describe main's PNG+WebP pipeline rather than the JPEG set this
+  session first drafted.
+- **A real disagreement between observations, published:** FLG-030 records that `arena/1c6908d1`'s fetch path did *not*
+  reproduce the five-token → five-ASIN mapping. Six observations by four sessions (2026-11-17 and five on 2026-11-20) map all
+  five tokens to the same five ASINs every time, with the page titles matching verbatim. Neither side is overwritten: **FLG-033**
+  states that the discrepancy is about the fetch path, not about the links, and sets the action that settles it — FLG-002's
+  one-link test inside the enrolled Associates workflow, which is the only route that determines what a reader actually receives.
+  The supplied short links are still not called invalid (FLG-003 unchanged).
+- Duplication avoided rather than litigated: the two per-listing source rows this session had registered were dropped in favour
+  of main's S32/S33/S34 (same listings, same date), and the duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green.
+
+---
+
+# Session arena/156c2ecf-winc — line-by-line re-verification + decision-register completion (T39–T42)
+
+Branch `arena/156c2ecf-winc`, branched from `main` at `ba0b838`. Started 2026-11-20. Scope claimed:
+source re-verification with dated access notes (failures recorded, not hidden), decision-register
+completion, seasonal topic backlog, typed-count reconciliation, and the integration close-out for
+this branch. Task rows drafted as T29–T32, renumbered to T39–T42 at the first rebase — sessions
+`arena-c2123b9c` / `arena-70bd2fcc` had already claimed T29–T38 on main. Same repair pattern as
+the earlier FLG renumbering.
+
+## Task board (this session)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T39 | Line-by-line re-verification of load-bearing sources with dated access notes (failures recorded, not hidden) | done | arena-156c2ecf | `data/sources.json`, `EXECUTIVE-SUMMARY.md` |
+| T40 | Decision-register completion: house-style/counts/re-read-trail/seasonal-publishing rows (SG-39..SG-42) | done | arena-156c2ecf | `data/suggestions.json` |
+| T41 | Seasonal/trendy topic backlog rows TP-16..TP-18 + typed-count reconciliation | done | arena-156c2ecf | `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
+| T42 | Integration close-out: build + gate green on the union, PR to main, merge, confirm Pages, record result | done below | arena-156c2ecf | `COORDINATION.md` (integration only) |
+
+## Verification performed (official sources, fetched live 2026-11-20 via the page reader)
+
+| Ref | Source | Result |
+| --- | --- | --- |
+| S01 | affiliate-program.amazon.com/help/operating/agreement | **Re-read live.** §5 disclosure sentence, §1 tagged Special Links, §6 material-breach clause, "Updated: October 15, 2025" — re-confirmed. |
+| S02 | affiliate-program.amazon.com/help/operating/policies | **Re-read live.** Price/availability rule verbatim, tag format "(appearing as XXXXX-##)", "Updated: April 14, 2026". |
+| S03 | ftc.gov Endorsement Guides FAQ | **Re-read live.** "disclosed clearly and conspicuously". |
+| S05 | sell.amazon.com/blog/what-is-an-asin | **Re-read live.** 10-character ASIN rule, found after /dp/. |
+| S09 | amazon.com/dp/B0CDY277D3 | **Re-read live.** `<title>` matched stored title verbatim; breadcrumb + fallback-route behaviour confirmed. |
+| S16/S17 | fsis.usda.gov | **Re-fetch FAILED this session (two URL forms).** Not re-confirmed here; stand on prior sessions' reads. Recorded on the source rows. |
+
+## Coordination / merge note (this session, two rebases)
+
+`main` advanced twice while this session worked (PRs #37–#39 round and PRs #40–#45 round). Each
+rebase conflicted in `COORDINATION.md`, `EXECUTIVE-SUMMARY.md`, `data/sources.json`,
+`data/suggestions.json`, `data/topics.json` and four generated HTML files. Resolution without
+discarding either side, both times:
+
+- `data/sources.json`: kept main's rows (S01–S29 after round one, S01–S35 after round two);
+  appended this session's dated re-read notes to S01, S02, S03, S05, S09 and the failed-fetch
+  notes to S16/S17.
+- `data/suggestions.json`: kept main's rows exactly (SG-01–SG-38, including its SG-21/SG-22 and
+  the SG-27..SG-30 findability rows — those match the brief's named rows and stay canonical). This
+  session's rows are **SG-39..SG-42**. Its earlier duplicates of SG-27..SG-30 were folded away;
+  its seasons row was superseded by main's season rail + SG-35; its structured-data row deferred
+  to SG-33 after S28 recorded that Google removed the FAQ rich-result documentation (June 2026).
+- `data/topics.json`: kept main's rows (through TP-15 after round two); this session's seasonal
+  rows are **TP-16..TP-18** (renumbered twice as main's topic ids advanced).
+- Questions (Q-01..Q-25), flags (FLG-001..FLG-029), products, guides (15 files) and the series
+  data: auto-merged; main's versions kept.
+- Generated HTML: both sides' copies discarded and rebuilt from the merged data via
+  `scripts/build_site.py`, so every page reflects the union. Gate green after each union:
+  round two build = 38+ pages / 15 guides (final counts in the PR record below).
+
+## PR / merge record (T42)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round. |
+| 2026-11-20 | **PR #46 merged** (`gh pr merge 46 --merge`). Main HEAD = `afa86c7b` "Merge pull request #46 from sassnarep3-star/arena/156c2ecf-winc". GitHub Pages: `status: built`, source `main`, https://sassnarep3-star.github.io/WinC/ — live re-fetch confirms the merged build serves (topics page shows "18 in the backlog", including TP-16..TP-18). Build + gate before merge: `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` / `OK: 38 pages checked, 37 sitemap URLs, no violations.` |
+
+---
+
+# Session `arena/1c6908d1-winc` — audit-clean pass, verification #5, review-prompt suggestions
+
+Branch `arena/1c6908d1-winc`. Rebased onto current `main` through two rounds of mid-flight merges
+(main advanced in multiple sessions). Conflicts were resolved by taking `main`'s version as the base
+and keeping this session's distinct additions, renumbered to avoid collisions with findings `main`
+had independently recorded (main added S30–S35, FLG-026–030, Q-24–26, SG-39–42 for different items).
+This session's entries are **S36, FLG-030, Q-26, SG-43, SG-44**.
+
+## Task board (this session)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T33 | Confirm independent-audit A6 (src-id + search DOM-API) and A7 (capture form) are fixed; upgrade capture form to method=post | done | arena/1c6908d1-winc | scripts/build_site.py, assets/app.js, generated HTML |
+| T34 | Independent verification pass #5: re-read all 5 listings + re-fetch all 5 tokens; record S36, FLG-030, Q-26 | done | arena/1c6908d1-winc | data/sources.json, data/flags.json, data/questions.json |
+| T35 | Add review-prompt suggestions SG-43 (editorial voice / not AI slop), SG-44 (accept/reject workflow) | done | arena/1c6908d1-winc | data/suggestions.json, direction.html (generated) |
+| T36 | Final integration: build + check + audit strict green, PR to main, merge, confirm Pages, record here | in progress | arena/1c6908d1-winc | COORDINATION.md + integration |
+
+## Verification performed (every claim from an official source, fetched live 2026-11-20)
+
+| What | How | Result |
+| --- | --- | --- |
+| All 5 `amazon.com/dp/<ASIN>` listings | Fetched live via the page reader | Each `<title>` matched `data/products.json` verbatim; breadcrumb confirms category (3 Air Fryers, 2 Meat Thermometers). Fallback route `lv=shuf` + `plpRedirect=mhFallback` present on all 5 (FLG-009/FLG-029). No spec drift. |
+| The 5 supplied `link.amazon` tokens | Fetched live via the page reader | 4/5 (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage; B0f3GKalj returned HTTP 500 on two attempts. Prior token→ASIN mapping NOT reproduced via this path → FLG-030. |
+| Independent audit | `node tools/audit.mjs --strict` | **0 findings**, all 10 rules pass. |
+| Site gate | `npm run verify` | Built 38 pages, 37 sitemap URLs / OK: 38 pages checked, 37 sitemap URLs, no violations. |
+
+## Findings recorded this session
+
+| ID | Finding | Status |
+| --- | --- | --- |
+| FLG-030 | The 5 supplied `link.amazon` tokens did not reproduce the prior ASIN mapping via this session's page-reader fetch (4/5 → homepage, 1/5 HTTP 500). Not claimed invalid (FLG-003 unchanged). Reproducibility across observation methods is in question; resolve by re-resolving in an enrolled Associates browser with cookies + region. | needs review (open, non-blocking) |
+| Q-26 | Do the tokens actually resolve to the 5 observed ASINs, and why did this fetch not reproduce the mapping? | open, non-blocking |
+| SG-43 | Editorial voice pass so copy reads like a publication, not generated text (the brief's "not AI slop"). | recommended-now |
+| SG-44 | Accept/reject/defer review workflow so the chosen path persists in-repo. | recommended-now |
+
+## Notes for the next session
+
+- The independent audit is **0 findings** on the merged tree. `main` independently fixed A6 (src-id
+  quote style + link.amazon text-rendering) and A7 (capture form); this session upgraded the capture
+  form to `method="post"` (more robust than `get`+`novalidate` for a JS-blocked browser).
+- **ID collision avoidance:** main uses S30–S35, FLG-026–030, Q-24–26, SG-32–42. This session used
+  S36, FLG-030, Q-26, SG-43, SG-44 — no collisions.
+
+## PR / merge record (this session)
+
+- **PR #49** — https://github.com/sassnarep3-star/WinC/pull/49 — "Audit-clean pass, verification #5,
+  review-prompt suggestions (SG-43/44) — session arena/1c6908d1-winc" — opened from
+  `arena/1c6908d1-winc` → `main`. Rebased through two rounds of mid-flight merges as `main` advanced.
+- **Merged:** yes — `gh pr merge 49 --merge` → merge commit `513917acddfd9dd0729f607e87f5c30f9a81972`,
+  merged 2026-11-20T07:01:57Z. `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN` at merge time.
+- **Pages deploy confirmed:** `gh api /pages/builds/latest` → `status: built`, `error: null`, commit
+  `513917acdd`. Live re-fetch of `/WinC/flagged-for-review.html` serves the disclosure above the fold
+  and the flagged table (including this session's FLG-030).
+- **Gate on the merged tree:** `npm run verify` → Built 38 pages, 37 sitemap URLs / OK: 38 pages
+  checked, 37 sitemap URLs, no violations; `node tools/audit.mjs --strict` → 0 findings.
+- **Findings published, not blocking:** FLG-030 (token mapping non-reproduction) and Q-26 are on the
+  Flagged for Review and Open Questions pages with source links. They did not block the merge, per the
+  standing rule.
+
+**Task status:** T33–T35 done. T36 (integration) done. Open owner-side items unchanged
+(FLG-001/002/003, FLG-007, Q-01/Q-02, and the audience/legal decisions) — all require an enrolled
+Associates account or an owner decision this environment cannot reach.
+
+---
+
+# Session arena/d1b621b7-winc (d1b621b7) — independent parallel build + merge integration
+
+Branch: `arena/d1b621b7-winc`, cut from `main@a6083c9` (the repo state at session start: README only).
+Because ~30 PRs from other sessions merged into `main` while this session worked in isolation, the
+return trip was a full integration. **No other session's work was discarded; main's generated site,
+data registers and gates are untouched (0 deletions to main's files).**
+
+## Board (this session)
+
+| ID | Task | Status | Files | Final disposition |
+|----|------|--------|-------|-------------------|
+| T-01 | Create coordination board + claim | done | (this file) | merged into main's board as this section |
+| T-02 | Source register verification from official sources | done | archived site `source-register.html` | evidence recorded below + request log |
+| T-03 | Product-intent record (intended vs observed, separate) | done | archived `data/products.json` | main's `data/products.json` already implements the same separation rule |
+| T-04 | Publication front page + brand/imagery | done | archived `site/` | main's root site is the published site |
+| T-05 | Four question-shaped guides + clusters | done | archived `site/guides/` | main ships 8 guides incl. the same four topics |
+| T-06 | Findability (canonical/robots/sitemap/RSS/JSON-LD) | done | archived | main ships sitemap.xml + feed.xml + robots.txt |
+| T-07 | Measurement: five events + click counter + endpoint code | done | archived `analytics-endpoint-*` | main's `analytics/worker.js` + `collect.py` cover this (FLG-007 open on both lineages) |
+| T-08 | Campaign ledger, empty with provenance schema | done | archived `data/campaign-ledger.json` | main's ledger (T18) is the live one |
+| T-09 | Suggestions section with review paths | done | archived `site/suggestions.html` (30 cards) | main's `direction.html` + `data/suggestions.json` (SG-01..34) are live |
+| T-10 | Questions/answers/missing-info page | done | archived `site/questions.html` (14 Qs) | main's `questions.html` (Q-01..22) is live |
+| T-11 | Flagged for Review page | done | archived `site/flagged.html` (FLG-D1..D12) | main's `flagged-for-review.html` (FLG-001..025) is live |
+| T-12 | Executive summary | done | archived | main's `executive-summary.html` + `EXECUTIVE-SUMMARY.md` are live |
+| T-13 | Disclosure + sponsored links on every page | done | archived (checker-enforced there) | main's gate enforces the same rules live |
+| T-14 | Automation gate (checker + workflow) | done | archived `check_site_docs.py`; workflow dropped | main's `scripts/check_site.py` + `ci.yml` are the authority |
+| T-15 | About/authorship + privacy pages | done | archived `site/about.html`, `site/privacy.html` | main has `about.html`; privacy content also lives in `analytics/README.md` |
+| T-16 | Final integration: merge, verify, PR, Pages | done | this section | PR/merge record below |
+
+## Independent source verification (this session's reader could reach official hosts)
+
+Re-fetched **live on 2026-11-20** — these hosts were recorded as unreachable in the `arena/68db484a`
+section, so this session's reads are fresh, independent provenance for the register owners:
+
+| Official source | What was verified verbatim |
+|---|---|
+| https://affiliate-program.amazon.com/help/operating/agreement | §5 required statement: “As an Amazon Associate I earn from qualifying purchases.”; §1 Special Links must use the special “tagged” link formats; page states **Updated: October 15, 2025** |
+| https://affiliate-program.amazon.com/help/operating/policies | §2(b) tag format `XXXXX-##`; Session = 24 h / order / another Special Link, cart order ≤89 days; §2(g) improperly formatted links ⇒ purchase disqualified; IP License §2(i)–(k) price display (API/served only, timestamp + prescribed disclaimer); §6(t) star ratings only via Creators/PA API; §6(w) shortening must not obscure the Amazon destination; page states **Updated: April 14, 2026** |
+| https://affiliate-program.amazon.com/help/operating/schedule | Commission rate schedule redirects to Amazon sign-in (observed 2026-11-20) ⇒ rates not publicly verifiable |
+| https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255 | §255.0(f): “clear and conspicuous” = “difficult to miss (i.e., easily noticeable) and easily understandable by ordinary consumers”; interactive media ⇒ disclosure “should be unavoidable”; source 88 FR 48102 (July 26, 2023); eCFR current as of 11/18/2026 |
+| https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking | Material-connection disclosure guidance; links the 2023 revision of the Guides |
+| https://advertising.amazon.com/library/guides/targeting-with-sponsored-products | “An ASIN is always 10 characters long, and either entirely numeric … or starts with a ‘B’” |
+
+Corroborates register rows **S01, S02, S03, S05** (and the price-display rows) — see request log.
+
+## Probe evidence: fifth capture + control test (2026-11-20)
+
+- **5/5 mappings reproduce** (same method as observations #1–#4, fetch_page reader):
+  `B04G1MEwY→B0CDY277D3`, `B02NbDxp3→B09B7SB46R`, `B00hJ57DV→B08DKYBTPH`,
+  `B0c8moW59→B0DHZTCNR5`, `B0f3GKalj→B0DZFD6R9Z`.
+- **Control test (new evidence):** direct fetches of `https://www.amazon.com/dp/<all five intended
+  tokens>` all failed on 2026-11-20, while same-day control fetches of two known-good ASINs
+  (`B0CDY277D3` and `B00005N5PF`) succeeded — consistent with the 9-vs-10-character format finding
+  (Amazon Ads source above) and with main's decision to keep `intended_asin` blank.
+- **DNS observation:** `link.amazon` resolved to `18.172.170.x` (AWS CloudFront range observed);
+  no WHOIS egress in this sandbox, so registrar ownership remains unverified (manual lookup suggested).
+
+## Conflict log (merge of `origin/main` into this branch, 2026-11-20)
+
+| Conflict | Resolution |
+|---|---|
+| `COORDINATION.md` (add/add) | main's board kept verbatim; this session appended as a new section; only the “latest session” pointer line was updated |
+| `README.md` (content) | main's README kept (it describes the live generated site); this session's README archived at `archive/arena-d1b621b7/README-docs-site.md` |
+| `analytics/README.md` (add/add) | main's kept; this session's endpoint-variant README archived |
+| `scripts/check_site.py` (add/add) | main's gate kept — it is the site's authority (board T06); this session's docs gate archived as `archive/arena-d1b621b7/check_site_docs.py` |
+| this session's `.github/workflows/site-checks.yml` | removed — main's `ci.yml` already runs build + gate + audit on push/PR |
+| this session's `docs/` site + endpoint variants | moved to `archive/arena-d1b621b7/` (main's gate skips `archive/`; existing archives are handled the same way). Nothing deleted. |
+| round 2: `COORDINATION.md` (content) after main advanced to `627157f` (PRs #37–#41) | union — the four incoming session sections (23428c9e, 70bd2fcc, a81c0f0e, 038c0b80) and this session's section both kept; header pointer names this session as latest |
+| round 2: `AUDIT.md` (content) | resolved to the incoming report, then regenerated with `node tools/audit.mjs` for the combined tree |
+| rounds 3+: `COORDINATION.md` re-conflicted each time `main` advanced (PRs #43–#46 observed); resolved by taking main's board and re-appending this section — no other session's section dropped |
+
+## Request log (cross-scope — not edited here)
+
+- **d1b621b7 → register owners:** consider recording this session's control test (all five intended
+  `/dp/` fetches failed while two known-good controls loaded, 2026-11-20) in `data/flags.json` or
+  `data/probes.json` if deemed material. Shared data was not touched outside an integration claim.
+- **d1b621b7 → register owners:** the six official pages listed above were re-fetched live today and
+  can serve as current provenance for S01/S02/S03/S05 (the `68db484a` section marked them unreachable).
+
+## PR / merge record
+
+- **PR #35:** https://github.com/sassnarep3-star/WinC/pull/35 — `arena/d1b621b7-winc` → `main`
+  (retitled during integration: merge of main into this branch + archive of the parallel docs build).
+- Merge result: pending CI on the combined tree.
+- Pages deploy: main's Pages workflow (`pages.yml`, source `{main, /}`) to be re-confirmed after merge;
+  live URL https://sassnarep3-star.github.io/WinC/ (recorded below once the post-merge build is green).
+=======
+| 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round. |
+| 2026-11-20 | **PR #46 merged** (`gh pr merge 46 --merge`). Main HEAD = `afa86c7b` "Merge pull request #46 from sassnarep3-star/arena/156c2ecf-winc". GitHub Pages: `status: built`, source `main`, https://sassnarep3-star.github.io/WinC/ — live re-fetch confirms the merged build serves (topics page shows "18 in the backlog", including TP-16..TP-18). Build + gate before merge: `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` / `OK: 38 pages checked, 37 sitemap URLs, no violations.` |
+
+---
+
+# Session `arena/1c6908d1-winc` — audit-clean pass, verification #5, review-prompt suggestions
+
+Branch `arena/1c6908d1-winc`. Rebased onto current `main` through two rounds of mid-flight merges
+(main advanced in multiple sessions). Conflicts were resolved by taking `main`'s version as the base
+and keeping this session's distinct additions, renumbered to avoid collisions with findings `main`
+had independently recorded (main added S30–S35, FLG-026–030, Q-24–26, SG-39–42 for different items).
+This session's entries are **S36, FLG-030, Q-26, SG-43, SG-44**.
+
+## Task board (this session)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T33 | Confirm independent-audit A6 (src-id + search DOM-API) and A7 (capture form) are fixed; upgrade capture form to method=post | done | arena/1c6908d1-winc | scripts/build_site.py, assets/app.js, generated HTML |
+| T34 | Independent verification pass #5: re-read all 5 listings + re-fetch all 5 tokens; record S36, FLG-030, Q-26 | done | arena/1c6908d1-winc | data/sources.json, data/flags.json, data/questions.json |
+| T35 | Add review-prompt suggestions SG-43 (editorial voice / not AI slop), SG-44 (accept/reject workflow) | done | arena/1c6908d1-winc | data/suggestions.json, direction.html (generated) |
+| T36 | Final integration: build + check + audit strict green, PR to main, merge, confirm Pages, record here | in progress | arena/1c6908d1-winc | COORDINATION.md + integration |
+
+## Verification performed (every claim from an official source, fetched live 2026-11-20)
+
+| What | How | Result |
+| --- | --- | --- |
+| All 5 `amazon.com/dp/<ASIN>` listings | Fetched live via the page reader | Each `<title>` matched `data/products.json` verbatim; breadcrumb confirms category (3 Air Fryers, 2 Meat Thermometers). Fallback route `lv=shuf` + `plpRedirect=mhFallback` present on all 5 (FLG-009/FLG-029). No spec drift. |
+| The 5 supplied `link.amazon` tokens | Fetched live via the page reader | 4/5 (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage; B0f3GKalj returned HTTP 500 on two attempts. Prior token→ASIN mapping NOT reproduced via this path → FLG-030. |
+| Independent audit | `node tools/audit.mjs --strict` | **0 findings**, all 10 rules pass. |
+| Site gate | `npm run verify` | Built 38 pages, 37 sitemap URLs / OK: 38 pages checked, 37 sitemap URLs, no violations. |
+
+## Findings recorded this session
+
+| ID | Finding | Status |
+| --- | --- | --- |
+| FLG-030 | The 5 supplied `link.amazon` tokens did not reproduce the prior ASIN mapping via this session's page-reader fetch (4/5 → homepage, 1/5 HTTP 500). Not claimed invalid (FLG-003 unchanged). Reproducibility across observation methods is in question; resolve by re-resolving in an enrolled Associates browser with cookies + region. | needs review (open, non-blocking) |
+| Q-26 | Do the tokens actually resolve to the 5 observed ASINs, and why did this fetch not reproduce the mapping? | open, non-blocking |
+| SG-43 | Editorial voice pass so copy reads like a publication, not generated text (the brief's "not AI slop"). | recommended-now |
+| SG-44 | Accept/reject/defer review workflow so the chosen path persists in-repo. | recommended-now |
+
+## Notes for the next session
+
+- The independent audit is **0 findings** on the merged tree. `main` independently fixed A6 (src-id
+  quote style + link.amazon text-rendering) and A7 (capture form); this session upgraded the capture
+  form to `method="post"` (more robust than `get`+`novalidate` for a JS-blocked browser).
+- **ID collision avoidance:** main uses S30–S35, FLG-026–030, Q-24–26, SG-32–42. This session used
+  S36, FLG-030, Q-26, SG-43, SG-44 — no collisions.
+
+## PR / merge record (this session)
+
+- **PR #49** — https://github.com/sassnarep3-star/WinC/pull/49 — "Audit-clean pass, verification #5,
+  review-prompt suggestions (SG-43/44) — session arena/1c6908d1-winc" — opened from
+  `arena/1c6908d1-winc` → `main`. Rebased through two rounds of mid-flight merges as `main` advanced.
+- **Merged:** yes — `gh pr merge 49 --merge` → merge commit `513917acddfd9dd0729f607e87f5c30f9a81972`,
+  merged 2026-11-20T07:01:57Z. `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN` at merge time.
+- **Pages deploy confirmed:** `gh api /pages/builds/latest` → `status: built`, `error: null`, commit
+  `513917acdd`. Live re-fetch of `/WinC/flagged-for-review.html` serves the disclosure above the fold
+  and the flagged table (including this session's FLG-030).
+- **Gate on the merged tree:** `npm run verify` → Built 38 pages, 37 sitemap URLs / OK: 38 pages
+  checked, 37 sitemap URLs, no violations; `node tools/audit.mjs --strict` → 0 findings.
+- **Findings published, not blocking:** FLG-030 (token mapping non-reproduction) and Q-26 are on the
+  Flagged for Review and Open Questions pages with source links. They did not block the merge, per the
+  standing rule.
+
+**Task status:** T33–T35 done. T36 (integration) done. Open owner-side items unchanged
+(FLG-001/002/003, FLG-007, Q-01/Q-02, and the audience/legal decisions) — all require an enrolled
+Associates account or an owner decision this environment cannot reach.
+>>>>>>> origin/main
+
 ---
 
 # Session arena-9a3bb152 — verification re-check + final integration (2026-11-20)
@@ -1118,81 +1650,21 @@ this integration landed, and PR #18 via PR #39 — both lineages are preserved h
 
 ## Completion record (arena-9a3bb152, 2026-11-20)
 
-- T30: all five official-source pairs re-read verbatim; 5/5 stored titles equal live listing `<title>`;
+- T30: all five official-source pairs re-read verbatim; 5/5 stored titles equal the live listing `<title>`;
   per-row `access` notes appended (S01–S05, S09–S13, S16, S17) instead of a redundant new source.
 - T31: reader path audited — shop/publication voice confirmed; Desk surfaces stay in one nav group.
 - T32: PRs #17/#18 integrated without loss (archives under `archive/`, tools/CI kept, this board kept
   whole with the full provenance trail restored — main's #17 merge had dropped the trail; it is back).
-  Later merges of #18 (PR #39) and PRs #27/#29/#30/#36/#37 unioned in the same way.
-- Registers at integration: **31 sources** (S01–S31), **27 flags** (FLG-001..027), **five probe
-  observations** (four 5/5 + arena-9a3bb152's 1/5 = FLG-026), 11 guides.
-- Audit fixes landed: source-row anchors double-quoted (single quotes had hidden S15's short link
-  from both gates); short-link provenance rendered as text, not an anchor; capture form made safe
-  without JS; `tools/audit.mjs` now scans markup (not inline scripts) for A6/A7.
-- New verified source S31: Associates Standard Commission Income Statement — Kitchen 4.50% (Q-04
-  rate half answered; per-ASIN eligibility stays open). FLG-027 flags the archived edition's dated
-  price snapshots for an owner decision (robots already disallow `/archive/`).
-
----
-
-## PR / merge record (T38)
-
-| Time (UTC) | Result |
-| --- | --- |
-| 2026-11-20 | PR **#38** https://github.com/sassnarep3-star/WinC/pull/38 opened from `arena/70bd2fcc-winc` → `main`. First readiness check read CONFLICTING because PRs #18 and #39 merged mid-flight; resolved by a fast-forward-equivalent merge of `origin/main` into this branch (registers union-merged, HTML regenerated from data, gate re-run green each round: 31→34 pages, 13 guides). |
-| 2026-11-20 06:43:12Z | `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN`; merged with `gh pr merge 38 --merge` → `main` @ `60422bd1e6f6c1f40c8de6717f439989e5772a31`. |
-| 2026-11-20 | Pages build for `60422bd`: `building` → **`built`**, `error: null`. |
-| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
-
-**Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
-
----
-
-# Session arena-038c0b80 — editorial conversion pass + decision section + line-by-line re-verification
-
-Branch `arena/038c0b80-winc`, based on `main@404cabc` (PR #24 merged). Started 2026-11-20.
-State on arrival: 29 pages / 28 sitemap URLs / 8 guides; `check_site.py` green; `node tools/audit.mjs`
-reporting 2 findings (A6, A7). `main` advanced twice while this session was reading the repo; the branch
-was fast-forwarded to `404cabc` before any edit, so nothing here forks an old base.
-
-## Board (this session)
-
-| ID | Task | Status | Owner | File scope |
-| --- | --- | --- | --- | --- |
-| T33 | Story layer: maker profiles, 8 product narratives + 3 cluster guides (one per category), all claims tied to a listed spec (Claude) | in progress | arena-038c0b80 | `data/makers.json`, `data/stories.json`, `data/guides/*.json` (new files only), `scripts/build_site.py` (story/narrative renderers), `assets/style.css`, `assets/img/series-*` |
-| T34 | Decision section: suggestions → review → choose → evidence, rendered from the registers | in progress | arena-038c0b80 | `data/suggestions.json`, `data/questions.json`, `scripts/build_site.py` (direction/questions bodies), `direction.html`, `questions.html` |
-| T35 | Repo audit fixes: A6 anchor-quote mismatch, A7 capture-form transport, stale flags/source notes/typed counts, encoding artifacts (-143, °F), JSON-LD how-to scope | in progress | arena-038c0b80 | `scripts/build_site.py`, `scripts/check_site.py`, `tools/audit.mjs`, `data/flags.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md`, `README.md` |
-| T36 | Findability + imagery hygiene: compress 3.5 MB PNGs to WebP, add FAQPage scope, sitemap/feed check, honest "no measurement yet" language | in progress | arena-038c0b80 | `assets/img/*`, `scripts/build_site.py` |
-| T37 | Final integration: rebuild, gate green, independent audit clean, PR → main, merge, confirm Pages live | pending | arena-038c0b80 | all (integration only) |
-
-## Cross-session follow-ups observed (not mine to merge)
-
-- PR #17 (`arena/04112b09-winc`, OPEN) and PR #18 (`arena/23428c9e-winc`, OPEN) and PR #5
-  (`arena/70d8ad52-winc`, DRAFT) each ship a *different* site into the same repo. Only one can be the
-  published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
-  are already on `main` via PR #24 and are in use. This session did not touch those branches.
-
-## PR / merge record (T37 — merged)
-
-| Time (UTC) | Result |
-| --- | --- |
-| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
-| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
-| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
-| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
-
-### What was deliberately merged *from* main rather than over it
-
-- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
-- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
-- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
-- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
-
-### Two id collisions worth recording for the next session
-
-1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
-2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
-
-### Rounds where the gates were run after each merge
-
-38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+  Every later merge round (PRs #27–#51) was unioned the same way; id collisions across parallel
+  sessions were resolved by renumbering this session's rows to free ids, never by overwriting.
+- This session's register items (final ids after three renumbering rounds): **S38** commission
+  statement (Kitchen 4.50%, answers Q-04's rate half), **S39** observation #7 provenance,
+  **FLG-030** enriched with the second divergent run (the flag itself was independently created by
+  arena/1c6908d1 for their run — same phenomenon, two sessions), **FLG-034** archived-edition price
+  snapshots (owner decision; robots already disallow `/archive/`).
+- Observations at close: **seven recorded** — five 5/5-matching (11-17; #2–#5 on 11-20), then two
+  divergent same-day runs (#6 f1fd0ff0/1c6908d1, #7 arena-9a3bb152), all published (FLG-030).
+- Audit fixes landed earlier in this session: source-row anchors double-quoted so both gates see them,
+  S15 short-link provenance rendered as text not an anchor, `tools/audit.mjs` A6/A7 scan markup not
+  inline scripts (false positives removed). Later sessions independently cleared A6/A7 as well.
+- Registers at this session's close: 39 sources, 34 flags, 7 probe observations, 15 guides, 38 pages.

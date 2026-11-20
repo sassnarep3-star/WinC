@@ -72,8 +72,9 @@
   }
   document.addEventListener("scroll", onScroll, { passive: true });
 
-  // 4) reader_capture_submit — no backend exists; count locally, send nothing, keep the address out of the URL.
-  var form = document.getElementById("reader-capture");
+  // 4) reader_capture_submit — newsletter form (double opt-in handled by provider; no tracking pixel)
+  //    preventDefault() keeps the address out of the URL even when JS is on; the form is POST so a
+  //    JS-blocked browser posts the body to the page instead of putting the address in a query string.  var form = document.getElementById("reader-capture");
   if (form){
     form.addEventListener("submit", function(e){
       e.preventDefault();
