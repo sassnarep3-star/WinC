@@ -1,46 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-  <title>Crisp Report — buyer guides</title>
-  <link>https://sassnarep3-star.github.io/WinC/</link>
-  <description>Small-appliance buying intelligence. Headlines and dates only: this feed carries no store links, so the buying decision stays on a page where the disclosure is.</description>
-  <language>en-US</language>
-  <lastBuildDate>Fri, 20 Nov 2026 07:00:00 GMT</lastBuildDate>
-  <atom:link href="https://sassnarep3-star.github.io/WinC/feed.xml" rel="self" type="application/rss+xml"/>
-  <item>
-    <title>What to check on an appliance listing before you click buy</title>
-    <link>https://sassnarep3-star.github.io/WinC/guides/what-to-check-on-the-listing/</link>
-    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/what-to-check-on-the-listing/</guid>
-    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
-    <description>The fields that can be verified, the ones that are decoration, and the two lines that tell you a listing was written by someone who used the thing.</description>
-  </item>
-  <item>
-    <title>Questions to ask before buying a multi-function kitchen appliance</title>
-    <link>https://sassnarep3-star.github.io/WinC/guides/multifunction-questions/</link>
-    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/multifunction-questions/</guid>
-    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
-    <description>Nine cooking modes is a spec sheet, not a reason. Six questions that separate a replacement from a duplicate - and save you the counter space anyway.</description>
-  </item>
-  <item>
-    <title>How to assess cleanup and counter-space trade-offs</title>
-    <link>https://sassnarep3-star.github.io/WinC/guides/cleanup-and-counter-space/</link>
-    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/cleanup-and-counter-space/</guid>
-    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
-    <description>The appliance you keep using is the one that is easy to wash and easy to park. Both are checkable before you buy, from documents you can open in a minute.</description>
-  </item>
-  <item>
-    <title>A no-hype checklist for comparing air fryer capacity</title>
-    <link>https://sassnarep3-star.github.io/WinC/guides/capacity-checklist/</link>
-    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/capacity-checklist/</guid>
-    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
-    <description>Litres, quart counts and &#39;feeds a family of&#39; claims measure different things. Here is how to read each one without being sold something.</description>
-  </item>
-  <item>
-    <title>Basket or oven-style air fryer: what should you compare?</title>
-    <link>https://sassnarep3-star.github.io/WinC/guides/basket-or-oven/</link>
-    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/basket-or-oven/</guid>
-    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
-    <description>Two shapes, two failure modes. The trade-offs that decide it are on the listing, if you know which fields to read.</description>
-  </item>
-</channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
+  <title>ShopNow Kitchen</title><link>https://sassnarep3-star.github.io/WinC/</link><atom:link href="https://sassnarep3-star.github.io/WinC/feed.xml" rel="self" type="application/rss+xml"/><description>Basket or oven-style? Compare before you buy. Specs, sources and the questions that decide it — no hype.</description>
+    <item><title>Basket or oven-style air fryer: what should you compare?</title><link>https://sassnarep3-star.github.io/WinC/guides/basket-or-oven-style-air-fryer.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/basket-or-oven-style-air-fryer.html</guid><category domain="https://sassnarep3-star.github.io/WinC/">Air Fryers</category><description>Two baskets that finish together vs. one big oven cavity. Compare capacity, footprint, and cleanup across the three air fryers in the shop.</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>Instant-read or leave-in probe: which one actually does your job?</title><link>https://sassnarep3-star.github.io/WinC/guides/instant-read-or-leave-in.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/instant-read-or-leave-in.html</guid><category domain="https://sassnarep3-star.github.io/WinC/">Thermometers</category><description>One thermometer you spot-check with, and one that stays in the food and tells you when to stop. The difference is not luxury — it is what you can walk away from.</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>A no-hype checklist for comparing air fryer capacity</title><link>https://sassnarep3-star.github.io/WinC/guides/air-fryer-capacity-checklist.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/air-fryer-capacity-checklist.html</guid><category domain="https://sassnarep3-star.github.io/WinC/">Air Fryers</category><description>Quarts mean different things. Measure the food, not the marketing — a practical capacity checklist for the three air fryers in the shop.</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>Cooking for a crowd this season: four thermometer questions to settle before Thursday</title><link>https://sassnarep3-star.github.io/WinC/guides/holiday-crowd-thermometer-questions.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/holiday-crowd-thermometer-questions.html</guid><category domain="https://sassnarep3-star.github.io/WinC/">Holiday cooking</category><description>A bird, a roast and four hours of oven. What to decide about probes, alarms, and cable heat limits before you buy anything for the holiday cook.</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>How to assess cleanup and counter-space trade-offs</title><link>https://sassnarep3-star.github.io/WinC/guides/cleanup-and-counter-space.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/cleanup-and-counter-space.html</guid><category domain="https://sassnarep3-star.github.io/WinC/">Air Fryers</category><description>Dishwasher-safe parts, windows, and the inches your counter actually has. A practical cleanup and footprint guide for basket vs. oven-style fryers.</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>Questions to ask before buying a multi-function kitchen appliance</title><link>https://sassnarep3-star.github.io/WinC/guides/multi-function-appliance-questions.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/multi-function-appliance-questions.html</guid><category domain="https://sassnarep3-star.github.io/WinC/">Multi-function</category><description>24 functions sound great — until you ask which ones you will use weekly. Questions for oven-style fryers and wireless thermometers.</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>Chefman 6 Qt Dual Basket (windows)</title><link>https://sassnarep3-star.github.io/WinC/products/chefman-6qt-dual-basket-b0cdy277d3.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/products/chefman-6qt-dual-basket-b0cdy277d3.html</guid><description>CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>Emeril 26QT French Door oven</title><link>https://sassnarep3-star.github.io/WinC/products/emeril-26qt-french-door-b09b7sb46r.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/products/emeril-26qt-french-door-b09b7sb46r.html</guid><description>Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>Chefman 8 Qt TurboFry (XL basket)</title><link>https://sassnarep3-star.github.io/WinC/products/chefman-8qt-turbofry-b08dkybtph.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/products/chefman-8qt-turbofry-b08dkybtph.html</guid><description>Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>ThermoMaven 1 Sec instant-read</title><link>https://sassnarep3-star.github.io/WinC/products/thermomaven-1sec-b0dhztcnr5.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/products/thermomaven-1sec-b0dhztcnr5.html</guid><description>ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&amp;NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+    <item><title>CHEF iQ Sense Gen3 (3 probes, WiFi)</title><link>https://sassnarep3-star.github.io/WinC/products/chefiq-sense-gen3-b0dzfd6r9z.html</link><guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/products/chefiq-sense-gen3-b0dzfd6r9z.html</guid><description>CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3</description><pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate></item>
+</channel></rss>

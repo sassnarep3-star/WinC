@@ -1,450 +1,191 @@
 {
-  "$comment": "Source register. `method` explains how we know: fetched = this agent retrieved the page from the publisher's own domain on fetched_on; api = observed by calling a published API; operator = supplied in the brief; local = measured inside the build sandbox; referenced = URL appears inside a fetched page but was not opened by us. Fields that no row here supports stay blank on the site and get a FLG entry.",
-  "updated_on": "2026-11-20",
   "sources": [
     {
-      "id": "SRC-01",
-      "publisher": "Amazon Services LLC (Associates Central)",
-      "title": "Associates Program Operating Agreement",
+      "id": "S01",
+      "title": "Amazon Associates Program Operating Agreement (Updated 2025-10-15)",
       "url": "https://affiliate-program.amazon.com/help/operating/agreement",
-      "domain": "affiliate-program.amazon.com",
-      "kind": "contract",
-      "page_states_updated": "October 15, 2025",
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "It is the agreement this site would be operating under. Section 5 fixes the disclosure wording; Section 1 defines the only permitted link format.",
-      "quotes": [
-        {
-          "ref": "§1 Description of the Associates Program",
-          "text": "The links must properly use the special “tagged” link formats we provide and comply with this Agreement (“Special Links”)."
-        },
-        {
-          "ref": "§5 Identifying Yourself as an Associate",
-          "text": "You must clearly and prominently state the following, or any substantially similar statement previously allowed under this Agreement, on your Site or any other location where Amazon may authorize your display or other use of Program Content: “As an Amazon Associate I earn from qualifying purchases.”"
-        },
-        {
-          "ref": "§5 Identifying Yourself as an Associate",
-          "text": "You will not misrepresent or embellish our relationship with you (including by expressing or implying that we support, sponsor, or endorse you)…"
-        },
-        {
-          "ref": "§6 Term and Termination",
-          "text": "For the avoidance of doubt and without limitation for purposes of the foregoing subsection (a) any violation of Section 5 and as specified in the Program Policies will be deemed a material breach of this Agreement."
-        },
-        {
-          "ref": "§12 Additional Provisions",
-          "text": "…(b) review, monitor, crawl, and otherwise investigate your Site to verify compliance with this Agreement…"
-        }
-      ]
+      "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
     },
     {
-      "id": "SRC-02",
-      "publisher": "Amazon Services LLC (Associates Central)",
-      "title": "Associates Program Policies (Commission Income Statement; Participation Requirements; Products Statement)",
+      "id": "S02",
+      "title": "Amazon Associates Program Policies (Updated 2026-04-14)",
       "url": "https://affiliate-program.amazon.com/help/operating/policies",
-      "domain": "affiliate-program.amazon.com",
-      "kind": "policy",
-      "page_states_updated": "April 14, 2026",
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "This single page decides most of the architecture: what a link may look like, whether a price or a star rating may be shown, what disqualifies a sale, and what counts as unsuitable content.",
-      "quotes": [
-        {
-          "ref": "Commission Income Statement §1(b) — the Session",
-          "text": "…beginning when a customer clicks through that Special Link and ending upon the first to occur of the following: (x) 24 hours elapse from that click, (y) the customer places an order for a Product… or (z) the customer clicks through a Special Link to an Amazon Site that is not your Special Link…"
-        },
-        {
-          "ref": "Commission Income Statement §1(c)(i) — cart window",
-          "text": "…completing the order for that Product no later than 89 days after their initial click-through of the Special Link…"
-        },
-        {
-          "ref": "Commission Income Statement §1(c)(iii) — fulfilment deadline",
-          "text": "within 180 days of the purchase, the Product is shipped to, streamed or downloaded by, and paid for by the customer"
-        },
-        {
-          "ref": "Commission Income Statement §2(c) — Prohibited Paid Search Placement",
-          "text": "…any Product order where… a customer who is referred to an Amazon Site through any advertisement that you purchased, including through participation in bidding or auctions on keywords, search terms, or other identifiers that include the word “amazon”, or “kindle”, or any other Amazon Mark…"
-        },
-        {
-          "ref": "Commission Income Statement §2(d) — search engines",
-          "text": "any Product purchased by a customer who is referred to an Amazon Site by a link that is generated or displayed on a search engine (including Google, Yahoo, Bing, or any other search portal, sponsored advertising service, or other search or referral service, or any site that participates in such search engine’s network)…"
-        },
-        {
-          "ref": "Commission Income Statement §2(e) — Redirecting Link",
-          "text": "…a link that sends users indirectly to an Amazon Site via an intermediate site, without requiring the customer to click on a link or take some other affirmative action on that intermediate site…"
-        },
-        {
-          "ref": "Commission Income Statement §2(g) — formatting",
-          "text": "any Product purchase that is not correctly tracked or reported because the links from your site to the relevant Amazon Site are not properly formatted"
-        },
-        {
-          "ref": "Commission Income Statement §2(k) — pre-release/pre-order",
-          "text": "any pre-release or pre-order Product that is not available on a Product listing page."
-        },
-        {
-          "ref": "Participation Requirements §1 Enrollment and Eligibility",
-          "text": "Your Site(s) must contain original content and be publicly available via the website address provided in the application. Original content utilizing third-party materials must contain significant commentary, analysis, or transformation to any materials you include."
-        },
-        {
-          "ref": "Participation Requirements §1 — trademark in identifiers",
-          "text": "(g) include any trademark of Amazon or its affiliates, or a variant or misspelling of a trademark of Amazon or its affiliates in any domain name, subdomain name, in any “tag” or Associates ID, or in any username, group name, or other identifier on any social networking site…"
-        },
-        {
-          "ref": "Participation Requirements §2(b) — tag parameter",
-          "text": "You must not encourage customers to bookmark your Special Links. All Special Links must be accessed directly from your Site. For example, you must include your Associates ID or “tag” (appearing as XXXXX-##, or such other format as we may designate) as a parameter in the URL of each link you place on your Site to an Amazon Site."
-        },
-        {
-          "ref": "Participation Requirements §2(b) — sub-tags and end users",
-          "text": "Under no circumstances may you associate any sub-tag, other ID or reporting provided in connection with the Associates Program with a specific end user of your Site (e.g. you may not dynamically assign sub-tags to users as they arrive on your Site for purposes of monitoring such users’ behavior)."
-        },
-        {
-          "ref": "Participation Requirements §2(b) — what a Special Link may point at",
-          "text": "Special Links must link to Products (as defined in the Products Statement). When linking to pages with Product lists you must have additional original content on your Site that is relevant to the Special Link."
-        },
-        {
-          "ref": "Participation Requirements §2(b) — no misleading claims",
-          "text": "You must not make inaccurate, overbroad, deceptive or otherwise misleading claims about any Product, an Amazon Site, or any of our policies, promotions, or prices."
-        },
-        {
-          "ref": "Participation Requirements §2(b) — prices and availability",
-          "text": "…your Site may only show prices and availability if: (a) we serve the link in which that price and availability data are displayed, or (b) you obtain Product pricing and availability data via Creators API or PA API and you comply with the requirements regarding use of Creators API or PA API in the License."
-        },
-        {
-          "ref": "Participation Requirements §2(b) — comparison format",
-          "text": "…if you choose to display prices for any Product on your Site in any “comparison” format… you must display both the lowest “new” price and, if we provide it to you, the lowest “used” price at which the Product is available on the Amazon Site."
-        },
-        {
-          "ref": "Participation Requirements §2(b) — expiring promotions",
-          "text": "You must remove from your Site any links and related references to limited time promotions as soon as that promotion on the relevant Amazon Site ends."
-        },
-        {
-          "ref": "Participation Requirements §3(e) — cookies and privacy",
-          "text": "disclosing on your Site accurately and adequately and otherwise satisfying applicable legal requirements, either through a privacy policy or otherwise, the use of cookies, pixels, and other technologies by you and third parties…"
-        },
-        {
-          "ref": "Participation Requirements §4 — offline and solicited messages",
-          "text": "You will not engage in any Promotional Activities in any offline manner… You may include Special Links in emails, SMS and direct messaging from your social media Sites; provided, that such communications are solicited (i.e., opted into by the receiving customer)…"
-        },
-        {
-          "ref": "Participation Requirements §5 — software, devices and machine learning",
-          "text": "You will not, without or express prior written approval, use, or allow any third party to use, any Special Links or Program Content to develop machine learning models or related technology."
-        },
-        {
-          "ref": "Participation Requirements §6(a) — Program Content must not be altered",
-          "text": "You will not add to, delete from, or otherwise alter any Program Content in any way, including by adding additional information, except that you may resize Program Content consisting of a graphic image in a manner that maintains the original proportions of the image or truncate Program Content consisting of text in a manner that does not materially alter the meaning of the text…"
-        },
-        {
-          "ref": "Participation Requirements §6(c) — staleness",
-          "text": "You will promptly remove from your Site and delete or otherwise destroy any Program Content that is no longer displayed on an Amazon Site or that we notify you is no longer available for your use."
-        },
-        {
-          "ref": "Participation Requirements §6(g) — no incentives",
-          "text": "You will not offer any person or entity any consideration, reward, or incentive (including any money, rebate, discount, points, donation to charity or other organization, or other benefit) for using Special Links."
-        },
-        {
-          "ref": "Participation Requirements §6(n)–(o) — framing and pop-ups",
-          "text": "You will not frame an Amazon Site, or any part of it, within your Site… You will not post or serve any Special Links or other content promoting an Amazon Site within any pop-up or pop-under windows, transitional page ads, or layer ads…"
-        },
-        {
-          "ref": "Participation Requirements §6(s) — synthetic traffic",
-          "text": "You will not artificially generate clicks or impressions on your Site or create Sessions on an Amazon Site, whether by way of a robot or software program or otherwise."
-        },
-        {
-          "ref": "Participation Requirements §6(t) — reviews and star ratings",
-          "text": "You will not display or otherwise use any of our customer reviews or star ratings, in part or in whole, on your Site unless you have obtained a link to that customer review or star rating through Creators API or PA API and you comply with the requirements for Creators API and PA API described in the License."
-        },
-        {
-          "ref": "Participation Requirements §6(u) — self-purchases",
-          "text": "You will not directly or indirectly purchase any Product(s) or take a Bounty Event action through Special Links, whether for your use or for the use of any other person or entity, and you will not permit, request or encourage any of your friends, relatives, employees, contractors, or business relations to directly or indirectly purchase any Product(s)…"
-        },
-        {
-          "ref": "Participation Requirements §6(v)–(w) — cloaking and shorteners",
-          "text": "You will not cloak, hide, spoof, or otherwise obscure the URL of your Site containing Special Links (including by use of Redirecting Links)… You will not use a link shortening service, button, hyperlink or other ad placement in a manner that makes it unclear that you are linking to an Amazon Site."
-        },
-        {
-          "ref": "Participation Requirements §6(y) — price alerting",
-          "text": "Unless otherwise agreed by Amazon, your Site must not have price tracking and/or price alerting functionality."
-        },
-        {
-          "ref": "Products Statement §1",
-          "text": "Under the Associates Program, subject to the additions and exclusions described in this Products Statement, a “Product” is any physical or digital item sold on an Amazon Site."
-        },
-        {
-          "ref": "Commission Income Statement §6 — Payment Minimum Chart",
-          "text": "U.S. — Minimum: Option 1 (Deposit) 10 USD; Option 2 (Gift Card) 10 USD, maximum 2000 USD; Option 3 (Check) 100 USD; Check Processing Fee 15 USD."
-        },
-        {
-          "ref": "Commission Income Statement §6 — dormancy",
-          "text": "If at any time there has been no substantial activity on your account for at least 3 years, then we will have the right, with 7 days’ written notice to withhold the accrued commission income for your inactive account…"
-        },
-        {
-          "ref": "Participation Requirements §1 — suitability, extract",
-          "text": "Unsuitable Sites include those that: (a) promote or contain sexually explicit or obscene materials, (b) promote violence…, (c) promote or contain false, deceptive, libelous or defamatory materials… (f) are directed toward children or knowingly collect, use, or disclose personal information from children under 13 years of age…"
-        }
-      ]
+      "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; disclosure + privacy requirements",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
     },
     {
-      "id": "SRC-03",
-      "publisher": "Amazon Services LLC (Associates Central)",
-      "title": "Help: Why do I have to identify myself as an Associate? How should I do this on social media?",
-      "url": "https://affiliate-program.amazon.com/help/node/topic/GHQNZAU6669EZS98",
-      "domain": "affiliate-program.amazon.com",
-      "kind": "program-help",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "Amazon's own answer tells an associate what a link-level disclosure looks like in practice, which is the thing a page template has to get right.",
-      "quotes": [
-        {
-          "ref": "Answer, numbered list",
-          "text": "1. Clear. A clear disclosure could be as simple as \"(paid link)\", \"#ad\", or \"#CommissionsEarned\". 2. Conspicuous. It should be placed near any affiliate link or product review in a location that customers will notice easily. They shouldn't have to hunt for it."
-        },
-        {
-          "ref": "Answer, same medium",
-          "text": "It is important to remember that the disclosure must be made in the medium in which the recommendation was provided…"
-        }
-      ]
-    },
-    {
-      "id": "SRC-04",
-      "publisher": "U.S. Federal Trade Commission",
-      "title": "FTC's Endorsement Guides: What People Are Asking",
+      "id": "S03",
+      "title": "FTC Endorsement Guides: What People Are Asking",
       "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking",
-      "domain": "ftc.gov",
-      "kind": "regulator-guidance",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "The disclosure duty here is not only contractual. This is the regulator's own statement of why a material connection must be visible next to the recommendation.",
-      "quotes": [
-        {
-          "ref": "Introduction",
-          "text": "…if there's a connection between an endorser and the marketer that a significant minority of consumers wouldn't expect and it would affect how they evaluate the endorsement, that connection should be disclosed clearly and conspicuously."
-        },
-        {
-          "ref": "Introduction",
-          "text": "…the Guides say, an endorsement must reflect the honest opinion of the endorser and can't be used to make a claim the marketer of the product couldn't legally make."
-        }
-      ]
+      "what": "Affiliate commission relationship must be disclosed clearly and conspicuously; closer to recommendation is better",
+      "date": "2026-11-20",
+      "access": "ftc.gov HTML page returned an error from this sandbox. Use the CFR/FTC PDF text instead (S22) for the quoted standard."
     },
     {
-      "id": "SRC-05",
-      "publisher": "Amazon Services LLC (Creators API documentation)",
-      "title": "Welcome to Creators API — operations and prerequisites",
-      "url": "https://affiliate-program.amazon.com/creatorsapi/docs/en-us/introduction",
-      "domain": "affiliate-program.amazon.com",
-      "kind": "api-docs",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "It states the prerequisite for any automated price/review/commission pipeline, and it is the reason this build sequences content before automation rather than the reverse.",
-      "quotes": [
-        {
-          "ref": "Prerequisites, list items 1–2",
-          "text": "1. Be enrolled in the Amazon Associates program for your target marketplace 2. Have at least 10 qualifying sales within the past 30 days to access the PA API through the Creators API"
-        },
-        {
-          "ref": "API Operations table",
-          "text": "GetItems — Retrieve detailed information for specific products by ASIN or other identifiers"
-        }
-      ]
-    },
-    {
-      "id": "SRC-06",
-      "publisher": "Amazon Services LLC (Creators API documentation)",
-      "title": "PA-API 5 Deprecation Notice",
-      "url": "https://affiliate-program.amazon.com/creatorsapi/docs/en-us/paapiv5-deprecation",
-      "domain": "affiliate-program.amazon.com",
-      "kind": "api-docs",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "Kills the obvious implementation path (a PA-API 5 client) so nobody spends a session building on a retired endpoint.",
-      "quotes": [
-        {
-          "ref": "What this means",
-          "text": "The Amazon Product Advertising API 5.0 (PA-API 5) has been deprecated and is being replaced by the Creators API. New and existing integrations should move to the Creators API to continue accessing Amazon's product catalog."
-        },
-        {
-          "ref": "What you'll see if you still call PA-API 5",
-          "text": "Applications that continue to call PA-API 5 receive an HTTP 403 Forbidden response with an AccessDeniedException"
-        }
-      ]
-    },
-    {
-      "id": "SRC-07",
-      "publisher": "Google Search Central",
-      "title": "Article (Article, NewsArticle, BlogPosting) structured data",
-      "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
-      "domain": "developers.google.com",
-      "kind": "search-engine-docs",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "Defines the markup our generator emits and which properties are actually read (author, dates, image), so the feed and schema are built to a published spec instead of guesswork.",
-      "quotes": [
-        {
-          "ref": "Lead",
-          "text": "Adding Article structured data to your news, blog, and sports article pages can help Google understand more about the web page and show better title text, images, and date information for the article in search results…"
-        }
-      ]
-    },
-    {
-      "id": "SRC-08",
-      "publisher": "Google Search Central",
-      "title": "Creating helpful, reliable, people-first content",
-      "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
-      "domain": "developers.google.com",
-      "kind": "search-engine-docs",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "The published bar we hold our own copy to — and the documented reason \"generated-sounding\" filler is a ranking risk, not just a taste problem.",
-      "quotes": [
-        {
-          "ref": "Self-assess — content and quality questions",
-          "text": "Does the content provide original information, reporting, research, or analysis? … Does the main heading or page title avoid exaggerating or being shocking in nature?"
-        }
-      ]
-    },
-    {
-      "id": "SRC-09",
-      "publisher": "GitHub, Inc.",
-      "title": "What is GitHub Pages?",
-      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages",
-      "domain": "docs.github.com",
-      "kind": "hosting-docs",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "Two consequences for this build: a project site is served from a sub-path (so every link must be relative), and the host logs visitor IP addresses (so the privacy page cannot claim 'no data leaves the browser').",
-      "quotes": [
-        {
-          "ref": "Types of GitHub Pages sites, table",
-          "text": "Default site location … `http(s)://<owner>.github.io/<repositoryname>`"
-        },
-        {
-          "ref": "Data collection",
-          "text": "When a GitHub Pages site is visited, the visitor's IP address is logged and stored for security purposes, regardless of whether the visitor has signed into GitHub or not."
-        }
-      ]
-    },
-    {
-      "id": "SRC-10",
-      "publisher": "GitHub, Inc. (REST API)",
-      "title": "GET /repos/sassnarep3-star/WinC/pages and /repos/sassnarep3-star/WinC",
-      "url": "https://api.github.com/repos/sassnarep3-star/WinC/pages",
-      "domain": "api.github.com",
-      "kind": "api-response",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "api",
-      "why_it_matters": "The deployment target and its constraints were read from the API rather than assumed: publishing source is branch `main` path `/`, `build_type=legacy`, site URL is under `/WinC/`.",
-      "quotes": []
-    },
-    {
-      "id": "SRC-11",
-      "publisher": "Operator",
-      "title": "Session brief (chat) — product links, tracking ID, priorities, editorial hypotheses",
-      "url": null,
-      "domain": null,
-      "kind": "operator-input",
-      "page_states_updated": "2026-11-20",
-      "fetched_on": "2026-11-20",
-      "method": "operator",
-      "why_it_matters": "It is the only source for the five links and the tracking ID. Anything not stated here and not confirmed by an official page is treated as unknown.",
-      "quotes": [
-        {
-          "ref": "Selected Tracking ID",
-          "text": "shopnow047c-20"
-        },
-        {
-          "ref": "Products to market",
-          "text": "https://link.amazon/B04G1MEwY, https://link.amazon/B02NbDxp3, https://link.amazon/B00hJ57DV, https://link.amazon/B0c8moW59, https://link.amazon/B0f3GKalj"
-        }
-      ]
-    },
-    {
-      "id": "SRC-12",
-      "publisher": "This repository",
-      "title": "Sandbox measurements: git state, identifier shape, network egress",
-      "url": null,
-      "domain": null,
-      "kind": "local-measurement",
-      "page_states_updated": "2026-11-20",
-      "fetched_on": "2026-11-20",
-      "method": "local",
-      "why_it_matters": "Reproducible facts a reviewer can re-run: the five token lengths, the single-commit starting state, and the exact curl error that makes link resolution inconclusive here.",
-      "quotes": [
-        {
-          "ref": "Identifier shape",
-          "text": "B04G1MEwY=9, B02NbDxp3=9, B00hJ57DV=9, B0c8moW59=9, B0f3GKalj=9 characters"
-        },
-        {
-          "ref": "Egress test",
-          "text": "curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to link.amazon:443 (and www.amazon.com:443) — egress to those hosts is not permitted from the build sandbox"
-        }
-      ]
-    },
-    {
-      "id": "SRC-16",
-      "publisher": "Google Search Central",
-      "title": "Qualify your outbound links",
+      "id": "S04",
+      "title": "Google — Qualify your outbound links to Google (rel=sponsored)",
       "url": "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links",
-      "domain": "developers.google.com",
-      "kind": "search-engine-docs",
-      "page_states_updated": "2025-12-10 UTC",
-      "fetched_on": "2026-11-20",
-      "method": "fetched",
-      "why_it_matters": "Defines rel=\"sponsored\", which the brief requires on every product link, and states the real effect: marked links are generally not followed. It is also the reason we can say plainly that the marking costs us no affiliate traffic — attribution rides on the tag parameter, not on Google.",
-      "quotes": [
-        {
-          "ref": "rel=\"sponsored\"",
-          "text": "Mark links that are advertisements or paid placements (commonly called paid links) with the sponsored value."
-        },
-        {
-          "ref": "After the rel values table",
-          "text": "Links marked with these rel attributes will generally not be followed. Remember that the linked pages may be found through other means, such as sitemaps or links from other sites, and thus they may still be crawled."
-        }
-      ]
+      "what": "Mark ads/paid placements with rel=sponsored; affiliate links qualify",
+      "date": "2026-11-20"
     },
     {
-      "id": "SRC-13",
-      "publisher": "Amazon Seller Central Help",
-      "title": "ASIN / product identifier definition (10-character convention)",
-      "url": "https://sellercentral.amazon.com/help/hub/reference/external/G18785",
-      "domain": "sellercentral.amazon.com",
-      "kind": "referenced-not-fetched",
-      "page_states_updated": null,
-      "fetched_on": null,
-      "method": "referenced",
-      "why_it_matters": "The brief leans on 'Amazon's ASIN definition provides a checkable identifier'. The length rule it implies is real and widely documented, but this session could not open a page stating it, so FLG-001 reports the observed shape and stops there instead of asserting invalidity.",
-      "quotes": []
+      "id": "S05",
+      "title": "Sell on Amazon — What is an ASIN?",
+      "url": "https://sell.amazon.com/blog/what-is-an-asin",
+      "what": "ASIN is a unique 10-character alphanumeric code; found after /dp/ in product URL",
+      "date": "2026-11-20"
     },
     {
-      "id": "SRC-14",
-      "publisher": "Amazon Services LLC (Associates Central)",
-      "title": "Non-Exhaustive Trademark Table (nodeId=200738910), as cited inside SRC-02",
-      "url": "https://www.amazon.com/gp/help/customer/display.html/?nodeId=200738910/",
-      "domain": "amazon.com",
-      "kind": "referenced-not-fetched",
-      "page_states_updated": null,
-      "fetched_on": null,
-      "method": "referenced",
-      "why_it_matters": "Named inside the Program Policies as the list of protected marks. Relevant to brand naming: no Amazon mark may appear in the domain, subdomain, tag or username.",
-      "quotes": []
+      "id": "S06",
+      "title": "Amazon Associates — Application Review Process (special tagged links)",
+      "url": "https://affiliate-program.amazon.com/help/node/topic/G8TW5AE9XL2VX9VM",
+      "what": "Special links are identifiers (e.g. abcd-20) embedded in Amazon product links; must be embedded on declared sites",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
     },
     {
-      "id": "SRC-15",
-      "publisher": "Amazon Services LLC (Associates Central)",
-      "title": "Program Help index (all help topics)",
-      "url": "https://affiliate-program.amazon.com/help/node",
-      "domain": "affiliate-program.amazon.com",
-      "kind": "program-help",
-      "page_states_updated": null,
-      "fetched_on": "2026-11-20",
-      "method": "referenced",
-      "why_it_matters": "The index a reviewer starts from when checking any statement on our Compliance page against Amazon's current wording. Link appears in the navigation of SRC-01/02/03 which we did fetch.",
-      "quotes": []
+      "id": "S07",
+      "title": "Amazon Associates — Why do I have to identify myself as an Associate?",
+      "url": "https://affiliate-program.amazon.com/help/node/topic/GPXFHVYZMTGPUMPE",
+      "what": "Link-level disclosure must be clear + conspicuous near link; Operating Agreement statement must appear clearly and conspicuously on Site",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S08",
+      "title": "GitHub Pages documentation",
+      "url": "https://docs.github.com/en/pages",
+      "what": "GitHub Pages turns a repository into a live website; site URL https://sassnarep3-star.github.io/WinC/",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S09",
+      "title": "Amazon listing — CHEFMAN 6 Qt Dual Basket (B0CDY277D3)",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "Title, brand, model RJ38-SQPF-3TDB-2W, 6 Qt, dimensions, weight, temp, UPC",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S10",
+      "title": "Amazon listing — Emeril Lagasse 26QT French Door (B09B7SB46R)",
+      "url": "https://www.amazon.com/dp/B09B7SB46R",
+      "what": "Title, brand, model 4-00675-02X-VN, 26QT, dimensions, weight, UPC",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S11",
+      "title": "Amazon listing — Chefman 8 Qt TurboFry (B08DKYBTPH)",
+      "url": "https://www.amazon.com/dp/B08DKYBTPH",
+      "what": "Title, brand, 8 Qt, dimensions, weight, power, UPC; model/temp conflicts flagged (FLG-005)",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S12",
+      "title": "Amazon listing — ThermoMaven 1 Sec (B0DHZTCNR5)",
+      "url": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "what": "Title, ±0.5°F accuracy, NIST&NSF certified, auto-rotate LED, waterproof; model HT07 via Amazon.fr (FLG-004)",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S13",
+      "title": "Amazon listing — CHEF iQ Sense Gen3 (B0DZFD6R9Z)",
+      "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "what": "Title, 3 probes + hub, WiFi, 1000°F, model CQ60-3C-Z1-E, UPC, package dims",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S14",
+      "title": "Prior sessions — live link resolutions 2026-11-17 (provenance, not official)",
+      "url": "https://github.com/kanlerxz87-cyber/Zone2/pull/160",
+      "what": "B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z; also Zone3 #153, Prod3 #11",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S15",
+      "title": "Submitted short links (as supplied in brief)",
+      "url": "https://link.amazon/B04G1MEwY",
+      "what": "Five tokens (9 chars each): B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj. Compliance status unresolved (FLG-003) — not claimed invalid.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S16",
+      "title": "USDA FSIS — Safe Minimum Internal Temperature Chart",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
+      "what": "All poultry (incl. ground poultry, giblets, stuffing) 165°F; ground meats 160°F; beef/pork/veal/lamb steaks, chops, roasts 145°F + rest ≥3 min; fresh/ham uncooked 145°F + rest. Used as the only numeric food-safety claims in the two new guides.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S17",
+      "title": "USDA FSIS — Food Thermometers",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+      "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S18",
+      "title": "Redirect re-observation — two sessions, three dates, 5/5 reproducible",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "All five link.amazon tokens resolved live; 5/5 targets match the 2026-11-17 prior-session mapping (S14). Every final URL carried lv=shuf and plpRedirect=mhFallback. Re-observed a third time on 2026-11-20 by session arena-82d39deb (S22) with identical 5/5 results. Raw query strings + page titles recorded in data/probes.json.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S19",
+      "title": "Google — Make your links crawlable / qualify outbound links",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/links-crawlable",
+      "what": "Fetched directly: 'If you were paid in some way for the link, qualify these links with sponsored or nofollow.' Basis for rel=\"sponsored nofollow noopener\" on every reader button.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S20",
+      "title": "Amazon Associates — Can I change my Associates ID? (tracking ID suffix)",
+      "url": "https://affiliate-program.amazon.com/help/node/topic/GM6CHU93RDXZV7D8",
+      "what": "'our software automatically adds \"-20\" to the end of all Associate IDs' — supports treating shopnow047c-20 as a US-marketplace-shaped tracking ID. Does not confirm issuance (FLG-001).",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+    },
+    {
+      "id": "S21",
+      "title": "GitHub Pages API record for this repository",
+      "url": "https://api.github.com/repos/sassnarep3-star/WinC/pages",
+      "what": "build_type=legacy, source branch main path /, public true, https enforced, html_url https://sassnarep3-star.github.io/WinC/. Basis for generating the site into the repo root (F-04).",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S22",
+      "title": "Third independent redirect observation, session arena-82d39deb (2026-11-20)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "All five supplied link.amazon tokens re-resolved live on 2026-11-20 in a third session: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. 5/5 identical to the 2026-11-17 mapping and to the 2026-11-20 second observation. Every final URL again carried lv=shuf and plpRedirect=mhFallback.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S23",
+      "title": "Amazon listing re-read, session arena-82d39deb (2026-11-20) — product-details tables",
+      "url": "https://www.amazon.com/dp/B08DKYBTPH",
+      "what": "Re-read of the live product-details tables and bullet copy for all five observed ASINs. Confirmed: B0CDY277D3 13.38\"D x 11.81\"W x 10.63\"H, 200-450°F, 120V/1700W, dishwasher-safe baskets, details-cell capacity '6 liters' (FLG-018). B08DKYBTPH 12.75\"D x 13.5\"W x 10\"H, 8 quarts, model RJ38-SQSS-8T, '1000 Watts/120 Volts', bullets 200-400°F vs title 450°F, 6/8/9-quart size selector, 'newer model' notice (FLG-005, FLG-019, FLG-022, FLG-023, FLG-024). B09B7SB46R 16.9\"D x 15.8\"W x 14.8\"H, 24.6 liters, stainless steel, 25 pre-sets in bullets vs 24 in title, serving claim '4-6 people' (FLG-010, FLG-020, FLG-021). B0DHZTCNR5 title re-read (±0.5°F, NIST&NSF, IP67). B0DZFD6R9Z title re-read (3 probes, 1000°F heat safe, 5 sensors).",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S24",
+      "title": "Amazon listing — live product-details table for B0CDY277D3 (Chefman 6 Qt dual basket)",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "Details table read 2026-11-20: Special Feature '2Min Button, Automatic Shut-Off, Dual Zone Features, Hi-Fry, Mute'; Product Dimensions 13.38\"D x 11.81\"W x 10.63\"H; Capacity 6 liters (see FLG-018); bullets 'Digital air fryer dual basket temperature settings from 200-450°F' and '120 Volts/1700 Watts'.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S25",
+      "title": "Amazon listing — live product-details table for B09B7SB46R (Emeril 26QT French Door)",
+      "url": "https://www.amazon.com/dp/B09B7SB46R",
+      "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, Programmable, Temperature Control, Timer'; Product Dimensions 16.9\"D x 15.8\"W x 14.8\"H; Capacity 24.6 liters; bullets '25 COOKING PRE-SETS', '26-QUART CAPACITY ... suitable for preparing food for 4–6 people with capacity to rotisserie a 6-lb chicken, bake a 12\" pizza'.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S26",
+      "title": "Amazon listing — live product-details table for B08DKYBTPH (Chefman 8 Qt TurboFry)",
+      "url": "https://www.amazon.com/dp/B08DKYBTPH",
+      "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, LED Shake Reminder, Programmable'; Product Dimensions 12.75\"D x 13.5\"W x 10\"H; Capacity 8 quarts; size selector 6/8/9 quarts; bullet 'presets ... a temperature range from 200-400°F'; bullet 'cETL approved ... 1000 Watts/120 Volts – RJ38-SQSS-8T'; page states 'There is a newer model of this item'.",
+      "date": "2026-11-20"
     }
   ]
 }

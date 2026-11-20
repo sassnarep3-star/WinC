@@ -1,17 +1,12 @@
 {
-  "name": "winc-crisp-report",
+  "name": "shopnow-kitchen",
   "version": "1.0.0",
   "private": true,
-  "description": "Crisp Report — an Amazon affiliate publication generated from a sourced data register, with a compliance gate that refuses unsourced claims.",
-  "type": "module",
+  "description": "ShopNow Kitchen — Amazon affiliate publication. Zero-dependency static build; data/ is the source of truth, GitHub Pages serves the committed output.",
   "scripts": {
-    "build": "node tools/build.mjs",
-    "check": "node tools/check.mjs",
-    "verify": "node tools/build.mjs && node tools/check.mjs",
-    "fresh": "node tools/freshness.mjs",
-    "serve": "node tools/serve.mjs"
-  },
-  "engines": { "node": ">=18" },
-  "license": "UNLICENSED",
-  "repository": { "type": "git", "url": "git+https://github.com/sassnarep3-star/WinC.git" }
+    "build": "python3 scripts/build_site.py",
+    "check": "python3 scripts/check_site.py",
+    "verify": "npm run build && npm run check",
+    "new-guide": "python3 scripts/new_guide.py"
+  }
 }
