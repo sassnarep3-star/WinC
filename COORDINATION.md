@@ -1,8 +1,8 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena-82d39deb`** (branch `arena/82d39deb-winc`). That session's board,
-> sources and findings are in the **last section of this file**. Earlier sessions are kept
-> verbatim as the provenance trail.
+> **Latest session: `arena-23428c9e`** (branch `arena/23428c9e-winc`, PR #18) — integration of the
+> Air & Ember parallel edition; its board, sources and merge note are in the **last section** of
+> this file. Prior sessions (incl. `arena-82d39deb`) are kept verbatim as the provenance trail.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -520,3 +520,85 @@ exist as `<tr id='src-S01'>` (single quotes); a fragment crawl of every page aga
 quote style. **F-2** (GET `reader-capture` no-JS path) remains noted for the owner; see the
 reader-capture copy on the front page. PR #17 itself is closed as superseded by this integration —
 its content is in main through this PR.
+
+---
+
+# Session arena-23428c9e — Air & Ember parallel edition + integration into main
+
+Branch `arena/23428c9e-winc`, created from `a6083c9` (the repo's single initial commit) while
+`main` was still empty at claim time. Started 2026-11-20. Scope: full brief build (site, register,
+review desk, guides, measurement, SEO), then integration of this branch into the advanced `main`.
+
+## Coordination incident worth reading (merge conflict, resolved without loss)
+
+This session claimed T-01..T-15 on a board it created from the empty-repo state, built a complete
+standalone edition ("Air & Ember"), opened **PR #18**, and only then hit a merge conflict: `main`
+had advanced through **PRs #1–#16** by sessions 9471c338, 68dc5c3a, 23d7ed19, dd79e08d, 5c2f1a2c,
+4ca9e665, 0458cd24 and 82d39deb — a full multi-pass site (ShopNow Kitchen) with builder, gate and
+live Pages. Resolution, without discarding either side:
+
+- **Adopted `main` as trunk for every shared file** (`README.md`, `index.html`,
+  `executive-summary.html`, `questions.html`, `verification.html`, `data/products.json`,
+  `feed.xml`, `sitemap.xml`, `robots.txt`): main's versions are the integrated, gate-checked
+  canonicals. This session's copies were superseded, not merged over the top.
+- **`COORDINATION.md`**: kept main's 456-line board verbatim; appended this session's record
+  (below). Same pattern sessions 23d7ed19 and 0458cd24 used.
+- **This session's standalone pages** (`products.html`, `flagged.html`, `suggestions.html`,
+  `compliance.html`, `guides.html`, five root-level `guide-*.html`, `css/`, `js/`, `images/`,
+  plus its register copy) moved to **`archive/air-ember-edition/`** — preserved verbatim as
+  provenance (same pattern as `archive/counter-notes/`), excluded from nav, sitemap and feed.
+  Reason: shipping two parallel site architectures would split the index/navigation that only
+  the integration step may change, and this edition hardcodes dated price snapshots that main's
+  Program-Policies price-display finding (prices only via Amazon-served links / API) deliberately
+  avoids.
+- **Nothing from main was discarded or overwritten.**
+
+## Board (this session)
+
+| ID | Task | Status | Files |
+| --- | --- | --- | --- |
+| T-01 | Create COORDINATION.md task board (from empty-repo state) | done | COORDINATION.md |
+| T-02 | Live verification of the 5 supplied links + official-source register | done | archive/air-ember-edition/data/products.register.json |
+| T-03 | Site shell: masthead, disclosure strip, footer, nav | done | archive/air-ember-edition/ |
+| T-04 | Products register page (intent vs observed, never merged) | done | archive/air-ember-edition/products.html |
+| T-05..T-13 | Exec summary, suggestions, questions, flagged, guides (5), compliance, SEO, click counter, verification | done | archive/air-ember-edition/ |
+| T-14 | Integration verification of this edition (14 HTML, 203 internal refs, 0 broken; 19 routes 200; XML/JSON-LD valid) | done | this branch pre-merge |
+| T-15 | Merge into advanced `main` without loss; keep gate green; PR record | done | this merge commit + PR #18 |
+
+## Sources verified directly by this session (2026-11-20, live fetches)
+
+- Five supplied `link.amazon/<code>` URLs each resolved live to official detail pages:
+  B04G1MEwY→`B0CDY277D3`, B02NbDxp3→`B09B7SB46R`, B00hJ57DV→`B08DKYBTPH`,
+  B0c8moW59→`B0DHZTCNR5`, B0f3GKalj→`B0DZFD6R9Z` (matches main's `data/probes.json` convergence).
+- Field-by-field reads of the five official detail pages (titles, price pairs, ratings, review
+  counts, breadcrumbs, spec rows) — snapshots preserved in
+  `archive/air-ember-edition/data/products.register.json`, dated 2026-11-20.
+- Amazon Ads guide — "An ASIN is always 10 characters long":
+  https://advertising.amazon.com/library/guides/targeting-with-sponsored-products
+- Associates Operating Agreement (upd. 2025-10-15): https://affiliate-program.amazon.com/help/operating/agreement
+- Associates Program Policies (upd. 2026-04-14): https://affiliate-program.amazon.com/help/operating/policies
+- Associates Standard Commission Income Statement (Kitchen = 4.50%):
+  https://affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ
+- FTC Disclosures 101: https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers
+
+## Flags raised by this session (archived edition numbering AE-01..AE-08; overlap with main's FLG IDs noted)
+
+| ID | Item | Overlaps main | Status |
+| --- | --- | --- | --- |
+| AE-01 | Supplied codes are 9 chars; ASINs always 10 → intent fields blank | main FLG set (intent blank policy) | absorbed — main already keeps intent blank |
+| AE-02 | `link.amazon` format not documented in Associates agreement; **not claimed invalid** | main FLG-003 | absorbed — same posture on main |
+| AE-03 | Intended ASIN/URL/date/source blank pending owner confirmation | main T02 record | absorbed — main's `data/products.json` holds intent fields |
+| AE-04 | Tracking ID `shopnow047c-20` account-unvalidated | main FLG-001 | absorbed |
+| AE-05 | Commission shown as rate-card Kitchen 4.50%; per-ASIN category unconfirmed | main rate sources | informational |
+| AE-06 | Campaign ledger empty; no conversion/revenue claims | main FLG-006 + ledger | absorbed |
+| AE-07 | "Five defined events" not enumerated in brief → provisional list used | main T04 (5 events) | absorbed |
+| AE-08 | Price/rating snapshots volatile; hardcoded prices avoided on main per price-display policy | main FLG-006 pricing policy | resolved by adopting main's policy |
+
+## PR / merge record (T-15)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR #18 opened: https://github.com/sassnarep3-star/WinC/pull/18 (`arena/23428c9e-winc` → `main`). |
+| 2026-11-20 | First merge attempt failed: merge conflict — `main` had advanced via PRs #1–#16 while this session worked. |
+| 2026-11-20 | Conflicts resolved with main as trunk (details above); this edition archived under `archive/air-ember-edition/`; board appended; gate (`scripts/check_site.py`) re-run green. |
+| 2026-11-20 | **Integrated by arena-9a3bb152** into the final integration branch together with PR #17; PR #18 content lands in `main` through that PR and #18 is closed as superseded. Same-day note: this session's own live resolution of all five links matched 5/5 while arena-9a3bb152's run matched 1/5 (FLG-026) — two different outcomes from the same URLs on 2026-11-20, recorded as per-request variance with a browser re-check action. |
