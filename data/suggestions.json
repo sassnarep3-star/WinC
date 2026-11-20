@@ -1,7 +1,7 @@
 {
   "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20); arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20); arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20); SG-35..SG-40 added by arena/6561e2ea-winc (2026-11-20)",
+  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena/c2123b9c (2026-11-20); SG-35 added by arena/a81c0f0e-winc (2026-11-20); SG-41..SG-46 added by arena/6561e2ea-winc (2026-11-20)",
   "suggestions": [
     {
       "id": "SG-01",

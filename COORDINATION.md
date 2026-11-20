@@ -911,6 +911,53 @@ backlog.
 | T-DECISION | Strengthen the suggestions/decision layer + design-prompt feed | done | arena/a81c0f0e-winc | data/suggestions.json, scripts/build_site.py (direction/prompt builder) |
 | T-EXEC | Reconcile executive summary + open-questions with this session's changes | done | arena/a81c0f0e-winc | EXECUTIVE-SUMMARY.md, data/questions.json, executive-summary.html (via builder) |
 | T-INT | Final integration: rebuild, gate green, PR → merge → confirm Pages, record | in progress | arena/a81c0f0e-winc | all (integration only) |
+---
+
+# Session arena/6561e2ea-winc — deployment repair, editorial voice, agent pipeline, answers to the register
+
+Branch `arena/6561e2ea-winc`. Started 2026-11-20 from `7426a0c`; rebased onto `main` four times since
+(`main` moved through PRs #17, #18, #22, #25, #36 and #39). Session id: **6561e2ea**.
+
+**Task-ID collision handled, twice.** This session first claimed T29–T34. Session `arena/c2123b9c`
+then merged PR #22 claiming **T29–T32**, so this session's claims were renumbered **T35–T40**. Later,
+session `arena/a81c0f0e-winc` added its own **SG-35** to the suggestions register, so this session's six
+suggestions were renumbered **SG-41..SG-46** and `arena/a81c0f0e-winc`'s SG-35 was kept intact. No
+claim, status, finding or file belonging to another session was modified at any point.
+
+**Division of labour.** `arena/c2123b9c` (PR #22) did redirect observation #4, two seasonal guides, the
+front-page seasonal band and the SG/Q register back-fill. `arena-482d5832` (PR #25) did the analytics
+privacy boundary. `arena/23428c9e-winc` (PR #18, #39) archived the parallel "Air & Ember" site.
+`arena/a81c0f0e-winc` did the publication-polish pass (masthead, season framing, three new guides) and
+its own SG-35. This session did not redo any of that. The four gaps left after those merges are what
+this session owns, and they are the four the brief asks for:
+
+1. **The Pages deploy was a race between two publishers.** GitHub's legacy builder (branch `main`,
+   path `/`) and this repo's `.github/workflows/pages.yml` both targeted the `github-pages`
+   environment. The legacy build record for `7426a0c` and `c744dcebb` came back `errored` with
+   `duration: 0` — an immediate abort, because the build was killed the moment a concurrent Actions
+   deployment held the environment. Every legacy build that ran without that collision reported
+   `built`. GitHub's own documentation (S30) describes the branch source and the Actions workflow as
+   *alternatives*. The competing workflow was removed; `scripts/deploy_check.py` now verifies the
+   publisher's record and the live pages.
+2. **Product cards opened with Amazon's own keyword title as body copy.** Five paragraphs of seller
+   text (`CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry…`)
+   is the strongest "AI slop" signal on the site. Every product now carries a desk-written dek, a
+   "best for" line and an honest "the catch", all grounded in specs already in the register or in a
+   flag the register already raises. The verbatim listing title stays on the product page, labelled
+   as Amazon's wording.
+3. **There was no automation pipeline.** `tools/` had an auditor and a collector sample; there was no
+   research→draft→gate→publish chain and nothing that read the campaign ledger to recommend what to do
+   next. `scripts/agent/` is that chain, and it refuses to write a value it cannot source.
+4. **Every one of the 22 questions had an empty answer cell.** The register could say what was missing
+   but never what was known, which made it a to-do list rather than a decision surface.
+
+| T35 | Deployment repair: one publisher for `github-pages`; no more 0-second legacy aborts | done | arena/6561e2ea-winc | `.github/workflows/pages.yml` (removed), `scripts/deploy_check.py` |
+| T36 | Fifth independent line-by-line re-verification of every registered source + all five listings | done | arena/6561e2ea-winc | `data/sources.json` (S30 added, S21 refreshed) |
+| T37 | Editorial voice pass: dek, best-for, the catch, per-product artwork, honest fallback captions | done | arena/6561e2ea-winc | `data/products.json`, `assets/img/`, `scripts/build_site.py`, `assets/style.css` |
+| T38 | Automation pipeline: research → draft → publish → optimise | done | arena/6561e2ea-winc | `scripts/agent/` |
+| T39 | Decision layer: answers written for every question the evidence settles; SG-41..SG-46 | done | arena/6561e2ea-winc | `data/questions.json`, `data/suggestions.json`, `scripts/check_site.py`, `EXECUTIVE-SUMMARY.md` |
+| T40 | Final integration: rebuild, gate green, audit clean, PR → merge → confirm Pages deploy | in progress | arena/6561e2ea-winc | all (integration only) |
+
 
 ## Re-verification performed this session (official sources, fetched live 2026-11-20)
 
@@ -957,3 +1004,137 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
   canonicals). All seven restored from this branch's own history (`9f61f0d` / `125d5bc`), so the
   archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
   archive stays out of nav/sitemap/feed; gate re-run green.
+
+## Verification performed (T36–T40)
+
+- **Fifth redirect observation** (2026-11-20, this session): all five `link.amazon` tokens re-resolved
+  live through the `fetch_page` reader — the same method as observations #2, #3 and #4. **5/5 mappings
+  reproduced for the fifth consecutive time** (B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R,
+  B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z). Every resolved listing served
+  its own title and category breadcrumb, and every title matches `data/products.json` exactly.
+  Every final URL still carried `lv=shuf` + `plpRedirect=mhFallback` → FLG-009 stands, intended
+  fields stay blank, **FLG-026** records why a fifth reproduction does not settle intent. Provenance
+  row **S31**.
+- **Official sources re-read** (2026-11-20): FTC Endorsement Guides (disclosure must be clear and
+  conspicuous and near the link; "affiliate link" alone is inadequate, "paid link" beside the link is
+  adequate), Amazon Operating Agreement §5 (the exact statement "As an Amazon Associate I earn from
+  qualifying purchases."; Agreement updated 2025-10-15), Amazon Program Policies (Special Links must
+  carry the assigned Associate ID; price/availability only via the Amazon-served link or the
+  Creators/PA API; policies updated 2026-04-14), Amazon Associates help on link identification
+  ("clear and conspicuous"; examples "paid link", "#ad", "#CommissionsEarned"), Amazon's tracking-ID
+  help ("our software automatically adds "-20" to the end of all Associate IDs"), Google Search
+  documentation (paid links should be qualified with `sponsored` or `nofollow`; affiliate links
+  qualify for `rel="sponsored"`), Amazon's ASIN definition (a unique 10-character identifier),
+  USDA FSIS safe-temperature chart (poultry and all stuffing 165 °F; ground meats 160 °F; beef,
+  pork, veal, lamb and fresh/uncooked ham 145 °F plus at least three minutes' rest) and USDA FSIS
+  Food Thermometers (thermometers are the only reliable safe-temperature check; whole poultry is
+  checked in thigh, wing and thickest breast avoiding bone; stuffing must reach 165 °F).
+  **New provenance row S30** — GitHub Docs, "Configuring a publishing source for your GitHub Pages
+  site", which describes the branch source and the Actions workflow as two *alternatives*.
+- **All five Amazon listings re-read** (2026-11-20): each served its own product title and category
+  breadcrumb. The listing-internal conflicts observed by earlier sessions still stand on this
+  capture — the Emeril `<title>` still reads "Six Cooking Accessories Included" (FLG-010), the
+  Chefman 8 Qt `<title>` still carries the 450 °F Hi-Fry wording against captured 200–400 °F copy
+  (FLG-005), and the ThermoMaven `<title>` wording rotated again (FLG-014).
+
+## Deployment repair (T35) — the actual root cause
+
+Two publishers were targeting the `github-pages` environment: GitHub's legacy builder (Pages source =
+branch `main`, path `/`) **and** this repository's `.github/workflows/pages.yml`. GitHub's own
+documentation (S30) describes those as two alternatives, not two things to run together.
+
+The evidence that they contended: the legacy build record for `7426a0c` and `c744dcebb` came back
+`status: errored` with **`duration: 0`** — an immediate abort, not a compile failure — and both of
+those commits were ones where an Actions deployment ran at the same moment. Every legacy build that
+ran *without* a concurrent Actions deployment reported `built` (including `ddbfc531e`, `06432e8`,
+`394d268`, `87f7284`, `a37c95b`). The competing workflow is now removed from the repository, so the
+branch build is the only publisher. The token available in this environment **cannot** change the
+Pages configuration directly (`PUT /repos/…/pages` → HTTP 403 "Resource not accessible by
+integration"), so the repair was made in the repository rather than in the API.
+
+`scripts/deploy_check.py` is the new check. It reads the publisher's own record (build type, source,
+the latest build's status and commit) and then checks the *live* pages: HTTP 200, the Agreement §5
+statement above the fold on every page, `rel="sponsored"` on every reader buy link, canonicals
+pointing at this site, and no price-like string in any body. It refuses to call a deploy successful
+on the strength of a workflow run alone.
+
+## Audit findings this session fixed (both were real)
+
+The independent audit (`tools/audit.mjs`, written from the policy documents rather than from this
+repo's checker) reported two findings on the merged tree. Both were genuine defects, and the
+session's own gate did not catch either:
+
+- **A6 — every source link on the site pointed at a fragment that did not exist.** The source table
+  emitted `id='src-S01'` with single quotes; the links used `#src-S01` with double quotes, and the
+  audit (correctly) reads `id="…"` only. So all 38 source links across `flagged-for-review.html`,
+  `questions.html` and `topics.html` were dead anchors. Fixed by emitting double-quoted ids. The
+  same change surfaced a second defect: with the id now parseable, the gate caught that the
+  supplied `link.amazon` short link was being published as a *clickable* link. It is provenance, not
+  a reader link, and it is now rendered as text that cannot be clicked (FLG-003).
+- **A7 — the reader-capture form really did put the address in the URL.** The form had
+  `method="get"` with a `name="email"` input and no `preventDefault`, so a browser with the script
+  blocked submitted the address into the page URL, the browser history and the host's request log —
+  while the page's own copy said the address "goes nowhere". Fixed three ways: the input no longer
+  has a `name`, the form is `novalidate`, and the submit is cancelled in `assets/app.js`.
+
+Two further defects were found while fixing those: the search page interpolated the user's query
+straight into `innerHTML` (a query of `<img src=x onerror=…>` would have executed), and it built
+`href` from a template literal the audit could not resolve. Both were rewritten with DOM APIs.
+
+The audit now reports **0 findings across 10 rules** on the merged tree.
+
+## Editorial voice (T37)
+
+Every product card opened with Amazon's own keyword title as body copy — five paragraphs of seller
+text on the front page. Each product now carries a desk-written **dek**, a **"best for"** line and an
+honest **"the catch"**, all grounded in specs already in the register or in a flag the register
+already raises (the Chefman 8 Qt catch names FLG-005; the CHEF iQ catch names FLG-014). The
+verbatim listing title is still on the product page, labelled as Amazon's wording, so a reader can
+match it against the page they land on. Five new original illustrations give each product its own
+picture instead of sharing a category plate; the three guides still without their own artwork now
+say in their caption that the picture is the category illustration.
+
+## Agent pipeline (T38)
+
+`scripts/agent/` — `research.py` → `draft.py` → `publish.py` → `optimize.py`, with a README that
+states the rule each step enforces:
+
+- **research** builds one brief per product from the registers, keeping the intended and observed
+  identifiers in separate fields, and attaches a source to every value it carries. Live pricing is
+  **gated**: without PA API credentials it records `price_live: null` and explains that Program
+  Policies allow a price only when the Amazon-served link shows it or the Creators/PA API supplies
+  it. A scraped price is neither route, so none is published.
+- **draft** turns a brief into a structured guide draft and **refuses** to write a draft containing a
+  price, a rating, a review count or a "we tested" claim; the refusal is printed with the reason.
+  Drafts land in `data/drafts/` (gitignored) and are not published until a person moves them into
+  `data/guides/`.
+- **publish** runs the same build and gate a person would run, and refuses to report success if the
+  gate reports a violation or if the committed HTML differs from the generator's output.
+- **optimize** reads `data/campaign-ledger.json` and, while the ledger is empty, prints exactly
+  which rows to collect and **makes no recommendation** — no revenue, no conversion rate, no
+  "which product wins". That is the correct output for the current state, not a missing feature.
+
+## Decision layer (T39)
+
+All 22 question rows had an empty answer cell, so the register could say what was missing but never
+what was known. Every row now carries an `answer_state` of **answered** (11), **partly answered**
+(10) or **open** (1), the answer the sources support, the date, and the source ids it rests on — or
+an explicit note that it rests on this repository's own records. The gate rejects an answered row
+with no date, an unknown source id, or neither a source nor an internal-evidence note, so an answer
+cannot rot into a claim. The questions page opens with a "decisions you can make now" panel, and
+the executive summary leads with the same split. Six new suggestions (**SG-41..SG-46**) cover the
+decision itself rather than the site: answering the register, dependency columns on every suggestion,
+proposing the next topic from the register rather than from instinct, recording which question a
+click was meant to inform, a per-link-type disclosure matrix, and an honest "choose this instead if"
+cross-link on every product.
+
+## Gate status at integration (T40)
+
+| Check | Result |
+|---|---|
+| `python3 scripts/build_site.py` | `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.` |
+| `python3 scripts/check_site.py` | `OK: 29 pages checked, 28 sitemap URLs, no violations.` |
+| `node tools/audit.mjs` | 10/10 rules ✓ · **0 findings** |
+| `npm test` (analytics contract, PR #25) | `Ran 4 tests — OK` · `Worker analytics contract: OK` |
+| `python3 scripts/agent/publish.py` | built, gate green, committed output matches the registers |
+| Internal links | no broken links — the independent audit resolves every internal link, fragment, image and `og:image` across 29 pages |
