@@ -451,6 +451,30 @@ for hf in cap_pages:
     if 'method="get"' in body and 'action=""' not in body:
         fail(f"{hf}: capture form has a method with no empty action guard")
 
+# --- inline JavaScript must parse (session arena-038c0b80) -------------------
+# A broken inline script is invisible to every HTML check and to a reader until
+# they click something. `node --check` is cheap and catches it.
+import subprocess, tempfile
+if html_files:
+    for hf in html_files:
+        body = read(hf)
+        for k, m in enumerate(re.finditer(r"(?s)<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", body)):
+            js = m.group(1).strip()
+            if not js or js.startswith("{"):
+                continue  # empty or JSON-LD
+            with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as tf:
+                tf.write(js)
+                tmp = tf.name
+            try:
+                r = subprocess.run(["node", "--check", tmp], capture_output=True, text=True)
+                if r.returncode != 0:
+                    first = [ln for ln in r.stderr.splitlines() if "Error" in ln][:1]
+                    fail(f"{hf}: inline script #{k} does not parse as JavaScript ({first[0] if first else 'syntax error'})")
+            except FileNotFoundError:
+                pass  # node not installed: skip rather than fail the gate for a missing tool
+            finally:
+                os.unlink(tmp)
+
 if errors:
     print(f"FAIL ({len(errors)} violations):")
     for e in errors:

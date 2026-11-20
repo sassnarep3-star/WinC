@@ -423,22 +423,13 @@ try{var s=localStorage.getItem('sk_path');if(s){var r=document.querySelector('in
 <script>
 (function(){
  var out=document.getElementById('prompt-out'), msg=document.getElementById('copy-msg');
- var HEAD="Implement on the ShopNow Kitchen site (repo sassnarep3-star/WinC). Standing rules: read COORDINATION.md and claim tasks before editing; never fill an unverified value — leave it blank and flag it; keep intended_* and observed_* fields separate; run `npm run build && npm run check` until green; open a PR to main, merge, and confirm Pages is live.
-
-ACCEPTED SUGGESTIONS
-";
- var TAIL="
-
-Also: re-verify anything you touch against an official source and add it to data/sources.json with a retrieval date. Do not add prices, ratings, review counts, or hands-on-testing claims. Every outbound product link keeps rel="sponsored nofollow noopener" and the affiliate tag.";
- function fmt(){
-  var on=[].slice.call(document.querySelectorAll('.sg-pick:checked'));
+ var HEAD="Implement on the ShopNow Kitchen site (repo sassnarep3-star/WinC). Standing rules: read COORDINATION.md and claim tasks before editing; never fill an unverified value — leave it blank and flag it; keep intended_* and observed_* fields separate; run npm run build && npm run check until green; open a PR to main, merge, and confirm Pages is live.\n\nACCEPTED SUGGESTIONS\n";
+ var TAIL="\n\nAlso: re-verify anything you touch against an official source and add it to data/sources.json with a retrieval date. Do not add prices, ratings, review counts, or hands-on-testing claims. Every outbound product link keeps rel=sponsored nofollow noopener and the affiliate tag.";
+ function fmt(){var on=[].slice.call(document.querySelectorAll('.sg-pick:checked'));
   var path=document.getElementById('path-select').value;
   if(!on.length&&!path){out.value="Check the boxes above to fill this in.";return;}
-  var body=on.map(function(c){return "- ["+c.value+"] "+c.dataset.title+"
-  → "+c.dataset.prompt;}).join("
-");
-  if(path){body=(body?body+"
-":"")+"- Path "+path+" from direction.html applies to this build.";}
+  var body=on.map(function(c){return "- ["+c.value+"] "+c.dataset.title+"\n  → "+c.dataset.prompt;}).join("\n");
+  if(path){body=(body?body+"\n":"")+"- Path "+path+" from direction.html applies to this build.";}
   out.value=HEAD+(body||"(none)")+TAIL;}
  document.querySelectorAll('.sg-pick,#path-select').forEach(function(el){el.addEventListener('change',fmt);});
  document.getElementById('prompt-copy').addEventListener('click',function(){
