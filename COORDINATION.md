@@ -1617,7 +1617,7 @@ Associates account or an owner decision this environment cannot reach.
 
 ---
 
-# Session arena/b0920c92-winc — row-level sourcing site-wide, observation #6, decision desk, measurement proof (T43–T49)
+# Session arena/b0920c92-winc — row-level sourcing site-wide, observation #7, decision desk, measurement proof (T43–T49)
 
 Branch `arena/b0920c92-winc`, based on `main@87f7284`; re-merged three times as `main` advanced
 (`a37c95b` via PR #37, `6a989c0` via PRs #38–#45, `1dc7a6a` via PRs #35/#49/#51).
@@ -1641,7 +1641,7 @@ sessions' was edited or discarded.
 | ID | Task | Status | Owner | Files |
 | --- | --- | --- | --- | --- |
 | T43 | *(was T29)* Provenance-trail restore | closed as superseded (main's unions already restored the history) | b0920c92 | `COORDINATION.md` |
-| T44 | *(was T30)* Independent verification pass over the 5 links, 5 listings and the policy pages — observation #6, corroborating FLG-030 | done | b0920c92 | `data/probes.json`, `data/sources.json` (S38), `data/products.json`, `data/flags.json` (FLG-034) |
+| T44 | *(was T30)* Independent verification pass over the 5 links, 5 listings and the policy pages — observation #7, extending FLG-033 | done | b0920c92 | `data/probes.json`, `data/sources.json` (S38), `data/products.json`, `data/flags.json` (FLG-034) |
 | T45 | *(was T31)* Row-level source-link enforcement (gate + repairs, site-wide) | done | b0920c92 | `scripts/check_site.py`, `scripts/build_site.py`, `data/guides/*.json` |
 | T46 | *(was T32)* Decision-desk hardening (paths, deciders, discovery) | done | b0920c92 | `data/suggestions.json`, `scripts/build_site.py`, `assets/style.css` |
 | T47 | *(was T33)* Measurement end-to-end proof against the hardened contract | done | b0920c92 | `scripts/verify_measurement.py` (new), `data/flags.json` (FLG-007), `package.json` |
@@ -1650,7 +1650,7 @@ sessions' was edited or discarded.
 
 ## Work record (T44–T47)
 
-### T44 — observation #7 of the five supplied links (corroborates FLG-030; S37, FLG-034)
+### T44 — observation #7 of the five supplied links (extends FLG-033; S38, FLG-034)
 
 | Source | What was done |
 | --- | --- |
