@@ -190,6 +190,8 @@ State on arrival: `main` = `358dd0c` (PR #9), gate green (26 pages, 25 sitemap U
 
 **Not done (no access in sandbox):** Associates Central tracking-ID confirmation and one-link workflow test (FLG-001, FLG-002, Q-01, Q-16). These remain owner-side.
 
+**PR / merge record (T18, session dd79e08d):** PR #10 https://github.com/sassnarep3-star/WinC/pull/10 (`arena/dd79e08d-winc` → `main`), `gh pr merge 10 --merge` → merged, merge commit `d8b1a85`. Pages build for `d8b1a85`: `status: built`, `error: null`. Live check via the browser reader: `flagged-for-review.html` lists FLG-015. Build/gate on the merged tree: `Built 26 pages, 25 sitemap URLs` / `OK: 26 pages checked, 25 sitemap URLs, no violations.`
+
 ## Session 5c2f1a2c (branch `arena/5c2f1a2c-winc`, 2026-11-20)
 
 Based on `main@358dd0c`. **ID collision note:** this session first wrote its task as T18 while session dd79e08d also claimed T18 (above). Both are kept; this session's task is **T19** below. Open draft PR #5 (`arena/70d8ad52-winc`, HELD, `docs/` site) was not touched.
