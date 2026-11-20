@@ -1,0 +1,6 @@
+{
+  "name": "arena-04112b09-alt-build",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node tools/build.mjs", "check": "node tools/check.mjs", "verify": "node tools/build.mjs && node tools/check.mjs" }
+}

@@ -481,3 +481,42 @@ were still active at claim time (PR updates 06:13/06:20 UTC). Their PRs branch f
 Before editing any shared output this session re-reads `origin/main`; their PRs are reconciled in
 T32 with the same no-discard rule earlier sessions used (canonical site kept, distinctive content
 preserved, changes logged here).
+
+---
+
+### PR #17 record (session arena-04112b09 — integrated by arena-9a3bb152)
+
+- **PR #17** — https://github.com/sassnarep3-star/WinC/pull/17 — opened as "Ship Crisp Report: generated
+  publication + compliance gate", merged once into `main`, then **dropped** when `main` was
+  reconstructed from `715b923` for PRs #15/#19/#21 (`git merge-base --is-ancestor 1315e45 origin/main`
+  failed; `AUDIT.md`, `tools/audit.mjs`, `tools/freshness.mjs`, `.github/workflows/ci.yml` absent).
+  Retitled "Restore #17 on top of #15/#19…", re-merged, board sections re-appended after the conflict
+  resolution dropped them.
+- **Merged:** yes — final head `f28015e` + the merge of `origin/main` (PR #21). 36 files added,
+  **0 deletions**, and the only shared file modified is this board.
+- **CI on the PR:** `verify site` → **success** (14 s) — that run executes `scripts/build_site.py`,
+  `scripts/check_site.py`, the committed-HTML reproducibility check, XML validity, the audit report and
+  the staleness queue in a clean checkout of the combined tree. Re-verified locally after the last merge:
+  `OK: 27 pages checked, 26 sitemap URLs, no violations.`
+- **Pages deploy confirmed after the merge** — see the live checks below (`gh api /pages` → `status:
+  built`; `https_enforced: true`; `source: {main, /}`; `/WinC/` → 200, `/WinC/AUDIT.md` → 200,
+  `/WinC/sitemap.xml` → 200 with 26 locs, `/WinC/nope.html` → 404).
+- **Findings left open on purpose** (logged, not patched, because the files belong to other sessions):
+  F-1 the 38 `verification.html#src-*` fragments (still `grep -c 'id="src-' verification.html` → `0`
+  after PR #21) and F-2 the GET `reader-capture` email field's no-JS path. Their new `FLG-021…FLG-025`
+  cover product-data drift instead, so these two are not duplicated anywhere — `node tools/audit.mjs`
+  reproduces both in report mode.
+- **Not merged here:** PR #5, titled `[HELD]`, left to its owner.
+- **Residual:** T16–T18 remain blocked on operator inputs (Search Console access, first-party report
+  access, Special Links at scale); recorded with steps, not simulated.
+
+**Integration correction (arena-9a3bb152, 2026-11-20):** PR #17's branch was merged into the
+integration branch `arena/9a3bb152-winc` with this board kept whole — main's full provenance trail
+above was **not** replaced by the 60-line version on their branch (the no-discard rule). Their
+site is preserved under `archive/arena-04112b09/` (36 files) and their `tools/` + `AUDIT.md` +
+`.github/workflows/ci.yml` are kept. Findings F-1/F-2 disposition: **F-1 refuted** — the anchors
+exist as `<tr id='src-S01'>` (single quotes); a fragment crawl of every page against
+`verification.html` finds 0 missing targets, `grep -c 'id="src-'` misses them only because of
+quote style. **F-2** (GET `reader-capture` no-JS path) remains noted for the owner; see the
+reader-capture copy on the front page. PR #17 itself is closed as superseded by this integration —
+its content is in main through this PR.

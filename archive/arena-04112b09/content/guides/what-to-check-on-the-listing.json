@@ -1,0 +1,49 @@
+{
+  "slug": "what-to-check-on-the-listing",
+  "title": "What to check on an appliance listing before you click buy",
+  "dek": "The fields that can be verified, the ones that are decoration, and the two lines that tell you a listing was written by someone who used the thing.",
+  "cluster": "reading-a-listing",
+  "published_on": "2026-11-20",
+  "reviewed_on": "2026-11-20",
+  "author": "Crisp Report desk",
+  "provenance": "The method behind this publication's own verification process, published as a guide. It is the only page on the site that talks about us, and it does so because the same rules bind us.",
+  "reading_time_min": 4,
+  "blocks": [
+    { "t": "lead", "x": "A product page is an argument with a spec table attached. Some of it can be checked, some of it cannot, and the ratio tells you more than the design does. Below is the sorting we do on every row of our own desk - which is why half our table is blank." },
+    { "t": "h2", "x": "Tier 1: fields you can check against each other" },
+    { "t": "check", "items": [
+      "**Product dimensions vs carton dimensions.** They are different rows. If only the carton appears, the size claim is unverifiable and should be treated as such.",
+      "**Stated capacity vs interior dimensions.** Multiply the internal length, width and height; if that number is nowhere near the headline figure, the headline figure is measuring a different thing.",
+      "**Included items vs gallery images.** A rack or a spit that appears in photos but not in the included-items list is either an accessory or a mistake, and you want to know which before you buy.",
+      "**Power and voltage vs your own outlet and region.** A listing written for another market can be electrically incompatible with your kitchen, and that is a spec-table problem, not a returns-policy problem.",
+      "**Warranty wording vs the brand's own support page.** If the page promises years and the manufacturer's site does not mention it, one of the two is not a warranty you can claim."
+    ], "x": "Five pairs. Every pair is a consistency test you can run in a couple of minutes, with no expertise:" },
+    { "t": "h2", "x": "Tier 2: fields that need a document you have to go and find" },
+    { "t": "p", "x": "Clearance requirements, care instructions, dishwasher wording, the temperature range, the accessory part numbers. These usually live in the manual PDF rather than on the page, which is exactly why they are worth fetching: the manual is the document a claim gets measured against, and it is written for the person who owns the thing rather than the person deciding whether to buy it." },
+    { "t": "h2", "x": "Tier 3: decoration" },
+    { "t": "table", "head": ["What the page says", "What it can and cannot mean", "Our move"], "rows": [
+      ["'Feeds the whole family'", "Nothing checkable; two identical litre figures can mean different baskets", "Ignore, and go to floor area"],
+      ["'Crispy with 90% less oil'", "A comparison whose baseline is not stated", "Ignore as a comparison; treat only as a description of method"],
+      ["'#1 best-selling'", "A category-and-time snapshot we cannot reproduce", "Do not repeat as a claim, ever"],
+      ["Star rating and review count", "Real data, but it belongs to the store and to a moment in time - and its display is tied to approved API access for anyone in our position", "Leave the field blank, with a reason"],
+      ["'Dishwasher safe'", "Which part, which cycle, which coating - all unstated", "Cross-check the manual's care section"],
+      ["A price shown on a third-party page", "May be hours stale; and showing one without the right source is a breach", "No prices on this site, full stop"]
+    ], "caption": "The last two rows are not advice about other sites. They are the rules this site wrote down for itself." },
+    { "t": "callout", "kind": "proof", "x": "Two of our own rules, in the source's words: prices and availability may be displayed only where Amazon serves the link or from an approved API (Participation Requirements §2(b)); and customer reviews or star ratings may not be displayed at all without a link obtained through those APIs (§6(t)). Our gate enforces both by scanning generated HTML for currency and rating patterns and failing the build. The check runs on every commit, which is a better promise than an intention.", "src": ["SRC-02"] },
+    { "t": "h2", "x": "The two lines that show a listing was written by someone who used it" },
+    { "t": "p", "x": "First: an inconvenient detail volunteered without being asked. A note that the display dims at night. A mention that the drawer handle gets warm. A warning that the basket is not the same as the pan in the photo. Nothing in a marketing brief produces that; only contact does." },
+    { "t": "p", "x": "Second: an honest limit stated in the copy - 'not for wet batter', 'does not fit a 9-inch pie dish', 'use two batches'. A listing that names a boundary is naming the returns it wants to avoid, and it usually means the rest of its numbers were written by someone who cared whether they were right." },
+    { "t": "h2", "x": "How we treat our own page" },
+    { "t": "p", "x": "Every populated cell in our tables points at a source id; every blank cell carries a reason; the identifier tokens we were given are reported as nine characters long and unresolved, because that is what measurement said and no repair was available; and disclosure sits above the fold on every page, because the agreement requires the sentence and our own taste requires it to be where the reader already is." },
+    { "t": "unverified", "items": [
+      "We cannot verify any specific listing from this desk right now: the identifiers we hold do not resolve, and egress to the store from the build environment is blocked.",
+      "We publish no rating, no review text, no price and no availability.",
+      "We make no popularity or ranking claim, because the only list we hold is four editorial hypotheses supplied by the project brief, labelled there as working titles.",
+      "We report no commission rate; the rate card sits inside the account, and 'unverified' is the honest column for now."
+    ], "src": ["SRC-11", "SRC-12"] },
+    { "t": "quote", "x": "Does the content provide original information, reporting, research, or analysis? … Does the main heading or page title avoid exaggerating or being shocking in nature?", "cite": "Google Search Central, Creating helpful, reliable, people-first content, read 2026-11-20", "src": "SRC-08" },
+    { "t": "p", "x": "Those two questions are why this guide's title has a comma in it and no exclamation mark, and why the site would rather show you an empty cell than a confident one. Go and use the five pairs in Tier 1 on whatever you are about to buy; that is the transferable part." }
+  ],
+  "related": ["capacity-checklist", "cleanup-and-counter-space"],
+  "cta": { "kind": "internal", "label": "See the register behind this page", "href": "./sources/" }
+}

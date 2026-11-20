@@ -1,0 +1,138 @@
+{
+  "$comment": "Flagged for review. These are published on the site, not buried in a commit message. A flag blocks nothing except the specific claim it attaches to; it does block silence.",
+  "flags": [
+    {
+      "id": "FLG-001",
+      "title": "All five supplied identifiers are 9 characters, not 10",
+      "observed": "B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj each measure 9 characters and mix upper and lower case (`awk`-style measurement recorded in SRC-12, reproducible with `npm run check`).",
+      "why_it_matters": "The identifier is the only thing that makes a product claim checkable. If it is one character short, no listing can be cited honestly, and a well-meaning repair would fabricate a product identity.",
+      "we_did": "Recorded the length, refused to auto-correct, and left title/listing/price blank. The generator's shape check fails loudly rather than silently passing these tokens through.",
+      "we_did_not": "We did not confirm the length rule from an official page. Seller Central help was unreachable from this environment (SRC-13 is logged as referenced-not-fetched), so this is reported as an observation and a question, not a ruling.",
+      "severity": "blocking for product claims; harmless to the rest of the site",
+      "status": "needs review",
+      "resolution": "Answer Q-01/Q-02 by supplying the listing URLs or regenerating links from the listings. The build then fills itself and this flag closes.",
+      "src": ["SRC-11", "SRC-12", "SRC-13"]
+    },
+    {
+      "id": "FLG-002",
+      "title": "The brief references registers and IDs that do not exist in this repo",
+      "observed": "The instructions mention a 'careful source register', rows 'SG-27..SG-30', flag 'FLG-003', sources 'S01 · S07 · S24', and a 'shipped RSS feed' as already existing. At session start the repository held exactly one commit (`a6083c9 Initial commit`) containing a 6-byte README.md: no data, no site, no COORDINATION.md, no prior numbering.",
+      "why_it_matters": "If we had 'updated' those artefacts we would have invented them. Numbering restarts at SG-01/FLG-001 here, and any external numbering in the brief is not equivalent to ours.",
+      "we_did": "Built the registers from zero, documented the starting state in COORDINATION.md, and kept the brief's referenced items as the topics they describe (nav labels, RSS, Search Console, reader capture) so nothing in the intent was lost.",
+      "severity": "process",
+      "status": "needs review",
+      "resolution": "If a prior register exists in another branch or repo, hand it over and we will re-key these rows to match instead of renumbering downstream work.",
+      "src": ["SRC-12"]
+    },
+    {
+      "id": "FLG-003",
+      "title": "Compliance status of the supplied short links is unresolved",
+      "observed": "Host is `link.amazon`, not an Amazon Site host we were told to treat as canonical, and the URLs carry no visible `tag=` parameter. We could not observe what they resolve to: egress from this sandbox to those hosts failed with curl error 35, and the platform fetcher errored on the product path.",
+      "why_it_matters": "Two rules bear on it - only Amazon's tagged formats may be used (SRC-01 §1), and a shortening presentation that makes the destination unclear is not permitted (SRC-02 §6(w)). Whether these links violate either depends on what they redirect to and how they were generated.",
+      "we_did": "Left the question open, exactly as the brief instructs: 'do not claim that the supplied short links are invalid'. We cite the rules, state what we could not observe, and route the site's own outbound links through tagged formats so the site is safe regardless of how this resolves.",
+      "severity": "high for the link layer; zero for readers today",
+      "status": "needs review",
+      "resolution": "Run one link through a browser while signed in to the account and record the final URL in the observed_redirect_target field (kept deliberately separate from the intended-ASIN fields).",
+      "src": ["SRC-01", "SRC-02", "SRC-11", "SRC-12"]
+    },
+    {
+      "id": "FLG-004",
+      "title": "Tracking ID accepted as given, not as verified",
+      "observed": "`shopnow047c-20` is the only ID supplied. It matches the documented `XXXXX-##` shape and contains no Amazon mark.",
+      "why_it_matters": "A tag that is not registered to an active account, or not paired with the enrolled locale, means referrals that accrue to nobody - the failure is invisible in analytics and only shows up in a report that stays empty.",
+      "we_did": "Used it verbatim in the generator and labelled it operator-supplied rather than verified.",
+      "severity": "blocking for revenue attribution",
+      "status": "needs review",
+      "resolution": "Confirm in Associates Central → Account settings → Tracking IDs and sites list (Q-03). One check closes it.",
+      "src": ["SRC-02", "SRC-11"]
+    },
+    {
+      "id": "FLG-005",
+      "title": "No prices, ratings or review text appear anywhere, by design",
+      "observed": "Both are permitted only through an Amazon-served link or Creators/PA API output (SRC-02 §2(b), §6(t)), and Creators API access itself needs at least 10 qualifying sales in the past 30 days (SRC-05).",
+      "why_it_matters": "A single stale price or copied star count is the easiest way for an otherwise careful site to breach the terms and mislead a buyer.",
+      "we_did": "Blank cells with an unverified marker, plus gate G-06 which scans generated HTML for currency and rating patterns and fails the build.",
+      "severity": "expected, informational",
+      "status": "needs review",
+      "resolution": "Unlocks with Q-05. Until then the product card's job is to tell readers what to check on the listing, not to report numbers.",
+      "src": ["SRC-02", "SRC-05"]
+    },
+    {
+      "id": "FLG-006",
+      "title": "Project started from an empty repository",
+      "observed": "One commit, a 6-byte README, no site, no Pages source files, no prior coordination board. Pages itself was already configured to build from `main` at `/` (SRC-10).",
+      "why_it_matters": "Nothing here is a refactor of earlier verified work, so the verification record starts from zero and every published row is new.",
+      "we_did": "Created COORDINATION.md first, claimed scope, then built the data layer before any HTML.",
+      "severity": "informational",
+      "status": "closed with a note",
+      "resolution": "None needed; recorded so later sessions do not assume lost work.",
+      "src": ["SRC-10", "SRC-12"]
+    },
+    {
+      "id": "FLG-007",
+      "title": "'AI-powered platform' needs re-scoping against two hard lines",
+      "observed": "Special Links and Program Content may not be used to develop machine learning models without Amazon's prior written approval (SRC-02 §5); PA-API 5 is deprecated and returns 403 (SRC-06); and synthetic clicks or generated sessions are prohibited (§6(s)).",
+      "why_it_matters": "The natural reading of the brief - an agent that pulls catalogue data, learns from it, and drives traffic automatically - crosses a permission line and rests on a retired endpoint.",
+      "we_did": "Split the pipeline: generation, formatting, sitemap/feed, disclosure placement and staleness queues are automated in-repo; product identity, claims, and anything touching Program Content for training sit behind a human gate. Documented on the How it works page.",
+      "severity": "high",
+      "status": "needs review",
+      "resolution": "Decide whether to request written approval, or to keep machine assistance strictly on original editorial text. Either is workable; both are cheaper than an assumption.",
+      "src": ["SRC-02", "SRC-06"]
+    },
+    {
+      "id": "FLG-008",
+      "title": "A static host cannot receive the events it defines",
+      "observed": "Pages serves files only; there is nowhere to POST a click. GitHub Pages separately logs visitor IPs for security (SRC-09), so 'nothing is collected' would be inaccurate.",
+      "why_it_matters": "The brief asks for a self-hosted analytics endpoint. Shipping a form that silently discards submissions, or claiming aggregation we cannot perform, are both worse than saying the collector is disabled.",
+      "we_did": "Counter runs in the visitor's browser, sums locally, and posts only if `endpoint` is configured in site.config.json (it is null). A sample collector is included as code to run on infrastructure the operator owns.",
+      "severity": "medium",
+      "status": "needs review",
+      "resolution": "Choose A, B or C in SG-06; then answer Q-11 for the retention and legal basis before any data flows.",
+      "src": ["SRC-02", "SRC-09"]
+    },
+    {
+      "id": "FLG-009",
+      "title": "The 'five defined events' were not enumerated in the brief",
+      "observed": "We received 'record the five defined events' with no list.",
+      "why_it_matters": "A schema invented silently and presented as pre-existing would make the measurement plan look more settled than it is.",
+      "we_did": "Proposed five, defined each field, and labelled the proposal as ours in data/events.json and on the measurement page.",
+      "severity": "low",
+      "status": "needs review",
+      "resolution": "Confirm or replace the list; the schema is one file.",
+      "src": ["SRC-11"]
+    },
+    {
+      "id": "FLG-010",
+      "title": "Every file in `main` becomes public, including the registers",
+      "observed": "The Pages source is branch `main` at path `/` with a legacy build, so `data/*.json` is served alongside the HTML unless excluded.",
+      "why_it_matters": "That is a feature for auditability and a leak for anything sensitive. It also means Jekyll-ignored names (`_`, `.`) behave differently from plain static hosts.",
+      "we_did": "Kept the data readable and secret-free by policy; recorded the tracking ID there anyway because an ID in a page's href is public regardless. `_config.yml` documents the exclusion choices.",
+      "severity": "medium",
+      "status": "needs review",
+      "resolution": "Confirm that publishing the source register and ledger is wanted. If not, we move data out of the published tree and keep only generated HTML at the root.",
+      "src": ["SRC-09", "SRC-10"]
+    },
+    {
+      "id": "FLG-011",
+      "title": "Audience locale and store locale may not match",
+      "observed": "The operator is in the Netherlands; the tracking ID pattern is the US program's; no marketplace was stated in the brief.",
+      "why_it_matters": "Sending NL readers to a US listing produces shipping, VAT and warranty friction that no layout can fix, and a tag from a locale that is not enrolled can simply fail to accrue.",
+      "we_did": "Wrote guides that are store-agnostic, flagged the open question (Q-03), and refused to build silent geo-redirects, which would also be a Redirecting Link.",
+      "severity": "high",
+      "status": "needs review",
+      "resolution": "Confirm enrolled locales, then pick SG-03's option and let the generator carry the host.",
+      "src": ["SRC-01", "SRC-02", "SRC-11"]
+    },
+    {
+      "id": "FLG-012",
+      "title": "The brief's priorities are numbered 4 and 5; 1-3 were not included",
+      "observed": "Text reads 'Priority 4 · evidence-based iteration' and 'Priority 5 · compliance gate'. No priority 1-3 list arrived, and the same message also says click/conversion measurement should come 'before writing anything else', which does not fit a list where measurement is 4th.",
+      "why_it_matters": "Sequencing is the whole argument in a plan like this. We chose the order the constraints force - identity → links → disclosure → measurement → volume - and flagged it rather than guessing the missing ranks.",
+      "we_did": "Built in that order; left the ledger empty by design; recorded the conflict here.",
+      "severity": "process",
+      "status": "needs review",
+      "resolution": "Send the missing priorities if they exist, and mark SG-06/SG-15 accepted or rejected so the sequence stops being inferred.",
+      "src": ["SRC-11"]
+    }
+  ]
+}

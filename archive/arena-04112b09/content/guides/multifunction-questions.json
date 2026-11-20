@@ -1,0 +1,49 @@
+{
+  "slug": "multifunction-questions",
+  "title": "Questions to ask before buying a multi-function kitchen appliance",
+  "dek": "Nine cooking modes is a spec sheet, not a reason. Six questions that separate a replacement from a duplicate - and save you the counter space anyway.",
+  "cluster": "multi-function",
+  "published_on": "2026-11-20",
+  "reviewed_on": "2026-11-20",
+  "author": "Crisp Report desk",
+  "provenance": "A decision framework. It makes no claim about any appliance and recommends nothing; the products on our desk are unresolved identifiers, so naming one would be naming a guess.",
+  "reading_time_min": 5,
+  "blocks": [
+    { "t": "lead", "x": "The multi-function appliance is sold as subtraction: one box instead of five. It usually arrives as addition - one box, plus a mode list you will not use, plus a control panel with a learning cost. The six questions below are the difference between the two outcomes, and every one of them is answerable from a listing page and a manual." },
+    { "t": "h2", "x": "1. Which single mode would you buy this for, on its own?" },
+    { "t": "p", "x": "Name it. If the honest answer is 'the crisping one', the rest of the modes are options, not value - and you should price your decision accordingly. If you cannot name one, that is the answer: this purchase is about the idea of cooking more, which is a different and more expensive thing." },
+    { "t": "p", "x": "Write the mode down and then check whether the machine does it as a **primary** function or a **tolerated** one. Air flow for crisping and still, gentle heat for dehydrating are genuinely different jobs; a listing that claims both with one fan and one element is asking you to accept a compromise on whichever you use less." },
+    { "t": "h2", "x": "2. What does each extra mode displace, physically?" },
+    { "t": "table", "head": ["Claimed mode", "The question to ask", "Where the answer usually is"], "rows": [
+      ["Dehydrate", "Do I get real tray space, or one rack with airflow over a single layer?", "Manual's accessory list, not the gallery"],
+      ["Roast / rotisserie", "Is a spit kit included, or sold separately, and does the chamber height allow my bird?", "Included-items list; then dimensions table"],
+      ["Bake", "Is there a rack position that fits a tin I own?", "Interior dimensions"],
+      ["Steam", "Is there a water path to clean, and what does the manual say about descaling?", "Care section of the manual"],
+      ["Sous-vide / low temperature", "Does it hold a set temperature without a dedicated bath, and how would I know?", "Precise temperature claims, if any, in the specs"],
+      ["Yoghurt / proof", "Does the low end go low enough, and is that stated?", "Temperature range figure on the listing"]
+    ], "caption": "Every row is a check on the same document set: specs, included items, and the manual's care section." },
+    { "t": "callout", "kind": "note", "x": "Notice what is missing from this table: no ranking, no verdict, no 'worth it'. Those require either measurements or a price comparison, and this desk is permitted neither - prices only via an Amazon-served link or an approved API, and we have not tested a single unit.", "src": ["FLG-005"] },
+    { "t": "h2", "x": "3. Does the control panel cost you attention?" },
+    { "t": "p", "x": "Multi-function units fail on interaction more often than on hardware. Three checks, all doable from photos and the manual: can you change time and temperature mid-run without a sequence of presses that stops the cycle; is the current mode legible from a standing position; and does it remember your last setting. A dial beats a menu for the mode you use every day, and loses to a menu for the mode you use four times a year - because the menu can hold a preset with a name on it." },
+    { "t": "h2", "x": "4. What breaks the promise on cleaning?" },
+    { "t": "p", "x": "More functions usually means more surfaces: a steam path, a water reservoir, a door seal, a grease catch, a rack stack. Find the care section and count how many things need attention after one cook. Then check whether the coating is described as removable and replaceable. This is the least glamorous column in the comparison and the one that predicts usage best - a machine with a five-minute wipe-down is used on a Tuesday, and a machine with a fifteen-minute disassembly is used on Sundays, which is a different product." },
+    { "t": "h2", "x": "5. Is the thing you are replacing actually replaced?" },
+    { "t": "p", "x": "If you intend to retire the kettle, the toaster oven or the slow cooker, put each on the listing and look for the specific function that does that job. If the page cannot tell you, that is an information gap you should treat as unresolved rather than as a minor detail; do not fill it in yourself and then call it savings. Keep the item you own until the new one has demonstrably taken over its role in your kitchen for a month." },
+    { "t": "h2", "x": "6. What is the total cost of the duplication you are accepting?" },
+    { "t": "p", "x": "Not the purchase price - the counter, the cupboard, the noise, and the electricity of a bigger chamber waiting to preheat for a small job. These are the recurring costs nobody writes on the box. The counter figure comes from the product dimensions plus the manual's clearance requirement; the rest you have to know about your own kitchen. Which is, in the end, the only advantage a small publication can honestly offer: telling you precisely which number to go and find." },
+    { "t": "h2", "x": "What we cannot answer, stated plainly" },
+    { "t": "unverified", "items": [
+      "Which multi-function unit is 'best'. We have resolved no products, tested none, and hold no rating data we are permitted to display.",
+      "Whether any given unit actually replaces a slow cooker or a dehydrator. That claim belongs to the listing, and it needs a temperature and airflow figure to mean anything.",
+      "Whether the modes hold a stated temperature precisely. Verification would need measurements we do not have.",
+      "Any number in a currency. This site shows no prices.",
+      "Whether the app-connected version is worth it. We have not evaluated any software, subscription or account requirement beyond noting that 'requires an app' is a spec worth reading before you buy."
+    ] },
+    { "t": "quote", "x": "Your Site(s) must contain original content and be publicly available via the website address provided in the application. Original content utilizing third-party materials must contain significant commentary, analysis, or transformation to any materials you include.", "cite": "Amazon Associates Program Policies, Participation Requirements §1, read 2026-11-20", "src": "SRC-02" },
+    { "t": "p", "x": "This is why the guides here are method rather than verdicts. Copying a listing's claims into a paragraph would be the fastest route to a terminated account and the slowest route to a reader who trusts you - and only one of those two outcomes is worth optimising for." },
+    { "t": "h2", "x": "The one-line version" },
+    { "t": "p", "x": "Buy it for one mode, check the accessories for the other, and treat every mode without a number attached to it as a wish, not a feature." }
+  ],
+  "related": ["basket-or-oven", "cleanup-and-counter-space"],
+  "cta": { "kind": "none", "note": "No product link." }
+}
