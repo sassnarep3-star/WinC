@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flagged for review — unverified items &amp; irregularities | Air &amp; Ember</title>
+<meta name="description" content="Everything that could not be confirmed from an official source, each with its source link, impact, and suggested action. Nothing here is inferred or filled in.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/flagged.html">
+<meta property="og:title" content="Flagged for review — Air &amp; Ember">
+<meta property="og:description" content="Unverified items and irregularities with sources, published openly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/flagged.html">
+<meta name="theme-color" content="#21201c">
+<link rel="alternate" type="application/rss+xml" title="Air &amp; Ember guides" href="feed.xml">
+<link rel="stylesheet" href="css/site.css">
+<script src="js/click-counter.js" defer></script>
+<script src="js/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">A&amp;E</span>
+      <span class="brand-text"><strong>Air &amp; Ember</strong><em>Countertop gear, straight answers</em></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="guides.html">Guides</a>
+      <div class="nav-group">
+        <button class="nav-group-toggle" aria-expanded="false">Review desk ▾</button>
+        <div class="nav-group-panel">
+          <a href="executive-summary.html">Executive summary</a>
+          <a href="suggestions.html">Suggestions &amp; paths</a>
+          <a href="questions.html">Questions &amp; answers</a>
+          <a href="verification.html">Verification log</a>
+          <a href="flagged.html">Flagged for review</a>
+          <a href="compliance.html">Compliance &amp; disclosure</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="disclosure-strip" role="note">
+    <strong>Advertisement</strong> — As an Amazon Associate we earn from qualifying purchases.
+    <a href="compliance.html" data-event="disclosure_click">How we disclose and mark every link</a>
+  </div>
+</header>
+
+<main id="main" class="wrap" style="padding-top:36px">
+  <p class="eyebrow">Review desk · flagged</p>
+  <h1>Flagged for review</h1>
+  <p class="hero-standfirst">Everything below is an item we could not confirm from an official source, or an irregularity worth a human’s eye. Each carries its evidence and a suggested action. None of it blocks the site — and none of it gets quietly filled in.</p>
+
+  <div class="filter-bar">
+    <input type="search" data-filter-input placeholder="Filter flags…" aria-label="Filter flags">
+    <span class="pill-note">8 items · all status: needs review</span>
+  </div>
+  <p class="empty-note" data-filter-empty>No flags match that filter.</p>
+
+  <div class="notice flagged" data-filter-item="FLG-001 asin 9 characters 10 format">
+    <h3><span class="flag-id">FLG-001</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> All five supplied product codes are 9 characters long (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj). Amazon’s own advertising documentation states “An ASIN is always 10 characters long, and either entirely numeric … or starts with a ‘B’.” The observed destinations (e.g. <span class="mono">B0CDY277D3</span>) <em>are</em> 10 characters — the supplied tokens are not.</p>
+    <p><strong>Why it matters:</strong> The brief treats the supplied codes as checkable identifiers; as delivered, they can’t serve as ASINs. Intended-ASIN fields stay blank.</p>
+    <p><strong>Evidence:</strong> <a href="https://advertising.amazon.com/library/guides/targeting-with-sponsored-products" rel="nofollow noopener" target="_blank">Amazon Ads — targeting guide (ASIN length) ↗</a> · <a href="products.html">register with both code sets</a></p>
+    <p><strong>Suggested action:</strong> Owner confirms intended product per code (S-08), or supply the real ASINs.</p>
+  </div>
+
+  <div class="notice flagged" data-filter-item="FLG-002 link amazon special links compliance short links unresolved">
+    <h3><span class="flag-id">FLG-002</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> The supplied links use <span class="mono">link.amazon/…</span>, a format not described in the Associates Operating Agreement or Program Policies. Those documents define Special Links as links that “properly use the special ‘tagged’ link formats we provide,” with the tag appearing as <span class="mono">XXXXX-##</span> as a URL parameter.</p>
+    <p><strong>What we are <em>not</em> saying:</strong> We do <strong>not</strong> claim the supplied links are invalid. Their exact compliance status is unresolved pending confirmation.</p>
+    <p><strong>Why it matters:</strong> Only confirmed Special Links earn commission and satisfy the agreement; buyer CTAs currently use the documented <span class="mono">/dp/…?tag=</span> format instead.</p>
+    <p><strong>Evidence:</strong> <a href="https://affiliate-program.amazon.com/help/operating/agreement" rel="nofollow noopener" target="_blank">Operating Agreement §1 ↗</a> · <a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies — Participation Requirements ↗</a></p>
+    <p><strong>Suggested action:</strong> Confirm with Associates support; run the one-link test (S-02); then decide CTAs (S-01).</p>
+  </div>
+
+  <div class="notice flagged" data-filter-item="FLG-003 intent blank intended asin observation">
+    <h3><span class="flag-id">FLG-003</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> Intended ASIN, intended listing URL, confirmation date, and intent source are blank for all five rows of the product-intent record. Nothing public binds a 9-character short code to a product, so intent cannot be inferred from observation.</p>
+    <p><strong>Why it matters:</strong> The record’s core rule is that intent and observation never merge; until the owner confirms, half the record stays empty on purpose.</p>
+    <p><strong>Evidence:</strong> <a href="products.html">product-intent confirmation record</a></p>
+    <p><strong>Suggested action:</strong> Owner fills intent columns (S-08).</p>
+  </div>
+
+  <div class="notice flagged" data-filter-item="FLG-004 tracking id tag shopnow047c-20 unvalidated">
+    <h3><span class="flag-id">FLG-004</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> Tracking ID <span class="mono">shopnow047c-20</span> matches the required tag format but has not been validated against an Associates account (no account access in this environment).</p>
+    <p><strong>Why it matters:</strong> If the tag is wrong or unapproved, attributed clicks won’t report. It is embedded in all buyer CTAs so the test can catch problems.</p>
+    <p><strong>Evidence:</strong> <a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies — tag format XXXXX-## ↗</a></p>
+    <p><strong>Suggested action:</strong> Verify in Associates account; run S-02 test; check first report.</p>
+  </div>
+
+  <div class="notice flagged" data-filter-item="FLG-005 commission fee category kitchen rate card per asin">
+    <h3><span class="flag-id">FLG-005</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> Commission shown for all five products is the official <strong>Kitchen 4.50%</strong> rate-card rate. Amazon assigns each product’s fee category at the product level; we cannot confirm the assigned category per ASIN without Associates reporting.</p>
+    <p><strong>Why it matters:</strong> If a product is actually categorised elsewhere, the effective rate differs. We show the rate card with its source rather than guess per product.</p>
+    <p><strong>Evidence:</strong> <a href="https://affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ" rel="nofollow noopener" target="_blank">Associates Standard Commission Income Statement ↗</a></p>
+    <p><strong>Suggested action:</strong> Confirm fee category per ASIN in report (S-09).</p>
+  </div>
+
+  <div class="notice flagged" data-filter-item="FLG-006 campaign ledger empty conversions orders">
+    <h3><span class="flag-id">FLG-006</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> The campaign ledger ships empty: no authorized first-party click or order report has been obtained. Columns are defined (timestamp, source, channel, eligible sessions, clicks, reported orders) but deliberately unfilled.</p>
+    <p><strong>Why it matters:</strong> No conversion score, revenue figure, or forecast appears anywhere on this site — by design until real reports exist.</p>
+    <p><strong>Evidence:</strong> <a href="executive-summary.html">executive summary — measurement status</a></p>
+    <p><strong>Suggested action:</strong> After S-02 traffic, export Associates reports and populate with dated provenance.</p>
+  </div>
+
+  <div class="notice flagged" data-filter-item="FLG-007 five defined events analytics undefined">
+    <h3><span class="flag-id">FLG-007</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> The brief says to “record the five defined events” but does not enumerate them. We implemented five provisional events locally: <span class="mono">page_view</span>, <span class="mono">outbound_product_click</span>, <span class="mono">guide_read</span>, <span class="mono">disclosure_click</span>, <span class="mono">suggestion_click</span>.</p>
+    <p><strong>Why it matters:</strong> Any analytics schema (including a future endpoint) should match the canonical list once confirmed.</p>
+    <p><strong>Evidence:</strong> <a href="js/click-counter.js">js/click-counter.js</a> · <a href="verification.html#metrics">local metrics panel</a></p>
+    <p><strong>Suggested action:</strong> Owner confirms or amends the five events (Q-10).</p>
+  </div>
+
+  <div class="notice flagged" data-filter-item="FLG-008 price rating snapshot volatile date">
+    <h3><span class="flag-id">FLG-008</span><span class="flag-status">Needs review</span></h3>
+    <p><strong>What:</strong> All prices, ratings, review counts, and badges are point-in-time snapshots from 2026-11-20 (deal-week conditions). They will drift.</p>
+    <p><strong>Why it matters:</strong> Publishing stale numbers as current would mislead buyers; every surface therefore dates the snapshot and links the live listing for re-checking.</p>
+    <p><strong>Evidence:</strong> <a href="products.html">register (dated rows)</a> · <a href="guide-black-friday-reading.html">deal-reading guide</a></p>
+    <p><strong>Suggested action:</strong> Schedule a refresh pass (manual or automated) before/after deal events — candidate for a future suggestion card.</p>
+  </div>
+
+  <div class="notice">
+    <h3 style="margin-bottom:.3em">Policy for this page</h3>
+    <ul style="margin:.3em 0;padding-left:1.2em">
+      <li>Flags don’t block the merge or the deploy — they get published here for post-launch review.</li>
+      <li>A flag closes only when an official source (or owner confirmation) lands in <span class="mono">COORDINATION.md</span>, with the source linked.</li>
+      <li>No flag is ever closed by inference.</li>
+    </ul>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Air &amp; Ember</h4>
+        <p>A small publication about countertop cooking gear: five picks, question-shaped guides, and a review desk that shows its work.</p>
+        <p>Tracking ID: <span class="mono">shopnow047c-20</span></p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products &amp; register</a>
+          <a href="guides.html">All guides</a>
+          <a href="feed.xml">RSS feed</a>
+        </div>
+      </div>
+      <div>
+        <h4>Review desk</h4>
+        <div class="footer-links">
+          <a href="executive-summary.html">Executive summary</a>
+          <a href="suggestions.html">Suggestions &amp; paths</a>
+          <a href="questions.html">Questions &amp; answers</a>
+          <a href="verification.html">Verification log</a>
+          <a href="flagged.html">Flagged for review</a>
+          <a href="compliance.html">Compliance &amp; disclosure</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-disclosure"><strong>Advertisement:</strong> As an Amazon Associate we earn from qualifying purchases. Product links on this site are marked as sponsored. We may earn a commission if you buy through them, at no extra cost to you. <a href="compliance.html">Full disclosure and link policy</a>.</p>
+    <p class="footer-meta">Product facts observed 20 Nov 2026 from official Amazon listing pages; prices and ratings change. Unverified fields are left blank and published on the <a href="flagged.html">Flagged for review</a> page. © 2026 Air &amp; Ember.</p>
+  </div>
+</footer>
+</body>
+</html>

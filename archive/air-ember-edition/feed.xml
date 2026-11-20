@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Air &amp; Ember — guides</title>
+    <link>https://sassnarep3-star.github.io/WinC/guides.html</link>
+    <atom:link href="https://sassnarep3-star.github.io/WinC/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Question-shaped buying guides for countertop cooking gear, with an official source on every product fact.</description>
+    <language>en</language>
+    <lastBuildDate>Thu, 20 Nov 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Black Friday appliance deals: how to read the price on the page</title>
+      <link>https://sassnarep3-star.github.io/WinC/guide-black-friday-reading.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guide-black-friday-reading.html</guid>
+      <pubDate>Thu, 20 Nov 2026 12:00:00 GMT</pubDate>
+      <description>Four of our five listings showed a deal on 20 Nov 2026. How to read list price, discount badges, and Amazon's own price footnote before you click.</description>
+    </item>
+    <item>
+      <title>Basket or oven-style air fryer: what should you compare?</title>
+      <link>https://sassnarep3-star.github.io/WinC/guide-basket-vs-oven.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guide-basket-vs-oven.html</guid>
+      <pubDate>Thu, 20 Nov 2026 12:00:00 GMT</pubDate>
+      <description>Footprint, capacity, and cleanup — the three axes that actually decide it, with real dimensions from official listings.</description>
+    </item>
+    <item>
+      <title>A no-hype checklist for comparing air fryer capacity</title>
+      <link>https://sassnarep3-star.github.io/WinC/guide-capacity-checklist.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guide-capacity-checklist.html</guid>
+      <pubDate>Thu, 20 Nov 2026 12:00:00 GMT</pubDate>
+      <description>Quarts, liters, and what the listing itself says when the units disagree. A two-minute checklist for any listing.</description>
+    </item>
+    <item>
+      <title>How to assess cleanup and counter-space trade-offs</title>
+      <link>https://sassnarep3-star.github.io/WinC/guide-cleanup-counter-space.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guide-cleanup-counter-space.html</guid>
+      <pubDate>Thu, 20 Nov 2026 12:00:00 GMT</pubDate>
+      <description>Dimensions, wattage, and dishwasher claims — read the spec table before the box lands on your counter.</description>
+    </item>
+    <item>
+      <title>Questions to ask before buying a multi-function kitchen appliance</title>
+      <link>https://sassnarep3-star.github.io/WinC/guide-multi-function-questions.html</link>
+      <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guide-multi-function-questions.html</guid>
+      <pubDate>Thu, 20 Nov 2026 12:00:00 GMT</pubDate>
+      <description>A pre-purchase interview for any 10-in-1 countertop machine: presets you'll use, doors you'll open, accessories you'll store.</description>
+    </item>
+  </channel>
+</rss>

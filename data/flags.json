@@ -12,7 +12,7 @@
     {
       "id": "FLG-002",
       "title": "Reader Special Links not yet tested in enrolled Associates workflow",
-      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session.",
+      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session. Neither the supplied short links nor the constructed Special Links have been through the enrolled Associates workflow test (one link per product: click it, confirm the destination, then confirm the click appears in the tracking report). Until that test is recorded, no link on this site is claimed to be a validated Special Link.",
       "action": "Test one link per product in Associates workflow; confirm destination and tracking report before scaling.",
       "status": "needs review",
       "sources": [],
@@ -235,7 +235,62 @@
       "title": "Stored product titles drifted from live Amazon listing titles (4 of 5)",
       "detail": "On 2026-11-20 session arena/0458cd24-winc re-read every observed listing's <title> directly from amazon.com. Four of five stored titles differed from the live Amazon listing <title> (only B0CDY277D3 matched verbatim). Product identities were confirmed via the live <title> plus the category breadcrumb, so the stored titles in data/products.json were reconciled to the verbatim live listing titles. The underlying spec concerns (FLG-005, FLG-010, FLG-014) remain open and are unaffected by this title-only reconciliation.",
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
-      "status": "fixed in this session"
+      "status": "fixed in this session",
+      "sources": [
+        "S11",
+        "S23"
+      ],
+      "source_note": "Compares the stored titles against the live listing reads recorded in S11 and S23."
+    },
+    {
+      "id": "FLG-026",
+      "title": "ThermoMaven sells near-identical instant-read listings under different ASINs",
+      "detail": "Amazon's page for B0DHZTCNR5 surfaced a separate ThermoMaven '0.5 Sec' instant-read listing (B0DNMTK56N) in its 'Customers who viewed this item also viewed' module, with a different speed claim and a different colour. The shop's item is the one-second black model. A buyer following a saved link could land on the other one.",
+      "action": "Owner or reader: check the title and ASIN on the page reached from any external link before buying. No site change needed; recorded so the shop's product page can warn about it.",
+      "status": "needs review",
+      "sources": [
+        "S12",
+        "S33"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-027",
+      "title": "CHEF iQ Sense is sold in 2-probe and 3-probe configurations under different ASINs",
+      "detail": "Amazon's page for B0DZFD6R9Z (3 probes) surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) in the same module. Probe count is a headline spec for this product, so the two configurations are easy to confuse and are not the same purchase.",
+      "action": "Owner or reader: confirm the probe count on the listing page reached. Recorded on the product page so the spec is not assumed from a family name.",
+      "status": "needs review",
+      "sources": [
+        "S13",
+        "S34"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-028",
+      "title": "This site publishes no analytics numbers, and the ledger is empty by design",
+      "detail": "The measurement layer ships as code (assets/app.js five events, analytics/worker.js and analytics/collect.py endpoints) but no endpoint is deployed and no first-party report has been obtained, so data/campaign-ledger.json has zero rows. Every 'how we would know it worked' line in the suggestions register is therefore a hypothesis about a future measurement, not a result.",
+      "action": "Deploy one endpoint (FLG-007), then fill the ledger only from authorized first-party exports with a dated provenance row. Do not present a forecast in the meantime.",
+      "status": "needs review",
+      "sources": [
+        "S21"
+      ],
+      "source_note": "Endpoint state is verifiable from the repo; the absence of first-party data cannot be proven from here, which is why this is flagged rather than asserted."
+    },
+    {
+      "id": "FLG-029",
+      "title": "Amazon listing pages in this environment are served as a fallback summary route",
+      "detail": "Every one of the five listing URLs read on 2026-11-20 returned with lv=shuf and plpRedirect=mhFallback in the response URL (FLG-009). The <title> and breadcrumb are stable across four observations, but the page is a summary route, so detail-table fields read from it may differ from the full detail page a shopper sees in a normal browser.",
+      "action": "Owner: open each listing once in a normal browser and compare the spec table with the product page's rows; correct any drift in data/products.json.",
+      "status": "needs review",
+      "sources": [
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34"
+      ],
+      "source_note": ""
     }
   ]
 }
