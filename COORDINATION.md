@@ -129,3 +129,24 @@ The five defined events in `assets/app.js` were re-checked by name this session:
 | 2026-11-20 06:27:23Z | Merged with `gh pr merge 22 --merge` → `main` @ `394d268`. |
 | 2026-11-20 06:27:24Z | Pages build for `394d268` started; `status: built`, `error: null`. |
 | 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/reheat-leftovers-air-fryer.html` serves the new USDA-sourced guide (disclosure strip above the fold, sourced table, cluster-filtered cards, tagged Sponsored buttons, FAQ, computed 3-min read); front page serves both new guides in the rail, the computed **In season · Holiday cooking** band (3 seasonal guides), 8-guide rail, category tiles, and the honest capture-form copy. |
+---
+
+# Session arena-482d5832 — analytics privacy-boundary hardening (T33)
+
+Branch `arena/482d5832-winc`, based on `06432e8` (current `origin/main`). Started 2026-11-20.
+Task IDs T29–T32 were already used by arena-c2123b9c, so this session's task is **T33**.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Analytics privacy boundary: event-specific property allow-lists in both collectors, server-side day only, contract tests wired into `npm test` | in progress | arena-482d5832 | `analytics/collect.py`, `analytics/worker.js`, `analytics/README.md`, `analytics/test_worker.mjs` (new), `scripts/test_analytics.py` (new), `package.json` (`test` + `verify` scripts only) |
+
+**Scope note.** T04 (measurement layer, owner 68dc5c3a) is marked done. Its files are edited here
+under a new claim, not re-opened. No other active claim covers these files; no site HTML, builder,
+register, or product data is touched, so the committed-output CI check is unaffected.
+
+**Why:** the earlier collector stored up to eight arbitrary client-supplied properties per event
+(string-truncated, not allow-listed), and the Worker trusted a client-supplied `at` date. Neither
+was a live leak (the bundled client sends only ASIN/depth), but the documented "no PII" boundary
+was enforced by the client, not the endpoint. This change moves the boundary to the endpoint.
