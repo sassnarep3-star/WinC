@@ -191,6 +191,22 @@
       "url": "https://www.amazon.com/dp/B08DKYBTPH",
       "what": "Details table read 2026-11-20: Special Feature 'Automatic Shut-Off, LED Shake Reminder, Programmable'; Product Dimensions 12.75\"D x 13.5\"W x 10\"H; Capacity 8 quarts; size selector 6/8/9 quarts; bullet 'presets ... a temperature range from 200-400°F'; bullet 'cETL approved ... 1000 Watts/120 Volts – RJ38-SQSS-8T'; page states 'There is a newer model of this item'.",
       "date": "2026-11-20"
+    },
+    {
+      "id": "S27",
+      "title": "Fourth observation of the five submitted link.amazon short links (2026-11-20)",
+      "url": "https://link.amazon/B0f3GKalj",
+      "what": "Session b0920c92 re-resolved all five submitted short links on 2026-11-20. Four of the five (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) ended on the Amazon home page; the fifth (B0f3GKalj) still resolved to B0DZFD6R9Z with the same fallback flags as before. Two of the four were re-fetched one at a time and gave the same result. Recorded as an observation only - this does not establish that the links are invalid (FLG-003 stays open) and it does not establish why.",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92. Direct shell access to amazon.com is blocked by this sandbox's egress policy, so every observation is a reader fetch, not a raw HTTP request."
+    },
+    {
+      "id": "S28",
+      "title": "Control re-read of all five observed listings via their direct /dp/ URLs (2026-11-20)",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "Session b0920c92 opened https://www.amazon.com/dp/<ASIN> for each of the five observed ASINs (B0CDY277D3, B09B7SB46R, B08DKYBTPH, B0DHZTCNR5, B0DZFD6R9Z). Every listing served the <title> and the category breadcrumb already recorded in data/products.json, so the reader-facing links on this site still resolve to the products they name, whatever the submitted short links do.",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92."
     }
   ]
 }

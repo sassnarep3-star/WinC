@@ -236,6 +236,32 @@
       "detail": "On 2026-11-20 session arena/0458cd24-winc re-read every observed listing's <title> directly from amazon.com. Four of five stored titles differed from the live Amazon listing <title> (only B0CDY277D3 matched verbatim). Product identities were confirmed via the live <title> plus the category breadcrumb, so the stored titles in data/products.json were reconciled to the verbatim live listing titles. The underlying spec concerns (FLG-005, FLG-010, FLG-014) remain open and are unaffected by this title-only reconciliation.",
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
       "status": "fixed in this session"
+    },
+    {
+      "id": "FLG-026",
+      "title": "Four of the five submitted short links landed on the Amazon home page on 2026-11-20",
+      "detail": "Fourth observation of the five submitted link.amazon URLs. B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the product listing that the first three observations recorded. B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four were re-fetched individually and gave the same result, so this is not a parallel-request artefact. Cause not determinable from this environment. This is NOT a claim that the short links are invalid - FLG-003 remains open and unresolved. It does mean the submitted links can no longer be relied on to land on these five products.",
+      "action": "Open each of the five submitted links in a normal browser session and record where it lands, with the date. If the home page is what an ordinary reader gets, the owner must confirm the intended product per link (Q-02) and use a Special Link from Associates Central instead (FLG-002).",
+      "status": "needs review",
+      "sources": [
+        "S15",
+        "S27",
+        "S28"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-027",
+      "title": "Amazon's own pages list sibling variants of both thermometers under the same product page",
+      "detail": "On the 2026-11-20 control re-read, the B0DHZTCNR5 page's 'Customers who viewed this item also viewed' block lists B0GL7Z4KP4 (the same ThermoMaven 1 Sec in orange), B0DNMTK56N (a 0.5 Sec ThermoMaven) and B0F5X3NSR4. The B0DZFD6R9Z page lists B0FXBQ3KX1 (the same CHEF iQ Sense with 2 probes instead of 3) and B0H2JP9YDM (a USA 250 limited edition). The shop stocks one variant of each family. Which variant the owner meant cannot be read off a redirect.",
+      "action": "Ask the supplier which colour, speed and probe-count variants are in scope, then record the chosen ASIN in the product-intent record (data/products.json intended_asin / intended_listing_url) with a confirmation date. Until then the observed ASIN stays as it is and the intended field stays blank.",
+      "status": "needs review",
+      "sources": [
+        "S12",
+        "S13",
+        "S28"
+      ],
+      "source_note": ""
     }
   ]
 }
