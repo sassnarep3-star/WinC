@@ -1,8 +1,14 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena-82d39deb`** (branch `arena/82d39deb-winc`). That session's board,
-> sources and findings are in the **last section of this file**. Earlier sessions are kept
-> verbatim as the provenance trail.
+> **Latest session: `ab951e4c`** (branch `arena/ab951e4c-winc`), started 2026-11-20 from
+> `main@ba0b838` (PR #15 merged). That session's claims are in the section
+> **"Session ab951e4c — shop-first polish, imagery, cadence, decision registers"** below.
+> Earlier sessions are kept verbatim as the provenance trail.
+>
+> **Concurrent open PRs seen at claim time (do not touch their branches):** #17
+> (`arena/04112b09-winc`, "Crisp Report"), #18 (`arena/23428c9e-winc`, "Air & Ember"),
+> #5 draft/HELD (`arena/70d8ad52-winc`, `docs/`). This session works only on
+> `arena/ab951e4c-winc` and merges `main` into itself before pushing.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -454,3 +460,25 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 | --- | --- |
 | 2026-11-20 | PR opened from `arena/0458cd24-winc` → `main`: source-register corrections (S01/S02/S03/S06/S20 access notes), product-title reconciliation (FLG-018), COORDINATION.md + EXECUTIVE-SUMMARY.md integration record. |
 | 2026-11-20 | Merged to `main`. GitHub Pages legacy build re-run; `status: built`, no error. Live pages re-fetched to confirm the merged content serves. |
+
+
+---
+
+# Session ab951e4c — shop-first polish, imagery, cadence, decision registers
+
+Branch `arena/ab951e4c-winc` from `main@ba0b838`. Started 2026-11-20. Claim pushed before any edit.
+Scope discipline: prior sessions' registers are appended to and status-corrected, never replaced;
+`archive/counter-notes/` untouched; no other session's branch touched.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+|----|------|--------|-------|------------|
+| T29 | Per-product editorial imagery (5 distinct illustrations) + asset compression so the front page is not four reused 3.7 MB PNGs | in progress | ab951e4c | `assets/img/*`, `data/products.json` (image fields), `data/guides/*.json` (image refs), `scripts/build_site.py` (product_card, head/og:image) |
+| T30 | Reader-path de-clutter: shelf lines on cards, flag IDs and model strings off the front page, trust rail instead of process prose | in progress | ab951e4c | `data/products.json` (`shelf_line`, `decide_on`), `scripts/build_site.py` (home_body, product_card, category_body), `assets/style.css` |
+| T31 | Three new sourced guides + topic-backlog reconciliation | in progress | ab951e4c | `data/guides/*.json`, `data/topics.json`, `data/sources.json` (new refs) |
+| T32 | Suggestions register v3: statuses repaired against code, new rows for this pass, path→suggestion mapping | in progress | ab951e4c | `data/suggestions.json`, `scripts/build_site.py` (direction_body) |
+| T33 | Questions register v3: rows this session could answer from official sources + new discovery actions | in progress | ab951e4c | `data/questions.json`, `scripts/build_site.py` (questions_body) |
+| T34 | Ledger ingest tooling: validated `scripts/ledger_add.py` (first-party rows only, refuses invented numbers) | in progress | ab951e4c | `scripts/ledger_add.py`, `analytics/README.md`, `measurement.html` (generated) |
+| T35 | Gate extensions: image uniqueness on the reader path, no flag IDs in card copy, shelf-line presence, ledger row schema | in progress | ab951e4c | `scripts/check_site.py` |
+| T36 | Final integration: build + gate green, PR → main, merge, confirm Pages, record here | pending | ab951e4c | all (integration only) |
