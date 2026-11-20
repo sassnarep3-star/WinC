@@ -1,7 +1,7 @@
 {
-  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped. Q-23 appended 2026-11-20 by session arena-70bd2fcc (task renumbered to T37 after an id collision with arena-c2123b9c). Rows above the trunk's highest Q number were renumbered during the merge (session ab951e4c); a question id is a register slot, not a citation, and an answer stays blank when nobody has the fact.",
+  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped.",
   "updated": "2026-11-20",
-  "blocking_count": 5,
+  "blocking_count": 8,
   "questions": [
     {
       "id": "Q-01",
@@ -86,41 +86,6 @@
       "source_note": ""
     },
     {
-      "id": "Q-15",
-      "question": "Are these five listings still live, in stock, and the same model today?",
-      "decision_it_gates": "Whether the product pages describe something a reader can actually buy this week, and whether any spec quoted here is stale.",
-      "have": "Each listing was readable on 2026-11-20 (titles captured verbatim in data/probes.json), so all five destinations existed on that date.",
-      "missing": "Availability, variant structure, and whether the listing content changed since the specs were copied. Listings move; a title captured once is not a permanent fact.",
-      "blocking": "no",
-      "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
-      "owner": "Any session with a browser",
-      "answer": "Partly, from the register. All five destinations rendered on 2026-11-20 across three independent reads (data/probes.json), and two of them showed signals that change a buying decision: the 8-Qt page displayed a newer-model notice (FLG-024) and a 6/8/9-quart size selector under one ASIN (FLG-023). Stock, price and availability were deliberately not recorded. What nobody can answer from a repo is whether a listing is still live tomorrow — scripts/freshness.py now publishes the age of every recorded read so a stale row is visible instead of invisible (FLG-027).",
-      "sources": [
-        "S09",
-        "S10",
-        "S11",
-        "S12",
-        "S13"
-      ],
-      "source_note": ""
-    },
-    {
-      "id": "Q-16",
-      "question": "Does the '-20' suffix mean the tag is already complete for a manual amazon.com link?",
-      "decision_it_gates": "Whether ?tag=shopnow047c-20 is the correct manual link form, or whether links must be generated in Associates Central instead.",
-      "have": "Amazon's help states '-20' is appended automatically to all Associate IDs (S20), and the site currently uses ?tag=shopnow047c-20 verbatim. That is consistent, and consistency is not confirmation.",
-      "missing": "Whether Amazon requires Special Links generated via SiteStripe/Links tool rather than hand-built query strings for this account type.",
-      "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
-      "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
-      "owner": "Account owner only",
-      "answer": "",
-      "sources": [
-        "S06",
-        "S20"
-      ],
-      "source_note": ""
-    },
-    {
       "id": "Q-06",
       "question": "Who is the human author, and what experience do they actually have?",
       "decision_it_gates": "Bylines, review policy, and whether the site can ever claim hands-on testing.",
@@ -142,11 +107,11 @@
       "blocking": "no — current labelling is honest",
       "discovery": "Either buy the item and photograph it (which also finally permits a testing claim, with dates and observations), or license stock that is not brand-identifying, or keep the illustration policy as-is and accept a lower-converting page.",
       "owner": "Owner (budget decision)",
-      "answer": "Answered in part on 2026-11-20: every image on the site is now original artwork made for this publication (9 files in assets/img, each captioned as an illustration and never as a product photograph), so nothing on the page depends on a stock licence and no Amazon listing image is reused. Program Policies §6(a) would allow resizing a Program Content graphic but forbids altering it (S30); this site does not rely on that permission. The open half is unchanged and owner-only: photograph the physical items, which is also the only route to a dated, honest testing claim.",
+      "answer": "Answered in part on 2026-11-20: every image on the site is now original artwork made for this publication (9 files in assets/img, each captioned as an illustration and never as a product photograph), so nothing on the page depends on a stock licence and no Amazon listing image is reused. Program Policies §6(a) would allow resizing a Program Content graphic but forbids altering it (S36); this site does not rely on that permission. The open half is unchanged and owner-only: photograph the physical items, which is also the only route to a dated, honest testing claim.",
       "sources": [
-        "S30"
+        "S36"
       ],
-      "source_note": ""
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-08",
@@ -215,7 +180,7 @@
       "blocking": "no",
       "discovery": "Set the rate at whatever survives the owner's calendar — one guide per week is realistic only if the file-drop workflow is used. Keep a backlog in data/questions.json answers, then promote answered questions into guide titles.",
       "owner": "Owner decision",
-      "answer": "Rate demonstrated rather than promised. On 2026-11-20 one session published three guides (accuracy/ice-cup, whole-chicken fit, listing literacy) by dropping three JSON files and running one build, and marked the four backlog rows they close in the same commit. That is the ceiling the machinery supports per focused pass, not a weekly commitment — SG-23 proposes two to three per build, and only the owner can pick a rate the calendar survives.",
+      "answer": "Rate demonstrated rather than promised. On 2026-11-20 one session published three guides (accuracy/ice-cup, whole-chicken fit, listing literacy) by dropping three JSON files and running one build, and marked the four backlog rows they close in the same commit. That is the ceiling the machinery supports per focused pass, not a weekly commitment — SG-43 proposes two to three per build, and only the owner can pick a rate the calendar survives.",
       "sources": [],
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
@@ -228,10 +193,10 @@
       "blocking": "no — the blank-and-labelled approach is compliant today",
       "discovery": "Check Creators API status in Associates Central. If granted: fetch at render/build time with a timestamp shown next to the number and an expiry rule; if not granted, leave prices off the page permanently.",
       "owner": "Account owner only",
-      "answer": "No — and the rule is now quoted rather than paraphrased. Program Policies §2(b): 'your Site may only show prices and availability if: (a) we serve the link in which that price and availability data are displayed, or (b) you obtain Product pricing and availability data via Creators API or PA API' (S30, confirming S02). Static prices stay off every page; the only route to a live number is Creators/PA API access on the owner's account, which this environment cannot check.",
+      "answer": "No — and the rule is now quoted rather than paraphrased. Program Policies §2(b): 'your Site may only show prices and availability if: (a) we serve the link in which that price and availability data are displayed, or (b) you obtain Product pricing and availability data via Creators API or PA API' (S36, confirming S02). Static prices stay off every page; the only route to a live number is Creators/PA API access on the owner's account, which this environment cannot check.",
       "sources": [
         "S02",
-        "S30"
+        "S36"
       ],
       "source_note": ""
     },
@@ -247,6 +212,41 @@
       "answer": "",
       "sources": [],
       "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+    },
+    {
+      "id": "Q-15",
+      "question": "Are these five listings still live, in stock, and the same model today?",
+      "decision_it_gates": "Whether the product pages describe something a reader can actually buy this week, and whether any spec quoted here is stale.",
+      "have": "Each listing was readable on 2026-11-20 (titles captured verbatim in data/probes.json), so all five destinations existed on that date.",
+      "missing": "Availability, variant structure, and whether the listing content changed since the specs were copied. Listings move; a title captured once is not a permanent fact.",
+      "blocking": "no",
+      "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
+      "owner": "Any session with a browser",
+      "answer": "Partly, from the register. All five destinations rendered on 2026-11-20 across three independent reads (data/probes.json), and two of them showed signals that change a buying decision: the 8-Qt page displayed a newer-model notice (FLG-024) and a 6/8/9-quart size selector under one ASIN (FLG-023). Stock, price and availability were deliberately not recorded. What nobody can answer from a repo is whether a listing is still live tomorrow — scripts/freshness.py now publishes the age of every recorded read so a stale row is visible instead of invisible (FLG-042).",
+      "sources": [
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "Q-16",
+      "question": "Does the '-20' suffix mean the tag is already complete for a manual amazon.com link?",
+      "decision_it_gates": "Whether ?tag=shopnow047c-20 is the correct manual link form, or whether links must be generated in Associates Central instead.",
+      "have": "Amazon's help states '-20' is appended automatically to all Associate IDs (S20), and the site currently uses ?tag=shopnow047c-20 verbatim. That is consistent, and consistency is not confirmation.",
+      "missing": "Whether Amazon requires Special Links generated via SiteStripe/Links tool rather than hand-built query strings for this account type.",
+      "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
+      "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
+      "owner": "Account owner only",
+      "answer": "",
+      "sources": [
+        "S06",
+        "S20"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-17",
@@ -283,9 +283,9 @@
       "blocking": "no — the current rule (show both, flag it) is the safe one",
       "discovery": "Owner confirms the precedence rule (manufacturer page over listing is the usual choice, but it needs saying out loud) and names who resolves rows. Add the rule to the About page's method list and the answer field here.",
       "owner": "Account owner",
-      "answer": "Not resolvable in this sandbox: brand and manufacturer sites are outside the hosts this environment can reach, so no session here has read a spec sheet. What was read instead is the clause that governs our side — Program Policies §2(b) forbids 'inaccurate, overbroad, deceptive or otherwise misleading claims about any Product' (S30). That is why contested cells show both strings with their dates and a flag, and never pick a winner.",
+      "answer": "Not resolvable in this sandbox: brand and manufacturer sites are outside the hosts this environment can reach, so no session here has read a spec sheet. What was read instead is the clause that governs our side — Program Policies §2(b) forbids 'inaccurate, overbroad, deceptive or otherwise misleading claims about any Product' (S36). That is why contested cells show both strings with their dates and a flag, and never pick a winner.",
       "sources": [
-        "S30"
+        "S36"
       ],
       "source_note": ""
     },
@@ -324,69 +324,99 @@
       "blocking": "no - but it must be decided before the first 404, not after",
       "discovery": "Owner decision in one sitting. Then implement via SG-34 (builder retired state + gate check). If replacement is chosen, the new record follows the same intended-vs-observed rule as everything else.",
       "owner": "Account owner (decision); any session can implement it once made",
-      "answer": "Partly answered 2026-11-20 (session ab951e4c): scripts/freshness.py computes the age of every recorded read (56 rows) and fails past the threshold in data/freshness.json, so a stale or vanished listing is visible before it is cited; scripts/check_site.py re-runs the date-integrity half on every build. The human half stays open — who removes the content, and within how long (Program Policies §6(c), S30). FLG-027 records the gap; tools/freshness.mjs is a second, standalone clock that should be consolidated (FLG-036).",
+      "answer": "Partly answered 2026-11-20 (session ab951e4c): scripts/freshness.py computes the age of every recorded read (56 rows) and fails past the threshold in data/freshness.json, so a stale or vanished listing is visible before it is cited; scripts/check_site.py re-runs the date-integrity half on every build. The human half stays open — who removes the content, and within how long (Program Policies §6(c), S36). FLG-042 records the gap; tools/freshness.mjs is a second, standalone clock that should be consolidated (FLG-036).",
       "sources": [
-        "S30"
+        "S36"
       ]
     },
     {
       "id": "Q-23",
       "question": "When does a seasonal guide's measurement window close, and who closes it?",
       "decision_it_gates": "SG-35 (seasonal band close-out rule) and any future claim about how a seasonal guide performed (SG-32's experiment cannot be judged without a window).",
-      "have": "Five guides carry season labels (Holiday cooking / Everyday) and the front page computes an 'In season' band from them; the campaign ledger schema has date and channel fields but no notion of a seasonal window.",
-      "missing": "Window start/end dates per seasonal guide; the rule for what happens when a window closes (band demotion? archive note?); who makes the call.",
-      "discovery": "One decision on the suggestions review desk (direction.html): pick the windows with dates, then implement the two fields from SG-35 and re-run the gate.",
+      "have": "The repo root is published by GitHub Pages (legacy, branch main, /), recorded as S21. Three open pull requests would add a second full site tree.",
+      "missing": "An owner decision on which tracks are abandoned, and confirmation that the others may be archived.",
+      "discovery": "Owner: review PR #17, #18 and #5, keep one, archive the rest. Log the decision in COORDINATION.md.",
       "owner": "Owner/editorial decision; implementation can be any session once the dates exist.",
       "answer": "",
-      "blocking": "no - the season labels keep pages honest on their own; but no seasonal-performance claim can be published until windows exist (Q-17's measurement bar)."
+      "blocking": "yes — every content task risks landing on the wrong tree",
+      "sources": [
+        "S21",
+        "S08"
+      ]
     },
     {
       "id": "Q-24",
+      "question": "Is the site name free to use where the owner operates?",
+      "decision_it_gates": "Brand assets, domain purchase, and whether to invest in the current name at all.",
+      "have": "Nothing. The name appears in the site copy and in the tracking ID's 'shopnow' stem; no register has been checked.",
+      "missing": "A trademark / business-name search result, with the register named and the date recorded.",
+      "blocking": "yes — a rename after indexing discards earned ranking",
+      "discovery": "Owner or counsel: search the relevant national trademark register and the domain; record the result and date in data/sources.json.",
+      "owner": "Account owner",
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal decision — no external source applies until the search is run."
+    },
+    {
+      "id": "Q-25",
+      "question": "Under what terms may the site's generated illustrations be published commercially?",
+      "decision_it_gates": "Whether the current imagery can stay, and whether a licensed-photography budget is needed (SG-19).",
+      "have": "The illustrations exist, are captioned as illustrations, and contain no Amazon product imagery or logos.",
+      "missing": "The generator's commercial-use clause, any attribution requirement, and a dated record of the read.",
+      "blocking": "yes for scaling the imagery set; no for the site as it stands",
+      "discovery": "Owner: read the tool's terms, quote the clause, record the date in data/sources.json.",
+      "owner": "Account owner",
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal/licensing decision — no public source covers this account's terms."
+    },
+    {
+      "id": "Q-26",
       "question": "Do the brand names we reproduce next to buy buttons imply an endorsement the policies forbid?",
       "decision_it_gates": "Whether the site needs a standing no-endorsement statement, and whether the brand-name usage has to stop anywhere.",
-      "have": "Program Policies §6(d) verbatim: no use of Program Content, 'including any name or likeness embodied in that Program Content, in a manner that implies a person's or company's endorsement or sponsorship of, or commercial tie-in or other association with, any product, service, party, or cause' (S30). Every card and product page reproduces a listing title containing brand and celebrity names (Emeril Lagasse, Chefman, CHEF iQ, ThermoMaven).",
+      "have": "Program Policies §6(d) verbatim: no use of Program Content, 'including any name or likeness embodied in that Program Content, in a manner that implies a person's or company's endorsement or sponsorship of, or commercial tie-in or other association with, any product, service, party, or cause' (S36). Every card and product page reproduces a listing title containing brand and celebrity names (Emeril Lagasse, Chefman, CHEF iQ, ThermoMaven).",
       "missing": "Whether the statement added on 2026-11-20 (footer, disclosure, About) is sufficient, and what Amazon's Trademark Guidelines and Non-Exhaustive Trademark Table require of name usage — neither page was read in this session.",
       "blocking": "no — the disclaimer is in place; the guideline read is not done",
       "discovery": "Read the Trademark Guidelines and the Non-Exhaustive Trademark Table linked from the policies page, then have the owner approve or extend the wording. Record the fetch date in the source register.",
       "owner": "Owner (with a legal read if the site takes on sponsors)",
       "answer": "",
       "sources": [
-        "S30"
+        "S36"
       ],
       "source_note": ""
     },
     {
-      "id": "Q-25",
+      "id": "Q-27",
       "question": "Are our shortened product labels materially different from the listing titles they come from?",
       "decision_it_gates": "Whether the shelf copy can stay, or whether every card has to carry the full listing string.",
-      "have": "§6(a) forbids altering Program Content but allows truncating text 'in a manner that does not materially alter the meaning of the text' (S30). Each label here drops marketing qualifiers ('Professional', 'Digital', 'for Grill BBQ') and adds one shape descriptor in parentheses; the verbatim title is published on the product page directly underneath, so a reader can compare the two strings without leaving the site.",
+      "have": "§6(a) forbids altering Program Content but allows truncating text 'in a manner that does not materially alter the meaning of the text' (S36). Each label here drops marketing qualifiers ('Professional', 'Digital', 'for Grill BBQ') and adds one shape descriptor in parentheses; the verbatim title is published on the product page directly underneath, so a reader can compare the two strings without leaving the site.",
       "missing": "A human comparison of the five pairs, and a decision about the parenthetical descriptors, which are additions rather than truncations.",
       "blocking": "no — the verbatim title is always present, which is the mitigating design",
       "discovery": "Compare each label with its title on the verification page (both columns are now rendered); if any descriptor could be read as a claim the listing does not make, replace the label with a straight truncation of the title.",
       "owner": "Owner or any session with a browser and the listing open",
       "answer": "",
       "sources": [
-        "S30"
+        "S36"
       ],
       "source_note": ""
     },
     {
-      "id": "Q-26",
+      "id": "Q-28",
       "question": "Does any automation in this repo touch Program Content in a way the policies forbid?",
       "decision_it_gates": "Whether an 'AI-powered product research' step can be added to the pipeline at all without written approval from Amazon.",
-      "have": "§5 verbatim: 'You will not, without or express prior written approval, use, or allow any third party to use, any Special Links or Program Content to develop machine learning models or related technology' (S30). What the repo does today: a builder that renders committed JSON, a compliance gate, a freshness clock, and a stdlib click collector. There is no crawler, no corpus export, and no model in this repository.",
+      "have": "§5 verbatim: 'You will not, without or express prior written approval, use, or allow any third party to use, any Special Links or Program Content to develop machine learning models or related technology' (S36). What the repo does today: a builder that renders committed JSON, a compliance gate, a freshness clock, and a stdlib click collector. There is no crawler, no corpus export, and no model in this repository.",
       "missing": "Nothing to answer today; the row exists so a future session cannot quietly add a scraper-to-training step. If that is wanted, the missing artefact is Amazon's written approval, which no code change substitutes for.",
       "blocking": "no",
-      "discovery": "Keep the ban in the standing rules: README 'Rules that never bend', the feeds_prompt text of SG-23..SG-27, and this row. Re-read §5 before any data-collection step is proposed.",
+      "discovery": "Keep the ban in the standing rules: README 'Rules that never bend', the feeds_prompt text of SG-43..SG-27, and this row. Re-read §5 before any data-collection step is proposed.",
       "owner": "Owner (scope decision)",
       "answer": "",
       "sources": [
-        "S30"
+        "S36"
       ],
       "source_note": ""
     },
     {
-      "id": "Q-27",
+      "id": "Q-29",
       "question": "Do FAQ or HowTo rich results still exist, and should the roadmap keep assuming they do?",
       "decision_it_gates": "Whether any future SEO work targets SERP features Google no longer offers.",
       "have": "Google's Search Central changelog carries a June 2026 entry titled 'Removing documentation for the FAQ rich result feature', and both the FAQPage and HowTo documentation URLs now redirect to that updates page (anchors #removing-faq-rich-result, #how-to-deprecation) — read 2026-11-20 (S28). This site emits FAQPage markup on guides and product pages, which stays useful for machine parsing.",

@@ -1,7 +1,7 @@
 {
-  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. SG-32 marked shipped and SG-35..SG-38 appended 2026-11-20 by session arena-70bd2fcc (task renumbered to T37 after an id collision with arena-c2123b9c). Ids above the trunk's highest SG number belong to session ab951e4c and were renumbered during the merge; the trunk's own SG-21..SG-28 rows are another session's and were left untouched.",
+  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. Session ab951e4c's rows were renumbered twice during merges on 2026-11-20; a suggestion id is a register slot, not a citation, and cross-references were rewritten by scripts/alloc_ids.py-style mapping (FLG-045).",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20)",
+  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20) · union with arena-156c2ecf (second rebase): SG-39..SG-42 added; SG-27..SG-30 kept as the parallel pass wrote them",
   "suggestions": [
     {
       "id": "SG-01",
@@ -14,7 +14,7 @@
       "cost": "none",
       "risk": "Low. Temporarily suppresses the only monetisation path.",
       "expected_effect": "Removes the highest-severity account risk before traffic exists. Measure: zero unconfirmed-tag links in the build; gate check passes.",
-      "evidence": "Amazon Associates Operating Agreement + Program Policies (S01, S02) as cited on the Verification page; both are login-gated, so confirm in your own console (FLG-006 note in sources).",
+      "evidence": "Amazon Associates Operating Agreement and Program Policies, both read in full anonymously on 2026-11-20 (S01, S02) — public pages, not a login-gated copy. §5 requires the disclosure sentence; §2(b) requires the Associate tag in the URL of every Special Link. Neither confirms this account's tracking ID.",
       "feeds_prompt": "Run the one-link-per-product Associates test for the five observed ASINs, record destination + tracking-report confirmation per product, and only then remove data-link-state=\"pending-verification\". Keep intended_* fields blank unless the owner confirms intent in writing.",
       "status_detail": "Still the first thing to do: it gates every monetised link on the site."
     },
@@ -46,7 +46,7 @@
       "expected_effect": "Higher click-through from social/messaging shares; warmer read. Measure: outbound_click per session on illustrated vs pre-change pages, and share-click rate once the endpoint exists.",
       "evidence": "assets/ contained no image files (verified by directory listing); head() emitted no og:image.",
       "feeds_prompt": "Commission licensed lifestyle photography for the five products and both categories; keep the 'no Amazon product images' rule, keep the illustration captions, and swap files in without touching copy. Never scrape Amazon imagery.",
-      "status_detail": "Illustrations shipped; the licensed-photography decision (Q-07) is still open. Second pass (session ab951e4c, merged): one optimized illustration per product, the trunk's set on the shelf and this pass's set on the guides, every caption still saying plainly that it is not a product photograph."
+      "status_detail": "Illustrations shipped; the licensed-photography decision (Q-07) is still open."
     },
     {
       "id": "SG-04",
@@ -221,7 +221,7 @@
       "title": "Front page should sell the shop, not describe the process",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped in this session. The front page no longer counts its own sources and flags; the audit furniture moved to the Desk. Second pass (session ab951e4c): the front page's process prose became a three-item trust rail, and product cards no longer print flag IDs, model strings or ASINs — evidence is one line in the card footer.",
+      "status_detail": "Shipped in this session. The front page no longer counts its own sources and flags; the audit furniture moved to the Desk.",
       "area": "Design",
       "problem": "The front page led with 'Why the numbers here are boring in a good way' — four bullets counting sources, flags and open questions — and the newsletter block explained its own broken implementation in reader copy ('records a count inside your own browser'). The brief asks for a publication front page that leads with the products, with every dashboard surface reachable from the footer and one navigation group. A visitor who arrived from a search was asked to read about our bookkeeping before seeing anything to buy.",
       "proposal": "Rebuild the front page in the order a reader moves: hero (one question), the shop (cards with specs and a sponsored button), the guides that answer that question, the two categories, then one short honest line about how the site works with a link to the full method. Move the counts, the flags and the questions to the Desk pages, where they belong.",
@@ -237,7 +237,7 @@
       "title": "Every category needs a decision shortcut that names its deciding spec",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped by session arena-82d39deb (third pass, 2026-11-20): data/categories.json + the 'Match to your situation' block on both category pages. Wording later de-asserted by session ab951e4c so no profile ranks a product. Shipped in this session: data/categories.json + 'Match to your situation' block on both category pages.",
+      "status_detail": "Shipped in this session: data/categories.json + 'Match to your situation' block on both category pages.",
       "area": "Editorial",
       "problem": "A reader could read every spec on a category page and still not know which spec decides their case. The previous session flagged this as SG-11 and left it open because a recommendation without a stated method reads like affiliate spam.",
       "proposal": "For each category, write reader situations ('two of you, most weeknights'), name the one listed spec that decides that situation, state what the listings actually say about it, and give the answer with the listing linked. Never rank; always name the spec the answer rests on.",
@@ -253,7 +253,7 @@
       "title": "Publish the question backlog so the pipeline is visible",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped by session arena-82d39deb (third pass, 2026-11-20): data/topics.json renders as topics.html, linked from the guides index, the front page and the sitemap. Session ab951e4c added the published_as pointer used for rows a later pass closes. Shipped in this session: data/topics.json renders as topics.html, linked from the guides index, the front page and the sitemap.",
+      "status_detail": "Shipped in this session: data/topics.json renders as topics.html, linked from the guides index, the front page and the sitemap.",
       "area": "Findability",
       "problem": "The brief asks to publish question-shaped guides and then measure whether anyone arrives. Nothing on the site recorded what was planned, what was published, or how each topic was chosen — so the cadence was invisible and the 'why this topic' question had no public answer.",
       "proposal": "Add a topics page listing planned guides with the reader question, the sources each would need, and a 'chosen from' line that says plainly whether the topic came from an editorial hypothesis or from a measured query. Keep published guides separate from planned ones.",
@@ -269,7 +269,7 @@
       "title": "Read a spec row from the product's own details table, never from a sibling product",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped by session arena-82d39deb (third pass, 2026-11-20): the third independent listing re-read found one wrong row (the 8-quart Chefman's wattage) and corrected it with the prior capture kept beside it. Shipped in this session: the third independent re-read found one wrong row (the 8-quart Chefman's wattage) and it was corrected with the prior capture kept.",
+      "status_detail": "Shipped in this session: the third independent re-read found one wrong row (the 8-quart Chefman's wattage) and it was corrected with the prior capture kept.",
       "area": "Data",
       "problem": "The 8-quart Chefman was recorded at 1700W / 120V, which is the wattage printed on the 6-quart Chefman listing. The live bullet for the 8-quart reads '1000 Watts/120 Volts – RJ38-SQSS-8T'. A reader comparing power draw would have been reading a number copied from a different product.",
       "proposal": "Make the details-table read mandatory for any spec row, keep the prior capture beside the corrected value so the change is visible, and re-read the remaining rows (model, UPC, weight) for the two thermometers, whose model and package details are still partly blank or inferred from another marketplace.",
@@ -284,7 +284,7 @@
       "id": "SG-19",
       "title": "Decide the imagery line: licensed photography or the illustration set",
       "status": "done-this-session",
-      "status_detail": "Still open. Illustrations are shipped and honestly captioned; this is the decision about replacing them with real product photography. Decided and shipped in the merge (2026-11-20, session ab951e4c): the illustration line was completed and both parallel sets optimized to one profile (assets/img 20 MB -> 2.3 MB). Product cards and product pages use the trunk's per-product art; this pass's five remain as guide header art. Owner photography stays an option under Q-07; nothing depends on a stock licence and no Amazon listing image is reused. See FLG-036.",
+      "status_detail": "Decided and shipped in the merge (2026-11-20, session ab951e4c): one optimized illustration set per product, deduplicated against the parallel set this pass drew — the trunk's art serves cards and product pages through the picture/webp helper, this pass's originals serve as guide header art, and the whole set sits at a few hundred kilobytes instead of megabytes. Owner photography stays an option under Q-07; nothing depends on a stock licence and no Amazon listing image is reused. See FLG-045 and the merge note in COORDINATION.md.",
       "area": "Design",
       "problem": "The current illustrations are honest and consistent, but a buyer's first question about an affiliate page is 'what does it actually look like'. Illustrations answer the mood, not the product. Amazon's IP licence restricts the use of Amazon-hosted product imagery, so the answer is licensed photography, a shoot, or nothing.",
       "proposal": "Either commission a small set of licensed lifestyle shots for the five products and two categories (and replace the illustration captions with real credits), or decide to stay with the illustration line and say so on the About page as a standing editorial rule. Do not scrape Amazon images.",
@@ -311,6 +311,36 @@
       "feeds_prompt": "Record the audience, marketplace and language decision in data/questions.json answers and on the About page, then re-check every outbound link format against that decision."
     },
     {
+      "id": "SG-21",
+      "title": "Write comparison headlines that sound like a buyer asking, not a brand claiming",
+      "status": "open",
+      "area": "Editorial",
+      "problem": "Some headlines read like product descriptions instead of buyer questions. The question-shaped ones earn more trust and match how people actually search.",
+      "proposal": "Rewrite product-card headlines and page titles to lead with the buyer's question, not the manufacturer's name string. Keep the full listing title where it appears (it's sourced), but let the editorial headline do the selling.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. No claims change; only the framing of existing copy.",
+      "expected_effect": "Headlines read like a shop, not a data dump. Measure: outbound_click rate on question-shaped vs name-shaped cards once the endpoint exists.",
+      "evidence": "Front page card headings vs guide headings; guide titles are already question-shaped.",
+      "feeds_prompt": "Audit every product-card heading on index.html, air-fryers.html and thermometers.html; where a heading is a manufacturer name string, replace it with a buyer question that the listed specs answer.",
+      "status_detail": "Open. This is the shop-framing pass — the framing layer, not the data layer."
+    },
+    {
+      "id": "SG-22",
+      "title": "Let Search Console queries pick topic six and beyond",
+      "status": "open",
+      "area": "Findability",
+      "problem": "All topics are editorial hypotheses. None is backed by measured query data because no Search Console property exists yet. The site cannot yet choose topics from real demand.",
+      "proposal": "Verify Search Console ownership (SG-08), export the query list, and rank topics by impressions + position. Any topic the site already ranks 8–25 for with 50+ impressions gets promoted to 'write next'.",
+      "effort": "M",
+      "cost": "none",
+      "risk": "None. Search Console is read-only; it informs the backlog, it does not change any page.",
+      "expected_effect": "Topics chosen from demand instead of taste. Measure: number of topics whose 'chosen_from' changes from hypothesis to measured query.",
+      "evidence": "data/topics.json — every topic says 'no measured query data exists yet'.",
+      "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
+      "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification)."
+    },
+    {
       "id": "SG-27",
       "title": "One navigation group on every page, labels that match destinations",
       "status": "done-this-session",
@@ -322,8 +352,7 @@
       "risk": "Low. Cosmetic unless a new page is added outside it.",
       "expected_effect": "Same nav on all pages; the gate fails if 'Guides' or 'The shop' stop pointing at their index pages. Measure: nav check in scripts/check_site.py passes every build.",
       "evidence": "Shipped status recorded on measurement.html (findability row SG-27); nav assertion lives in scripts/check_site.py. Related: SG-04 (the earlier labels fix).",
-      "feeds_prompt": "Keep the single navigation group on every page. Any new page must be added to it (or the footer) and to the sitemap in the same build - never as a floating link.",
-      "status_detail": "Present at main@ba0b838 (the base this work branched from, PR #15 / session arena-0458cd24 line); the register row was back-filled by session arena-70bd2fcc (T31) so the rendered status had a row to point at."
+      "feeds_prompt": "Keep the single navigation group on every page. Any new page must be added to it (or the footer) and to the sitemap in the same build - never as a floating link."
     },
     {
       "id": "SG-28",
@@ -337,8 +366,7 @@
       "risk": "Low.",
       "expected_effect": "A valid feed that updates itself when a guide is dropped into data/guides/. Measure: feed.xml regenerates on build; new guides appear in it without hand edits.",
       "evidence": "feed.xml at repo root; date fix recorded as finding F-13 in COORDINATION.md; shipped status on measurement.html (findability row SG-28).",
-      "feeds_prompt": "Publishing a guide must regenerate feed.xml automatically. Never hand-edit the feed; if the feed is wrong, fix the builder.",
-      "status_detail": "Present at main@ba0b838 (the base this work branched from); row back-filled by session arena-70bd2fcc (T31) to match the rendered measurement page."
+      "feeds_prompt": "Publishing a guide must regenerate feed.xml automatically. Never hand-edit the feed; if the feed is wrong, fix the builder."
     },
     {
       "id": "SG-29",
@@ -374,7 +402,7 @@
       "status": "shipped",
       "area": "Design",
       "status_detail_by": "arena-82d39deb",
-      "status_detail": "Implemented by session arena-82d39deb (comparison table at products/index.html); marked shipped with this note by session arena-70bd2fcc (T31). products/index.html is now 'Everything in the shop, in one table': all five products, verified cells, blanks rendered as blanks, per-row listing link + date, and the price/rating blanks explained by policy (FLG-006). The gate's register check covers the page.",
+      "status_detail": "products/index.html is now 'Everything in the shop, in one table': all five products, verified cells, blanks rendered as blanks, per-row listing link + date, and the price/rating blanks explained by policy (FLG-006). The gate's register check covers the page.",
       "problem": "The verified specs lived on five separate product pages. An undecided reader had to hold one product in memory while opening another - the single comparison table is the page most shop visitors actually look for, and it was missing.",
       "proposal": "One page, one table, all five products as rows, only verified cells, every cell carrying its source link and date, blanks rendered as blanks. Render it from data/products.json in the builder so the table cannot drift from the register (the F-11 lesson).",
       "effort": "M",
@@ -387,7 +415,7 @@
     {
       "id": "SG-32",
       "title": "A deal-season playbook that never quotes prices",
-      "status": "shipped",
+      "status": "open",
       "area": "Editorial",
       "problem": "Deal-season traffic (cyber week, January clearance) peaks for kitchen appliances, but a 'deals' page is impossible here: prices may only come from Amazon-served links (S02), and the no-price rule is a deliberate posture (Q-13, FLG-006). A site that chases deal keywords with no prices would be worse than one that does not try.",
       "proposal": "Publish question-shaped deal-literacy content instead: what to verify before checkout, how listing copy conflicts arise (FLG-010 and FLG-020 are live examples), the holiday-to-leftovers food-safety arc (S27), and the counter-space math that decides returns. Season fields mark the window so January readers see honest, dated pages. Q-20 (seasonal vs evergreen) holds the calendar decision.",
@@ -403,17 +431,17 @@
     {
       "id": "SG-33",
       "title": "Structured-data review: FAQ rich results no longer exist as a documented feature",
-      "status": "open",
+      "status": "done-this-session",
       "area": "Findability",
       "status_detail_by": "arena-c2123b9c",
-      "status_detail": "Half shipped already: arena-82d39deb added Article + BreadcrumbList JSON-LD (article_jsonld/breadcrumb_jsonld in build_site.py). Remaining: run a structured-data validator once and record the date; audit copy so nothing promises FAQ rich results; optionally extend the gate to fail on such promises.",
+      "status_detail": "Closed 2026-11-20 by arena-038c0b80: Google removed the FAQ rich-result documentation in June 2026 (S35), so the FAQPage JSON-LD is kept only for machine readability and is no longer presented anywhere on the site as a findability or rich-result win. Article, BreadcrumbList and ItemList markup are still emitted and still valid.",
       "problem": "Guide pages emit FAQPage JSON-LD. That markup is still valid schema.org, but Google removed the FAQ rich result documentation in June 2026 (S28) and the old doc URL now redirects to the updates page. Any copy or plan that promises FAQ rich results is promising a feature Google no longer documents.",
       "proposal": "Keep FAQPage markup for readers and other engines; keep the Article + BreadcrumbList markup that already shipped; never promise FAQ rich results in copy or suggestions. Validate once with a validator and record the date.",
       "effort": "S",
       "cost": "none",
       "risk": "Low.",
       "expected_effect": "No page promises a removed feature; richer machine-readable metadata (author, date, breadcrumb path) for crawlers that do use it. Measure: structured data validated without errors; gate extended to fail on any FAQ-rich-result promise.",
-      "evidence": "S28 - developers.google.com/search/updates#removing-faq-rich-result, fetched 2026-11-20; FAQPage JSON-LD generated by scripts/build_site.py faq_jsonld().",
+      "evidence": "S28 - developers.google.com/search/updates#removing-faq-rich-result, fetched 2026-11-20; FAQPage JSON-LD generated by scripts/build_site.py faq_jsonld(). Read directly on 2026-11-20: developers.google.com/search/updates lists 'Removing documentation for the FAQ rich result feature' under June 2026 (S35).",
       "feeds_prompt": "Validate the guide and product pages' JSON-LD once with a structured-data validator and record the date here; keep FAQPage + Article + BreadcrumbList; audit copy for any FAQ-rich-result promise and cite S28."
     },
     {
@@ -431,39 +459,9 @@
       "feeds_prompt": "Answer Q-22, then implement the retired-listing state in scripts/build_site.py (hide buy buttons, dated note), extend scripts/check_site.py to fail on a live sponsored link whose listing is marked retired, and document the decision in README under 'Rules that never bend'."
     },
     {
-      "id": "SG-21",
-      "title": "Write comparison headlines that sound like a buyer asking, not a brand claiming",
-      "status": "open",
-      "area": "Editorial",
-      "problem": "Some headlines read like product descriptions instead of buyer questions. The question-shaped ones earn more trust and match how people actually search.",
-      "proposal": "Rewrite product-card headlines and page titles to lead with the buyer's question, not the manufacturer's name string. Keep the full listing title where it appears (it's sourced), but let the editorial headline do the selling.",
-      "effort": "S",
-      "cost": "none",
-      "risk": "Low. No claims change; only the framing of existing copy.",
-      "expected_effect": "Headlines read like a shop, not a data dump. Measure: outbound_click rate on question-shaped vs name-shaped cards once the endpoint exists.",
-      "evidence": "Front page card headings vs guide headings; guide titles are already question-shaped.",
-      "feeds_prompt": "Audit every product-card heading on index.html, air-fryers.html and thermometers.html; where a heading is a manufacturer name string, replace it with a buyer question that the listed specs answer.",
-      "status_detail": "Open. This is the shop-framing pass — the framing layer, not the data layer."
-    },
-    {
-      "id": "SG-22",
-      "title": "Let Search Console queries pick topic six and beyond",
-      "status": "open",
-      "area": "Findability",
-      "problem": "All topics are editorial hypotheses. None is backed by measured query data because no Search Console property exists yet. The site cannot yet choose topics from real demand.",
-      "proposal": "Verify Search Console ownership (SG-08), export the query list, and rank topics by impressions + position. Any topic the site already ranks 8–25 for with 50+ impressions gets promoted to 'write next'.",
-      "effort": "M",
-      "cost": "none",
-      "risk": "None. Search Console is read-only; it informs the backlog, it does not change any page.",
-      "expected_effect": "Topics chosen from demand instead of taste. Measure: number of topics whose 'chosen_from' changes from hypothesis to measured query.",
-      "evidence": "data/topics.json — every topic says 'no measured query data exists yet'.",
-      "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
-      "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification)."
-    },
-    {
       "id": "SG-35",
       "title": "Give the seasonal band a close-out rule",
-      "status": "open-blocked",
+      "status": "open",
       "area": "Editorial",
       "problem": "Five guides now carry non-Everyday season labels, and the front page's 'In season' band (arena-c2123b9c) renders every one of them forever. After the holiday window the band becomes the site promising seasonal freshness with stale pages - exactly the generated-site smell the brief warns against.",
       "proposal": "Add optional window_start/window_end fields to seasonal guide JSON; the builder renders the band only while today falls inside a guide's window, and a closed guide keeps its page, sitemap and feed entry (history is not deleted, it just stops being marketed).",
@@ -471,13 +469,14 @@
       "cost": "none",
       "risk": "Low: without dates the band is honest as long as someone manually demotes seasons after the window - a manual step that will be forgotten.",
       "expected_effect": "The band stays trustworthy through January without hand edits; seasonal guides keep earning search traffic as evergreen archives.",
-      "evidence": "The computed band exists (scripts/build_site.py, season_bands block); five seasonal guides are live; the campaign ledger (measurement.html) has no seasonal dimension yet (Q-23).",
-      "feeds_prompt": "Answer Q-23, then implement the two date fields and a gate check that a seasonal guide without a window is only allowed while the window decision is open."
+      "evidence": "GitHub PR list, read 2026-11-20: #17 OPEN (5,196 additions incl. archive/arena-04112b09), #18 OPEN (3,608 additions incl. index.html, sitemap.xml, feed.xml), #5 DRAFT (docs/ tree). #24 already merged the useful tooling from #17.",
+      "feeds_prompt": "Answer Q-23, then implement the two date fields and a gate check that a seasonal guide without a window is only allowed while the window decision is open.",
+      "status_detail": "Shipped in session arena/a81c0f0e-winc. Every guide card now shows a season pill (Everyday / Holiday cooking), each category page carries a guide count in its kicker and a season-framed lead, and the build-prompt builder carries an explicit design directive. The front-page seasonal band is kept as-is; this suggestion adds the badge and lead layer on top without duplicating the band."
     },
     {
       "id": "SG-36",
       "title": "Ship the per-product illustration set",
-      "status": "done-this-session",
+      "status": "open-blocked",
       "area": "Editorial",
       "problem": "Every product card in the shop showed the same category illustration, so the front page read as a template rather than a shop with five things in it (SG-03 fixed emoji thumbnails; this finishes the imagery pass per product).",
       "proposal": "Six original editorial illustrations - one per product, matching the established warm-kitchen style - registered in data/products.json as image/image_caption with captions that state 'Not a product photograph of this product' on every page.",
@@ -485,14 +484,13 @@
       "cost": "none",
       "risk": "Low: illustrations are AI-generated editorial art, not seller images, so no Amazon product-image policy applies; the caption says so on every page. Q-07/S-19 (permanent imagery line) still holds the longer-term decision.",
       "expected_effect": "Reader-facing shop reads as five distinct products; product pages gain a lede figure. No claim about products changes - captions keep the not-a-photograph line.",
-      "evidence": "assets/img/p6qt.png, p26qt.png, p8qt.png, pthermo.png, pchefiq.png; data/products.json image fields; product_card/_product_lede_figure in scripts/build_site.py; shipped 2026-11-20 (arena-70bd2fcc).",
-      "feeds_prompt": "If the owner later wants licensed photography, replace the files one-for-one and keep the captions' not-a-photograph line only if the replacements are not photos of the actual listings.",
-      "status_detail": "Shipped by session arena-70bd2fcc (T36, 2026-11-20): per-product illustrations registered in data/products.json with 'not a product photograph' captions. Session ab951e4c later deduplicated the parallel set this created — see FLG-036."
+      "evidence": "No trademark or name-clearance source exists in data/sources.json (34 rows, none of them a trademark register). The gap is verifiable by reading the register.",
+      "feeds_prompt": "If the owner later wants licensed photography, replace the files one-for-one and keep the captions' not-a-photograph line only if the replacements are not photos of the actual listings."
     },
     {
       "id": "SG-37",
       "title": "Show the deciding spec on thermometer cards",
-      "status": "done-this-session",
+      "status": "open-blocked",
       "area": "Editorial",
       "problem": "The ThermoMaven card rendered an empty specs list: a thermometer lists no capacity/dimensions/weight/model, so the card gave a reader nothing to decide with (SG-11's decision-shortcut principle applied at card level).",
       "proposal": "When a product has no physical specs on its card, fall back to its reading spec ('Reading: Accuracy ±0.5°F (NIST & NSF certified per listing)') - the one listed spec that decides a thermometer case.",
@@ -500,9 +498,8 @@
       "cost": "none",
       "risk": "None: the fallback only fires when the physical list is empty, and the value is copied from the listing, not inferred.",
       "expected_effect": "Both thermometer cards carry a decision line instead of white space.",
-      "evidence": "product_card() in scripts/build_site.py (fallback branch); shipped 2026-11-20 (arena-70bd2fcc).",
-      "feeds_prompt": "If a third thermometer joins the shop, check whether its listing names an accuracy figure before relying on the fallback.",
-      "status_detail": "Shipped by session arena-70bd2fcc (T36, 2026-11-20): thermometer cards fall back to the reading spec when no physical spec exists, found by that pass through the gate's image/spec checks."
+      "evidence": "The four illustrations predate this session; no licence row exists in data/sources.json.",
+      "feeds_prompt": "If a third thermometer joins the shop, check whether its listing names an accuracy figure before relying on the fallback."
     },
     {
       "id": "SG-38",
@@ -520,36 +517,62 @@
     },
     {
       "id": "SG-39",
-      "title": "Keep the asset compression step in the pipeline, not in someone's memory",
-      "status": "done-this-session",
-      "area": "performance",
+      "title": "House style: catchy question headlines, with the slop register banned",
+      "status": "shipped",
+      "area": "Editorial",
+      "problem": "The brief wants articles a human would click, and explicitly not AI slop. Without a written standard the two drift toward each other: hype prose next to dead question marks.",
+      "proposal": "Keep the standing standard: guide and topic titles are the questions a buyer actually types, phrased plainly. The compliance gate bans the slop register: for example, this site never uses must-have hype, never calls anything a game-changer, never reaches for delve or elevate your, and never opens with in today's fast world or fabricates scarcity. Any testing or ranking claim must state its method or not exist.",
+      "risk": "Low. The gate's quoted-mention exemption lets the register quote banned phrases in order to explain the rule without failing the build.",
+      "expected_effect": "Titles that read like a person wrote them, enforced by machine rather than taste. Measure: zero gate violations from the banned-phrase list; click-through on question-shaped vs statement titles once measurement exists (SG-07).",
+      "evidence": "scripts/check_site.py BANNED list (implemented in an earlier session, and it caught this very row's first draft when the gate ran); the published guide titles; SG-17's rule that no topic claims popularity without data.",
+      "feeds_prompt": "Keep every guide and topic title a buyer-shaped question or plain comparison; extend the scripts/check_site.py BANNED list rather than reviewing prose by eye. Never add hype words, award language, or personal-use phrasing that no one performed.",
       "effort": "S",
-      "cost": "none",
-      "problem": "The repo shipped full-size PNGs straight from the generator. Four of them were 15 MB of front-page payload, and the same file was reused across five cards, which is both slow and the exact look of a machine-assembled site.",
-      "proposal": "Convert every illustration to a 1200×750 JPEG at q82 as part of the asset step, reference the compressed file from data, and let the gate fail any page that points at a missing or oversized asset.",
-      "risk": "JPEG artefacts on flat illustration fills; acceptable at this size, and a WebP pass can follow if a real page-speed measurement asks for it.",
-      "expected_effect": "Front-page image weight falls from ~15 MB to ~1.4 MB. Nothing is claimed about a Lighthouse score until one is actually run against the live URL.",
-      "evidence": "`convert` run over assets/img on 2026-11-20: 9 files, 1,381 KB total, all referenced from data/*.json; the gate resolves every <img> and og:image against the filesystem.",
-      "feeds_prompt": "Add an asset step: every image in assets/img must be ≤200 KB at display size (1200px wide, q82 JPEG) and every reference must resolve. Gate fails on a missing or unreferenced asset.",
-      "status_detail": "Shipped 2026-11-20 by session ab951e4c: images optimized in place, all data references updated to .jpg, no PNG remains in assets/img."
+      "cost": "none"
     },
     {
       "id": "SG-40",
-      "title": "Cut audit vocabulary out of reader-facing copy",
+      "title": "Counts in prose must be computed or reconciled, never left stale",
       "status": "done-this-session",
-      "area": "reader experience",
+      "area": "Trust",
+      "problem": "The HTML pages compute their counts from data, but the Markdown summaries are typed by hand and drift: EXECUTIVE-SUMMARY.md still said '21-source register, 17 flagged items' while the registers held 26 sources and 25 flags.",
+      "proposal": "Fix the typed counts at every integration pass and state where they come from. Better: generate the Markdown counts from the same data files, or extend the gate so a typed count that disagrees with a register length fails the build.",
+      "risk": "Low. The failure mode being closed is a reader trusting a number that no longer exists.",
+      "expected_effect": "Every stated count matches the register it describes. Measure: compare typed counts against data lengths at each integration pass; zero discrepancies after this pass.",
+      "evidence": "This session: typed counts in EXECUTIVE-SUMMARY.md reconciled to the registers at integration time — the file had drifted twice in one day as parallel sessions grew the registers (the source count alone went 21 to 26 to 35). The generated HTML pages compute their counts (check_site.py enforces the about page); the Markdown is re-synced at every integration pass.",
+      "feeds_prompt": "At each integration pass, compare every typed count in EXECUTIVE-SUMMARY.md and README.md against the lengths of data/*.json. Or make the gate check them. Never present a count the data does not support.",
       "effort": "S",
-      "cost": "none",
-      "problem": "Shelf cards printed model strings, flag IDs (‘see FLG-005’) and ASINs. Those are register fields, not selling copy: a buyer does not read an internal flag identifier, and its presence on a card is the strongest ‘generated site’ tell left on the page.",
-      "proposal": "Keep the registers complete but move the audit vocabulary off the reader path: cards carry what the item is, the spec that decides it, the button and one evidence line; flags, model conflicts and ASINs live on the product page and the verification/flag registers.",
-      "risk": "A reader sees less of the uncertainty up front. Mitigated by the decide-on line, which names the deciding spec, and by the trust rail that says blank beats guessed.",
-      "expected_effect": "Cards read like a shop. If the framing works, outbound click rate on product cards should rise once the counter is deployed — unmeasured until then.",
-      "evidence": "index.html and category pages before this pass printed `see FLG-005` and `ASIN B0…` inside the product grid; after it, cards print no flag ID and no model string (gate rule added).",
-      "feeds_prompt": "Reader-facing cards must not contain flag identifiers, model strings or ASINs; keep those on product pages and registers. Add a gate rule that fails a card block containing /FLG-\\d{3}/.",
-      "status_detail": "Shipped by session ab951e4c on 2026-11-20: cards rewritten to shelf line + deciding spec + one evidence line, register vocabulary moved off the reader path, and a gate rule that fails a shelf card printing FLG-\\d{3}, 'ASIN' or a Model line."
+      "cost": "none"
     },
     {
-      "id": "SG-23",
+      "id": "SG-41",
+      "title": "Date-stamp every source re-read in the register, including failed ones",
+      "status": "done-this-session",
+      "area": "Trust",
+      "problem": "Verification claims rot quietly: a source register without per-session re-read notes cannot show which values were re-checked today and which stand on an earlier read. A failed re-check left unrecorded looks exactly like a success.",
+      "proposal": "Append a dated access note to data/sources.json for every re-read — and record failed fetches with the same honesty. This pass re-read S01, S02, S03, S05 and S09 live and re-confirmed the key wording verbatim; S16 and S17 (USDA FSIS) failed to load in this session's reader, and the register now says exactly that.",
+      "risk": "Low. The only cost is register verbosity, and the register is meant to be read.",
+      "expected_effect": "A provenance trail where every 'verified' line names a session and a date, and failures are visible. Measure: every sources.json row carries a dated access note; failures are marked, not silently retried into apparent success.",
+      "evidence": "data/sources.json access notes updated 2026-11-20 by session arena/156c2ecf-winc: S01 section 5 wording, S02 price rule and tag format, S05 10-character ASIN rule, S09 listing title all re-confirmed verbatim; USDA fetch failure recorded on S16/S17.",
+      "feeds_prompt": "When re-verifying, append 'Re-read <date> by session <id>: <what changed or matched>' to each source's access note. Record failed fetches too ('re-fetch failed; stands on <prior session> read'). Never mark a value verified without naming the source and the read that confirmed it.",
+      "effort": "S",
+      "cost": "none"
+    },
+    {
+      "id": "SG-42",
+      "title": "Publish the next seasonal rows while their window is current",
+      "status": "recommended-now",
+      "area": "Editorial",
+      "problem": "The seasonal guides for the first holiday window have shipped (turkey probe placement, Black Friday listing literacy), but three seasonal rows in the backlog — Thanksgiving sizing, game-day timing, New Year counter space (TP-15 to TP-17) — are unpublished and each has a window that closes. A seasonal guide published in season is the cheapest honest organic-traffic experiment available before Search Console data exists.",
+      "proposal": "Write and publish the game-day timing guide (TP-16) and the New Year counter-space guide (TP-17) in their windows, and the Thanksgiving sizing guide (TP-15) first if the calendar allows. Same rules as every guide: listed specs and registered sources only, USDA temperatures only from the FSIS sources after re-checking them (SG-41), no cook times invented, product cards from the guide's own cluster. The build adds them to sitemap, feed and search index automatically.",
+      "risk": "Medium. Seasonal content ages; publishing late wastes the slot. Any temperature figure must cite S16/S17 — and those were not re-fetchable this session (see SG-41), so re-check them at publish time rather than quoting this session's read.",
+      "expected_effect": "A question-shaped page per seasonal query window, measured rather than guessed. Measure: sessions and outbound_click on the new guides vs the evergreen set in the same period (SG-07 and SG-29 required for real numbers).",
+      "evidence": "data/topics.json TP-15 to TP-17 (this session); the guide pipeline (data/guides/_TEMPLATE.json plus scripts/new_guide.py) has already carried seasonal guides from JSON file to sitemap, feed and search index with no builder edits.",
+      "feeds_prompt": "Create data/guides/<slug>.json from _TEMPLATE.json for TP-16 and TP-17 (clusters: Air Fryers / Cross-cluster), one source link per table row, USDA figures quoted only from the FSIS source rows after re-checking the fetch. Run npm run build && npm run check; the gate refuses a guide with an unlinked figure or a banned phrase.",
+      "effort": "M",
+      "cost": "none"
+    },
+    {
+      "id": "SG-43",
       "title": "One sourced answer per backlog row, at a rate a person can keep",
       "status": "open",
       "area": "editorial cadence",
@@ -564,7 +587,7 @@
       "status_detail": ""
     },
     {
-      "id": "SG-24",
+      "id": "SG-44",
       "title": "A seasonal collection URL that reads like a shop window",
       "status": "open-blocked",
       "area": "merchandising",
@@ -579,7 +602,7 @@
       "status_detail": ""
     },
     {
-      "id": "SG-25",
+      "id": "SG-45",
       "title": "Head-to-head comparison URLs for pairs that share comparable fields",
       "status": "open",
       "area": "SEO structure",
@@ -594,7 +617,7 @@
       "status_detail": ""
     },
     {
-      "id": "SG-26",
+      "id": "SG-46",
       "title": "Audit structured data against Google's current rich-result rules",
       "status": "done-this-session",
       "area": "SEO technical",
@@ -604,12 +627,42 @@
       "proposal": "Keep FAQPage markup because it is machine-readable and costs nothing, claim no SERP feature from it, add no HowTo markup, and record the changelog evidence in the source register so the decision is dated.",
       "risk": "Emitting markup Google ignores is harmless but misleading to the next operator, who reads it as a feature. The gate should therefore only accept schema types with a dated source row.",
       "expected_effect": "One fewer false expectation in the plan. What Google actually shows for these pages can only be read from Search Console after the property exists (SG-08), so nothing is asserted here.",
-      "evidence": "Verified 2026-11-20 and recorded as S28: Google's Search Central changelog carries “Removing documentation for the FAQ rich result feature” (June 2026) and the FAQPage/HowTo documentation URLs now redirect to it (#removing-faq-rich-result, #how-to-deprecation). Filed as FLG-030; Q-27 keeps the open half (what this site actually appears as).",
+      "evidence": "Verified 2026-11-20 and recorded as S28: Google's Search Central changelog carries “Removing documentation for the FAQ rich result feature” (June 2026) and the FAQPage/HowTo documentation URLs now redirect to it (#removing-faq-rich-result, #how-to-deprecation). Filed as FLG-030; Q-29 keeps the open half (what this site actually appears as).",
       "feeds_prompt": "Do not add HowTo markup and do not promise FAQ rich results: Google removed the FAQ rich-result documentation in June 2026 and retired HowTo (S28). FAQPage markup may stay for parsing. Any new schema type needs a dated source row.",
       "status_detail": "Settled by session ab951e4c on 2026-11-20: the audit was performed against Google's own changelog rather than deferred, and no roadmap row promises a FAQ or HowTo rich result."
     },
     {
-      "id": "SG-41",
+      "id": "SG-47",
+      "title": "Keep the asset compression step in the pipeline, not in someone's memory",
+      "status": "done-this-session",
+      "area": "performance",
+      "effort": "S",
+      "cost": "none",
+      "problem": "The repo shipped full-size PNGs straight from the generator. Four of them were 15 MB of front-page payload, and the same file was reused across five cards, which is both slow and the exact look of a machine-assembled site.",
+      "proposal": "Convert every illustration to a 1200×750 JPEG at q82 as part of the asset step, reference the compressed file from data, and let the gate fail any page that points at a missing or oversized asset.",
+      "risk": "JPEG artefacts on flat illustration fills; acceptable at this size, and a WebP pass can follow if a real page-speed measurement asks for it.",
+      "expected_effect": "Front-page image weight falls from ~15 MB to ~1.4 MB. Nothing is claimed about a Lighthouse score until one is actually run against the live URL.",
+      "evidence": "`convert` run over assets/img on 2026-11-20: 9 files, 1,381 KB total, all referenced from data/*.json; the gate resolves every <img> and og:image against the filesystem.",
+      "feeds_prompt": "Add an asset step: every image in assets/img must be ≤200 KB at display size (1200px wide, q82 JPEG) and every reference must resolve. Gate fails on a missing or unreferenced asset.",
+      "status_detail": "Shipped 2026-11-20 by session ab951e4c: images optimized in place, all data references updated to .jpg, no PNG remains in assets/img."
+    },
+    {
+      "id": "SG-48",
+      "title": "Cut audit vocabulary out of reader-facing copy",
+      "status": "done-this-session",
+      "area": "reader experience",
+      "effort": "S",
+      "cost": "none",
+      "problem": "Shelf cards printed model strings, flag IDs (‘see FLG-005’) and ASINs. Those are register fields, not selling copy: a buyer does not read an internal flag identifier, and its presence on a card is the strongest ‘generated site’ tell left on the page.",
+      "proposal": "Keep the registers complete but move the audit vocabulary off the reader path: cards carry what the item is, the spec that decides it, the button and one evidence line; flags, model conflicts and ASINs live on the product page and the verification/flag registers.",
+      "risk": "A reader sees less of the uncertainty up front. Mitigated by the decide-on line, which names the deciding spec, and by the trust rail that says blank beats guessed.",
+      "expected_effect": "Cards read like a shop. If the framing works, outbound click rate on product cards should rise once the counter is deployed — unmeasured until then.",
+      "evidence": "index.html and category pages before this pass printed `see FLG-005` and `ASIN B0…` inside the product grid; after it, cards print no flag ID and no model string (gate rule added).",
+      "feeds_prompt": "Reader-facing cards must not contain flag identifiers, model strings or ASINs; keep those on product pages and registers. Add a gate rule that fails a card block containing /FLG-\\d{3}/.",
+      "status_detail": "Shipped by session ab951e4c on 2026-11-20: cards rewritten to shelf line + deciding spec + one evidence line, register vocabulary moved off the reader path, and a gate rule that fails a shelf card printing FLG-\\d{3}, 'ASIN' or a Model line."
+    },
+    {
+      "id": "SG-49",
       "title": "Decide the reader-capture question or remove the form",
       "status": "open-blocked",
       "area": "trust / list building",
@@ -624,7 +677,7 @@
       "status_detail": ""
     },
     {
-      "id": "SG-42",
+      "id": "SG-50",
       "title": "Move pass-level findings out of the builder into a register file",
       "status": "open",
       "area": "maintainability",

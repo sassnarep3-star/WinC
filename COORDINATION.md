@@ -1,9 +1,10 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena-23428c9e`** (branch `arena/23428c9e-winc`, PR #18) — integration of the
-> Air & Ember parallel edition; its board, sources and merge note are in the **last section** of
-> this file. Sections for `arena-c2123b9c` (T29–T32) and `arena-482d5832` (T33) plus every earlier
-> session are kept verbatim as the provenance trail — this round's conflict dropped none of them.
+> **Latest session: `arena-156c2ecf`** (branch `arena-156c2ecf-winc`) — line-by-line re-verification
+> plus decision-register completion; its board, sources and merge note are in the **last section**
+> of this file. Every earlier session section — `arena-23428c9e` (Air & Ember integration),
+> `arena-c2123b9c` (T29–T32), `arena-482d5832` (T33), `arena-038c0b80` and the rest — is kept
+> verbatim as the provenance trail; this round's conflicts dropped none of them.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -1057,16 +1058,129 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
 
 ---
 
+# Session arena-038c0b80 — editorial conversion pass + decision section + line-by-line re-verification
+
+Branch `arena/038c0b80-winc`, based on `main@404cabc` (PR #24 merged). Started 2026-11-20.
+State on arrival: 29 pages / 28 sitemap URLs / 8 guides; `check_site.py` green; `node tools/audit.mjs`
+reporting 2 findings (A6, A7). `main` advanced twice while this session was reading the repo; the branch
+was fast-forwarded to `404cabc` before any edit, so nothing here forks an old base.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Story layer: maker profiles, 8 product narratives + 3 cluster guides (one per category), all claims tied to a listed spec (Claude) | in progress | arena-038c0b80 | `data/makers.json`, `data/stories.json`, `data/guides/*.json` (new files only), `scripts/build_site.py` (story/narrative renderers), `assets/style.css`, `assets/img/series-*` |
+| T34 | Decision section: suggestions → review → choose → evidence, rendered from the registers | in progress | arena-038c0b80 | `data/suggestions.json`, `data/questions.json`, `scripts/build_site.py` (direction/questions bodies), `direction.html`, `questions.html` |
+| T35 | Repo audit fixes: A6 anchor-quote mismatch, A7 capture-form transport, stale flags/source notes/typed counts, encoding artifacts (-143, °F), JSON-LD how-to scope | in progress | arena-038c0b80 | `scripts/build_site.py`, `scripts/check_site.py`, `tools/audit.mjs`, `data/flags.json`, `data/sources.json`, `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T36 | Findability + imagery hygiene: compress 3.5 MB PNGs to WebP, add FAQPage scope, sitemap/feed check, honest "no measurement yet" language | in progress | arena-038c0b80 | `assets/img/*`, `scripts/build_site.py` |
+| T37 | Final integration: rebuild, gate green, independent audit clean, PR → main, merge, confirm Pages live | pending | arena-038c0b80 | all (integration only) |
+
+## Cross-session follow-ups observed (not mine to merge)
+
+- PR #17 (`arena/04112b09-winc`, OPEN) and PR #18 (`arena/23428c9e-winc`, OPEN) and PR #5
+  (`arena/70d8ad52-winc`, DRAFT) each ship a *different* site into the same repo. Only one can be the
+  published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
+  are already on `main` via PR #24 and are in use. This session did not touch those branches.
+
+## PR / merge record (T37 — merged)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
+| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
+| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
+
+### What was deliberately merged *from* main rather than over it
+
+- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
+- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
+- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
+- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
+
+### Two id collisions worth recording for the next session
+
+1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
+2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
+
+### Rounds where the gates were run after each merge
+
+38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+
+
+---
+
+# Session arena/156c2ecf-winc — line-by-line re-verification + decision-register completion (T39–T42)
+
+Branch `arena/156c2ecf-winc`, branched from `main` at `ba0b838`. Started 2026-11-20. Scope claimed:
+source re-verification with dated access notes (failures recorded, not hidden), decision-register
+completion, seasonal topic backlog, typed-count reconciliation, and the integration close-out for
+this branch. Task rows drafted as T29–T32, renumbered to T39–T42 at the first rebase — sessions
+`arena-c2123b9c` / `arena-70bd2fcc` had already claimed T29–T38 on main. Same repair pattern as
+the earlier FLG renumbering.
+
+## Task board (this session)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T39 | Line-by-line re-verification of load-bearing sources with dated access notes (failures recorded, not hidden) | done | arena-156c2ecf | `data/sources.json`, `EXECUTIVE-SUMMARY.md` |
+| T40 | Decision-register completion: house-style/counts/re-read-trail/seasonal-publishing rows (SG-39..SG-42) | done | arena-156c2ecf | `data/suggestions.json` |
+| T41 | Seasonal/trendy topic backlog rows TP-16..TP-18 + typed-count reconciliation | done | arena-156c2ecf | `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
+| T42 | Integration close-out: build + gate green on the union, PR to main, merge, confirm Pages, record result | done below | arena-156c2ecf | `COORDINATION.md` (integration only) |
+
+## Verification performed (official sources, fetched live 2026-11-20 via the page reader)
+
+| Ref | Source | Result |
+| --- | --- | --- |
+| S01 | affiliate-program.amazon.com/help/operating/agreement | **Re-read live.** §5 disclosure sentence, §1 tagged Special Links, §6 material-breach clause, "Updated: October 15, 2025" — re-confirmed. |
+| S02 | affiliate-program.amazon.com/help/operating/policies | **Re-read live.** Price/availability rule verbatim, tag format "(appearing as XXXXX-##)", "Updated: April 14, 2026". |
+| S03 | ftc.gov Endorsement Guides FAQ | **Re-read live.** "disclosed clearly and conspicuously". |
+| S05 | sell.amazon.com/blog/what-is-an-asin | **Re-read live.** 10-character ASIN rule, found after /dp/. |
+| S09 | amazon.com/dp/B0CDY277D3 | **Re-read live.** `<title>` matched stored title verbatim; breadcrumb + fallback-route behaviour confirmed. |
+| S16/S17 | fsis.usda.gov | **Re-fetch FAILED this session (two URL forms).** Not re-confirmed here; stand on prior sessions' reads. Recorded on the source rows. |
+
+## Coordination / merge note (this session, two rebases)
+
+`main` advanced twice while this session worked (PRs #37–#39 round and PRs #40–#45 round). Each
+rebase conflicted in `COORDINATION.md`, `EXECUTIVE-SUMMARY.md`, `data/sources.json`,
+`data/suggestions.json`, `data/topics.json` and four generated HTML files. Resolution without
+discarding either side, both times:
+
+- `data/sources.json`: kept main's rows (S01–S29 after round one, S01–S35 after round two);
+  appended this session's dated re-read notes to S01, S02, S03, S05, S09 and the failed-fetch
+  notes to S16/S17.
+- `data/suggestions.json`: kept main's rows exactly (SG-01–SG-38, including its SG-21/SG-22 and
+  the SG-27..SG-30 findability rows — those match the brief's named rows and stay canonical). This
+  session's rows are **SG-39..SG-42**. Its earlier duplicates of SG-27..SG-30 were folded away;
+  its seasons row was superseded by main's season rail + SG-35; its structured-data row deferred
+  to SG-33 after S28 recorded that Google removed the FAQ rich-result documentation (June 2026).
+- `data/topics.json`: kept main's rows (through TP-15 after round two); this session's seasonal
+  rows are **TP-16..TP-18** (renumbered twice as main's topic ids advanced).
+- Questions (Q-01..Q-25), flags (FLG-001..FLG-029), products, guides (15 files) and the series
+  data: auto-merged; main's versions kept.
+- Generated HTML: both sides' copies discarded and rebuilt from the merged data via
+  `scripts/build_site.py`, so every page reflects the union. Gate green after each union:
+  round two build = 38+ pages / 15 guides (final counts in the PR record below).
+
+## PR / merge record (T42)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round. |
+| 2026-11-20 | **PR #46 merged** (`gh pr merge 46 --merge`). Main HEAD = `afa86c7b` "Merge pull request #46 from sassnarep3-star/arena/156c2ecf-winc". GitHub Pages: `status: built`, source `main`, https://sassnarep3-star.github.io/WinC/ — live re-fetch confirms the merged build serves (topics page shows "18 in the backlog", including TP-16..TP-18). Build + gate before merge: `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` / `OK: 38 pages checked, 37 sitemap URLs, no violations.` |
+
+---
+
 # Session ab951e4c — shop-first polish, imagery, cadence, decision registers
 
 Branch `arena/ab951e4c-winc` from `main@ba0b838`. Started 2026-11-20. Claim pushed before any edit.
 
 > **Note on ids.** This session numbered its tasks T29–T37 and its flags FLG-026…FLG-036 without
 > knowing other branches were open; three other sessions merged first, so trunk task numbers T29–T38 and
-> several register ids were already taken. Nothing was overwritten: this pass's sources row landed as **S30**
+> several register ids were already taken. Nothing was overwritten: this pass's sources row landed as **S36**
 > (trunk's S27 is the FSIS leftovers page), its suggestions as **SG-23…SG-26, SG-39…SG-42**, its questions as
-> **Q-24…Q-27** (its freshness question was absorbed into trunk **Q-22** instead of duplicating it), and its
-> topic rows as **TP-15…TP-20**. The mapping is printed in the merge section below and every in-file reference
+> **Q-26…Q-29** (its freshness question was absorbed into trunk **Q-22** instead of duplicating it), and its
+> topic rows as **TP-19…TP-24**. The mapping is printed in the merge section below and every in-file reference
 > was rewritten to the new ids.
 Scope discipline: prior sessions' registers are appended to and status-corrected, never replaced;
 `archive/counter-notes/` untouched; no other session's branch touched.
@@ -1170,3 +1284,37 @@ open action on FLG-036 rather than decided unilaterally in someone else's file.
 ## Merge reconciliation (main ← ab951e4c, 2026-11-20)
 
 Merged `origin/main` (`848508e`, PRs #37–#41) into this branch before opening the PR. Conflicts: 42 files. Resolution rules applied: trunk wins any file it changed (`assets/style.css`, `package.json`, `scripts/build_site.py` taken as trunk + this pass's 31 patches re-applied with an assertion per patch, so a silent miss was impossible); generated HTML/sitemap/feed/search-index taken as trunk and regenerated from the merged data; registers appended with renumbered ids; `EXECUTIVE-SUMMARY.md`/`README.md` union. Two collisions that were *decisions*, not merges: **FLG-036** records the duplicated illustration sets (this pass's five `prod-*.jpg` now serve as guide header art, the trunk's five per-product illustrations stay on cards and product pages, and the trunk's 2.8 MB PNGs were converted to the same optimized JPEG profile — `assets/img` 20 MB → 2.3 MB), and the two freshness clocks (`scripts/freshness.py` wired into the gate vs `tools/freshness.mjs`, standalone) stay both present with consolidation flagged. Gate: see the PR record below.
+
+## Second merge round (ab951e4c ← main `1d389bd`, PRs #40…#48)
+
+The trunk moved again while this reconciliation was being written, and it had taken the very ids
+the first renumbering had chosen. Round two, applied by `.merge-tmp` scripts and then re-checked:
+
+| This pass's rows (after round one) | Final id | Why |
+| --- | --- | --- |
+| S30 deep read of Program Policies §2–§6 | **S36** | trunk filled S30…S35 with its own dated listing re-reads |
+| FLG-026…029 (§6(d) endorsement, §6(c) removal, §5 ML, §4 email) | **FLG-041…FLG-044** | trunk's FLG-026…029 are different findings |
+| FLG-030…040 | unchanged | free slots on trunk |
+| SG-23…26, SG-39…42 | **SG-43…SG-50** | trunk filled both ranges with other suggestions |
+| Q-24…Q-27 | **Q-26…Q-29** | trunk added Q-24 (site name) and Q-25 (illustration terms) |
+| TP-15…TP-20 | **TP-19…TP-24** | trunk added TP-15…TP-18 |
+| freshness question (was Q-24 in round one) | absorbed into trunk **Q-22** | same question, one row |
+
+Trunk-wins files: `scripts/build_site.py`, `scripts/check_site.py`, `scripts/new_guide.py`,
+`assets/style.css`, `tools/audit.mjs`, `package.json`, every generated page — each of this pass's
+26 builder deltas re-applied on top with an assertion per patch (the one that no longer matched —
+the front-page kicker, which the trunk had rewritten entirely — was skipped rather than forced).
+`data/products.json`: the trunk's webp-backed illustration pipeline serves the shelf; this pass's
+`shelf_line` / `decide_on` fields and `image_alt` artwork were added to it.
+
+Structural response, because guessing ids three times in a day is the actual defect:
+**`scripts/alloc_ids.py`** allocates the next free id from the merged tree and audits every
+cross-register reference; **FLG-045** records the collision; **FLG-046** records a four-row gap in
+the suggestions register that a live citation pointed into (found by the new checker on its first
+run, and it predates this pass). The gate now runs the reference audit, so a half-renumbered row
+cannot publish.
+
+Verification on the merged tree: `npm run build` → *Built 41 pages, 40 sitemap URLs, 18 guides,
+35 search rows*; `npm run check` → *no violations*; `node tools/audit.mjs --strict` → see the PR
+record below; `npm test` → analytics contract tests OK.
+

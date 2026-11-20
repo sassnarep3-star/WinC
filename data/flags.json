@@ -12,7 +12,7 @@
     {
       "id": "FLG-002",
       "title": "Reader Special Links not yet tested in enrolled Associates workflow",
-      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session.",
+      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session. Neither the supplied short links nor the constructed Special Links have been through the enrolled Associates workflow test (one link per product: click it, confirm the destination, then confirm the click appears in the tracking report). Until that test is recorded, no link on this site is claimed to be a validated Special Link.",
       "action": "Test one link per product in Associates workflow; confirm destination and tracking report before scaling.",
       "status": "needs review",
       "sources": [],
@@ -235,51 +235,106 @@
       "title": "Stored product titles drifted from live Amazon listing titles (4 of 5)",
       "detail": "On 2026-11-20 session arena/0458cd24-winc re-read every observed listing's <title> directly from amazon.com. Four of five stored titles differed from the live Amazon listing <title> (only B0CDY277D3 matched verbatim). Product identities were confirmed via the live <title> plus the category breadcrumb, so the stored titles in data/products.json were reconciled to the verbatim live listing titles. The underlying spec concerns (FLG-005, FLG-010, FLG-014) remain open and are unaffected by this title-only reconciliation.",
       "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
-      "status": "fixed in this session"
+      "status": "fixed in this session",
+      "sources": [
+        "S11",
+        "S23"
+      ],
+      "source_note": "Compares the stored titles against the live listing reads recorded in S11 and S23."
     },
     {
       "id": "FLG-026",
+      "title": "ThermoMaven sells near-identical instant-read listings under different ASINs",
+      "detail": "Amazon's page for B0DHZTCNR5 surfaced a separate ThermoMaven '0.5 Sec' instant-read listing (B0DNMTK56N) in its 'Customers who viewed this item also viewed' module, with a different speed claim and a different colour. The shop's item is the one-second black model. A buyer following a saved link could land on the other one.",
+      "action": "Owner or reader: check the title and ASIN on the page reached from any external link before buying. No site change needed; recorded so the shop's product page can warn about it.",
+      "status": "needs review",
+      "sources": [
+        "S12",
+        "S33"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-027",
+      "title": "CHEF iQ Sense is sold in 2-probe and 3-probe configurations under different ASINs",
+      "detail": "Amazon's page for B0DZFD6R9Z (3 probes) surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) in the same module. Probe count is a headline spec for this product, so the two configurations are easy to confuse and are not the same purchase.",
+      "action": "Owner or reader: confirm the probe count on the listing page reached. Recorded on the product page so the spec is not assumed from a family name.",
+      "status": "needs review",
+      "sources": [
+        "S13",
+        "S34"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-028",
+      "title": "This site publishes no analytics numbers, and the ledger is empty by design",
+      "detail": "The measurement layer ships as code (assets/app.js five events, analytics/worker.js and analytics/collect.py endpoints) but no endpoint is deployed and no first-party report has been obtained, so data/campaign-ledger.json has zero rows. Every 'how we would know it worked' line in the suggestions register is therefore a hypothesis about a future measurement, not a result.",
+      "action": "Deploy one endpoint (FLG-007), then fill the ledger only from authorized first-party exports with a dated provenance row. Do not present a forecast in the meantime.",
+      "status": "needs review",
+      "sources": [
+        "S21"
+      ],
+      "source_note": "Endpoint state is verifiable from the repo; the absence of first-party data cannot be proven from here, which is why this is flagged rather than asserted."
+    },
+    {
+      "id": "FLG-029",
+      "title": "Amazon listing pages in this environment are served as a fallback summary route",
+      "detail": "Every one of the five listing URLs read on 2026-11-20 returned with lv=shuf and plpRedirect=mhFallback in the response URL (FLG-009). The <title> and breadcrumb are stable across four observations, but the page is a summary route, so detail-table fields read from it may differ from the full detail page a shopper sees in a normal browser.",
+      "action": "Owner: open each listing once in a normal browser and compare the spec table with the product page's rows; correct any drift in data/products.json.",
+      "status": "needs review",
+      "sources": [
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-041",
       "title": "Brand-endorsement statement missing while brand names sit next to buy buttons",
       "detail": "Program Policies §6(d) forbids using Program Content 'in a manner that implies a person's or company's endorsement or sponsorship of, or commercial tie-in or other association with, any product, service, party, or cause'. Every product page and card on this site reproduces the seller's listing title — which contains brand and celebrity names (Emeril Lagasse, Chefman, ThermoMaven, CHEF iQ) — next to a sponsored buy button. The site's disclosure covered the Amazon relationship but said nothing about the brands, so a reader could infer an endorsement that does not exist.",
       "action": "Fixed the same day: a one-line 'not endorsed by the brands' statement added to the disclosure page, the About page and the site-wide footer, worded as the policy's own concept. Review the wording against the Operating Agreement before any brand-relations contact.",
       "status": "fixed by this session (2026-11-20), review the wording",
       "sources": [
-        "S30"
+        "S36"
       ],
-      "source_note": "Clause read verbatim from the Amazon Associates Program Policies on 2026-11-20 — see S30 in the source register for the quoted text and the URL."
+      "source_note": "Clause read verbatim from the Amazon Associates Program Policies on 2026-11-20 — see S36 in the source register for the quoted text and the URL."
     },
     {
-      "id": "FLG-027",
+      "id": "FLG-042",
       "title": "No process for promptly removing Program Content that Amazon has taken down",
       "detail": "Program Policies §6(c): 'You will promptly remove from your Site and delete or otherwise destroy any Program Content that is no longer displayed on an Amazon Site or that we notify you is no longer available for your use.' The site records a source_date per product and re-reads listings when a session happens to run, but nothing checks the age of a recorded read or removes a listing that has gone away. FLG-024 (Amazon showing a newer model of B08DKYBTPH) is exactly the signal this rule is about.",
       "action": "scripts/freshness.py reports every recorded read older than the threshold and exits non-zero past the hard limit; run it before a publish. Owner-side: the actual takedown check needs a browser and a decision about who acts on it.",
       "status": "mitigated by tooling, open as a process",
       "sources": [
-        "S30"
+        "S36"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S30. The tooling measures the age of a recorded read; it cannot see Amazon's site."
+      "source_note": "Clause read verbatim 2026-11-20 — see S36. The tooling measures the age of a recorded read; it cannot see Amazon's site."
     },
     {
-      "id": "FLG-028",
+      "id": "FLG-043",
       "title": "'AI-powered' scope limit: Program Content may not be used to develop machine-learning models",
       "detail": "Program Policies §5: 'You will not, without or express prior written approval, use, or allow any third party to use, any Special Links or Program Content to develop machine learning models or related technology.' The project brief asks for an 'AI-powered Amazon affiliate marketing platform' that automates product research. Automation of publishing, formatting, gate checks and topic bookkeeping is unaffected; collecting listing content into a corpus for model training is not permitted without Amazon's express prior written approval.",
       "action": "Recorded in the executive summary, the disclosure page and the direction register so no future session builds a scraper-for-training step into the pipeline. If the owner wants model training on Program Content, the gate is a written approval from Amazon, not a code change.",
       "status": "open by design — a scope boundary, not a bug",
       "sources": [
-        "S30"
+        "S36"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S30."
+      "source_note": "Clause read verbatim 2026-11-20 — see S36."
     },
     {
-      "id": "FLG-029",
+      "id": "FLG-044",
       "title": "Email with Special Links is only permitted for solicited recipients",
       "detail": "Program Policies §4: 'You may include Special Links in emails, SMS and direct messaging from your social media Sites; provided, that such communications are solicited (i.e., opted into by the receiving customer) and are otherwise in compliance with the Agreement, the Trademark Guidelines, and the Amazon Brand Usage Guidelines.' The reader-capture form on every page records a press in the visitor's own browser and sends nothing anywhere, so no email is being sent and no rule is broken today. It also means no list can be started from that form's data.",
       "action": "Before any list is started: real consent capture with a timestamped opt-in record, a provider, and the disclosure updated in the same commit. Keep affiliate links out of unsolicited mail permanently.",
       "status": "open — gated by Q-21",
       "sources": [
-        "S30"
+        "S36"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S30."
+      "source_note": "Clause read verbatim 2026-11-20 — see S36."
     },
     {
       "id": "FLG-030",
@@ -299,9 +354,9 @@
       "action": "The verbatim title is displayed on every product page under the label, and the label field is now listed on the verification page so a reviewer can compare the two strings side by side.",
       "status": "open — needs a human comparison, not a code change",
       "sources": [
-        "S30"
+        "S36"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S30. No claim is made that any specific label is or is not compliant."
+      "source_note": "Clause read verbatim 2026-11-20 — see S36. No claim is made that any specific label is or is not compliant."
     },
     {
       "id": "FLG-032",
@@ -310,9 +365,9 @@
       "action": "Replaced with a precise statement of what is taken from a listing (title and detail values, each with URL and read date), what is never taken (listing images, banners, description paragraphs), and the §6(a) truncation rule the labels rely on. Q-23 asks the human question the policy leaves open.",
       "status": "fixed by this session",
       "sources": [
-        "S30"
+        "S36"
       ],
-      "source_note": "Program Policies §6(a), read verbatim 2026-11-20 (S30). No external source speaks to our own wording; the contradiction was internal."
+      "source_note": "Program Policies §6(a), read verbatim 2026-11-20 (S36). No external source speaks to our own wording; the contradiction was internal."
     },
     {
       "id": "FLG-033",
@@ -359,7 +414,7 @@
       "sources": [
         "S03"
       ],
-      "source_note": "No Amazon clause governs a form that collects nothing; this is the site's own accuracy duty — the copy said 'sends your address nowhere' while the markup had a path that could carry it. Recorded under the same principle as S30 §6(a) (do not misdescribe what your site does)."
+      "source_note": "No Amazon clause governs a form that collects nothing; this is the site's own accuracy duty — the copy said 'sends your address nowhere' while the markup had a path that could carry it. Recorded under the same principle as S36 §6(a) (do not misdescribe what your site does)."
     },
     {
       "id": "FLG-038",
@@ -368,7 +423,7 @@
       "action": "The measurement table now states the exception in the row itself and carries a plain note under the event table. No code change: the URL is the mechanism that makes search work without a server, and removing it would break shareable searches.",
       "status": "disclosed rather than removed",
       "sources": [
-        "S30"
+        "S36"
       ],
       "source_note": "Program Policies §3 makes the site owner responsible for accurate disclosure of what is collected and how; the fix is accuracy of the claim, not a new feature."
     },
@@ -389,6 +444,33 @@
       "status": "fixed in tooling",
       "sources": [],
       "source_note": "Internal only — a second-gate false positive, recorded because the honest response to a gate finding is to prove which side was wrong."
+    },
+    {
+      "id": "FLG-045",
+      "title": "Third register-id collision inside one day: ids were allocated by guessing what other sessions would use",
+      "detail": "This branch claimed S27…S28, FLG-026…FLG-040, SG-21…SG-28 and Q-22…Q-26 against a board read at session start. Nine other PRs merged while it worked. Round one: the trunk already held S27, SG-21…SG-28 and Q-22/Q-23 for other findings, so this pass renumbered to S30, SG-39…SG-42, Q-24…Q-27, TP-15…TP-20. Round two (PRs #40…#48): the trunk had *also* taken those slots — S30…S35, SG-39…SG-42, Q-24…Q-25, TP-15…TP-18, FLG-026…FLG-029 — so the same rows needed new ids again. Renumbering at merge time is correct, but it is bookkeeping a machine can do, and each round is a chance to leave a reference pointing at another session's row.",
+      "action": "Closed structurally rather than by care: scripts/alloc_ids.py allocates ids from the merged tree at commit time and rewrites a row's own references with the same map, and scripts/check_site.py now fails any file (data, scripts, markdown, generated HTML) that cites an S/FLG/SG/Q/TP id absent from its register. This pass's fifteen flag rows are the first test of both.",
+      "status": "fixed by tooling; allocation discipline enforced by the gate",
+      "sources": [],
+      "source_note": "Internal only — a coordination defect in this repository's own ids, found by the merge process itself."
+    },
+    {
+      "id": "FLG-046",
+      "title": "The suggestions register had a four-row gap that a live citation pointed into",
+      "detail": "Found on 2026-11-20 by scripts/alloc_ids.py --check, the reference audit added in this merge. The register runs from SG-01 up to SG-50 but the numbers 23, 24, 25 and 26 were never issued (an earlier session's numbering jumped), and the FSIS temperature-chart source row's access note told a reader to re-check the figures 'see the two suggestion rows numbered 24 and 25' — a pointer into a hole. Gaps like this are invisible to a count-based check and to anyone reading only the top of the file.",
+      "action": "The citation was corrected to name the duty that actually exists (the freshness clock and the stale-read removal flag) rather than inventing three rows to fill a gap whose intended content nobody recorded. The four hole numbers stay empty on purpose: ids are allocated from max+1 by scripts/alloc_ids.py, so a gap is never silently reused for something else. Read a missing number as never-issued, not as deleted.",
+      "status": "found and closed at the reference; the gap is left as evidence",
+      "sources": [],
+      "source_note": "Internal only — a register-integrity finding from this repository's own ids, surfaced by tooling added in the same merge."
+    },
+    {
+      "id": "FLG-047",
+      "title": "A committed merge-conflict marker had shipped inside the executive summary",
+      "detail": "Found on 2026-11-20 while writing this pass's summary section: main's EXECUTIVE-SUMMARY.md contained a conflict region left in place by an earlier merge — a marker line, a one-line HEAD side, a separator, and 196 lines of main's own history inside the block. Markdown renders that as literal '<<<<<<< HEAD' text, and nothing in either gate looked at it, because both gates check the generated HTML and the registers, not the repository's prose. Nothing was lost: the 196 lines were the only copy of three earlier sessions' sections.",
+      "action": "Resolved losslessly by this pass: the three marker lines were removed and both sides kept, after checking that no heading in the block was duplicated elsewhere in the file. A rule was added to scripts/check_site.py so any committed conflict marker in HTML, JSON, markdown, Python or CSS fails the build — the class of defect, not the instance.",
+      "status": "fixed; caught structurally from now on",
+      "sources": [],
+      "source_note": "Internal only — a repository-state finding on main, found by reading the file rather than by trusting the merge."
     }
   ]
 }

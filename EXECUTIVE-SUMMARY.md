@@ -1,110 +1,102 @@
 # Executive summary — ShopNow Kitchen (WinC)
 
 **Site:** https://sassnarep3-star.github.io/WinC/ · **Tracking ID (as supplied):** shopnow047c-20 · **Date:** 2026-11-20
-
-ShopNow Kitchen is a publication front page for five Amazon products (3 air fryers, 2 meat thermometers).
-It leads with products, answers buyer questions, and keeps verification one click away — not in the way.
-
-## What is live  *(counts recomputed from the repo on 2026-11-20 by session `ab951e4c`; they were stale in this block)*
-
-<<<<<<< HEAD
-- **Shop:** front page + 2 category pages + 5 product pages + a shop index, all with Sponsored buy buttons (`rel="sponsored nofollow noopener"`) and the Associates disclosure above the fold and again in the footer. Cards carry a shelf line, the deciding spec and one evidence link.
-- **Guides:** 9 question-shaped guides — basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, the ice-cup accuracy check, whole-chicken fit against the 165°F rule, and how to read thermometer listing copy.
-- **Trust:** verification register (intent vs. observed kept separate), **28 sources**, **34 flagged items**, redirect re-observation log (three dated observations), compliance gate (`scripts/check_site.py`, ~40 rule families) and a freshness clock (`scripts/freshness.py`).
-- **Decisions:** **28 reviewed suggestions** and **26 open questions** (5 blocking) with answers recorded only where an official source supports them (5 answered).
-- **Measurement:** 5-event beacon + Worker + stdlib collector (none deployed — Pages is static), a gated ledger ingest tool, an **empty** campaign ledger, sitemap + RSS + internal search.
-- **Site:** 30 pages, 29 sitemap URLs, image set 1.39 MB (was 15 MB).
-=======
-- **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
-- **Guides:** 8 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
-- **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
->>>>>>> origin/main
-
-## Key facts (all sourced)
-
-| Fact | Value | Source |
-|------|-------|--------|
-| Submitted links | 5 link.amazon short links (9-char tokens) | Verification §1 |
-| Observed ASINs | B0CDY277D3 · B09B7SB46R · B08DKYBTPH · B0DHZTCNR5 · B0DZFD6R9Z | Verification §1–2, §4 |
-| Intended ASINs | Blank (9-char tokens are not ASINs) | S05 (ASIN = 10 chars) |
-| Redirect targets, re-observed 2026-11-20 | 5/5 identical to 2026-11-17; every response carried `lv=shuf` + `plpRedirect=mhFallback` | S18, `data/probes.json` |
-| Food-safety figures in the two new guides | Poultry 165°F; ground meats 160°F; steaks/chops/roasts 145°F + 3-min rest | S16, S17 (USDA FSIS) |
-| Prices / ratings | Blank by policy + volatility | S02 (FLG-006) |
-| Tracking ID | shopnow047c-20 (as supplied; unconfirmed — FLG-001) | Flagged for Review |
-| Site URL | https://sassnarep3-star.github.io/WinC/ | S08 |
-
-## What happens next (needs review)
-
-1. Confirm tracking ID + run one-link Associates tests (FLG-001, FLG-002).
-2. Re-observe redirects + resolve FLG-004/FLG-005 spec conflicts.
-3. Deploy analytics endpoint; submit sitemap to Search Console.
-4. Pick a path on the Direction page before the next build.
-
-**No revenue forecast, no conversion score.** The ledger is empty until first-party reports arrive.
+**Counts below are generated from the repo** (`python3 scripts/build_site.py && python3 scripts/check_site.py`), not typed. Source of the numbers: `data/*.json`.
 
 ---
 
-# Second-pass verification & publication polish — 2026-11-20 (session `arena-23d7ed19`)
+## 1 · What this is
 
-This pass did not rebuild the site; it re-checked the merged one, fixed what was wrong, and added
-the decision layer the brief asks for. Counts above were corrected to match the repo.
+A five-product Amazon Associates publication in two categories — air fryers and meat thermometers — built so that **every published figure traces to an official page**, and anything that could not be confirmed is blank and flagged rather than guessed.
 
-## What was verified
+| Layer | State on this build |
+|---|---|
+| Products | 5 (3 air fryers, 2 meat thermometers), each with a long-form narrative, a spec table, an FAQ, and flagged listing contradictions |
+| Series | 2 editorial series pages, generated from `data/stories.json` |
+| Guides | 15 question-shaped guides across both categories, plus two series pages that tie each cluster together |
+| Topics | 18 in the published backlog — 4 marked published with links to the guide each became |
+| Sources | 35 register rows, each with URL, what it confirms, and a retrieval date |
+| Flags | 29 items, each with the action that would resolve it; all public on *Flagged for review* |
+| Open questions | 25, of which 8 are blocking; four of those can only be answered inside an enrolled Associates account |
+| Suggestions | 38, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
+| Measurement | 5 defined events; endpoint code (`analytics/worker.js`, `analytics/collect.py`) shipped and tested; **not deployed**; campaign ledger **empty** |
+| Gates | `scripts/check_site.py` (authority) and `tools/audit.mjs` (independent, written from the policy documents) — **both pass with zero findings** |
 
-- **All five supplied links were re-resolved live, independently of the earlier sessions.** 5/5
-  destinations matched the 2026-11-17 mapping (B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R,
-  B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z). This closes FLG-008.
-- **The mechanism matters more than the match.** Every final URL carried `lv=shuf` and
-  `plpRedirect=mhFallback` — Amazon's shuffle/listing-page fallback. The tokens are 9 characters
-  with lowercase letters; Amazon ASINs are 10 characters. So the redirect is a reproducible record
-  of *where a link goes*, and no evidence at all of *what was meant*. `intended_*` fields stay
-  blank. Logged as FLG-009.
-- **Two guides cited sources as bare text with no links** (capacity checklist, cleanup/counter
-  space). Now linked, and the gate refuses an unlinked guide.
-- **Amazon policy pages were read in full, not via an indexed copy.** The Operating Agreement (§5
-  disclosure, §1 Special Links), the Program Policies (price/availability display rule, Special Link
-  tag requirement), and the Associates help pages were all fetched directly and anonymously on
-  2026-11-20; the FTC Endorsement Guides page is likewise reachable and was read directly.
-  `data/sources.json` records the direct read for each. An earlier pass over-marked these as
-  "login-gated / indexed copy" and ftc.gov as "unreachable"; that is corrected rather than left
-  silently wrong.
+## 2 · Key facts, each with its source
 
-## What changed on the site
+| Fact | Value | Source |
+|---|---|---|
+| Submitted links | 5 × `link.amazon` short links, 9-character tokens | Verification §1 |
+| ASIN format | 10 alphanumeric characters | [sell.amazon.com — What is an ASIN](https://sell.amazon.com/blog/what-is-an-asin) (S05) |
+| Observed destinations | B0CDY277D3 · B09B7SB46R · B08DKYBTPH · B0DHZTCNR5 · B0DZFD6R9Z — identical across four observations | `data/probes.json`, Verification §4 |
+| Intended ASINs | **Blank for all five.** Nothing public binds a 9-char short code to a product; the redirect is a fallback route (`lv=shuf`, `plpRedirect=mhFallback`) | S05, FLG-003, FLG-009, FLG-029 |
+| Listing titles | All five re-read live on 2026-11-20 and confirmed **verbatim** against the stored titles | S30–S34 |
+| Disclosure sentence | “As an Amazon Associate I earn from qualifying purchases.” — §5, verbatim | [Operating Agreement](https://affiliate-program.amazon.com/help/operating/agreement) (S01) |
+| Price/availability display | Only via an Amazon-served link or Creators/PA API — so this site shows **no prices** | [Program Policies](https://affiliate-program.amazon.com/help/operating/policies) (S02) |
+| Outbound link marking | `rel="sponsored"` + visible *Sponsored · paid affiliate link* label on every buy button | [Google: qualify outbound links](https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links) (S04, S19) |
+| Food-safety figures in the thermometer cluster | Poultry 165°F · ground meats 160°F · steaks/chops/roasts 145°F + 3-min rest · fish 145°F · leftovers 165°F | [USDA FSIS temperature chart](https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart) (S16), re-read verbatim 2026-11-20 |
+| FAQ rich results | Google **removed** the FAQ rich-result feature in June 2026; FAQPage markup is kept for machine readability only | [Google Search Central changelog](https://developers.google.com/search/updates#removing-faq-rich-result) (S35) |
+| Tracking ID | `shopnow047c-20` — well-formed, **issuance unconfirmed** | FLG-001, Q-01 |
 
-- Meat Thermometers was advertised as a co-equal cluster with zero guides: **two new guides** added
-  (instant-read vs. leave-in; holiday crowd cooking), grounded in USDA FSIS temperature guidance
-  rather than adjectives.
-- **Real imagery replaced the emoji glyphs** (four commissioned illustrations, every one captioned
-  as an illustration; no Amazon product images, no logos), plus `og:image`/`twitter:card`, so a
-  shared link is no longer a blank card.
-- **Navigation labels now match destinations**: `guides/index.html` and `products/index.html` exist,
-  and all nine dashboard surfaces sit in one "The Desk" group with a full footer repeat.
-- Guides show **only their own cluster's products** (a meat-thermometer card used to close the
-  air-fryer comparison).
-- `About`/`Executive summary` counts are **computed from data**, read time is computed from word
-  count (was a hardcoded "4 min read"), RSS dates are valid RFC-822 (they were not), and the
-  capture block no longer promises a double opt-in flow that no code implements (FLG-013).
-- `robots.txt` scopes `/scripts/`, `/data/`, `/analytics/`, `/archive/` out of the crawl set.
+## 3 · What changed in this session (arena-038c0b80)
 
-## Decision layer (the part meant to be reviewed, not read past)
+1. **It reads like a shop now.** The front page leads with a publication headline, two series tiles, five product cards carrying a one-line hook and a source tail, then guides, then seasons, then categories. Every product page opens with an editorial narrative — headline, standfirst, deciding spec — before the spec table. A quiet house ad points at the newest guide on the front page, the shop index and every category page.
+2. **Everything has a maker and a story.** New `data/makers.json` (4 makers, each with ≥2 checkable claims tied to a register source) and `data/stories.json` (5 product narratives + 2 cluster notes). Each narrative names the *one* stored spec it rests on, states the trade-off the spec creates, and prints the listing's own contradictions.
+3. **Three new guides**, one of which is the missing shape-decision piece: *Two baskets or one?* (air fryers), *One second or all night* (thermometers, with the USDA table), and the cluster note that ties each series together. Two backlog topics are now marked published with links to what they became.
+4. **A decision section exists.** `direction.html` now opens with a four-step decision desk: read the suggestions → answer what blocks you → pick one of four paths → copy the prompt. The four paths each carry cost, risk, and a “done when” that is a measurement, not a promise. `questions.html` gained a seven-row *before you publish anything else* checklist that a non-technical owner can work through.
+5. **Three new suggestions and three new questions** from this session's own audit: duplicate site trees (SG-35/Q-23), name clearance (SG-36/Q-24), imagery licence (SG-37/Q-25) — plus TP-13, a topic chosen from a verification finding rather than a hunch.
+6. **The imagery is 30× smaller.** Five 3.5–4 MB PNGs became six WebP files totalling ~0.5 MB; every reference (HTML, builder, guide data, templates) was updated and the gate verifies every asset resolves. Intrinsic `width`/`height` are set on every image so nothing shifts while loading.
+7. **Two audit findings fixed at the source** (they had been open since before this session): the source-register anchors used single quotes so the independent audit could not resolve 60 cross-references (A6), and the reader-capture form would submit an address into a GET URL in a browser with JavaScript disabled while the page claimed otherwise (A7). The form is now `novalidate`, `action=""`, guarded, and the copy says the control is switched off on purpose.
+8. **The gate got stricter.** `scripts/check_site.py` now fails on: an `SG-`/`Q-`/`FLG-` id cited anywhere in the HTML that does not exist in its register; a story with fewer than three paragraphs, an unknown flag, or a `spec_anchor` that is not a stored product field; a maker claim citing an unknown source; and a capture form without the transport guard.
 
-- **`direction.html` — 28 suggestions**, each with problem, proposal, effort, cost, risk, *how we
-  would know it worked*, evidence, and an instruction block for the next build prompt. Tick the
-  ones you accept and the page assembles a copy-paste prompt carrying the standing rules
-  (localStorage only; nothing is transmitted; nothing is auto-implemented).
-- **`questions.html` — 22 open questions** (5 blocking) with what we have and can cite, what is
-  missing, which decision the gap blocks, how to go find the answer, who can answer, and a blank
-  answer cell. Includes a copy-ready pack for whoever owns the Associates account.
+## 4 · What is deliberately not claimed
 
-## Unchanged, on purpose
+- **No prices, ratings or review counts** anywhere. Both are barred by Program Policies and volatile by nature.
+- **No testing.** Nothing in this shop has been cooked with, measured or opened by anyone writing about it. Every page says so.
+- **No revenue, conversion, traffic or ranking forecast.** The ledger is empty because no first-party report exists (FLG-028).
+- **No claim that the supplied short links are invalid.** Their compliance status is unresolved (FLG-003); they are simply not republished as link hops.
+- **No claim that a section of the site "ranks".** Search Console is not set up and no analytics endpoint is deployed, so findability work is described as work done, never as results achieved.
 
-- No price, rating, review count, stock level, conversion score or revenue forecast anywhere.
-- No testing, ranking or endorsement claim. No hands-on language: nobody has used these products.
-- Short links are never called invalid; their status stays flagged (FLG-003) exactly as instructed.
-- Reader buy buttons remain, but flagged as untested for destination and attribution (FLG-002).
+## 5 · What has to happen before this earns anything
 
-## Remaining risk, stated plainly
+1. **Q-01 / FLG-002 — the money path.** Confirm the tracking ID and run one link through the enrolled Associates workflow per product. Everything else is decoration until a click can attribute.
+2. **Q-23 / SG-35 — one site.** Three open pull requests each ship a different full website into this repo. Pick one tree, archive the rest.
+3. **Q-24 / SG-36 — the name.** A trademark and domain search before more is invested in the current name.
+4. **Q-25 / SG-37 — the imagery licence.** A dated record of commercial-use terms for the generated illustrations.
+5. **FLG-007 / SG-07 — one measurement.** Deploy an endpoint, then choose the next topic from measured `outbound_click` and query data instead of instinct.
+6. **FLG-029 — re-read every listing in a normal browser.** The sandbox only sees Amazon's fallback summary route; detail-table rows should be confirmed once by a human against the real page.
+
+## 6 · Where to look
+
+- Reader path: [front page](https://sassnarep3-star.github.io/WinC/) · [the shop](https://sassnarep3-star.github.io/WinC/products/index.html) · [guides](https://sassnarep3-star.github.io/WinC/guides/index.html) · [series](https://sassnarep3-star.github.io/WinC/series/countertop.html)
+- Decision path: [suggestions + paths](https://sassnarep3-star.github.io/WinC/direction.html) · [open questions](https://sassnarep3-star.github.io/WinC/questions.html) · [topics](https://sassnarep3-star.github.io/WinC/topics.html)
+- Evidence path: [verification](https://sassnarep3-star.github.io/WinC/verification.html) · [flagged for review](https://sassnarep3-star.github.io/WinC/flagged-for-review.html) · [measurement](https://sassnarep3-star.github.io/WinC/measurement.html) · [executive summary](https://sassnarep3-star.github.io/WinC/executive-summary.html)
+
+---
+
+## Appendix — earlier sessions (kept verbatim as provenance)
+
+The records below are the repo's own history, kept so nobody re-litigates a settled point. Later sessions corrected earlier ones where the record was wrong; the corrections are noted inline where they occur.
+
+### First pass (session 68dc5c3a / arena/a42979d2-winc)
+
+Five supplied links recorded as 9-character tokens, resolved live, ASIN format checked against sell.amazon.com, Operating Agreement and Program Policies read, and a shop-first site built.
+
+### Second pass (arena-23d7ed19)
+
+Independent re-observation of all five links; closed FLG-008; added imagery, `og:` cards, cluster-filtered product blocks, RSS dates as RFC-822, computed read-times, robots scoping. Corrected two guides that cited sources as unlinked plain text, and the About page's typed cluster counts.
+
+### Third pass (arena-82d39deb)
+
+Added reader-situation profiles per category, per-product FAQs, the topic backlog page, suggestions v2, and a register-schema gate. Renumbered its own flags to FLG-018..024 when ids collided with a parallel session. Documented that every redirect still carried `lv=shuf` + `plpRedirect=mhFallback` (FLG-009).
+
+### Integration passes (arena/0458cd24-winc, arena/c2123b9c-winc)
+
+Corrected the register where earlier sessions had over-claimed (Amazon policy pages marked “login-gated, indexed copy” when they are publicly readable) and under-claimed (ftc.gov marked unreachable when it is reachable). Added `tools/audit.mjs` + `.github/workflows/ci.yml` and the seasonal band. Their audit found the A6 and A7 defects this session fixed.
+
+### What every pass has held constant
+
+No prices. No ratings. No testing claims. Intended and observed ASINs in separate fields. Short links never called invalid. Every table row that makes a claim carries a source link or an explicit “internal only” note.
 
 Nothing in this repo can confirm the tracking ID is issued, that a hand-built `?tag=` link is an
 approved link form for this account, or that these five listings are the five products that were
@@ -215,124 +207,6 @@ authorised first-party reports arrive.
 
 ---
 
-<<<<<<< HEAD
-# Fourth pass — a shop that reads like a publication, and the policy details that were missing (2026-11-20, session `ab951e4c`)
-
-Brief for this pass: make it look like a polished marketing affiliate site rather than AI output,
-make the suggestions reviewable, list what has to be answered before a decision is reasonable, and
-keep verifying line by line. Everything below is what changed; nothing was claimed that a source
-does not support.
-
-## 1 · Reader path: shop copy, not audit copy
-
-- **Shelf cards rewritten.** Each product now leads with a shelf line (what it is for, in the
-  listing's own terms) and a *decide on* line naming the one spec that settles the case, plus one
-  evidence link. The old card printed a keyword-stuffed listing title, a model number, `see
-  FLG-005` and a bare ASIN — register vocabulary that no shop prints on a shelf ticket.
-- **Every product got its own artwork.** Five new original illustrations (dual basket, oven-style
-  with a bird, XL basket, folding instant-read, leave-in probes to a hub), each captioned *not a
-  product photograph*. Before this pass the three air fryers shared one image and both thermometers
-  shared another — the single most obvious generated-site tell on the page.
-- **Asset weight: 15 MB → 1.39 MB.** The four 3.7 MB PNGs became nine optimized 1200×750 JPEGs,
-  every reference updated in data, and the gate now refuses a PNG asset or one image shared by two
-  products (SG-21).
-- **Process prose off the reader path.** The front page's wall of method text is now a three-item
-  trust rail ("nothing is tested, so nothing is claimed" / "blank beats guessed" / "the links are
-  sponsored"), each pointing at the register that proves it.
-- Two gate rules were verified by *breaking* them first (shared image, stale flag reference), so
-  they are known to fail rather than assumed to pass.
-
-## 2 · Editorial: three guides, and the backlog kept truthful
-
-Published from sources that can be re-read, not from adjectives:
-
-| Guide | The claim it rests on |
-|---|---|
-| [Thermometer accuracy / ice-cup check](guides/thermometer-accuracy-ice-cup-check.html) | USDA FSIS: *"Most food thermometers will give an accurate reading within 2 to 4 degrees F"*; its documented ice-water (32°F) and boiling-water (212°F at sea level, −2°F to −5°F at altitude) procedures; its calibration-per-type table (*oven-cord and fork: "Cannot be calibrated"*). |
-| [Whole-chicken fit](guides/whole-chicken-air-fryer-fit.html) | The three listings' own capacity/footprint/weight strings, the observation that **no listing publishes an interior cavity dimension**, plus FSIS's 165°F and three-place bird check. |
-| [Reading thermometer listing copy](guides/listing-wording-thermometer-claims.html) | FSIS's care rule (*"Most thermometers should not be immersed in water"*, *"do not leave … unless the manufacturer's instructions specifically say it can withstand heat"*) read against the listing's IP67 and 1000°F wording. |
-
-No testing claim, no price, no rating, no "best". Each closes a backlog row: TP-03, TP-06, TP-08
-and TP-09 are marked published **with a pointer to the guide that answers them**, and six new rows
-were added from gaps found while writing (dishwasher-safe part lists, clearance, Sync Finish,
-read-time vs the FSIS table, alarm behaviour, preset names). Each new row states how it was chosen:
-editorial hypothesis, because no Search Console property exists.
-
-## 3 · Compliance: five clauses that had never been read into this register
-
-The Program Policies page renders anonymously, so §2(b), §4, §5, §6(a), §6(c) and §6(d) were read
-verbatim on 2026-11-20 and recorded as **S27** with the quotes. Consequences, all now on the site:
-
-- **§6(d) — no implied endorsement.** Brand and celebrity names sit beside buy buttons on every
-  product surface. The disclosure, the About page and the site-wide footer now state that the site
-  is not endorsed by or affiliated with any brand named on a page, and the gate fails if that
-  sentence disappears (FLG-026).
-- **§6(c) — prompt removal of Program Content Amazon no longer displays.** No process existed.
-  `scripts/freshness.py` measures the age of all 56 recorded reads against today, warns past 14
-  days and fails past 45 (thresholds in `data/freshness.json`, not in code); the removal decision
-  itself stays human and is recorded as open (FLG-027, Q-24).
-- **§6(a) — Program Content may be truncated where meaning is unchanged, not altered.** The site's
-  short shelf labels rely on exactly that permission, so the verbatim listing title is published on
-  every product page under the label, and the comparison is flagged for a human rather than asserted
-  as compliant (FLG-031, Q-23).
-- **§5 — Program Content may not be used to develop machine-learning models without Amazon's
-  express prior written approval.** This is the boundary on the "AI-powered platform" ambition: this
-  repo automates rendering, gating and record-keeping and contains no crawler or corpus export. The
-  ban is written into the standing rules so a future pass cannot drift past it (FLG-028, Q-25).
-- **§4 — Special Links in email are permitted only where the recipient solicited the message.** The
-  capture form records nothing today, so no rule is broken — and no list can be built from it.
-  Recorded as the gate in front of any future newsletter (FLG-029, Q-21, SG-27).
-- **Disclosure over-claim corrected (FLG-032).** The page asserted *"Amazon product descriptions are
-  never copied"* while every product page publishes the listing's verbatim title and its detail
-  values — which is the whole verification method. Replaced with what is actually taken, what is
-  never taken, and the clause that permits it.
-- **Expectation repair from Google (S28, FLG-030).** Google's changelog carries *"Removing
-  documentation for the FAQ rich result feature"* (June 2026) and both the FAQPage and HowTo
-  documentation URLs now redirect to it. The site keeps emitting FAQ markup for parsing and claims
-  no SERP feature from it; no HowTo markup is added.
-
-## 4 · Decision layer, made checkable
-
-- **`direction.html`** — 28 suggestion rows. SG-19 (imagery line) was decided and shipped here;
-  SG-21…SG-28 added. Each of the four paths now lists **the register rows it comprises** and
-  **the questions it waits on**, so a choice can be audited before it is made instead of after.
-- **`questions.html`** — 26 rows, 5 blocking. Five rows gained answers this pass (Q-07, Q-12,
-  Q-13, Q-15, Q-19), each answer citing the source that supports it; Q-22…Q-26 were opened by the
-  policy read above. A blank answer still means *nobody has it*, never *skipped*.
-- **Register honesty enforced, not hoped for.** A `done-this-session` row must now name the pass
-  that shipped it — three rows said "this session", which means nothing once four sessions have said
-  it (the `_note` was corrected to stop readers reading `reviewed_by_session` as authorship). The
-  gate also checks the ledger schema, the freshness data, card hygiene and imagery uniqueness.
-- **Findings drift found and fixed (FLG-034).** The executive summary page's "what changed" table
-  cited flag IDs that had drifted to the wrong findings after a renumbering; all five references were
-  corrected, a structural rule now fails any page citing a flag that does not exist, and SG-28
-  proposes moving pass-level findings into a data file so the semantic half cannot rot either.
-
-## 5 · Numbers, computed
-
-| Register | Now | Before this pass |
-|---|---|---|
-| Pages / sitemap URLs | 30 / 29 | 27 / 26 |
-| Guides | 9 | 6 |
-| Sources | 28 | 26 |
-| Flagged items | 34 | 25 |
-| Open questions (blocking / answered) | 26 (5 / 5) | 21 (5 / 0) |
-| Suggestions (open / blocked) | 28 (9 / 2) | 20 (5 / 0) |
-| Topic backlog rows (published) | 18 (4) | 12 (0) |
-| Image payload | 1.39 MB | 15 MB |
-| Recorded reads on the freshness clock | 56 | — (no clock existed) |
-
-`npm run build` → *Built 30 pages, 29 sitemap URLs, 9 guides, 26 search rows.*
-`npm run check` → *OK: 30 pages checked, 29 sitemap URLs, no violations.*
-
-## 6 · What this pass deliberately did not do
-
-No prices, ratings, review counts, stock levels, conversion scores, revenue forecasts or traffic
-projections. No ranking and no "best". No claim that the supplied short links are invalid (FLG-003
-stays unresolved). No `intended_*` field filled from a redirect. No analytics deployed (Pages is
-static; FLG-007), and no ledger row: `scripts/ledger_add.py` was exercised with a throwaway row,
-rendered, and reverted, because no authorized first-party report exists to record.
-=======
 # Session `arena-c2123b9c` — observation #4, seasonal editorial, register back-fill — 2026-11-20
 
 Merged on top of the third pass (`main@715b923`) after resolving a both-sides-edited rebase without
@@ -420,4 +294,164 @@ explicit design directive to the build-prompt builder.
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
->>>>>>> origin/main
+
+
+---
+
+# Session `arena-156c2ecf` — line-by-line re-verification, decision-register completion — 2026-11-20
+
+This pass re-verified the load-bearing claims against their official sources where the reader could
+reach them, recorded the one fetch that failed instead of papering over it, added the seasonal
+topic rows and the register rows this session owns, reconciled typed counts, and resolved two
+rebases against the parallel PR rounds without dropping anyone's work.
+
+## Re-verification this session (official sources, links for manual review)
+
+| Ref | Source (manual review link) | Re-read result, 2026-11-20 |
+|-----|------------------------------|-----------------------------|
+| S01 | [Associates Program Operating Agreement](https://affiliate-program.amazon.com/help/operating/agreement) | §5 disclosure sentence verbatim; §1 tagged Special Links; §6 §5-violation = material breach; stamp "Updated: October 15, 2025". **Confirmed live.** |
+| S02 | [Associates Program Policies](https://affiliate-program.amazon.com/help/operating/policies) | Price/availability rule verbatim ((a) Amazon-served link or (b) Creators/PA API only); tag format "(appearing as XXXXX-##)"; stamp "Updated: April 14, 2026". **Confirmed live.** |
+| S03 | [FTC Endorsement Guides FAQ](https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking) | "disclosed clearly and conspicuously"; affiliate section present. **Confirmed live.** |
+| S05 | [What is an ASIN?](https://sell.amazon.com/blog/what-is-an-asin) | "unique 10-character alphanumeric code"; found after /dp/. **Confirmed live** — the 9-character submitted tokens cannot be ASINs, so `intended_asin` stays blank. |
+| S09 | [Amazon listing B0CDY277D3](https://www.amazon.com/dp/B0CDY277D3) | `<title>` matched the stored product title verbatim; breadcrumb confirmed; `lv=shuf` + `plpRedirect=mhFallback` fallback observed again. **Identity confirmed live.** |
+| S16/S17 | USDA FSIS pages | **Re-fetch FAILED in this session's reader (two attempts).** Not re-confirmed here; they stand on prior sessions' direct reads. Re-check before any new guide quotes them. |
+
+## What changed
+
+- **Suggestion register: SG-39..SG-42 added** (house-style/slop gate as a shipped standard, counts
+  honesty, the dated re-read trail with recorded failures, and the next seasonal-publishing
+  proposal). SG-27..SG-30 kept as the parallel pass wrote them — they are the rows the brief names.
+- **Seasonal topic rows TP-16..TP-18** (Thanksgiving sizing, game-day timing, New Year counter
+  space): catchy, question-shaped, each labelled "editorial hypothesis" in `chosen_from` — no
+  popularity or search-volume claim, exactly as the topics page demands.
+- **Typed counts reconciled** (SG-40): the state table above now matches the registers (15 guides,
+  18 topics, 38 suggestions, 35 sources, 29 flags).
+- **Rebase unions:** the PRs #37–#39 and #40–#45 rounds both conflicted with this branch; both
+  sides kept every time (registers unioned, colliding IDs renumbered — T29–T32 became T39–T42,
+  this session's topics moved to TP-16..TP-18 — HTML rebuilt from the merged data). Details in
+  COORDINATION.md.
+
+## Unchanged, on purpose
+
+No price, rating, review count, revenue forecast or conversion score anywhere. Short links are
+never called invalid (FLG-003). Intended vs observed identifiers stay in separate fields. The
+campaign ledger stays empty until first-party reports exist.
+
+---
+
+# Fourth pass — shop-first reader path, policy detail read to the clause, and id discipline (2026-11-20, session `ab951e4c`)
+
+Brief for this pass: make it read like a polished affiliate shop rather than AI output or an audit;
+make the suggestions reviewable before implementation; list what has to be answered before a
+decision is reasonable; keep verifying line by line against official sources. Counts below are read
+from the registers at write time, and every page that states a count computes it from the same data.
+
+## 1 · Reader path: shelf copy, not register copy
+
+- **Cards now answer the buying question first.** Each product leads with a shelf line (what the
+  listing says the thing is for) and a *decide on* line naming the one listed spec the decision rests
+  on, followed by the button and a single evidence link. What left the card: the keyword-stuffed
+  listing title, the model number, `see FLG-0nn`, and the bare ASIN. Those are register fields and
+  they are still published — on the product page and in the verification table.
+- **One image per product, on one optimized profile.** This pass drew five original illustrations; the
+  trunk had meanwhile drawn its own five. Rather than shipping ten near-identical multi-megabyte
+  files, the merge put the trunk's webp-backed set on cards and product pages and kept this pass's
+  art as guide header art. `assets/img` is 5.1 MB across 24 files, and the gate refuses a
+  shared or oversized product asset. Recorded as a merge decision, not hidden (FLG-045).
+- **The front page's method essay became three lines.** "Nothing is tested, so nothing is claimed ·
+  Blank beats guessed · The links are sponsored", each linking the register that proves it. The
+  verbatim listing title now sits under the short shelf label on every product page, which is what
+  makes the label's truncation defensible under §6(a).
+
+## 2 · Editorial: three guides, and a backlog that says what it closed
+
+| Guide | What it rests on |
+|---|---|
+| Thermometer accuracy / the ice-cup check | USDA FSIS: “most food thermometers will give an accurate reading within 2 to 4 degrees F”, its ice-water and boiling-water procedures, its calibration-per-type table, and “if the thermometer doesn't allow manual calibration, you may need to replace it” |
+| Can it fit a whole chicken? | The three listings' own capacity, footprint and weight strings — including that none of them publishes an interior cavity dimension — plus the FSIS 165°F minimum and the three-place bird check |
+| Reading thermometer listing copy | FSIS care and placement rules (“most thermometers should not be immersed in water”; do not leave one in the food unless the maker designed it to) read against the listing's IP67, 1000°F and “unlimited range” wording |
+
+No test claim, no price, no rating, no “best”. The topic backlog went to 24 rows with 8 marked
+published **pointing at the guide that answers each**, and the rest stating in their own words that
+they are editorial hypotheses because no Search Console property exists. Cadence: this pass shipped
+three guides in one build, which is what the machinery supports per focused pass (SG-43).
+
+## 3 · Compliance: read the clauses, then change what the site says
+
+The Program Policies page renders anonymously, so §2(b), §4, §5, §6(a), §6(c) and §6(d) were read
+verbatim on 2026-11-20 and recorded as **S36**, and the consequences are on the site rather than in a
+to-do list:
+
+- **§6(d) — no implied endorsement.** Brand and celebrity names sit beside buy buttons, so the
+  disclosure, the About page and the site-wide footer now state plainly that no named brand endorses
+  or sponsors this site. The gate fails if that sentence goes missing (FLG-041).
+- **§6(c) — remove Program Content promptly.** `scripts/freshness.py` measures the age of
+  82 recorded reads and exits non-zero past the limit in `data/freshness.json` (14 / 45 days). The
+  removal decision stays human and is recorded as open (FLG-042, Q-22).
+- **§6(a) — truncate where the meaning is unchanged, never alter.** The short labels rely on that
+  permission, so the full title is published under each one and the comparison is flagged for a human
+  rather than declared compliant (FLG-044's sibling finding, Q-27).
+- **§5 — no Program Content in model training** without Amazon's express prior written approval. This
+  is the boundary on the "AI-powered product research" ambition, and it is written into the standing
+  rules so a later pass cannot drift past it: this repository renders, checks and records; it has no
+  crawler and no corpus export (FLG-043, Q-28).
+- **§4 — affiliate links in email only where the recipient solicited the message.** The capture form
+  collects nothing today, so no rule is broken and no list can be started from it (FLG-044, Q-21).
+- **Disclosure accuracy.** The page used to claim “Amazon product descriptions are never copied” while
+  every product page reproduces the listing's verbatim title — the practice is the method, so the
+  sentence was fixed to say what is taken, what is never taken, and the clause that permits it (FLG-032).
+- **Google's own changelog** confirms the FAQ rich-result documentation was removed and HowTo retired
+  (**S28**): the site keeps FAQ markup for parsing and promises no SERP feature (FLG-030, Q-29).
+
+## 4 · The independent second gate found four things, and two were this site's fault
+
+`tools/audit.mjs` (another session's checker, run against the merged tree) disagreed with the primary
+gate four times. Each disagreement was chased to the correct side:
+
+| Finding | Who was wrong | Outcome |
+|---|---|---|
+| 52 “unresolved fragment” reports against the source register | the audit read only double-quoted `id=` | both sides fixed: register anchors are double-quoted, the audit accepts either style (FLG-039) |
+| an “unresolved reference” to a JavaScript concatenation | the audit treated inline JS as markup | fixed in the audit, with the reason at the change site (FLG-040) |
+| the capture form could submit an address into a URL when scripting was blocked | **the site** | the trunk made it non-submitting; this pass removed the field's `name` attribute so a script-blocked submit has no key/value pair to carry, and the page says why (FLG-037) |
+| “never stored: search query text” while search puts `?q=` in the address bar | **the claim was incomplete** | disclosed rather than removed, because the URL is the mechanism that makes server-less search shareable (FLG-038) |
+
+## 5 · Machinery, and the register's own hygiene
+
+- `scripts/ledger_add.py` is the only way a row enters the campaign ledger: `--authorized`,
+  integer-or-null measured fields, a dated provenance string, no estimating words, and no derived
+  rates. It was exercised end-to-end — a throwaway row rendered into `measurement.html`, then the
+  ledger was reverted to empty, because no authorized first-party report exists to record.
+- `scripts/alloc_ids.py` allocates ids from the merged tree and audits every cross-register
+  reference. It exists because nine parallel sessions guessed at free ids and the guesses went stale
+  twice inside a day (FLG-045). On its first run it found a pre-existing defect: the suggestions
+  register had a four-row hole that a live citation pointed into; the citation was corrected to name
+  the duty instead of inventing rows to fill the gap (FLG-046).
+- The gate gained rule families for card hygiene, imagery uniqueness and size, ledger row schema, the
+  §6(d) statement, recorded-date sanity and reference integrity. Each was verified by breaking it
+  first — including three negative tests run against the merged tree before being reverted.
+- `data/suggestions.json` is 46 rows (24 shipped, 20 open) and every shipped row names the pass
+  that shipped it; 8 rows said “this session”, which stops meaning anything after nine sessions.
+  `data/questions.json` is 29 rows, 8 blocking, 6 answered from a source.
+
+## 6 · Counts, read from the registers
+
+| Register | Read from the data on 2026-11-20 |
+|---|---|
+| Guides | 18 |
+| Sources | 36 |
+| Flagged items | 47 |
+| Suggestions | 46 |
+| Open questions | 29 (8 blocking, 6 answered) |
+| Topic backlog | 24 (8 published) |
+| Recorded reads on the freshness clock | 82 |
+| `assets/img` | 24 files, 5.1 MB, webp-served |
+
+`npm run verify` on the merged tree: build → gate → analytics tests; `node tools/audit.mjs --strict`
+reports no findings.
+
+## 7 · Deliberately absent
+
+No prices, ratings, review counts, stock levels, conversion scores, revenue forecasts or traffic
+projections. No testing, ranking or endorsement claim. The supplied short links are still not called
+invalid (FLG-003 unresolved) and `intended_*` fields stay blank. The analytics endpoint is still not
+deployed (Pages is static, FLG-007). The ledger is still empty.

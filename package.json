@@ -2,13 +2,14 @@
   "name": "shopnow-kitchen",
   "version": "1.0.0",
   "private": true,
-  "description": "ShopNow Kitchen \u2014 Amazon affiliate publication. Zero-dependency static build; data/ is the source of truth, GitHub Pages serves the committed output. scripts/freshness.py is the age-of-read clock required by Program Policies \u00a76(c).",
+  "description": "ShopNow Kitchen — Amazon affiliate publication. Zero-dependency static build; data/ is the source of truth, GitHub Pages serves the committed output. scripts/freshness.py is the age-of-read clock required by Program Policies §6(c).",
   "scripts": {
     "build": "python3 scripts/build_site.py",
     "check": "python3 scripts/check_site.py",
     "test": "python3 scripts/test_analytics.py && node analytics/test_worker.mjs",
     "verify": "npm run build && npm run check && npm test",
     "new-guide": "python3 scripts/new_guide.py",
-    "fresh": "python3 scripts/freshness.py"
+    "fresh": "python3 scripts/freshness.py",
+    "ids": "python3 scripts/alloc_ids.py --check"
   }
 }

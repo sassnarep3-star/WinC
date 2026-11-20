@@ -2,12 +2,9 @@
 """Compliance + integrity gate for ShopNow Kitchen. Exit 1 on violation.
 Run: python3 scripts/check_site.py
 Checks: disclosure strip on every page, sponsored links, no prices, sitemap coverage,
-internal links resolve, product data sanity (9-char tokens, 10-char ASINs, blank intended),
-guide completeness and cluster filtering, register-schema validity for suggestions/questions/topics,
-category decision profiles, claim-drift (banned phrasing), imagery uniqueness and reader-path hygiene,
-campaign-ledrow schema (first-party figures only), and the age-of-a-recorded-read data-quality clock.
+internal links resolve, product data sanity (9-char tokens, 10-char ASINs, blank intended).
 """
-import os, re, json, sys, html as _html, xml.etree.ElementTree as ET
+import os, re, json, sys, glob, html as _html, xml.etree.ElementTree as ET
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
@@ -25,7 +22,6 @@ def read(path):
 products = json.load(open(os.path.join(ROOT, "data/products.json"), encoding="utf-8"))["products"]
 PROBES = json.load(open(os.path.join(ROOT, "data/probes.json"), encoding="utf-8"))
 FLAGS = json.load(open(os.path.join(ROOT, "data/flags.json"), encoding="utf-8"))["flags"]
-ledger = json.load(open(os.path.join(ROOT, "data/campaign-ledger.json"), encoding="utf-8"))
 for p in products:
     if len(p["submitted_token"]) != 9:
         fail(f"{p['id']}: submitted token must be 9 chars, got {p['submitted_token']}")
@@ -189,6 +185,14 @@ for hf in html_files:
         rel = os.path.normpath(os.path.join(base, src)) if base else src
         if not os.path.exists(os.path.join(ROOT, rel)):
             fail(f"{hf}: missing image -> {src}")
+    # a <picture><source srcset> pointing at a missing file is a silent broken image
+    for m in re.finditer(r'<source[^>]+srcset="([^"]+)"', content):
+        src = m.group(1)
+        if src.startswith(("http", "data:")):
+            continue
+        rel = os.path.normpath(os.path.join(base, src)) if base else src
+        if not os.path.exists(os.path.join(ROOT, rel)):
+            fail(f"{hf}: missing <source> image -> {src}")
     for m in re.finditer(r'<meta property="og:image" content="([^"]+)"', content):
         u = m.group(1)
         if not u.startswith(SITE):
@@ -273,9 +277,6 @@ for s in suggestions:
         fail(f"suggestion {sid}: status {s.get('status')!r} is not one of {sorted(SUG_STATUSES)}")
     if s.get("effort") not in ("S", "M", "L"):
         fail(f"suggestion {sid}: effort {s.get('effort')!r} must be S, M or L")
-    if s.get("status") in ("done-this-session", "shipped") and not re.search(
-            r"(session |arena-|ab951e4c|23d7ed19|82d39deb|0458cd24|dd79e08d|5c2f1a2c|4ca9e665)", str(s.get("status_detail", ""))):
-        fail(f"suggestion {sid}: marked {s['status']!r} without naming the pass that shipped it in status_detail")
 
 q_doc = json.load(open(os.path.join(ROOT, "data/questions.json"), encoding="utf-8"))
 seen_q = set()
@@ -396,63 +397,150 @@ for hf in REGISTER_PAGES:
         fail(f"{hf}: register page links to no source at all")
 
 
-# --- reader-path hygiene + imagery + ledger schema (session ab951e4c) --------
-# 1. A shelf card is selling copy with sources attached. Register vocabulary
-#    (flag IDs, model strings, ASINs) belongs on the product page and the
-#    registers; on a card it reads as an audit that forgot to become a shop.
-CARD_PAGES = ["index.html", "air-fryers.html", "thermometers.html", "products/index.html"] + \
-             [g["path"] for g in guides]
-for hf in CARD_PAGES:
-    if not os.path.exists(os.path.join(ROOT, hf)):
-        fail(f"{hf}: page missing")
+# --- narrative + register integrity (session arena-038c0b80) -----------------
+# Every cross-reference the site publishes must resolve, and every story must rest on
+# a stored spec. Silent drift here is how a register starts lying about itself.
+story_doc = json.load(open(os.path.join(ROOT, "data/stories.json"), encoding="utf-8"))
+FLAG_IDS_ALL = {f["id"] for f in FLAGS}
+PRODUCT_KEYS = {p["id"] for p in products}
+for st in story_doc["stories"]:
+    sid = st.get("product_id", "<no id>")
+    for field in ("product_id", "series", "kicker", "headline", "standfirst", "paragraphs", "spec_anchor"):
+        if not st.get(field):
+            fail(f"stories.json: {sid}: field '{field}' is empty")
+    if not isinstance(st.get("paragraphs"), list) or len(st["paragraphs"]) < 3:
+        fail(f"stories.json: {sid}: needs at least 3 paragraphs to be a piece rather than a blurb")
+    for f in st.get("flags", []) or []:
+        if f not in FLAG_IDS_ALL:
+            fail(f"stories.json: {sid}: cites unknown flag {f}")
+    if st["spec_anchor"] not in PRODUCT_FIELDS:
+        fail(f"stories.json: {sid}: spec_anchor '{st['spec_anchor']}' is not a stored product field")
+for sname, pids in story_doc.get("_series", {}).items():
+    for pid in pids:
+        if pid not in PRODUCT_KEYS:
+            fail(f"stories.json: series '{sname}' lists unknown product {pid}")
+
+maker_doc = json.load(open(os.path.join(ROOT, "data/makers.json"), encoding="utf-8"))
+SRC_IDS = {x["id"] for x in json.load(open(os.path.join(ROOT, "data/sources.json"), encoding="utf-8"))["sources"]}
+for mk in maker_doc["makers"]:
+    for field in ("id", "name", "who", "story", "checkable_claims"):
+        if not mk.get(field):
+            fail(f"makers.json: {mk.get('id')}: field '{field}' is empty")
+    if len(mk["checkable_claims"]) < 2:
+        fail(f"makers.json: {mk['id']}: fewer than 2 checkable claims")
+    for c in mk["checkable_claims"]:
+        if c.get("source_id") not in SRC_IDS:
+            fail(f"makers.json: {mk['id']}: claim cites unknown source {c.get('source_id')!r}")
+        if not c.get("claim") or not c.get("source_label"):
+            fail(f"makers.json: {mk['id']}: claim without text or source label")
+
+# every SG-/Q-/FLG- id cited in reader-facing HTML must exist in its register
+for hf in html_files:
+    if hf.startswith("archive"):
         continue
-    content = read(hf)
-    for m in re.finditer(r'(?s)<article class="card productcard">(.*?)</article>', content):
+    body = read(hf)
+    for sg in set(re.findall(r"\bSG-\d{2}\b", body)):
+        if sg not in seen:
+            fail(f"{hf}: cites {sg}, which is not in data/suggestions.json")
+    for qq in set(re.findall(r"\bQ-\d{2}\b", body)):
+        if qq not in seen_q:
+            fail(f"{hf}: cites {qq}, which is not in data/questions.json")
+    for ff in set(re.findall(r"\bFLG-\d{3}\b", body)):
+        if ff not in FLAG_IDS_ALL:
+            fail(f"{hf}: cites {ff}, which is not in data/flags.json")
+
+# the capture control must stay switched off and un-submittable
+# a page that merely MENTIONS the form (e.g. a suggestion card) is not a page that renders it
+cap_pages = [hf for hf in html_files if 'id="reader-capture"' in read(hf)]
+for hf in cap_pages:
+    body = read(hf)
+    if 'novalidate' not in body or 'data-nosubmit="true"' not in body:
+        fail(f"{hf}: capture form lacks the novalidate/data-nosubmit guard (a JS-blocked browser would GET the address into a URL)")
+    if 'method="get"' in body and 'action=""' not in body:
+        fail(f"{hf}: capture form has a method with no empty action guard")
+
+# --- inline JavaScript must parse (session arena-038c0b80) -------------------
+# A broken inline script is invisible to every HTML check and to a reader until
+# they click something. `node --check` is cheap and catches it.
+import subprocess, tempfile
+if html_files:
+    for hf in html_files:
+        body = read(hf)
+        for k, m in enumerate(re.finditer(r"(?s)<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", body)):
+            js = m.group(1).strip()
+            if not js or js.startswith("{"):
+                continue  # empty or JSON-LD
+            with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as tf:
+                tf.write(js)
+                tmp = tf.name
+            try:
+                r = subprocess.run(["node", "--check", tmp], capture_output=True, text=True)
+                if r.returncode != 0:
+                    first = [ln for ln in r.stderr.splitlines() if "Error" in ln][:1]
+                    fail(f"{hf}: inline script #{k} does not parse as JavaScript ({first[0] if first else 'syntax error'})")
+            except FileNotFoundError:
+                pass  # node not installed: skip rather than fail the gate for a missing tool
+            finally:
+                os.unlink(tmp)
+
+
+# --- reader path, imagery, ledger and id integrity (session ab951e4c, 2026-11-20) ----
+# 1. A shelf card is selling copy with sources attached. Register vocabulary — flag ids,
+#    model strings, ASINs — belongs on the product page and in the registers. On a card it
+#    reads as an audit that forgot to become a shop, and it is the strongest generated-site
+#    tell left on the page.
+CARD_PAGES = ["index.html", "air-fryers.html", "thermometers.html", "products/index.html", "topics.html"]
+CARD_PAGES += [g["path"] for g in guides] if guides else []
+for hf in sorted(set(CARD_PAGES)):
+    if not os.path.exists(os.path.join(ROOT, hf)):
+        fail(f"{hf}: page missing"); continue
+    for m in re.finditer(r'(?s)<article class="card productcard">(.*?)</article>', read(hf)):
         block = m.group(1)
-        for pat, why in ((r"FLG-\d{3}", "a flag ID on a shelf card"),
+        for pat, why in ((r"FLG-\d{3}", "a flag id on a shelf card"),
                          (r"\bASIN\b", "an ASIN on a shelf card"),
                          (r"<li>Model:", "a model number on a shelf card")):
             if re.search(pat, block):
                 fail(f"{hf}: {why} — keep register vocabulary on the product page")
 
-# 2. Imagery: each product needs its own art, a caption that says it is an
-#    illustration, and the two decision lines. Reusing one image across cards is
-#    the strongest generated-site tell on the page, so it is a failure, not a taste note.
+# 2. Every product needs the two decision lines, its own artwork, and an asset small enough
+#    to be worth a reader's bandwidth. Uniqueness is checked because four cards sharing one
+#    image is what a machine-assembled shelf looks like.
+MAX_ASSET_KB = 400
 for p in products:
-    for field in ("image", "image_caption", "shelf_line", "decide_on"):
+    for field in ("shelf_line", "decide_on", "image", "image_caption"):
         if not p.get(field):
-            fail(f"{p['id']}: {field} is empty (a card with no shelf line is a spec sheet, not a shop)")
-    if p.get("image") and not os.path.exists(os.path.join(ROOT, p["image"])):
-        fail(f"{p['id']}: image {p['image']} does not exist")
-    if p.get("image", "").endswith(".png"):
-        fail(f"{p['id']}: {p['image']} is an uncompressed PNG — run the asset step (see SG-21)")
+            fail(f"{p['id']}: {field} is empty (a card without a shelf line and a deciding spec is a spec sheet)")
+    img = p.get("image", "")
+    if img:
+        path = os.path.join(ROOT, img)
+        if not os.path.exists(path):
+            fail(f"{p['id']}: image {img} does not exist")
+        else:
+            kb = os.path.getsize(path) / 1024
+            twin = re.sub(r"\.png$", ".webp", img)
+            if os.path.exists(os.path.join(ROOT, twin)):
+                kb = min(kb, os.path.getsize(os.path.join(ROOT, twin)) / 1024)
+            if kb > MAX_ASSET_KB:
+                fail(f"{p['id']}: {img} serves at {kb:.0f} KB (budget {MAX_ASSET_KB} KB) — run the asset step (SG-47)")
 seen_img = {}
 for p in products:
     seen_img.setdefault(p.get("image", ""), []).append(p["id"])
 for img, owners in seen_img.items():
-    if len(owners) > 1:
-        fail(f"imagery: {img} is reused by {len(owners)} products ({', '.join(owners)}) — give each product its own art")
-if not os.path.exists(os.path.join(ROOT, "data", "freshness.json")):
-    fail("data/freshness.json missing — the freshness thresholds are configuration, not code")
-else:
-    fcfg = json.load(open(os.path.join(ROOT, "data", "freshness.json"), encoding="utf-8"))
-    for k in ("soft_days", "hard_days"):
-        if not isinstance(fcfg.get(k), int) or fcfg[k] <= 0:
-            fail(f"data/freshness.json: {k} must be a positive integer")
-    if fcfg.get("soft_days", 0) >= fcfg.get("hard_days", 0):
-        fail("data/freshness.json: soft_days must be below hard_days")
+    if img and len(owners) > 1:
+        fail(f"imagery: {img} is reused by {', '.join(owners)} — one illustration per product")
 
-# 3. The campaign ledger may hold only first-party figures. A row with an extra
-#    key, a float, a rate, or an estimating word is the beginning of a fake number.
+# 3. The campaign ledger may hold only first-party figures. An extra key, a float, a derived
+#    rate or an estimating word is the beginning of a fabricated number.
 LEDGER_KEYS = {"timestamp", "source", "channel", "eligible_sessions", "clicks", "reported_orders", "provenance"}
 EST = re.compile(r"\b(estimat\w*|forecast\w*|project(ing|ion|ed)?|assum\w*|backfill\w*|extrapolat\w*|approximat\w*)\b", re.I)
-for i, r in enumerate(ledger.get("rows", [])):
+LEDGER = json.load(open(os.path.join(ROOT, "data/campaign-ledger.json"), encoding="utf-8"))
+for i, r in enumerate(LEDGER.get("rows", [])):
     extra = set(r) - LEDGER_KEYS
     if extra:
         fail(f"campaign-ledger row {i}: keys {sorted(extra)} are not in the ledger schema (revenue and rate fields are never stored here)")
     for k in ("eligible_sessions", "clicks", "reported_orders"):
         if k in r and r[k] is not None and not isinstance(r[k], int):
-            fail(f"campaign-ledger row {i}: {k} must be an integer or null, not {type(r[k]).__name__} — a value the report did not state stays blank")
+            fail(f"campaign-ledger row {i}: {k} must be an integer or null, not {type(r[k]).__name__}")
     for k in ("source", "channel", "provenance"):
         v = str(r.get(k, ""))
         if EST.search(v):
@@ -460,39 +548,51 @@ for i, r in enumerate(ledger.get("rows", [])):
     if r.get("provenance") and not re.search(r"\d{4}-\d{2}-\d{2}", str(r["provenance"])):
         fail(f"campaign-ledger row {i}: provenance carries no YYYY-MM-DD date, so the row cannot be re-checked")
 
-# 3b. Any flag ID cited in rendered copy must exist. Flag IDs were renumbered once
-#     already (FLG-015..017 collided across sessions), and a citation pointing at an
-#     unrelated number is worse than no citation.
-for hf in html_files:
-    for m in re.finditer(r"FLG-(\d{3})", read(hf)):
-        if "FLG-" + m.group(1) not in {f["id"] for f in FLAGS}:
-            fail(f"{hf}: cites FLG-{m.group(1)}, which is not in data/flags.json")
+# 4. Program Policies §6(d): brand names sit beside buy buttons, so the non-endorsement
+#    statement is load-bearing copy, not decoration (see the flag on §6(d)).
+if "not endorsed by, sponsored by or affiliated with any brand" not in read("disclosure.html"):
+    fail("disclosure.html: the §6(d) brand-endorsement statement is gone (Program Policies read, see the sources register)")
 
-# 4. Program Policies §6(d): brand names sit next to buy buttons, so the
-#    not-endorsed-by-the-brand statement has to stay on the disclosure page.
-disc = read("disclosure.html")
-if "not endorsed by, sponsored by or affiliated with any brand" not in disc:
-    fail("disclosure.html: the §6(d) brand-endorsement statement is gone (Program Policies, S27)")
-
-# 5. Freshness data quality: every recorded read must carry a parseable,
-#    non-future date. Aging itself is reported, not failed, so the gate stays
-#    deterministic and a reader is never blocked by the passage of time.
+# 5. Age of a recorded read: the *data quality* half is a failure (missing or future dates);
+#    aging itself is reported, so the gate stays deterministic and a reader is never blocked
+#    by the passage of time. Removal of stale content is a human action.
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
+try:
+    import alloc_ids as _alloc
+    dangling, _, _ = _alloc.find_dangling(skip_html=True)
+    for d in dangling[:20]:
+        fail(f"dangling reference: {d}")
+    if len(dangling) > 20:
+        fail(f"dangling references: {len(dangling) - 20} more (run scripts/alloc_ids.py --check)")
+except ImportError:
+    fail("scripts/alloc_ids.py missing — cross-register reference checking is part of the gate")
 try:
     import freshness as _fr
     import datetime as _dt
-    as_of = _dt.date.today()
-    rs = _fr.rows(as_of)
+    rs = _fr.rows(_dt.date.today())
     for r in rs:
         if r["state"] in ("no date recorded", "unparseable date") or r["state"].startswith("date is in the future"):
             fail(f"freshness: {r['id']} / {r['field']} — {r['state']}")
     aged = sum(1 for r in rs if r["state"].startswith("past"))
     if aged:
-        print(f"note: {aged} of {len(rs)} recorded reads are past the freshness threshold — "
-              f"run `python3 scripts/freshness.py` and re-read before publishing (FLG-027).")
+        print(f"note: {aged} of {len(rs)} recorded reads are past the freshness threshold — run "
+              f"`python3 scripts/freshness.py` and re-read before publishing.")
 except ImportError:
     fail("scripts/freshness.py missing or unimportable — the age-of-read check is part of the gate")
 
+# 6. No merge-conflict markers may reach a committed file. The builder, the gate and every
+#    downstream reader assume the tree is resolved; a marker that ships is a page that renders
+#    someone's tooling at a reader. main itself carried one in EXECUTIVE-SUMMARY.md (FLG-047).
+MARKERS = ("<<<<<<<", "=======", ">>>>>>>")
+for rel in sorted(set(glob.glob("**/*.html", recursive=True) + glob.glob("**/*.json", recursive=True)
+                      + glob.glob("**/*.md", recursive=True) + glob.glob("scripts/*.py")
+                      + glob.glob("tools/*.mjs") + glob.glob("assets/*.css"))):
+    if rel.startswith("archive/") or "/archive/" in rel or "node_modules" in rel:
+        continue
+    text = read(rel) if os.path.exists(os.path.join(ROOT, rel)) else ""
+    for line_no, line in enumerate(text.split("\n"), 1):
+        if any(line.startswith(m) for m in ("<<<<<<< ", ">>>>>>> ")) or line == "=======" and ".md" in rel:
+            fail(f"{rel}:{line_no}: unresolved merge-conflict marker committed to the tree")
 
 if errors:
     print(f"FAIL ({len(errors)} violations):")

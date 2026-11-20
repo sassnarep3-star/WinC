@@ -10,54 +10,77 @@ A polished Amazon affiliate publication: basket or oven-style? Compare before yo
 python3 scripts/new_guide.py "A question a buyer actually asks" --category "Air Fryers"
 python3 scripts/build_site.py   # rebuild the site from data/ (single source of truth)
 python3 scripts/check_site.py   # compliance + integrity gate (exit 1 on violation)
-python3 scripts/freshness.py    # age of every recorded read; fails past data/freshness.json limits
-python3 scripts/ledger_add.py --help   # the only way a row may enter the campaign ledger
-# or: npm run build / npm run check / npm run verify / npm run new-guide / npm run fresh
+# or: npm run build / npm run check / npm run verify / npm run new-guide
 ```
 
 No third-party dependencies: Python standard library only.
 
 ## Layout
 
-- `data/` — products, sources, flags, probes, suggestions, questions, categories (reader situations),
-  topics (backlog), freshness thresholds, campaign ledger — single source of truth
+- `data/` — products, sources, flags, probes, suggestions, questions, categories (reader situations), topics (backlog) — single source of truth
 - `data/guides/*.json` — one file per guide; publish by dropping a file
 - `scripts/build_site.py` — generates all HTML + sitemap + RSS + search index
-- `scripts/check_site.py` — the gate: disclosure, sponsored qualification, no prices, sitemap
-  coverage, link resolution, guide and register schema, imagery uniqueness, reader-path hygiene,
-  ledger row schema, claim-drift and flag-reference integrity
-- `scripts/freshness.py` — how old every externally-sourced claim is (Program Policies §6(c) duty
-  to promptly remove Program Content Amazon no longer displays)
+- `scripts/check_site.py` — disclosure / sponsored / price / sitemap / link / imagery / claim-drift gate
 - `scripts/new_guide.py` — scaffolds a guide so cadence needs no builder edits
-- `assets/` — stylesheet, measurement beacon, search index, `img/` (original editorial illustrations,
-  optimized: 1.39 MB for the whole set)
+- `assets/` — stylesheet, measurement beacon, search index, `img/` (original illustrations)
 - `analytics/` — self-hosted endpoint code (deploy separately; Pages is static)
 - `*.html`, `guides/`, `products/` — generated site (committed for GitHub Pages)
 
 ## Rules that never bend
 
 - Disclosure above the fold on every page + footer repeat.
-- Every buy button is `rel="sponsored nofollow noopener"` + `Sponsored · paid affiliate link` + the tracking ID.
+- Every buy button is `rel="sponsored"` + Sponsored label + tracking ID.
 - No prices, ratings, or invented facts. Blank + flagged beats inferred.
 - Every decision block names the one listed spec it rests on. No ranking, no preference.
 - Intended vs. observed ASINs live in separate fields, never merged.
 - Short links are never claimed invalid; their status is flagged (FLG-003).
-- The site is not endorsed by, and does not endorse, any brand it names (Program Policies §6(d)).
-- Nothing collected or displayed here trains a machine-learning model: Program Policies §5 bars
-  using Program Content or Special Links for that without Amazon's express prior written approval.
-- Reader imagery is original artwork, captioned as an illustration; no Amazon listing image is reused.
-- A ledger row exists only if an authorized first-party report produced it, with a dated provenance
-  string — `scripts/ledger_add.py` refuses anything else, and the file stays empty until then.
 
 Pages a reader sees: front page, `products/index.html`, `guides/index.html`, `topics.html`,
-<<<<<<< HEAD
-two category pages, five product pages, nine guides. Pages an operator sees (one nav group, plus
-=======
 two category pages, five product pages, eleven guides (seasonal guides surface in a front-page band,
 with season badges on every card). Pages an operator sees (one nav group, plus
->>>>>>> origin/main
 the footer): `verification.html`, `flagged-for-review.html`, `questions.html`, `direction.html`,
 `measurement.html`, `executive-summary.html`, `search.html`, `about.html`, `disclosure.html`.
 
-See `COORDINATION.md` for the task board and session-by-session provenance, and
-`EXECUTIVE-SUMMARY.md` for the full summary with sources.
+See `COORDINATION.md` for the task board and `EXECUTIVE-SUMMARY.md` for the summary.
+
+## Content layer
+
+- `data/makers.json` — one profile per maker: who they are, plus at least two checkable claims each tied to a source-register row. Never ranked, never inferred from the brand name.
+- `data/stories.json` — the long-form narrative per product (headline, standfirst, deciding spec, paragraphs, flags it depends on) and the series membership. A story may only argue from a stored spec or from USDA's published figures.
+- `assets/img/*.webp` — the illustration set, ~0.5 MB total. Captioned as illustrations; no Amazon product imagery or logos.
+
+## Two gates, both must pass
+
+`scripts/check_site.py` is the authority; `tools/audit.mjs` is the independent second opinion written from the policy documents rather than from the checker. The gate also parses every inline script with `node --check`, because a broken script is invisible to an HTML check.
+
+```bash
+npm run verify                      # build + check_site.py
+node tools/audit.mjs --strict       # independent audit, exit 1 on any finding
+```
+
+## Machinery added on 2026-11-20 (session `ab951e4c`)
+
+```bash
+python3 scripts/freshness.py            # age of every recorded read; --as-of YYYY-MM-DD is deterministic
+python3 scripts/alloc_ids.py --next FLG # next free id in a register, from the merged tree
+python3 scripts/alloc_ids.py --check    # every S/FLG/SG/Q/TP reference must resolve
+python3 scripts/ledger_add.py --help    # the only route a figure may take into the campaign ledger
+# or: npm run fresh
+```
+
+- **Why a freshness clock exists.** Program Policies §6(c) requires an Associate to remove Program
+  Content promptly once Amazon no longer displays it. Nothing in a repository can see Amazon's site,
+  so the tool measures the one thing it does know: how old each recorded read is. Thresholds live in
+  `data/freshness.json`, not in code. The removal decision stays human.
+- **Why an id allocator exists.** Nine sessions worked in parallel today and each guessed which ids
+  were free. Two rounds of renumbering later, `scripts/alloc_ids.py` is the authority on both
+  allocation and reference integrity, and the gate runs its check on every build.
+- **Why the ledger has a bouncer.** `scripts/ledger_add.py` refuses a row without `--authorized`,
+  a non-integer or derived value, an estimating word, or an undated provenance string. The file
+  stays empty until a first-party report exists — empty is the correct state, not a missing step.
+
+Standing rules the gate enforces, added in the same pass: no flag ids, model strings or ASINs on a
+shelf card; one optimized illustration per product (no shared or oversized asset); ledger rows carry
+only the seven schema keys; the §6(d) non-endorsement statement must stay on the disclosure page;
+recorded dates must be parseable and not in the future.
+

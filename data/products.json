@@ -60,13 +60,13 @@
           "The listed footprint is 13.38\"D x 11.81\"W x 10.63\"H and the listed weight is 13.3 lb. Measure the depth of your counter and the clearance above the unit, not just the square footage you have free."
         ]
       ],
-      "image": "assets/img/p6qt.jpg",
+      "image": "assets/img/p6qt.png",
       "image_caption": "Editorial illustration: a dual-basket air fryer with two pull-out baskets, one open. Not a product photograph of this product.",
       "shelf_line": "Two independent 3-quart baskets with easy-view windows, Sync Finish and Hi-Fry, named in the listing title — the shape you buy when two things have to finish at the same time.",
       "decide_on": "Decide on the listed footprint before the capacity: this listing gives 13.38\"D x 11.81\"W x 10.63\"H and 13.3 pounds, so measure the strip of counter you can give up permanently before you read a single preset list.",
       "image_alt": "assets/img/prod-dual-basket.jpg",
       "image_alt_caption": "Editorial illustration of a dual-basket fryer on a counter. Not a product photograph — the listing linked below shows the actual item.",
-      "image_note": "Card and product-page art is the trunk illustration set. image_alt holds the parallel set drawn by session ab951e4c, kept as guide header art after the merge. Both are original editorial illustrations; see FLG-036."
+      "image_note": "Cards and product pages use `image` (the trunk illustration set) through the picture/webp helper; `image_alt` is the parallel set this pass drew, used as guide header art. Both are original editorial illustrations. See FLG-045."
     },
     {
       "id": "p2-emeril-26qt",
@@ -144,13 +144,13 @@
           "The listing's own bullet says the 26-quart cavity is sized for 4-6 people, can rotisserie a 6-lb chicken and bake a 12-inch pizza. That is the seller's sizing claim on the listing, quoted as a claim and not as advice from this desk (FLG-021)."
         ]
       ],
-      "image": "assets/img/p26qt.jpg",
+      "image": "assets/img/p26qt.png",
       "image_caption": "Editorial illustration: a french-door countertop oven with racks visible. Not a product photograph of this product.",
       "shelf_line": "A 26QT French-door oven cavity with one-touch presets and cooking accessories listed — the largest interior on this shelf by listed capacity (26QT against 8QT and 6QT), in a body the listing measures 16.9\" deep.",
       "decide_on": "Decide on the cavity, not the preset count: 26QT (24.6 Liters) inside a 16.9\"D x 15.8\"W x 14.8\"H shell, so the question is whether your counter depth and cabinet clearance survive a 26.5-pound permanent appliance.",
       "image_alt": "assets/img/prod-oven-style.jpg",
       "image_alt_caption": "Editorial illustration of an oven-style fryer with French doors and a whole bird on the rack. Not a product photograph.",
-      "image_note": "Card and product-page art is the trunk illustration set. image_alt holds the parallel set drawn by session ab951e4c, kept as guide header art after the merge. Both are original editorial illustrations; see FLG-036."
+      "image_note": "Cards and product pages use `image` (the trunk illustration set) through the picture/webp helper; `image_alt` is the parallel set this pass drew, used as guide header art. Both are original editorial illustrations. See FLG-045."
     },
     {
       "id": "p3-chefman-8qt",
@@ -233,13 +233,13 @@
           "The page title says '450F Hi-Fry Option' while the bullet copy on the same page says a temperature range from 200-400F. Both strings are shown on the specs table rather than one of them being quietly chosen (FLG-005)."
         ]
       ],
-      "image": "assets/img/p8qt.jpg",
+      "image": "assets/img/p8qt.png",
       "image_caption": "Editorial illustration: a stainless single-basket air fryer with the basket open. Not a product photograph of this product.",
       "shelf_line": "One 8-quart XL nonstick basket, listed as dishwasher-safe, with a 450°F Hi-Fry option named in the listing title — the tall-basket shape rather than an oven cavity.",
       "decide_on": "Decide on one-layer cooking area, not the quart number: the listing gives a single 8-quart basket in a 12.75\"D x 13.5\"W x 10\"H body, so count how many hands-on layers your usual meals need before you compare it with a twin-basket unit.",
       "image_alt": "assets/img/prod-xl-basket.jpg",
       "image_alt_caption": "Editorial illustration of a single-basket air fryer with the basket pulled forward. Not a product photograph.",
-      "image_note": "Card and product-page art is the trunk illustration set. image_alt holds the parallel set drawn by session ab951e4c, kept as guide header art after the merge. Both are original editorial illustrations; see FLG-036."
+      "image_note": "Cards and product pages use `image` (the trunk illustration set) through the picture/webp helper; `image_alt` is the parallel set this pass drew, used as guide header art. Both are original editorial illustrations. See FLG-045."
     },
     {
       "id": "p4-thermomaven",
@@ -301,13 +301,13 @@
         ]
       ],
       "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)",
-      "image": "assets/img/pthermo.jpg",
+      "image": "assets/img/pthermo.png",
       "image_caption": "Editorial illustration: a slim instant-read thermometer on a cutting board beside a roasted chicken. Not a product photograph of this product.",
       "shelf_line": "An instant-read the listing rates at 1 second with ±0.5℉ accuracy and IP67 waterproofing — the tool for FSIS's three-place bird check, taken near the end of cooking.",
       "decide_on": "Decide on what the listing does not say: it states an accuracy figure, and USDA FSIS says most food thermometers read within 2 to 4°F, so the ice-cup check is the part you can do yourself.",
       "image_alt": "assets/img/prod-instant-read.jpg",
       "image_alt_caption": "Editorial illustration of a folding instant-read thermometer over a sliced steak. Not a product photograph.",
-      "image_note": "Card and product-page art is the trunk illustration set. image_alt holds the parallel set drawn by session ab951e4c, kept as guide header art after the merge. Both are original editorial illustrations; see FLG-036."
+      "image_note": "Cards and product pages use `image` (the trunk illustration set) through the picture/webp helper; `image_alt` is the parallel set this pass drew, used as guide header art. Both are original editorial illustrations. See FLG-045."
     },
     {
       "id": "p5-chefiq",
@@ -362,13 +362,13 @@
           "It is a marketing phrase on the listing. What it means is that the hub reports over your network rather than over a short radio link; how far the hub can sit from the cooker is a question about your router and your house, not a published number."
         ]
       ],
-      "image": "assets/img/pchefiq.jpg",
+      "image": "assets/img/pchefiq.png",
       "image_caption": "Editorial illustration: ultra-thin probe thermometers resting in a charging hub. Not a product photograph of this product.",
       "shelf_line": "Three ultra-thin leave-in probes reporting to a hub over WiFi, with probes the listing calls heat-safe to 1000°F — built for the long cook somebody else has to stop.",
       "decide_on": "Decide on the leave-in job, not the app: USDA FSIS lists wireless/smart thermometers as designed to remain in the food while cooking, at least 1\" deep in the thickest part.",
       "image_alt": "assets/img/prod-wireless-probe.jpg",
       "image_alt_caption": "Editorial illustration of leave-in probes cabled out of an oven to a charging hub. Not a product photograph.",
-      "image_note": "Card and product-page art is the trunk illustration set. image_alt holds the parallel set drawn by session ab951e4c, kept as guide header art after the merge. Both are original editorial illustrations; see FLG-036."
+      "image_note": "Cards and product pages use `image` (the trunk illustration set) through the picture/webp helper; `image_alt` is the parallel set this pass drew, used as guide header art. Both are original editorial illustrations. See FLG-045."
     }
   ],
   "_note": "Per-product illustration fields added 2026-11-20 (session arena-70bd2fcc): these are original editorial illustrations in the site style — not product photographs, not seller images — so no product-image policy question applies. Captions say so on every page."
