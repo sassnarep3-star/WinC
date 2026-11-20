@@ -98,7 +98,7 @@ re-read `main` immediately before editing shared outputs.
 | T14 | Gate extension (claim drift, image existence, unlinked sources) | done | arena-23d7ed19 | `scripts/check_site.py` |
 | T15 | Cadence tooling: guides as data + scaffolder | done | arena-23d7ed19 | `scripts/new_guide.py`, `data/guides/_TEMPLATE.json` |
 | T16 | Exec summary + README reconciliation with repo state | done | arena-23d7ed19 | `EXECUTIVE-SUMMARY.md`, `README.md` |
-| T17 | PR → main → confirm Pages live | in progress | arena-23d7ed19 | (integration only) |
+| T17 | PR → main → confirm Pages live | done | arena-23d7ed19 | (integration only) |
 
 ## Verified sources added by this session
 
@@ -139,6 +139,19 @@ volatility), the short links are not called invalid (FLG-003 per the brief), and
 
 ## PR / merge record (T17)
 
-- Pushed `arena/23d7ed19-winc`, PR → `main`, merged without waiting for review per instruction.
-- Pages: `build_type: legacy`, source `main:/`. Deploy confirmed via the Pages API/build endpoint
-  after merge; live URL re-fetched. Result recorded in the commit that follows this one.
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#6** https://github.com/sassnarep3-star/WinC/pull/6 opened from `arena/23d7ed19-winc` → `main`. `mergeable: MERGEABLE`, `mergeStateStatus: CLEAN`, no status checks configured (Actions not enabled for this token: `403` on `/actions/permissions`). |
+| 2026-11-20 | Merged with `gh pr merge 6 --merge` → `main` @ `4805588`. No conflict with the other two merged sessions; `archive/counter-notes/` untouched. |
+| 2026-11-20 | Pages `POST`-free legacy build picked up the merge: `pages/builds/latest` went `building` → **`built`**, `error: null`. |
+| 2026-11-20 | Live re-fetch through the browser reader, not inferred from the API: `https://sassnarep3-star.github.io/WinC/questions.html` and `/WinC/guides/instant-read-or-leave-in.html` both serve this PR's content (new nav group, disclosure strip, illustration + caption, USDA table with live source links, cluster-filtered cards, tagged+Sponsored buttons). Images resolve from `/WinC/assets/img/`. |
+
+**Build commands of record:** `python3 scripts/build_site.py` → `Built 26 pages, 25 sitemap URLs, 6 guides, 22 search rows.`
+`python3 scripts/check_site.py` → `OK: 26 pages checked, 25 sitemap URLs, no violations.`
+
+## Open items handed to the next session (all owner-side; see `questions.html`)
+
+Q-01 tracking-ID issuance · Q-16 manual `?tag=` vs generated Special Link · Q-02 product intent for the
+five tokens · Q-04 category commission rates · Q-06 real byline. Three of these cannot be answered from
+any sandbox — they require an enrolled Amazon Associates account. Until then the correct posture is what
+shipped: published guides, sourced specs, **links gated and flagged**, no invented numbers.
