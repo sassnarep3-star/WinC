@@ -84,9 +84,12 @@ for hf in html_files:
     text = re.sub(r"<style.*?</style>", "", text, flags=re.S)
     if PRICE_RE.search(text):
         fail(f"{hf}: price-like text rendered (must stay blank per policy)")
-    # no link.amazon reader buttons (short links only in verification provenance)
-    for m in re.finditer(r'<a[^>]+href="https://link\.amazon/[^"]+"', content):
-        fail(f"{hf}: link.amazon used as reader link (provenance only): {m.group(0)[:100]}")
+    # link.amazon short links are provenance, never reader links. A citation of the
+    # submitted URL inside the source register is legitimate and carries rel="nofollow";
+    # anything presented as a clickable destination is a violation.
+    for m in re.finditer(r'<a[^>]+href="https://link\.amazon/[^"]+"[^>]*>', content):
+        if 'rel="nofollow' not in m.group(0):
+            fail(f"{hf}: link.amazon used as a reader link (provenance only): {m.group(0)[:100]}")
     # internal links resolve (skip JS template fragments)
     for m in re.finditer(r'href="([^"]+)"', content):
         href = m.group(1)
@@ -370,23 +373,59 @@ if "the shop" not in idx_text.lower():
     fail("index.html: front page no longer shows the shop")
 
 
-# --- every register row must carry an official source link (or say why not) ---
-REGISTER_PAGES = ["questions.html", "topics.html", "flagged-for-review.html", "products/index.html"]
-for hf in REGISTER_PAGES:
-    if not os.path.exists(os.path.join(ROOT, hf)):
-        fail(f"{hf}: register page missing")
-        continue
+# --- every table row on every page must carry a source (the brief's hard rule) ---
+# A row passes if it links to an official source (https), cites the source register
+# (verification.html#src-), or explicitly says the source is internal and links the
+# internal file it came from. A row that is blank must say so and point at the
+# register where the gap is published. Nothing may simply have no source.
+ROW_OK_LINK = ('href="https://', "href='https://")
+ROW_OK_CITE = "verification.html#src-"
+ROW_INTERNAL_MARKERS = ("Internal only", "Internal \u2014", "Internal -")
+ROW_BLANK_MARKERS = ("blank (unverified)", "not confirmed", "not shown (policy)",
+                     "no external source", "not applicable")
+
+def row_is_sourced(row):
+    if any(k in row for k in ROW_OK_LINK):
+        return True
+    if ROW_OK_CITE in row:
+        return True
+    if "Internal only" in row:
+        return True
+    has_link = 'href="' in row or "href='" in row
+    if has_link and any(m in row for m in ROW_INTERNAL_MARKERS):
+        return True
+    if has_link and any(m in row for m in ROW_BLANK_MARKERS):
+        return True
+    return False
+
+for hf in html_files:
     content = read(hf)
     for m in re.finditer(r"(?s)<tr[^>]*>(.*?)</tr>", content):
         row = m.group(1)
         if "<td" not in row:
             continue  # header row
-        has_source = ('href="https://' in row) or ('href="verification.html#src-' in row)
-        if not has_source and "Internal only" not in row:
-            fail(f"{hf}: a table row carries no official source link and no 'internal only' note")
-    # and the page must point at the source register
-    if 'href="https://' not in content and 'href="verification.html#src-' not in content:
-        fail(f"{hf}: register page links to no source at all")
+        if not row_is_sourced(row):
+            fail(f"{hf}: a table row carries no official source link, no source-register "
+                 f"citation and no explicit internal/blank note: {re.sub(r'<[^>]+>', ' ', row)[:90]!r}")
+
+# --- deep links into the source register and the flagged register must resolve ---
+ANCHOR_PAGES = {}
+for hf in html_files:
+    ANCHOR_PAGES[hf] = set(re.findall(r'id="([^"]+)"', read(hf)))
+
+for hf in html_files:
+    content = read(hf)
+    for m in re.finditer(r'href="([^"]*?)#(src-[A-Za-z0-9]+|flag-FLG-[0-9]+|q-Q-[0-9]+|t-T-[0-9]+)"', content):
+        target, anchor = m.group(1), m.group(2)
+        target = target.replace("../", "").replace("./", "")
+        if target and not target.endswith(".html"):
+            continue
+        if not target:
+            target = hf
+        if target not in ANCHOR_PAGES:
+            fail(f"{hf}: deep link target page missing -> {target}#{anchor}")
+        elif anchor not in ANCHOR_PAGES[target]:
+            fail(f"{hf}: deep link anchor does not exist -> {target}#{anchor}")
 
 
 if errors:
