@@ -271,6 +271,12 @@ def product_card(p, depth=0):
         specs.append(f"Weight: {esc(p['weight'])}")
     if p["model"]:
         specs.append(f"Model: {esc(p['model'])}")
+    # thermometers carry no capacity/model sometimes: fall back to the spec the listing does state
+    if not specs:
+        if p.get("temperature"):
+            specs.append(f"Reading: {esc(p['temperature'])}")
+        if p.get("power") and p["power"] != "—":
+            specs.append(f"Power: {esc(p['power'])}")
     li = "".join(f"<li>{x}</li>" for x in specs)
     return f"""<article class="card">
 <figure class="cardimg">{pic(img, cap, 800, 500, pfx, cls="cardpic")}</figure>
@@ -525,8 +531,9 @@ def story_body(p):
     anchor_value = p.get(st.get("spec_anchor", "")) or "not confirmed from the listing"
     sname = SERIES_OF.get(p["id"])
     series_meta = SERIES_META.get(sname, {})
-    crumb = (f'<p class="seriesline"><span class="seriesmark">{esc(st["series"])}</span> · '
-             f'<a href="../{esc(series_meta.get("slug", ""))}">{esc(sname)}</a></p>' if sname else "")
+    # one series marker only: the badge itself links to the series page
+    crumb = (f'<p class="seriesline"><a class="seriesmark" href="../{esc(series_meta.get("slug", ""))}">{esc(st["series"])}</a>'
+             f' · <span class="meta">series</span></p>' if sname else "")
     maker = ""
     if mk:
         maker = (f'<div class="makerbox"><h3>About the maker: {esc(mk["name"])}</h3>'

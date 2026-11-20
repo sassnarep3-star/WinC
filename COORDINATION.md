@@ -1,10 +1,10 @@
 # COORDINATION — WinC affiliate site (shared task board)
 
-> **Latest session: `arena/d1b621b7-winc`** (session id `d1b621b7`) — independent parallel build,
-> then merge integration of `main` into its branch; its section is at the **end of this file**.
-> Immediately before it, sections for `arena-23428c9e`, `arena-70bd2fcc`, `arena/a81c0f0e-winc`
-> and `arena-038c0b80` plus every earlier session are kept verbatim as the provenance trail —
-> this round's conflict dropped none of them.
+> **Latest session: `arena-156c2ecf`** (branch `arena-156c2ecf-winc`) — line-by-line re-verification
+> plus decision-register completion; its board, sources and merge note are in the **last section**
+> of this file. Every earlier session section — `arena-23428c9e` (Air & Ember integration),
+> `arena-c2123b9c` (T29–T32), `arena-482d5832` (T33), `arena-038c0b80` and the rest — is kept
+> verbatim as the provenance trail; this round's conflicts dropped none of them.
 
 > Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
 > Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
@@ -13,6 +13,8 @@
 > Shared outputs (table data, index, navigation) are changed only by the final integration step
 > in this session (single-session repo: the integration step is the same session, after all tasks).
 
+> **Also latest: `arena/d1b621b7-winc`** (session `d1b621b7`) — its integration section was
+> appended at the very end of this file when `main` was merged back into its branch.
 ## Task board
 
 | ID | Task | Status | Owner (session) | File scope |
@@ -1082,7 +1084,91 @@ was fast-forwarded to `404cabc` before any edit, so nothing here forks an old ba
   published site. PR #17's files (`archive/arena-04112b09`, `tools/*.mjs`, `.github/workflows/ci.yml`)
   are already on `main` via PR #24 and are in use. This session did not touch those branches.
 
+## PR / merge record (T37 — merged)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:47:55 | PR **#40** https://github.com/sassnarep3-star/WinC/pull/40 from `arena/038c0b80-winc` → `main`. Merge commit `627157f`. `main` advanced **six times** during this session (PRs #36–#41); each time the branch was rebased/merged forward with registers unioned **by id** (never by whole file), `main`'s SSRF fix and stricter collector kept over this session's older copies, and every page regenerated from the merged data. |
+| 2026-11-20 06:47Z | GitHub Actions on the merge commit: `verify site` **success** (26s), `Deploy static site to GitHub Pages` **success** (26s), `pages build and deployment` **success** (22s). Pages API: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Verified through the browser reader: `series/countertop.html` serves the generated series page (3 product cards, all with tagged Sponsored buttons, WebP imagery, series pieces, related guides); `products/chefman-...b0cdy277d3.html` serves the full editorial narrative, the "as listed on Amazon" evidence line, the deciding-spec anchor, the maker box with linked `S09` claims, the spec table with price/rating blank, the listing-contradiction block and the FAQ. |
+| 2026-11-20 | Follow-up PR for a cosmetic fix (the product page printed the series name twice in its series line) opened against the merge; content of record is the merged state above. |
+
+### What was deliberately merged *from* main rather than over it
+
+- `analytics/collect.py`, `analytics/worker.js`, `analytics/test_worker.mjs` — another session added an SSRF allow-list and a stricter per-event schema. Their version is published; this session's older copy was dropped.
+- `data/suggestions.json` — another session added `SG-21`/`SG-22` while this one used `SG-35..37`. Both kept; ids sorted numerically. **Nothing renumbered, nothing dropped.**
+- Three guides added by another session (`air-fryer-vs-convection-oven`, `first-air-fryer-six-checks`, `what-6-quarts-actually-holds`) kept, and their image references repointed to the WebP files that actually exist.
+- `COORDINATION.md` — main's full document kept, this session's section appended (union, not replacement).
+
+### Two id collisions worth recording for the next session
+
+1. `TP-13` was used by two sessions for different topics. Resolved by keeping both: the other session's topic stays `TP-13`, this session's Amazon-listing-reading topic became `TP-15`.
+2. Two other-session topics (`TP-13`, `TP-14`) were marked `planned` describing guides that were already **live**. They are now marked `published` with `published_as` links, because a backlog that lists finished work as pending misstates the site.
+
+### Rounds where the gates were run after each merge
+
+38 pages · 37 sitemap URLs · 15 guides · 32 search rows · `check_site.py` **0 violations** · `tools/audit.mjs --strict` **0 findings** · `scripts/test_analytics.py` 4/4 · `analytics/test_worker.mjs` OK.
+
+
 ---
+
+# Session arena/156c2ecf-winc — line-by-line re-verification + decision-register completion (T39–T42)
+
+Branch `arena/156c2ecf-winc`, branched from `main` at `ba0b838`. Started 2026-11-20. Scope claimed:
+source re-verification with dated access notes (failures recorded, not hidden), decision-register
+completion, seasonal topic backlog, typed-count reconciliation, and the integration close-out for
+this branch. Task rows drafted as T29–T32, renumbered to T39–T42 at the first rebase — sessions
+`arena-c2123b9c` / `arena-70bd2fcc` had already claimed T29–T38 on main. Same repair pattern as
+the earlier FLG renumbering.
+
+## Task board (this session)
+
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T39 | Line-by-line re-verification of load-bearing sources with dated access notes (failures recorded, not hidden) | done | arena-156c2ecf | `data/sources.json`, `EXECUTIVE-SUMMARY.md` |
+| T40 | Decision-register completion: house-style/counts/re-read-trail/seasonal-publishing rows (SG-39..SG-42) | done | arena-156c2ecf | `data/suggestions.json` |
+| T41 | Seasonal/trendy topic backlog rows TP-16..TP-18 + typed-count reconciliation | done | arena-156c2ecf | `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
+| T42 | Integration close-out: build + gate green on the union, PR to main, merge, confirm Pages, record result | done below | arena-156c2ecf | `COORDINATION.md` (integration only) |
+
+## Verification performed (official sources, fetched live 2026-11-20 via the page reader)
+
+| Ref | Source | Result |
+| --- | --- | --- |
+| S01 | affiliate-program.amazon.com/help/operating/agreement | **Re-read live.** §5 disclosure sentence, §1 tagged Special Links, §6 material-breach clause, "Updated: October 15, 2025" — re-confirmed. |
+| S02 | affiliate-program.amazon.com/help/operating/policies | **Re-read live.** Price/availability rule verbatim, tag format "(appearing as XXXXX-##)", "Updated: April 14, 2026". |
+| S03 | ftc.gov Endorsement Guides FAQ | **Re-read live.** "disclosed clearly and conspicuously". |
+| S05 | sell.amazon.com/blog/what-is-an-asin | **Re-read live.** 10-character ASIN rule, found after /dp/. |
+| S09 | amazon.com/dp/B0CDY277D3 | **Re-read live.** `<title>` matched stored title verbatim; breadcrumb + fallback-route behaviour confirmed. |
+| S16/S17 | fsis.usda.gov | **Re-fetch FAILED this session (two URL forms).** Not re-confirmed here; stand on prior sessions' reads. Recorded on the source rows. |
+
+## Coordination / merge note (this session, two rebases)
+
+`main` advanced twice while this session worked (PRs #37–#39 round and PRs #40–#45 round). Each
+rebase conflicted in `COORDINATION.md`, `EXECUTIVE-SUMMARY.md`, `data/sources.json`,
+`data/suggestions.json`, `data/topics.json` and four generated HTML files. Resolution without
+discarding either side, both times:
+
+- `data/sources.json`: kept main's rows (S01–S29 after round one, S01–S35 after round two);
+  appended this session's dated re-read notes to S01, S02, S03, S05, S09 and the failed-fetch
+  notes to S16/S17.
+- `data/suggestions.json`: kept main's rows exactly (SG-01–SG-38, including its SG-21/SG-22 and
+  the SG-27..SG-30 findability rows — those match the brief's named rows and stay canonical). This
+  session's rows are **SG-39..SG-42**. Its earlier duplicates of SG-27..SG-30 were folded away;
+  its seasons row was superseded by main's season rail + SG-35; its structured-data row deferred
+  to SG-33 after S28 recorded that Google removed the FAQ rich-result documentation (June 2026).
+- `data/topics.json`: kept main's rows (through TP-15 after round two); this session's seasonal
+  rows are **TP-16..TP-18** (renumbered twice as main's topic ids advanced).
+- Questions (Q-01..Q-25), flags (FLG-001..FLG-029), products, guides (15 files) and the series
+  data: auto-merged; main's versions kept.
+- Generated HTML: both sides' copies discarded and rebuilt from the merged data via
+  `scripts/build_site.py`, so every page reflects the union. Gate green after each union:
+  round two build = 38+ pages / 15 guides (final counts in the PR record below).
+
+## PR / merge record (T42)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round; merge result and Pages status appended below. |
 
 ---
 
@@ -1154,6 +1240,7 @@ Corroborates register rows **S01, S02, S03, S05** (and the price-display rows) �
 | this session's `docs/` site + endpoint variants | moved to `archive/arena-d1b621b7/` (main's gate skips `archive/`; existing archives are handled the same way). Nothing deleted. |
 | round 2: `COORDINATION.md` (content) after main advanced to `627157f` (PRs #37–#41) | union — the four incoming session sections (23428c9e, 70bd2fcc, a81c0f0e, 038c0b80) and this session's section both kept; header pointer names this session as latest |
 | round 2: `AUDIT.md` (content) | resolved to the incoming report, then regenerated with `node tools/audit.mjs` for the combined tree |
+| rounds 3+: `COORDINATION.md` re-conflicted each time `main` advanced (PRs #43–#46 observed); resolved by taking main's board and re-appending this section — no other session's section dropped |
 
 ## Request log (cross-scope — not edited here)
 
