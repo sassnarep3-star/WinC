@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Before You Decide — questions, answers and missing information · Kitchen Shortlist</title>
+<meta name="description" content="Fourteen questions that must be answered before reasonable decisions can be made: what we know with sources, what we're missing, and how each gap gets discovered.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/questions.html">
+<meta property="og:title" content="Before You Decide — questions, answers and missing information">
+<meta property="og:description" content="What we know, what we lack, and how each gap gets closed — before any decision is made.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/questions.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Kitchen Shortlist RSS" href="rss.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ANALYTICS_ENDPOINT = null; /* local mode — FLG-006 */</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span><span class="brand-name">Kitchen Shortlist</span><span class="brand-tag">Buyer-first appliance guides</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guides/index.html">Guides</a></li>
+        <li><a href="products.html">The Shortlist</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Before You Decide</a></li>
+        <li><a href="executive-summary.html">Summary</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap">
+    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+    <span class="sep">·</span> If you buy through a product link on this page we may earn a commission at no extra cost to you.
+    <span class="sep">·</span> Product links carry <code>rel="sponsored"</code>.
+    <a href="compliance.html">How we disclose</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="index.html">Home</a> / Before You Decide</p>
+    <h1>Before You Decide</h1>
+    <p class="lede">A decision is only as good as the facts behind it. Fourteen questions — each with <strong>what we know</strong> (sourced), <strong>what's missing</strong>, and <strong>how the gap gets closed</strong>. Nothing here is guessed; if the answer isn't known, the cell says so.</p>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="qa">
+
+        <article class="qa-item" id="q01">
+          <h3>Q-01 · Are the five submitted codes valid ASINs?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Not confirmed — and the evidence points to no.</strong> All five codes are exactly 9 characters with lowercase letters; Amazon Ads states an ASIN is "always 10 characters long" and starts with "B" or is numeric (<a href="source-register.html#v12">V-12</a>). Fetches of <span class="code">amazon.com/dp/&lt;code&gt;</span> failed for all five on 2026-11-20 while two known-good controls succeeded (<a href="flagged.html#flg-001">FLG-001</a>).</dd>
+            <dt>Source</dt>
+            <dd><a href="https://advertising.amazon.com/library/guides/targeting-with-sponsored-products">Amazon Ads: targeting guide (ASIN = 10 characters)</a> · <a href="source-register.html#observations">observation log O-06/O-07</a></dd>
+            <dt>Missing information</dt>
+            <dd>Whether the codes are truncated/obfuscated forms of real ASINs, or identifiers from a different system entirely.</dd>
+            <dt>How we discover it</dt>
+            <dd>Open each submitted link in a logged-out browser, note the final <span class="code">/dp/</span> code, and compare with the code in the link path; ask the link provider for their mapping table.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>Which product each register row refers to (SG-06, product copy, any future price display).</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q02">
+          <h3>Q-02 · What do the supplied links actually promote?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Observed and recorded — and they don't match the intended codes.</strong> All five resolved to real Amazon listings: three air fryers (B0CDY277D3, B09B7SB46R, B08DKYBTPH) and two meat thermometers (B0DHZTCNR5, B0DZFD6R9Z) on 2026-11-20 (<a href="flagged.html#flg-002">FLG-002</a>).</dd>
+            <dt>Source</dt>
+            <dd><a href="source-register.html#record">product-intent record (intended vs observed blocks)</a></dd>
+            <dt>Missing information</dt>
+            <dd>Which side is authoritative: the code in the link path, or the listing it lands on.</dd>
+            <dt>How we discover it</dt>
+            <dd>Owner confirms intent per row; re-run the redirect check monthly to catch link reuse.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>Product names on the shortlist, guide-to-product matching, catalog expansion.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q03">
+          <h3>Q-03 · Is <span class="code">link.amazon</span> an official Amazon domain?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Partially:</strong> it resolves in DNS to AWS CloudFront addresses (18.172.170.x) and redirects into <span class="code">amazon.com</span> product pages with Amazon-style parameters (<a href="flagged.html#flg-008">FLG-008</a>). Domain ownership (WHOIS/registrar) has <em>not</em> been independently verified.</dd>
+            <dt>Source</dt>
+            <dd><a href="source-register.html#observations">observation O-08</a> · <a href="https://affiliate-program.amazon.com/help/operating/policies">Amazon Program Policies (link clarity rules, V-08)</a></dd>
+            <dt>Missing information</dt>
+            <dd>Registrar record / WHOIS for <span class="code">link.amazon</span>.</dd>
+            <dt>How we discover it</dt>
+            <dd>One manual WHOIS lookup or ICANN Lookup by the owner; result logged here.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>SG-06 (whether these links qualify as Special Links at all).</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q04">
+          <h3>Q-04 · Is the tracking ID <span class="code">shopnow047c-20</span> active on the Associates account?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Unverified.</strong> The format is compatible with Amazon's documented tag pattern (<span class="code">XXXXX-##</span>, <a href="source-register.html#v03">V-03</a>), but validity is only observable inside Associates Central (<a href="flagged.html#flg-004">FLG-004</a>).</dd>
+            <dt>Source</dt>
+            <dd><a href="https://affiliate-program.amazon.com/help/operating/policies">Associates Program Policies §2(b)</a></dd>
+            <dt>Missing information</dt>
+            <dd>Account status, tag assignment, and whether this tag is the one on the supplied links.</dd>
+            <dt>How we discover it</dt>
+            <dd>Owner signs in → Account Settings → check tracking IDs; click one test link and inspect the <span class="code">tag=</span> parameter in the destination URL.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>SG-19 (one-link test), any revenue reporting.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q05">
+          <h3>Q-05 · What commission rate applies to these products?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Unknown — deliberately blank.</strong> The rate schedule sits behind Associates sign-in; a fetch of the schedule redirected to Amazon's sign-in on 2026-11-20 (<a href="source-register.html#v09">V-09</a>, <a href="flagged.html#flg-005">FLG-005</a>).</dd>
+            <dt>Source</dt>
+            <dd><a href="https://affiliate-program.amazon.com/help/operating/schedule">Commission schedule (sign-in required)</a></dd>
+            <dt>Missing information</dt>
+            <dd>Category rate for home/kitchen small appliances on this account (rates are account- and date-specific).</dd>
+            <dt>How we discover it</dt>
+            <dd>Owner reads the rate card in Associates Central and records it with the date read.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>Niche profitability analysis, ledger forecasting (explicitly not attempted until then).</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q06">
+          <h3>Q-06 · Do the supplied links qualify as "Special Links"?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Unresolved — and we do not claim they're invalid.</strong> Amazon requires tagged formats (<a href="source-register.html#v02">V-02</a>) and prohibits shortening that obscures the Amazon destination (<a href="source-register.html#v08">V-08</a>); whether these links carry a proper tag internally can't be seen from outside (<a href="flagged.html#flg-003">FLG-003</a>).</dd>
+            <dt>Source</dt>
+            <dd><a href="https://affiliate-program.amazon.com/help/operating/agreement">Operating Agreement §1</a> · <a href="https://affiliate-program.amazon.com/help/operating/policies">Program Policies §6(w)</a></dd>
+            <dt>Missing information</dt>
+            <dd>Destination URL parameters after full redirect chain (tag parameter), and the Associates-side report for a test click.</dd>
+            <dt>How we discover it</dt>
+            <dd>SG-19: click one link per product inside the enrolled workflow; confirm destination + that the click appears in the tracking report.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>SG-06 link replacement, revenue attribution trust.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q07">
+          <h3>Q-07 · Where should the analytics endpoint live?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd>Endpoint <em>code</em> is ready (Worker + Python variants); GitHub Pages cannot accept POSTs, so something must host it (<a href="flagged.html#flg-006">FLG-006</a>). Today the site runs in local mode: events record in-browser and appear on the <a href="measurement.html">Measurement page</a>.</dd>
+            <dt>Source</dt>
+            <dd><a href="https://github.com/sassnarep3-star/WinC">repo <code>analytics/</code> directory</a></dd>
+            <dt>Missing information</dt>
+            <dd>Owner's hosting preference, budget tolerance, and whether a subdomain (e.g. <span class="code">go.example.com</span>) is allowed.</dd>
+            <dt>How we discover it</dt>
+            <dd>Pick a path on SG-12; deploy takes ~15 minutes with a Cloudflare account.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>SG-10 ROI loop, SG-24 A/B tests, cross-device click data.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q08">
+          <h3>Q-08 · What is the canonical domain?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd>Canonical URLs point at <span class="code">https://sassnarep3-star.github.io/WinC/</span> — the only domain known to exist today (<a href="flagged.html#flg-010">FLG-010</a>).</dd>
+            <dt>Source</dt>
+            <dd><a href="sitemap.xml">sitemap.xml</a> · <a href="robots.txt">robots.txt</a></dd>
+            <dt>Missing information</dt>
+            <dd>Whether a custom domain will be purchased (affects canonicals, Search Console property, email trust).</dd>
+            <dt>How we discover it</dt>
+            <dd>Decision on SG-26; if yes, one CNAME + SSL setup and a sitemap/canonical sweep (checker will confirm).</dd>
+            <dt>Decision it blocks</dt>
+            <dd>SG-29 property strategy, long-term SEO stability (changing domains later costs rankings).</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q09">
+          <h3>Q-09 · Can we see what queries bring people here?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Not yet.</strong> The site is crawlable (robots, sitemap, canonicals shipped), but no Search Console property is verified (<a href="flagged.html#flg-007">FLG-007</a>), so zero query data exists.</dd>
+            <dt>Source</dt>
+            <dd><a href="measurement.html">measurement page</a> · <a href="https://sassnarep3-star.github.io/WinC/sitemap.xml">sitemap</a></dd>
+            <dt>Missing information</dt>
+            <dd>Property verification token (HTML tag or DNS TXT) and 30 days of accrual.</dd>
+            <dt>How we discover it</dt>
+            <dd>SG-29: owner obtains verification tag → we inject it → wait 30 days → export queries.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>SG-20 (data-driven topic selection), content ROI reporting.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q10">
+          <h3>Q-10 · How will readers subscribe beyond RSS?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd>RSS is live (<a href="rss.xml">rss.xml</a>, SG-28). Email capture is undecided — no provider is contracted and no consent flow exists (<a href="flagged.html#flg-011">FLG-011</a> is related: privacy addendum needed first).</dd>
+            <dt>Source</dt>
+            <dd><a href="privacy.html">privacy page</a> · <a href="suggestions.html#sg-list">SG-30</a></dd>
+            <dt>Missing information</dt>
+            <dd>Provider choice, consent wording, and whether reader email is in scope at all.</dd>
+            <dt>How we discover it</dt>
+            <dd>Owner picks a path on SG-30; privacy addendum drafted before any form goes live.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>Owned-audience strategy; launch of any subscribe form.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q11">
+          <h3>Q-11 · Which marketplace's rules apply?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd>The tag suffix <span class="code">-20</span> and all observed listings are <span class="code">amazon.com</span> (US) — so US Associates terms and FTC guidance were used as the compliance baseline (<a href="source-register.html#v01">V-01</a>, <a href="source-register.html#v10">V-10</a>). The Amazon Associates agreement set is per-marketplace, so this should be confirmed.</dd>
+            <dt>Source</dt>
+            <dd><a href="https://affiliate-program.amazon.com/help/operating/agreement">US Operating Agreement</a> · <a href="https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255">16 CFR Part 255</a></dd>
+            <dt>Missing information</dt>
+            <dd>Confirmatory note from the account owner: US program enrolled, not another region.</dd>
+            <dt>How we discover it</dt>
+            <dd>One line from the owner; if non-US, the compliance page gets re-based on the correct marketplace agreement.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>Final wording of disclosure strip for non-US readers (none today).</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q12">
+          <h3>Q-12 · Can we show prices, ratings or reviews?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Not in the current setup.</strong> Prices only if Amazon serves the data or via Creators/PA API with timestamp + disclaimer (<a href="source-register.html#v06">V-06</a>); star ratings only via those APIs (<a href="source-register.html#v07">V-07</a>). So all such cells are blank and labelled unverified.</dd>
+            <dt>Source</dt>
+            <dd><a href="https://affiliate-program.amazon.com/help/operating/policies">Program Policies (IP License §2(i)-(k), §6(t))</a></dd>
+            <dt>Missing information</dt>
+            <dd>Whether PA API access will be requested (needs qualifying account status + build plan).</dd>
+            <dt>How we discover it</dt>
+            <dd>SG-23 decision; until then "Check price" links carry buyers to Amazon's own current number.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>Rich product cards, price-based content, comparison tables with numbers.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q13">
+          <h3>Q-13 · Who is the author, and how do readers reach them?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd>Bylines currently read "Kitchen Shortlist Editorial" — an organization-level authorship, with editorial policy published on <a href="about.html">About</a>. No contact address exists in the repo yet.</dd>
+            <dt>Source</dt>
+            <dd><a href="about.html">about &amp; editorial policy</a> · <a href="suggestions.html#sg-list">SG-22</a></dd>
+            <dt>Missing information</dt>
+            <dd>A real contact channel and a named human or clearly defined editorial entity.</dd>
+            <dt>How we discover it</dt>
+            <dd>Owner provides contact email (or chooses GitHub Issues) → published in About + footer.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>Full authorship signals (E-E-A-T), corrections SLA, feedback loop.</dd>
+          </dl>
+        </article>
+
+        <article class="qa-item" id="q14">
+          <h3>Q-14 · Is there demand for these topics at all?</h3>
+          <dl>
+            <dt>Answer (what we know)</dt>
+            <dd><strong>Unknown — no demand data exists.</strong> The four guides are editorial hypotheses from the brief, explicitly labeled as working titles with no claim of popularity or search volume (<a href="flagged.html#flg-012">FLG-012</a>).</dd>
+            <dt>Source</dt>
+            <dd><a href="guides/index.html">guides index (working-title note)</a> · <a href="measurement.html">measurement page</a></dd>
+            <dt>Missing information</dt>
+            <dd>30 days of Search Console queries + on-site search terms + guide-level page views.</dd>
+            <dt>How we discover it</dt>
+            <dd>SG-29 verify → accumulate → read the Measurement page and Search Console export together.</dd>
+            <dt>Decision it blocks</dt>
+            <dd>SG-20 next topic, cluster expansion, whether to keep or rewrite any hypothesis.</dd>
+          </dl>
+        </article>
+
+      </div>
+
+      <div class="note"><strong>Summary of what's missing:</strong> Associates-side confirmations (Q-04, Q-05, Q-06, SG-19 test), link-provider mapping (Q-01, Q-02), domain WHOIS (Q-03), hosting pick (Q-07), domain strategy (Q-08), Search Console token (Q-09), subscription consent flow (Q-10), marketplace confirmation (Q-11), API access decision (Q-12), contact identity (Q-13), and 30 days of measured demand (Q-14). Each one has a named discovery path above — none of them require guessing.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Kitchen Shortlist</span>
+        <p>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul class="footer-nav">
+          <li><a href="guides/index.html">All guides</a></li>
+          <li><a href="products.html">The Shortlist</a></li>
+          <li><a href="index.html#seasonal">Seasonal clusters</a></li>
+          <li><a href="rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Dashboard</h4>
+        <ul>
+          <li><a href="source-register.html">Source register</a></li>
+          <li><a href="flagged.html">Flagged for review</a></li>
+          <li><a href="measurement.html">Measurement</a></li>
+          <li><a href="ledger.html">Campaign ledger</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="executive-summary.html">Executive summary</a></li>
+          <li><a href="suggestions.html">Suggestions</a></li>
+          <li><a href="questions.html">Before you decide</a></li>
+          <li><a href="about.html">About &amp; editorial policy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclosure">
+      <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. If you buy through links on this page we may earn a commission at no extra cost to you. Product links are marked <code>rel="sponsored"</code>; we only recommend what our source register can support, and unverified values are published as blank rather than filled in.
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Kitchen Shortlist</span>
+      <a href="sitemap.xml">Sitemap</a>
+      <a href="robots.txt">Robots</a>
+      <a href="privacy.html">Privacy</a>
+      <span>Prices and availability change; check the listing for current terms.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/analytics.js" defer></script>
+</body>
+</html>

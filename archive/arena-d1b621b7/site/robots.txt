@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Kitchen Shortlist — one site, one sitemap
+Sitemap: https://sassnarep3-star.github.io/WinC/sitemap.xml
