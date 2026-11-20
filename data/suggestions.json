@@ -1,5 +1,5 @@
 {
-  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide.",
+  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. SG-32 marked shipped and SG-35..SG-38 appended 2026-11-20 by session arena-70bd2fcc (task renumbered to T37 after an id collision with arena-c2123b9c).",
   "updated": "2026-11-20",
   "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20)",
   "suggestions": [
@@ -385,7 +385,7 @@
     {
       "id": "SG-32",
       "title": "A deal-season playbook that never quotes prices",
-      "status": "open",
+      "status": "shipped",
       "area": "Editorial",
       "problem": "Deal-season traffic (cyber week, January clearance) peaks for kitchen appliances, but a 'deals' page is impossible here: prices may only come from Amazon-served links (S02), and the no-price rule is a deliberate posture (Q-13, FLG-006). A site that chases deal keywords with no prices would be worse than one that does not try.",
       "proposal": "Publish question-shaped deal-literacy content instead: what to verify before checkout, how listing copy conflicts arise (FLG-010 and FLG-020 are live examples), the holiday-to-leftovers food-safety arc (S27), and the counter-space math that decides returns. Season fields mark the window so January readers see honest, dated pages. Q-20 (seasonal vs evergreen) holds the calendar decision.",
@@ -394,7 +394,9 @@
       "risk": "Low: seasonal pages can look dated after the window - mitigate with the season field and a refresh pass, not by deleting history.",
       "expected_effect": "Seasonal guides indexed before the window; measured arrivals once SG-29 + SG-07 exist. If a seasonal guide earns no arrivals in its window, that is the measurement saying stop.",
       "evidence": "USDA FSIS leftovers guidance (S27); the Emeril accessory-count (FLG-010) and preset-count (FLG-020) conflicts as worked examples; Q-20 (seasonal windows) is the blocking decision.",
-      "feeds_prompt": "Answer Q-20 first (pick the seasonal windows with dates). For the next window, write two question-shaped guides with zero price claims, register them in data/guides/ with season fields, rebuild, and record what the window earned in the campaign ledger once deployed."
+      "feeds_prompt": "Answer Q-20 first (pick the seasonal windows with dates). For the next window, write two question-shaped guides with zero price claims, register them in data/guides/ with season fields, rebuild, and record what the window earned in the campaign ledger once deployed.",
+      "status_detail_by": "arena-70bd2fcc",
+      "status_detail": "Shipped 2026-11-20 as two price-free, question-shaped seasonal guides: \"Cooking a turkey this week: where does the probe actually go?\" (guides/turkey-probe-placement.html, USDA-sourced) and \"Black Friday air fryer deals: what should you check before you click buy?\" (guides/black-friday-air-fryer-checklist.html, pre-click checklist built on the live listing conflicts FLG-005/010/020/023/024 and the S02 price rule), alongside arena-c2123b9c's leftovers guide. All carry season fields so the band groups them."
     },
     {
       "id": "SG-33",
@@ -456,20 +458,61 @@
       "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
       "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification)."
     },
-  {
-   "id": "SG-35",
-   "title": "Publication polish: season badges on guide cards and a season lead on category pages",
-   "status": "done-this-session",
-   "status_detail": "Shipped in session arena/a81c0f0e-winc. Every guide card now shows a season pill (Everyday / Holiday cooking), each category page carries a guide count in its kicker and a season-framed lead, and the build-prompt builder carries an explicit design directive. The front-page seasonal band is kept as-is; this suggestion adds the badge and lead layer on top without duplicating the band.",
-   "area": "Editorial / design",
-   "problem": "The site read like a careful verification dashboard rather than a polished marketing publication. The reader-facing surfaces lacked the season framing on individual cards and category pages that make an affiliate shop feel published rather than generated.",
-   "proposal": "Add a publication-polish layer: a season pill on every guide card, a guide count and season-framed lead on each category page, and an explicit design directive in the build-prompt builder so the suggestions feed a polished-marketing-publication build. Keep every compliance rule intact (disclosure above the fold, sponsored marking, blank prices).",
-   "effort": "S",
-   "cost": "none",
-   "risk": "Low. Cosmetic and additive only; no data or compliance rule changed. Risk is over-claiming if a 'trending' label implied measured data, which is why the framing is explicitly editorial.",
-   "expected_effect": "The site reads as a published marketing publication, which is the condition for organic traffic and click-through. Measure: outbound_click rate and guide views once the endpoint and Search Console are live (Q-08, Q-13).",
-   "evidence": "User brief: 'Make suggestions that will feed into the prompt to design the site so it should look like a polished marketing affiliate website... It should not read like some AI slop website.' Layered on the existing seasonal band and publication-polish pass.",
-   "feeds_prompt": "Design direction: the site must read like a polished marketing affiliate publication — catchy, human-sounding buyer questions as titles, editorial season framing, clean single-group navigation. It must NOT read like a generated dashboard. Keep disclosure above the fold on every page, mark every outbound product link Sponsored with rel=\"sponsored nofollow noopener\", and never print a price or rating."
-  }
+    {
+      "id": "SG-35",
+      "title": "Give the seasonal band a close-out rule",
+      "status": "open-blocked",
+      "area": "Editorial",
+      "problem": "Five guides now carry non-Everyday season labels, and the front page's 'In season' band (arena-c2123b9c) renders every one of them forever. After the holiday window the band becomes the site promising seasonal freshness with stale pages - exactly the generated-site smell the brief warns against.",
+      "proposal": "Add optional window_start/window_end fields to seasonal guide JSON; the builder renders the band only while today falls inside a guide's window, and a closed guide keeps its page, sitemap and feed entry (history is not deleted, it just stops being marketed).",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low: without dates the band is honest as long as someone manually demotes seasons after the window - a manual step that will be forgotten.",
+      "expected_effect": "The band stays trustworthy through January without hand edits; seasonal guides keep earning search traffic as evergreen archives.",
+      "evidence": "The computed band exists (scripts/build_site.py, season_bands block); five seasonal guides are live; the campaign ledger (measurement.html) has no seasonal dimension yet (Q-23).",
+      "feeds_prompt": "Answer Q-23, then implement the two date fields and a gate check that a seasonal guide without a window is only allowed while the window decision is open."
+    },
+    {
+      "id": "SG-36",
+      "title": "Ship the per-product illustration set",
+      "status": "done-this-session",
+      "area": "Editorial",
+      "problem": "Every product card in the shop showed the same category illustration, so the front page read as a template rather than a shop with five things in it (SG-03 fixed emoji thumbnails; this finishes the imagery pass per product).",
+      "proposal": "Six original editorial illustrations - one per product, matching the established warm-kitchen style - registered in data/products.json as image/image_caption with captions that state 'Not a product photograph of this product' on every page.",
+      "effort": "M",
+      "cost": "none",
+      "risk": "Low: illustrations are AI-generated editorial art, not seller images, so no Amazon product-image policy applies; the caption says so on every page. Q-07/S-19 (permanent imagery line) still holds the longer-term decision.",
+      "expected_effect": "Reader-facing shop reads as five distinct products; product pages gain a lede figure. No claim about products changes - captions keep the not-a-photograph line.",
+      "evidence": "assets/img/p6qt.png, p26qt.png, p8qt.png, pthermo.png, pchefiq.png; data/products.json image fields; product_card/_product_lede_figure in scripts/build_site.py; shipped 2026-11-20 (arena-70bd2fcc).",
+      "feeds_prompt": "If the owner later wants licensed photography, replace the files one-for-one and keep the captions' not-a-photograph line only if the replacements are not photos of the actual listings."
+    },
+    {
+      "id": "SG-37",
+      "title": "Show the deciding spec on thermometer cards",
+      "status": "done-this-session",
+      "area": "Editorial",
+      "problem": "The ThermoMaven card rendered an empty specs list: a thermometer lists no capacity/dimensions/weight/model, so the card gave a reader nothing to decide with (SG-11's decision-shortcut principle applied at card level).",
+      "proposal": "When a product has no physical specs on its card, fall back to its reading spec ('Reading: Accuracy ±0.5°F (NIST & NSF certified per listing)') - the one listed spec that decides a thermometer case.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "None: the fallback only fires when the physical list is empty, and the value is copied from the listing, not inferred.",
+      "expected_effect": "Both thermometer cards carry a decision line instead of white space.",
+      "evidence": "product_card() in scripts/build_site.py (fallback branch); shipped 2026-11-20 (arena-70bd2fcc).",
+      "feeds_prompt": "If a third thermometer joins the shop, check whether its listing names an accuracy figure before relying on the fallback."
+    },
+    {
+      "id": "SG-38",
+      "title": "Cross-link each seasonal guide to its evergreen sibling",
+      "status": "open",
+      "area": "Editorial",
+      "problem": "The seasonal guides and the evergreen guides live in separate rails with no link between them, so a holiday reader never discovers the evergreen comparison that answers the same question in March.",
+      "proposal": "One 'Read the evergreen version' link at the foot of each seasonal guide body: turkey-probe-placement → holiday-crowd-thermometer-questions; black-friday-air-fryer-checklist → read-an-air-fryer-listing; reheat-leftovers → cleanup-and-counter-space.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low: internal links only; the gate already checks link resolution.",
+      "expected_effect": "Holiday traffic leaks into the evergreen cluster instead of bouncing when the season ends; supports the measured-arrivals loop once SG-07/SG-29 exist.",
+      "evidence": "Guide bodies are data files (data/guides/*.json); the pairing is visible in the guides index; effort is one sentence per guide.",
+      "feeds_prompt": "Add the three links in a single edit pass, rebuild, and let the gate verify the links resolve."
+    }
   ]
 }
