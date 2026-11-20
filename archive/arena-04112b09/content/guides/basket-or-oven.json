@@ -1,0 +1,49 @@
+{
+  "slug": "basket-or-oven",
+  "title": "Basket or oven-style air fryer: what should you compare?",
+  "dek": "Two shapes, two failure modes. The trade-offs that decide it are on the listing, if you know which fields to read.",
+  "cluster": "multi-function",
+  "published_on": "2026-11-20",
+  "reviewed_on": "2026-11-20",
+  "author": "Crisp Report desk",
+  "provenance": "Written as a comparison method. No unit on this desk has been cooked in, and no product below is recommended - the five links we were given are still unresolved, so this page deliberately names nothing.",
+  "reading_time_min": 4,
+  "blocks": [
+    { "t": "lead", "x": "The choice between a basket drawer and an oven-style unit is not about which cooks better. It is about which inconvenience you would rather live with: shaking and refilling a drawer in batches, or dedicating a permanent slice of counter to a box with a door. Both are workable. Both get returned for the wrong reason." },
+    { "t": "h2", "x": "Start with the shape of what you actually cook" },
+    { "t": "p", "x": "Write down three things you would realistically make in it twice a month. Not the aspirational list - the ordinary one. Then look at each item's geometry: a tray of wings lies flat, a whole small chicken does not; frozen fries want a wide, shallow layer, roasted chickpeas want air on all sides and tolerate a deeper pile." },
+    { "t": "p", "x": "A single-layer basket is the honest answer for anything you want crisped on two faces, because nothing sits on top of it. An oven-style unit with two racks and a rotisserie is the honest answer for volume in one go, because it trades contact with the surface for a second level. If your three items all lie flat, the second set of features is money spent on a mode you will not use." },
+    { "t": "check", "x": "Before you compare any two models, answer these three:", "items": [
+      "Do I need to cook **one big flat layer** or **two stacked smaller ones**?",
+      "Will food need turning halfway - and do I have a reason to care (yes for crisped surfaces, no for a casserole dish)?",
+      "Does anything I cook need a **rotating spit**, or a **vertical clearance** taller than the drawer can give? Those two requirements eliminate most drawers outright, whatever the spec sheet claims."
+    ] },
+    { "t": "h2", "x": "Six fields on the listing that actually decide it" },
+    { "t": "table", "head": ["Field", "Why it decides the shape", "How to check it"], "rows": [
+      ["Internal chamber dimensions, not stated litres", "A volume figure can include the door cavity, the element housing or the rack stack", "Compare the length × width × height numbers against one item from your list. If only a litre figure is given, treat the capacity as unverified."],
+      ["Number of rack or shelf positions", "This is the real difference between a drawer and an oven", "Count the physical positions in the gallery, not the modes in the marketing copy."],
+      ["Window and light", "Oven styles earn their door; drawer styles rarely need one", "If the listing has no window image, assume you will open it to look, which costs heat."],
+      ["Removable parts list", "Drawer = one basket to wash; oven = racks, tray, door glass", "Find the parts diagram. Whatever is not shown as removable is what you will be wiping with a cloth."],
+      ["Power figure", "Compare like with like between listings, not against a household guess", "Note the wattage each listing states and put the two numbers side by side; a bigger chamber at the same draw behaves differently from a small one."],
+      ["Clearance stated in the manual", "Oven styles usually want more breathing room around the exhaust", "The manual is a linked PDF on most listings. Measure the space you have against that figure before the box arrives."],
+      ["Rotation of the fan housing", "Determines whether you can push it near a wall", "Photograph the spot you have in mind and note what is beside the exhaust. If the answer is a cabinet side, a wall or a socket, the manual’s clearance figure becomes the deciding number, not the marketing copy."]
+    ], "caption": "Every row is a field you can verify on a listing in about a minute. None of them requires us to have tested a product." },
+    { "t": "callout", "kind": "note", "x": "Why this page carries no model names. We were given five links to build this desk around. Each identifier in them measures nine characters, which we cannot resolve to a listing, so no title, price or rating appears anywhere on this site. A guide that named a product today would be naming a guess. The full record is on the Desk page and in Flagged for review.", "src": ["FLG-001", "FLG-005"] },
+    { "t": "h2", "x": "The failure mode nobody mentions" },
+    { "t": "p", "x": "Drawer units fail in households for a boring reason: the coating on the basket wears, and a replacement is either sold separately or not at all. Oven units fail for an equally boring reason: the door glass, the hinge and the seal are three more things that can be damaged by a scrubber, and they are rarely cheap or quick to replace." },
+    { "t": "p", "x": "Before you buy, run one search: the brand plus the word for the part you would most plausibly need in year two. If a coating or a gasket is not obtainable, the appliance has a shorter practical life than its warranty suggests, and the shape decision becomes a repairability decision. That is checkable from the listing page and the brand's own support area - not from a review score." },
+    { "t": "h2", "x": "What we cannot tell you, and would rather say so" },
+    { "t": "unverified", "items": [
+      "Which of the two shapes cooks more evenly in our kitchen. Nobody here cooked anything.",
+      "Whether a specific model is quieter, faster, or better built. Those are listing claims until someone measures them.",
+      "Any price, discount or 'best value' judgement. Prices may only be shown by Amazon-served content or an approved API, and we have neither; a comparison table with invented numbers is the fastest way to lose an affiliate account and a reader's trust in one commit.",
+      "Any star rating or review count. Amazon's participation requirements tie the display of reviews and ratings to a link obtained through the approved APIs, which we do not have."
+    ], "src": ["SRC-02"] },
+    { "t": "h2", "x": "Decision line" },
+    { "t": "p", "x": "Choose the drawer if you cook flat, single-layer food, wash as you go, and store the thing in a cupboard. Choose the oven style if you cook for more than two at once, want two racks or a rotisserie in the same run, and have a permanent stretch of counter that satisfies the clearance the manual asks for on the exhaust side. If both describe you, the tie-breaker is not performance - it is whether you would rather carry one basket to the sink or wipe a door." },
+    { "t": "quote", "x": "You must not make inaccurate, overbroad, deceptive or otherwise misleading claims about any Product, an Amazon Site, or any of our policies, promotions, or prices.", "cite": "Amazon Associates Program Policies, Participation Requirements §2(b), read 2026-11-20", "src": "SRC-02" },
+    { "t": "p", "x": "That is the sentence this publication holds itself to, which is why the paragraph above says 'we do not know' in three places. On the next page: the capacity checklist, where the numbers on the box get treated the same way." }
+  ],
+  "related": ["capacity-checklist", "what-to-check-on-the-listing"],
+  "cta": { "kind": "none", "note": "No product link on this page. Every outbound link we place must point at a confirmed product, and none is confirmed yet." }
+}

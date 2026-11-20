@@ -1,0 +1,53 @@
+{
+  "slug": "cleanup-and-counter-space",
+  "title": "How to assess cleanup and counter-space trade-offs",
+  "dek": "The appliance you keep using is the one that is easy to wash and easy to park. Both are checkable before you buy, from documents you can open in a minute.",
+  "cluster": "cleanup",
+  "published_on": "2026-11-20",
+  "reviewed_on": "2026-11-20",
+  "author": "Crisp Report desk",
+  "provenance": "Written from listings and manuals as documents, not from a kitchen. Nothing here was tested; the aim is to show which fields carry weight.",
+  "reading_time_min": 5,
+  "blocks": [
+    { "t": "lead", "x": "Ask anyone whose appliance sits under a cupboard, unused, what went wrong. Almost nobody says 'the crispiness was disappointing'. They say it was a faff to clean, and there was nowhere to keep it. Those two facts decide long-term use more than any performance claim on a spec sheet, and both can be checked before you spend anything." },
+    { "t": "h2", "x": "Count the parts before you count the features" },
+    { "t": "p", "x": "Find the exploded parts diagram - it is usually in the manual PDF or a gallery image. Then count, on one run, what touches food and what touches grease. A drawer unit is often two pieces. An oven-style unit is commonly a basket, one or two racks, a tray, a door with glass on both sides, and an interior surface you can only reach with a cloth. Each piece is a minute; the door is the one people stop doing." },
+    { "t": "check", "items": [
+      "How many pieces touch food, and are they all shown as removable?",
+      "Does the interior need wiping, and can you see the surface in a photo to judge it?",
+      "Is the coating described as a coating, or only as 'non-stick' with no type given?",
+      "Are replacements sold for the coating, the basket and the door seal - and does the brand's own support page list them?",
+      "Does the manual say 'dishwasher safe' for the part, or for the coating? Those are different promises."
+    ], "x": "The five questions that predict whether you will still use it in month eight:" },
+    { "t": "callout", "kind": "warn", "x": "'Dishwasher safe' is the most quietly overloaded phrase on an appliance listing. Sometimes it means the basket, sometimes it means the basket without the coating surviving the detergent, and sometimes it appears in the marketing image but not in the manual's care section. Read the manual's wording. If the two disagree, the manual is the document a warranty claim will be argued from." },
+    { "t": "h2", "x": "Grease: the question listings avoid" },
+    { "t": "p", "x": "Look for three things. Whether there is a grease catch or drip tray and how visible it is to remove. Whether the exhaust points up, back or sideways - which decides what gets greasy on your shelf. And whether any text on the page tells you what to do about the inside of the chamber after a fatty cook. A listing that describes crisping beautifully and never mentions grease has optimised for the return it hopes you will not make." },
+    { "t": "h2", "x": "Counter space is a volume problem, not a footprint problem" },
+    { "t": "p", "x": "Most buyers measure the width of the gap and stop. The three numbers that actually matter are on the same line of the spec table:" },
+    { "t": "table", "head": ["Number", "What it decides", "Where the honest version lives"], "rows": [
+      ["Body width × depth", "Whether it physically sits in the slot", "Product dimensions table - not the carton size"],
+      ["Body height", "Whether the drawer can open under a shelf, and whether you can see the display standing up", "Same table; then crouch to the height you will cook at and imagine it"],
+      ["Clearance the manual requires", "Whether the slot is safe, and whether the exhaust has somewhere to go", "Manual PDF. If the listing and manual disagree, the manual wins"],
+      ["Weight", "Whether it gets put away after each use or lives there permanently", "Same table. A unit you must lift tends to end up on the floor"],
+      ["Cord length and which side it exits", "Whether the socket you have is usable at all", "Gallery close-up or manual; rarely in the headline specs"]
+    ], "caption": "Five fields, no review needed, and every one of them has caused a return." },
+    { "t": "h2", "x": "The 'put it away' test" },
+    { "t": "p", "x": "Decide now, before you buy, which of two households you are: the appliance lives on the counter permanently, or it lives in a cupboard. If it lives in a cupboard, the questions change completely - weight, whether the cord tucks, whether parts stack, whether it is awkward to carry one-handed. If it lives on the counter, the questions are grease on the shelf above, noise while people are at the table, and whether the finish shows fingerprints next to your kettle." },
+    { "t": "p", "x": "There is no correct answer, and that is the point of writing it down first. A purchase that fits the household beats a better appliance that does not." },
+    { "t": "h2", "x": "What we will not pretend to know" },
+    { "t": "unverified", "items": [
+      "Whether any particular unit's coating lasts. Coating durability is a long-term property; we have no long-term anything.",
+      "How loud any model is in a room with a dining table. A decibel figure without its measurement conditions is not comparable between listings.",
+      "What it costs today. This desk shows no prices at all: prices may only appear via an Amazon-served link or an approved API, and we hold neither.",
+      "Which model 'cleans up easily'. That is a claim about a product, and we have not resolved which products we are even writing about.",
+      "Whether the clearance figure on any listing is right. We have not verified a single listing."
+    ], "src": ["SRC-02"] },
+    { "t": "callout", "kind": "note", "x": "The blank cells on our Desk page are the same discipline applied to a table. Five identifiers were supplied to this project; all five measure nine characters and cannot be resolved to a listing, so the title, price and rating columns stay empty with a reason attached instead of being filled with plausible filler.", "src": ["FLG-001", "FLG-005"] },
+    { "t": "h2", "x": "A short procedure" },
+    { "t": "p", "x": "Open the listing. Open the manual. In one column, write the parts that touch food. In the second, write the clearance the manual asks for. In the third, write what you do when you get home: measure the slot, look up at the shelf, and check which side the cord exits. Two of the three columns are about your kitchen, which is why this is worth more than any summary sentence anyone could write for you here." },
+    { "t": "quote", "x": "…your Site may only show prices and availability if: (a) we serve the link in which that price and availability data are displayed, or (b) you obtain Product pricing and availability data via Creators API or PA API…", "cite": "Amazon Associates Program Policies, Participation Requirements §2(b), read 2026-11-20", "src": "SRC-02" },
+    { "t": "p", "x": "That is why our comparison tables have gaps in them. It is a rule we would rather obey than explain away after the fact - and if a competitor's page shows you a price today, that is a fact about their compliance, not an obligation on us to match it." }
+  ],
+  "related": ["capacity-checklist", "what-to-check-on-the-listing"],
+  "cta": { "kind": "none", "note": "No product link on this page, for the reason given in the callout." }
+}
