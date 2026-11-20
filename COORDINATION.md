@@ -450,7 +450,7 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 
 | ID | Task | Status | Owner | File scope |
 |---|---|---|---|---|
-| T29 | Keep purchase CTAs disabled until intended product identity and exact Associates Special Link destination + tracking report are confirmed; enforce in build gate | done locally; PR/deploy pending | arena/d49143e1-winc | `data/products.json`, `data/suggestions.json`, `scripts/build_site.py`, `scripts/check_site.py`, `assets/style.css`, generated product/shop/category/guide/direction pages, `README.md`, `EXECUTIVE-SUMMARY.md`, `COORDINATION.md` |
+| T29 | Keep purchase CTAs disabled until intended product identity and exact Associates Special Link destination + tracking report are confirmed; enforce in build gate | in progress (gate implemented + merged onto current main; PR/deploy pending) | arena/d49143e1-winc | `data/products.json`, `data/suggestions.json`, `scripts/build_site.py`, `scripts/check_site.py`, `assets/style.css`, generated product/shop/category/guide/direction pages, `README.md`, `EXECUTIVE-SUMMARY.md`, `COORDINATION.md` |
 
 ## Changes and verification
 
@@ -459,8 +459,16 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 - Original submitted short URLs, intended-product fields, observed redirect fields, and Associates test fields remain separate. FLG-003 still says the short-link compliance status is unresolved; this change does **not** claim they are invalid.
 - `scripts/check_site.py` now fails if an outbound CTA lacks `rel="sponsored"`, does not match the exact tested URL and intended ASIN record, or is rendered before both intent and test records are complete. It also fails if a complete record has no rendered CTA.
 - SG-01 now records the implementation and remains reviewable on Direction. Executive summary and README were reconciled; generated site pages were rebuilt.
-- Verification performed in this checkout: `python3 scripts/build_site.py` → `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.`; `python3 scripts/check_site.py` → `OK: 27 pages checked, 26 sitemap URLs, no violations.`
+- Verification performed in this checkout: `python3 scripts/build_site.py` → `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.`; `python3 scripts/check_site.py` → `OK: 27 pages checked, 26 sitemap URLs, no violations.` On the merged tree (main@404cabc): `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.` and `OK: 29 pages checked, 28 sitemap URLs, no violations.`
 - Official source references retained for manual review: Amazon Associates Operating Agreement (S01) https://affiliate-program.amazon.com/help/operating/agreement and Program Policies (S02) https://affiliate-program.amazon.com/help/operating/policies; Google affiliate-link qualification (S04) https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links. This session relied on the existing source register and did not independently re-fetch official pages; no Amazon Associates Central account/report was accessible.
+
+## Integration on top of current main (2026-11-20)
+
+`main` had moved to `404cabc` (PR #22 / #24 merged, session arena-c2123b9c) while this branch was open, so the branch was merged forward rather than merged on top of a stale base:
+
+- Conflicts: `COORDINATION.md` (both PR records kept, no row dropped), `EXECUTIVE-SUMMARY.md` (disabled-CTA shop line + the 8-guide line), `data/suggestions.json` (their SG-27..SG-34 plus this session's SG-01 → 28 rows), `direction.html` / `executive-summary.html` (regenerated from the merged data, not hand-picked).
+- Combined registers after the merge: 29 sources, 25 flags, 22 questions, 12 topics, 8 guides, 5 products — all with `intended_asin` blank and an empty `associates_link_test` record.
+- Re-checked on the merged tree: no outbound purchase anchor is rendered anywhere, no `amazon.com/dp/...?tag=` URL exists outside `archive/`, and every product/category/guide card shows the disabled "Link under review" state.
 
 ## Open items / irregularities
 
