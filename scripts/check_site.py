@@ -22,6 +22,7 @@ def read(path):
 products = json.load(open(os.path.join(ROOT, "data/products.json"), encoding="utf-8"))["products"]
 PROBES = json.load(open(os.path.join(ROOT, "data/probes.json"), encoding="utf-8"))
 FLAGS = json.load(open(os.path.join(ROOT, "data/flags.json"), encoding="utf-8"))["flags"]
+SOURCES = json.load(open(os.path.join(ROOT, "data/sources.json"), encoding="utf-8"))["sources"]
 for p in products:
     if len(p["submitted_token"]) != 9:
         fail(f"{p['id']}: submitted token must be 9 chars, got {p['submitted_token']}")
@@ -272,6 +273,7 @@ for s in suggestions:
 
 q_doc = json.load(open(os.path.join(ROOT, "data/questions.json"), encoding="utf-8"))
 seen_q = set()
+ANSWER_STATES = {"answered", "partly", "open"}
 for q in q_doc["questions"]:
     qid = q.get("id", "<no id>")
     if qid in seen_q:
@@ -284,6 +286,30 @@ for q in q_doc["questions"]:
         fail(f"question {qid}: 'answer' key missing (use an empty string, never omit it)")
     if not str(q.get("blocking", "")).startswith(("yes", "no")):
         fail(f"question {qid}: blocking must start with 'yes' or 'no'")
+    # An answer must be traceable. Either it names the sources it rests on, or it says
+    # explicitly that it rests on this repository's own records. An answer with neither is a
+    # claim, and the whole point of the register is that it is not one.
+    state = q.get("answer_state")
+    if state not in ANSWER_STATES:
+        fail(f"question {qid}: answer_state must be one of {sorted(ANSWER_STATES)}, got {state!r}")
+    ans = str(q.get("answer") or "").strip()
+    if state == "open" and ans:
+        fail(f"question {qid}: answer_state 'open' must have an empty answer cell")
+    if state and state != "open":
+        if not ans:
+            fail(f"question {qid}: answer_state {state!r} but the answer is empty")
+        if not q.get("answered_on"):
+            fail(f"question {qid}: an answered row needs the date it was answered")
+        froms = q.get("answered_from")
+        if not isinstance(froms, list):
+            fail(f"question {qid}: answered_from must be a list (may be empty only with a note)")
+        else:
+            for sid in froms:
+                if sid not in {s["id"] for s in SOURCES}:
+                    fail(f"question {qid}: answered_from cites unknown source {sid!r}")
+            if not froms and not q.get("answered_from_note"):
+                fail(f"question {qid}: an answered row needs either a cited source or an "
+                     f"answered_from_note saying it rests on this repository's own records")
 
 FLAG_IDS = {f["id"] for f in FLAGS}
 for p in products:
@@ -368,6 +394,15 @@ for phrase in ("why the numbers here are boring", "records a count inside your o
         fail(f"index.html: front page carries process furniture ({phrase!r}) — the reader path must lead with products")
 if "the shop" not in idx_text.lower():
     fail("index.html: front page no longer shows the shop")
+
+# the questions register must lead with what can be decided now, not only with what is missing
+qtext = scan_text("questions.html") if os.path.exists(os.path.join(ROOT, "questions.html")) else ""
+for phrase in ("still open", "partly answered", "decisions you can make now"):
+    if phrase not in qtext.lower():
+        fail(f"questions.html: the register must show {phrase!r} so a reviewer can tell "
+             f"settled questions from open ones")
+if q_doc.get("answered_count", 0) == 0:
+    fail("questions.json: answered_count is 0 — the register must record the answers it has")
 
 
 # --- every register row must carry an official source link (or say why not) ---

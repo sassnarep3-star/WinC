@@ -1162,23 +1162,55 @@ def question_sources(q):
 
 def questions_body():
     c = counts()
+    answered = [q for q in QUESTIONS if q.get("answer_state") == "answered"]
+    partly = [q for q in QUESTIONS if q.get("answer_state") == "partly"]
+    still_open = [q for q in QUESTIONS if q.get("answer_state") == "open"]
     rows = ""
     for q in QUESTIONS:
         bl = q.get("blocking", "no")
         kind = "act" if bl.startswith("yes") else "note"
+        st = q.get("answer_state", "open")
+        st_label = {"answered": "answered", "partly": "partly answered", "open": "still open"}[st]
+        st_kind = {"answered": "ok", "partly": "warn", "open": "act"}[st]
+        ans = q["answer"]
+        if ans:
+            cell = f'<p>{esc(ans)}</p><p class="meta">Answered {esc(q.get("answered_on") or "—")}</p>'
+        else:
+            cell = '<span class="blank">— blank (unverified)</span>'
         rows += (f'<tr><td><strong>{esc(q["id"])}</strong><br>{pill("blocking" if bl.startswith("yes") else "non-blocking", kind)}</td>'
                  f'<td><strong>{esc(q["question"])}</strong><p class="meta">Gates: {esc(q["decision_it_gates"])}</p></td>'
                  f'<td>{link_source_ids(esc(q["have"]))}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
-                 f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}</td>'
-                 f'<td class="answercell">{blank(q["answer"])}</td></tr>')
+                 f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}<br>{pill(st_label, st_kind)}</td>'
+                 f'<td class="answercell">{cell}</td></tr>')
     pack = "\n\n".join(f'{q["id"]}. {q["question"]}\nWhat we need: {q["missing"]}\nHow to get it: {q["discovery"]}'
                         for q in QUESTIONS if q.get("blocking", "no").startswith("yes"))
+    settled_list = "".join(
+        f'<li><strong>{esc(q["id"])}</strong> — {esc(q["question"])}</li>' for q in answered)
+    partly_list = "".join(
+        f'<li><strong>{esc(q["id"])}</strong> — {esc(q["question"])}</li>' for q in partly)
+    open_list = "".join(
+        f'<li><strong>{esc(q["id"])}</strong> — {esc(q["question"])}</li>' for q in still_open)
     return f"""
 <section class="hero"><span class="kicker">Open questions · {c['questions']} rows, {c['blocking']} blocking</span>
 <h1>What has to be answered before the next decision is reasonable</h1>
-<p class="lede">Not a to-do list — a register. Each row states what we already know and can cite, what is genuinely missing, which decision that gap blocks, and the concrete action that produces the answer. A blank answer cell means nobody has it yet, not that we skipped it.</p>
+<p class="lede">Not a to-do list — a register. Each row states what we already know and can cite, what is genuinely missing, which decision that gap blocks, the concrete action that produces the answer, and the answer as far as the evidence reaches it.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · evidence in <a href="verification.html">the source register</a>, consequences in <a href="flagged-for-review.html">Flagged for review</a></p></section>
-<div class="notice"><strong>Read it this way:</strong> the {c['blocking']} blocking rows are worth more than any content decision. Four of them — Q-01, Q-02, Q-04 and Q-16 — can only be answered inside an enrolled Amazon Associates account, which this environment cannot reach. That is a fact about the tooling, not an excuse, and it is why the site ships with links gated rather than links guessed. When you have an answer, paste it into <code>answer</code> in <code>data/questions.json</code>: the table updates on the next build, and the matching flag closes.</div>
+<div class="notice"><strong>Read it this way:</strong> an answer is not the same as a gap. A row marked
+<strong>answered</strong> is settled by a source and names it; a row marked <strong>partly answered</strong>
+names the part the evidence settles and the part it does not; a row marked <strong>still open</strong> has a
+blank answer cell, which means nobody has it yet — not that the row was skipped. Today:
+{len(answered)} answered, {len(partly)} partly answered, {len(still_open)} still open.</div>
+<h2>Decisions you can make now</h2>
+<div class="grid two">
+<div class="callout"><h3>Answered — {len(answered)} rows</h3><ul class="tight">{settled_list or "<li>none</li>"}</ul>
+<p class="meta">Each of these can be acted on today. The answer and its source are in the table below.</p></div>
+<div class="callout"><h3>Partly answered — {len(partly)} rows</h3><ul class="tight">{partly_list or "<li>none</li>"}</ul>
+<p class="meta">Half of each is settled and the table says which half. The remainder still needs the
+action listed in the “How to discover it” column.</p></div>
+</div>
+<div class="callout catch-callout"><h3>Still open — {len(still_open)} row(s)</h3><ul class="tight">{open_list or "<li>none</li>"}</ul>
+<p class="meta">Only the account owner can close {len(still_open)} of these. Until then the site ships
+with the gap visible rather than papered over.</p></div>
 <div class="tablewrap"><table class="qtable"><thead><tr><th>ID</th><th>Question</th><th>What we have (and its source)</th><th>What we do not have</th><th>How to discover it</th><th>Who can answer</th><th>Official sources</th><th>Answer</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>Copy-ready question pack</h2>
 <p>The blocking rows, as a message you can send to whoever owns the account.</p>
