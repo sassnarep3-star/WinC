@@ -274,6 +274,22 @@
       "what": "Sixth independent re-resolution of the five supplied link.amazon tokens, fetched live 2026-11-20 through the same page reader used by observations #2-#5. Four tokens reproduced their recorded /dp/ targets with the same verbatim page <title> and the same summary/fallback route flags (lv=shuf + plpRedirect=mhFallback). B00hJ57DV landed on https://www.amazon.com/ instead of the recorded /dp/B08DKYBTPH — the same divergence session arena/9a3bb152 recorded for that token, seen again from a different session on the same day. Recorded as observation #6 in data/probes.json and raised as FLG-030. No price, rating or availability value was copied from any page (S02 rule).",
       "date": "2026-11-20",
       "access": "Fetched anonymously 2026-11-20"
+    },
+    {
+      "id": "S37",
+      "title": "Sixth independent live read of all five resolved listings + re-resolution record (session f1fd0ff0, 2026-11-20)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "All five recorded ASINs were re-read through the same reader on 2026-11-20 by a session that had not seen them before. 5/5 page <title> values match the stored titles verbatim; the Emeril details table re-confirmed dimensions, capacity, model, UPC, wattage and its own ASIN row. Two of five resolved URLs additionally carried th=1 (a variant parameter) on top of lv=shuf + plpRedirect=mhFallback. Prices, star ratings, review counts, Best-Sellers-Rank and 'Black Friday Deal' badges were visible on these pages and were deliberately not copied (S02, FLG-006, FLG-031).",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader; the redirect target is a reproducible observation, not a confirmation of intent (FLG-009)."
+    },
+    {
+      "id": "S38",
+      "title": "Independent short-link re-resolution #7 — divergent (4/5 home page) — plus /dp/ control, session b0920c92 (2026-11-20)",
+      "url": "https://link.amazon/B0f3GKalj",
+      "what": "Session b0920c92 re-resolved all five submitted link.amazon short links on 2026-11-20. DIVERGENT from the listing re-reads (S30-S34, S36, S37, all 5/5): four of the five (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) ended on the Amazon home page, and only B0f3GKalj still resolved to B0DZFD6R9Z with the same fallback flags. Two of the four re-fetched individually: identical, so not a parallel-request artefact. This adds a third divergent data point to the disagreement FLG-033 records (FLG-030 vs the 5/5 passes): two sessions (arena/1c6908d1 via FLG-030 and b0920c92 here) saw the home-page fallback on short-link passes while listing re-reads kept agreeing 5/5. Control in the same pass: all five direct /dp/ listings re-opened and every one still served the recorded <title> and breadcrumb, so the published reader links are unaffected. An observation only - not a claim that the links are invalid (FLG-003 stays open); recorded as FLG-034.",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92. Direct shell access to amazon.com is blocked by this sandbox's egress policy, so every observation is a reader fetch."
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "_note": "Independent re-observation of the five supplied links. Observed redirect targets are stored HERE and mirrored into products.json only as 'observed_*' fields. The intended identifier is never derived from these observations.",
-  "probe_method": "Live HTTP resolution through the fetch_page reader (no direct sandbox network), following redirects, recording the final URL and page <title>. Query-string flags are recorded verbatim because they describe the mechanism of the redirect. Third observation re-read each resolved listing's product-details table and bullet copy to check the recorded spec rows line by line. Observation #5 (arena-70bd2fcc) re-read each listing page <title> and category breadcrumb through the fetch_page reader; no price, rating or availability value was copied from any page (S02 rule). Observation #6 (arena/ceced4d0-winc) re-resolved all five tokens again through the same reader on 2026-11-20: four reproduced their recorded /dp/ targets and one (B00hJ57DV) landed on the Amazon homepage. No price, rating or availability value was copied from any page.",
-  "probe_session": "arena/ceced4d0-winc (sixth observation). Earlier: 2026-11-17 (prior sessions); 2026-11-20 observations #2 (arena-23d7ed19), #3 (arena-82d39deb), #4 (arena-c2123b9c), #5 (arena-70bd2fcc).",
+  "probe_method": "Live HTTP resolution through the fetch_page reader (no direct sandbox network), following redirects, recording the final URL and page <title>. Query-string flags are recorded verbatim because they describe the mechanism of the redirect. Third observation re-read each resolved listing's product-details table and bullet copy to check the recorded spec rows line by line. Observation #5 (arena-70bd2fcc) re-read each listing page <title> and category breadcrumb through the fetch_page reader; no price, rating or availability value was copied from any page (S02 rule). Observation #6 (arena/ceced4d0-winc) re-resolved all five tokens again through the same reader on 2026-11-20: four reproduced their recorded /dp/ targets and one (B00hJ57DV) landed on the Amazon homepage. No price, rating or availability value was copied from any page. Observation #6 was made twice on 2026-11-20 by two sessions (arena/ceced4d0-winc and f1fd0ff0) through the same reader; they agree on four tokens and disagree on B00hJ57DV. Both are recorded on each row (sixth_observation and sixth_observation_alt) and the disagreement is published as FLG-030 and FLG-033.",
+  "probe_session": "arena/ceced4d0-winc and f1fd0ff0 (both sixth observations, 2026-11-20). Earlier: 2026-11-17 (prior sessions); 2026-11-20 observations #2 (arena-23d7ed19), #3 (arena-82d39deb), #4 (arena-c2123b9c), #5 (arena-70bd2fcc).",
   "probe_date": "2026-11-20",
   "probes": [
     {
@@ -45,6 +45,20 @@
         "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstic",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0CDY277D3",
+        "final_url": "https://www.amazon.com/dp/B0CDY277D3?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -89,6 +103,20 @@
         "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B09B7SB46R",
+        "final_url": "https://www.amazon.com/dp/B09B7SB46R?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -133,6 +161,21 @@
         "final_title": "Amazon.com. Spend less. Smile more.",
         "matches_prior_observations": false,
         "note": "Landed on the Amazon homepage instead of the recorded /dp/ target. This is the same divergence session arena/9a3bb152 recorded for this token, seen again by a different session on the same day. It is a reader-side or short-link-behaviour change that this environment cannot separate from a real change at Amazon; either way it neither confirms nor invalidates the link (FLG-003, FLG-009 stand)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B08DKYBTPH",
+        "final_url": "https://www.amazon.com/dp/B08DKYBTPH?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -177,6 +220,19 @@
         "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℃ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DHZTCNR5",
+        "final_url": "https://www.amazon.com/dp/B0DHZTCNR5?lv=shuf&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -222,6 +278,21 @@
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DZFD6R9Z",
+        "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -251,6 +322,20 @@
         "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstic",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0CDY277D3",
+        "final_url": "https://www.amazon.com/dp/B0CDY277D3?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -281,6 +366,20 @@
         "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B09B7SB46R",
+        "final_url": "https://www.amazon.com/dp/B09B7SB46R?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -312,6 +411,21 @@
         "final_title": "Amazon.com. Spend less. Smile more.",
         "matches_prior_observations": false,
         "note": "Landed on the Amazon homepage instead of the recorded /dp/ target. This is the same divergence session arena/9a3bb152 recorded for this token, seen again by a different session on the same day. It is a reader-side or short-link-behaviour change that this environment cannot separate from a real change at Amazon; either way it neither confirms nor invalidates the link (FLG-003, FLG-009 stand)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B08DKYBTPH",
+        "final_url": "https://www.amazon.com/dp/B08DKYBTPH?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -342,6 +456,19 @@
         "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℃ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DHZTCNR5",
+        "final_url": "https://www.amazon.com/dp/B0DHZTCNR5?lv=shuf&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     },
     {
@@ -373,6 +500,21 @@
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3",
         "matches_prior_observations": true,
         "note": "Same observed target as every prior observation, reached through the same summary/fallback route (lv=shuf + plpRedirect=mhFallback)."
+      },
+      "sixth_observation_alt": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DZFD6R9Z",
+        "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "A sixth observation from a different session on the same date, reached through the same reader. It reports a DIFFERENT destination for this token from the observation beside it. FLG-030 and FLG-033 record that two sessions disagreeing about the same links on the same day; neither confirms nor invalidates the recorded mapping."
       }
     }
   ],

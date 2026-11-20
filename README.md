@@ -33,6 +33,8 @@ No third-party dependencies: Python standard library only.
 - No prices, ratings, or invented facts. Blank + flagged beats inferred.
 - Every decision block names the one listed spec it rests on. No ranking, no preference.
 - Intended vs. observed ASINs live in separate fields, never merged.
+- Reader copy is prose, not a data dump: no scraped listing title in a card, no flag id inside a spec value.
+- Product artwork is commissioned, labelled as an illustration, and small enough to load (the gate fails over 400 KB per file).
 - Short links are never claimed invalid; their status is flagged (FLG-003).
 
 Pages a reader sees: front page, `products/index.html`, `guides/index.html`, `topics.html`,

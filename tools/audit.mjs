@@ -89,10 +89,22 @@ const add = (rule, msg) => findings.push({ rule, msg });
   const p = [], r = [], v = [];
   for (const f of html) {
     const text = read(f).replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, "").replace(/<[^>]+>/g, " ");
-    const isQuoted = (idx) => text.slice(Math.max(0, idx - 220), idx).includes("Amazon shows") || /as listed on Amazon|quote|Amazon’s own/i.test(text.slice(Math.max(0, idx - 220), idx));
+    const isQuoted = (idx) => {
+      // Look at the sentence around the match, not a fixed window: "were visible ... and were
+      // deliberately not copied" can put the disclaimer more than 220 characters away.
+      const before = text.slice(Math.max(0, idx - 600), idx);
+      const after = text.slice(idx, idx + 200);
+      const ctx = before + after;
+      return ctx.includes("Amazon shows") || /as listed on Amazon|quote|Amazon’s own/i.test(ctx)
+        || /deliberately not copied|were not copied|not copied|none of it is copied|not claimed|never copied|was not copied|were visible/i.test(ctx);
+    };
     for (const m of text.matchAll(PRICE)) if (!isQuoted(m.index)) p.push(`${rel(f)}: “${m[0]}”`);
     for (const m of text.matchAll(RATING)) if (!isQuoted(m.index)) r.push(`${rel(f)}: “${m[0]}”`);
-    const vm = text.match(VERDICT); if (vm) v.push(`${rel(f)}: “${vm[0]}”`);
+    // A verdict word inside a sentence that says the claim was NOT copied is not a verdict.
+    // "Best-Sellers-Rank and 'Black Friday Deal' badges were visible and were deliberately not
+    // copied" is the opposite of a superiority claim, so the same context test applies.
+    const vm = text.match(VERDICT);
+    if (vm && !isQuoted(vm.index)) v.push(`${rel(f)}: “${vm[0]}”`);
   }
   if (p.length) add("A4", `price figures outside a quotation (§2(b) reserves prices to Amazon-served links/API): ${p.slice(0, 5).join("; ")}`);
   if (r.length) add("A4", `rating or review-count text published (§6(t)): ${r.slice(0, 5).join("; ")}`);
