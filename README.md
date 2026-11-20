@@ -17,7 +17,7 @@ No third-party dependencies: Python standard library only.
 
 ## Layout
 
-- `data/` — products, sources, flags, probes, suggestions, questions (single source of truth)
+- `data/` — products, sources, flags, probes, suggestions, questions, categories (reader situations), topics (backlog) — single source of truth
 - `data/guides/*.json` — one file per guide; publish by dropping a file
 - `scripts/build_site.py` — generates all HTML + sitemap + RSS + search index
 - `scripts/check_site.py` — disclosure / sponsored / price / sitemap / link / imagery / claim-drift gate
@@ -31,12 +31,13 @@ No third-party dependencies: Python standard library only.
 - Disclosure above the fold on every page + footer repeat.
 - Every buy button is `rel="sponsored"` + Sponsored label + tracking ID.
 - No prices, ratings, or invented facts. Blank + flagged beats inferred.
+- Every decision block names the one listed spec it rests on. No ranking, no preference.
 - Intended vs. observed ASINs live in separate fields, never merged.
 - Short links are never claimed invalid; their status is flagged (FLG-003).
 
-Pages a reader sees: front page, `products/index.html`, `guides/index.html`, two category pages,
-five product pages, six guides. Pages an operator sees (one nav group, plus the footer):
-`verification.html`, `flagged-for-review.html`, `questions.html`, `direction.html`,
+Pages a reader sees: front page, `products/index.html`, `guides/index.html`, `topics.html`,
+two category pages, five product pages, six guides. Pages an operator sees (one nav group, plus
+the footer): `verification.html`, `flagged-for-review.html`, `questions.html`, `direction.html`,
 `measurement.html`, `executive-summary.html`, `search.html`, `about.html`, `disclosure.html`.
 
 See `COORDINATION.md` for the task board and `EXECUTIVE-SUMMARY.md` for the summary.

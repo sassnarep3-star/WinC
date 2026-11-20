@@ -8,9 +8,10 @@ It leads with products, answers buyer questions, and keeps verification one clic
 ## What is live
 
 - **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
-- **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 14 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
-- **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
+- **Editorial:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook), 12 queued topics published on `topics.html`, and 11 reader situations on the two category pages, each naming the one listed spec it rests on.
+- **Trust:** verification register (intent vs. observed kept separate), 26-source register, 21 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
+- **Decisions:** 20 reviewed suggestions with a review table, a staged path and a prompt builder (`direction.html`); 21 open questions, 5 of them blocking (`questions.html`).
+- **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search. 27 pages, 26 sitemap URLs.
 
 ## Key facts (all sourced)
 
@@ -98,3 +99,95 @@ approved link form for this account, or that these five listings are the five pr
 meant to be promoted (Q-01, Q-02, Q-16). Those need an enrolled Associates account. Until they are
 answered, this is a well-sourced publication with a gated monetisation path — which is the correct
 state to be in, not a half-finished one.
+
+---
+
+# Third pass — verification, decision support, and a shop-shaped front page (2026-11-20, session `arena-82d39deb`)
+
+The brief for this pass was: make it read like a shop, make suggestions reviewable before anyone
+implements them, and verify every row against an official source. Those three things are what
+changed. Nothing else moved.
+
+## 1 · Verification — a third live observation, and one row that was wrong
+
+- **All five supplied links were resolved live again**, by a session that had never seen them.
+  5/5 destinations identical to the 2026-11-17 mapping and to the second 2026-11-20 observation.
+  Every response again carried `lv=shuf` + `plpRedirect=mhFallback` — a fallback route, so the
+  mapping is a reproducible record of *where the link goes* and still no evidence of *what was
+  meant*. `intended_asin`, `intended_listing_url`, `confirmation_date` and `intended_source` stay
+  blank for all five. (S22, `data/probes.json`)
+- **Every listing's product-details table and bullet copy was re-read** to check the recorded spec
+  rows line by line. That found **one wrong row**: the 8-quart Chefman was recorded at 1700 W /
+  120 V, which is the wattage printed on the *6-quart* Chefman listing. The live bullet reads
+  "1000 Watts/120 Volts – RJ38-SQSS-8T". Corrected, and the earlier capture is kept beside it
+  (`power_prior_capture`) so the change is visible rather than silent. (FLG-019)
+- **Four listing-internal contradictions were confirmed live**, and are now published on the
+  product pages instead of being smoothed over: the 8-Qt temperature (title "450°F Hi-Fry" vs.
+  bullets "200–400°F", FLG-005), the Emeril accessory count (title "Six" vs. bullets "7", FLG-010),
+  the Emeril preset count (title 24 vs. bullets 25, FLG-017) and the 6-Qt capacity unit (details
+  table "6 liters" vs. title "6 quart", FLG-015).
+- **Two buyer-relevant facts were found in the live pages**: the 8-Qt ASIN is a 6/8/9-quart size
+  family (so the same link can land on a different size, FLG-020), and Amazon's own page states
+  there is a newer model of that item (FLG-021).
+- **Amazon's name strings vary for the same ASIN.** The live title for B08DKYBTPH reads
+  "TurboFry® 4-in-1 with 450°F Hi-Fry"; the earlier capture read "TurboFry Touch …". Both are
+  stored; the live one is displayed. (FLG-016)
+
+Source register grew from 21 to 26 rows; flagged items from 14 to 21.
+
+## 2 · Decision support — the reader now gets an answer, not just a table
+
+- **`data/categories.json` → "Match to your situation"** on both category pages: 11 reader
+  situations ("Two of you, most weeknights", "You cook in the air fryer specifically"). Each one
+  names the **single listed spec that settles the case**, states what the listings say about it,
+  and links the listing it came from. No profile ranks a product best, and the gate fails the
+  build if a profile names a field that does not exist in `data/products.json`.
+- **Product pages** gained three things: what to compare before you buy (already there, now above
+  the specs), *where the listing disagrees with itself* (each contradiction with its flag id), and
+  *what the listing claims, quoted as claims* (serving size, rotisserie and pizza limits stay the
+  seller's words, FLG-018) — plus a three-question reader FAQ with FAQ schema.
+- **Guides** gained a third FAQ each where they had two, so every guide answers at least three
+  questions on the page itself.
+
+## 3 · Reviewable suggestions and a visible topic pipeline
+
+- **`direction.html`** now opens with a review table (ID · suggestion · area · effort · cost ·
+  status · how we would know it worked) and a **recommended sequence**: *Do now* → *Decide next* →
+  *Blocked* → *Already shipped*. Two statuses in the register were stale — SG-05 and SG-13 were
+  marked `open` after the previous session had already shipped them — and are corrected, with the
+  shipping session named. Six new suggestions were added (SG-15 … SG-20), including the one this
+  pass exists to answer: **SG-16, "every category needs a decision shortcut that names its
+  deciding spec"**.
+- **`topics.html`** publishes the 12 queued topics with, for each one, the reader question, why it
+  earns a page, what it would need, and **how the topic was chosen**. Every one of them says
+  "editorial hypothesis" or names the verification finding that raised it. None claims popularity,
+  search volume or demand, because no Search Console property exists yet. The gate refuses a topic
+  that claims measured demand without naming the measurement source.
+- **Questions register** grew from 16 to 21 rows: what success would even look like (Q-17),
+  whether the catalogue stays at five products (Q-18), which source wins when a listing and a
+  manufacturer page disagree (Q-19), seasonal or evergreen (Q-20), and who owns the reader list
+  and its consent flow (Q-21).
+
+## 4 · The machinery
+
+The compliance gate now also checks the **registers as data**, not only the rendered HTML: every
+suggestion needs its seven fields and a status from a known vocabulary; every question needs its
+fields and an explicit (possibly empty) `answer` key; every category needs at least two profiles
+whose deciding spec exists in the product data and whose source is a recorded listing; every topic
+needs a stated provenance; products' listing notes must cite a flag that exists; the redirect log
+and the product records must not drift apart; and the front page must not reintroduce process
+furniture (a regression guard for the rebuild). `npm run verify` → **OK: 27 pages checked, 26
+sitemap URLs, no violations.**
+
+## What has to happen before any of this earns anything
+
+1. Confirm the tracking ID and run one-link Associates tests (FLG-001, FLG-002, Q-01, Q-16).
+2. Confirm intent for the five products with whoever supplied them (Q-02) — a redirect is not intent.
+3. Deploy the metrics endpoint, then choose topics from measured queries (SG-07, SG-08).
+4. Settle the spec conflicts on the manufacturer page, not on Amazon marketing copy (FLG-005,
+   FLG-010, Q-05, Q-19).
+5. Decide the audience, the marketplace and what "working" means (Q-10, Q-17, SG-20) — before more
+   content is written, not after.
+
+**No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
+authorised first-party reports arrive.
