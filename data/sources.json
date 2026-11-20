@@ -255,6 +255,14 @@
       "what": "Live page read 2026-11-20: <title> verbatim the stored title; 'also viewed' surfaced a 2-probe CHEF iQ Sense listing (B0FXBQ3KX1) — recorded as FLG-027.",
       "date": "2026-11-20",
       "access": "Fetched anonymously; publicly readable."
+    },
+    {
+      "id": "S35",
+      "title": "Google Search Central — What's new: 'Removing documentation for the FAQ rich result feature' (June 2026)",
+      "url": "https://developers.google.com/search/updates#removing-faq-rich-result",
+      "what": "Google's own changelog lists the removal of the FAQ rich-result documentation in June 2026. FAQPage structured data is still valid schema.org markup, but it no longer produces a FAQ rich result in Google Search. This site keeps emitting it for machine readability and stops treating it as a findability win.",
+      "date": "2026-11-20",
+      "access": "Fetched anonymously 2026-11-20; changelog entry visible in the June 2026 section."
     }
   ]
 }

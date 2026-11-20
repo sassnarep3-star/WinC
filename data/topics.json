@@ -154,14 +154,16 @@
       "question": "What should I check so I do not regret this in a month?",
       "why": "A beginner checklist is the highest-intent entry point for a first purchase, and every row can be a listed spec: capacity, footprint, weight, temperature range, wattage, dishwasher-safe parts, accessory count.",
       "needs": "The specs already verified in data/products.json. No new sources, no opinions, no ranking.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the natural top-of-funnel page for a first-time buyer; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
-      ]
+      ],
+      "published_as": "guides/two-baskets-or-one.html",
+      "note": "Published 2026-11-20 as \"Two baskets or one? The air fryer shape decision in ten minutes\" (session arena-038c0b80). The six checks became the shape table plus the \"what to check on the page you land on\" list."
     },
     {
       "id": "TP-11",
@@ -171,13 +173,15 @@
       "question": "Which of these two upgrades actually changes my cooking?",
       "why": "A cross-cluster question that only works on a site that sells both, and it can be answered from USDA FSIS guidance and listed capacity — not from preference.",
       "needs": "USDA FSIS statement that a food thermometer is the only reliable way to confirm safe internal temperature (S17), plus the listed capacities for each fryer.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the natural 'which one first' question for a two-category shop; no measured query data exists yet",
       "priority": "medium",
       "source": [
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
         "https://www.amazon.com/dp/B0CDY277D3"
-      ]
+      ],
+      "published_as": "guides/one-second-or-all-night.html",
+      "note": "Published 2026-11-20 as \"One second or all night: choosing between an instant-read and a leave-in thermometer\" (session arena-038c0b80). The fryer-or-thermometer question is answered as a cook-length decision rather than a product ranking."
     },
     {
       "id": "TP-12",
@@ -194,6 +198,23 @@
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-13",
+      "title": "What the Amazon page does and does not tell you about a spec",
+      "cluster": "Cross-cluster",
+      "season": "Everyday",
+      "question": "If two numbers on the same listing disagree, which one is the product?",
+      "why": "This session re-read all five listings and found four internal contradictions (FLG-005, FLG-010, FLG-018, FLG-020) plus a fallback-route quirk (FLG-029). A guide that teaches a reader how to read the detail table would make every other page more useful.",
+      "needs": "The recorded contradictions already in data/flags.json; no new sources beyond a normal-browser re-read of the five listings.",
+      "status": "planned",
+      "chosen_from": "verification finding — FLG-029 and the four listing contradictions recorded in this repo, not a measured query",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
       ]
     }
   ]

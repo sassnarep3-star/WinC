@@ -389,6 +389,68 @@ for hf in REGISTER_PAGES:
         fail(f"{hf}: register page links to no source at all")
 
 
+# --- narrative + register integrity (session arena-038c0b80) -----------------
+# Every cross-reference the site publishes must resolve, and every story must rest on
+# a stored spec. Silent drift here is how a register starts lying about itself.
+story_doc = json.load(open(os.path.join(ROOT, "data/stories.json"), encoding="utf-8"))
+FLAG_IDS_ALL = {f["id"] for f in FLAGS}
+PRODUCT_KEYS = {p["id"] for p in products}
+for st in story_doc["stories"]:
+    sid = st.get("product_id", "<no id>")
+    for field in ("product_id", "series", "kicker", "headline", "standfirst", "paragraphs", "spec_anchor"):
+        if not st.get(field):
+            fail(f"stories.json: {sid}: field '{field}' is empty")
+    if not isinstance(st.get("paragraphs"), list) or len(st["paragraphs"]) < 3:
+        fail(f"stories.json: {sid}: needs at least 3 paragraphs to be a piece rather than a blurb")
+    for f in st.get("flags", []) or []:
+        if f not in FLAG_IDS_ALL:
+            fail(f"stories.json: {sid}: cites unknown flag {f}")
+    if st["spec_anchor"] not in PRODUCT_FIELDS:
+        fail(f"stories.json: {sid}: spec_anchor '{st['spec_anchor']}' is not a stored product field")
+for sname, pids in story_doc.get("_series", {}).items():
+    for pid in pids:
+        if pid not in PRODUCT_KEYS:
+            fail(f"stories.json: series '{sname}' lists unknown product {pid}")
+
+maker_doc = json.load(open(os.path.join(ROOT, "data/makers.json"), encoding="utf-8"))
+SRC_IDS = {x["id"] for x in json.load(open(os.path.join(ROOT, "data/sources.json"), encoding="utf-8"))["sources"]}
+for mk in maker_doc["makers"]:
+    for field in ("id", "name", "who", "story", "checkable_claims"):
+        if not mk.get(field):
+            fail(f"makers.json: {mk.get('id')}: field '{field}' is empty")
+    if len(mk["checkable_claims"]) < 2:
+        fail(f"makers.json: {mk['id']}: fewer than 2 checkable claims")
+    for c in mk["checkable_claims"]:
+        if c.get("source_id") not in SRC_IDS:
+            fail(f"makers.json: {mk['id']}: claim cites unknown source {c.get('source_id')!r}")
+        if not c.get("claim") or not c.get("source_label"):
+            fail(f"makers.json: {mk['id']}: claim without text or source label")
+
+# every SG-/Q-/FLG- id cited in reader-facing HTML must exist in its register
+for hf in html_files:
+    if hf.startswith("archive"):
+        continue
+    body = read(hf)
+    for sg in set(re.findall(r"\bSG-\d{2}\b", body)):
+        if sg not in seen:
+            fail(f"{hf}: cites {sg}, which is not in data/suggestions.json")
+    for qq in set(re.findall(r"\bQ-\d{2}\b", body)):
+        if qq not in seen_q:
+            fail(f"{hf}: cites {qq}, which is not in data/questions.json")
+    for ff in set(re.findall(r"\bFLG-\d{3}\b", body)):
+        if ff not in FLAG_IDS_ALL:
+            fail(f"{hf}: cites {ff}, which is not in data/flags.json")
+
+# the capture control must stay switched off and un-submittable
+# a page that merely MENTIONS the form (e.g. a suggestion card) is not a page that renders it
+cap_pages = [hf for hf in html_files if 'id="reader-capture"' in read(hf)]
+for hf in cap_pages:
+    body = read(hf)
+    if 'novalidate' not in body or 'data-nosubmit="true"' not in body:
+        fail(f"{hf}: capture form lacks the novalidate/data-nosubmit guard (a JS-blocked browser would GET the address into a URL)")
+    if 'method="get"' in body and 'action=""' not in body:
+        fail(f"{hf}: capture form has a method with no empty action guard")
+
 if errors:
     print(f"FAIL ({len(errors)} violations):")
     for e in errors:

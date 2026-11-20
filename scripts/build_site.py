@@ -604,7 +604,8 @@ def product_body(p):
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
-<p class="lede">{esc(p['title'])}</p>
+<p class="lede">{esc((STORIES.get(p['id']) or {}).get('standfirst') or p['title'])}</p>
+<p class="aslisted"><span class="aslabel">As listed on Amazon</span> {esc(p['title'])}</p>
 <p class="meta">Observed ASIN {esc(p['observed_asin'])} · Listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
 <p class="meta">You will go to Amazon. Price and availability are shown there. This button is a sponsored link.</p>
@@ -638,7 +639,7 @@ def guide_body(g):
     cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
     fig = ""
     if g.get("image"):
-        fig = (f'<figure class="lede-figure"><img src="../{esc(g["image"])}" alt="{esc(cap)}" width="1200" height="750">'
+        fig = (f'<figure class="lede-figure"><img src="../{esc(g["image"])}" alt="{esc(cap)}" width="1200" height="800">'
                f'<figcaption>{esc(cap)}</figcaption></figure>')
     cat_href = dict(CATEGORIES).get(g.get("category"), "guides/index.html")
     return f"""
@@ -1094,6 +1095,7 @@ def measurement_body():
 <tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td><a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
 <tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record date here</td></tr>
 <tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see FLG-013</td></tr>
+<tr><td>Structured data</td><td><span class="okpill">shipped, with one honest caveat</span></td><td>Article, BreadcrumbList and ItemList JSON-LD are emitted and valid. FAQPage markup is still emitted for machine readability, but Google removed the FAQ rich-result feature in June 2026 (<a href="verification.html#src-S35">S35</a>) — this site does not count it as a rich-snippet win.</td></tr>
 <tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td><a href="search.html">search.html</a> (client-side, no server)</td></tr>
 </tbody></table></div>
 {capture_block()}
@@ -1357,6 +1359,13 @@ def topic_sources(t):
         return '<span class="meta">— none yet</span>'
     return " ".join(f'<a href="{esc(u)}" rel="nofollow noopener" target="_blank">{esc(u.split("/dp/")[-1] if "/dp/" in u else u)}</a>' for u in urls)
 
+def published_link(t):
+    """A published topic links to the guide it became; a planned one shows nothing."""
+    pa = t.get("published_as")
+    if not pa:
+        return ""
+    return '<br><a href="' + esc(pa) + '">Read it →</a>'
+
 def topics_body():
     rows = ""
     for t in TOPICS:
@@ -1368,7 +1377,7 @@ def topics_body():
                  f'<td>{esc(t["why"])}</td><td>{esc(t["needs"])}</td>'
                  f'<td>{topic_sources(t)}</td>'
                  f'<td>{esc(t["chosen_from"])}</td>'
-                 f'<td><span class="{cls}">{esc(status)}</span></td></tr>')
+                 f'<td><span class="{cls}">{esc(status)}</span>{published_link(t)}</td></tr>')
     published = "".join(f'<li><a href="{g["path"]}">{esc(g["title"])}</a> <span class="meta">({esc(g.get("cluster",""))})</span></li>'
                         for g in GUIDES)
     return f"""
