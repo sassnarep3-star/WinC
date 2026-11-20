@@ -1,7 +1,7 @@
 {
-  "_note": "The guide backlog, published as a page so the publishing pipeline is visible. These titles are editorial hypotheses — questions a reader would plausibly type — not claims about popularity, search volume or demand. `chosen_from` records exactly how each topic was chosen. Until a Search Console property exists (Q-13 / SG-08) there is no measured query data, so every planned topic says so in public rather than implying evidence it does not have.",
+  "_note": "The guide backlog, published as a page so the publishing pipeline is visible. These titles are editorial hypotheses — questions a reader would plausibly type — not claims about popularity, search volume or demand. `chosen_from` records exactly how each topic was chosen. Until a Search Console property exists (Q-13 / SG-08) there is no measured query data, so every planned topic says so in public rather than implying evidence it does not have. Rows renumbered during the merge into main (session ab951e4c, 2026-11-20): a topic id is a backlog slot, not a citation.",
   "updated": "2026-11-20",
-  "how_topics_are_chosen": "1) A reader question that can be answered from listed specifications and published guidance — never from an opinion. 2) A question with a gap that a product page can close. 3) After the analytics endpoint and Search Console property exist, queries where the site ranks 8–25 with more than 50 impressions take priority over anything on this list. 4) A question that surfaced while writing a shipped guide is added here the same day it is noticed, so the backlog is a by-product of publishing, not a wish list.",
+  "how_topics_are_chosen": "1) A reader question that can be answered from listed specifications and published guidance — never from an opinion. 2) A question with a gap that a product page can close. 3) After the analytics endpoint and Search Console property exist, queries where the site ranks 8–25 with more than 50 impressions take priority over anything on this list.",
   "topics": [
     {
       "id": "TP-01",
@@ -54,8 +54,8 @@
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"
       ],
-      "status_note": "Published 2026-11-20 as “Can it fit a whole chicken?”. The pizza half stays open: the only supporting text is the listing's own bullet, so the guide quotes it as a seller claim (FLG-021) rather than answering it.",
-      "published_as": "guides/whole-chicken-air-fryer-fit.html"
+      "published_as": "guides/whole-chicken-air-fryer-fit.html",
+      "status_note": "Published 2026-11-20 as “Can it fit a whole chicken?”. The pizza half stays open: the only supporting text is the listing's own bullet, so the guide quotes it as a seller claim (FLG-021) rather than answering it."
     },
     {
       "id": "TP-04",
@@ -103,8 +103,8 @@
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
       ],
-      "status_note": "Published 2026-11-20: the three-place bird check is carried by the whole-chicken guide and the placement rules by the listing-literacy guide, both quoting USDA FSIS.",
-      "published_as": "guides/whole-chicken-air-fryer-fit.html"
+      "published_as": "guides/whole-chicken-air-fryer-fit.html",
+      "status_note": "Published 2026-11-20: the three-place bird check is carried by the whole-chicken guide and the placement rules by the listing-literacy guide, both quoting USDA FSIS."
     },
     {
       "id": "TP-07",
@@ -137,8 +137,8 @@
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
         "https://www.amazon.com/dp/B0DHZTCNR5"
       ],
-      "status_note": "Published 2026-11-20 as “Your thermometer claims ±0.5°F…”, built on FSIS's 2–4°F statement and its documented ice-water and boiling-water checks.",
-      "published_as": "guides/thermometer-accuracy-ice-cup-check.html"
+      "published_as": "guides/thermometer-accuracy-ice-cup-check.html",
+      "status_note": "Published 2026-11-20 as “Your thermometer claims ±0.5°F…”, built on FSIS's 2–4°F statement and its documented ice-water and boiling-water checks."
     },
     {
       "id": "TP-09",
@@ -156,8 +156,8 @@
         "https://www.amazon.com/dp/B0DHZTCNR5",
         "https://www.amazon.com/dp/B0DZFD6R9Z"
       ],
-      "status_note": "Published 2026-11-20 in the listing-literacy guide, which quotes FSIS's rule that a thermometer may stay in the food only if the manufacturer designed it to.",
-      "published_as": "guides/listing-wording-thermometer-claims.html"
+      "published_as": "guides/listing-wording-thermometer-claims.html",
+      "status_note": "Published 2026-11-20 in the listing-literacy guide, which quotes FSIS's rule that a thermometer may stay in the food only if the manufacturer designed it to."
     },
     {
       "id": "TP-10",
@@ -211,6 +211,40 @@
     },
     {
       "id": "TP-13",
+      "title": "Basket or oven-style: which air fryer wins your counter?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Two baskets vs. one big cavity — which one do I actually need?",
+      "why": "The two Chefman listings differ in basket count and capacity, and the Emeril is a different shape entirely. This is the question at the top of the shop.",
+      "needs": "Listed capacity, dimensions and basket configuration for each of the three air fryers — already in data/products.json.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — the site's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-14",
+      "title": "Instant-read or leave-in: which probe actually does your job?",
+      "cluster": "Thermometers",
+      "season": "Everyday",
+      "question": "Spot-check or stay-in-the-food — which one fits how you cook?",
+      "why": "The ThermoMaven is an instant-read you pull out; the CHEF iQ stays in and reports over WiFi. The decision is about cooking style, not about which one is 'better'.",
+      "needs": "Listed connectivity, probe count, heat limits and USDA FSIS check-point guidance — already in data/products.json and the sources register.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — the thermometer cluster's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0DHZTCNR5",
+        "https://www.amazon.com/dp/B0DZFD6R9Z",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ]
+    },
+    {
+      "id": "TP-15",
       "title": "“Dishwasher-safe” baskets: does that cover the pan, the tray and the coil?",
       "cluster": "Air Fryers",
       "season": "Everyday",
@@ -227,7 +261,7 @@
       ]
     },
     {
-      "id": "TP-14",
+      "id": "TP-16",
       "title": "How much clearance does a countertop fryer need around it?",
       "cluster": "Air Fryers",
       "season": "Everyday",
@@ -244,7 +278,7 @@
       ]
     },
     {
-      "id": "TP-15",
+      "id": "TP-17",
       "title": "What does “Sync Finish” claim to do — and how would you notice if it didn't?",
       "cluster": "Air Fryers",
       "season": "Everyday",
@@ -259,7 +293,7 @@
       ]
     },
     {
-      "id": "TP-16",
+      "id": "TP-18",
       "title": "“1 second” versus the seconds FSIS lists per thermometer type",
       "cluster": "Thermometers",
       "season": "Everyday",
@@ -275,7 +309,7 @@
       ]
     },
     {
-      "id": "TP-17",
+      "id": "TP-19",
       "title": "Hub, app or alarm: who actually gets told when the probe hits temperature?",
       "cluster": "Thermometers",
       "season": "Holiday cooking",
@@ -291,7 +325,7 @@
       ]
     },
     {
-      "id": "TP-18",
+      "id": "TP-20",
       "title": "Reheat, bake, dehydrate: which modes does each listing actually name?",
       "cluster": "Air Fryers",
       "season": "Everyday",

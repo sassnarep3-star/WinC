@@ -1,0 +1,79 @@
+{
+  "$comment": "Event schema. The brief asked for 'the five defined events' but did not enumerate them, so this is a proposal by this session and is labelled as such on the site (see FLG-009).",
+  "provenance": "proposed by arena-04112b09 on 2026-11-20; not an existing standard",
+  "storage": {
+    "default": "browser-local (sessionStorage + a rolling localStorage counter); nothing is transmitted while site.config.json measurement.endpoint is null",
+    "opt_in": "aggregate POST of the object below to an endpoint the operator hosts; see tools/collector.sample.mjs",
+    "never_collected": ["name", "email entered anywhere", "exact IP", "cross-page visitor id", "sub-tag per visitor"],
+    "compliance": [
+      "Sub-tags may never be associated with a specific end user, and tags must not be dynamically assigned per visitor - SRC-02 §2(b)",
+      "Clicks and impressions must not be artificially generated, by robot or software - SRC-02 §6(s)",
+      "Cookie/pixel use by the site and third parties must be disclosed - SRC-02 §3(e)"
+    ]
+  },
+  "events": [
+    {
+      "name": "page_view",
+      "why": "Denominator for everything else; tells us which template earns reading.",
+      "trigger": "DOMContentLoaded, once per navigation",
+      "fields": [
+        { "k": "path", "v": "pathname relative to site root" },
+        { "k": "cluster", "v": "editorial cluster slug or 'desk'" },
+        { "k": "t", "v": "epoch seconds, client clock, not used for identity" }
+      ],
+      "reportable_now": true,
+      "authorized_source_for_ledger": "own counter only; Search Console 'impressions' is the external cross-check"
+    },
+    {
+      "name": "guide_open",
+      "why": "Separates a landing click from a reader who started a guide - the difference between curiosity and intent.",
+      "trigger": "first content intersection past 40% viewport, or direct navigation to /guides/**",
+      "fields": [
+        { "k": "guide", "v": "guide slug" },
+        { "k": "entry", "v": "front | cluster | search | feed | internal" },
+        { "k": "read_to", "v": "deepest scroll band, coarse (25/50/75/100)" }
+      ],
+      "reportable_now": true,
+      "authorized_source_for_ledger": "own counter only"
+    },
+    {
+      "name": "outbound_click",
+      "why": "The only conversion proxy this site can honestly collect; the brief's primary metric candidate (SG-15).",
+      "trigger": "click on an a[href] whose host is a store host; recorded, then the browser navigates normally",
+      "hard_rule": "no preventDefault, no interstitial, no redirect hop - a Redirecting Link disqualifies the purchase (SRC-02 §2(e))",
+      "fields": [
+        { "k": "product_row", "v": "PI-nn id, never a person" },
+        { "k": "host", "v": "destination host as written in href" },
+        { "k": "tag_present", "v": "boolean - catches an untagged link in the wild" },
+        { "k": "rel_ok", "v": "boolean - catches a missing sponsored value" },
+        { "k": "t", "v": "epoch seconds" }
+      ],
+      "reportable_now": true,
+      "authorized_source_for_ledger": "own counter (clicks) is a floor, not a truth: Amazon's own report is what counts"
+    },
+    {
+      "name": "product_intent_check",
+      "why": "Makes the register's incompleteness visible as work, not as a footnote: every time a row is still unresolved, that is a measured open item.",
+      "trigger": "on load of the Picks page when any row has status 'unresolved'; and when an operator re-runs npm run verify:intent",
+      "fields": [
+        { "k": "rows_unresolved", "v": "integer" },
+        { "k": "shape_failures", "v": "integer (identifier length/case)" },
+        { "k": "oldest_checked_on", "v": "ISO date or null" }
+      ],
+      "reportable_now": true,
+      "authorized_source_for_ledger": "this repo's data only"
+    },
+    {
+      "name": "editorial_decision",
+      "why": "The suggestions board only improves the site if accepted/rejected paths are recorded; this event is that record, exported as markdown.",
+      "trigger": "a decision row is changed on /suggestions/ and the operator exports it",
+      "fields": [
+        { "k": "suggestion", "v": "SG-nn id" },
+        { "k": "choice", "v": "option label | accept | reject | defer" },
+        { "k": "depends_on_answered", "v": "list of Q-nn ids now answered" }
+      ],
+      "reportable_now": true,
+      "authorized_source_for_ledger": "decision export; nothing visitor-related"
+    }
+  ]
+}

@@ -232,10 +232,10 @@
     },
     {
       "id": "FLG-025",
-      "title": "ThermoMaven model 'HT07' blanked (sourced only from Amazon.fr, not the US listing)",
-      "detail": "Session dd79e08d (2026-11-20): HT07 appeared only in an Amazon.fr listing reference (S-row in sources.json). The US listing observed for B0DHZTCNR5 does not show it in the fields we captured. Under the verification rule the value is blank rather than carried over from another marketplace. Related: FLG-004 (ASIN canonicality).",
-      "action": "Confirm the model on the amazon.com listing for B0DHZTCNR5 or the manufacturer page; only then re-add it with its URL and date.",
-      "status": "needs review"
+      "title": "Stored product titles drifted from live Amazon listing titles (4 of 5)",
+      "detail": "On 2026-11-20 session arena/0458cd24-winc re-read every observed listing's <title> directly from amazon.com. Four of five stored titles differed from the live Amazon listing <title> (only B0CDY277D3 matched verbatim). Product identities were confirmed via the live <title> plus the category breadcrumb, so the stored titles in data/products.json were reconciled to the verbatim live listing titles. The underlying spec concerns (FLG-005, FLG-010, FLG-014) remain open and are unaffected by this title-only reconciliation.",
+      "action": "Re-verify titles at the one-link Associates workflow test (FLG-002); re-check if Amazon edits a listing title again.",
+      "status": "fixed in this session"
     },
     {
       "id": "FLG-026",
@@ -244,9 +244,9 @@
       "action": "Fixed the same day: a one-line 'not endorsed by the brands' statement added to the disclosure page, the About page and the site-wide footer, worded as the policy's own concept. Review the wording against the Operating Agreement before any brand-relations contact.",
       "status": "fixed by this session (2026-11-20), review the wording",
       "sources": [
-        "S27"
+        "S30"
       ],
-      "source_note": "Clause read verbatim from the Amazon Associates Program Policies on 2026-11-20 — see S27 in the source register for the quoted text and the URL."
+      "source_note": "Clause read verbatim from the Amazon Associates Program Policies on 2026-11-20 — see S30 in the source register for the quoted text and the URL."
     },
     {
       "id": "FLG-027",
@@ -255,9 +255,9 @@
       "action": "scripts/freshness.py reports every recorded read older than the threshold and exits non-zero past the hard limit; run it before a publish. Owner-side: the actual takedown check needs a browser and a decision about who acts on it.",
       "status": "mitigated by tooling, open as a process",
       "sources": [
-        "S27"
+        "S30"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S27. The tooling measures the age of a recorded read; it cannot see Amazon's site."
+      "source_note": "Clause read verbatim 2026-11-20 — see S30. The tooling measures the age of a recorded read; it cannot see Amazon's site."
     },
     {
       "id": "FLG-028",
@@ -266,9 +266,9 @@
       "action": "Recorded in the executive summary, the disclosure page and the direction register so no future session builds a scraper-for-training step into the pipeline. If the owner wants model training on Program Content, the gate is a written approval from Amazon, not a code change.",
       "status": "open by design — a scope boundary, not a bug",
       "sources": [
-        "S27"
+        "S30"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S27."
+      "source_note": "Clause read verbatim 2026-11-20 — see S30."
     },
     {
       "id": "FLG-029",
@@ -277,9 +277,9 @@
       "action": "Before any list is started: real consent capture with a timestamped opt-in record, a provider, and the disclosure updated in the same commit. Keep affiliate links out of unsolicited mail permanently.",
       "status": "open — gated by Q-21",
       "sources": [
-        "S27"
+        "S30"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S27."
+      "source_note": "Clause read verbatim 2026-11-20 — see S30."
     },
     {
       "id": "FLG-030",
@@ -299,9 +299,9 @@
       "action": "The verbatim title is displayed on every product page under the label, and the label field is now listed on the verification page so a reviewer can compare the two strings side by side.",
       "status": "open — needs a human comparison, not a code change",
       "sources": [
-        "S27"
+        "S30"
       ],
-      "source_note": "Clause read verbatim 2026-11-20 — see S27. No claim is made that any specific label is or is not compliant."
+      "source_note": "Clause read verbatim 2026-11-20 — see S30. No claim is made that any specific label is or is not compliant."
     },
     {
       "id": "FLG-032",
@@ -310,9 +310,9 @@
       "action": "Replaced with a precise statement of what is taken from a listing (title and detail values, each with URL and read date), what is never taken (listing images, banners, description paragraphs), and the §6(a) truncation rule the labels rely on. Q-23 asks the human question the policy leaves open.",
       "status": "fixed by this session",
       "sources": [
-        "S27"
+        "S30"
       ],
-      "source_note": "Program Policies §6(a), read verbatim 2026-11-20 (S27). No external source speaks to our own wording; the contradiction was internal."
+      "source_note": "Program Policies §6(a), read verbatim 2026-11-20 (S30). No external source speaks to our own wording; the contradiction was internal."
     },
     {
       "id": "FLG-033",
@@ -340,6 +340,55 @@
       "status": "fixed by this session; gate rule added",
       "sources": [],
       "source_note": "Internal only — a provenance error inside this repository's own register, found by reading the rows against the coordination log."
+    },
+    {
+      "id": "FLG-036",
+      "title": "Two illustration sets and two freshness clocks collided in the merge and were reconciled",
+      "detail": "Found by session ab951e4c while merging origin/main on 2026-11-20. This pass drew five product illustrations (assets/img/prod-*.jpg) and added a Python freshness clock (scripts/freshness.py + data/freshness.json); the trunk had in the meantime gained five per-product illustrations of its own (p6qt/p8qt/p26qt/pthermo/pchefiq, ~2.8 MB PNGs each), two seasonal PNGs, and a Node clock (tools/freshness.mjs). Ten near-identical 2.8 MB PNGs and two clocks is how a multi-session site gains weight and loses coherence. Resolution: the trunk's artwork is what cards and product pages show, because its captions describe each specific unit; this pass's five remain as guide header art, one per guide where it fits; every trunk PNG was converted to the same optimized 1200×750 q82 JPEG profile, so assets/img went from 20 MB to 2.3 MB and both sets are cheap. Both clocks remain wired (the Python one is what the gate and measurement.html use); consolidating them is a follow-up.",
+      "action": "Decide which freshness clock is canonical and delete or absorb the other. Do not generate a third illustration set for a product that already has one — check assets/img and data/products.json first. If a product needs photographic art instead, that is Q-07's owner decision, not another illustration.",
+      "status": "recorded; consolidation open",
+      "sources": [],
+      "source_note": "Internal only — a repository-state finding from the merge itself, written down so a later session does not add a third set."
+    },
+    {
+      "id": "FLG-037",
+      "title": "The reader-capture form could submit an address into a URL when scripting was blocked",
+      "detail": "Found by the independent second gate (tools/audit.mjs, rule A7) while reconciling this merge, and confirmed by reading the markup: the form carried action=measurement.html method=get with a named email input. With scripting blocked, pressing Subscribe navigates to measurement.html?email=you@example.com — the address then sits in the reader's history and in whatever request log the static host keeps, while the copy on the page said the address goes nowhere. Nothing was ever collected by us; the leak was the browser's own fallback path.",
+      "action": "Fixed 2026-11-20 (session ab951e4c): the form now posts to no destination (action=\"\", novalidate) and the input has no name attribute, so a no-script submission has no key/value pair to carry — an address cannot enter a URL or a request log. The counter still fires, because it reads the event, not the field. The field's own note on the page states the reason in plain words.",
+      "status": "fixed",
+      "sources": [
+        "S03"
+      ],
+      "source_note": "No Amazon clause governs a form that collects nothing; this is the site's own accuracy duty — the copy said 'sends your address nowhere' while the markup had a path that could carry it. Recorded under the same principle as S30 §6(a) (do not misdescribe what your site does)."
+    },
+    {
+      "id": "FLG-038",
+      "title": "Internal search puts the query in the page URL, which the measurement table implied it never would",
+      "detail": "search.html reads results from ?q= so a search can be shared or reloaded, and the form is a GET with a named input. The measurement page's 'never stored: search query text' row is true of this site's counter (and of a site that stores nothing), but a reader could reasonably read it as 'what I type never appears anywhere', while the host serving the page can log the URL it was asked for.",
+      "action": "The measurement table now states the exception in the row itself and carries a plain note under the event table. No code change: the URL is the mechanism that makes search work without a server, and removing it would break shareable searches.",
+      "status": "disclosed rather than removed",
+      "sources": [
+        "S30"
+      ],
+      "source_note": "Program Policies §3 makes the site owner responsible for accurate disclosure of what is collected and how; the fix is accuracy of the claim, not a new feature."
+    },
+    {
+      "id": "FLG-039",
+      "title": "The independent second gate could not read single-quoted ids and reported 52 phantom broken fragments",
+      "detail": "tools/audit.mjs rule A6 scans each page for id=\"...\" in double quotes; the source register rows in verification.html were emitted with id='src-S01' in single quotes. Both are valid HTML. The result was 52 'unresolved fragment' findings against links that resolve in every browser — the kind of false positive that trains a reviewer to ignore a gate. It also meant that any tool reading only double-quoted ids is blind to that page's anchors.",
+      "action": "Both sides fixed (2026-11-20, session ab951e4c): the builder now emits double-quoted ids for the register anchors, consistent with the rest of the page, and the audit accepts either quoting style with a comment saying why. A6 is now clean for the right reason — the references resolve, and the tool can see it.",
+      "status": "fixed on both sides",
+      "sources": [],
+      "source_note": "Internal only — a tooling blind spot found while merging; the second gate's finding was wrong but its disagreement with the primary gate was worth chasing, which is why it exists."
+    },
+    {
+      "id": "FLG-040",
+      "title": "The second gate read an inline-JS string as a link and reported a phantom unresolved reference",
+      "detail": "After the id-quoting fix, tools/audit.mjs rule A6 still reported one broken reference: search.html → '+h.url+'. That is a JavaScript expression inside the page's own search script (it builds result links at runtime), not a published href. A checker that treats every quoted string in a page as a file path will keep inventing findings out of client-side code, and a gate that cries wolf gets ignored. Provenance note: this flag's own first draft quoted a builder expression literally and tripped the leak rule — the wording was changed rather than the rule loosened.",
+      "action": "Fixed in the audit (2026-11-20, session ab951e4c): a value containing quote/concatenation/template characters is recognised as a runtime expression and skipped, with the reason commented at the site of the change. The site itself needed no change, and the separate rule that fails when an un-interpolated builder expression leaks into static output is untouched — this only stops A6 mistaking JS for markup.",
+      "status": "fixed in tooling",
+      "sources": [],
+      "source_note": "Internal only — a second-gate false positive, recorded because the honest response to a gate finding is to prove which side was wrong."
     }
   ]
 }

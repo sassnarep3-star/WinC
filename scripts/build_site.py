@@ -13,7 +13,9 @@ except Exception:
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
 TAG = "shopnow047c-20"
-TODAY = "2026-11-20"
+# Build-date knob: keep the shipped date by default so rebuilds are byte-stable;
+# set WINC_BUILD_DATE=YYYY-MM-DD for a dated rebuild. (arena-c2123b9c, 2026-11-20)
+TODAY = os.environ.get("WINC_BUILD_DATE", "2026-11-20")
 
 def load(p):
     with open(os.path.join(ROOT, p), encoding="utf-8") as f:
@@ -63,6 +65,25 @@ CAT_IMG = {
 }
 HERO_IMG = ("assets/img/hero-counter.jpg",
     "Editorial illustration: kitchen counter with an air fryer, a probe thermometer and a board of roasted potatoes. Not a product photograph.")
+
+def current_season():
+    """Publication season computed from today's date (never typed by hand)."""
+    t = datetime.date.today()
+    if t.month in (11, 12):
+        return f"Holiday {t.year}"
+    if t.month == 1:
+        return f"New Year {t.year}"
+    if 6 <= t.month <= 8:
+        return f"Summer {t.year}"
+    return "Everyday"
+
+def product_img(p, depth=0):
+    """Per-product illustration when one is registered; category fallback otherwise."""
+    pfx = "../" * depth
+    if p.get("image"):
+        return pfx + p["image"], p.get("image_caption") or CAT_IMG.get(p["category"], HERO_IMG)[1]
+    img, cap = CAT_IMG.get(p["category"], HERO_IMG)
+    return pfx + img, cap
 
 def prods(cat=None):
     return [x for x in PRODUCTS if cat is None or x["category"] == cat]
@@ -196,7 +217,7 @@ Prices and availability are shown on Amazon — check Amazon for current details
 <li><a href="{p}index.html">Front page</a></li>
 </ul></div>
 </div>
-<p class="meta footnote">ShopNow Kitchen · {TODAY} · Tracking ID {TAG} (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners and appear here only to identify the items being discussed: this site is not endorsed by or affiliated with Amazon beyond Associates participation, and it is not endorsed by, sponsored by or affiliated with any brand named on a page (Program Policies §6(d), S27). No testing, ranking or price claim is made without a stated source.</p>
+<p class="meta footnote">ShopNow Kitchen · {TODAY} · Tracking ID {TAG} (issuance unconfirmed — see FLG-001). Product names and trademarks belong to their owners and appear here only to identify the items being discussed: this site is not endorsed by or affiliated with Amazon beyond Associates participation, and it is not endorsed by, sponsored by or affiliated with any brand named on a page (Program Policies §6(d), S30). No testing, ranking or price claim is made without a stated source.</p>
 </div></footer>"""
 
 
@@ -233,22 +254,25 @@ def page_html(path, title, desc, body, page_type="page", extra_head="", image=""
         f'<script src="{"../"*depth}assets/app.js" defer></script></body></html>')
 
 def product_card(p, depth=0):
-    """Shelf card. Reader-facing: what it is, the one spec that decides it, the buy button.
-    Flag IDs, model strings and ASINs live on the product page and in the registers, not here."""
     pfx = "../" * depth
-    img, cap = (p.get("image"), p.get("image_caption")) if p.get("image") else CAT_IMG.get(p["category"], HERO_IMG)
+    img, cap = product_img(p, depth)
     specs = []
     if p["capacity"] and p["capacity"] != "—":
         specs.append(f"Capacity: {esc(p['capacity'])}")
     if p["dimensions"]:
-        specs.append(f"Fits: {esc(p['dimensions'])}")
+        specs.append(f"Size: {esc(p['dimensions'])}")
     if p["weight"]:
-        specs.append(f"On the scale: {esc(p['weight'])}")
+        specs.append(f"Weight: {esc(p['weight'])}")
+    if not specs and p.get("temperature") and p["temperature"] != "—":
+        # a thermometer lists no physical dims — the reading spec is the one that decides
+        specs.append(f"Reading: {esc(p['temperature'])}")
     li = "".join(f"<li>{x}</li>" for x in specs)
     shelf = f'<p class="shelfline">{esc(p.get("shelf_line") or p["title"])}</p>'
     decide = f'<p class="decide">{esc(p.get("decide_on"))}</p>' if p.get("decide_on") else ""
+    # A shelf ticket says what the thing is for and which spec decides it. Flag IDs, model
+    # strings and ASINs are register fields and live on the product page instead (SG-22).
     return f"""<article class="card productcard">
-<figure class="cardimg"><img src="{pfx}{img}" alt="{esc(cap)}" loading="lazy" width="1200" height="750"></figure>
+<figure class="cardimg"><img src="{img}" alt="{esc(cap)}" loading="lazy" width="1200" height="750"></figure>
 <span class="cat">{esc(p['brand'])} · {esc(p['category'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
 {shelf}
@@ -258,16 +282,23 @@ def product_card(p, depth=0):
 <p class="cardfoot"><a href="{pfx}verification.html">Specs copied from the listing, checked {esc(p['source_date'])}</a></p>
 </article>"""
 
+def season_pill(season):
+    """Season badge for guide cards and section kickers. Act (coloured) for non-Everyday."""
+    kind = "act" if season and season != "Everyday" else "note"
+    return f'<span class="seasonpill pill-{kind}">{esc(season or "Everyday")}</span>'
+
 def guide_card(g, depth=0):
     pfx = "../" * depth
     img = g.get("image") or CAT_IMG.get(g.get("category", ""), HERO_IMG)[0]
     cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
+    season = g.get("season", "Everyday")
+    sp = season_pill(season) + " "
     return f'''<article class="card guidecard">
 <figure class="cardimg"><img src="{pfx}{esc(img)}" alt="Editorial illustration for: {esc(g['title'])}" loading="lazy" width="800" height="500"></figure>
 <span class="cat">Guide · {esc(g['cluster'])}</span>
 <h3><a href="{pfx}{g['path']}">{esc(g['title'])}</a></h3>
 <p>{esc(g['desc'])}</p>
-<p class="meta">{esc(g['published'])} · {read_min(g)} min read · {esc(g.get('season', 'Everyday'))}</p>
+<p class="meta">{sp}{esc(g['published'])} · {read_min(g)} min read</p>
 </article>'''
 
 def link_source_ids(text, prefix="", suffix=""):
@@ -316,18 +347,19 @@ def capture_block(depth=0):
     return f"""<section class="capture" aria-label="Reader updates">
 <h3>Get the next comparison — checklist first, hype never.</h3>
 <p>One email when a new guide publishes.</p>
-<form id="reader-capture" action="{pfx}measurement.html" method="get">
+<form id="reader-capture" action="" method="get" novalidate>
 <label for="email">Email address</label>
-<input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+<input id="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
+<p class="meta">The field has no <code>name</code> attribute on purpose: with scripting blocked there is nothing for a browser to put into a URL, so an address cannot reach a request log either.</p>
 <small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect. One rule is already settled: Amazon's Program Policies permit Special Links in email only where the message was solicited by the recipient, so no affiliate link here will ever go out uninvited.</small>
 </section>"""
 
 # ---------- HOME ----------
 def home_body():
     c = counts()
-    # An editor picks the front-page story; the newest/heaviest guide is only the fallback.
+    # An editor picks the front-page story (guide data: "featured"); weight is the fallback.
     lead = next((g for g in GUIDES if g.get("featured")), GUIDES[0])
     cards = "".join(product_card(x) for x in PRODUCTS)
     rail = "".join(guide_card(g) for g in GUIDES if g is not lead)
@@ -337,9 +369,20 @@ def home_body():
         cimg, ccap = CAT_IMG[name]
         tiles += (f'<a class="cattile" href="{href}"><img src="{cimg}" alt="{esc(ccap)}" loading="lazy" width="800" height="500">'
                   f'<span class="catname">{esc(name)}</span><span class="catcount">{len(prods(name))} in the shop · {len(guides_for(name))} guides</span></a>')
+    # Seasonal band: guides whose season is set, grouped by season. Computed from the
+    # guides register so it cannot drift from data (F-11 lesson). (arena-c2123b9c)
+    by_season = {}
+    for g in GUIDES:
+        s = (g.get("season") or "Everyday").strip()
+        if s and s != "Everyday":
+            by_season.setdefault(s, []).append(g)
+    season_bands = ""
+    for sname, gs in by_season.items():
+        scards = "".join(guide_card(g) for g in gs)
+        season_bands += f'<h2>In season · {esc(sname)}</h2>\n<div class="grid">{scards}</div>\n'
     return f"""
 <section class="hero">
-<span class="kicker">Editor’s pick · Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
+<span class="kicker">Editor’s pick · Countertop cooking · Season: {esc(lead.get('season') or current_season())}</span>
 <h1>{esc(lead['title'])}</h1>
 <p class="lede">{esc(lead['desc'])}</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {read_min(lead)} min read · <a href="about.html">How we check</a></p>
@@ -354,7 +397,7 @@ def home_body():
 </ul>
 
 <h2>On the shelf this week</h2>
-<p class="sectionlede">Five appliances, two jobs. Each card says what the item is for, then names the one listed spec that decides whether it fits your kitchen.</p>
+<p class="sectionlede">{c['products']} appliances, two jobs. Each card says what the item is for, then names the one listed spec that decides whether it fits your kitchen.</p>
 <div class="grid">{cards}</div>
 <p class="seclink"><a class="btn btn-quiet" href="products/index.html">Compare every spec in one table →</a></p>
 
@@ -362,8 +405,9 @@ def home_body():
 <div class="grid">{rail}</div>
 <p><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a> <a class="btn btn-quiet" href="topics.html">What we are writing next →</a></p>
 
-<h2>Or start with a category</h2>
+{season_bands}<h2>Or start with a category</h2>
 <div class="catgrid">{tiles}</div>
+
 {capture_block()}
 """
 
@@ -414,10 +458,12 @@ def category_body(cat, title, intro, guide_links):
         rows.append(f"<tr><th>{esc(f)}</th>{cells}</tr>")
     table = ('<div class="tablewrap"><table><thead><tr>' + head_row + "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>"
              + '<p class="src">Sources: ' + " · ".join(f'<a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p["observed_asin"])}</a>' for p in ps) + f' · checked {TODAY}. Blank = unverified.</p>')
+    nguides = len(guides_for(cat))
     return f"""
-<section class="hero"><span class="kicker">Category · {esc(cat)}</span>
+<section class="hero"><span class="kicker">Category · {esc(cat)} · {nguides} guides</span>
 <h1>{esc(title)}</h1><p class="lede">{esc(intro)}</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · <a href="guides/index.html">All guides</a></p></section>
+<p class="railnote">Start with the situation you are in, not the brand. Each answer names the one listed spec that settles it — then the side-by-side table puts the numbers next to each other.</p>
 <h2>Match to your situation</h2>
 <p>Each answer names the one listed spec that settles the case, and links the listing it came from. Nobody here has cooked with these units, so there is no “we tested it” line anywhere — you check the spec against your kitchen.</p>
 {profile_block(cat)}
@@ -430,6 +476,11 @@ def category_body(cat, title, intro, guide_links):
 """
 
 # ---------- PRODUCT PAGES ----------
+def _product_lede_figure(p, depth=1):
+    img, cap = product_img(p, depth)
+    return (f'<figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="750" loading="lazy">'
+            f'<figcaption>{esc(cap)}</figcaption></figure>')
+
 def product_body(p):
     related = [q for q in PRODUCTS if q["category"] == p["category"] and q["id"] != p["id"]]
     rel_cards = "".join(product_card(q, depth=1) for q in related)
@@ -459,24 +510,28 @@ def product_body(p):
     if faq:
         rows = "".join(f'<details class="faqitem"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)
         faq_html = f'<h2>Questions readers ask about this one</h2><div class="faqlist">{rows}</div>'
-    img, cap = (p.get("image"), p.get("image_caption")) if p.get("image") else CAT_IMG.get(p["category"], HERO_IMG)
-    figure = (f'<figure class="lede-figure"><img src="../{esc(img)}" alt="{esc(cap)}" width="1200" height="750">'
-              f'<figcaption>{esc(cap)}</figcaption></figure>')
     decide = p.get("decide_on") or "Compare the listed capacity and footprint below against your own counter and cookware — that is the whole test."
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
 <p class="lede">{esc(p.get('shelf_line') or p['title'])}</p>
-{figure}
 <div class="actions" style="margin:14px 0">{buy_button(p)}</div>
 <p class="meta">You will go to Amazon, where price and availability are shown. This button is a sponsored link.</p>
 </section>
+{_product_lede_figure(p)}
 <div class="callout"><span>Before you buy</span><p>{esc(decide)}</p></div>
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
 <h2>What the listing calls it</h2>
 <p class="listing-title">{esc(p['title'])}</p>
-<p class="meta">Recorded verbatim so you can compare it with the page you land on. Observed ASIN {esc(p['observed_asin'])} · listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a></p>
+<p class="meta">Recorded verbatim so you can compare it with the page you land on. Observed ASIN {esc(p['observed_asin'])} · listing checked {esc(p['source_date'])} · <a href="../verification.html">Verification record</a>. Short shelf labels rely on Program Policies §6(a), which permits truncating Program Content where the meaning is unchanged (S30, Q-25).</p>
+<h2>What to compare before you buy</h2>
+<ul>
+<li><strong>Capacity vs. your actual meals:</strong> {esc(p['capacity'] or 'see listing')} — measure the tray or bird you cook most often.</li>
+<li><strong>Footprint:</strong> {esc(p['dimensions'] or 'not confirmed — measure the listing’s dimensions on Amazon')} — check counter depth and cabinet clearance.</li>
+<li><strong>Cleanup:</strong> check whether baskets/parts are listed as dishwasher-safe on Amazon before you buy.</li>
+<li><strong>Functions you will use weekly:</strong> presets only help if they match your routine (see the multi-function guide).</li>
+</ul>
 {notes}
 {claims}
 {faq_html}
@@ -593,7 +648,7 @@ PATHS = [
   ["Q-01", "Q-02", "Q-16", "Q-04"],
   "Nothing scales before one link is proven to attribute. This path is small, boring, and the only one that can close FLG-002."),
  ("B", "Shop depth — make the page a buyer can act on",
-  ["SG-11", "SG-16", "SG-19", "SG-22", "SG-25"],
+  ["SG-11", "SG-16", "SG-19", "SG-40", "SG-25"],
   ["Q-07", "Q-23"],
   "Imagery, decision blocks, comparison URLs. Everything here is bounded by what a listing states, so it converts without inventing."),
  ("C", "Content volume — publish the backlog",
@@ -601,7 +656,7 @@ PATHS = [
   ["Q-12", "Q-20", "Q-05"],
   "Two to three guides a build, each added to sitemap and feed automatically. Without measurement this is educated guessing, and the pages say so."),
  ("D", "Measure first, then decide",
-  ["SG-07", "SG-08", "SG-21", "SG-26", "SG-27"],
+  ["SG-07", "SG-08", "SG-39", "SG-26", "SG-41"],
   ["Q-08", "Q-13", "Q-21", "Q-24", "Q-26"],
   "Deploy the endpoint, verify Search Console, run the freshness clock on a schedule. The next five topics come from queries, not from this board."),
 ]
@@ -611,7 +666,9 @@ def path_table():
     q_by_id = {x["id"]: x for x in QUESTIONS}
     rows = ""
     for key, name, sugs, qs, note in PATHS:
-        cells = " · ".join(f'<a href="#{sid}">{sid}</a>' if sid in by_id else f"{sid} <span class=blank>(not in the register)</span>" for sid in sugs)
+        cells = " · ".join(
+            f'<a href="#{sid}">{sid}</a> — {esc(by_id[sid]["title"])}' if sid in by_id
+            else f'{sid} <span class="blank">(not in the register)</span>' for sid in sugs)
         waits = " · ".join(
             f'<a href="questions.html">{qid}</a> — {esc(q_by_id[qid]["question"])}' if qid in q_by_id else esc(qid)
             for qid in qs)
@@ -702,7 +759,7 @@ def prompt_builder():
 <script>
 (function(){{
  var out=document.getElementById('prompt-out'), msg=document.getElementById('copy-msg');
- var HEAD="Implement on the ShopNow Kitchen site (repo sassnarep3-star/WinC). Standing rules: read COORDINATION.md and claim tasks before editing; never fill an unverified value — leave it blank and flag it; keep intended_* and observed_* fields separate; run `npm run build && npm run check` until green; open a PR to main, merge, and confirm Pages is live.\n\nACCEPTED SUGGESTIONS\n";
+ var HEAD="Implement on the ShopNow Kitchen site (repo sassnarep3-star/WinC). DESIGN DIRECTION: the site must read like a polished marketing affiliate publication — catchy, human-sounding buyer questions as titles, editorial season framing, clean single-group navigation. It must NOT read like a generated dashboard or AI slop. Standing rules: read COORDINATION.md and claim tasks before editing; never fill an unverified value — leave it blank and flag it; keep intended_* and observed_* fields separate; run `npm run build && npm run check` until green; open a PR to main, merge, and confirm Pages is live.\n\nACCEPTED SUGGESTIONS\n";
  var TAIL="\n\nAlso: re-verify anything you touch against an official source and add it to data/sources.json with a retrieval date. Do not add prices, ratings, review counts, or hands-on-testing claims. Every outbound product link keeps rel=\"sponsored nofollow noopener\" and the affiliate tag.";
  function fmt(){{
   var on=[].slice.call(document.querySelectorAll('.sg-pick:checked'));
@@ -752,9 +809,13 @@ def verification_body():
     specs_table_html = ('<div class="tablewrap"><table><thead><tr><th>Product</th><th>Brand</th><th>Model</th><th>Capacity</th><th>Dimensions</th><th>Weight</th><th>Temp/accuracy</th><th>Power</th><th>UPC</th><th>Price</th><th>Source</th></tr></thead><tbody>'
                         + "".join(specs_rows) + "</tbody></table></div>")
 
-    src_rows = "".join(
-        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
-        for s in SOURCES)
+    def _src_row(x):
+        sid, ttl, url, what, date = x["id"], x["title"], x["url"], x["what"], x["date"]
+        return ('<tr id="src-' + esc(sid) + '"><td>' + esc(sid) + "</td><td>" + esc(ttl)
+                + "<br><a class='src' href='" + esc(url) + "' rel='nofollow noopener' target='_blank'>" + esc(url)
+                + "</a></td><td>" + esc(what) + "</td><td>" + esc(date) + "</td></tr>")
+
+    src_rows = "".join(_src_row(x) for x in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
 
@@ -845,8 +906,8 @@ def disclosure_body():
 <ul>
 <li><strong>Sponsored links:</strong> every outbound product link carries <code>rel="sponsored nofollow"</code> (Google, S04) and a visible Sponsored label.</li>
 <li><strong>Prices:</strong> this site does not display prices. Prices and availability are shown on Amazon (Program Policies, S02). “Check price on Amazon” is the only price action.</li>
-<li><strong>No endorsement, in either direction:</strong> an affiliate relationship does not mean Amazon endorses this site, and this site is not endorsed by, sponsored by or affiliated with any brand it names. Program Policies §6(d) forbids using Program Content — “including any name or likeness embodied in that Program Content” — in a way that implies an endorsement or a commercial tie-in (S27). Brand names appear here to identify products, and nothing else.</li>
-<li><strong>What we take from a listing, exactly:</strong> the title string and the product-detail values, each reproduced with the URL and the date it was read. Program Policies §6(a) allows truncating that text where the meaning is unchanged and forbids altering it, so the verbatim title always sits under the shortened shelf label (S27, Q-23). No listing image, banner or description paragraph is copied, and no Amazon graphic is resized and reused.</li>
+<li><strong>No endorsement, in either direction:</strong> an affiliate relationship does not mean Amazon endorses this site, and this site is not endorsed by, sponsored by or affiliated with any brand it names. Program Policies §6(d) forbids using Program Content — “including any name or likeness embodied in that Program Content” — in a way that implies an endorsement or a commercial tie-in (S30). Brand names appear here to identify products, and nothing else.</li>
+<li><strong>What we take from a listing, exactly:</strong> the title string and the product-detail values, each reproduced with the URL and the date it was read. Program Policies §6(a) allows truncating that text where the meaning is unchanged and forbids altering it, so the verbatim title always sits under the shortened shelf label (S30, Q-25). No listing image, banner or description paragraph is copied, and no Amazon graphic is resized and reused.</li>
 <li><strong>Guides are original:</strong> the analysis, the checklists and the questions are written here. What is quoted is marked as a quote and linked.</li>
 <li><strong>Privacy:</strong> no cookies, no fingerprinting, no email storage on this static site. Measurement counts aggregates only (see <a href="measurement.html">Measurement</a>). Reader-capture emails are handled by the email provider you choose.</li>
 </ul>
@@ -858,13 +919,6 @@ def disclosure_body():
 <li><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies (S02)</a></li>
 <li><a href="https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking" rel="nofollow noopener" target="_blank">FTC Endorsement Guides (S03)</a></li>
 <li><a href="https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links" rel="nofollow noopener" target="_blank">Google rel=sponsored (S04)</a></li>
-<li><a href="https://affiliate-program.amazon.com/help/operating/policies" rel="nofollow noopener" target="_blank">Program Policies §2(b) prices, §4 email, §5 machine-learning limit, §6(a)/(c)/(d) content rules — read verbatim 2026-11-20 (S27)</a></li>
-<li><a href="https://developers.google.com/search/updates" rel="nofollow noopener" target="_blank">Google Search Central changelog — FAQ rich-result documentation removed, HowTo deprecated (S28)</a></li>
-</ul>
-<h2>Two obligations this page now states out loud</h2>
-<ul>
-<li><strong>If Amazon takes a listing down, the copy here has to go.</strong> Program Policies §6(c) requires prompt removal of Program Content “that is no longer displayed on an Amazon Site” (S27). <code>scripts/freshness.py</code> publishes how old every recorded read is and fails past a hard limit, so a stale page is visible rather than quietly trusted. The takedown itself is a human action, and that is recorded as an open process (<a href="flagged-for-review.html#FLG-027">FLG-027</a>, <a href="questions.html">Q-24</a>).</li>
-<li><strong>Nothing collected here trains a model.</strong> Program Policies §5 bars using Special Links or Program Content “to develop machine learning models or related technology” without Amazon’s express prior written approval (S27). This repository automates rendering, checking and record-keeping; it contains no crawler and no corpus export, and the ban is written into the standing rules so a future pass cannot drift past it (Q-25).</li>
 </ul>
 {capture_block()}
 """
@@ -883,8 +937,7 @@ def ledger_rows_html():
     return "\n".join(out)
 
 def measurement_body():
-    hard = 45
-    total = 0
+    hard, total = 45, 0
     try:
         hard = int(load("data/freshness.json").get("hard_days", 45))
         total = len(_freshness.rows(datetime.date.fromisoformat(TODAY)))
@@ -902,8 +955,9 @@ def measurement_body():
 <tr><td>2</td><td><code>outbound_click</code></td><td>Click on a Sponsored Amazon link</td><td>Day + page + observed ASIN</td><td>Identity, full URL, query</td></tr>
 <tr><td>3</td><td><code>guide_read</code></td><td>Reader reaches 50%+ on a guide</td><td>Day + page + depth bucket</td><td>Reading content, identity</td></tr>
 <tr><td>4</td><td><code>reader_capture_submit</code></td><td>Newsletter form submitted</td><td>Day + page count</td><td>Email address (provider handles it)</td></tr>
-<tr><td>5</td><td><code>search_submit</code></td><td>Internal search submitted</td><td>Day + page count</td><td>Search query text</td></tr>
+<tr><td>5</td><td><code>search_submit</code></td><td>Internal search submitted</td><td>Day + page count</td><td>Search query text (see the note below: the query does appear in your own address bar)</td></tr>
 </tbody></table></div>
+<p class="meta">One honest exception, stated because it is easy to miss: the search box puts your query in the page URL (<code>search.html?q=…</code>) so a search can be shared or reloaded. Nothing is sent to this site, and the counter records only that a search happened — but a static host can log the URL it was asked for, so treat a search box here like an address bar, not like a private note. Do not type anything you would not want in a server log.</p>
 <p>Client: <code>assets/app.js</code> · Endpoint code: <code>analytics/worker.js</code> (deploy separately — GitHub Pages is static, FLG-007). Until <code>CONFIG.endpoint</code> is set, counts live only in the reader’s browser (localStorage).</p>
 
 <h2>Campaign ledger (empty by design)</h2>
@@ -921,7 +975,7 @@ def measurement_body():
 <tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see FLG-013</td></tr>
 <tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td><a href="search.html">search.html</a> (client-side, no server)</td></tr>
 <tr><td>Ledger ingest gate</td><td><span class="okpill">shipped</span></td><td><code>scripts/ledger_add.py</code> appends a row only with <code>--authorized</code>, an integer-or-null per field, and a dated provenance string; it refuses estimating words and will not derive a rate from another column. Exercised on {TODAY} with a throwaway row, rendered, then reverted — the ledger is empty because no first-party report has been obtained.</td></tr>
-<tr><td>Freshness clock (Program Policies §6(c))</td><td><span class="okpill">shipped</span></td><td><code>npm run fresh</code> reports the age of <strong>{total}</strong> recorded reads against today and exits non-zero past {hard} days (thresholds in <code>data/freshness.json</code>, not in the script). Re-reading is a human action, and removing content Amazon no longer displays stays a human decision — see <a href="flagged-for-review.html">FLG-027</a>.</td></tr>
+<tr><td>Freshness clock (Program Policies §6(c))</td><td><span class="okpill">shipped</span></td><td><code>npm run fresh</code> reports the age of <strong>{total}</strong> recorded reads against today and exits non-zero past {hard} days (thresholds in <code>data/freshness.json</code>, not in the script). Two implementations now exist and should be consolidated: this Python clock plus <code>tools/freshness.mjs</code> — see <a href="flagged-for-review.html">FLG-036</a>.</td></tr>
 <tr><td>What the counter cannot see</td><td><span class="warnpill">by design</span></td><td>The collector counts clicks and reads; it cannot observe an order. Orders enter this site only through a first-party Associates report, appended by hand with provenance — never inferred from a click count.</td></tr>
 </tbody></table></div>
 {capture_block()}
@@ -965,15 +1019,15 @@ def about_body():
 # ---------- EXEC SUMMARY ----------
 def exec_body():
     c = counts()
-    total_pages = 4 + len(CATEGORIES) + len(PRODUCTS) + len(GUIDES) + len(NAV_DESK)
     import glob as _glob
     _imgs = sorted(_glob.glob(os.path.join(ROOT, "assets", "img", "*")))
-    fresh_img = f"{len([1 for p in PRODUCTS if p.get('image')])} of {len(PRODUCTS)}, {len(_imgs)} files in assets/img"
+    fresh_img = f"{len([p for p in PRODUCTS if p.get('image')])} of {len(PRODUCTS)}, {len(_imgs)} files in assets/img"
     fresh_count = "0"
     try:
         fresh_count = str(len(_freshness.rows(datetime.date.fromisoformat(TODAY))))
     except Exception:
         pass
+    total_pages = 4 + len(CATEGORIES) + len(PRODUCTS) + len(GUIDES) + len(NAV_DESK)
     return f"""
 <section class="hero"><span class="kicker">Executive summary · for the owner, not for readers</span>
 <h1>Executive summary: {c['products']} products, {c['guides']} guides, {c['flags']} flags, nothing invented</h1>
@@ -1006,13 +1060,13 @@ def exec_body():
 
 <h2>What the fourth pass added (2026-11-20, session ab951e4c)</h2>
 <div class="tablewrap"><table><thead><tr><th>Area</th><th>Change</th><th>Where</th></tr></thead><tbody>
-<tr><td>Reader path</td><td>Shelf cards rewritten: a shelf line, the deciding spec, one evidence link. Register vocabulary (flag IDs, model strings, ASINs) left the cards for the product pages, and each product got its own illustration — {fresh_img}</td><td>Front page · category pages · SG-21, SG-22</td></tr>
-<tr><td>Asset weight</td><td>The four reused 3.7 MB PNGs became nine optimized JPEGs: 15 MB → 1.4 MB for the whole image set, with every reference updated and the gate refusing a PNG or a shared image</td><td>SG-21 · <code>assets/img/</code></td></tr>
+<tr><td>Reader path</td><td>Shelf cards rewritten: a shelf line, the deciding spec, one evidence link. Register vocabulary (flag IDs, model strings, ASINs) left the cards for the product pages, and each product keeps its own illustration — {fresh_img}</td><td>Front page · category pages · SG-39, SG-40</td></tr>
+<tr><td>Asset weight</td><td>The reused full-size PNGs became optimized 1200×750 JPEGs for the products this pass drew, with every reference updated and the gate refusing a PNG product asset or one image shared by two products</td><td>SG-39 · <code>assets/img/</code></td></tr>
 <tr><td>Editorial</td><td>Three new guides, each answerable from a published source: the ice-cup accuracy check, whole-chicken fit against the 165°F rule, and how to read thermometer listing copy. Four backlog rows closed with pointers to the guide that answers each</td><td><a href="guides/index.html">Guides</a> · <a href="topics.html">Topics</a></td></tr>
-<tr><td>Compliance detail</td><td>Program Policies §2(b), §4, §5, §6(a), §6(c) and §6(d) read verbatim and recorded (S27). Six consequences: a brand-endorsement statement, a freshness clock for the §6(c) removal duty, a written limit on training models with Program Content, a rule that affiliate email must be solicited, corrected disclosure wording, and a note that short labels rely on the §6(a) truncation permission</td><td>FLG-026 … FLG-031 · <a href="disclosure.html">Disclosure</a></td></tr>
-<tr><td>Expectation repair</td><td>Google's own changelog says the FAQ rich-result documentation was removed and HowTo is deprecated (S28), so no roadmap row promises a SERP feature from our FAQ markup</td><td>FLG-030 · Q-26</td></tr>
-<tr><td>Machinery</td><td>Two tools added and both exercised: <code>scripts/freshness.py</code> (age of {fresh_count} recorded reads) and <code>scripts/ledger_add.py</code> (a ledger row needs <code>--authorized</code>, a dated provenance string, integer-or-null fields, and no estimating words). The gate gained five rule families, each verified by breaking it first</td><td><a href="measurement.html">Measurement</a></td></tr>
-<tr><td>Decision board</td><td>Paths now name the register rows they comprise and the questions they wait on, so a choice is checkable before it is made; SG-19 (imagery) decided and shipped; SG-21 … SG-27 added</td><td><a href="direction.html">Suggestions &amp; paths</a></td></tr>
+<tr><td>Compliance detail</td><td>Program Policies §2(b), §4, §5, §6(a), §6(c) and §6(d) read verbatim and recorded (S30). Consequences: a brand-endorsement statement, a freshness clock for the §6(c) removal duty, a written limit on training models with Program Content, a rule that affiliate email must be solicited, corrected disclosure wording, and a note that short labels rely on the §6(a) truncation permission</td><td>FLG-026 … FLG-031 · <a href="disclosure.html">Disclosure</a></td></tr>
+<tr><td>Expectation repair</td><td>Google's own changelog says the FAQ rich-result documentation was removed and HowTo is deprecated (S31), so no roadmap row promises a SERP feature from our FAQ markup</td><td>FLG-030 · Q-27</td></tr>
+<tr><td>Machinery</td><td>Two tools added and both exercised: <code>scripts/freshness.py</code> (age of {fresh_count} recorded reads) and <code>scripts/ledger_add.py</code> (a ledger row needs <code>--authorized</code>, a dated provenance string, integer-or-null fields, no estimating words). The gate gained six rule families, each verified by breaking it first</td><td><a href="measurement.html">Measurement</a></td></tr>
+<tr><td>Decision board</td><td>Each path now names the register rows it comprises and the questions it waits on; SG-19 (imagery line) decided and shipped; SG-23 … SG-26 and SG-39 … SG-42 added</td><td><a href="direction.html">Suggestions &amp; paths</a></td></tr>
 </tbody></table></div>
 
 <h2>What has to happen before any of this earns anything</h2>
@@ -1182,7 +1236,8 @@ def topic_sources(t):
         urls = [urls]
     out = " ".join(f'<a href="{esc(u)}" rel="nofollow noopener" target="_blank">{esc(u.split("/dp/")[-1] if "/dp/" in u else u)}</a>' for u in urls)
     if t.get("published_as"):
-        out += f' <span class="meta">· published as <a href="{esc(t["published_as"])}">{esc(t["published_as"].split("/")[-1].replace(".html",""))}</a></span>'
+        out += (f' <span class="meta">· published as <a href="{esc(t["published_as"])}">'
+                f'{esc(t["published_as"].split("/")[-1].replace(".html", ""))}</a></span>')
     if t.get("status_note"):
         out += f'<p class="meta">{esc(t["status_note"])}</p>'
     return out or '<span class="meta">— none yet</span>' 

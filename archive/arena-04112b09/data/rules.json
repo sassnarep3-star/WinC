@@ -1,0 +1,128 @@
+{
+  "$comment": "The publishing gate. `auto` rules are enforced by tools/check.mjs and fail the build; `human` rules cannot be verified from a repository and are the reason a gate sits in front of publishing rather than a post-publish apology.",
+  "enforced_by": "tools/check.mjs",
+  "rules": [
+    {
+      "id": "G-01",
+      "rule": "The required Associates sentence appears, unaltered, on every page.",
+      "text_required": "As an Amazon Associate I earn from qualifying purchases.",
+      "enforcement": "auto",
+      "check": "every generated .html contains the sentence in the pre-content disclosure strip",
+      "source": "SRC-01 §5",
+      "why": "§5 makes a violation a material breach, not a nit."
+    },
+    {
+      "id": "G-02",
+      "rule": "The disclosure is repeated in the footer, so a reader who lands at the bottom of a long page still sees it.",
+      "enforcement": "auto",
+      "check": "footer block contains the sentence and a link to the disclosure page",
+      "source": "SRC-01 §5; SRC-04 (clear and conspicuous); operator brief",
+      "why": "'Conspicuous' survives scrolling only if it is placed twice."
+    },
+    {
+      "id": "G-03",
+      "rule": "Every outbound link to a store carries a link-level label in the same sentence or block, using Amazon's own example wording.",
+      "label": "(paid link)",
+      "enforcement": "auto",
+      "check": "each a[href*='amzn.to'], a[href*='amazon.'] element must be preceded or followed by a .paid-label node",
+      "source": "SRC-03",
+      "why": "Amazon's FAQ distinguishes the site-wide sentence from the label that sits next to the link."
+    },
+    {
+      "id": "G-04",
+      "rule": "Every populated cell in a data table resolves to a source id; unverified values stay blank and carry an unverified marker.",
+      "enforcement": "auto",
+      "check": "data rows are JSON; each non-blank field must have a matching src key present in data/sources.json",
+      "source": "operator brief (verification rule)",
+      "why": "Makes 'never infer' a build failure instead of a promise."
+    },
+    {
+      "id": "G-05",
+      "rule": "Store links are marked sponsored, never routed through a redirect or an interstitial, and always carry the tag parameter.",
+      "enforcement": "auto",
+      "check": "rel must contain 'sponsored'; no href may point at this site's own outbound-redirect handler; tag= must be present",
+      "source": "SRC-16 (sponsored); SRC-02 §2(e) (Redirecting Links disqualify); SRC-01 §1 (tagged formats)",
+      "why": "An intermediate hop both disqualifies the sale and obscures the destination."
+    },
+    {
+      "id": "G-06",
+      "rule": "No price, availability, star rating or review text is displayed anywhere unless it came from Creators/PA API output or an Amazon-served link, and is timestamped.",
+      "enforcement": "auto",
+      "check": "regex scan of generated HTML for currency patterns, 'out of 5', 'stars', and rating decimals; allowlist requires a provenance key",
+      "source": "SRC-02 Participation Requirements §2(b) and §6(t)",
+      "why": "This is the single most common way a compliant-looking affiliate site becomes a non-compliant one."
+    },
+    {
+      "id": "G-07",
+      "rule": "No claim of superiority, ranking, 'best', or test outcome about a product we have not examined.",
+      "enforcement": "auto+human",
+      "check": "superlative scan + reviewer sign-off line on each guide",
+      "source": "SRC-02 §2(b) (no inaccurate, overbroad, deceptive or misleading claims); SRC-08 (headings must not exaggerate)",
+      "why": "Also the difference between a publication and a content farm."
+    },
+    {
+      "id": "G-08",
+      "rule": "No price-tracking or price-alert functionality on the site.",
+      "enforcement": "auto",
+      "check": "no form, script or data file may declare a drop-alert/watch feature",
+      "source": "SRC-02 §6(y)",
+      "why": "The brief's wishlist of automation collides with this line; we do not build it."
+    },
+    {
+      "id": "G-09",
+      "rule": "No incentive, reward, raffle or 'support us' perk tied to clicking a store link.",
+      "enforcement": "human",
+      "check": "reviewer question in the publishing template",
+      "source": "SRC-02 §6(g)",
+      "why": "Rewards for clicking are explicitly excluded, including donations and points."
+    },
+    {
+      "id": "G-10",
+      "rule": "Click measurement is aggregate-only: no per-visitor sub-tag assignment, no synthetic clicks, no bot traffic.",
+      "enforcement": "auto",
+      "check": "collector must not write a per-user identifier into any tag/subtag field; no automated click emulation in tooling",
+      "source": "SRC-02 §2(b) sub-tag paragraph; §6(s)",
+      "why": "Analytics ambition is exactly where these two lines get crossed by accident."
+    },
+    {
+      "id": "G-11",
+      "rule": "No program content is fed to model training or fine-tuning without prior written Amazon approval.",
+      "enforcement": "human",
+      "check": "data-pipeline review at intake; recorded in the AI-pipeline note",
+      "source": "SRC-02 §5",
+      "why": "It bounds the 'AI-powered platform' ambition: generation is fine, ingest-as-training-data is a separate permission."
+    },
+    {
+      "id": "G-12",
+      "rule": "Program Content that disappears from Amazon is removed promptly; every product field carries a re-check due date.",
+      "enforcement": "auto",
+      "check": "products with checked_on older than 30 days fail the build with a remove-or-recheck notice",
+      "source": "SRC-02 §6(c)",
+      "why": "Turns a contractual duty into a scheduled job that cannot be quietly ignored."
+    },
+    {
+      "id": "G-13",
+      "rule": "Store links live only on this site; no Special Links inside an RSS item body, no links in email unless the recipient solicited them, nothing offline.",
+      "enforcement": "auto",
+      "check": "feed.xml must not contain an amazon host in <description>; confirmed at build time",
+      "source": "SRC-02 §4 and §6(b)",
+      "why": "The feed is syndicated into mailers by third parties we do not control; the safe design is to feed headlines and link to the guide."
+    },
+    {
+      "id": "G-14",
+      "rule": "No pop-ups, layer ads or transitional pages; no framing of a store page.",
+      "enforcement": "auto",
+      "check": "no iframe to a store host; newsletter capture is inline, not a modal",
+      "source": "SRC-02 §6(n)–(o)",
+      "why": "It also happens to be the reader-friendly choice."
+    },
+    {
+      "id": "G-15",
+      "rule": "Every internal link resolves to a file we generate; every source URL cited is present in the source register.",
+      "enforcement": "auto",
+      "check": "link crawl of all generated HTML + host allowlist for cited sources",
+      "source": "operator brief (no broken links)",
+      "why": "A 404 on a 'verify this' link is worse than no link."
+    }
+  ]
+}

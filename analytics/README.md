@@ -16,7 +16,8 @@ ships the endpoint code so it can be deployed separately (e.g. Cloudflare Worker
 ## Privacy rules
 
 - No cookies, no fingerprinting, no IP / user-agent storage, no email storage.
-- The Worker allow-lists fields and drops everything else.
+- Both endpoint implementations apply event-specific allow-lists: only a valid 10-character ASIN for `outbound_click` and a fixed depth bucket for `guide_read` can be retained; all other client properties are dropped.
+- The server supplies the event date and site ID; client timestamps, email addresses, search queries, referrers, and arbitrary properties are not stored.
 - Client (`assets/app.js`) runs in local-only mode until `CONFIG.endpoint` is set.
 
 ## Deploy
@@ -42,10 +43,11 @@ python3 analytics/collect.py --port 8080 --out /var/log/shopnow-events.jsonl \
 ```
 
 Endpoints: `POST /collect` (only the five defined events), `GET /stats`, `GET /ledger`,
-`GET /healthz`. Behaviour verified by test, not asserted: all five events → `202` and one JSON
-line each; an out-of-set event (`purchase`) → `422`; malformed body → `400`; a `text/plain`
-`sendBeacon` payload → accepted; `../` and CRLF in `page` → stored as `rejected`.
-No IP logging (access log disabled), no cookies, no user-agent storage, no session stitching.
+`GET /healthz`. The contract tests cover event allow-listing and field redaction for both endpoint
+implementations, valid and invalid route names, and rejection of out-of-set events. Each accepted
+Python event writes one JSONL row; only the event name, server-side day, a validated route, and the
+approved event-specific property (ASIN or depth bucket) are stored. No IP logging (access log disabled),
+no cookies, no user-agent storage, no session stitching.
 
 Honest limits: this counts **clicks and reads, not orders**. `/ledger` will never know a sale
 happened. Order and revenue rows must be transcribed from Associates Central's own reports into
