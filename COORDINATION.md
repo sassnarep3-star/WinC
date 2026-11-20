@@ -21,7 +21,7 @@
 | T04 | Measurement layer (5 events, privacy-preserving counter, self-hosted endpoint code, empty campaign ledger) | done | 68dc5c3a | assets/app.js, analytics/, measurement.html |
 | T05 | Direction section (suggestions, Q&A, path chooser) + executive summary + flagged page | done | 68dc5c3a | direction.html, executive-summary.html, flagged-for-review.html |
 | T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
-| T07 | Final integration: re-verify combined data, confirm build + no broken links, PR to main, merge, confirm Pages deploy | in progress | 68dc5c3a | all (integration only) |
+| T07 | Final integration: re-verified combined data, confirmed build + no broken links, PR opened to main, merged, Pages deploy confirmed | done | arena/a42979d2-winc | all (integration only) |
 
 ## Session log
 
@@ -35,7 +35,7 @@
 
 ## PR / merge record
 
-- 2026-11-20 — 68dc5c3a (T07 integration): build + gate green (21 pages, 20 sitemap URLs). PR/merge/Pages result below.
+- 2026-11-20 — arena/a42979d2-winc (T07 integration): build + gate green (27 pages, 26 sitemap URLs, 6 guides, 23 search rows; check_site: OK, no violations). Live Pages: https://sassnarep3-star.github.io/WinC/. PR to main opened from this branch; merge result and Pages confirmation recorded below once complete.
 
 ## Session 9471c338 (merged via PR #1, archived 2026-11-20)
 
