@@ -7,8 +7,10 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = process.cwd();
-const DAYS = Number(process.argv[++process.argv.indexOf("--days")] || 30);
-const QUIET = process.argv.includes("--quiet");
+const argv = process.argv.slice(2);
+const di = argv.indexOf("--days");
+const DAYS = Number(di >= 0 ? argv[di + 1] : 30) || 30;
+const QUIET = argv.includes("--quiet");
 const read = (p) => (existsSync(join(ROOT, p)) ? JSON.parse(readFileSync(join(ROOT, p), "utf8")) : null);
 const products = read("data/products.json")?.products || [];
 const probes = read("data/probes.json")?.probes || [];

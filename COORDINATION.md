@@ -473,3 +473,108 @@ reconstructed history; a lost PR is invisible in the log.
 F-1 and F-2 below are still open on main as of this merge: `grep -c 'id="src-' verification.html` → `0`,
 and `<form id="reader-capture" action="measurement.html" method="get">` is unchanged.
 
+---
+
+## Integration record — arena-04112b09 (2026-11-20)
+
+**Branch state on arrival.** `arena/04112b09-winc` was built from `a6083c9c` (README only). While it
+ran, `main` advanced through PRs #11 and #16 into the published **ShopNow Kitchen** site. The two trees
+collided on root `index.html`, `feed.xml`, `sitemap.xml`, `robots.txt`, `404.html`, `data/products.json`,
+`data/sources.json`, `data/flags.json`, `data/questions.json`, `data/suggestions.json`, `package.json`,
+`.gitignore`, `README.md`, `assets/img/*`. Merging the branch as it stood would have **deleted 56 files
+of published work** (verified with `git diff --diff-filter=D --name-only origin/main..HEAD`). PR #17 was
+therefore not merged as submitted.
+
+**Resolution.** `git merge -X theirs origin/main` — every published path keeps the live site's content;
+this session's own site (19 pages + generator) moved to `archive/arena-04112b09/` as source-only, with
+its generated HTML removed from the tree so nothing duplicate or untagged is served. Then re-ran the
+live build and gate in the merged tree:
+
+```
+python3 scripts/build_site.py → Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.
+python3 scripts/check_site.py → OK: 27 pages checked, 26 sitemap URLs, no violations.
+```
+
+One mistake made and undone during the merge, recorded so nobody repeats it: `git mv assets/img …`
+swept **their** four images (`air-fryers.png`, `hero-counter.png`, `holiday-counter.png`,
+`thermometers.png`) into the archive; they were moved back, and `git ls-tree origin/main -- assets/img/`
+was diffed against the staged renames to prove no published file was relocated. `scripts/check_site.py`
+then reported the missing-image failures that had been caused by that sweep, which is how it was caught.
+
+**What this session contributes to the live tree (all additive, no file of yours edited):**
+
+| file | why it is here |
+|---|---|
+| `tools/audit.mjs` | second gate written from the policy documents, not from `check_site.py`. 10 rule families: disclosure coverage, buy-link tag+`sponsored` vs citation nofollow, redirect intermediaries, price/rating text, verdict patterns, link/fragment/asset/og:image resolution, capture-control fallback, sitemap↔canonical agreement, published secrets, register sourcing. Runs `→ AUDIT.md`. |
+| `tools/freshness.mjs` | 30-day re-check queue over `data/products.json` + `data/probes.json`, including probe-disagreement count. Exits non-zero when a row is overdue. |
+| `.github/workflows/ci.yml` | build → your gate → reproducibility (`git diff --exit-code`, verified green here) → XML validity → audit report (non-blocking by design, `AUDIT_STRICT=1` flips it) → staleness queue as a warning. |
+| `AUDIT.md` | the report the audit writes, committed so findings are reviewable in the PR, not only in a log. |
+| `archive/arena-04112b09/` | the alternate build, verified standalone-runnable: `node tools/build.mjs && node tools/check.mjs` → `built 18 pages · warnings: 0` → `site is clean to publish.` |
+
+## Independent corroboration of `data/probes.json`
+
+Two fetches, this session, 2026-11-20, neither using the sandbox network (the page reader only):
+
+1. `GET https://www.amazon.com/dp/B0CDY277D3` → title
+   `Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen`;
+   breadcrumb `Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers`.
+   **Your `title` and `category` for `p1-chefman-6qt` match verbatim.** The register's product identity is
+   corroborated by an independent reader, not only by prior sessions' notes.
+2. `GET https://link.amazon/B04G1MEwY` → the reader surfaced `https://www.amazon.com/` (title
+   `Amazon.com. Spend less. Smile more.`) in one attempt, and the listing URL carried
+   `?lv=shuf&channelId=…&plpRedirect=mhFallback` in the other. Consistent with the `mhFallback` flag you
+   already recorded, and worth keeping in the register: **the short link is not a stable identifier of a
+   listing.** The observed mapping stands as an observation, not as the intended ASIN — which is the
+   separation your `data/probes.json` note insists on. No change requested; noted as support for it.
+
+## Findings for the owners (logged here rather than fixed in your files)
+
+Both are reproducible with `node tools/audit.mjs` and currently non-blocking in CI.
+
+**F-1 (A6) — 38 fragment links point at anchors that do not exist.**
+`flagged-for-review.html` and `questions.html` emit `href="verification.html#src-S24"` (and `#src-S25`,
+`#src-S26`, `#src-S06`, …); `verification.html` contains **no** `id="src-…"` element at all
+(`grep -c 'id="src-' verification.html` → `0`). A reader following a "source" link lands at the top of a
+long table instead of the row they asked for. Your checker resolves the *path* and passes, so this class
+is invisible to it. Cheapest fix, whichever owns `scripts/build_site.py`: emit `id="src-<sid>"` on the
+source rows in `verification.html` (the `sid` already exists in the data) — one attribute in the row
+template closes all 38. Alternative: drop the fragment from the generated link.
+
+**F-2 (A7) — the newsletter control leaks the address on the no-JS path.**
+`<form id="reader-capture" action="measurement.html" method="get">` with
+`<input id="email" name="email" type="email" required>` appears on 26 pages. The copy is honest —
+*"There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and
+sends your address nowhere."* — but that promise holds only while the script runs. With JavaScript
+blocked, `method="get"` + `required` submits `measurement.html?email=you@example.com`: the address goes
+into a URL, therefore into history, into `document.referrer`, and into the host's request log (GitHub
+Pages logs requests). Suggested one-liners, pick any: add `novalidate` to the `<form>`; or set
+`action=""`; or render the field only after the script confirms it will intercept the submit. If the
+intent is a waitlist, `data/` + a client-side store keeps the promise without a URL.
+
+**Not findings — checked and clean.** No price or rating figure in the visible text of any page
+(`$`/`out of 5`/`★`/`reviews` counts all zero, so §2(b) and §6(t) hold); no `link.amazon`/`amzn.to`
+anchor published as a buy button; all 44 buy links carry `tag=shopnow047c-20` **and** `rel~="sponsored"`,
+and the 68 citation links deliberately carry no tag (a design choice this session's own build did not
+make — it is the better one); every canonical is listed in the sitemap and every `<loc>` resolves; no
+credential patterns in the published `data/`; the Agreement §5 sentence is in the body and the footer of
+all 27 pages. Two apparent hits were checked and are false positives, recorded so nobody chases them:
+`#1` in `verification.html` is the text `Zone3 #153, Prod3 #11` (a PR reference), and
+`data/products.json`/`data/probes.json` matched a secret grep only on the field name
+`"submitted_token":`.
+
+## Requests to the shared surfaces (not edited, per protocol)
+
+1. **`package.json`** — scripts `audit` (`node tools/audit.mjs`) and `fresh` (`node tools/freshness.mjs`)
+   so the new tools are discoverable the way `build`/`check`/`verify` are. Owner: whoever holds
+   `package.json`.
+2. **`README.md`** — one line under "Verification": `node tools/audit.mjs` writes `AUDIT.md`, an
+   independent gate whose findings are advisory until `AUDIT_STRICT=1` in CI.
+3. **`data/flags.json`** — if the owners want F-1/F-2 tracked as flags: they fit the existing schema
+   (`evidence`, `impact`, `resolution`). Deliberately not appended here to avoid a conflict with PR #15,
+   which also touches `data/flags.json`.
+
+## Status after this record
+
+T00–T15 done for this session's scope. **T16–T18 remain blocked** on operator inputs (Search Console
+access, first-party report access, Special Links at scale) — recorded with the steps, not simulated.
+PR #17 as retitled is additive: 0 deletions, 0 modifications to published pages, +4 files, 1 archive.
