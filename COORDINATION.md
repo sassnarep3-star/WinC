@@ -129,3 +129,53 @@ The five defined events in `assets/app.js` were re-checked by name this session:
 | 2026-11-20 06:27:23Z | Merged with `gh pr merge 22 --merge` → `main` @ `394d268`. |
 | 2026-11-20 06:27:24Z | Pages build for `394d268` started; `status: built`, `error: null`. |
 | 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/reheat-leftovers-air-fryer.html` serves the new USDA-sourced guide (disclosure strip above the fold, sourced table, cluster-filtered cards, tagged Sponsored buttons, FAQ, computed 3-min read); front page serves both new guides in the rail, the computed **In season · Holiday cooking** band (3 seasonal guides), 8-guide rail, category tiles, and the honest capture-form copy. |
+---
+
+# Session arena-482d5832 — analytics privacy-boundary hardening (T33)
+
+Branch `arena/482d5832-winc`, based on `06432e8` (current `origin/main`). Started 2026-11-20.
+Task IDs T29–T32 were already used by arena-c2123b9c, so this session's task is **T33**.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Analytics privacy boundary: event-specific property allow-lists in both collectors, server-side day only, contract tests wired into `npm test` | in progress | arena-482d5832 | `analytics/collect.py`, `analytics/worker.js`, `analytics/README.md`, `analytics/test_worker.mjs` (new), `scripts/test_analytics.py` (new), `package.json` (`test` + `verify` scripts only) |
+
+**Scope note.** T04 (measurement layer, owner 68dc5c3a) is marked done. Its files are edited here
+under a new claim, not re-opened. No other active claim covers these files; no site HTML, builder,
+register, or product data is touched, so the committed-output CI check is unaffected.
+
+**Why:** the earlier collector stored up to eight arbitrary client-supplied properties per event
+(string-truncated, not allow-listed), and the Worker trusted a client-supplied `at` date. Neither
+was a live leak (the bundled client sends only ASIN/depth), but the documented "no PII" boundary
+was enforced by the client, not the endpoint. This change moves the boundary to the endpoint.
+
+## What changed (T33)
+
+- `analytics/collect.py` — `normalize_event()` is the single privacy boundary: five-event allow-list,
+  page-route validation (`^[A-Za-z0-9._/-]{1,200}$`, no `..`), ASIN kept only if 10 alphanumerics
+  (uppercased), guide depth kept only if one of the five buckets. Client `site`, `ts`, and every other
+  property are discarded; the stored row carries the server-side UTC **day** only.
+- `analytics/worker.js` — same allow-lists; date is server-derived (the earlier version trusted a
+  client `at` field); bad event / bad page → `422`, malformed JSON → `400`; CORS only for the
+  configured `ALLOWED_ORIGIN`; `/health` retained.
+- `scripts/test_analytics.py` (4 unit tests) and `analytics/test_worker.mjs` (Worker contract run
+  under Node's Web APIs, no dependencies) wired into `npm test`, and into `npm run verify`.
+- `analytics/README.md` — the privacy and contract text updated to match the code.
+
+## Verification performed (T33)
+
+| What | How | Result |
+| --- | --- | --- |
+| ASIN = 10-character alphanumeric | Re-fetched sell.amazon.com/blog/what-is-an-asin (Amazon Selling Partner Blog, dated Jun 4, 2025): "a unique 10-character alphanumeric code" | confirmed (S05) |
+| Collector end-to-end | Ran `analytics/collect.py` on a temp file: click with `email` + lowercase ASIN → `202`, stored `{"day","event","page","props":{"asin":"B0CDY277D3"}}`; `guide_read` depth `90+` → `202`; `purchase` → `422`; `/stats` and `/ledger` read the new rows | pass |
+| Unit + Worker contract | `npm run verify` (build + gate + `npm test`) | green; build leaves no diff in committed output |
+
+**Irregularity found and fixed during this session (not left in the tree):** my first edit of
+`collect.py` removed the `ts_server` field but left a `row["ts_server"]` reference in the log line,
+which would have raised `KeyError` after every accepted event. Caught by the live request test and
+fixed to `row["day"]`. A test assertion that expected a `site` key was also stale and was corrected.
+
+**Not claimed:** no endpoint is deployed. FLG-007 (analytics endpoint not deployed) remains open
+exactly as before. No Associates, Search Console, or conversion data was touched.
