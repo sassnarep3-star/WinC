@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suggestions — review before anything ships · Kitchen Shortlist</title>
+<meta name="description" content="Thirty suggestions with explicit options, effort and dependencies. Nothing here is implemented until someone picks a path.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/suggestions.html">
+<meta property="og:title" content="Suggestions — review before anything ships">
+<meta property="og:description" content="Pick a path first: every suggestion lists its options, effort and what it blocks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/suggestions.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Kitchen Shortlist RSS" href="rss.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ANALYTICS_ENDPOINT = null; /* local mode — FLG-006 */</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span><span class="brand-name">Kitchen Shortlist</span><span class="brand-tag">Buyer-first appliance guides</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guides/index.html">Guides</a></li>
+        <li><a href="products.html">The Shortlist</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Before You Decide</a></li>
+        <li><a href="executive-summary.html">Summary</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap">
+    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+    <span class="sep">·</span> If you buy through a product link on this page we may earn a commission at no extra cost to you.
+    <span class="sep">·</span> Product links carry <code>rel="sponsored"</code>.
+    <a href="compliance.html">How we disclose</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="index.html">Home</a> / Suggestions</p>
+    <h1>Suggestions</h1>
+    <p class="lede">The decision queue. Every item states what it is, why it matters, and the <strong>paths you can choose between</strong> — nothing marked <em>needs decision</em> gets implemented without a pick. Items marked <em>done</em> were part of the initial build and are listed so the full picture is reviewable in one place.</p>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sg-toolbar" data-sg-toolbar role="group" aria-label="Filter suggestions">
+        <button data-status="all" aria-pressed="true">All (30)</button>
+        <button data-status="needs-decision" aria-pressed="false">Needs decision (9)</button>
+        <button data-status="proposed" aria-pressed="false">Proposed (7)</button>
+        <button data-status="done" aria-pressed="false">Done (14)</button>
+      </div>
+
+      <div class="qa" id="sg-list">
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-01</span><h3>Lead with the products, not the verification process</h3><span class="chip chip-done">done</span></div>
+          <p>The landing page is a publication front page: buyer question → guides → shortlist. Every dashboard surface (register, flags, ledger, measurement) is one click away in the footer's Dashboard group, reachable but never in the buyer's face.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> publication front page, dashboards in footer</span><span class="path">Path B: dashboard-style home — rejected, reads like an audit</span></div>
+          <div class="sg-foot"><span>Effort: shipped</span><span>Impact: buyer trust + conversion path</span><span><a href="index.html">see front page</a></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-02</span><h3>Single navigation group; dashboard surfaces in footer</h3><span class="chip chip-done">done</span></div>
+          <p>One reader-facing nav (Home · Guides · The Shortlist · Suggestions · Before You Decide · Summary). Operational pages live under the footer's <strong>Dashboard</strong> heading so the information architecture stays one-level deep.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> two-tier — reader nav + footer dashboard</span><span class="path">Path B: mega-menu mixing both — rejected, noise</span></div>
+          <div class="sg-foot"><span>Effort: shipped</span><span>Related: SG-27</span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-03</span><h3>Disclosure strip above the fold on every page, repeated in footer</h3><span class="chip chip-done">done</span></div>
+          <p>The Associates statement sits in an amber strip directly under the masthead — before any content, on every page including this one — and again in the footer. Placement follows FTC's "unavoidable" standard (<a href="source-register.html#v10">V-10</a>) and Amazon's required wording (<a href="source-register.html#v01">V-01</a>). A CI check fails the build if it's ever missing.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> static strip in HTML (works without JS)</span><span class="path">Path B: JS-injected banner — rejected, breaks no-JS and crawlers</span></div>
+          <div class="sg-foot"><span>Enforced by: <code>scripts/check_site.py</code></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-04</span><h3>Every outbound product link marked as sponsored</h3><span class="chip chip-done">done</span></div>
+          <p>All product links carry <code>rel="sponsored nofollow noopener"</code> plus a <code>js-outbound</code> hook for click measurement. The build checker fails if any <code>link.amazon</code> or <code>/dp/</code> link appears without <code>sponsored</code>.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> rel=sponsored + checker gate</span></div>
+          <div class="sg-foot"><span>Enforced by: <code>scripts/check_site.py</code></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-05</span><h3>Product-intent confirmation record with separated fields</h3><span class="chip chip-done">done</span></div>
+          <p>Each submitted link stores: intended code, official listing URL, confirmation date, source — in the <code>intended</code> block. Observed redirect target, title and check date live in a separate <code>observed</code> block. The two are never merged; all five mismatches are flagged.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> two-block JSON + rendered tables</span></div>
+          <div class="sg-foot"><span><a href="data/products.json">products.json</a> · <a href="source-register.html#record">rendered record</a></span></div>
+        </article>
+
+        <article class="sg" data-status="needs-decision">
+          <div class="sg-head"><span class="sg-id">SG-06</span><h3>Replace ambiguous outbound links with validated Special Links</h3><span class="chip chip-unverified">needs decision</span></div>
+          <p>Amazon requires links to properly use its "tagged" formats (<a href="source-register.html#v02">V-02</a>) and warns that unclear link shortening is prohibited (<a href="source-register.html#v08">V-08</a>). The supplied short links' exact compliance status is unresolved (<a href="flagged.html#flg-003">FLG-003</a>) — we do <em>not</em> claim they are invalid. Nothing gets swapped until the one-link test below runs.</p>
+          <div class="paths">
+            <span class="path"><b>Path A:</b> owner runs one-link-per-product test in the enrolled Associates workflow, records destination + tracking report, then swap — <em>recommended</em></span>
+            <span class="path">Path B: keep submitted links (marked sponsored) until a later batch test</span>
+            <span class="path">Path C: swap to <code>/dp/</code>+tag links now — rejected, untested against the Associates account</span>
+          </div>
+          <div class="sg-foot"><span>Effort: 1 session (A) · Blocks: revenue attribution confidence</span><span><a href="questions.html#q06">Q-06</a></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-07</span><h3>Publish question-shaped guides from the editorial hypotheses</h3><span class="chip chip-done">done</span></div>
+          <p>All four suggested titles shipped as real guides, each labeled a working hypothesis (no popularity/superiority claims), with comparison tables whose rows link sources.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> publish all four, label as working titles</span></div>
+          <div class="sg-foot"><span><a href="guides/index.html">guides index</a></span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-08</span><h3>Set a publishing cadence and hold to it</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>Recommended: one guide per fortnight, published Tuesday, added to sitemap and feed the same day. Cadence beats bursts for how search engines treat a new site — but it's an ongoing commitment, so it needs an owner pick.</p>
+          <div class="paths"><span class="path"><b>Path A:</b> 1 guide / fortnight — <em>recommended</em></span><span class="path">Path B: 1 guide / month, lower load</span><span class="path">Path C: burst of 4/quarter, then pause</span></div>
+          <div class="sg-foot"><span>Effort: 2–4 h per guide · Blocks: SG-20 topic loop</span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-09</span><h3>Add every new guide to the sitemap and feed on publish</h3><span class="chip chip-done">done</span></div>
+          <p><code>sitemap.xml</code> and <code>rss.xml</code> currently list all four guides; the checker fails if a published HTML page is missing from the sitemap or a guide is missing from the feed.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> static files + CI completeness check</span></div>
+          <div class="sg-foot"><span>Enforced by: <code>scripts/check_site.py</code></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-10</span><h3>Turn on click measurement before writing anything else</h3><span class="chip chip-done">done</span></div>
+          <p>Outbound-click counter and the five-event taxonomy shipped with the site. Events record locally today (endpoint decision pending — SG-12), so data starts accumulating from day one.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> ship client now, endpoint after decision</span></div>
+          <div class="sg-foot"><span><a href="measurement.html">measurement page</a></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-11</span><h3>Privacy-preserving outbound-click counter</h3><span class="chip chip-done">done</span></div>
+          <p>No cookies, no third-party requests, random per-browser session id, referrer truncated, ring buffer capped at 500 events. Documented on the <a href="privacy.html">privacy page</a>.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> first-party, cookieless, sendBeacon</span><span class="path">Path B: third-party analytics — rejected, conflicts with privacy positioning</span></div>
+          <div class="sg-foot"><span>Code: <code>docs/assets/analytics.js</code></span></div>
+        </article>
+
+        <article class="sg" data-status="needs-decision">
+          <div class="sg-head"><span class="sg-id">SG-12</span><h3>Deploy the self-hosted analytics endpoint</h3><span class="chip chip-unverified">needs decision</span></div>
+          <p>Endpoint code is shipped (<code>analytics/endpoint.js</code> for Cloudflare Workers, <code>analytics/server.py</code> for any Python host) but not deployed — hosting requires credentials this session doesn't have (<a href="flagged.html#flg-006">FLG-006</a>). Until then the site runs in local mode and the Measurement page shows this browser's events.</p>
+          <div class="paths">
+            <span class="path"><b>Path A:</b> Cloudflare Worker + KV (free tier, ~15 min) — <em>recommended</em></span>
+            <span class="path">Path B: small VPS running <code>server.py</code></span>
+            <span class="path">Path C: stay local-only — no cross-device data, weakens SG-10</span>
+          </div>
+          <div class="sg-foot"><span>Effort: A/B 1 session · Blocks: real click analytics, SG-24</span><span><a href="questions.html#q07">Q-07</a></span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-13</span><h3>Approve the five-event taxonomy</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>The brief referenced "the five defined events" but no definition existed in the repo. We proposed: <code>page_view</code>, <code>outbound_product_click</code>, <code>guide_cta_click</code>, <code>search_query</code>, <code>subscribe_click</code> — deliberately excluding conversions, which only enter via authorized Associates reports (<a href="flagged.html#flg-009">FLG-009</a>).</p>
+          <div class="paths"><span class="path"><b>Path A:</b> approve as proposed — <em>recommended</em></span><span class="path">Path B: revise list (send the replacement five)</span></div>
+          <div class="sg-foot"><span>Blocks: event dashboards, ledger alignment</span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-14</span><h3>Measure before automating optimization</h3><span class="chip chip-done">done</span></div>
+          <p>The campaign ledger exists with zero rows by design — timestamp, source, channel, eligible sessions, clicks, reported orders and provenance are defined; numbers only enter from authorized first-party reports. No conversion score or revenue forecast is presented anywhere on the site.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> empty ledger + entry rules</span></div>
+          <div class="sg-foot"><span><a href="ledger.html">ledger</a></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-15</span><h3>Dated provenance trail for every future number</h3><span class="chip chip-done">done</span></div>
+          <p>Ledger rows are append-only with a provenance field; corrections are new rows referencing the old one. Schema published so the first report entry has nowhere to hide its source.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> append-only JSON + rendered table</span></div>
+          <div class="sg-foot"><span><a href="data/campaign-ledger.json">schema</a></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-16</span><h3>Put disclosures and API policy checks in the publishing workflow</h3><span class="chip chip-done">done</span></div>
+          <p>GitHub Actions runs <code>check_site.py</code> on every push and PR: disclosure present, links sponsored, table rows sourced, sitemap/feed complete, internal links valid. The <a href="compliance.html">compliance page</a> records the review checklist against the Operating Agreement and FTC guidance.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> CI gate + published checklist</span><span class="path">Path B: manual pre-publish review only — rejected, doesn't scale</span></div>
+          <div class="sg-foot"><span>Workflow: <code>.github/workflows/site-checks.yml</code></span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-17</span><h3>Give search engines one site to index</h3><span class="chip chip-done">done</span></div>
+          <p>Canonical URLs, <code>robots.txt</code> with sitemap pointer, complete <code>sitemap.xml</code>, JSON-LD (WebSite + Article), meta descriptions and OG tags on every page, <code>.nojekyll</code> for a fast static build.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> static SEO foundation</span></div>
+          <div class="sg-foot"><span>Next: SG-29 (Search Console)</span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-18</span><h3>Leave price/rating/commission blank until policy-compliant sources exist</h3><span class="chip chip-done">done</span></div>
+          <p>Prices: only if Amazon serves the link or PA API with timestamp + disclaimer (<a href="source-register.html#v06">V-06</a>). Ratings: only via Creators/PA API (<a href="source-register.html#v07">V-07</a>). Commission: sign-in required (<a href="source-register.html#v09">V-09</a>). Blank + flagged, never inferred.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> blanks with visible rationale</span><span class="path">Path B: show scraped numbers — rejected, policy violation + staleness</span></div>
+          <div class="sg-foot"><span>Future path: SG-23 (PA API)</span></div>
+        </article>
+
+        <article class="sg" data-status="needs-decision">
+          <div class="sg-head"><span class="sg-id">SG-19</span><h3>Run the one-link-per-product test in the Associates workflow</h3><span class="chip chip-unverified">needs decision</span></div>
+          <p>Before scaling any link replacement: test one link per product inside the enrolled Associates account, confirm the destination page and that the click reports in the tracking report. Owner-only action — requires Associates Central sign-in.</p>
+          <div class="paths"><span class="path"><b>Path A:</b> run test now, log results in FLG-003 — <em>recommended</em></span><span class="path">Path B: defer until the site has traffic (attribution stays blind)</span></div>
+          <div class="sg-foot"><span>Effort: ~30 min · Blocks: SG-06</span><span><a href="compliance.html#special-links">test plan</a></span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-20</span><h3>Choose the next guide topic from measured queries, not instinct</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>After 30 days of Search Console + on-site search data, pick the next topic from what people actually queried. Until then the next-topic slot stays empty — the guides index shows it as "gated on data".</p>
+          <div class="paths"><span class="path"><b>Path A:</b> wait for 30 days of data — <em>recommended</em></span><span class="path">Path B: publish from the remaining hypotheses now, measure later</span></div>
+          <div class="sg-foot"><span>Blocks on: SG-29 + SG-12</span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-21</span><h3>Seasonal cluster windows on the editorial calendar</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>Three windows proposed: gifting (Nov–Dec), new-year capacity (Jan), small-kitchen moves (May–Aug). Dates are editorial judgment, not data — review before committing production time.</p>
+          <div class="paths"><span class="path"><b>Path A:</b> adopt the three windows</span><span class="path">Path B: revise windows, keep cluster concept</span></div>
+          <div class="sg-foot"><span><a href="guides/index.html#seasonal-anchor">calendar table</a></span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-22</span><h3>Corrections channel with a published response time</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>An editorial publication needs a visible way to be corrected. Currently no contact address exists in the repo — that's a missing fact, not an oversight to paper over.</p>
+          <div class="paths"><span class="path"><b>Path A:</b> publish a contact email + "corrections answered within 7 days" promise</span><span class="path">Path B: GitHub Issues as the public channel</span></div>
+          <div class="sg-foot"><span>Blocks: full about page · <a href="questions.html#q13">Q-13</a></span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-23</span><h3>Product Advertising API integration for compliant prices</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>PA API (or Creators API) is the policy-compliant route to displaying prices, availability and ratings with the required timestamp and disclaimer (<a href="source-register.html#v06">V-06</a>, <a href="source-register.html#v07">V-07</a>). Requires Associates account + API credentials and a caching plan (24-hour content rules).</p>
+          <div class="paths"><span class="path"><b>Path A:</b> request API access after SG-19 passes</span><span class="path">Path B: never display prices — keep "check price" links only</span></div>
+          <div class="sg-foot"><span>Effort: multi-session · Blocks: rich product cards</span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-24</span><h3>A/B test CTA wording once events flow</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>"Check price" vs "See today's price" vs "View on Amazon" — test on <code>outbound_product_click</code> after the endpoint (SG-12) is live. Premature now: local-only events can't support a trustworthy comparison.</p>
+          <div class="paths"><span class="path"><b>Path A:</b> test after endpoint + 4 weeks of data</span></div>
+          <div class="sg-foot"><span>Blocks on: SG-12</span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-25</span><h3>Internal linking between guides, shortlist and register</h3><span class="chip chip-done">done</span></div>
+          <p>Every guide ends in a shortlist CTA; the shortlist links back to guides; the register and flags are cross-linked from product rows. Crawlers and readers both get a loop, not a dead end.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> CTA linkboxes + cross-links</span></div>
+          <div class="sg-foot"><span>Verified by: internal-link check</span></div>
+        </article>
+
+        <article class="sg" data-status="needs-decision">
+          <div class="sg-head"><span class="sg-id">SG-26</span><h3>Custom domain vs GitHub Pages URL</h3><span class="chip chip-unverified">needs decision</span></div>
+          <p>Canonicals currently point at <span class="code">sassnarep3-star.github.io/WinC/</span>. A custom domain reads more like a publication and simplifies Search Console — but it's a purchase + DNS + SSL decision with ongoing cost (<a href="flagged.html#flg-010">FLG-010</a>).</p>
+          <div class="paths"><span class="path"><b>Path A:</b> custom domain (~€10–15/yr + CNAME setup)</span><span class="path"><b>Path B:</b> stay on GitHub Pages URL — zero cost, longer canonical</span><span class="path">Path C: decide after first Search Console data (my pick)</span></div>
+          <div class="sg-foot"><span>Blocks: SG-29 property strategy</span><span><a href="questions.html#q08">Q-08</a></span></div>
+        </article>
+
+        <article class="sg" data-status="proposed">
+          <div class="sg-head"><span class="sg-id">SG-27</span><h3>Navigation labels</h3><span class="chip chip-proposed">proposed</span></div>
+          <p>Shipped labels: <em>Home · Guides · The Shortlist · Suggestions · Before You Decide · Summary</em>. "The Shortlist" is deliberately shop-like; "Before You Decide" names the Q&amp;A page by the reader's intent. Alternatives below if these don't match the brand voice you want.</p>
+          <div class="paths">
+            <span class="path"><b>Path A (shipped):</b> as above — <em>recommended</em></span>
+            <span class="path">Path B: "Products" instead of "The Shortlist"; "Decisions" instead of "Before You Decide"</span>
+            <span class="path">Path C: send replacement labels</span>
+          </div>
+          <div class="sg-foot"><span>Effort: 10 min to relabel + re-check sitemap</span></div>
+        </article>
+
+        <article class="sg" data-status="done">
+          <div class="sg-head"><span class="sg-id">SG-28</span><h3>Ship the RSS feed</h3><span class="chip chip-done">done</span></div>
+          <p><code>rss.xml</code> is live with all four guides, linked from every page head, the footer and the front-page subscribe box; included in the sitemap and covered by the feed-completeness check.</p>
+          <div class="paths"><span class="path"><b>Path A (chosen):</b> RSS 2.0, hand-built, CI-checked</span></div>
+          <div class="sg-foot"><span><a href="rss.xml">rss.xml</a></span></div>
+        </article>
+
+        <article class="sg" data-status="needs-decision">
+          <div class="sg-head"><span class="sg-id">SG-29</span><h3>Search Console verification</h3><span class="chip chip-unverified">needs decision</span></div>
+          <p>The site is indexable today (robots, sitemap, canonicals) but nobody has verified property ownership in Google Search Console — that requires an action only the repo owner can take (<a href="flagged.html#flg-007">FLG-007</a>). Without it, SG-20's "measured queries" loop cannot start.</p>
+          <div class="paths">
+            <span class="path"><b>Path A:</b> HTML-tag method — owner drops the meta tag, we inject it — <em>fastest</em></span>
+            <span class="path">Path B: DNS TXT record (needed anyway if SG-26 picks a domain)</span>
+            <span class="path">Path C: defer (keeps SG-20 blind)</span>
+          </div>
+          <div class="sg-foot"><span>Effort: 15 min · Blocks: SG-20, content ROI loop</span><span><a href="questions.html#q09">Q-09</a></span></div>
+        </article>
+
+        <article class="sg" data-status="needs-decision">
+          <div class="sg-head"><span class="sg-id">SG-30</span><h3>Reader capture beyond RSS</h3><span class="chip chip-unverified">needs decision</span></div>
+          <p>RSS is shipped and working. Email capture is the usual next layer — but it needs a provider choice, a double opt-in flow and a privacy-policy addendum, so it stays a decision, not a surprise.</p>
+          <div class="paths">
+            <span class="path"><b>Path A:</b> RSS-only for 60 days, review open rates of what exists</span>
+            <span class="path">Path B: add a privacy-reviewed email provider (double opt-in)</span>
+            <span class="path">Path C: GitHub-discussion signup — low friction, less owned</span>
+          </div>
+          <div class="sg-foot"><span>Blocks on: privacy review · <a href="questions.html#q10">Q-10</a></span></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="note" style="margin:0"><strong>How to use this page:</strong> pick a path on each <em>needs decision</em> item (SG-06, SG-12, SG-19, SG-26, SG-29, SG-30 are the ones that gate revenue, measurement and growth), then anything marked <em>proposed</em> can be accepted, revised or dropped. The <a href="questions.html">Before You Decide</a> page lists the missing information behind each pick.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Kitchen Shortlist</span>
+        <p>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul class="footer-nav">
+          <li><a href="guides/index.html">All guides</a></li>
+          <li><a href="products.html">The Shortlist</a></li>
+          <li><a href="index.html#seasonal">Seasonal clusters</a></li>
+          <li><a href="rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Dashboard</h4>
+        <ul>
+          <li><a href="source-register.html">Source register</a></li>
+          <li><a href="flagged.html">Flagged for review</a></li>
+          <li><a href="measurement.html">Measurement</a></li>
+          <li><a href="ledger.html">Campaign ledger</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="executive-summary.html">Executive summary</a></li>
+          <li><a href="suggestions.html">Suggestions</a></li>
+          <li><a href="questions.html">Before you decide</a></li>
+          <li><a href="about.html">About &amp; editorial policy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclosure">
+      <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. If you buy through links on this page we may earn a commission at no extra cost to you. Product links are marked <code>rel="sponsored"</code>; we only recommend what our source register can support, and unverified values are published as blank rather than filled in.
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Kitchen Shortlist</span>
+      <a href="sitemap.xml">Sitemap</a>
+      <a href="robots.txt">Robots</a>
+      <a href="privacy.html">Privacy</a>
+      <span>Prices and availability change; check the listing for current terms.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/analytics.js" defer></script>
+</body>
+</html>

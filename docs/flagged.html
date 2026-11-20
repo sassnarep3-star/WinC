@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flagged for Review — irregularities with sources · Kitchen Shortlist</title>
+<meta name="description" content="Twelve flagged items: what was observed, why it matters, the official source, and what review is needed. Published, not buried.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/flagged.html">
+<meta property="og:title" content="Flagged for Review — irregularities with sources">
+<meta property="og:description" content="Every open irregularity, with the evidence and the review it needs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/flagged.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Kitchen Shortlist RSS" href="rss.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ANALYTICS_ENDPOINT = null; /* local mode — FLG-006 */</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span><span class="brand-name">Kitchen Shortlist</span><span class="brand-tag">Buyer-first appliance guides</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guides/index.html">Guides</a></li>
+        <li><a href="products.html">The Shortlist</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Before You Decide</a></li>
+        <li><a href="executive-summary.html">Summary</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="disclosure" role="note">
+  <div class="wrap">
+    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+    <span class="sep">·</span> If you buy through a product link on this page we may earn a commission at no extra cost to you.
+    <span class="sep">·</span> Product links carry <code>rel="sponsored"</code>.
+    <a href="compliance.html">How we disclose</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="index.html">Home</a> / Flagged for Review</p>
+    <h1>Flagged for Review</h1>
+    <p class="lede">Irregularities found during line-by-line verification — published with evidence so they can be reviewed after the site is live. <strong>Flags do not block the site</strong>; they block specific claims, cells and automations until a human resolves them.</p>
+    <div class="stats" style="margin-top:1.4rem">
+      <div class="stat"><div class="num">12</div><div class="lbl">Open flags</div><div class="sub">None block publishing</div></div>
+      <div class="stat"><div class="num">5</div><div class="lbl">Block a claim or cell</div><div class="sub">FLG-001, 002, 004, 005, 012</div></div>
+      <div class="stat"><div class="num">4</div><div class="lbl">Block an automation</div><div class="sub">FLG-003, 006, 007, 009</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">Block a growth move</div><div class="sub">FLG-010, 011, and SG-30</div></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="flag-list">
+
+        <article class="flag" id="flg-001">
+          <h3>FLG-001 · Submitted codes don't match the official ASIN format</h3>
+          <p><strong>Observed:</strong> all five path codes are 9 characters with lowercase letters (<span class="code">B04G1MEwY</span>, <span class="code">B02NbDxp3</span>, <span class="code">B00hJ57DV</span>, <span class="code">B0c8moW59</span>, <span class="code">B0f3GKalj</span>), and <span class="code">amazon.com/dp/&lt;code&gt;</span> failed to load for each while two known-good controls loaded fine — same day, same method.</p>
+          <p><strong>Why it matters:</strong> Amazon states "An ASIN is always 10 characters long" — so these cannot be complete ASINs as defined.</p>
+          <p><strong>Review needed:</strong> confirm with the link provider whether codes are truncated; map each to its true ASIN.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="https://advertising.amazon.com/library/guides/targeting-with-sponsored-products">Amazon Ads targeting guide (ASIN definition)</a> · <a href="source-register.html#observations">observations O-06, O-07</a></p>
+          <div class="flag-meta"><span>Blocks: product identity</span><span>Related: FLG-002, Q-01</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-002">
+          <h3>FLG-002 · Intended codes and observed redirect targets mismatch on all five links</h3>
+          <p><strong>Observed:</strong> each submitted link landed on a real Amazon listing whose <span class="code">/dp/</span> code differs from the code in the link path — e.g. <span class="code">B04G1MEwY</span> → <span class="code">B0CDY277D3</span> (air fryer), <span class="code">B0c8moW59</span> → <span class="code">B0DHZTCNR5</span> (thermometer).</p>
+          <p><strong>Why it matters:</strong> the register stores both fields separately on purpose; merging them would silently misattribute every product.</p>
+          <p><strong>Review needed:</strong> owner states which side is authoritative per row (path code vs landing listing).</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="https://www.amazon.com/dp/B0CDY277D3">observed listing P-01</a> · <a href="https://www.amazon.com/dp/B0DHZTCNR5">observed listing P-04</a> · <a href="source-register.html#record">full record</a></p>
+          <div class="flag-meta"><span>Blocks: product copy, catalog</span><span>Related: Q-02</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-003">
+          <h3>FLG-003 · Compliance status of the supplied short links is unresolved</h3>
+          <p><strong>Observed:</strong> <span class="code">link.amazon/…</span> links redirect into Amazon product pages, but whether they satisfy Amazon's "tagged" Special Link format cannot be determined from outside the Associates account.</p>
+          <p><strong>Why it matters:</strong> Amazon requires Special Links for commission tracking (<a href="source-register.html#v02">V-02</a>), disclaims fees on improperly formatted links (<a href="source-register.html#v05">V-05</a>), and prohibits shortening that makes the Amazon destination unclear (<a href="source-register.html#v08">V-08</a>). <strong>We do not claim the supplied links are invalid</strong> — their status is simply untested.</p>
+          <p><strong>Review needed:</strong> SG-19 one-link-per-product test inside the enrolled Associates workflow; record destination + tracking-report confirmation here.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="https://affiliate-program.amazon.com/help/operating/agreement">Operating Agreement §1</a> · <a href="https://affiliate-program.amazon.com/help/operating/policies">Program Policies §2(b), §6(w)</a></p>
+          <div class="flag-meta"><span>Blocks: SG-06 link swap</span><span>Related: Q-06</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-004">
+          <h3>FLG-004 · Tracking ID <span class="code">shopnow047c-20</span> unverified</h3>
+          <p><strong>Observed:</strong> format is compatible with Amazon's documented <span class="code">XXXXX-##</span> tag pattern; account-side existence cannot be checked without sign-in.</p>
+          <p><strong>Why it matters:</strong> if the tag isn't active on the account, no click will ever accrue — silently.</p>
+          <p><strong>Review needed:</strong> owner checks Account Settings in Associates Central; click one test link and read the <span class="code">tag=</span> parameter.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="https://affiliate-program.amazon.com/help/operating/policies">Program Policies §2(b) (V-03)</a> · <a href="questions.html#q04">Q-04</a></p>
+          <div class="flag-meta"><span>Blocks: revenue reporting</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-005">
+          <h3>FLG-005 · Commission rates not publicly verifiable</h3>
+          <p><strong>Observed:</strong> fetching the Commission schedule redirected to Amazon sign-in on 2026-11-20 — rates are behind authentication.</p>
+          <p><strong>Why it matters:</strong> profitability analysis can't start; we refuse to quote remembered or third-party rates as fact.</p>
+          <p><strong>Review needed:</strong> owner reads the rate card and records category + rate + date read into the ledger notes.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="https://affiliate-program.amazon.com/help/operating/schedule">schedule (sign-in wall)</a> · <a href="questions.html#q05">Q-05</a></p>
+          <div class="flag-meta"><span>Blocks: niche profitability</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-006">
+          <h3>FLG-006 · Analytics endpoint code shipped but not deployed</h3>
+          <p><strong>Observed:</strong> GitHub Pages is static and cannot receive event POSTs; endpoint implementations exist in <code>analytics/</code> but need a host and credentials.</p>
+          <p><strong>Why it matters:</strong> until deployed, events record only in the local browser — no cross-device or aggregate click data.</p>
+          <p><strong>Review needed:</strong> pick a hosting path on SG-12 (Cloudflare Worker recommended), deploy, set <code>SITE_ANALYTICS_ENDPOINT</code>.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="measurement.html">measurement page</a> · <a href="suggestions.html#sg-list">SG-12</a> · <a href="questions.html#q07">Q-07</a></p>
+          <div class="flag-meta"><span>Blocks: aggregate analytics, SG-24</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-007">
+          <h3>FLG-007 · Search Console property not verified</h3>
+          <p><strong>Observed:</strong> no verification token exists anywhere in the repo; sitemap submission and query data therefore cannot exist.</p>
+          <p><strong>Why it matters:</strong> the brief's "choose topics from measured queries" loop cannot start (SG-20).</p>
+          <p><strong>Review needed:</strong> owner obtains HTML-tag or DNS verification (SG-29); we inject the tag and submit the sitemap.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="questions.html#q09">Q-09</a> · <a href="sitemap.xml">sitemap ready to submit</a></p>
+          <div class="flag-meta"><span>Blocks: SG-20, SEO measurement</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-008">
+          <h3>FLG-008 · <span class="code">link.amazon</span> domain ownership not independently verified</h3>
+          <p><strong>Observed:</strong> DNS resolves to AWS CloudFront addresses and redirects land on <span class="code">amazon.com</span>; no WHOIS/registrar check was performed from this environment.</p>
+          <p><strong>Why it matters:</strong> outbound links should only point at domains we can attribute — relevant to SG-06 and reader safety.</p>
+          <p><strong>Review needed:</strong> one manual WHOIS/ICANN lookup; log the registrar result here.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="source-register.html#observations">observation O-08</a> · <a href="questions.html#q03">Q-03</a></p>
+          <div class="flag-meta"><span>Blocks: SG-06 final approval</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-009">
+          <h3>FLG-009 · "Five defined events" taxonomy was never defined in the repo</h3>
+          <p><strong>Observed:</strong> the brief references five defined events; the repository contained no definition. We proposed: <code>page_view</code>, <code>outbound_product_click</code>, <code>guide_cta_click</code>, <code>search_query</code>, <code>subscribe_click</code>.</p>
+          <p><strong>Why it matters:</strong> dashboards, ledger alignment and A/B tests all key off this list — an unapproved taxonomy would be a silent assumption.</p>
+          <p><strong>Review needed:</strong> approve or replace the five (SG-13).</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="measurement.html">measurement page (taxonomy)</a> · <a href="suggestions.html#sg-list">SG-13</a></p>
+          <div class="flag-meta"><span>Blocks: event dashboards</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-010">
+          <h3>FLG-010 · No custom domain; canonicals point at GitHub Pages URL</h3>
+          <p><strong>Observed:</strong> canonical host is <span class="code">sassnarep3-star.github.io/WinC/</span>; no domain purchase or DNS setup exists.</p>
+          <p><strong>Why it matters:</strong> domain choice affects brand trust, Search Console property strategy and future migration cost.</p>
+          <p><strong>Review needed:</strong> SG-26 decision (buy domain vs stay vs decide after first data).</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="sitemap.xml">sitemap canonicals</a> · <a href="questions.html#q08">Q-08</a></p>
+          <div class="flag-meta"><span>Blocks: SG-29 property strategy</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-011">
+          <h3>FLG-011 · No reader-capture provider or consent flow yet</h3>
+          <p><strong>Observed:</strong> RSS ships; no email provider, consent text or privacy addendum for subscriber data exists.</p>
+          <p><strong>Why it matters:</strong> adding a form without consent flow and privacy coverage would create a compliance gap on an otherwise careful site.</p>
+          <p><strong>Review needed:</strong> SG-30 path pick; privacy addendum before any form goes live.</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="privacy.html">privacy page</a> · <a href="suggestions.html#sg-list">SG-30</a> · <a href="questions.html#q10">Q-10</a></p>
+          <div class="flag-meta"><span>Blocks: email capture launch</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+        <article class="flag" id="flg-012">
+          <h3>FLG-012 · Guide topics are hypotheses, not validated demand</h3>
+          <p><strong>Observed:</strong> all four published titles come from the brief's suggested list and are labeled working titles; zero demand data exists (no Search Console, no 30-day history).</p>
+          <p><strong>Why it matters:</strong> presenting them as "trending" or "popular" would be a fabricated claim; they're presented as useful frameworks instead.</p>
+          <p><strong>Review needed:</strong> after 30 days of measurement, keep / revise / retire each hypothesis (SG-20).</p>
+          <p class="src-list"><strong>Sources:</strong> <a href="guides/index.html">guides index (working-title note)</a> · <a href="questions.html#q14">Q-14</a></p>
+          <div class="flag-meta"><span>Blocks: "trending" positioning</span><span>Opened: 2026-11-20</span></div>
+        </article>
+
+      </div>
+
+      <div class="note"><strong>Flag lifecycle:</strong> open → evidence gathered → owner decision or automated check passes → resolved (kept here with a resolution note, never deleted). A flag marked resolved still shows what was found — the audit trail is the product.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Kitchen Shortlist</span>
+        <p>Question-shaped buying guides for small kitchen appliances. Every claim carries a source; every unverified value stays blank.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul class="footer-nav">
+          <li><a href="guides/index.html">All guides</a></li>
+          <li><a href="products.html">The Shortlist</a></li>
+          <li><a href="index.html#seasonal">Seasonal clusters</a></li>
+          <li><a href="rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Dashboard</h4>
+        <ul>
+          <li><a href="source-register.html">Source register</a></li>
+          <li><a href="flagged.html">Flagged for review</a></li>
+          <li><a href="measurement.html">Measurement</a></li>
+          <li><a href="ledger.html">Campaign ledger</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="executive-summary.html">Executive summary</a></li>
+          <li><a href="suggestions.html">Suggestions</a></li>
+          <li><a href="questions.html">Before you decide</a></li>
+          <li><a href="about.html">About &amp; editorial policy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclosure">
+      <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. If you buy through links on this page we may earn a commission at no extra cost to you. Product links are marked <code>rel="sponsored"</code>; we only recommend what our source register can support, and unverified values are published as blank rather than filled in.
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Kitchen Shortlist</span>
+      <a href="sitemap.xml">Sitemap</a>
+      <a href="robots.txt">Robots</a>
+      <a href="privacy.html">Privacy</a>
+      <span>Prices and availability change; check the listing for current terms.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/analytics.js" defer></script>
+</body>
+</html>
