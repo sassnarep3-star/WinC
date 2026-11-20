@@ -15,6 +15,7 @@ def load(p):
         return json.load(f)
 
 PRODUCTS = load("data/products.json")["products"]
+LEDGER = load("data/campaign-ledger.json")
 SOURCES = load("data/sources.json")["sources"]
 FLAGS = load("data/flags.json")["flags"]
 SRC = {s["id"]: s for s in SOURCES}
@@ -663,6 +664,18 @@ def disclosure_body():
 """
 
 # ---------- MEASUREMENT ----------
+def ledger_rows_html():
+    rows = LEDGER.get("rows", [])
+    if not rows:
+        return '<tr><td colspan="7"><span class="blank">— no rows yet (ledger is empty until first-party data arrives)</span></td></tr>'
+    out = []
+    for r in rows:
+        cells = [r.get("timestamp"), r.get("source"), r.get("channel"), r.get("eligible_sessions"),
+                 r.get("clicks"), r.get("reported_orders"), r.get("provenance")]
+        tds = "".join("<td>%s</td>" % (esc(str(c)) if c not in (None, "") else '<span class="blank">—</span>') for c in cells)
+        out.append("<tr>%s</tr>" % tds)
+    return "\n".join(out)
+
 def measurement_body():
     return f"""
 <section class="hero"><span class="kicker">Measurement · Evidence-based iteration</span>
@@ -683,8 +696,9 @@ def measurement_body():
 <h2>Campaign ledger (empty by design)</h2>
 <p>Timestamp, source, channel, eligible sessions, clicks, and reported orders are recorded <strong>only</strong> when obtained from authorized first-party reports (Associates Reports). Keep a dated provenance trail. No conversion score or revenue forecast is presented here.</p>
 <div class="tablewrap"><table><thead><tr><th>Timestamp</th><th>Source</th><th>Channel</th><th>Eligible sessions</th><th>Clicks</th><th>Reported orders</th><th>Provenance</th></tr></thead><tbody>
-<tr><td colspan="7"><span class="blank">— no rows yet (ledger is empty until first-party data arrives)</span></td></tr>
+{ledger_rows_html()}
 </tbody></table></div>
+<p class="meta">Source file: <a href="https://github.com/sassnarep3-star/WinC/blob/main/data/campaign-ledger.json">data/campaign-ledger.json</a> · rows: {len(LEDGER.get("rows", []))} · provenance entries: {len(LEDGER.get("provenance_trail", []))}</p>
 
 <h2>Findability status (SG-27..SG-30)</h2>
 <div class="tablewrap"><table><thead><tr><th>Item</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
