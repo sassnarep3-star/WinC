@@ -193,7 +193,7 @@ def layout(relpath, title, description, body):
   </div>
 </header>
 <div class="disclosure" role="note">
-  <div class="wrap"><strong>Affiliate disclosure.</strong> {E(DISCLOSURE)} Links marked “Sponsored” go to Amazon. <span class="muted">Prices and ratings are dated snapshots, last checked {E(VERIFIED_ON)}.</span></div>
+  <div class="wrap"><strong>Affiliate disclosure.</strong> {E(DISCLOSURE)} Links marked “Sponsored” go to Amazon. <span class="muted">Prices, availability and ratings are not shown on this site; see the live Amazon listing.</span></div>
 </div>
 <main class="wrap">
 {body}
@@ -226,16 +226,11 @@ def layout(relpath, title, description, body):
 
 def product_card(p):
     cat_label = CATEGORIES[p["category"]][0]
-    price = f'{E(p["price_observed"])} <span class="muted">shown {E(p["confirmation_date"])}</span>' if p["price_observed"] else unverified()
-    if p["rating"]:
-        rating = f'{E(p["rating"])} out of 5 <span class="muted">({E(p["review_count"])} reviews)</span>'
-    else:
-        rating = unverified("F-06")
+    price = '<span class="muted">Price: see the live Amazon listing</span>'
     return f"""<article class="card" id="card-{p['id'].lower()}">
   <div class="cat">{E(cat_label)} · {E(p['id'])}</div>
   <h3>{E(p['display_name'])}</h3>
   <div class="price">{price}</div>
-  <div class="status-note">Rating: {rating}</div>
   <div class="status-note">{badge('Partly verified')} {src_chips(p['sources'])}</div>
   <div style="margin-top:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
     {external(p['submitted_link'], 'View on Amazon', 'btn')}
@@ -257,8 +252,8 @@ def page_home():
     body = f"""
 <section class="hero">
   <div class="kicker">Air fryers · Meat thermometers</div>
-  <h1>Five Amazon picks, priced and dated.</h1>
-  <p class="lede">Compare three basket and oven-style air fryers and two meat thermometers. Each card shows the price we saw, the day we saw it, and the page it came from. If a figure could not be confirmed, the card says so.</p>
+  <h1>Five Amazon picks, sourced and dated.</h1>
+  <p class="lede">Compare three basket and oven-style air fryers and two meat thermometers. Each card shows the product, the source of its details, and the date we checked them. Prices and ratings are shown only on Amazon. If a detail could not be confirmed, the card says so.</p>
 </section>
 <section>
   <h2>The five picks</h2>
@@ -272,7 +267,7 @@ def page_home():
   <div class="callout">
     <h3>Before you buy</h3>
     <ul>
-      <li>The price on our card is a snapshot. Amazon's price on the day you buy is the one that counts.</li>
+      <li>Prices and availability change. Amazon's price at the time of purchase is the one that applies.</li>
       <li>Protection plans shown on Amazon pages are not part of our picks, and their ratings are not product ratings.</li>
       <li>Every link to Amazon is marked sponsored. We may earn a commission on qualifying purchases.</li>
     </ul>
@@ -284,38 +279,35 @@ def page_home():
   <p>{internal('flagged-for-review/index.html', 'Flagged for review')} · {internal('suggestions/index.html', 'Suggestions to choose from')} · {internal('questions/index.html', 'Open questions')} · {internal('executive-summary/index.html', 'Executive summary')}</p>
 </section>
 """
-    layout(rel, "Five Amazon picks, priced and dated", "Air fryers and meat thermometers from Amazon, each with a dated price, a source link and a clear disclosure.", body)
+    layout(rel, "Five Amazon picks, sourced and dated", "Air fryers and meat thermometers from Amazon, each with a source link, a check date and a clear disclosure.", body)
 
 
 def category_page(key):
     label, rel = CATEGORIES[key]
     begin(rel)
     items = [p for p in PRODUCTS if p["category"] == key]
-    prices = [price_value(p["price_observed"]) for p in items if p["price_observed"]]
     rows = []
     for p in items:
         rows.append([
             f'<a href="{E(PREFIX)}products/index.html#{p["id"].lower()}"><strong>{E(p["display_name"])}</strong></a><br><span class="muted">{E(p["id"])}</span>',
-            f'{E(p["price_observed"])}<br><span class="muted">{E(p["confirmation_date"])}</span>' if p["price_observed"] else unverified(),
-            f'{E(p["rating"])} / 5 ({E(p["review_count"])})' if p["rating"] else unverified("F-06"),
-            external(p["submitted_link"], "Open link", "btn btn-small"),
+            external(p["submitted_link"], "See price on Amazon", "btn btn-small"),
             src_chips(p["sources"]),
         ])
     body = f"""
 <section>
   <div class="kicker">Category</div>
   <h1>{E(label)}</h1>
-  <p class="lede">Prices observed on {E(VERIFIED_ON)} on Amazon.com, US delivery location shown. Observed range: ${min(prices):,.2f} to ${max(prices):,.2f}. Product ratings are confirmed for {len([p for p in items if p['rating']])} of {len(items)} products on this page; the rest are marked Unverified.</p>
+  <p class="lede">Prices and ratings are not shown here. Each row links to the live Amazon listing, where the current price and rating appear.</p>
 </section>
 <section>
-  {table(["Product", "Price shown", "Rating", "Link", "Sources"], rows)}
+  {table(["Product", "Link", "Sources"], rows)}
 </section>
 <section class="callout">
   <h3>What this table does not say</h3>
   <p>It does not rank these products, does not forecast sales or commission, and does not say which product converts best. No demand or trend data is held for this category yet (see <a href="{E(PREFIX)}analysis/index.html">Analysis</a>).</p>
 </section>
 """
-    layout(rel, label, f"{label}: five Amazon picks with dated prices and source links.", body)
+    layout(rel, label, f"{label}: five Amazon picks with source links and check dates.", body)
 
 
 def page_products():
@@ -336,13 +328,11 @@ def page_products():
             E(p["confirmation_date"]),
             src_chips(p["sources"]),
         ])
-        rating = f'{E(p["rating"])} out of 5 ({E(p["review_count"])} reviews)' if p["rating"] else unverified("F-06")
         detail_rows.append([
             f'<strong>{E(p["display_name"])}</strong><br><span class="muted">{E(p["page_title"])}</span>',
             E(CATEGORIES[p["category"]][0]),
             E(p["breadcrumb"]),
-            f'{E(p["price_observed"])}<br><span class="muted">{E(p["price_note"])}</span>' if p["price_observed"] else unverified(),
-            rating,
+            '<span class="muted">Not shown; see the live listing</span>',
             src_chips(p["sources"]),
         ])
     body = f"""
@@ -357,14 +347,14 @@ def page_products():
 </section>
 <section>
   <h2>Listing details</h2>
-  {table(["Product", "Category", "Breadcrumb (as shown)", "Price shown", "Rating", "Sources"], detail_rows)}
+  {table(["Product", "Category", "Breadcrumb (as shown)", "Price and rating", "Sources"], detail_rows)}
 </section>
 <section class="callout">
   <h3>How to read this</h3>
   <p>The submitted token is what the link path contains. The observed ASIN is taken from the Amazon page the link reached. Those two values are different for every product, and neither was merged into the other. Read the <a href="{E(PREFIX)}flagged-for-review/index.html">flags</a> before relying on any row.</p>
 </section>
 """
-    layout(rel, "All products", "Product register: submitted links, observed ASINs, redirect targets, prices and sources.", body)
+    layout(rel, "All products", "Product register: submitted links, observed ASINs, redirect targets and sources.", body)
 
 
 def page_analysis():
@@ -374,16 +364,10 @@ def page_analysis():
     token_mismatch = sum(1 for p in PRODUCTS if p["submitted_token"] != p["observed_asin"])
     token_not_10 = sum(1 for p in PRODUCTS if len(p["submitted_token"]) != 10)
     tag_seen = sum(1 for p in PRODUCTS if "tag=" in p["observed_redirect_target"])
-    ratings = sum(1 for p in PRODUCTS if p["rating"])
-    prices = [(price_value(p["price_observed"]), p) for p in PRODUCTS if p["price_observed"]]
-    lo, hi = min(prices, key=lambda t: t[0]), max(prices, key=lambda t: t[0])
     rows = [
         ["Products in scope", str(n), "Count of submitted links (3 air fryers, 2 meat thermometers).", src_text("SRC-07 to SRC-12"), badge("Verified")],
         ["Pages reached and read", f"{n} of {n}", "Each short link resolved to an amazon.com /dp/ page.", src_text("SRC-12"), badge("Verified")],
-        ["Prices captured", f"{len(prices)} of {n}", "Buy Box price on each captured page, 2026-11-20.", src_text("SRC-07 to SRC-11"), badge("Verified")],
-        ["Lowest observed price", f'{E(lo[1]["price_observed"])} ({E(lo[1]["id"])})', "Minimum of captured prices. Snapshot only.", external(SRC[lo[1]["sources"][0]]["url"], lo[1]["sources"][0]), badge("Verified")],
-        ["Highest observed price", f'{E(hi[1]["price_observed"])} ({E(hi[1]["id"])})', "Maximum of captured prices. Snapshot only.", external(SRC[hi[1]["sources"][0]]["url"], hi[1]["sources"][0]), badge("Verified")],
-        ["Product ratings captured", f"{ratings} of {n}", "Only product-level ratings were used. Protection-plan ratings were excluded.", src_text("SRC-10"), badge("Partly verified")],
+        ["Price and rating display", "Not shown", "Program Policies (Participation Requirements) allow prices on this site only when Amazon serves them or they come from Creators API or PA API. The captured values are kept as an internal record and are not published.", src_text("SRC-02"), badge("Flag: F-13")],
         ["Submitted tokens with 10 characters", f"{n - token_not_10} of {n}", "Length of each submitted path token, counted in code.", src_text("SRC-03 (ASIN definition), SRC-12"), badge("Verified")],
         ["Submitted tokens equal to observed ASIN", f"{n - token_mismatch} of {n}", "Token compared with the ASIN in the redirected /dp/ URL.", src_text("SRC-07 to SRC-11, SRC-12"), badge("Verified")],
         ["Redirect targets carrying a tag= parameter", f"{tag_seen} of {n}", "Searched for 'tag=' in each stored redirect URL.", src_text("SRC-02 (Participation Requirement 2(b))"), badge("Flag: F-02")],
@@ -431,7 +415,7 @@ def page_exec():
 <section>
   <h2>What is here</h2>
   <ul>
-    <li>{n} products from the submitted links: three air fryers and two meat thermometers. Each has a product page, a dated price snapshot, and a source link (<a href="{E(PREFIX)}products/index.html">All products</a>).</li>
+    <li>{n} products from the submitted links: three air fryers and two meat thermometers. Each has a product page, a check date, and a source link (<a href="{E(PREFIX)}products/index.html">All products</a>).</li>
     <li>A source register of {len(SRC)} entries with verification status (<a href="{E(PREFIX)}sources/index.html">Sources</a>).</li>
     <li>A compliance gate that runs on every build. It checks the Associates disclosure, the sponsored marking on Amazon links, and internal links (<a href="{E(PREFIX)}compliance/index.html">Compliance gate</a>).</li>
     <li>Open questions, suggestions for you to choose from, and {len(FLAGS)} flags for review (<a href="{E(PREFIX)}questions/index.html">Questions</a>, <a href="{E(PREFIX)}suggestions/index.html">Suggestions</a>, <a href="{E(PREFIX)}flagged-for-review/index.html">Flagged for review</a>).</li>
@@ -441,7 +425,7 @@ def page_exec():
   <h2>What is confirmed</h2>
   <ul>
     <li>All {n} submitted links resolve to an amazon.com product page. The observed ASIN in each page's URL is different from the submitted token (<a href="{E(PREFIX)}analysis/index.html">Analysis</a>).</li>
-    <li>Buy Box prices were captured for all {n} products on {E(VERIFIED_ON)}. A product rating was captured for one (ThermoMaven, 4.6 out of 5 from 3,499 reviews).</li>
+    <li>Prices and ratings are not published. The Program Policies allow them on this site only if Amazon serves them or they come from Creators API or PA API (<a href="{E(PREFIX)}flagged-for-review/index.html">Flag F-13</a>).</li>
     <li>The Associates disclosure text is as stated in Operating Agreement section 5 (<a href="{E(SRC['SRC-01']['url'])}" rel="noopener" target="_blank">SRC-01</a>).</li>
   </ul>
 </section>
@@ -789,7 +773,7 @@ def write_feed_sitemap():
     today = datetime.date(2026, 11, 20)
     rfc822 = today.strftime("%a, %d %b %Y 00:00:00 GMT")
     items = [
-        ("Site launch: product register, sources and flags", "The first version of the register is live: five Amazon listings with dated prices, a source register, a compliance gate, and an open list of flags. No guides are published yet.", "index.html"),
+        ("Site launch: product register, sources and flags", "The first version of the register is live: five Amazon listings with source links, a source register, a compliance gate, and an open list of flags. Prices and ratings are not published.", "index.html"),
     ]
     rss_items = "".join(
         f"<item><title>{E(t)}</title><link>{E(SITE_BASE + l)}</link><guid isPermaLink=\"true\">{E(SITE_BASE + l)}</guid><pubDate>{rfc822}</pubDate><description>{E(d)}</description></item>"
@@ -848,6 +832,14 @@ def validate(errors):
         parser = PageParser()
         parser.feed(raw)
         pages[rel] = (parser, raw)
+
+    # 0. No prices or ratings are published (Program Policies; see F-13).
+    for rel, (parser, raw) in pages.items():
+        visible = re.sub(r"<script.*?</script>|<style.*?</style>", "", raw, flags=re.S)
+        if re.search(r"\$\d", visible):
+            errors.append(f"{rel}: a price figure is published (see F-13)")
+        if re.search(r"out of 5|\d\.\d\s*/\s*5\b|\d\.\d stars|\d[\d,]* reviews|\d\.\d\s*\(\s*[\d,]{3,}\s*\)", visible):
+            errors.append(f"{rel}: a product rating is published (see F-13)")
 
     # 1. Disclosure above the fold and repeated in the footer, on every page.
     for rel, (parser, raw) in pages.items():
@@ -910,7 +902,7 @@ def validate(errors):
             errors.append(f"{pid}: submitted token is not in the submitted link")
         if p["intended_asin"] and not re.fullmatch(r"[A-Z0-9]{10}", p["intended_asin"]):
             errors.append(f"{pid}: intended ASIN is not 10 characters")
-        blanks = [k for k in ("intended_asin", "rating", "review_count", "price_observed") if not p[k]]
+        blanks = [k for k in ("intended_asin",) if not p[k]]
         for k in blanks:
             flag = p.get("unverified_fields", {}).get(k)
             if not flag or flag not in FLAGS:

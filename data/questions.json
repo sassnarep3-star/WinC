@@ -50,7 +50,7 @@
       "id": "Q-06",
       "question": "What are the product ratings and review counts?",
       "status": "Partly answered",
-      "have": "P-04: 4.6 out of 5, 3,499 reviews (SRC-10).",
+      "have": "Captured for one product (P-04); not published (F-13).",
       "missing": "Ratings and review counts for P-01, P-02, P-03 and P-05.",
       "how_to_find_out": "Read the product summary section of each page on a later capture.",
       "refs": ["F-06"]

@@ -1,6 +1,6 @@
 # WinC: Amazon affiliate picks (static site)
 
-Live site: https://sassnarep3-star.github.io/WinC/ (GitHub Pages, serves the `docs/` folder of `main`)
+**Status: not merged.** This branch (`arena/70d8ad52-winc`) builds a separate site into `docs/`. `main` already serves a different, complete site at https://sassnarep3-star.github.io/WinC/ (ShopNow Kitchen, from PR #1 and #2). Merging this branch would replace it, so the merge is held. See PR #5 and COORDINATION.md.
 
 A small, source-first buying guide for five Amazon listings (three air fryers, two meat thermometers). Every value is dated and cites an official source. A value that could not be confirmed is left blank and shown as **Unverified**, with a flag.
 
@@ -32,6 +32,10 @@ The build exits non-zero if any check fails, so a broken site is not published. 
 - every internal link and `#anchor` resolves;
 - each product has an official source, its URL-derived values match its stored values, and each blank value is listed against a flag;
 - `sitemap.xml` and `feed.xml` parse and list every page.
+
+## Policy on prices and ratings
+
+The Associates Program Policies allow a site to show prices and availability only when Amazon serves the link or the data comes from the Creators API or PA API. This build therefore shows no prices and no ratings. Captured values are kept in `data/products.json` as internal records (see Flagged for Review F-13 and F-14). The build fails if a price, a rating, or a review count appears in any generated page.
 
 ## Editing
 

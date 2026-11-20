@@ -32,14 +32,15 @@ Repository: `sassnarep3-star/WinC` · Site: https://sassnarep3-star.github.io/Wi
 | 2026-11-20 | T-03 | Operating Agreement §5 disclosure text read on the official page. Policy clauses §2(b), 2(v), 2(w) read from official search excerpts (full-page confirmation pending). FTC Disclosures 101 and Google `rel="sponsored"` read on official pages. | SRC-01, SRC-02, SRC-04, SRC-05 | F-03, F-07, F-10 |
 | 2026-11-20 | T-02 | ASIN definition checked against PA-API 5.0 GetItems (official, search excerpt). Token lengths counted in code. | SRC-03 | F-01 |
 | 2026-11-20 | T-04, T-06, T-07 | Build run from a fresh process: 14 pages written, validation passed. Negative tests confirmed the gate catches: a missing rel=sponsored, a missing disclosure, a broken internal link, a wrong tag flag, an unflagged blank, a row without an official source, and an ASIN that does not match its URL. | SRC-01 to SRC-13 | — |
-| 2026-11-20 | T-10 | Pull request opened: https://github.com/sassnarep3-star/WinC/pull/5 (`arena/70d8ad52-winc` → `main`). Merge and Pages checks recorded below. | SRC-01 to SRC-13 | F-01 to F-12 (all carried into the PR body) |
+| 2026-11-20 | T-10 | Held: PR #5 open as draft, not merged (overlaps `main`'s live site). See Integration record. | SRC-01 to SRC-13 | F-01 to F-14 |
 
-## Integration record (T-10)
+## Integration record (T-10): HELD, not merged
 
-- PR: https://github.com/sassnarep3-star/WinC/pull/5
-- Merge method: merge commit (`gh pr merge 5 --merge`), no approval gate, per the owner's instruction. Owner approval was not requested.
-- Pages: source to be set to `main` / `/docs` after the merge, then the build status and the live URL are checked. Results are reported in the session summary.
-- Unverified items and flags do not block the merge. They are published on the Flagged for Review page.
+- PR: https://github.com/sassnarep3-star/WinC/pull/5 (`arena/70d8ad52-winc` to `main`). Set to draft.
+- Reason: `main` already serves a complete site (ShopNow Kitchen, PR #1 and #2, 21 pages, `check_site.py` green). This branch builds a second, parallel site into `docs/` that overlaps the same pages, data, and COORDINATION file. Merging would replace the live site. The owner should choose which site is published (see PR #5 and the Suggestions page).
+- Checks run on this branch: build passes; negative tests confirm the gate catches a missing disclosure, a missing sponsored rel, a broken link, a wrong tag flag, an unflagged blank, a row with no official source, an ASIN mismatch, and a published price or rating (F-13).
+- Correction made in this turn: the first build showed captured prices and ratings. Program Policies (Participation Requirements) allow prices on the site only when Amazon serves them or they come from Creators API or PA API. Prices and ratings are no longer shown anywhere. Values stay in `data/products.json` as internal records (F-13, F-14).
+- Pages: `main` serves from `/`. Not changed by this session.
 
 ## Handoff / claim rules followed
 

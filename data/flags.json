@@ -6,7 +6,15 @@
       "severity": "High",
       "title": "Submitted tokens are 9 characters; the ASIN definition is 10",
       "detail": "All five path tokens (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj) are 9 characters long. The PA-API 5.0 definition of ASIN is a 10-character identifier. Because a token of the wrong length cannot be confirmed as an ASIN, intended_asin is left blank for every product. None of the five tokens matches the ASIN observed on the page it redirects to. The observed ASINs are kept in their own field.",
-      "sources": ["SRC-03", "SRC-12", "SRC-07", "SRC-08", "SRC-09", "SRC-10", "SRC-11"],
+      "sources": [
+        "SRC-03",
+        "SRC-12",
+        "SRC-07",
+        "SRC-08",
+        "SRC-09",
+        "SRC-10",
+        "SRC-11"
+      ],
       "owner_action": "Confirm, for each link, which product the owner intended. Provide the intended ASIN with its source if it differs from the observed page."
     },
     {
@@ -14,7 +22,15 @@
       "severity": "High",
       "title": "No Associates tag observed in any redirect target",
       "detail": "None of the five observed redirect URLs contains a tag= parameter. Participation Requirements 2(b) says each Special Link must carry the Associates tag as a URL parameter. Attribution to shopnow047c-20 therefore cannot be confirmed from the observed URLs. The fetch tool may have dropped parameters; this has not been ruled out.",
-      "sources": ["SRC-02", "SRC-12", "SRC-07", "SRC-08", "SRC-09", "SRC-10", "SRC-11"],
+      "sources": [
+        "SRC-02",
+        "SRC-12",
+        "SRC-07",
+        "SRC-08",
+        "SRC-09",
+        "SRC-10",
+        "SRC-11"
+      ],
       "owner_action": "Run the single-link test (F-09) and check the Associates tracking report for each product."
     },
     {
@@ -22,7 +38,11 @@
       "severity": "High",
       "title": "Compliance status of link.amazon short links is unresolved",
       "detail": "Participation Requirements 2(w) prohibits link shortening used in a way that makes it unclear that the link goes to an Amazon Site. 2(v) prohibits cloaking or obscuring the site URL, including by redirect. The domain link.amazon is not an Amazon domain that could be verified in this review, and the owner of that domain was not confirmed. The status of these links is NOT claimed to be invalid. It is unresolved (see the request's note on FLG-003).",
-      "sources": ["SRC-02", "SRC-12", "SRC-06"],
+      "sources": [
+        "SRC-02",
+        "SRC-12",
+        "SRC-06"
+      ],
       "owner_action": "Ask Associates support (SRC-06) whether these short links are permitted Special Links. Until answered, treat the outbound links as unvalidated."
     },
     {
@@ -30,7 +50,11 @@
       "severity": "Medium",
       "title": "Marketplace not confirmed (US listings; owner location in the Netherlands)",
       "detail": "All observed destinations are amazon.com pages, with prices shown for a US delivery location (Fairfax 22030). The owner's location is the Netherlands. Which Associates marketplace tracking ID shopnow047c-20 belongs to has not been confirmed. Prices and availability are marketplace-specific.",
-      "sources": ["SRC-01", "SRC-07", "SRC-11"],
+      "sources": [
+        "SRC-01",
+        "SRC-07",
+        "SRC-11"
+      ],
       "owner_action": "Confirm the marketplace of tracking ID shopnow047c-20 in Associates Central. Confirm whether the Netherlands marketplace listings should be used instead."
     },
     {
@@ -38,15 +62,23 @@
       "severity": "Medium",
       "title": "Referenced source register and coordination files were not in the repo",
       "detail": "At the start of this session the repository contained only README.md (one commit). The S01-S24, FLG-003, SG-27-SG-30 and S02 references, and the Operating Agreement copy named in the request, were not present. A new register (SRC-01 to SRC-13) was created. The old IDs were not reconstructed, so any cross-reference to them must be made by the owner.",
-      "sources": ["SRC-01"],
+      "sources": [
+        "SRC-01"
+      ],
       "owner_action": "Provide the original source register if it exists elsewhere. Map its IDs to SRC-01 to SRC-13 or add it to data/sources.json."
     },
     {
       "id": "F-06",
       "severity": "Medium",
       "title": "Ratings and review counts captured for one product only",
-      "detail": "Only P-04 (ThermoMaven) shows a product rating (4.6, 3,499 reviews) in the captured sections. The other four pages show protection-plan ratings in the same areas. Those were excluded. Prices are a single snapshot and change over time and by location.",
-      "sources": ["SRC-07", "SRC-08", "SRC-09", "SRC-10", "SRC-11"],
+      "detail": "Only P-04 (ThermoMaven) shows a product rating (captured; not published, see F-13) in the captured sections. The other four pages show protection-plan ratings in the same areas. Those were excluded. Prices are a single snapshot and change over time and by location.",
+      "sources": [
+        "SRC-07",
+        "SRC-08",
+        "SRC-09",
+        "SRC-10",
+        "SRC-11"
+      ],
       "owner_action": "Re-capture ratings and prices for P-01, P-02, P-03 and P-05 before publishing those values as current."
     },
     {
@@ -54,7 +86,9 @@
       "severity": "Medium",
       "title": "Tracking ID format needs owner confirmation",
       "detail": "Participation Requirements 2(b) gives the tag format as XXXXX-## or another format Amazon designates. shopnow047c-20 follows the -## suffix pattern, but the letters-and-digits part is not a length this review could confirm against a designated format.",
-      "sources": ["SRC-02"],
+      "sources": [
+        "SRC-02"
+      ],
       "owner_action": "Confirm the tracking ID exactly as shown in Associates Central."
     },
     {
@@ -70,7 +104,10 @@
       "severity": "High",
       "title": "Special Link test not performed (requires owner login)",
       "detail": "The request asks for one link per product to be tested in the enrolled Associates workflow, with destination and tracking report confirmed before scaling. That needs a login to the owner's Associates account, which an agent cannot use. Not performed.",
-      "sources": ["SRC-01", "SRC-02"],
+      "sources": [
+        "SRC-01",
+        "SRC-02"
+      ],
       "owner_action": "For each of the five products, run the Associates link test. Record the destination URL, the tracking report line, and the date."
     },
     {
@@ -78,7 +115,11 @@
       "severity": "Medium",
       "title": "Disclosure placement: built to spec, legal review pending",
       "detail": "The Associates statement is placed under the masthead on every page and repeated in the footer. The FTC guidance (SRC-04) asks for a disclosure that is hard to miss and placed with the endorsement. Those requirements are met in the design, but this is not legal advice. The FTC Endorsement Guides (SRC-13) were not reviewed.",
-      "sources": ["SRC-01", "SRC-04", "SRC-13"],
+      "sources": [
+        "SRC-01",
+        "SRC-04",
+        "SRC-13"
+      ],
       "owner_action": "Have counsel review the disclosure text and placement against SRC-13 before scaling."
     },
     {
@@ -86,7 +127,9 @@
       "severity": "Low",
       "title": "Amazon product imagery not used",
       "detail": "No Amazon product images are on the site. The Associates IP licence and usage requirements (SRC-02) were not fully read, so image use is not claimed as permitted.",
-      "sources": ["SRC-02"],
+      "sources": [
+        "SRC-02"
+      ],
       "owner_action": "Decide on imagery (Suggestions S-06). Read the IP licence before adding any Amazon imagery."
     },
     {
@@ -94,8 +137,34 @@
       "severity": "Low",
       "title": "Capture method limits",
       "detail": "Pages were read with a fetch tool, not a browser session, and the sandbox could not reach link.amazon directly. Content may differ from what a logged-in or differently located visitor sees. Dates on every value show when it was captured.",
-      "sources": ["SRC-12"],
+      "sources": [
+        "SRC-12"
+      ],
       "owner_action": "Spot-check two values per product in a normal browser and note any difference."
+    },
+    {
+      "id": "F-13",
+      "severity": "High",
+      "title": "Prices and ratings not published (Program Policies)",
+      "detail": "Amazon's Associates Program Policies (Participation Requirements, price and availability) allow a site to show prices and availability only if Amazon serves the link that displays them, or the data comes through the Creators API or PA API, which requires enrolment and sales thresholds the account has not confirmed. Prices and ratings captured by hand on 2026-11-20 are kept only as an internal record and are not shown on any page. Each row links to the live Amazon listing instead.",
+      "sources": [
+        "SRC-02"
+      ],
+      "owner_action": "Decide between: (a) keep prices off the site and link only; (b) use Creators API or PA API once account eligibility is confirmed in Associates Central (Suggestions page, S-04)."
+    },
+    {
+      "id": "F-14",
+      "severity": "Medium",
+      "title": "Price conflict between two captures",
+      "detail": "Two captures disagree for four of five products. The earlier capture's date was not recorded; the 2026-11-20 capture is dated. Both sets of values are kept as internal records in data/products.json and are not published (see F-13). Neither value has been chosen.",
+      "sources": [
+        "SRC-07",
+        "SRC-08",
+        "SRC-09",
+        "SRC-10",
+        "SRC-11"
+      ],
+      "owner_action": "No action needed for publication while F-13 stands. Re-check if prices are ever shown."
     }
   ]
 }
