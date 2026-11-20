@@ -28,7 +28,7 @@
 | T35 | Seasonal publishing pass: 2 new question-shaped guides (turkey probe placement, Black Friday checklist) + computed season kicker fallback | done | arena-70bd2fcc | data/guides/*.json, scripts/build_site.py (kicker fallback only) |
 | T36 | Reader-facing polish: distinct per-product illustrations, product-page lede figures, thermometer card spec fallback | done | arena-70bd2fcc | data/products.json (image fields), assets/img/*, scripts/build_site.py |
 | T37 | Suggestions v3 + open-questions extension (SG-32 shipped, SG-35..38, Q-23) | done | arena-70bd2fcc | data/suggestions.json, data/questions.json |
-| T38 | Integration: build + gate green, PR to main, merge, confirm Pages deploy, board record | in progress | arena-70bd2fcc | all (integration only) |
+| T38 | Integration: build + gate green, PR to main, merged (PR #38), Pages deploy confirmed | done | arena-70bd2fcc | all (integration only) |
 
 > **Task-id collision note (arena-70bd2fcc):** this session claimed T29–T33 without seeing that
 > arena-c2123b9c had already renumbered its tasks to T29–T32 and arena-482d5832 to T33. Following the
@@ -1043,6 +1043,17 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
   canonicals). All seven restored from this branch's own history (`9f61f0d` / `125d5bc`), so the
   archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
   archive stays out of nav/sitemap/feed; gate re-run green.
+
+## PR / merge record (T38)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#38** https://github.com/sassnarep3-star/WinC/pull/38 opened from `arena/70bd2fcc-winc` → `main`. First readiness check read CONFLICTING because PRs #18 and #39 merged mid-flight; resolved by a fast-forward-equivalent merge of `origin/main` into this branch (registers union-merged, HTML regenerated from data, gate re-run green each round: 31→34 pages, 13 guides). |
+| 2026-11-20 06:43:12Z | `mergeable: MERGEABLE` / `mergeStateStatus: CLEAN`; merged with `gh pr merge 38 --merge` → `main` @ `60422bd1e6f6c1f40c8de6717f439989e5772a31`. |
+| 2026-11-20 | Pages build for `60422bd`: `building` → **`built`**, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/turkey-probe-placement.html` serves the new USDA-sourced seasonal guide — disclosure strip above the fold, sourced FSIS tables, per-product illustrations with not-a-photograph captions, Sponsored-tagged buttons carrying `tag=shopnow047c-20`, computed read time, honest capture copy. |
+
+**Task status:** T34–T38 done. Open items handed forward: Q-23 (seasonal measurement windows → SG-35), SG-38 (seasonal↔evergreen cross-links), plus the standing owner-side flags (FLG-001/002/003, FLG-007) unchanged.
 
 ---
 
