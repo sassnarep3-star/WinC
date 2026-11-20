@@ -155,3 +155,19 @@ Q-01 tracking-ID issuance · Q-16 manual `?tag=` vs generated Special Link · Q-
 five tokens · Q-04 category commission rates · Q-06 real byline. Three of these cannot be answered from
 any sandbox — they require an enrolled Amazon Associates account. Until then the correct posture is what
 shipped: published guides, sourced specs, **links gated and flagged**, no invented numbers.
+
+## Post-merge follow-ups (same session)
+
+| Ref | What | Result |
+| --- | --- | --- |
+| PR #7 | Board + deploy record | merged → `main@3859683`; Pages `built`, no error |
+| (this commit) | `analytics/collect.py` (stdlib collector, request-tested), shop-table legend for `—` vs blank, `analytics/README.md` | gate green: 26 pages, 25 sitemap URLs |
+
+Measurement status after that change: **two** runnable routes now exist (`analytics/worker.js` for
+an edge deploy, `analytics/collect.py` for any box already owned), both verified to accept only the
+five defined events and to log no IP, cookie or user-agent. Still **not deployed**, so
+`data/campaign-ledger.json` remains empty and no page reports a number it did not obtain. The
+collector counts clicks and reads only — it cannot see an order, by design.
+
+New session note for whoever picks this up: `pkill -f collect.py` / `pgrep -f 'collect\.py'` will
+kill your own shell if the same string appears in the running command. Use `fuser -k <port>/tcp`.
