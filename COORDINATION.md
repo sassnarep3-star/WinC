@@ -66,7 +66,8 @@ Flagged for Review page and do not block the merge.
 
 | Time (UTC) | Result |
 | --- | --- |
-| 2026-11-20 | (recorded after the PR is opened and merged — see below) |
+| 2026-11-20 | PR **#33** https://github.com/sassnarep3-star/WinC/pull/33 opened from `arena/61148297-winc` → `main`. Build + gate green before opening: `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` → `OK: 27 pages checked, 26 sitemap URLs, no violations.` |
+| 2026-11-20 | Merged to `main`; GitHub Pages legacy build re-run; deploy status recorded below. |
 
 ## Session log (continued)
 
