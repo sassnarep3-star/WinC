@@ -27,3 +27,28 @@ ships the endpoint code so it can be deployed separately (e.g. Cloudflare Worker
 4. Record the deploy date on the Measurement page and in `COORDINATION.md`.
 
 Status: **code shipped, not yet deployed** — see FLG-007 on the Flagged for Review page.
+
+---
+
+## `collect.py` — the one-command option (added 2026-11-20, session `arena-23d7ed19`)
+
+`worker.js` is the edge deployment. If you would rather just run it somewhere you already have,
+`analytics/collect.py` is the same contract with zero dependencies:
+
+```bash
+python3 analytics/collect.py --port 8080 --out /var/log/shopnow-events.jsonl \
+        --origin https://sassnarep3-star.github.io
+# then set CONFIG.endpoint in assets/app.js to https://HOST:8080/collect
+```
+
+Endpoints: `POST /collect` (only the five defined events), `GET /stats`, `GET /ledger`,
+`GET /healthz`. Behaviour verified by test, not asserted: all five events → `202` and one JSON
+line each; an out-of-set event (`purchase`) → `422`; malformed body → `400`; a `text/plain`
+`sendBeacon` payload → accepted; `../` and CRLF in `page` → stored as `rejected`.
+No IP logging (access log disabled), no cookies, no user-agent storage, no session stitching.
+
+Honest limits: this counts **clicks and reads, not orders**. `/ledger` will never know a sale
+happened. Order and revenue rows must be transcribed from Associates Central's own reports into
+`data/campaign-ledger.json` with the export date, which is the only reason the ledger ships empty.
+Run it behind TLS and keep the `--origin` pin on when it faces the public internet; this file is a
+measurement tool, not a hardened service.
