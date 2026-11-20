@@ -202,3 +202,73 @@ sitemap URLs, no violations.**
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
+
+
+---
+
+# Fourth pass — make it read like a shop (2026-11-20, session `f1fd0ff0`)
+
+The brief for this pass had three parts: lead with the products, give the reader a decision to
+make, and keep every number sourced. Three things changed on the site, and one row of data turned
+out to be wrong in public.
+
+## 1 · Verification, a fourth time — 5/5 titles verbatim, and two new findings
+
+- **All five supplied links were re-resolved and all five listings re-read** on 2026-11-20 by a
+  session that had not seen the earlier data. 5/5 page `<title>` values match the stored product
+  titles verbatim; the redirect responses still carry `lv=shuf` + `plpRedirect=mhFallback`. The
+  Emeril page exposed its full details table, so dimensions (16.9" × 15.8" × 14.8"), capacity
+  (24.6 litres), model `4-00675-02X-VN`, UPC `752356835682`, 1700 W and its own ASIN row were
+  re-checked cell by cell against `data/products.json` — all match, and the same page repeats the
+  six-versus-seven accessories contradiction (FLG-010) in `Configuration` vs `Item Highlight`.
+- **FLG-026 (new):** two of five resolved URLs carried a variant parameter (`th=1`), and Amazon's
+  own rails showed sibling listings for three products (Chefman 6 Qt dual basket `B0B7C327LK`,
+  ThermoMaven Orange `B0GL7Z4KP4`, CHEF iQ Sense `B0DZFNQXGL`). A stable destination still does not
+  pin the variant a reader is served, so no product page here claims a colour, size or bundle.
+- **FLG-027 (new):** prices, star ratings and “Black Friday Deal” badges were visible during the
+  reads and were not copied (Program Policies, S02). The consequence is stated as an open decision
+  (SG-27 / Q-23), not left as a silent gap.
+- **One reader-facing value was wrong in public:** the Chefman 8 Qt `temperature` and `model`
+  fields carried “— see FLG-005” inside the *value*, so a shopper copying the number copied our
+  bookkeeping with it. The fields are now clean (`200-400°F`, `RJ38-SQSS-8T`) and the disagreement
+  lives where it belongs — the product page's “Where the listing disagrees with itself” block and
+  the Flagged page. The gate now fails any spec value that carries a flag id.
+
+## 2 · The shop, rebuilt so it reads like one
+
+- Cards no longer print Amazon's keyword-stuffed title as body copy. Each carries a short editorial
+  line written only from that product's own sourced fields, with the verbatim listing title moved
+  to the product page under “What the listing itself says, verbatim”.
+- 12 commissioned illustrations, 1.9 MB in total (every file under the gate's 400 KB budget) — one per
+  product, so no two cards share artwork; product artwork doubles as each page's `og:image`. The
+  43 MB of raw PNGs the site was loading is gone, and a rule keeps it gone.
+- The front page leads with the products and a one-screen at-a-glance table (form, capacity,
+  footprint, weight, what the listing sets it up for, source link per row), followed by the guides.
+  Register counts no longer appear as a feature of the landing page; the dashboard pages are one
+  navigation group plus the footer, as the brief asks.
+- A dated seasonal strip points at the holiday guides. It states its year in its own text, because
+  an undated seasonal promise is how a site ends up looking stale in public.
+
+## 3 · Nine guides, four backlog rows closed
+
+`29` sources · `27` flags · `24` questions (5 blocking) ·
+`30` suggestions (19 shipped, 10 open, 1 recommended now) · `13` topics (4 published).
+
+Three guides were written this pass, each from sources already readable:
+**probe-accuracy-check**, **probe-placement-holiday-cook** and **counter-fit-before-you-order** —
+thermometer accuracy (USDA FSIS ice-water and boiling-water calibration methods, the 2–4°F
+expectation, which types cannot be adjusted), probe placement for a holiday bird (three places in a
+whole bird, 165°F, stuffing, the leave-in rule), and counter fit (the listed footprints and weights,
+with ventilation clearance explicitly refused because no listing states one).
+
+Build and gate: `Built 30 pages, 29 sitemap URLs, 9 guides, 26 search rows.` →
+`OK: 30 pages checked, 29 sitemap URLs, no violations.`
+
+## What still cannot be answered from this repo
+
+Nothing changed about the four blockers: the tracking ID's issuance (FLG-001), the one-link
+Associates test (FLG-002), the compliance status of the supplied short links (FLG-003), and the
+specification conflicts inside two listings (FLG-004, FLG-005, FLG-010). All of them need an enrolled
+Associates account or the owner's decision, and all of them are published on the Flagged page with
+the action that settles each. No price, rating, ranking or revenue figure appears anywhere, and the
+ledger stays empty until first-party reports arrive.

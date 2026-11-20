@@ -513,7 +513,7 @@ def product_body(p):
 <div class="listingtitle"><span>What the listing itself says, verbatim</span><p>{esc(p['title'])}</p></div>
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
-{f'<p class="footnote">Re-read {esc(p["source_date"])}: {esc(p["fourth_read"])}</p>' if p.get('fourth_read') else ''}
+{f'<p class="footnote">{esc(p["fourth_read"])}</p>' if p.get('fourth_read') else ''}
 <h2>What to compare before you buy</h2>
 <ul>
 <li><strong>Capacity vs. your actual meals:</strong> {esc(p['capacity'] or 'see listing')} — measure the tray or bird you cook most often.</li>
@@ -1127,18 +1127,30 @@ def questions_body():
 
 def probes_section():
     rows = ""
+    n_obs = len(PROBES.get("probe_dates", [])) or 3
     for pr in PROBES["probes"]:
         agree = "matches 2026-11-17" if pr.get("agrees_with_prior_session") else "DIVERGES from 2026-11-17"
         flags = " ".join(f"<code>{esc(f)}</code>" for f in pr.get("observed_flags", []))
         note = f'<p class="meta">{esc(pr["note"])}</p>' if pr.get("note") else ""
+        fourth = pr.get("fourth_observation") or {}
+        if fourth:
+            latest = (f'{esc(fourth.get("date", ""))} · <span class="okpill">title matches verbatim</span>'
+                      if fourth.get("matches_prior_observations")
+                      else f'{esc(fourth.get("date", ""))} · <span class="flagpill">title differs</span>')
+            extra_flags = sorted({f for f in fourth.get("observed_flags", [])} - {f for f in pr.get("observed_flags", [])})
+            if extra_flags:
+                latest += ' <span class="meta">new on this read: ' + " ".join(f"<code>{esc(x)}</code>" for x in extra_flags) + "</span>"
+        else:
+            latest = '<span class="meta">not re-read by the latest pass</span>'
         rows += (f'<tr><td><code>{esc(pr["submitted_token"])}</code><br><span class="meta">{pr["token_chars"]} chars · lowercase: {esc(pr["token_lowercase_letters"])}</span></td>'
                  f'<td>{esc(pr["http_result"])}</td><td><a href="{esc(pr["final_url"].split("?")[0])}" rel="nofollow noopener" target="_blank">{esc(pr["final_asin"])}</a></td>'
-                 f'<td class="src">{flags}</td><td>{esc(agree)}</td><td>{esc(pr["breadcrumb_top"])}{note}</td></tr>')
+                 f'<td class="src">{flags}</td><td>{esc(agree)}</td><td>{latest}</td>'
+                 f'<td>{esc(pr["breadcrumb_top"])}{note}</td></tr>')
     interp = PROBES["interpretation"]
     return f"""
 <h2 id="probes">4 · Redirect re-observation log</h2>
-<p>Independent re-check of all five supplied links, run by {esc(PROBES['probe_session'])} on {esc(PROBES['probe_date'])} — which closes FLG-008, the prior session’s note that nobody in this repo had observed the redirects directly. Method: {esc(PROBES['probe_method'])}</p>
-<div class="tablewrap"><table><thead><tr><th>Supplied token</th><th>Result</th><th>Final listing</th><th>Query flags on the response</th><th>vs prior session</th><th>Browse path / note</th></tr></thead><tbody>{rows}</tbody></table></div>
+<p>{n_obs} independent observations of all five supplied links, across {len(set(d.split(" (")[0] for d in PROBES.get("probe_dates", ["2026-11-17"])))} dates. Most recent pass: {esc(PROBES['probe_session'])}, on {esc(PROBES['probe_date'])} — the fourth, and the third by a session that had not seen the earlier data. Method: {esc(PROBES['probe_method'])}</p>
+<div class="tablewrap"><table><thead><tr><th>Supplied token</th><th>Result</th><th>Final listing</th><th>Query flags on the response</th><th>vs prior session</th><th>Latest re-read</th><th>Browse path / note</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h3>What this proves</h3>
 <p>{esc(interp['reproduced'])}</p>
 <h3>What it does not prove</h3>
