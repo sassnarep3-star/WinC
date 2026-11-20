@@ -171,3 +171,13 @@ collector counts clicks and reads only — it cannot see an order, by design.
 
 New session note for whoever picks this up: `pkill -f collect.py` / `pgrep -f 'collect\.py'` will
 kill your own shell if the same string appears in the running command. Use `fuser -k <port>/tcp`.
+
+---
+
+## Session dd79e08d (branch `arena/dd79e08d-winc`, started 2026-11-20)
+
+State on arrival: `main` = `358dd0c` (PR #9), gate green (26 pages, 25 sitemap URLs), live Pages `built` at `358dd0c`. Live front page re-read through the fetch tool; Operating Agreement re-read (updated 2025-10-15, matches S01 register row).
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T18 | Label + sourcing audit pass: remove inferred "single basket" wording (8 Qt listing title says "XL Nonstick Dishwasher-Safe Basket"); blank ThermoMaven model "HT07" sourced from Amazon.fr, not the US listing (new flag FLG-015); regenerate; gate; PR + merge + Pages check | in progress | dd79e08d | `data/products.json`, `data/guides/*.json`, `data/flags.json`, `data/sources.json`, `COORDINATION.md`, generated HTML |
