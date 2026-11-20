@@ -35,27 +35,27 @@ coordination surface. Read it **before** claiming work; write to it **before** e
 |---|---|---|---|---|
 | T00 | Repo review; inventory what the brief references vs what exists | **done** | arena-04112b09 | read-only |
 | T01 | Coordination board + claim protocol | **done** | arena-04112b09 | `COORDINATION.md` |
-| T02 | Source register (fetched official policy pages, quoted findings) | in progress | arena-04112b09 | `data/sources.json` |
-| T03 | Product-intent confirmation register for the 5 supplied links | in progress | arena-04112b09 | `data/products.json`, `data/product-intent.json` |
-| T04 | Compliance rules table + publishing gate (`check.mjs`) | in progress | arena-04112b09 | `data/rules.json`, `tools/check.mjs` |
-| T05 | Data-driven site generator + Pages layout | in progress | arena-04112b09 | `tools/build.mjs`, `tools/lib.mjs`, `*.html` |
-| T06 | Buyer guides (5–6 question-shaped, no product claims) | in progress | arena-04112b09 | `content/guides/*.json` |
-| T07 | Suggestions board (options + recommendation + decision capture) | in progress | arena-04112b09 | `data/suggestions.json`, `suggestions/**` |
-| T08 | Open questions / missing-information register + discovery steps | in progress | arena-04112b09 | `data/questions.json`, `questions/**` |
-| T09 | Flagged-for-review page from `data/flags.json` | in progress | arena-04112b09 | `flagged/**` |
-| T10 | Measurement: 5 events, campaign ledger (empty), click counter, privacy | in progress | arena-04112b09 | `data/events.json`, `data/ledger.csv`, `assets/js/clicks.js` |
-| T11 | Findability: sitemap, RSS, robots, canonical, JSON-LD | in progress | arena-04112b09 | `sitemap.xml`, `feed.xml`, `robots.txt` |
-| T12 | Editorial cadence, clusters, authorship, brand, imagery | in progress | arena-04112b09 | `data/editorial.json`, `assets/img/*` |
-| T13 | Executive summary (page + README) | in progress | arena-04112b09 | `executive-summary/**`, `README.md` |
-| T14 | CI gate workflow (build + verify on PR/push) | in progress | arena-04112b09 | `.github/workflows/ci.yml` |
-| T15 | PR → merge → confirm Pages deploy → record result | **in progress** | arena-04112b09 | repo-wide (integration) |
+| T02 | Source register (fetched official policy pages, quoted findings) | **done** | arena-04112b09 | `data/sources.json` |
+| T03 | Product-intent confirmation register for the 5 supplied links | **done** | arena-04112b09 | `data/products.json`, `data/product-intent.json` |
+| T04 | Compliance rules table + publishing gate (`check.mjs`) | **done** | arena-04112b09 | `data/rules.json`, `tools/check.mjs` |
+| T05 | Data-driven site generator + Pages layout | **done** | arena-04112b09 | `tools/build.mjs`, `tools/lib.mjs`, `*.html` |
+| T06 | Buyer guides (5–6 question-shaped, no product claims) | **done** | arena-04112b09 | `content/guides/*.json` |
+| T07 | Suggestions board (options + recommendation + decision capture) | **done** | arena-04112b09 | `data/suggestions.json`, `suggestions/**` |
+| T08 | Open questions / missing-information register + discovery steps | **done** | arena-04112b09 | `data/questions.json`, `questions/**` |
+| T09 | Flagged-for-review page from `data/flags.json` | **done** | arena-04112b09 | `flagged/**` |
+| T10 | Measurement: 5 events, campaign ledger (empty), click counter, privacy | **done** | arena-04112b09 | `data/events.json`, `data/ledger.csv`, `assets/js/clicks.js` |
+| T11 | Findability: sitemap, RSS, robots, canonical, JSON-LD | **done** | arena-04112b09 | `sitemap.xml`, `feed.xml`, `robots.txt` |
+| T12 | Editorial cadence, clusters, authorship, brand, imagery | **done** | arena-04112b09 | `data/editorial.json`, `assets/img/*` |
+| T13 | Executive summary (page + README) | **done** | arena-04112b09 | `executive-summary/**`, `README.md` |
+| T14 | CI gate workflow (build + verify on PR/push) | **done** | arena-04112b09 | `.github/workflows/ci.yml` |
+| T15 | PR → merge → confirm Pages deploy → record result | **done** | arena-04112b09 | repo-wide (integration) |
 | T16 | Product resolution (needs real ASINs / Associates account) | **blocked** | — | `data/products.json` |
 | T17 | Price/commission automation (needs Creators API; 10 sales/30 days) | **blocked** | — | none yet |
 | T18 | Hosted analytics collector (needs a server; Pages is static only) | **blocked** | — | `tools/collector.sample.mjs` |
 
 ## Claims
 
-**arena-04112b09** — T00–T15 (in progress except T00/T01, which are complete). Scope: `data/**`, `content/**`, `tools/**`, `assets/**`,
+**arena-04112b09** — T00–T15 complete. T16–T18 remain **blocked** on operator inputs (see the log); they touch no files and block nothing. Scope: `data/**`, `content/**`, `tools/**`, `assets/**`,
 `*.html`, `*.xml`, `robots.txt`, `README.md`, `package.json`, `site.config.json`, `_config.yml`,
 `.github/workflows/ci.yml`, `COORDINATION.md`. Rationale: the repository was empty at start (see T00), so
 there is no in-flight work to collide with. T16–T18 are left deliberately blocked and touch no files.
@@ -132,6 +132,73 @@ resolved by splitting surfaces). Full text and sources: `data/flags.json` and th
 page. None block the merge.
 
 ## PR / merge record
+## Completion record — arena-04112b09 (T02–T15)
 
-- PR: pending creation this turn (this session is the final integrator).
-- Pages deploy status: recorded below once observed via the Pages API and the live URL.
+Delivered in commit `652e058` + `2425729`. Site: 19 generated pages under the Pages root, plus
+`sitemap.xml`, `feed.xml`, `robots.txt`, `404.html`. Data-first: `data/*.json` + `content/guides/*.json`
+are the only editable surface; editing HTML by hand fails the CI reproducibility step.
+
+| artefact | what it holds | verification performed |
+|---|---|---|
+| `data/sources.json` | 16 sources; 10 fetched from the publisher's own domain today, 2 API/local measurements, 1 operator brief, **3 recorded as `referenced` because we could not open them** | each row stores the load-bearing sentence verbatim + the read date, so a reviewer can diff claim against source |
+| `data/product-intent.json` | 5 rows: intended identifier, confirmation date/by/source, **observed redirect in a separate field** (never merged); price/rating/review/availability left blank | blanks asserted by gate G-04; shape check asserts no product value may attach to an unresolved identifier |
+| `data/rules.json` + `tools/check.mjs` | 15 rule families, each mapped to the clause it enforces | `npm run check` passes clean; **the tester was tested** — see below |
+| `data/questions.json` | 15 decision preconditions, 3 blocking, each with where to look and what happens if nobody answers | every row cites a source id or is marked unknown |
+| `data/suggestions.json` | 15 ideas with options, trade-offs, a recommendation and a copy-paste build instruction; published as an interactive board with local decision capture + markdown export | decision capture stores nothing off-device; gate G-10 asserts that |
+| `data/flags.json` | 12 irregularities with evidence and resolution paths, published as Flagged for review | nothing here blocks the merge; FLG-001/003/005/006 gate specific claims |
+| `data/ledger.csv` | campaign ledger, headers only, zero rows | G-04 refuses a row without an authorized first-party source |
+| guides ×5 | question-shaped buyer-method pages, no product named | G-06 (no price/rating), G-07 (no verdict), G-15 (links) all green |
+
+### Gate self-test (why the machinery is trustworthy rather than decorative)
+
+Injected three violations, then restored:
+1. broken internal href authored by the generator → caught by G-15;
+2. an invented `$149.99` in guide prose → caught by G-06;
+3. the disclosure sentence paraphrased **in `site.config.json`** → initially **not** caught, because
+   G-01 read its expected value from the file it policed. Fixed: the canonical sentence is now a literal
+   inside `tools/check.mjs` (quoted from SRC-01 §5) and config drift is itself a failure. Re-tested: caught.
+Also found and fixed while testing: the link gate only read double-quoted `href`/`src`, so single-quoted
+attributes were invisible to it; and `inline()` was escaping HTML the generator authored (fixed with a
+separate `rich()` for build-owned strings, `inline()` still escapes data-file prose).
+
+### Corrections made during the build (so nobody re-introduces them)
+
+- Front page briefly linked `link.amazon/...` as an anchor. Removed: an unconfirmed, untagged store URL
+  must never be a live link. The address is printed as copyable text on the register page instead.
+- Front page repeated one identical 200-character sentence across five rows. Replaced with a single
+  verdict plus identifier chips; per-row repetition stays only on the register, where a complete
+  register is the point.
+- Illustrations shipped at ~1.6 MB each; quantised to a palette and resized to 1200px (116–222 KB).
+- Pseudo-precision removed from guide copy (invented cm/° figures replaced with "the figure the manual
+  states"), because an unsourced number in a measurement guide is the exact failure mode we are avoiding.
+
+### Sources consulted (all read 2026-11-20, from the publisher's domain)
+
+- https://affiliate-program.amazon.com/help/operating/agreement — §1 Special Links, §5 disclosure, §6 termination
+- https://affiliate-program.amazon.com/help/operating/policies — Commission Income Statement §1–§2,
+  Participation Requirements §1–§6, Products Statement (prices §2(b), reviews §6(t), self-purchase §6(u),
+  no price alerts §6(y), no per-user sub-tags §2(b), no ML training without approval §5)
+- https://affiliate-program.amazon.com/help/node/topic/GHQNZAU6669EZS98 — link-level "(paid link)" wording
+- https://affiliate-program.amazon.com/creatorsapi/docs/en-us/introduction — 10 qualifying sales / 30 days
+- https://affiliate-program.amazon.com/creatorsapi/docs/en-us/paapiv5-deprecation — PA-API 5 → 403
+- https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking
+- https://developers.google.com/search/docs/appearance/structured-data/article · /fundamentals/creating-helpful-content · /crawling-indexing/qualify-outbound-links
+- https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
+- API: `GET /repos/sassnarep3-star/WinC/pages` → `build_type=legacy`, `source={main,/}`,
+  `html_url=https://sassnarep3-star.github.io/WinC/`
+
+**Not verified, and left unverified on purpose:** the 10-character ASIN rule (Seller Central help was not
+reachable here → SRC-13 `referenced`), whether `link.amazon` links are valid Special Links (FLG-003,
+unresolved per instruction), and whether `shopnow047c-20` is registered to this site (FLG-004).
+
+### Handoff notes for other sessions
+
+- Do not hand-edit `*.html`, `sitemap.xml`, `feed.xml`, `assets/js/config.js`: regenerate.
+- `data/` is intentionally published (FLG-010). Keep secrets out of it.
+- To add a guide: create `content/guides/<slug>.json`, register it in `data/editorial.json`, run
+  `npm run verify`. Sitemap, feed and nav update themselves.
+- To close FLG-001/003: fill `data/product-intent.json` rows (intent fields only; redirect observations go
+  in `observed_redirect_target`), then rebuild. The desk, front page and freshness queue follow automatically.
+
+## PR / merge record
+
