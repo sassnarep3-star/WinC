@@ -304,6 +304,52 @@
         "S36"
       ],
       "source_note": ""
+    },
+    {
+      "id": "FLG-031",
+      "title": "Deal season is here and the no-price stance is still a habit, not a policy",
+      "detail": "The listings read on 2026-11-20 displayed dollar amounts, list-price strikethroughs, review counts and 'Black Friday Deal' badges. None were copied, because a static build cannot keep them current and Program Policies restrict price display to an Amazon-served link or the Creator/PA API (S02, FLG-006). The unresolved part is editorial: the site publishes seasonal guides that answer 'what should you check before you click buy' while having no sanctioned way to talk about the one variable readers weigh that week, and SG-32 (deal-season playbook) and SG-35 (seasonal close-out rule) both assume this is settled.",
+      "action": "Record the stance on the direction register (SG-47 / Q-27): either wire the Creator/PA API into a timestamped build step with the required freshness note, or adopt a permanent no-price position and say so on the disclosure page and in the seasonal copy. Whichever is chosen, the site states it instead of implying it.",
+      "status": "needs review",
+      "sources": [
+        "S02",
+        "S06",
+        "S37"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B0CDY277D3"
+      ]
+    },
+    {
+      "id": "FLG-032",
+      "title": "Two of five redirect responses served a th=1 variant, so a stable ASIN still does not pin what the reader sees",
+      "detail": "Observation #6 (2026-11-20, session f1fd0ff0): B08DKYBTPH and B0DZFD6R9Z resolved with an added th=1 variant parameter on top of lv=shuf + plpRedirect=mhFallback. This is a different mechanism from the sibling-ASIN findings already on this register (FLG-026 ThermoMaven, FLG-027 CHEF iQ) and from the fallback-route note (FLG-029): the same ASIN can be served at a different colour, size or bundle depending on the request, so a link can land on a listing this site does not describe.",
+      "action": "During the one-link Associates test (FLG-002), record each link's final URL including every query parameter for all five products. If a variant parameter appears, either pin the Special Link to that variant or keep the bare /dp/<ASIN> form and leave variant wording out of the product copy. intended_* stays blank until the owner confirms intent (FLG-003).",
+      "status": "needs review",
+      "sources": [
+        "S29",
+        "S37",
+        "S22"
+      ],
+      "source_urls": [
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ]
+    },
+    {
+      "id": "FLG-033",
+      "title": "Observations of the same five links now disagree across fetch paths (FLG-030 vs 5/5 reproduction six times over)",
+      "detail": "FLG-030 records that session arena/1c6908d1's pass did not reproduce the prior ASIN mapping 'via this fetch path'. Six other observations — 2026-11-17 and four separate sessions on 2026-11-20, including this session's #6 through the fetch_page reader — map all five tokens to the same five ASINs with matching page titles every time. The disagreement is therefore about the observation method, not about the links: one path returns a redirect, another returns a summary or an error page. Nothing has been resolved in favour of either, because the register's rule is that an observation only describes its own path.",
+      "action": "Treat FLG-030 and this row as one question with two answers until the Associates workflow settles it: run FLG-002's one-link test inside the enrolled workflow (the only route that determines what a reader actually receives), record the final URL per product with its fetch path named, then mark both rows fixed in the same commit. Until then keep the reader links as they are and keep intended_* blank.",
+      "status": "needs review",
+      "sources": [
+        "S29",
+        "S37",
+        "S22"
+      ],
+      "source_urls": [
+        "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json"
+      ]
     }
   ]
 }

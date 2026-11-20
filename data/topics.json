@@ -1,310 +1,332 @@
 {
- "_note": "The guide backlog, published as a page so the publishing pipeline is visible. These titles are editorial hypotheses — questions a reader would plausibly type — not claims about popularity, search volume or demand. `chosen_from` records exactly how each topic was chosen. Until a Search Console property exists (Q-13 / SG-08) there is no measured query data, so every planned topic says so in public rather than implying evidence it does not have.",
- "updated": "2026-11-20",
- "how_topics_are_chosen": "1) A reader question that can be answered from listed specifications and published guidance — never from an opinion. 2) A question with a gap that a product page can close. 3) After the analytics endpoint and Search Console property exist, queries where the site ranks 8–25 with more than 50 impressions take priority over anything on this list.",
- "topics": [
-  {
-   "id": "TP-01",
-   "title": "Air fryer vs. convection oven: what actually changes?",
-   "cluster": "Air Fryers",
-   "season": "Everyday",
-   "question": "Am I buying a different machine, or the same machine with a different name?",
-   "why": "The oven-style listing names toaster-oven modes and a much larger cavity; the fryer listings name baskets. Readers cannot tell from a title which one their cooking style needs.",
-   "needs": "Listed cavity size, listed functions, listed capacity for each of the three air fryers (already in data/products.json). No new sources required.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — the brief's 'basket or oven-style' question is the site's own framing; no measured query data exists yet",
-   "priority": "high",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH",
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ]
-  },
-  {
-   "id": "TP-02",
-   "title": "How much food actually fits in 6 quarts?",
-   "cluster": "Air Fryers",
-   "season": "Everyday",
-   "question": "Quarts are not servings — what fits, in practice?",
-   "why": "Capacity is the first spec every buyer filters on and the easiest one to over-interpret. The Emeril listing itself makes a serving claim (4–6 people) that can be checked against the others.",
-   "needs": "Listed capacities (6 Qt / two 3-Qt baskets, 8 quarts, 26 Qt = 24.6 L) plus the listing's own serving claim. USDA MyPlate serving guidance would be the neutral yardstick for portions if it is cited per row.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — pairs with the published capacity checklist; no measured query data exists yet",
-   "priority": "high",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH",
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ]
-  },
-  {
-   "id": "TP-03",
-   "title": "Can one countertop oven handle a whole chicken and a pizza?",
-   "cluster": "Air Fryers",
-   "season": "Holiday cooking",
-   "question": "What size cook do you need before you start hosting?",
-   "why": "The 26-quart listing states a 6-lb rotisserie chicken and a 12-inch pizza in its own bullet copy. That is a directly checkable claim a reader can hold the site to.",
-   "needs": "The listing bullets for B09B7SB46R (already captured) and the USDA FSIS whole-poultry guidance for the temperature side.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — seasonal cluster already used by the holiday guide; no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B09B7SB46R",
-    "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
-   ]
-  },
-  {
-   "id": "TP-04",
-   "title": "Air fryer presets: when to use one, and when to set the time yourself",
-   "cluster": "Air Fryers",
-   "season": "Everyday",
-   "question": "Do the buttons save me anything?",
-   "why": "The oven-style listing's preset count is internally inconsistent (25 in the bullets, 24 in the title), and the 6-quart listing names presets in its special features. A guide that says 'the preset is a starting point, not a temperature' has to be careful not to invent cook times.",
-   "needs": "Listed special features and preset names per listing. Any cook time would need a manufacturer source — no cook times may be invented.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis; no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ]
-  },
-  {
-   "id": "TP-05",
-   "title": "Which accessory count is right: six or seven?",
-   "cluster": "Air Fryers",
-   "season": "Everyday",
-   "question": "The page contradicts itself — what do I actually get?",
-   "why": "A listing whose own title and bullets disagree (FLG-010, FLG-020) is exactly the kind of detail a reader will hit at the checkout screen, and it is the clearest argument for reading the page rather than a round-up.",
-   "needs": "A manufacturer page for the 4-00675-02X-VN model, which would also settle the model string itself.",
-   "status": "blocked",
-   "chosen_from": "editorial hypothesis — raised by the third-pass verification (FLG-010, FLG-020), not by a measured query",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ]
-  },
-  {
-   "id": "TP-06",
-   "title": "Where exactly do you put the probe in a chicken?",
-   "cluster": "Thermometers",
-   "season": "Holiday cooking",
-   "question": "Thigh, breast, or the wing — and how close to the bone?",
-   "why": "USDA FSIS names the three places to check a whole bird and says to avoid bone. The instant-read listing cannot help with technique; a guide can, and the source is already in the register.",
-   "needs": "USDA FSIS Food Thermometers page (S17) — already cited in the published probe guide; would need a cooking-technique section with per-step citations.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
-   "priority": "high",
-   "source": [
-    "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
-    "https://www.amazon.com/dp/B0DHZTCNR5"
-   ]
-  },
-  {
-   "id": "TP-07",
-   "title": "Do you need two probes or three?",
-   "cluster": "Thermometers",
-   "season": "Holiday cooking",
-   "question": "How many birds, how many readings?",
-   "why": "The wireless listing states 3 probes and the FSIS guidance names 3 check points. A short guide that maps 'cooking for N' onto 'probes you need' would help a buyer decide without a ranking.",
-   "needs": "USDA FSIS guidance for the check points, the CHEF iQ probe count, and the instant-read's role as the spot-check tool.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — completes the 'Cooking for a crowd' guide cluster; no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B0DZFD6R9Z",
-    "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
-   ]
-  },
-  {
-   "id": "TP-08",
-   "title": "What does a ±0.5°F accuracy claim actually mean?",
-   "cluster": "Thermometers",
-   "season": "Everyday",
-   "question": "Is the number on the box a measurement or a marketing claim?",
-   "why": "The instant-read listing states ±0.5°F and NIST & NSF certification; the wireless listing states no tolerance figure on the page read. Readers are comparing numbers that do not come from the same place.",
-   "needs": "The listing's certification claim, and — if the owner wants to go further — a manufacturer calibration page. No claim about this site's own measurements is possible: nobody here has tested a probe.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis; no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B0DHZTCNR5"
-   ]
-  },
-  {
-   "id": "TP-09",
-   "title": "Can you leave a probe in a food while it air fries?",
-   "cluster": "Thermometers",
-   "season": "Everyday",
-   "question": "Will the cable survive a small basket and a hot element?",
-   "why": "The wireless listing names air fryer as a use and states a 1000°F probe heat limit. The cable rating is the part readers get wrong, and it is a check-the-listing question rather than a test result.",
-   "needs": "Listing wording on probe heat limits and any cable rating the manufacturer publishes. No clearance measurement may be claimed without a source.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — cross-links the thermometer and air-fryer clusters; no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B0DZFD6R9Z"
-   ]
-  },
-  {
-   "id": "TP-10",
-   "title": "Your first air fryer: the six checks before you buy",
-   "cluster": "Air Fryers",
-   "season": "Everyday",
-   "question": "What should I check so I do not regret this in a month?",
-   "why": "A beginner checklist is the highest-intent entry point for a first purchase, and every row can be a listed spec: capacity, footprint, weight, temperature range, wattage, dishwasher-safe parts, accessory count.",
-   "needs": "The specs already verified in data/products.json. No new sources, no opinions, no ranking.",
-   "status": "published",
-   "chosen_from": "editorial hypothesis — the natural top-of-funnel page for a first-time buyer; no measured query data exists yet",
-   "priority": "high",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH",
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ],
-   "published_as": "guides/two-baskets-or-one.html",
-   "note": "Published 2026-11-20 as \"Two baskets or one? The air fryer shape decision in ten minutes\" (session arena-038c0b80). The six checks became the shape table plus the \"what to check on the page you land on\" list."
-  },
-  {
-   "id": "TP-11",
-   "title": "What should you buy first: a fryer or a thermometer?",
-   "cluster": "Cross-cluster",
-   "season": "Everyday",
-   "question": "Which of these two upgrades actually changes my cooking?",
-   "why": "A cross-cluster question that only works on a site that sells both, and it can be answered from USDA FSIS guidance and listed capacity — not from preference.",
-   "needs": "USDA FSIS statement that a food thermometer is the only reliable way to confirm safe internal temperature (S17), plus the listed capacities for each fryer.",
-   "status": "published",
-   "chosen_from": "editorial hypothesis — the natural 'which one first' question for a two-category shop; no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
-    "https://www.amazon.com/dp/B0CDY277D3"
-   ],
-   "published_as": "guides/one-second-or-all-night.html",
-   "note": "Published 2026-11-20 as \"One second or all night: choosing between an instant-read and a leave-in thermometer\" (session arena-038c0b80). The fryer-or-thermometer question is answered as a cook-length decision rather than a product ranking."
-  },
-  {
-   "id": "TP-12",
-   "title": "How loud is an air fryer?",
-   "cluster": "Air Fryers",
-   "season": "Everyday",
-   "question": "Will it wake the baby?",
-   "why": "It is a question readers ask constantly and no manufacturer publishes a dB figure for these listings. Publishing it as 'nobody publishes this — here is how to check it yourself' would be more useful than silence, and it demonstrates the site's own standard.",
-   "needs": "A manufacturer noise specification if one exists; otherwise the page becomes a 'what to look for and what we cannot tell you' page. Either way, no decibel number may be invented.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — included deliberately because it may have no answer, which is a legitimate published outcome",
-   "priority": "low",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH",
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ]
-  },
-  {
-   "id": "TP-13",
-   "title": "Basket or oven-style: which air fryer wins your counter?",
-   "cluster": "Air Fryers",
-   "season": "Everyday",
-   "question": "Two baskets vs. one big cavity — which one do I actually need?",
-   "why": "The two Chefman listings differ in basket count and capacity, and the Emeril is a different shape entirely. This is the question at the top of the shop.",
-   "needs": "Listed capacity, dimensions and basket configuration for each of the three air fryers — already in data/products.json.",
-   "status": "published",
-   "chosen_from": "editorial hypothesis — the site's own framing question; no measured query data exists yet",
-   "priority": "high",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH",
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ],
-   "published_as": "guides/two-baskets-or-one.html",
-   "note": "The question this topic describes is already answered live by \"Two baskets or one? The air fryer shape decision in ten minutes\". Marked published rather than planned after re-reading the guides register."
-  },
-  {
-   "id": "TP-14",
-   "title": "Instant-read or leave-in: which probe actually does your job?",
-   "cluster": "Thermometers",
-   "season": "Everyday",
-   "question": "Spot-check or stay-in-the-food — which one fits how you cook?",
-   "why": "The ThermoMaven is an instant-read you pull out; the CHEF iQ stays in and reports over WiFi. The decision is about cooking style, not about which one is 'better'.",
-   "needs": "Listed connectivity, probe count, heat limits and USDA FSIS check-point guidance — already in data/products.json and the sources register.",
-   "status": "published",
-   "chosen_from": "editorial hypothesis — the thermometer cluster's own framing question; no measured query data exists yet",
-   "priority": "high",
-   "source": [
-    "https://www.amazon.com/dp/B0DHZTCNR5",
-    "https://www.amazon.com/dp/B0DZFD6R9Z",
-    "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
-   ],
-   "published_as": "guides/one-second-or-all-night.html",
-   "note": "The question this topic describes is already answered live by \"One second or all night\". Marked published rather than planned after re-reading the guides register."
-  },
-  {
-   "id": "TP-15",
-   "title": "What the Amazon page does and does not tell you about a spec",
-   "cluster": "Cross-cluster",
-   "season": "Everyday",
-   "question": "If two numbers on the same listing disagree, which one is the product?",
-   "why": "This session re-read all five listings and found four internal contradictions (FLG-005, FLG-010, FLG-018, FLG-020) plus a fallback-route quirk (FLG-029). A guide that teaches a reader how to read the detail table would make every other page more useful.",
-   "needs": "The recorded contradictions already in data/flags.json; no new sources beyond a normal-browser re-read of the five listings.",
-   "status": "planned",
-   "chosen_from": "verification finding — FLG-029 and the four listing contradictions recorded in this repo, not a measured query",
-   "priority": "high",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B09B7SB46R",
-    "https://www.amazon.com/dp/B08DKYBTPH"
-   ]
-  },
-  {
-   "id": "TP-16",
-   "title": "Thanksgiving math: what fits in each fryer, and what temperature does the food need?",
-   "cluster": "Cross-cluster",
-   "season": "Thanksgiving → Christmas",
-   "question": "Can the machine I have handle the holiday spread, and how do I know the food is done?",
-   "why": "The three fryers' listed capacities (two 3-qt baskets, one 8-qt basket, a 26-qt oven) answer the size question from data this site already holds, and the temperature question has one authoritative answer (USDA FSIS). The two thermometers in the shop are the tools for checking it — a cross-cluster question neither category page answers alone.",
-   "needs": "Listed capacities from data/products.json (already captured), USDA FSIS temperatures quoted from S16/S17 only — re-check those sources before publishing (SG-41). No new sources required.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — the calendar season and this shop's own cross-cluster gap; no measured query data exists yet (Search Console pending, SG-29)",
-   "priority": "high",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH",
-    "https://www.amazon.com/dp/B09B7SB46R",
-    "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"
-   ]
-  },
-  {
-   "id": "TP-17",
-   "title": "Game day, two baskets, one kickoff: what can actually finish together?",
-   "cluster": "Air Fryers",
-   "season": "Winter (game day)",
-   "question": "How do I cook two things at once and have them land on the table at the same time?",
-   "why": "The dual-basket listing names two independent 3-quart baskets with a Sync Finish so both baskets can finish together; the single-basket 8-quart carries no such claim. That is a gathering question the listings answer without opinions.",
-   "needs": "Listed Sync Finish description and basket counts (already captured for B0CDY277D3 and B08DKYBTPH). No cook times may be invented.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — seasonal calendar (winter gatherings); no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH"
-   ]
-  },
-  {
-   "id": "TP-18",
-   "title": "New Year's honest question: which machine earns its counter space all year?",
-   "cluster": "Cross-cluster",
-   "season": "New Year",
-   "question": "After the holiday rush, what do I actually keep out on the counter?",
-   "why": "The listed footprints differ by nearly a factor of two between the basket fryers and the 26-qt oven (13.38\"D x 11.81\"W x 10.63\"H vs 16.9\"D x 15.8\"W x 14.8\"H), and the listed weights range 12.8-26.5 lb. The cleanup guide covers dishwasher-safe parts; the seasonal framing is the New Year habit of clearing the counter — the deciding numbers are the same listed specs.",
-   "needs": "Listed dimensions and weights (already in data/products.json). Nothing new; the keep-or-store judgement stays the reader's.",
-   "status": "planned",
-   "chosen_from": "editorial hypothesis — calendar season (New Year decluttering); no measured query data exists yet",
-   "priority": "medium",
-   "source": [
-    "https://www.amazon.com/dp/B0CDY277D3",
-    "https://www.amazon.com/dp/B08DKYBTPH",
-    "https://www.amazon.com/dp/B09B7SB46R"
-   ]
-  }
- ]
+  "_note": "The guide backlog, published as a page so the publishing pipeline is visible. These titles are editorial hypotheses — questions a reader would plausibly type — not claims about popularity, search volume or demand. `chosen_from` records exactly how each topic was chosen. Until a Search Console property exists (Q-13 / SG-08) there is no measured query data, so every planned topic says so in public rather than implying evidence it does not have.",
+  "updated": "2026-11-20",
+  "how_topics_are_chosen": "1) A reader question that can be answered from listed specifications and published guidance — never from an opinion. 2) A question with a gap that a product page can close. 3) After the analytics endpoint and Search Console property exist, queries where the site ranks 8–25 with more than 50 impressions take priority over anything on this list.",
+  "topics": [
+    {
+      "id": "TP-01",
+      "title": "Air fryer vs. convection oven: what actually changes?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Am I buying a different machine, or the same machine with a different name?",
+      "why": "The oven-style listing names toaster-oven modes and a much larger cavity; the fryer listings name baskets. Readers cannot tell from a title which one their cooking style needs.",
+      "needs": "Listed cavity size, listed functions, listed capacity for each of the three air fryers (already in data/products.json). No new sources required.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — the brief's 'basket or oven-style' question is the site's own framing; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-02",
+      "title": "How much food actually fits in 6 quarts?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Quarts are not servings — what fits, in practice?",
+      "why": "Capacity is the first spec every buyer filters on and the easiest one to over-interpret. The Emeril listing itself makes a serving claim (4–6 people) that can be checked against the others.",
+      "needs": "Listed capacities (6 Qt / two 3-Qt baskets, 8 quarts, 26 Qt = 24.6 L) plus the listing's own serving claim. USDA MyPlate serving guidance would be the neutral yardstick for portions if it is cited per row.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — pairs with the published capacity checklist; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-03",
+      "title": "Can one countertop oven handle a whole chicken and a pizza?",
+      "cluster": "Air Fryers",
+      "season": "Holiday cooking",
+      "question": "What size cook do you need before you start hosting?",
+      "why": "The 26-quart listing states a 6-lb rotisserie chicken and a 12-inch pizza in its own bullet copy. That is a directly checkable claim a reader can hold the site to.",
+      "needs": "The listing bullets for B09B7SB46R (already captured) and the USDA FSIS whole-poultry guidance for the temperature side.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — seasonal cluster already used by the holiday guide; no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ]
+    },
+    {
+      "id": "TP-04",
+      "title": "Air fryer presets: when to use one, and when to set the time yourself",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Do the buttons save me anything?",
+      "why": "The oven-style listing's preset count is internally inconsistent (25 in the bullets, 24 in the title), and the 6-quart listing names presets in its special features. A guide that says 'the preset is a starting point, not a temperature' has to be careful not to invent cook times.",
+      "needs": "Listed special features and preset names per listing. Any cook time would need a manufacturer source — no cook times may be invented.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis; no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-05",
+      "title": "Which accessory count is right: six or seven?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "The page contradicts itself — what do I actually get?",
+      "why": "A listing whose own title and bullets disagree (FLG-010, FLG-020) is exactly the kind of detail a reader will hit at the checkout screen, and it is the clearest argument for reading the page rather than a round-up.",
+      "needs": "A manufacturer page for the 4-00675-02X-VN model, which would also settle the model string itself.",
+      "status": "blocked",
+      "chosen_from": "editorial hypothesis — raised by the third-pass verification (FLG-010, FLG-020), not by a measured query",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-06",
+      "title": "Where exactly do you put the probe in a chicken?",
+      "cluster": "Thermometers",
+      "season": "Holiday cooking",
+      "question": "Thigh, breast, or the wing — and how close to the bone?",
+      "why": "USDA FSIS names the three places to check a whole bird and says to avoid bone. The instant-read listing cannot help with technique; a guide can, and the source is already in the register.",
+      "needs": "Published 2026-11-20 as guides/turkey-probe-placement.html — FSIS placement and the 165°F figure quoted from the source on this row; nothing invented to fill a gap, and no hands-on measurement claimed.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+        "https://www.amazon.com/dp/B0DHZTCNR5"
+      ],
+      "published_as": "guides/turkey-probe-placement.html"
+    },
+    {
+      "id": "TP-07",
+      "title": "Do you need two probes or three?",
+      "cluster": "Thermometers",
+      "season": "Holiday cooking",
+      "question": "How many birds, how many readings?",
+      "why": "The wireless listing states 3 probes and the FSIS guidance names 3 check points. A short guide that maps 'cooking for N' onto 'probes you need' would help a buyer decide without a ranking.",
+      "needs": "USDA FSIS guidance for the check points, the CHEF iQ probe count, and the instant-read's role as the spot-check tool.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — completes the 'Cooking for a crowd' guide cluster; no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0DZFD6R9Z",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ]
+    },
+    {
+      "id": "TP-08",
+      "title": "What does a ±0.5°F accuracy claim actually mean?",
+      "cluster": "Thermometers",
+      "season": "Everyday",
+      "question": "Is the number on the box a measurement or a marketing claim?",
+      "why": "The instant-read listing states ±0.5°F and NIST & NSF certification; the wireless listing states no tolerance figure on the page read. Readers are comparing numbers that do not come from the same place.",
+      "needs": "Published 2026-11-20 as guides/probe-accuracy-check.html — FSIS placement and the 165°F figure quoted from the source on this row; nothing invented to fill a gap, and no hands-on measurement claimed.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis; no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0DHZTCNR5"
+      ],
+      "published_as": "guides/probe-accuracy-check.html"
+    },
+    {
+      "id": "TP-09",
+      "title": "Can you leave a probe in a food while it air fries?",
+      "cluster": "Thermometers",
+      "season": "Everyday",
+      "question": "Will the cable survive a small basket and a hot element?",
+      "why": "The wireless listing names air fryer as a use and states a 1000°F probe heat limit. The cable rating is the part readers get wrong, and it is a check-the-listing question rather than a test result.",
+      "needs": "Published 2026-11-20 as guides/turkey-probe-placement.html — FSIS placement and the 165°F figure quoted from the source on this row; nothing invented to fill a gap, and no hands-on measurement claimed.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — cross-links the thermometer and air-fryer clusters; no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ],
+      "published_as": "guides/turkey-probe-placement.html"
+    },
+    {
+      "id": "TP-10",
+      "title": "Your first air fryer: the six checks before you buy",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "What should I check so I do not regret this in a month?",
+      "why": "A beginner checklist is the highest-intent entry point for a first purchase, and every row can be a listed spec: capacity, footprint, weight, temperature range, wattage, dishwasher-safe parts, accessory count.",
+      "needs": "The specs already verified in data/products.json. No new sources, no opinions, no ranking.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — the natural top-of-funnel page for a first-time buyer; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ],
+      "published_as": "guides/two-baskets-or-one.html",
+      "note": "Published 2026-11-20 as \"Two baskets or one? The air fryer shape decision in ten minutes\" (session arena-038c0b80). The six checks became the shape table plus the \"what to check on the page you land on\" list."
+    },
+    {
+      "id": "TP-11",
+      "title": "What should you buy first: a fryer or a thermometer?",
+      "cluster": "Cross-cluster",
+      "season": "Everyday",
+      "question": "Which of these two upgrades actually changes my cooking?",
+      "why": "A cross-cluster question that only works on a site that sells both, and it can be answered from USDA FSIS guidance and listed capacity — not from preference.",
+      "needs": "USDA FSIS statement that a food thermometer is the only reliable way to confirm safe internal temperature (S17), plus the listed capacities for each fryer.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — the natural 'which one first' question for a two-category shop; no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+        "https://www.amazon.com/dp/B0CDY277D3"
+      ],
+      "published_as": "guides/one-second-or-all-night.html",
+      "note": "Published 2026-11-20 as \"One second or all night: choosing between an instant-read and a leave-in thermometer\" (session arena-038c0b80). The fryer-or-thermometer question is answered as a cook-length decision rather than a product ranking."
+    },
+    {
+      "id": "TP-12",
+      "title": "How loud is an air fryer?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Will it wake the baby?",
+      "why": "It is a question readers ask constantly and no manufacturer publishes a dB figure for these listings. Publishing it as 'nobody publishes this — here is how to check it yourself' would be more useful than silence, and it demonstrates the site's own standard.",
+      "needs": "A manufacturer noise specification if one exists; otherwise the page becomes a 'what to look for and what we cannot tell you' page. Either way, no decibel number may be invented.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — included deliberately because it may have no answer, which is a legitimate published outcome",
+      "priority": "low",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-13",
+      "title": "Basket or oven-style: which air fryer wins your counter?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Two baskets vs. one big cavity — which one do I actually need?",
+      "why": "The two Chefman listings differ in basket count and capacity, and the Emeril is a different shape entirely. This is the question at the top of the shop.",
+      "needs": "Listed capacity, dimensions and basket configuration for each of the three air fryers — already in data/products.json.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — the site's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ],
+      "published_as": "guides/two-baskets-or-one.html",
+      "note": "The question this topic describes is already answered live by \"Two baskets or one? The air fryer shape decision in ten minutes\". Marked published rather than planned after re-reading the guides register."
+    },
+    {
+      "id": "TP-14",
+      "title": "Instant-read or leave-in: which probe actually does your job?",
+      "cluster": "Thermometers",
+      "season": "Everyday",
+      "question": "Spot-check or stay-in-the-food — which one fits how you cook?",
+      "why": "The ThermoMaven is an instant-read you pull out; the CHEF iQ stays in and reports over WiFi. The decision is about cooking style, not about which one is 'better'.",
+      "needs": "Listed connectivity, probe count, heat limits and USDA FSIS check-point guidance — already in data/products.json and the sources register.",
+      "status": "published",
+      "chosen_from": "editorial hypothesis — the thermometer cluster's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0DHZTCNR5",
+        "https://www.amazon.com/dp/B0DZFD6R9Z",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ],
+      "published_as": "guides/one-second-or-all-night.html",
+      "note": "The question this topic describes is already answered live by \"One second or all night\". Marked published rather than planned after re-reading the guides register."
+    },
+    {
+      "id": "TP-15",
+      "title": "What the Amazon page does and does not tell you about a spec",
+      "cluster": "Cross-cluster",
+      "season": "Everyday",
+      "question": "If two numbers on the same listing disagree, which one is the product?",
+      "why": "This session re-read all five listings and found four internal contradictions (FLG-005, FLG-010, FLG-018, FLG-020) plus a fallback-route quirk (FLG-029). A guide that teaches a reader how to read the detail table would make every other page more useful.",
+      "needs": "The recorded contradictions already in data/flags.json; no new sources beyond a normal-browser re-read of the five listings.",
+      "status": "planned",
+      "chosen_from": "verification finding — FLG-029 and the four listing contradictions recorded in this repo, not a measured query",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
+      ]
+    },
+    {
+      "id": "TP-16",
+      "title": "Thanksgiving math: what fits in each fryer, and what temperature does the food need?",
+      "cluster": "Cross-cluster",
+      "season": "Thanksgiving → Christmas",
+      "question": "Can the machine I have handle the holiday spread, and how do I know the food is done?",
+      "why": "The three fryers' listed capacities (two 3-qt baskets, one 8-qt basket, a 26-qt oven) answer the size question from data this site already holds, and the temperature question has one authoritative answer (USDA FSIS). The two thermometers in the shop are the tools for checking it — a cross-cluster question neither category page answers alone.",
+      "needs": "Listed capacities from data/products.json (already captured), USDA FSIS temperatures quoted from S16/S17 only — re-check those sources before publishing (SG-41). No new sources required.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — the calendar season and this shop's own cross-cluster gap; no measured query data exists yet (Search Console pending, SG-29)",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"
+      ]
+    },
+    {
+      "id": "TP-17",
+      "title": "Game day, two baskets, one kickoff: what can actually finish together?",
+      "cluster": "Air Fryers",
+      "season": "Winter (game day)",
+      "question": "How do I cook two things at once and have them land on the table at the same time?",
+      "why": "The dual-basket listing names two independent 3-quart baskets with a Sync Finish so both baskets can finish together; the single-basket 8-quart carries no such claim. That is a gathering question the listings answer without opinions.",
+      "needs": "Listed Sync Finish description and basket counts (already captured for B0CDY277D3 and B08DKYBTPH). No cook times may be invented.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — seasonal calendar (winter gatherings); no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH"
+      ]
+    },
+    {
+      "id": "TP-18",
+      "title": "New Year's honest question: which machine earns its counter space all year?",
+      "cluster": "Cross-cluster",
+      "season": "New Year",
+      "question": "After the holiday rush, what do I actually keep out on the counter?",
+      "why": "The listed footprints differ by nearly a factor of two between the basket fryers and the 26-qt oven (13.38\"D x 11.81\"W x 10.63\"H vs 16.9\"D x 15.8\"W x 14.8\"H), and the listed weights range 12.8-26.5 lb. The cleanup guide covers dishwasher-safe parts; the seasonal framing is the New Year habit of clearing the counter — the deciding numbers are the same listed specs.",
+      "needs": "Listed dimensions and weights (already in data/products.json). Nothing new; the keep-or-store judgement stays the reader's.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — calendar season (New Year decluttering); no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-19",
+      "title": "Will it actually fit on my counter?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Before you order, what do you have to measure — and what can the listing tell you?",
+      "why": "Two of the three fryers in the shop are bigger than a reader expects (13.4 and 16.9 inches deep), and the biggest is 26.5 lb. A wrong fit is the most common way an appliance goes back.",
+      "needs": "Listed dimensions and weights already in data/products.json, each re-confirmed against the live listing (S24, S25, S28). No new sources were needed, and no clearance figure was invented: the guide tells the reader which number to ask the manufacturer for.",
+      "status": "published",
+      "published_as": "guides/counter-fit-before-you-order.html",
+      "chosen_from": "verification finding — the 2026-11-20 listing re-read put three different footprint shapes in front of us, and the existing cleanup guide already promised a counter-space answer without the measurements page",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.amazon.com/dp/B08DKYBTPH"
+      ],
+      "_note": "Added as TP-19: main had already taken TP-15..TP-18 for its own backlog rows on 2026-11-20 (a third renumbering the same day)."
+    }
+  ]
 }
