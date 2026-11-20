@@ -13,7 +13,12 @@
       "needs": "Listed cavity size, listed functions, listed capacity for each of the three air fryers (already in data/products.json). No new sources required.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — the brief's 'basket or oven-style' question is the site's own framing; no measured query data exists yet",
-      "priority": "high"
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
     },
     {
       "id": "TP-02",
@@ -25,7 +30,12 @@
       "needs": "Listed capacities (6 Qt / two 3-Qt baskets, 8 quarts, 26 Qt = 24.6 L) plus the listing's own serving claim. USDA MyPlate serving guidance would be the neutral yardstick for portions if it is cited per row.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — pairs with the published capacity checklist; no measured query data exists yet",
-      "priority": "high"
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
     },
     {
       "id": "TP-03",
@@ -37,7 +47,11 @@
       "needs": "The listing bullets for B09B7SB46R (already captured) and the USDA FSIS whole-poultry guidance for the temperature side.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — seasonal cluster already used by the holiday guide; no measured query data exists yet",
-      "priority": "medium"
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ]
     },
     {
       "id": "TP-04",
@@ -49,7 +63,11 @@
       "needs": "Listed special features and preset names per listing. Any cook time would need a manufacturer source — no cook times may be invented.",
       "status": "planned",
       "chosen_from": "editorial hypothesis; no measured query data exists yet",
-      "priority": "medium"
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
     },
     {
       "id": "TP-05",
@@ -61,7 +79,10 @@
       "needs": "A manufacturer page for the 4-00675-02X-VN model, which would also settle the model string itself.",
       "status": "blocked",
       "chosen_from": "editorial hypothesis — raised by the third-pass verification (FLG-010, FLG-017), not by a measured query",
-      "priority": "medium"
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
     },
     {
       "id": "TP-06",
@@ -73,7 +94,11 @@
       "needs": "USDA FSIS Food Thermometers page (S17) — already cited in the published probe guide; would need a cooking-technique section with per-step citations.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
-      "priority": "high"
+      "priority": "high",
+      "source": [
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+        "https://www.amazon.com/dp/B0DHZTCNR5"
+      ]
     },
     {
       "id": "TP-07",
@@ -85,7 +110,11 @@
       "needs": "USDA FSIS guidance for the check points, the CHEF iQ probe count, and the instant-read's role as the spot-check tool.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — completes the 'Cooking for a crowd' guide cluster; no measured query data exists yet",
-      "priority": "medium"
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0DZFD6R9Z",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
+      ]
     },
     {
       "id": "TP-08",
@@ -97,7 +126,10 @@
       "needs": "The listing's certification claim, and — if the owner wants to go further — a manufacturer calibration page. No claim about this site's own measurements is possible: nobody here has tested a probe.",
       "status": "planned",
       "chosen_from": "editorial hypothesis; no measured query data exists yet",
-      "priority": "medium"
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0DHZTCNR5"
+      ]
     },
     {
       "id": "TP-09",
@@ -109,7 +141,10 @@
       "needs": "Listing wording on probe heat limits and any cable rating the manufacturer publishes. No clearance measurement may be claimed without a source.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — cross-links the thermometer and air-fryer clusters; no measured query data exists yet",
-      "priority": "medium"
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0DZFD6R9Z"
+      ]
     },
     {
       "id": "TP-10",
@@ -121,7 +156,12 @@
       "needs": "The specs already verified in data/products.json. No new sources, no opinions, no ranking.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — the natural top-of-funnel page for a first-time buyer; no measured query data exists yet",
-      "priority": "high"
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
     },
     {
       "id": "TP-11",
@@ -133,7 +173,11 @@
       "needs": "USDA FSIS statement that a food thermometer is the only reliable way to confirm safe internal temperature (S17), plus the listed capacities for each fryer.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — the natural 'which one first' question for a two-category shop; no measured query data exists yet",
-      "priority": "medium"
+      "priority": "medium",
+      "source": [
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+        "https://www.amazon.com/dp/B0CDY277D3"
+      ]
     },
     {
       "id": "TP-12",
@@ -145,7 +189,12 @@
       "needs": "A manufacturer noise specification if one exists; otherwise the page becomes a 'what to look for and what we cannot tell you' page. Either way, no decibel number may be invented.",
       "status": "planned",
       "chosen_from": "editorial hypothesis — included deliberately because it may have no answer, which is a legitimate published outcome",
-      "priority": "low"
+      "priority": "low",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
     }
   ]
 }

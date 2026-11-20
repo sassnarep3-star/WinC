@@ -370,6 +370,25 @@ if "the shop" not in idx_text.lower():
     fail("index.html: front page no longer shows the shop")
 
 
+# --- every register row must carry an official source link (or say why not) ---
+REGISTER_PAGES = ["questions.html", "topics.html", "flagged-for-review.html", "products/index.html"]
+for hf in REGISTER_PAGES:
+    if not os.path.exists(os.path.join(ROOT, hf)):
+        fail(f"{hf}: register page missing")
+        continue
+    content = read(hf)
+    for m in re.finditer(r"(?s)<tr[^>]*>(.*?)</tr>", content):
+        row = m.group(1)
+        if "<td" not in row:
+            continue  # header row
+        has_source = ('href="https://' in row) or ('href="verification.html#src-' in row)
+        if not has_source and "Internal only" not in row:
+            fail(f"{hf}: a table row carries no official source link and no 'internal only' note")
+    # and the page must point at the source register
+    if 'href="https://' not in content and 'href="verification.html#src-' not in content:
+        fail(f"{hf}: register page links to no source at all")
+
+
 if errors:
     print(f"FAIL ({len(errors)} violations):")
     for e in errors:

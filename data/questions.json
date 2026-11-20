@@ -12,7 +12,12 @@
       "blocking": "yes — blocks scaling and any claim of monetisation",
       "discovery": "Associates Central → account settings → Manage your Tracking IDs: confirm shopnow047c exists and amazon.com site list includes the Pages domain. Screenshot the row, store the date, set confirmation_date in data/products.json.",
       "owner": "Account owner only",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S06",
+        "S20"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-02",
@@ -23,7 +28,12 @@
       "blocking": "yes — blocks filling intended_asin, intended_listing_url and confirmation_date",
       "discovery": "Ask the supplier for the ten-character ASIN or the full amazon.com/dp/… URL per product. If unavailable, confirm by matching each product to the campaign the links came from. Do not accept 'it redirects there, so it is that product' as an answer.",
       "owner": "Brief author / campaign owner",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S15",
+        "S22"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-03",
@@ -35,7 +45,12 @@
       "blocking": "no — current handling is already the safe one",
       "discovery": "Associates Central → Help → link formats / Special Links; or open a support ticket quoting the exact URL form and asking whether it is permitted and whether the tag survives. Paste the reply into the flagged page.",
       "owner": "Account owner only",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S01",
+        "S02"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-04",
@@ -46,7 +61,11 @@
       "blocking": "yes — blocks Priority 4 (the campaign ledger cannot be reasoned about without a rate)",
       "discovery": "Associates Central → Reports → Income Accounting Rate Card, plus the Program Policies earnings statement. Record rate, effective date and a screenshot path in data/campaign-ledger.json's provenance block.",
       "owner": "Account owner only",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S02"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-05",
@@ -57,7 +76,14 @@
       "blocking": "no — cells are blank or dual-reported, never guessed",
       "discovery": "Chefman, Emeril Table Top and ThermoMaven product/support pages: find the model-specific spec sheet, record URL + retrieval date in data/sources.json, then re-render the table showing both values where they still disagree.",
       "owner": "Any session with a browser",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S10",
+        "S11",
+        "S12",
+        "S23"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-15",
@@ -68,7 +94,15 @@
       "blocking": "no",
       "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
       "owner": "Any session with a browser",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-16",
@@ -79,7 +113,12 @@
       "blocking": "yes — blocks scaling links, together with Q-01 and Q-03",
       "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
       "owner": "Account owner only",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S06",
+        "S20"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-06",
@@ -90,7 +129,9 @@
       "blocking": "yes — blocks any E-E-A-T improvement and any future 'tested' claim",
       "discovery": "Owner decides and supplies it; then create data/authors.json and re-render bylines. If the owner prefers anonymity, record that as a policy in Editorial so 'no testing claims' stays true forever.",
       "owner": "Owner decision",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-07",
@@ -101,7 +142,9 @@
       "blocking": "no — current labelling is honest",
       "discovery": "Either buy the item and photograph it (which also finally permits a testing claim, with dates and observations), or license stock that is not brand-identifying, or keep the illustration policy as-is and accept a lower-converting page.",
       "owner": "Owner (budget decision)",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-08",
@@ -112,7 +155,9 @@
       "blocking": "no — but it blocks every optimisation decision, which is most of them",
       "discovery": "Deploy analytics/worker.js, set the endpoint, submit the site to Search Console, then fill data/campaign-ledger.json only from timestamped first-party exports.",
       "owner": "Any session + owner for the host",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-09",
@@ -123,7 +168,11 @@
       "blocking": "no — but a missing imprint is the kind of thing that gets noticed by the wrong person",
       "discovery": "Owner supplies entity + contact. Then a short review against EU consumer-information rules for a commercial site targeting NL/EU readers — this site makes no claim to have done that legal review, and should not pretend to.",
       "owner": "Owner + a real lawyer if scaled",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S03"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-10",
@@ -134,7 +183,9 @@
       "blocking": "no — but it should be decided before a lot of content is written",
       "discovery": "Owner picks the primary audience. If non-US matters: check Associates enrolment for each marketplace, then evaluate OneLink routing before writing anything translated.",
       "owner": "Owner decision",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-11",
@@ -145,7 +196,12 @@
       "blocking": "no — current setup works and is documented",
       "discovery": "If Actions is enabled later: switch Pages to the Actions build type in the same change that adds the workflow, or Pages will keep serving main's committed files and confuse everyone.",
       "owner": "Owner (repo admin)",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S08",
+        "S21"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-12",
@@ -157,7 +213,9 @@
       "blocking": "no",
       "discovery": "Set the rate at whatever survives the owner's calendar — one guide per week is realistic only if the file-drop workflow is used. Keep a backlog in data/questions.json answers, then promote answered questions into guide titles.",
       "owner": "Owner decision",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-13",
@@ -168,7 +226,11 @@
       "blocking": "no — the blank-and-labelled approach is compliant today",
       "discovery": "Check Creators API status in Associates Central. If granted: fetch at render/build time with a timestamp shown next to the number and an expiry rule; if not granted, leave prices off the page permanently.",
       "owner": "Account owner only",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S02"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-14",
@@ -179,7 +241,9 @@
       "blocking": "no",
       "discovery": "Work them in this order: Q-01 (tracking ID), Q-04 (rates), Q-02 (intent), then specs. Each answer should be pasted into the same page next to the flag so the next session inherits the fact, not the guess.",
       "owner": "Owner + next session",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-17",
@@ -190,7 +254,9 @@
       "blocking": "no — but every 'how we would know it worked' line in the suggestions register is a hypothesis until this is answered",
       "discovery": "Owner writes one sentence: the outcome that matters, the number that represents it, and the date the window closes. Put it in this row's answer field and in EXECUTIVE-SUMMARY.md. If the number must come from Amazon, use the Associates Reports link and record the report date.",
       "owner": "Account owner",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-18",
@@ -201,7 +267,9 @@
       "blocking": "no — but it changes the shape of every content plan and it is cheaper to decide before the next ten guides",
       "discovery": "Owner picks one: (a) five products, deep coverage; (b) widen to a category, with each addition needing its own intent record, spec read and source link; (c) widen only if a measured query shows a gap. Record the choice in this row's answer field.",
       "owner": "Account owner",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-19",
@@ -212,7 +280,15 @@
       "blocking": "no — the current rule (show both, flag it) is the safe one",
       "discovery": "Owner confirms the precedence rule (manufacturer page over listing is the usual choice, but it needs saying out loud) and names who resolves rows. Add the rule to the About page's method list and the answer field here.",
       "owner": "Account owner",
-      "answer": ""
+      "answer": "",
+      "sources": [
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "source_note": ""
     },
     {
       "id": "Q-20",
@@ -223,7 +299,9 @@
       "blocking": "no — but a seasonal site has a deadline that a backlog does not show on its own",
       "discovery": "Owner names the lead season and the publish date for the first cluster item. The topics page already carries a season field per topic, so the decision becomes a priority order rather than new work.",
       "owner": "Account owner",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     },
     {
       "id": "Q-21",
@@ -234,7 +312,9 @@
       "blocking": "no — but until it is answered the capture block can only promise what it already does",
       "discovery": "Owner picks a provider that supports a confirmed-consent flow (the address is only usable after the reader confirms it) and exports its list, writes the retention rule (for example: delete after 12 months of inactivity), and adds a matching line to the About and Disclosure pages. Until then the copy stays as it is now: a local count and nothing more.",
       "owner": "Account owner",
-      "answer": ""
+      "answer": "",
+      "sources": [],
+      "source_note": "Internal only — this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
     }
   ]
 }

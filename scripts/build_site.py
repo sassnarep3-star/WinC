@@ -261,6 +261,15 @@ def guide_card(g, depth=0):
 <p class="meta">{esc(g['published'])} · {read_min(g)} min read · {esc(g.get('season', 'Everyday'))}</p>
 </article>'''
 
+def link_source_ids(text, prefix="", suffix=""):
+    """Turn (S05)-style references into links to the source register anchor."""
+    def repl(m):
+        sid = m.group(1)
+        if sid not in SRC:
+            return m.group(0)
+        return (f'<a href="{prefix}verification.html#src-{sid}">({sid})</a>')
+    return re.sub(r"\((S\d{2})\)", repl, text)
+
 def source_link(url, label):
     """Evidence citation. Deliberately NOT an affiliate link: no tag, nofollow."""
     return f'<a class="srclink" href="{esc(url)}" rel="nofollow noopener" target="_blank">{esc(label)}</a>'
@@ -693,7 +702,7 @@ def verification_body():
                         + "".join(specs_rows) + "</tbody></table></div>")
 
     src_rows = "".join(
-        f"<tr><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
+        f"<tr id='src-{esc(s['id'])}'><td>{esc(s['id'])}</td><td>{esc(s['title'])}<br><a class='src' href='{esc(s['url'])}' rel='nofollow noopener' target='_blank'>{esc(s['url'])}</a></td><td>{esc(s['what'])}</td><td>{esc(s['date'])}</td></tr>"
         for s in SOURCES)
     src_table = ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Source</th><th>What was verified</th><th>Date</th></tr></thead><tbody>'
                  + src_table_rows(src_rows) + "</tbody></table></div>")
@@ -746,16 +755,29 @@ def src_table_rows(rows):
     return rows
 
 # ---------- FLAGGED ----------
+def flag_sources(f):
+    """Official sources cited by a flag, linked into the source register."""
+    ids = f.get("sources") or []
+    if not ids:
+        return '<span class="meta">' + esc(f.get("source_note") or "Internal only — no external source applies.") + "</span>"
+    links = " ".join(
+        f'<a href="verification.html#src-{sid}">{sid}</a>' for sid in ids if sid in SRC)
+    extra = " ".join(f'<a href="{esc(u)}" rel="nofollow noopener" target="_blank">{esc(u)}</a>'
+                     for u in f.get("source_urls") or [])
+    return (links + " " + extra).strip()
+
 def flagged_body():
     rows = "".join(
-        f"<tr><td><strong>{esc(f['id'])}</strong></td><td>{esc(f['title'])}</td><td>{esc(f['detail'])}</td><td>{esc(f['action'])}</td><td><span class='flagpill'>{esc(f['status'])}</span></td></tr>"
+        f"<tr><td><strong>{esc(f['id'])}</strong></td><td>{esc(f['title'])}</td><td>{esc(f['detail'])}</td>"
+        f"<td>{esc(f['action'])}</td><td>{flag_sources(f)}</td>"
+        f"<td><span class='flagpill'>{esc(f['status'])}</span></td></tr>"
         for f in FLAGS)
     return f"""
 <section class="hero"><span class="kicker">Flagged for Review · Needs review</span>
 <h1>Flagged for Review: what we could not verify</h1>
 <p class="lede">These items do not block the site. They are published here so you can review them after the site is live and request changes. Nothing flagged is presented as fact elsewhere.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
-<div class="tablewrap"><table><thead><tr><th>ID</th><th>Issue</th><th>Detail</th><th>Action to resolve</th><th>Status</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Issue</th><th>Detail</th><th>Action to resolve</th><th>Official sources</th><th>Status</th></tr></thead><tbody>{rows}</tbody></table></div>
 <div class="notice"><strong>What “needs review” means:</strong> the site works without these answers, but the flagged facts stay blank or pending until the action is done. Request changes via the <a href="direction.html">Direction</a> page or a new issue.</div>
 {capture_block()}
 """
@@ -993,6 +1015,12 @@ def products_index_body():
 {capture_block(depth=1)}
 """
 
+def question_sources(q):
+    ids = q.get("sources") or []
+    if not ids:
+        return '<span class="meta">' + esc(q.get("source_note") or "Internal only — no external source applies.") + "</span>"
+    return " ".join(f'<a href="verification.html#src-{sid}">{sid}</a>' for sid in ids if sid in SRC)
+
 def questions_body():
     c = counts()
     rows = ""
@@ -1001,8 +1029,9 @@ def questions_body():
         kind = "act" if bl.startswith("yes") else "note"
         rows += (f'<tr><td><strong>{esc(q["id"])}</strong><br>{pill("blocking" if bl.startswith("yes") else "non-blocking", kind)}</td>'
                  f'<td><strong>{esc(q["question"])}</strong><p class="meta">Gates: {esc(q["decision_it_gates"])}</p></td>'
-                 f'<td>{esc(q["have"])}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
-                 f'<td>{esc(q["owner"])}</td><td class="answercell">{blank(q["answer"])}</td></tr>')
+                 f'<td>{link_source_ids(esc(q["have"]))}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
+                 f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}</td>'
+                 f'<td class="answercell">{blank(q["answer"])}</td></tr>')
     pack = "\n\n".join(f'{q["id"]}. {q["question"]}\nWhat we need: {q["missing"]}\nHow to get it: {q["discovery"]}'
                         for q in QUESTIONS if q.get("blocking", "no").startswith("yes"))
     return f"""
@@ -1011,7 +1040,7 @@ def questions_body():
 <p class="lede">Not a to-do list — a register. Each row states what we already know and can cite, what is genuinely missing, which decision that gap blocks, and the concrete action that produces the answer. A blank answer cell means nobody has it yet, not that we skipped it.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · evidence in <a href="verification.html">the source register</a>, consequences in <a href="flagged-for-review.html">Flagged for review</a></p></section>
 <div class="notice"><strong>Read it this way:</strong> the {c['blocking']} blocking rows are worth more than any content decision. Four of them — Q-01, Q-02, Q-04 and Q-16 — can only be answered inside an enrolled Amazon Associates account, which this environment cannot reach. That is a fact about the tooling, not an excuse, and it is why the site ships with links gated rather than links guessed. When you have an answer, paste it into <code>answer</code> in <code>data/questions.json</code>: the table updates on the next build, and the matching flag closes.</div>
-<div class="tablewrap"><table class="qtable"><thead><tr><th>ID</th><th>Question</th><th>What we have (and its source)</th><th>What we do not have</th><th>How to discover it</th><th>Who can answer</th><th>Answer</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="tablewrap"><table class="qtable"><thead><tr><th>ID</th><th>Question</th><th>What we have (and its source)</th><th>What we do not have</th><th>How to discover it</th><th>Who can answer</th><th>Official sources</th><th>Answer</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>Copy-ready question pack</h2>
 <p>The blocking rows, as a message you can send to whoever owns the account.</p>
 <pre><code>{esc(pack)}</code></pre>
@@ -1046,6 +1075,12 @@ def probes_section():
 """
 
 # ---------- TOPICS (backlog) ----------
+def topic_sources(t):
+    urls = t.get("source") or []
+    if not urls:
+        return '<span class="meta">— none yet</span>'
+    return " ".join(f'<a href="{esc(u)}" rel="nofollow noopener" target="_blank">{esc(u.split("/dp/")[-1] if "/dp/" in u else u)}</a>' for u in urls)
+
 def topics_body():
     rows = ""
     for t in TOPICS:
@@ -1055,6 +1090,7 @@ def topics_body():
                  f'<td><strong>{esc(t["title"])}</strong><p class="meta">{esc(t["question"])}</p></td>'
                  f'<td>{esc(t["cluster"])}</td><td>{esc(t.get("season", "Everyday"))}</td>'
                  f'<td>{esc(t["why"])}</td><td>{esc(t["needs"])}</td>'
+                 f'<td>{topic_sources(t)}</td>'
                  f'<td>{esc(t["chosen_from"])}</td>'
                  f'<td><span class="{cls}">{esc(status)}</span></td></tr>')
     published = "".join(f'<li><a href="{g["path"]}">{esc(g["title"])}</a> <span class="meta">({esc(g.get("cluster",""))})</span></li>'
@@ -1065,7 +1101,7 @@ def topics_body():
 <p class="lede">Every guide on this site starts as a question someone would actually type. This page shows the questions still to write, what each one would need, and — in plain words — whether the topic came from an editorial hunch or from a measured query.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
 <div class="notice"><strong>Read the “chosen from” column before treating a title as evidence of demand.</strong> No Search Console property exists for this site yet, so no topic on this list is chosen from measured queries. They are editorial hypotheses: plausible questions, not popularity claims. When the analytics endpoint and the Search Console property exist, this column is where a measured query replaces a hunch — and the gate fails if a topic ever claims measured demand without a recorded source.</div>
-<div class="tablewrap"><table><thead><tr><th>ID</th><th>Topic (the question)</th><th>Cluster</th><th>Season</th><th>Why it earns a page</th><th>What it would need</th><th>Chosen from</th><th>Status</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Topic (the question)</th><th>Cluster</th><th>Season</th><th>Why it earns a page</th><th>What it would need</th><th>Official sources</th><th>Chosen from</th><th>Status</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>Already published</h2>
 <ul>{published}</ul>
 <p class="seclink"><a class="btn btn-quiet" href="guides/index.html">Read the guides →</a> <a class="btn btn-quiet" href="direction.html">Suggest a different topic →</a></p>
