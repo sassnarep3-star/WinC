@@ -35,7 +35,7 @@
 
 ## PR / merge record
 
-- 2026-11-20 — arena/a42979d2-winc (T07 integration): build + gate green (27 pages, 26 sitemap URLs, 6 guides, 23 search rows; check_site: OK, no violations). Live Pages: https://sassnarep3-star.github.io/WinC/. PR to main opened from this branch; merge result and Pages confirmation recorded below once complete.
+- 2026-11-20 — arena/a42979d2-winc (T07 integration): build + gate green (27 pages, 26 sitemap URLs, 6 guides, 23 search rows; check_site: OK, no violations). Live Pages: https://sassnarep3-star.github.io/WinC/. PR #19 https://github.com/sassnarep3-star/WinC/pull/19 (arena/a42979d2-winc → main), `gh pr merge 19 --merge` → merged, merge commit ddbfc531e0592cd7bd4ae13c5cc50a04e2adb2c2. Pages build #1386264636 for commit ddbfc53: status built, error null, updated 2026-11-20T06:23:08Z. Site live: https://sassnarep3-star.github.io/WinC/. T07 complete.
 
 ## Session 9471c338 (merged via PR #1, archived 2026-11-20)
 
@@ -447,6 +447,11 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 - `data/flags.json`: kept `main`'s FLG-018–FLG-024; appended this session's title-drift flag as
   **FLG-025** (renumbered to avoid collision).
 - All generated HTML/feed/search-index regenerated from the combined data via `scripts/build_site.py`.
+- **Post-merge correction:** the second rebase's flag merge briefly duplicated the ThermoMaven
+  flag as FLG-025 and dropped this session's title-drift flag (a `next()` selector matched
+  FLG-015 instead of the title-drift entry). Fixed in a follow-up commit: the title-drift finding
+  is restored as **FLG-025**, and the duplicate ThermoMaven flag removed (ThermoMaven remains at
+  FLG-004 and FLG-015 only). Gate re-run green.
 
 ## PR / merge record (T07)
 
