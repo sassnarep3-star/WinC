@@ -29,7 +29,7 @@
         "matches_first_observation": true,
         "matches_second_observation": true
       },
-      "fourth_observation": {
+      "fifth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -65,7 +65,7 @@
         "matches_first_observation": true,
         "matches_second_observation": true
       },
-      "fourth_observation": {
+      "fifth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -101,7 +101,7 @@
         "matches_first_observation": true,
         "matches_second_observation": true
       },
-      "fourth_observation": {
+      "fifth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -137,7 +137,7 @@
         "matches_first_observation": true,
         "matches_second_observation": true
       },
-      "fourth_observation": {
+      "fifth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -174,7 +174,7 @@
         "matches_first_observation": true,
         "matches_second_observation": true
       },
-      "fourth_observation": {
+      "fifth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "B0DZFD6R9Z",
@@ -183,18 +183,126 @@
         "matched_prior": true,
         "note": "Matches the first three observations, including lv=shuf + plpRedirect=mhFallback flags."
       }
+    },
+    {
+      "submitted_url": "https://link.amazon/B04G1MEwY",
+      "submitted_token": "B04G1MEwY",
+      "token_chars": 9,
+      "token_lowercase_letters": "w",
+      "session": "arena-c2123b9c",
+      "date": "2026-11-20",
+      "observation": 4,
+      "http_result": "redirect followed",
+      "final_asin": "B0CDY277D3",
+      "final_url": "https://www.amazon.com/dp/B0CDY277D3?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-6ac5c55694dd065d&channelId=704&plpRedirect=mhFallback",
+      "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen",
+      "observed_flags": [
+        "lv=shuf",
+        "plpRedirect=mhFallback",
+        "channelId=704"
+      ],
+      "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
+      "agrees_with_prior_session": true
+    },
+    {
+      "submitted_url": "https://link.amazon/B02NbDxp3",
+      "submitted_token": "B02NbDxp3",
+      "token_chars": 9,
+      "token_lowercase_letters": "b",
+      "session": "arena-c2123b9c",
+      "date": "2026-11-20",
+      "observation": 4,
+      "http_result": "redirect followed",
+      "final_asin": "B09B7SB46R",
+      "final_url": "https://www.amazon.com/dp/B09B7SB46R?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-039a25afc55ea595&channelId=704&plpRedirect=mhFallback",
+      "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included : Home & Kitchen",
+      "observed_flags": [
+        "lv=shuf",
+        "plpRedirect=mhFallback",
+        "channelId=704"
+      ],
+      "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
+      "agrees_with_prior_session": true,
+      "note": "Title still reads 'Six Cooking Accessories Included' while captured bullet copy says 7 accessories - FLG-010 stands on a third capture."
+    },
+    {
+      "submitted_url": "https://link.amazon/B00hJ57DV",
+      "submitted_token": "B00hJ57DV",
+      "token_chars": 9,
+      "token_lowercase_letters": "h",
+      "session": "arena-c2123b9c",
+      "date": "2026-11-20",
+      "observation": 4,
+      "http_result": "redirect followed",
+      "final_asin": "B08DKYBTPH",
+      "final_url": "https://www.amazon.com/dp/B08DKYBTPH?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-5756d38428f77669&channelId=704&plpRedirect=mhFallback&th=1",
+      "final_title": "Amazon.com: Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel : Home & Kitchen",
+      "observed_flags": [
+        "lv=shuf",
+        "plpRedirect=mhFallback",
+        "channelId=704",
+        "th=1"
+      ],
+      "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
+      "agrees_with_prior_session": true,
+      "note": "Listing <title> again shows 'TurboFry® 4-in-1 ... 450°F Hi-Fry ... XL Nonstick Dishwasher-Safe Basket' against captured 200-400°F copy - FLG-005 stands on a third capture."
+    },
+    {
+      "submitted_url": "https://link.amazon/B0c8moW59",
+      "submitted_token": "B0c8moW59",
+      "token_chars": 9,
+      "token_lowercase_letters": "c",
+      "session": "arena-c2123b9c",
+      "date": "2026-11-20",
+      "observation": 4,
+      "http_result": "redirect followed",
+      "final_asin": "B0DHZTCNR5",
+      "final_url": "https://www.amazon.com/dp/B0DHZTCNR5?lv=shuf&btn_type=ss&gaOptInStatus=true&_encoding=UTF8&sp_csd=d2lkZ2V0TmFtZT1zcF9waG9uZV9ob21lcGFnZV9ibGVuZGVk&language=en_US&content-id=amzn1.sym.4582c56b-139d-4168-9db2-822c68889360&ie=UTF8&btn_ref=srctok-746a9d4ac23b0098&channelId=500&plpRedirect=mhFallback",
+      "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black : Home & Kitchen",
+      "observed_flags": [
+        "lv=shuf",
+        "plpRedirect=mhFallback",
+        "channelId=500"
+      ],
+      "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
+      "agrees_with_prior_session": true,
+      "note": "Fifth consecutive landing on B0DHZTCNR5 (weakens FLG-004 further; does not settle canonicality - fallback route, FLG-009). Listing <title> wording rotated again ('IP67 Waterproof ... Stocking Stuffers Gifts for Men' vs the captured 'Highly Waterproof for Grill BBQ Camping') - seller copy rotates between captures; consistent with FLG-014."
+    },
+    {
+      "submitted_url": "https://link.amazon/B0f3GKalj",
+      "submitted_token": "B0f3GKalj",
+      "token_chars": 9,
+      "token_lowercase_letters": "f",
+      "session": "arena-c2123b9c",
+      "date": "2026-11-20",
+      "observation": 4,
+      "http_result": "redirect followed",
+      "final_asin": "B0DZFD6R9Z",
+      "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5cc162659fe052bf&channelId=500&plpRedirect=mhFallback&th=1",
+      "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
+      "observed_flags": [
+        "lv=shuf",
+        "plpRedirect=mhFallback",
+        "channelId=500",
+        "th=1"
+      ],
+      "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
+      "agrees_with_prior_session": true,
+      "note": "Carousel shows sibling variants (2-probe Gen3 B0FXBQ3KX1, USA-250 edition B0H2JP9YDM); the observed target remains the 3-probe Gen3 title. Variants recorded to show the listing family is active."
     }
   ],
   "interpretation": {
-    "reproduced": "All five mappings were observed live on three separate occasions (2026-11-17 in the prior sessions, and twice on 2026-11-20 by sessions arena-23d7ed19 and arena-82d39deb), each agreeing 5/5 — so FLG-008 stayed closed and the observed_* fields rest on three matching observations rather than single-session noise. A fourth re-resolution on 2026-11-20 by session arena-9a3bb152 matched only 1 of 5: B0f3GKalj reproduced its recorded target, while the other four tokens landed on the Amazon homepage. That divergence is published as FLG-026 with the action that would settle it; it does not by itself invalidate any link (FLG-003).",
+    "reproduced": "Five observations of the five supplied links are recorded: 2026-11-17 (prior sessions), 2026-11-20 by arena-23d7ed19, 2026-11-20 by arena-82d39deb, 2026-11-20 by arena-c2123b9c (S29, 5/5 matched) and 2026-11-20 by arena-9a3bb152 (1/5 matched — the other four tokens landed on the Amazon homepage; FLG-026). Four of five runs agree 5/5 with the recorded mapping; the observed_* fields rest on those runs, and the divergent run is published rather than dropped. FLG-008 stays closed: no run contradicted a previously recorded target, one run simply failed to reproduce it from that client.",
     "what_reproduction_does_not_prove": "Every final URL in the first three observations carried lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback). That is a fallback route, not a canonical resolution of the submitted token. The targets were stable per token across the first three observations, so they are a usable observation — but they do not confirm that the person who supplied the links intended these five products, and the fourth observation shows the behavior can differ from one run to the next. Intended fields therefore stay blank.",
-    "operational_consequence": "Keep publishing without reader links until the Associates one-link test (FLG-002) confirms destination and tracking report. If the owner confirms the five products are the intended ones, nothing about the pages changes except the intended_* fields and confirmation_date. Third observation also re-read each listing's product-details table: one recorded row was wrong (the 8-quart Chefman's wattage — FLG-022, corrected) and four listing-internal contradictions were confirmed (FLG-005, FLG-010, FLG-018, FLG-020). Fourth observation (FLG-026): destination must be re-checked from a normal browser and inside the enrolled Associates workflow test (FLG-002) before any short link is used at scale."
+    "operational_consequence": "Keep publishing without reader links until the Associates one-link test (FLG-002) confirms destination and tracking report. If the owner confirms the five products are the intended ones, nothing about the pages changes except the intended_* fields and confirmation_date. Third observation also re-read each listing's product-details table: one recorded row was wrong (the 8-quart Chefman's wattage — FLG-022, corrected) and four listing-internal contradictions were confirmed (FLG-005, FLG-010, FLG-018, FLG-020). Fifth recorded observation (FLG-026): destination must be re-checked from a normal browser and inside the enrolled Associates workflow test (FLG-002) before any short link is used at scale."
   },
   "probe_dates": [
     "2026-11-17 (prior sessions)",
     "2026-11-20 (arena-23d7ed19)",
     "2026-11-20 (arena-82d39deb)",
-    "2026-11-20 (arena-9a3bb152, fourth observation: 1/5 matched, see FLG-026)"
+    "2026-11-20 observation #4: arena-c2123b9c",
+    "2026-11-20 observation #5: arena-9a3bb152 (1/5 matched — homepage divergence, FLG-026)"
   ],
-  "fourth_observation_note": "Fourth re-resolution, 2026-11-20, session arena-9a3bb152: 1 of 5 matched the recorded mapping (B0f3GKalj → B0DZFD6R9Z). The other four tokens landed on the Amazon homepage rather than the recorded /dp/ targets. The first three observations (2026-11-17 and twice on 2026-11-20) agreed 5/5. Divergence is published as FLG-026 with the re-check action; no link is claimed invalid (FLG-003), and intended_* fields stay blank."
+  "probe4_note": "Fourth independent observation (session arena-c2123b9c, 2026-11-20), via live HTTP resolution through the fetch_page reader, same method as observations #2 and #3. All five mappings reproduced 5/5 again. Per-row 'session'/'date'/'observation' fields mark which observation produced the row (rows without them are observation #3 by arena-82d39deb). Channel IDs varied (704/704/704/500/500) and two rows carried th=1 - recorded verbatim. Every row still carries lv=shuf and plpRedirect=mhFallback, so FLG-009's fallback-route reading stands. New per-listing observations: the Emeril <title> still says 'Six Cooking Accessories' (FLG-010 on a third capture); the Chefman 8 Qt <title> still shows the 450F Hi-Fry wording against captured 200-400F copy (FLG-005); the ThermoMaven <title> wording rotated again (consistent with FLG-014). Provenance row: S29.",
+  "fifth_observation_note": "Fourth re-resolution, 2026-11-20, session arena-9a3bb152: 1 of 5 matched the recorded mapping (B0f3GKalj → B0DZFD6R9Z). The other four tokens landed on the Amazon homepage rather than the recorded /dp/ targets. The first three observations (2026-11-17 and twice on 2026-11-20) agreed 5/5. Divergence is published as FLG-026 with the re-check action; no link is claimed invalid (FLG-003), and intended_* fields stay blank."
 }

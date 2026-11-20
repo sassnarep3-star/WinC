@@ -247,12 +247,12 @@
     },
     {
       "id": "FLG-026",
-      "title": "Fourth probe observation matched only 1 of 5: four supplied tokens landed on the Amazon homepage",
+      "title": "Fifth recorded observation matched only 1 of 5: four supplied tokens landed on the Amazon homepage",
       "detail": "On 2026-11-20 session arena-9a3bb152 re-resolved all five supplied link.amazon tokens through the same reader used for the first three observations. B0f3GKalj resolved to /dp/B0DZFD6R9Z and matched every prior observation (same lv=shuf + plpRedirect=mhFallback flags). B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each landed on https://www.amazon.com/ (page title 'Amazon.com. Spend less. Smile more.') instead of the recorded /dp/ targets. Cause unresolved: reader-side degradation and a change in the short-link behavior cannot be separated from this environment. This neither confirms nor invalidates any link — FLG-003 stands, and the observed_* fields continue to rest on the three earlier matching observations (S14, S18, S22).",
       "action": "Re-run all five resolutions from a normal browser (record final URL + screenshot), then perform the enrolled Associates one-link workflow test (FLG-002). If homepage landing reproduces in a normal browser, contact Associates support before any link is used at scale.",
       "status": "needs review",
       "sources": [
-        "S27"
+        "S30"
       ],
       "source_note": ""
     },
