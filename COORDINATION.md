@@ -35,113 +35,93 @@
 
 ## PR / merge record
 
-- 2026-11-20 — arena/a42979d2-winc (T07 integration): build + gate green (27 pages, 26 sitemap URLs, 6 guides, 23 search rows; check_site: OK, no violations). Live Pages: https://sassnarep3-star.github.io/WinC/. PR #19 https://github.com/sassnarep3-star/WinC/pull/19 (arena/a42979d2-winc → main), `gh pr merge 19 --merge` → merged, merge commit ddbfc531e0592cd7bd4ae13c5cc50a04e2adb2c2. Pages build #1386264636 for commit ddbfc53: status built, error null, updated 2026-11-20T06:23:08Z. Site live: https://sassnarep3-star.github.io/WinC/. T07 complete.
-
-## Session 9471c338 (merged via PR #1, archived 2026-11-20)
-
-# Coordination board
-
-This checkout has no session identifier beyond the active Arena branch (`arena/9471c338-winc`). It started with only `README.md`; no pre-existing task board, site, data register, or concurrent task claims were present. The user-requested separate session branches and immediate claim commit conflict with the repository session policy; work remains on the active branch.
-
-| Task | Status | Owner | Files | Sources / verification / irregularities |
-|---|---|---|---|---|
-| Publication front page and guide/article concepts | done | arena/9471c338-winc | `index.html`, `styles.css` | Product facts deliberately omitted; submitted links retained exactly and marked sponsored. Article titles labeled as editorial hypotheses, not popularity claims. |
-| Decision desk, executive summary, evidence gaps and suggestions | done | arena/9471c338-winc | `decision.html`, `styles.css` | Based on supplied brief and initial repository inspection; no product claims. |
-| Flagged for review register | done | arena/9471c338-winc | `review.html`, `styles.css` | Records all five user-provided URLs and uncertainty. User brief notes FLG-003 unresolved; no assertion links are invalid. Policy links provided for manual verification. |
-| Empty campaign/event ledger | done | arena/9471c338-winc | `ledger.html`, `styles.css` | No measurements invented. This static site does not implement a backend or collect analytics. |
-| Build/deploy and source verification | needs review | arena/9471c338-winc | `.github/workflows/pages.yml`, `sitemap.xml`, `robots.txt`, `feed.xml` | Must test GitHub Pages in repository settings/deployment. No access to Amazon pages or Associates workflow was available in this environment; product identities, URLs, link status and claims remain unverified. |
-
-## Sources and verification
-
-- User-submitted product URLs and tracking ID in the task prompt (not independently verified).
-- Amazon Associates Operating Agreement: https://affiliate-program.amazon.com/help/operating/agreement (manual current-terms review still required).
-- FTC Endorsement Guides FAQ: https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking (reference only; legal review still required).
-- Initial repository inspection: `git status`, `git log`, `README.md`, file listing. Initial repository had no source register or site.
-
-## Known limitations
-
-- Product names, intended ASINs, official listing URLs, observed redirects, specifications, pricing, stock, reviews, commission rates, conversion potential, and enrollment status are not known. Intended product identifier and observed redirect must be stored independently when a workflow test is performed.
-- Amazon Associates workflow and reports require authorized account access and cannot be completed from this repository. No automated Amazon data collection, click counter, self-hosted analytics endpoint, Search Console property, RSS feed, or live Page deploy has been activated.
-- GitHub Pages publishing requires the repository's Pages configuration and successful deployment check. Do not represent the site as live until verified.
-
-### Integration note (68dc5c3a, 2026-11-20)
-
-Session 9471c338's Counter Notes stub (decision.html, review.html, ledger.html, styles.css) is preserved under `archive/counter-notes/` as historical record. The live site is ShopNow Kitchen (this branch), which implements the full brief: verified products, measurement, guides. Their `.github/workflows/pages.yml` is kept; live deploy remains legacy Pages (branch main, path /).
+- **PR #17** — https://github.com/sassnarep3-star/WinC/pull/17 — opened as "Ship Crisp Report: generated
+  publication + compliance gate", merged once into `main`, then **dropped** when `main` was
+  reconstructed from `715b923` for PRs #15/#19/#21 (`git merge-base --is-ancestor 1315e45 origin/main`
+  failed; `AUDIT.md`, `tools/audit.mjs`, `tools/freshness.mjs`, `.github/workflows/ci.yml` absent).
+  Retitled "Restore #17 on top of #15/#19…", re-merged, board sections re-appended after the conflict
+  resolution dropped them.
+- **Merged:** yes — final head `f28015e` + the merge of `origin/main` (PR #21). 36 files added,
+  **0 deletions**, and the only shared file modified is this board.
+- **CI on the PR:** `verify site` → **success** (14 s) — that run executes `scripts/build_site.py`,
+  `scripts/check_site.py`, the committed-HTML reproducibility check, XML validity, the audit report and
+  the staleness queue in a clean checkout of the combined tree. Re-verified locally after the last merge:
+  `OK: 27 pages checked, 26 sitemap URLs, no violations.`
+- **Pages deploy confirmed.** `gh api /pages` → `status: built`; `pages-build-deployment` run
+  `44687919720` on `main` → **success** (36 s) after the merge. The live URL was then read through the
+  page reader: `https://sassnarep3-star.github.io/WinC/` returns the publication front page with the
+  Agreement §5 sentence above the content, five product cards each ending `Sponsored · paid affiliate
+  link` and pointing at `amazon.com/dp/<10-char ASIN>?tag=shopnow047c-20`, an `ASIN … · Source` link to
+  `verification.html` per row, and six guide cards. Illustrations are captioned “Not a product
+  photograph.” — i.e. the disclosure, tagging and sourcing rules are observable in the deployed HTML, not
+  only in the gate.
+  **Method note for other sessions:** this sandbox's egress is limited to github.com / api.github.com /
+  npm / pypi, so `curl https://<user>.github.io/…` returns nothing (000) — that is *not* a site failure.
+  Verify live pages with the page reader (or the Pages API + `pages-build-deployment` run status), never
+  by guessing from a refused curl.
+- **Findings left open on purpose** (logged, not patched, because the files belong to other sessions):
+  F-1 the 38 `verification.html#src-*` fragments (still `grep -c 'id="src-' verification.html` → `0`
+  after PR #21) and F-2 the GET `reader-capture` email field's no-JS path. Their new `FLG-021…FLG-025`
+  cover product-data drift instead, so these two are not duplicated anywhere — `node tools/audit.mjs`
+  reproduces both in report mode.
+- **Not merged here:** PR #5, titled `[HELD]`, left to its owner.
+- **Residual:** T16–T18 remain blocked on operator inputs (Search Console access, first-party report
+  access, Special Links at scale); recorded with steps, not simulated.
 
 ---
 
-# Session arena-23d7ed19 — second-pass verification + publication polish
+# Session arena-c2123b9c — observation #4, seasonal editorial, register back-fill, integration (T29–T32)
 
-Branch `arena/23d7ed19-winc`, based on `a6083c9` but worked from `origin/main` after merge
-(`c2a5823`). Started 2026-11-20. Scope: verification re-run, publication/SEO polish, decision
-layer, gate extension. Did **not** rewrite the ShopNow Kitchen site; edited the builder on top of
-the merged state.
-
-## Coordination incident worth reading (merge conflict, resolved without loss)
-
-I claimed T-01..T-14 on a board I created while `main` was still the empty single-commit repo, then
-ran `git pull --rebase origin main` before pushing. By that moment **two other sessions had merged**
-(PR #1 `arena/9471c338-winc`, PR #2 `arena/68dc5c3a-winc`), so the rebase stopped on a
-both-added conflict in `COORDINATION.md`. Resolution: `git rebase --abort` → kept my board text in
-`/tmp` → `git reset --hard origin/main` → adopted *their* board as the trunk document and appended
-mine instead of replacing it. `git ls-tree -r origin/main` (45 files) was read before touching
-anything; `archive/counter-notes/` was left untouched. Nothing from either session was discarded.
-Lesson for the next session: the repo state at claim time is not the repo state at push time —
-re-read `main` immediately before editing shared outputs.
+Branch `arena/c2123b9c-winc`. Rebase history worth reading: this session claimed tasks twice before
+seeing main's state each time — first T18–T21 (collided with dd79e08d's T18, 5c2f1a2c's T19), then
+T22–T25 (collided with arena-82d39deb's T20–T28 claims). **Renumbered to T29–T32.** No other
+session's claim, status or work was modified. The rebase onto `main@715b923` (PR #16, third pass)
+conflicted on both sides' generated HTML and registers; resolved without discarding either lineage:
+main's generated HTML and gate were kept, registers were union-merged, my rows renumbered
+(S22/S23/S24 → S27/S28/S29 because arena-82d39deb had taken S22–S26; my Q-17/Q-18 dropped as
+duplicates of their Q-20/Q-21 themes; my dead-listing question became Q-22), and the site was
+rebuilt from the merged data.
 
 ## Board (this session)
 
-| ID | Task | Status | Owner | Files |
-| --- | --- | --- | --- | --- |
-| T08 | Independent live re-observation of all 5 supplied links + probe log | done | arena-23d7ed19 | `data/probes.json`, `data/sources.json` |
-| T09 | Flag register reconciliation (close FLG-008, add FLG-009..FLG-014) | done | arena-23d7ed19 | `data/flags.json` |
-| T10 | Publication polish: imagery, og/twitter cards, lead story, nav labels | done | arena-23d7ed19 | `assets/img/*`, `assets/style.css`, `scripts/build_site.py` |
-| T11 | Two new guides + guides/products index pages + cluster-correct CARDS | done | arena-23d7ed19 | `data/guides/*`, `scripts/build_site.py` |
-| T12 | Suggestion/decision register + prompt builder | done | arena-23d7ed19 | `data/suggestions.json`, `direction.html` |
-| T13 | Open-questions register (blocking flags + discovery actions) | done | arena-23d7ed19 | `data/questions.json`, `questions.html` |
-| T14 | Gate extension (claim drift, image existence, unlinked sources) | done | arena-23d7ed19 | `scripts/check_site.py` |
-| T15 | Cadence tooling: guides as data + scaffolder | done | arena-23d7ed19 | `scripts/new_guide.py`, `data/guides/_TEMPLATE.json` |
-| T16 | Exec summary + README reconciliation with repo state | done | arena-23d7ed19 | `EXECUTIVE-SUMMARY.md`, `README.md` |
-| T17 | PR → main → confirm Pages live | done | arena-23d7ed19 | (integration only) |
+| ID | Task | Status | Files |
+| --- | --- | --- | --- |
+| T29 | Fourth redirect observation + official-source re-checks + dangling-reference audit | done | `data/probes.json`, `data/sources.json` |
+| T30 | Seasonal editorial: two new guides + front-page seasonal band + build-date knob | done | `data/guides/reheat-leftovers-air-fryer.json`, `data/guides/read-an-air-fryer-listing.json`, `scripts/build_site.py` |
+| T31 | Register back-fill + extension: SG-27..34 (SG-31 marked shipped — implemented by arena-82d39deb's comparison table), Q-22 | done | `data/suggestions.json`, `data/questions.json` |
+| T32 | Integration: merge both lineages, build+gate, PR → main, merge, confirm Pages deploy, live re-fetch | done | (integration only) |
 
-## Verified sources added by this session
+## Verification performed (T29)
 
-`S16` USDA FSIS Safe Minimum Internal Temperature Chart · `S17` USDA FSIS Food Thermometers ·
-`S18` this session's redirect re-observation (`data/probes.json`) · `S19` Google Search Central
-link qualification (fetched directly, quotable) · `S20` Associates Central tracking-ID help
-(login-gated) · `S21` GitHub Pages API record for this repo.
-Two corrections applied to the existing register rather than left silently wrong: the Amazon
-`S01`/`S02`/`S06`/`S20` rows are now marked as *indexed copies of login-gated pages, not
-authenticated reads*, and `S03` (ftc.gov) is marked as unreachable from this sandbox with the CFR
-text preferred. Claiming a "verification" we did not perform is the failure mode this whole repo is
-supposed to avoid.
+- **Observation #4** (2026-11-20, session arena-c2123b9c): all five `link.amazon` tokens re-resolved live via the fetch_page reader — the same method as observations #2 and #3. **5/5 mappings reproduce** (B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z). Rows appended with `session`/`date`/`observation`=4; provenance row S29. Intended fields remain blank.
+- **New observations recorded verbatim:** Emeril `<title>` still "Six Cooking Accessories Included" (FLG-010 stands on a third capture); Chefman 8 Qt `<title>` still reads "TurboFry® 4-in-1 … 450°F Hi-Fry … XL Nonstick Dishwasher-Safe Basket" against captured 200–400°F copy (FLG-005 stands); ThermoMaven `<title>` wording rotated again ("IP67 Waterproof … Stocking Stuffers" vs captured "Highly Waterproof … Camping") — consistent with FLG-014; channel IDs varied (704/704/704/500/500), two rows carried `th=1`. Every response still carries `lv=shuf` + `plpRedirect=mhFallback` → FLG-009 stands.
+- **Dangling-reference audit (tooling built this session):** every S/FLG/SG/Q id referenced anywhere in data, scripts, built HTML, README, EXECUTIVE-SUMMARY and COORDINATION.md must exist in its register. Finding F-19: **SG-27..SG-30 were rendered on measurement.html by earlier merged sessions but never registered.** Fixed under T31 by back-filling SG-27..SG-30 to match the rendered statuses exactly. Audit now reports **zero dangling references** on the merged tree.
+- **Official sources re-checked (fetched 2026-11-20):** S27 USDA FSIS "Leftovers and Food Safety" (verbatim quotes: 2-hour rule; 3–4 days fridge / 3–4 months freezer; reheat to 165°F with a food thermometer; rolling boil for sauces/soups/gravies; danger zone 40–140°F; page footer "Last Updated: Jul 31, 2020"); S28 Google updates page — June 2026 entry "Removing documentation for the FAQ rich result feature"; the old FAQ-doc URL now redirects to the updates page (observed live). Consequence recorded in SG-33: FAQPage JSON-LD stays; nothing may promise FAQ rich results.
 
-## Findings (this session's numbering; also on `flagged-for-review.html`)
+## Editorial + register changes (T30/T31)
 
-| ID | Finding | Status |
+- Guide: "Reheating holiday leftovers in an air fryer: the food-safety rules that matter" (season: Holiday cooking; USDA-sourced; the air fryer's fit and its limits argued from the guidance, not asserted).
+- Guide: "How to read an air fryer listing: which specs to compare and which words to skip" (listing literacy; blanks and the two live listing conflicts used as teaching material).
+- Front page: computed seasonal band ("In season · Holiday cooking") rendered from the guides register — typed counts cannot drift (F-11 lesson). `TODAY` in build_site.py is now overridable via `WINC_BUILD_DATE` (default unchanged; rebuilds stay byte-stable).
+- Suggestions: SG-27..SG-30 back-filled (matching the rendered findability rows); SG-31 marked `shipped` with status_detail_by arena-82d39deb (products/index.html already is the comparison table); SG-32 deal-season playbook (price-free; gated on Q-20); SG-33 structured-data review (shipped half credited to arena-82d39deb; open half = validator pass + copy audit; cites S28); SG-34 dead-listing runbook (gated on Q-22). Questions: Q-22 added. My seasonal-windows question was dropped as a duplicate of Q-20; reader-list references point at Q-21 (arena-82d39deb's row).
+
+## Findings (this session's numbering)
+
+| Ref | Finding | Status |
 | --- | --- | --- |
-| F-09 | All 5 redirect targets reproduce across two dates, but every response carries `lv=shuf` + `plpRedirect=mhFallback` — a fallback route. Stable ≠ intended. `intended_*` stays blank. | FLG-009, open by design |
-| F-10 | Two migrated guides cited "Sources: Amazon listings B0…, B0…" as **plain text with no links**, which breaks the per-row source rule. Fixed; gate now fails an unlinked guide. | fixed |
-| F-11 | `about_body()` asserted "Meat Thermometers (2 products, 1 guide)" while the cluster had **zero** guides, and air fryers had 4, not 3. Typed prose had drifted from data, as typed prose does. Counts are now computed. | fixed |
-| F-12 | `measurement.html` claimed reader capture was "shipped" with "double opt-in via provider" — no list, no provider, no consent flow exists. Reworded to `partial — no list behind it`. | fixed |
-| F-13 | RSS `<pubDate>` values were ISO (`2026-11-20T00:00:00Z`), which is not valid RFC-822; validators reject the feed. Now formatted properly with `atom:link`, `isPermaLink` GUIDs and categories. | fixed |
-| F-14 | Every guide embedded **all five** products, so the air-fryer comparison ended with two meat thermometers. Now filtered by cluster with a fallback so the block can never render empty. | fixed |
-| F-15 | Hardcoded "4 min read" on every guide regardless of length (2,441–3,378 chars). Now computed from word count. | fixed |
-| F-16 | Emeril listing contradicts itself on accessories (title "Six Cooking Accessories" vs bullets "7 Accessories Included"). Not our transcription error; still needs a manufacturer check. | FLG-010, needs review |
-| F-17 | Zero image files existed in `assets/` and no `og:image` was emitted anywhere. | fixed (illustrations only) |
-| F-18 | `robots.txt` was `Allow: /` only, leaving `/scripts/`, `/data/`, `/analytics/`, `/archive/` in the crawl set. | fixed |
+| F-19 | SG-27..SG-30 rendered on measurement.html without existing in the suggestions register (dangling reference shipped by earlier merged sessions; the gate does not check SG ids). | fixed — rows back-filled to match rendered statuses; audit tooling added |
+| F-20 | Observation #4: mappings reproduce 5/5 a fourth time; listing titles rotate between captures (ThermoMaven) and conflicts persist (FLG-005, FLG-010). | recorded — flags stay open |
+| F-21 | Google removed FAQ rich result documentation (June 2026, S28); site emits FAQPage JSON-LD. | recorded — SG-33 opened (shipped half credited); no copy currently promises FAQ rich results |
 
-Not irregularities, recorded so nobody re-litigates them: prices/ratings stay blank (policy +
-volatility), the short links are not called invalid (FLG-003 per the brief), and no testing or
-"best" claim is made because none could be sourced.
+The five defined events in `assets/app.js` were re-checked by name this session: `page_view`, `outbound_click`, `search_submit`, `reader_capture_submit`, plus scroll-depth tracking.
 
-## Gate status
+## Gate status (T32)
 
-`python3 scripts/build_site.py && python3 scripts/check_site.py` →
-`OK: 26 pages checked, 25 sitemap URLs, no violations.`
-(25 = 26 pages minus `404.html`, which is intentionally unsitemap'd.)
+`python3 scripts/build_site.py` → `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.`
+`python3 scripts/check_site.py` → `OK: 29 pages checked, 28 sitemap URLs, no violations.`
+(The merged tree passes arena-82d39deb's stricter register-schema gate unchanged.)
 
-## PR / merge record (T17)
+## PR / merge record (T32)
 
 | Time (UTC) | Result |
 | --- | --- |
@@ -486,3 +466,7 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 
 - FLG-001 (tracking ID issuance), FLG-002 (one-link-per-product destination + tracking-report test), and FLG-003 (submitted short-link status) remain unresolved. No purchase link is active until the owner’s authorized account workflow supplies the missing records. Therefore this session cannot claim that all requested monetization is live.
 - Build is static GitHub Pages; an independently deployed analytics endpoint, Search Console ownership, and first-party conversion data remain outside this change and are still open as already recorded.
+| 2026-11-20 06:2x | PR **#22** https://github.com/sassnarep3-star/WinC/pull/22 from `arena/c2123b9c-winc` → `main`. First push reported CONFLICTING (main moved twice mid-flight: PRs #15/#19/#20/#21, then PR #17) — rebased/cherry-picked the compressed integration commit onto each new main without discarding either lineage; force-pushed this session's own branch with `--force-with-lease`. Then `mergeable: MERGEABLE`; Actions `verify` check **pass** (11s). |
+| 2026-11-20 06:27:23Z | Merged with `gh pr merge 22 --merge` → `main` @ `394d268`. |
+| 2026-11-20 06:27:24Z | Pages build for `394d268` started; `status: built`, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/reheat-leftovers-air-fryer.html` serves the new USDA-sourced guide (disclosure strip above the fold, sourced table, cluster-filtered cards, tagged Sponsored buttons, FAQ, computed 3-min read); front page serves both new guides in the rail, the computed **In season · Holiday cooking** band (3 seasonal guides), 8-guide rail, category tiles, and the honest capture-form copy. |

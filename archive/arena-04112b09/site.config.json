@@ -1,0 +1,70 @@
+{
+  "brand": {
+    "name": "Crisp Report",
+    "short_name": "Crisp",
+    "kicker": "Small-appliance buying intelligence",
+    "tagline": "We read the listing so you don't have to guess.",
+    "promise": "Question-shaped guides, sourced claims only, and a visible note whenever a link can earn us a commission.",
+    "name_check": "Contains no Amazon mark. Required because Participation Requirements 1(g) bars Amazon trademarks or misspellings in a domain, subdomain, tag or username (SRC-02)."
+  },
+  "issue": {
+    "number": 1,
+    "date": "2026-11-20",
+    "season": "Autumn/winter 2026"
+  },
+  "site": {
+    "base_url": "https://sassnarep3-star.github.io/WinC/",
+    "path_prefix": "/WinC/",
+    "host": "GitHub Pages (project site, legacy build from main /)",
+    "repo": "https://github.com/sassnarep3-star/WinC",
+    "default_locale": "en-US",
+    "note": "Project Pages sites serve from a sub-path, so the generator emits relative internal links and absolute canonical URLs."
+  },
+  "monetization": {
+    "program": "Amazon Associates (US)",
+    "tracking_id": "shopnow047c-20",
+    "tracking_id_status": "operator-supplied; not checked against an Associates account from this environment",
+    "tag_pattern_allowed": "XXXXX-##, or such other format as we may designate (SRC-02 §2(b))",
+    "tag_shape_ok": true,
+    "earnings_statement": "As an Amazon Associate I earn from qualifying purchases.",
+    "link_level_label": "(paid link)",
+    "link_rel": "sponsored nofollow",
+    "note": "The exact sentence above is the wording §5 of the Operating Agreement requires, reproduced without alteration. `sponsored` is Google's documented value for paid placements (SRC-16)."
+  },
+  "authorship": {
+    "desk": "Crisp Report desk",
+    "person_byline": null,
+    "review_required": true,
+    "provenance": "Drafted with machine assistance inside a repository session; a named human must review and sign off before this line changes to 'reviewed by'. Until then the site says who made it and how, which is the answer to Google's 'Who / How / Why' questions (SRC-08)."
+  },
+  "audience": {
+    "market": "Netherlands / EU readers shopping on amazon.nl and amazon.de, and US readers on amazon.com",
+    "open_question": "Which marketplace the enrolled Associates account actually covers is unknown to us (Q-03): the tracking ID and the tag locale must match the store the links send readers to."
+  },
+  "editorial": {
+    "cadence": "One guide per week, Tuesday 07:00 CET, plus a monthly desk note.",
+    "hard_rule": "A guide may not publish while it contains an unverified product claim; methodology claims are allowed.",
+    "clusters": [
+      "Capacity",
+      "Cleanup",
+      "Counter space",
+      "Multi-function",
+      "Power & noise",
+      "Reading a listing"
+    ]
+  },
+  "privacy": {
+    "click_counter": "local-only by default; nothing leaves the browser until an endpoint is configured",
+    "no_per_user_subtags": "Required by SRC-02 §2(b): sub-tags may never be associated with a specific end user.",
+    "host_logs_ips": "GitHub Pages logs visitor IP addresses for security (SRC-09), so 'we collect nothing at all' would be false."
+  },
+  "measurement": {
+    "endpoint": null,
+    "note": "null = the collector never posts. Set a URL you host, rebuild, and answer Q-11 (retention, legal basis) before traffic arrives.",
+    "assets": [
+      "hero.png",
+      "og.png",
+      "capacity.png"
+    ]
+  }
+}

@@ -8,7 +8,7 @@ It leads with products, answers buyer questions, and keeps verification one clic
 ## What is live
 
 - **Shop:** front page + 2 category pages + 5 product pages, with disclosure above the fold. Purchase CTAs are visibly disabled on all five products until the intended listing and Associates destination + tracking report have been confirmed per product; no unverified purchase link is active.
-- **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
+- **Guides:** 8 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, leftovers food safety, listing literacy) + a seasonal band on the front page.
 - **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
 - **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
 
@@ -84,11 +84,11 @@ the decision layer the brief asks for. Counts above were corrected to match the 
 
 ## Decision layer (the part meant to be reviewed, not read past)
 
-- **`direction.html` — 14 suggestions**, each with problem, proposal, effort, cost, risk, *how we
+- **`direction.html` — 28 suggestions**, each with problem, proposal, effort, cost, risk, *how we
   would know it worked*, evidence, and an instruction block for the next build prompt. Tick the
   ones you accept and the page assembles a copy-paste prompt carrying the standing rules
   (localStorage only; nothing is transmitted; nothing is auto-implemented).
-- **`questions.html` — 16 open questions** (6 blocking) with what we have and can cite, what is
+- **`questions.html` — 22 open questions** (5 blocking) with what we have and can cite, what is
   missing, which decision the gap blocks, how to go find the answer, who can answer, and a blank
   answer cell. Includes a copy-ready pack for whoever owns the Associates account.
 
@@ -191,8 +191,8 @@ fields and an explicit (possibly empty) `answer` key; every category needs at le
 whose deciding spec exists in the product data and whose source is a recorded listing; every topic
 needs a stated provenance; products' listing notes must cite a flag that exists; the redirect log
 and the product records must not drift apart; and the front page must not reintroduce process
-furniture (a regression guard for the rebuild). `npm run verify` → **OK: 27 pages checked, 26
-sitemap URLs, no violations.**
+furniture (a regression guard for the rebuild). `npm run verify` → **OK: 29 pages checked, 28
+sitemap URLs, no violations.** (8 guides, 24 search rows)
 
 ## What has to happen before any of this earns anything
 
@@ -206,3 +206,37 @@ sitemap URLs, no violations.**
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
+
+
+---
+
+# Session `arena-c2123b9c` — observation #4, seasonal editorial, register back-fill — 2026-11-20
+
+Merged on top of the third pass (`main@715b923`) after resolving a both-sides-edited rebase without
+discarding either lineage. Tasks renumbered T29–T32 after an ID collision with arena-82d39deb's
+T20–T28 claims (this session first claimed T22–T25, then T18–T21 on the previous rebase — both
+renumbered; no other session's claim or work was touched).
+
+- **Observation #4 (T29):** all five supplied links re-resolved live a fourth time; **5/5 mappings
+  reproduce** again (S29, `data/probes.json`). New per-listing notes recorded verbatim: the Emeril
+  title still says "Six Cooking Accessories" (FLG-010 stands on a third capture); the Chefman 8 Qt
+  title still shows 450°F Hi-Fry against captured 200–400°F copy (FLG-005 stands); the ThermoMaven
+  title wording rotated again (consistent with FLG-014); channel IDs varied (704/500). Every response
+  still carries `lv=shuf` + `plpRedirect=mhFallback` — FLG-009 stands. Intended fields stay blank.
+- **Dangling references found and fixed (T31):** the findability table on `measurement.html` rendered
+  SG-27..SG-30 that were never registered in `data/suggestions.json`. Back-filled SG-27..SG-30 to
+  match the rendered statuses exactly, then added SG-31..SG-34 — with SG-31 marked `shipped` because
+  arena-82d39deb's comparison table already implements it, and SG-33 split into its shipped half
+  (Article + BreadcrumbList by arena-82d39deb) and its open half (validator pass + copy audit after
+  Google removed the FAQ rich result documentation in June 2026, S28). Q-22 (dead-listing runbook)
+  added; my seasonal-windows question was dropped as a duplicate of Q-20, and reader-list questions
+  point at Q-21. A reference audit now reports zero dangling S/FLG/SG/Q ids repo-wide.
+- **New guides (T30):** "Reheating holiday leftovers in an air fryer" (USDA FSIS-sourced, S27,
+  verbatim quotes: 2-hour rule, 3–4 days, 165°F reheat target, 40–140°F danger zone, rolling boil
+  for liquids) and "How to read an air fryer listing" (listing literacy; blanks and the live listing
+  conflicts used as teaching material). Front page gains a seasonal band computed from the guides
+  register; `TODAY` in the builder is now overridable via `WINC_BUILD_DATE` (default unchanged).
+- **New source evidence:** S27 (USDA FSIS Leftovers, fetched), S28 (Google updates — FAQ rich result
+  docs removed, June 2026), S29 (observation #4 provenance).
+- **Gate on the merged tree:** `OK: 29 pages checked, 28 sitemap URLs, no violations.` (8 guides,
+  25 search rows). The stricter register-schema gate from the third pass passes unchanged.
