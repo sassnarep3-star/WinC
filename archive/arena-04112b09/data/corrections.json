@@ -1,0 +1,15 @@
+{
+  "$comment": "Corrections log. Empty by design, not by omission: the schema exists so that a correction is a row, not an apology thread. We will not populate it with hypothetical corrections.",
+  "schema": {
+    "id": "COR-nn",
+    "published_on": "date the wrong statement went live",
+    "corrected_on": "date the fix shipped",
+    "page": "site-relative path",
+    "what_was_wrong": "the claim, quoted",
+    "what_is_true": "the replacement, with a source id",
+    "how_we_found_out": "reader | gate | source update | account report",
+    "src": ["source ids supporting the correction"]
+  },
+  "rule": "A correction is published within one working day of confirmation and the guide carries a visible note. Silence is the only unacceptable option.",
+  "entries": []
+}

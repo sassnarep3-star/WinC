@@ -1,0 +1,146 @@
+{
+  "$comment": "Editorial operating data: clusters, cadence, guide registry and nav labels. The generator reads this to build the front page, cluster pages, sitemap and feed, so the nav labels the brief asked to settle live here rather than in scattered templates.",
+  "nav": {
+    "reader": [
+      { "label": "Front page", "href": "./" },
+      { "label": "The Desk", "href": "./picks/" },
+      { "label": "Guides", "href": "./guides/" },
+      { "label": "Ideas", "href": "./suggestions/" }
+    ],
+    "single_group_for_dashboards": {
+      "label": "The workroom",
+      "items": [
+        { "label": "Executive summary", "href": "./executive-summary/" },
+        { "label": "Open questions", "href": "./questions/" },
+        { "label": "Source register", "href": "./sources/" },
+        { "label": "Compliance & gate", "href": "./how-it-works/" },
+        { "label": "Measurement", "href": "./measurement/" },
+        { "label": "Flagged for review", "href": "./flagged/" }
+      ]
+    },
+    "note": "Brief asked for reader-facing navigation plus every dashboard surface reachable from the footer inside one nav group; the reader bar stays at four links and the workroom collapses into one group."
+  },
+  "cadence": {
+    "rule": "One guide each Tuesday 07:00 CET; the desk note on the first Tuesday of the month.",
+    "queue_policy": "Upcoming topics are an unranked list. The next topic is chosen from the first block of Search Console queries that matches a cluster, not from preference.",
+    "added_to_findability": "Every accepted guide is appended to sitemap.xml and feed.xml by the generator; publishing a guide and updating findability are the same commit.",
+    "season": {
+      "current": "Autumn/winter 2026",
+      "editorial_note": "Counter-space and oven-style questions rise when the oven is already busy; capacity questions rise before hosting. Treat as timing for publishing, not as a claim about search volume.",
+      "status": "hypothesis, unmeasured"
+    }
+  },
+  "clusters": [
+    {
+      "slug": "capacity",
+      "name": "Capacity",
+      "question": "How much of the basket is actually usable?",
+      "why": "The single most common regret, and the one a headline number obscures."
+    },
+    {
+      "slug": "cleanup",
+      "name": "Cleanup",
+      "question": "What has to be washed, and how often?",
+      "why": "Decides whether the appliance is used weekly or monthly."
+    },
+    {
+      "slug": "counter-space",
+      "name": "Counter space",
+      "question": "Where does it live between uses?",
+      "why": "Footprint plus clearance is a real constraint that no review score captures."
+    },
+    {
+      "slug": "multi-function",
+      "name": "Multi-function",
+      "question": "Does the extra mode replace a device or duplicate one?",
+      "why": "Where marketing value and household value most often disagree."
+    },
+    {
+      "slug": "power-noise",
+      "name": "Power & noise",
+      "question": "What does the label say about draw, and what is it like at 19:00?",
+      "why": "Two things a buyer discovers after purchase rather than before."
+    },
+    {
+      "slug": "reading-a-listing",
+      "name": "Reading a listing",
+      "question": "Which fields on a product page are verifiable, and which are decoration?",
+      "why": "It is the skill our own verification process is built on, so we publish it."
+    }
+  ],
+  "guides": [
+    {
+      "slug": "basket-or-oven",
+      "title": "Basket or oven-style air fryer: what should you compare?",
+      "dek": "Two shapes, two failure modes. The trade-offs that decide it are on the listing if you know which fields to read.",
+      "cluster": "multi-function",
+      "status": "published",
+      "published_on": "2026-11-20",
+      "reviewed_on": "2026-11-20",
+      "word_target": 850,
+      "claims": "none about any product",
+      "src": ["SRC-02", "SRC-08"]
+    },
+    {
+      "slug": "capacity-checklist",
+      "title": "A no-hype checklist for comparing air fryer capacity",
+      "dek": "Litres, quart counts and 'feeds a family of' claims measure different things. Here is how to read each one without being sold something.",
+      "cluster": "capacity",
+      "status": "published",
+      "published_on": "2026-11-20",
+      "reviewed_on": "2026-11-20",
+      "word_target": 900,
+      "claims": "none about any product",
+      "src": ["SRC-02", "SRC-08"]
+    },
+    {
+      "slug": "cleanup-and-counter-space",
+      "title": "How to assess cleanup and counter-space trade-offs",
+      "dek": "The appliance you keep using is the one that is easy to wash and easy to park. Both are checkable before you buy.",
+      "cluster": "cleanup",
+      "status": "published",
+      "published_on": "2026-11-20",
+      "reviewed_on": "2026-11-20",
+      "word_target": 900,
+      "claims": "none about any product",
+      "src": ["SRC-02", "SRC-08"]
+    },
+    {
+      "slug": "multifunction-questions",
+      "title": "Questions to ask before buying a multi-function kitchen appliance",
+      "dek": "Nine cooking modes is a spec sheet, not a reason. Six questions that separate a replacement from a duplicate.",
+      "cluster": "multi-function",
+      "status": "published",
+      "published_on": "2026-11-20",
+      "reviewed_on": "2026-11-20",
+      "word_target": 850,
+      "claims": "none about any product",
+      "src": ["SRC-02", "SRC-08"]
+    },
+    {
+      "slug": "what-to-check-on-the-listing",
+      "title": "What to check on an appliance listing before you click buy",
+      "dek": "The fields that can be verified, the ones that are decoration, and the two lines that tell you a listing was written by someone who used the thing.",
+      "cluster": "reading-a-listing",
+      "status": "published",
+      "published_on": "2026-11-20",
+      "reviewed_on": "2026-11-20",
+      "word_target": 800,
+      "claims": "none about any product",
+      "src": ["SRC-02", "SRC-13"]
+    }
+  ],
+  "upcoming_unranked": [
+    { "topic": "Preheat, or not: what the manual actually instructs", "cluster": "power-noise", "state": "needs a source we can cite" },
+    { "topic": "Noise in an open-plan kitchen: what a decibel figure does and does not tell you", "cluster": "power-noise", "state": "waiting on Search Console query evidence" },
+    { "topic": "Dishwasher-safe: what that phrase is and is not a promise about", "cluster": "cleanup", "state": "queued" },
+    { "topic": "Second-hand and open-box appliances: which checks matter more", "cluster": "reading-a-listing", "state": "queued" }
+  ],
+  "feed": {
+    "type": "RSS 2.0",
+    "path": "feed.xml",
+    "items": "title, link to the guide, publication date, description that contains no store link",
+    "why_truncated": "Special Links may not be placed where we cannot control redistribution, and syndication puts our copy into someone else's mailer (SRC-02 §4, §6(b))",
+    "reader_note": "Subscribe to headlines; the buying decision stays on the page where the disclosure is."
+  }
+}
