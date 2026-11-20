@@ -368,11 +368,10 @@ table td p{margin:4px 0 0}
 
 /* ============================================================
    f1fd0ff0 graft (2026-11-20): front-page glance table + dated
-   seasonal strip. Added on top of the current stylesheet; no
-   framework, no external fonts, no third-party requests.
+   seasonal strip, added on top of the publication stylesheet.
+   No framework, no external fonts, no third-party requests.
    ============================================================ */
 .kicker-warm{background:#FFEAD5;border-color:#FBCD9B;color:#8A3B0B}
-
 .glance table{font-size:13.5px}
 .glance th,.glance td{padding:9px 11px;vertical-align:top}
 .glance thead th{background:#1C1917;color:#FFF9F0;border-bottom:0}
@@ -383,7 +382,6 @@ table td p{margin:4px 0 0}
 .legend{font-size:12.8px;color:var(--muted);margin:8px 0 0}
 .footnote{font-size:13px;color:var(--muted);background:#FCF8F1;border:1px solid var(--line);
   border-radius:10px;padding:9px 12px;margin:10px 0 0}
-
 .seasonal{margin:26px 0 4px;border:1px solid #FBCD9B;border-left:6px solid #C98A2B;border-radius:var(--radius);
   background:linear-gradient(180deg,#FFF6E9 0%,#FFFBF4 100%);padding:18px 20px}
 .seasonal h2{margin:8px 0 6px;font-size:23px}

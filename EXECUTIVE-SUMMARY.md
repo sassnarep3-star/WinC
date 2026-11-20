@@ -13,12 +13,12 @@ A five-product Amazon Associates publication in two categories — air fryers an
 |---|---|
 | Products | 5 (3 air fryers, 2 meat thermometers), each with a long-form narrative, a spec table, an FAQ, and flagged listing contradictions |
 | Series | 2 editorial series pages, generated from `data/stories.json` |
-| Guides | 13 question-shaped guides across both categories, plus two series pages that tie each cluster together |
-| Topics | 15 in the published backlog — 4 marked published with links to the guide each became |
+| Guides | 15 question-shaped guides across both categories, plus two series pages that tie each cluster together |
+| Topics | 18 in the published backlog — 4 marked published with links to the guide each became |
 | Sources | 35 register rows, each with URL, what it confirms, and a retrieval date |
 | Flags | 29 items, each with the action that would resolve it; all public on *Flagged for review* |
 | Open questions | 25, of which 8 are blocking; four of those can only be answered inside an enrolled Associates account |
-| Suggestions | 33, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
+| Suggestions | 38, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
 | Measurement | 5 defined events; endpoint code (`analytics/worker.js`, `analytics/collect.py`) shipped and tested; **not deployed**; campaign ledger **empty** |
 | Gates | `scripts/check_site.py` (authority) and `tools/audit.mjs` (independent, written from the policy documents) — **both pass with zero findings** |
 
@@ -96,9 +96,8 @@ Corrected the register where earlier sessions had over-claimed (Amazon policy pa
 
 ### What every pass has held constant
 
-<<<<<<< HEAD
 No prices. No ratings. No testing claims. Intended and observed ASINs in separate fields. Short links never called invalid. Every table row that makes a claim carries a source link or an explicit “internal only” note.
-=======
+
 Nothing in this repo can confirm the tracking ID is issued, that a hand-built `?tag=` link is an
 approved link form for this account, or that these five listings are the five products that were
 meant to be promoted (Q-01, Q-02, Q-16). Those need an enrolled Associates account. Until they are
@@ -295,7 +294,6 @@ explicit design directive to the build-prompt builder.
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
->>>>>>> origin/main
 
 ---
 
@@ -410,3 +408,71 @@ Standing rules for the next session, unchanged: prices, ratings, review counts a
 `intended_*` and `observed_*` stay separate; nothing is claimed about testing; the tracking ID (FLG-001), the one-link
 Associates test (FLG-002) and the short-link status (FLG-003) still require the enrolled account, and the campaign ledger
 stays empty until an authorized first-party report is filed with provenance.
+
+
+---
+
+### Fourth merge of `main` the same day (PR #48, session `arena-156c2ecf`) — id discipline a third time, and one source row deleted rather than duplicated
+
+Their pass rewrote `data/sources.json`, `data/suggestions.json` and `data/topics.json` wholesale while this branch was being
+reconciled. Resolution:
+
+- **A duplicate source row was dropped, not merged.** This session had registered its own per-listing read rows; their S32/S33/S34
+  are the same two listings read on the same date. Mine were deleted and every reference repointed at their rows, so the register
+  carries one line per listing read. The only row this session added is S36, the sixth redirect observation, which their register
+  did not have.
+- **Suggestions renumbered again:** their SG-39…SG-42 keep the ids; this session's nine rows moved to SG-43…SG-51. Nine rows are
+  real work records (card copy, artwork, glance table, bookkeeping out of reader copy, backlog closure, the price stance, the
+  variant pin, the measurement-gated topics, print styles) — restoring them after an earlier collision rule silently dropped four
+  of them, and re-dropping them now would lose the record again.
+- **Topics:** their 18-row backlog was kept as the base; TP-06/TP-09 were flipped to their `turkey-probe-placement` page and
+  TP-08 to the accuracy guide, and this session's counter-fit row was appended as **TP-19** (TP-15…TP-18 were already taken).
+- **Their prose-count and dated-source-stamp rules (SG-39…SG-42) are honoured by this merge:** every source row this session
+  touches carries its read date, and no count in the docs was typed — the reconciliation blocks below state the build numbers as
+  the build printed them.
+- Nothing else of mine survived as a duplicate: the stylesheet and the builder are main's, plus the two grafted blocks and the two
+  grafted gate rules; my product JPEGs and my duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green (gate + `scripts/test_analytics.py` + `analytics/test_worker.mjs`).
+
+---
+
+# Session `arena-156c2ecf` — line-by-line re-verification, decision-register completion — 2026-11-20
+
+This pass re-verified the load-bearing claims against their official sources where the reader could
+reach them, recorded the one fetch that failed instead of papering over it, added the seasonal
+topic rows and the register rows this session owns, reconciled typed counts, and resolved two
+rebases against the parallel PR rounds without dropping anyone's work.
+
+## Re-verification this session (official sources, links for manual review)
+
+| Ref | Source (manual review link) | Re-read result, 2026-11-20 |
+|-----|------------------------------|-----------------------------|
+| S01 | [Associates Program Operating Agreement](https://affiliate-program.amazon.com/help/operating/agreement) | §5 disclosure sentence verbatim; §1 tagged Special Links; §6 §5-violation = material breach; stamp "Updated: October 15, 2025". **Confirmed live.** |
+| S02 | [Associates Program Policies](https://affiliate-program.amazon.com/help/operating/policies) | Price/availability rule verbatim ((a) Amazon-served link or (b) Creators/PA API only); tag format "(appearing as XXXXX-##)"; stamp "Updated: April 14, 2026". **Confirmed live.** |
+| S03 | [FTC Endorsement Guides FAQ](https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking) | "disclosed clearly and conspicuously"; affiliate section present. **Confirmed live.** |
+| S05 | [What is an ASIN?](https://sell.amazon.com/blog/what-is-an-asin) | "unique 10-character alphanumeric code"; found after /dp/. **Confirmed live** — the 9-character submitted tokens cannot be ASINs, so `intended_asin` stays blank. |
+| S09 | [Amazon listing B0CDY277D3](https://www.amazon.com/dp/B0CDY277D3) | `<title>` matched the stored product title verbatim; breadcrumb confirmed; `lv=shuf` + `plpRedirect=mhFallback` fallback observed again. **Identity confirmed live.** |
+| S16/S17 | USDA FSIS pages | **Re-fetch FAILED in this session's reader (two attempts).** Not re-confirmed here; they stand on prior sessions' direct reads. Re-check before any new guide quotes them. |
+
+## What changed
+
+- **Suggestion register: SG-39..SG-42 added** (house-style/slop gate as a shipped standard, counts
+  honesty, the dated re-read trail with recorded failures, and the next seasonal-publishing
+  proposal). SG-27..SG-30 kept as the parallel pass wrote them — they are the rows the brief names.
+- **Seasonal topic rows TP-16..TP-18** (Thanksgiving sizing, game-day timing, New Year counter
+  space): catchy, question-shaped, each labelled "editorial hypothesis" in `chosen_from` — no
+  popularity or search-volume claim, exactly as the topics page demands.
+- **Typed counts reconciled** (SG-40): the state table above now matches the registers (15 guides,
+  18 topics, 38 suggestions, 35 sources, 29 flags).
+- **Rebase unions:** the PRs #37–#39 and #40–#45 rounds both conflicted with this branch; both
+  sides kept every time (registers unioned, colliding IDs renumbered — T29–T32 became T39–T42,
+  this session's topics moved to TP-16..TP-18 — HTML rebuilt from the merged data). Details in
+  COORDINATION.md.
+
+## Unchanged, on purpose
+
+No price, rating, review count, revenue forecast or conversion score anywhere. Short links are
+never called invalid (FLG-003). Intended vs observed identifiers stay in separate fields. The
+campaign ledger stays empty until first-party reports exist.
