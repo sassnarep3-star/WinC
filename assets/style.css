@@ -234,3 +234,50 @@ table td p{margin:4px 0 0}
   border-left:5px solid var(--accent2);border-radius:10px;font-size:14.5px;color:#44403C;line-height:1.5}
 .listtitle-k{display:block;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
   color:var(--accent2);margin-bottom:3px}
+
+/* ============================================================
+   Publication polish pass (session arena/a81c0f0e-winc, 2026-11-20)
+   Season framing, editorial rail, refined masthead & hero.
+   Reads like a publication front page, not a generated dashboard.
+   ============================================================ */
+
+/* masthead — stronger publication masthead with an edition line */
+.masthead{background:linear-gradient(180deg,#221F1D 0%,#1C1917 100%);color:#FFF9F0;
+  padding:26px 0 16px;border-bottom:3px solid var(--accent)}
+.masthead .wrap{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline;justify-content:space-between}
+.brand{font-size:33px;font-weight:900;letter-spacing:-.03em;color:#FFF9F0;text-decoration:none}
+.brand span{color:#FBBF24}
+.tagline{color:#D6D3D1;font-size:15.5px;margin:0;font-style:italic}
+.dateline{font-size:13px;color:#A8A29E;letter-spacing:.02em;white-space:nowrap}
+
+/* season pill */
+.seasonpill{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:999px;border:1px solid transparent;vertical-align:middle}
+.pill-act{background:#FEF3C7;border-color:#FDE68A;color:#92400E}
+.pill-note{background:#F5F5F4;border-color:#E7E5E4;color:#57534E}
+
+/* editorial rail on the home page */
+.railh{font-family:ui-serif,Georgia,"Iowan Old Style","Times New Roman",serif;font-size:27px;
+  letter-spacing:-.01em;margin:38px 0 4px;display:flex;align-items:center;gap:12px}
+.railh::after{content:"";flex:1;height:2px;background:var(--line);border-radius:2px}
+.railnote{color:var(--muted);font-size:15px;margin:0 0 16px;max-width:70ch}
+.hero{padding:38px 0 12px}
+.hero .kicker{margin-bottom:14px}
+.lede-figure{margin:20px 0 8px}
+
+/* guide card: crisper image + stronger title */
+.guidecard .cardimg{margin-bottom:6px}
+.guidecard h3{font-size:19.5px}
+.guidecard .meta{font-size:13px}
+
+/* hero CTA row polish */
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
+.btn-ghost{background:#fff;color:var(--accent)!important;border:1px solid var(--accent);font-weight:800}
+.btn-ghost:hover{background:#FFF5EC}
+
+/* category hero kicker */
+.catgrid{margin-top:6px}
+
+/* a touch more breathing room for the shop grid on the home page */
+.home-shop .grid{margin-top:6px}
+@media (max-width:640px){.brand{font-size:27px}.masthead{padding:20px 0 14px}}

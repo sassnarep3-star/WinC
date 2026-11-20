@@ -266,8 +266,8 @@ text anonymously; the register already records this, and this session re-confirm
   record of what the listing says. No rankings, no superiority claims, no prices. Recorded as
   suggestion **SG-35** (done-this-session) on the Direction page.
 - New `.cardblurb` / `.listtitle` styles; everything else in the design system is unchanged.
-- `npm run verify` → **Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.** →
-  **OK: 29 pages checked, 28 sitemap URLs, no violations.**
+- `npm run verify` → **Built 32 pages, 31 sitemap URLs, 11 guides, 28 search rows.** →
+  **OK: 32 pages checked, 31 sitemap URLs, no violations.**
 
 ## Still open (unchanged, and why they stay open)
 
@@ -277,3 +277,60 @@ text anonymously; the register already records this, and this session re-confirm
 - The imagery line, audience/marketplace, and the spec conflicts (SG-19, SG-20, FLG-005/010).
 
 **No revenue forecast, no conversion score.** The campaign ledger remains empty by design.
+
+---
+
+# Session `arena/a81c0f0e-winc` — publication polish, catchy guides, final integration (2026-11-20)
+
+This pass answers the user's explicit ask that the site read like a **polished marketing affiliate
+publication** (not "AI slop"), carry **catchy trendy articles**, and keep a **reviewable suggestion
+and question layer**. It re-verified everything from official sources first, then added publication
+polish and published more question-shaped guides from the already-verified backlog. Nothing was
+invented and no compliance rule was relaxed. It was rebased onto the advanced `main` (which already
+carries a seasonal band from arena-c2123b9c), so this session's edits are additive on top: it did not
+rewrite `home_body` — it added season badges on guide cards, a season lead on category pages, and an
+explicit design directive to the build-prompt builder.
+
+## Re-verified from official sources, live on 2026-11-20
+
+- **Compliance backbone:** Amazon Associates Operating Agreement ("Updated: October 15, 2025"; §1
+  Special Links "tagged" format; §5 disclosure), Program Policies ("Updated: April 14, 2026";
+  price/availability display rule + Special Link tag requirement), FTC Endorsement Guides
+  ("disclosed clearly and conspicuously"; links to 16 CFR Part 255), Google's `rel="sponsored"`
+  guidance ("Last updated 2025-12-10"; "Mark links that are advertisements or paid placements … with
+  the `sponsored` value"), and the ASIN definition (sell.amazon.com: "unique 10-character alphanumeric
+  code", "appears after '/dp/'").
+- **USDA FSIS:** Safe Minimum Internal Temperature Chart (poultry 165°F; ground meats 160°F;
+  steaks/chops/roasts 145°F + 3-min rest) and Food Thermometers ("the only reliable way").
+- **All five product listings** re-read live: every stored `<title>` and breadcrumb matched
+  verbatim, confirming the three air fryers and two meat thermometers. The fallback summary page
+  (`lv=shuf` + `plpRedirect=mhFallback`) matches the prior note. The ThermoMaven page showed a
+  price in the live read; the site still leaves prices blank per Program Policies S02 — a deliberate
+  compliance choice, unchanged.
+
+## What this session added (additive on `main`)
+
+- **Three new catchy, question-shaped guides** published from the verified topic backlog: *Your
+  first air fryer: the six checks before you buy*, *Air fryer vs. convection oven: what actually
+  changes?*, and *How much food actually fits in 6 quarts?*. Every numeric cell is a value read
+  from the listed Amazon product; no price, rating, ranking or hands-on-test claim is made. These
+  surface automatically on the front page and in the seasonal band because guides are loaded from
+  `data/guides/*.json`.
+- **Publication polish (additive):** a `season_pill` badge on every guide card, a guide count and
+  season-framed lead on each category page, and an explicit **design directive** in the
+  build-prompt builder so the suggestions feed a polished-marketing-publication build directly. The
+  front-page seasonal band from the earlier pass is kept as-is.
+- **Decision layer:** a new suggestion **SG-36** records the publication-polish pass.
+
+## What still has to happen before this earns anything
+
+1. Confirm the tracking ID and run one-link Associates tests (FLG-001, FLG-002, Q-01, Q-16).
+2. Confirm intent for the five products with whoever supplied them (Q-02).
+3. Deploy the metrics endpoint and submit the sitemap to Search Console, then choose topics from
+   measured queries (SG-07, SG-08) — until then every topic is an editorial hypothesis, not a claim.
+4. Settle the spec conflicts on the manufacturer page, not on Amazon marketing copy (FLG-005,
+   FLG-010, Q-05, Q-19).
+5. Decide the audience, the marketplace and what "working" means (Q-10, Q-17, SG-20).
+
+**No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
+authorised first-party reports arrive.
