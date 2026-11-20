@@ -1,0 +1,21 @@
+{
+  "_note": "Campaign ledger. Starts EMPTY by design. A row may be added only from an authorized first-party Amazon Associates report (Associates Central > Reports) or from the owner's own first-party analytics export. Never estimate, backfill, or infer a value: leave a field null and it renders as blank. Every row needs a timestamp and a provenance string that names the exact report and the date it was exported.",
+  "schema": {
+    "timestamp": "ISO-8601 date-time the figure was observed or exported (UTC)",
+    "source": "Exact report or system name, e.g. 'Associates Central > Reports > Earnings'",
+    "channel": "e.g. 'site:guides', 'site:products', 'direct'",
+    "eligible_sessions": "number from the first-party report, or null",
+    "clicks": "number from the first-party report, or null",
+    "reported_orders": "number from the first-party report, or null",
+    "provenance": "file name or URL of the export/screenshot kept by the owner, plus export date. Required."
+  },
+  "provenance_trail": [
+    {
+      "date": "2026-11-20",
+      "action": "Ledger created as an empty, well-defined file (session 5c2f1a2c).",
+      "rows_added": 0,
+      "source": "No first-party report has been obtained. Associates Central access requires the owner's account; none is available in this repository."
+    }
+  ],
+  "rows": []
+}
