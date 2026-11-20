@@ -459,3 +459,23 @@ all 27 pages. Two apparent hits were checked and are false positives, recorded s
 T00–T15 done for this session's scope. **T16–T18 remain blocked** on operator inputs (Search Console
 access, first-party report access, Special Links at scale) — recorded with the steps, not simulated.
 PR #17 as retitled is additive: 0 deletions, 0 modifications to published pages, +4 files, 1 archive.
+
+## PR / merge record
+
+- **PR:** https://github.com/sassnarep3-star/WinC/pull/17 — retitled after the collision was found, from
+  "Ship Crisp Report: generated publication + compliance gate" to "Integrate cleanly: independent gate,
+  staleness queue, CI, and a retired alternate build".
+- **Merged:** `1315e45` into `main` at `715b923` (fast-forward for main? no — merge commit; main now at
+  the merge of `1315e45`). Merge performed without waiting for approval, per the brief.
+  Result: **MERGED**, 36 files changed, 5,176 insertions, **0 deletions**, 1 file modified
+  (`COORDINATION.md`).
+- **Pages deploy confirmed** after merge: `gh api /pages` → `status: built`, `build_type: legacy`,
+  `source: {branch: main, destination: /}`, `https_enforced: true`.
+  Live checks: `/WinC/` → 200 (110 KB), `/WinC/AUDIT.md` → 200, `/WinC/sitemap.xml` → 200 (26 locs,
+  https under the `/WinC/` prefix), `/WinC/products/chefman-6qt-dual-basket-b0cdy277d3.html` → 200,
+  `/WinC/nope.html` → 404.
+- **Not merged by me:** PR #15 (another integration session; touches `data/flags.json`, `data/sources.json`,
+  root `index.html`, `feed.xml`) and PR #5, which is titled `[HELD]` — left open for its owner.
+  F-1 and F-2 above are the material findings that their pages would need either way.
+- **Residual:** T16–T18 stay blocked on operator inputs; nothing else from the brief is outstanding for
+  this session.
