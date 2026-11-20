@@ -217,9 +217,4 @@ Based on `main@358dd0c`. **ID collision note:** this session first wrote its tas
 - PR https://github.com/sassnarep3-star/WinC/pull/11 — opened from `arena/5c2f1a2c-winc` → `main`.
 - Gate: `python3 scripts/build_site.py && python3 scripts/check_site.py` → OK, 26 pages, 25 sitemap URLs, no violations.
 
-
-### PR / merge record (5c2f1a2c, T18)
-
-- PR https://github.com/sassnarep3-star/WinC/pull/11 — `arena/5c2f1a2c-winc` → `main`, opened 2026-11-20.
-- Gate before PR: `python3 scripts/build_site.py && python3 scripts/check_site.py` → OK, 26 pages, 25 sitemap URLs, no violations.
-- Merge result and Pages build status: recorded in the session reply (the board cannot record its own merge commit without a push to `main`).
+- Merge result and Pages build status for PR #11 are recorded in the session reply. The board cannot record its own merge commit without pushing to `main`, which this session must not do.
