@@ -40,4 +40,23 @@ two category pages, five product pages, eight guides (seasonal guides surface in
 the footer): `verification.html`, `flagged-for-review.html`, `questions.html`, `direction.html`,
 `measurement.html`, `executive-summary.html`, `search.html`, `about.html`, `disclosure.html`.
 
+## Content layer
+
+- `data/makers.json` — one profile per maker: who they are, plus ≥2 checkable claims each tied to a source-register row. Never ranked, never inferred from the brand name.
+- `data/stories.json` — the long-form narrative per product (headline, standfirst, deciding spec, paragraphs, flags it depends on) and the series membership. A story may only argue from a stored spec or from USDA's published figures.
+- `data/guides/*.json` — one file per guide; `npm run new-guide` scaffolds the next.
+- `assets/img/*.webp` — the illustration set (~0.5 MB total). Captioned as illustrations; no Amazon product imagery or logos.
+
+## The two gates
+
+`scripts/check_site.py` is the authority and `tools/audit.mjs` is the independent second opinion
+(written from the policy documents, not from the checker). Both must pass:
+
+```bash
+npm run verify            # build + check_site.py
+node tools/audit.mjs --strict
+```
+
+`node tools/audit.mjs` writes `AUDIT.md`; with `--strict` it exits non-zero on any finding.
+
 See `COORDINATION.md` for the task board and `EXECUTIVE-SUMMARY.md` for the summary.
