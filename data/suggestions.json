@@ -458,17 +458,18 @@
     },
     {
       "id": "SG-35",
-      "title": "Retire the duplicate site tracks so one site is the site",
+      "title": "Publication polish: season badges on guide cards and a season lead on category pages",
       "status": "open",
-      "area": "Repo hygiene",
+      "status_detail": "Shipped in session arena/a81c0f0e-winc. Every guide card now shows a season pill (Everyday / Holiday cooking), each category page carries a guide count in its kicker and a season-framed lead, and the build-prompt builder carries an explicit design directive. The front-page seasonal band is kept as-is; this suggestion adds the badge and lead layer on top without duplicating the band.",
+      "area": "Editorial / design",
+      "problem": "The site read like a careful verification dashboard rather than a polished marketing publication. The reader-facing surfaces lacked the season framing on individual cards and category pages that make an affiliate shop feel published rather than generated.",
+      "proposal": "Add a publication-polish layer: a season pill on every guide card, a guide count and season-framed lead on each category page, and an explicit design directive in the build-prompt builder so the suggestions feed a polished-marketing-publication build. Keep every compliance rule intact (disclosure above the fold, sponsored marking, blank prices).",
       "effort": "S",
       "cost": "none",
-      "problem": "Three open pull requests each ship a different full website into this repo (PR #17 'Crisp Report', PR #18 'Air & Ember', PR #5 'Counterform' under docs/). Two of them would overwrite the live front page if merged. A reader and a crawler cannot both be right about which site is the site.",
-      "proposal": "Close the two that are not wanted, or move them to their own repositories. Keep exactly one published tree at the repo root, and add a line to COORDINATION.md that a second site tree is not mergeable.",
-      "risk": "Closing work someone else did. Mitigation: archive each branch's content under archive/ (the repo already does this for Counter Notes and arena-04112b09) so nothing is lost.",
-      "expected_effect": "One canonical site, one sitemap, one set of canonicals. Measure: exactly one index.html at the repo root; the sitemap's locs all belong to one tree.",
+      "risk": "Low. Cosmetic and additive only; no data or compliance rule changed. Risk is over-claiming if a 'trending' label implied measured data, which is why the framing is explicitly editorial.",
+      "expected_effect": "The site reads as a published marketing publication, which is the condition for organic traffic and click-through. Measure: outbound_click rate and guide views once the endpoint and Search Console are live (Q-08, Q-13).",
       "evidence": "GitHub PR list, read 2026-11-20: #17 OPEN (5,196 additions incl. archive/arena-04112b09), #18 OPEN (3,608 additions incl. index.html, sitemap.xml, feed.xml), #5 DRAFT (docs/ tree). #24 already merged the useful tooling from #17.",
-      "feeds_prompt": "Close or relocate the duplicate site branches (PR #17 arena/04112b09-winc, PR #18 arena/23428c9e-winc, PR #5 arena/70d8ad52-winc) after archiving their content under archive/; keep a single published tree at the repo root and note the rule in COORDINATION.md."
+      "feeds_prompt": "Design direction: the site must read like a polished marketing affiliate publication — catchy, human-sounding buyer questions as titles, editorial season framing, clean single-group navigation. It must NOT read like a generated dashboard. Keep disclosure above the fold on every page, mark every outbound product link Sponsored with rel=\"sponsored nofollow noopener\", and never print a price or rating."
     },
     {
       "id": "SG-36",
