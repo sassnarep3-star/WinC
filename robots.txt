@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sassnarep3-star.github.io/WinC/sitemap.xml
