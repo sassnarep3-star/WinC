@@ -5,12 +5,14 @@
 ShopNow Kitchen is a publication front page for five Amazon products (3 air fryers, 2 meat thermometers).
 It leads with products, answers buyer questions, and keeps verification one click away — not in the way.
 
-## What is live
+## What is live  *(counts recomputed from the repo on 2026-11-20 by session `ab951e4c`; they were stale in this block)*
 
-- **Shop:** front page + 2 category pages + 5 product pages, all with Sponsored buy buttons (`rel="sponsored"`) and disclosure above the fold.
-- **Guides:** 6 question-shaped guides (basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook).
-- **Trust:** verification register (intent vs. observed kept separate), 21-source register, 17 flagged items, redirect re-observation log, compliance gate (`scripts/check_site.py`).
-- **Measurement:** 5-event beacon + Worker code; empty campaign ledger; sitemap + RSS + internal search.
+- **Shop:** front page + 2 category pages + 5 product pages + a shop index, all with Sponsored buy buttons (`rel="sponsored nofollow noopener"`) and the Associates disclosure above the fold and again in the footer. Cards carry a shelf line, the deciding spec and one evidence link.
+- **Guides:** 9 question-shaped guides — basket vs. oven-style, capacity checklist, cleanup/counter-space, multi-function questions, instant-read vs. leave-in, holiday crowd cook, the ice-cup accuracy check, whole-chicken fit against the 165°F rule, and how to read thermometer listing copy.
+- **Trust:** verification register (intent vs. observed kept separate), **28 sources**, **34 flagged items**, redirect re-observation log (three dated observations), compliance gate (`scripts/check_site.py`, ~40 rule families) and a freshness clock (`scripts/freshness.py`).
+- **Decisions:** **28 reviewed suggestions** and **26 open questions** (5 blocking) with answers recorded only where an official source supports them (5 answered).
+- **Measurement:** 5-event beacon + Worker + stdlib collector (none deployed — Pages is static), a gated ledger ingest tool, an **empty** campaign ledger, sitemap + RSS + internal search.
+- **Site:** 30 pages, 29 sitemap URLs, image set 1.39 MB (was 15 MB).
 
 ## Key facts (all sourced)
 
@@ -202,3 +204,123 @@ sitemap URLs, no violations.**
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
+
+
+---
+
+# Fourth pass — a shop that reads like a publication, and the policy details that were missing (2026-11-20, session `ab951e4c`)
+
+Brief for this pass: make it look like a polished marketing affiliate site rather than AI output,
+make the suggestions reviewable, list what has to be answered before a decision is reasonable, and
+keep verifying line by line. Everything below is what changed; nothing was claimed that a source
+does not support.
+
+## 1 · Reader path: shop copy, not audit copy
+
+- **Shelf cards rewritten.** Each product now leads with a shelf line (what it is for, in the
+  listing's own terms) and a *decide on* line naming the one spec that settles the case, plus one
+  evidence link. The old card printed a keyword-stuffed listing title, a model number, `see
+  FLG-005` and a bare ASIN — register vocabulary that no shop prints on a shelf ticket.
+- **Every product got its own artwork.** Five new original illustrations (dual basket, oven-style
+  with a bird, XL basket, folding instant-read, leave-in probes to a hub), each captioned *not a
+  product photograph*. Before this pass the three air fryers shared one image and both thermometers
+  shared another — the single most obvious generated-site tell on the page.
+- **Asset weight: 15 MB → 1.39 MB.** The four 3.7 MB PNGs became nine optimized 1200×750 JPEGs,
+  every reference updated in data, and the gate now refuses a PNG asset or one image shared by two
+  products (SG-21).
+- **Process prose off the reader path.** The front page's wall of method text is now a three-item
+  trust rail ("nothing is tested, so nothing is claimed" / "blank beats guessed" / "the links are
+  sponsored"), each pointing at the register that proves it.
+- Two gate rules were verified by *breaking* them first (shared image, stale flag reference), so
+  they are known to fail rather than assumed to pass.
+
+## 2 · Editorial: three guides, and the backlog kept truthful
+
+Published from sources that can be re-read, not from adjectives:
+
+| Guide | The claim it rests on |
+|---|---|
+| [Thermometer accuracy / ice-cup check](guides/thermometer-accuracy-ice-cup-check.html) | USDA FSIS: *"Most food thermometers will give an accurate reading within 2 to 4 degrees F"*; its documented ice-water (32°F) and boiling-water (212°F at sea level, −2°F to −5°F at altitude) procedures; its calibration-per-type table (*oven-cord and fork: "Cannot be calibrated"*). |
+| [Whole-chicken fit](guides/whole-chicken-air-fryer-fit.html) | The three listings' own capacity/footprint/weight strings, the observation that **no listing publishes an interior cavity dimension**, plus FSIS's 165°F and three-place bird check. |
+| [Reading thermometer listing copy](guides/listing-wording-thermometer-claims.html) | FSIS's care rule (*"Most thermometers should not be immersed in water"*, *"do not leave … unless the manufacturer's instructions specifically say it can withstand heat"*) read against the listing's IP67 and 1000°F wording. |
+
+No testing claim, no price, no rating, no "best". Each closes a backlog row: TP-03, TP-06, TP-08
+and TP-09 are marked published **with a pointer to the guide that answers them**, and six new rows
+were added from gaps found while writing (dishwasher-safe part lists, clearance, Sync Finish,
+read-time vs the FSIS table, alarm behaviour, preset names). Each new row states how it was chosen:
+editorial hypothesis, because no Search Console property exists.
+
+## 3 · Compliance: five clauses that had never been read into this register
+
+The Program Policies page renders anonymously, so §2(b), §4, §5, §6(a), §6(c) and §6(d) were read
+verbatim on 2026-11-20 and recorded as **S27** with the quotes. Consequences, all now on the site:
+
+- **§6(d) — no implied endorsement.** Brand and celebrity names sit beside buy buttons on every
+  product surface. The disclosure, the About page and the site-wide footer now state that the site
+  is not endorsed by or affiliated with any brand named on a page, and the gate fails if that
+  sentence disappears (FLG-026).
+- **§6(c) — prompt removal of Program Content Amazon no longer displays.** No process existed.
+  `scripts/freshness.py` measures the age of all 56 recorded reads against today, warns past 14
+  days and fails past 45 (thresholds in `data/freshness.json`, not in code); the removal decision
+  itself stays human and is recorded as open (FLG-027, Q-24).
+- **§6(a) — Program Content may be truncated where meaning is unchanged, not altered.** The site's
+  short shelf labels rely on exactly that permission, so the verbatim listing title is published on
+  every product page under the label, and the comparison is flagged for a human rather than asserted
+  as compliant (FLG-031, Q-23).
+- **§5 — Program Content may not be used to develop machine-learning models without Amazon's
+  express prior written approval.** This is the boundary on the "AI-powered platform" ambition: this
+  repo automates rendering, gating and record-keeping and contains no crawler or corpus export. The
+  ban is written into the standing rules so a future pass cannot drift past it (FLG-028, Q-25).
+- **§4 — Special Links in email are permitted only where the recipient solicited the message.** The
+  capture form records nothing today, so no rule is broken — and no list can be built from it.
+  Recorded as the gate in front of any future newsletter (FLG-029, Q-21, SG-27).
+- **Disclosure over-claim corrected (FLG-032).** The page asserted *"Amazon product descriptions are
+  never copied"* while every product page publishes the listing's verbatim title and its detail
+  values — which is the whole verification method. Replaced with what is actually taken, what is
+  never taken, and the clause that permits it.
+- **Expectation repair from Google (S28, FLG-030).** Google's changelog carries *"Removing
+  documentation for the FAQ rich result feature"* (June 2026) and both the FAQPage and HowTo
+  documentation URLs now redirect to it. The site keeps emitting FAQ markup for parsing and claims
+  no SERP feature from it; no HowTo markup is added.
+
+## 4 · Decision layer, made checkable
+
+- **`direction.html`** — 28 suggestion rows. SG-19 (imagery line) was decided and shipped here;
+  SG-21…SG-28 added. Each of the four paths now lists **the register rows it comprises** and
+  **the questions it waits on**, so a choice can be audited before it is made instead of after.
+- **`questions.html`** — 26 rows, 5 blocking. Five rows gained answers this pass (Q-07, Q-12,
+  Q-13, Q-15, Q-19), each answer citing the source that supports it; Q-22…Q-26 were opened by the
+  policy read above. A blank answer still means *nobody has it*, never *skipped*.
+- **Register honesty enforced, not hoped for.** A `done-this-session` row must now name the pass
+  that shipped it — three rows said "this session", which means nothing once four sessions have said
+  it (the `_note` was corrected to stop readers reading `reviewed_by_session` as authorship). The
+  gate also checks the ledger schema, the freshness data, card hygiene and imagery uniqueness.
+- **Findings drift found and fixed (FLG-034).** The executive summary page's "what changed" table
+  cited flag IDs that had drifted to the wrong findings after a renumbering; all five references were
+  corrected, a structural rule now fails any page citing a flag that does not exist, and SG-28
+  proposes moving pass-level findings into a data file so the semantic half cannot rot either.
+
+## 5 · Numbers, computed
+
+| Register | Now | Before this pass |
+|---|---|---|
+| Pages / sitemap URLs | 30 / 29 | 27 / 26 |
+| Guides | 9 | 6 |
+| Sources | 28 | 26 |
+| Flagged items | 34 | 25 |
+| Open questions (blocking / answered) | 26 (5 / 5) | 21 (5 / 0) |
+| Suggestions (open / blocked) | 28 (9 / 2) | 20 (5 / 0) |
+| Topic backlog rows (published) | 18 (4) | 12 (0) |
+| Image payload | 1.39 MB | 15 MB |
+| Recorded reads on the freshness clock | 56 | — (no clock existed) |
+
+`npm run build` → *Built 30 pages, 29 sitemap URLs, 9 guides, 26 search rows.*
+`npm run check` → *OK: 30 pages checked, 29 sitemap URLs, no violations.*
+
+## 6 · What this pass deliberately did not do
+
+No prices, ratings, review counts, stock levels, conversion scores, revenue forecasts or traffic
+projections. No ranking and no "best". No claim that the supplied short links are invalid (FLG-003
+stays unresolved). No `intended_*` field filled from a redirect. No analytics deployed (Pages is
+static; FLG-007), and no ledger row: `scripts/ledger_add.py` was exercised with a throwaway row,
+rendered, and reverted, because no authorized first-party report exists to record.

@@ -965,6 +965,14 @@ def about_body():
 def exec_body():
     c = counts()
     total_pages = 4 + len(CATEGORIES) + len(PRODUCTS) + len(GUIDES) + len(NAV_DESK)
+    import glob as _glob
+    _imgs = sorted(_glob.glob(os.path.join(ROOT, "assets", "img", "*")))
+    fresh_img = f"{len([1 for p in PRODUCTS if p.get('image')])} of {len(PRODUCTS)}, {len(_imgs)} files in assets/img"
+    fresh_count = "0"
+    try:
+        fresh_count = str(len(_freshness.rows(datetime.date.fromisoformat(TODAY))))
+    except Exception:
+        pass
     return f"""
 <section class="hero"><span class="kicker">Executive summary · for the owner, not for readers</span>
 <h1>Executive summary: {c['products']} products, {c['guides']} guides, {c['flags']} flags, nothing invented</h1>
@@ -989,10 +997,21 @@ def exec_body():
 
 <h2>What the latest verification pass changed</h2>
 <div class="tablewrap"><table><thead><tr><th>Finding</th><th>What changed</th><th>Where</th></tr></thead><tbody>
-<tr><td>One spec row was wrong</td><td>The 8-quart Chefman was recorded at 1700 W / 120 V. Its live bullet reads “1000 Watts/120 Volts – RJ38-SQSS-8T” — 1700 W is the 6-quart model's number. Corrected, and the earlier capture kept beside it.</td><td>FLG-019, <a href="verification.html">Verification</a></td></tr>
-<tr><td>Four listing-internal contradictions confirmed live</td><td>8-Qt temperature (title 450°F vs bullets 200–400°F) · Emeril accessory count (title 6 vs bullets 7) · Emeril preset count (title 24 vs bullets 25) · 6-Qt capacity unit (details “6 liters” vs title “6 quart”)</td><td>FLG-005, FLG-010, FLG-015, FLG-017</td></tr>
-<tr><td>One Amazon product-name string differs from the earlier capture</td><td>B08DKYBTPH serves “TurboFry 4-in-1 … 450°F Hi-Fry” now and a different name string earlier. Both are stored; the live one is displayed.</td><td>FLG-016</td></tr>
-<tr><td>Two buyer-relevant facts found in the live pages</td><td>The 8-Qt ASIN is a 6/8/9-quart size family, and Amazon's own page states there is a newer model of that item. Both are now on the product page.</td><td>FLG-020, FLG-021</td></tr>
+<tr><td>One spec row was wrong</td><td>The 8-quart Chefman was recorded at 1700 W / 120 V. Its live bullet reads “1000 Watts/120 Volts – RJ38-SQSS-8T” — 1700 W is the 6-quart model's number. Corrected, and the earlier capture kept beside it.</td><td>FLG-022, <a href="verification.html">Verification</a></td></tr>
+<tr><td>Four listing-internal contradictions confirmed live</td><td>8-Qt temperature (title 450°F vs bullets 200–400°F) · Emeril accessory count (title 6 vs bullets 7) · Emeril preset count (title 24 vs bullets 25) · 6-Qt capacity unit (details “6 liters” vs title “6 quart”)</td><td>FLG-005, FLG-010, FLG-020, FLG-018</td></tr>
+<tr><td>One Amazon product-name string differs from the earlier capture</td><td>B08DKYBTPH serves “TurboFry 4-in-1 … 450°F Hi-Fry” now and a different name string earlier. Both are stored; the live one is displayed.</td><td>FLG-019</td></tr>
+<tr><td>Two buyer-relevant facts found in the live pages</td><td>The 8-Qt ASIN is a 6/8/9-quart size family, and Amazon's own page states there is a newer model of that item. Both are now on the product page.</td><td>FLG-023, FLG-024</td></tr>
+</tbody></table></div>
+
+<h2>What the fourth pass added (2026-11-20, session ab951e4c)</h2>
+<div class="tablewrap"><table><thead><tr><th>Area</th><th>Change</th><th>Where</th></tr></thead><tbody>
+<tr><td>Reader path</td><td>Shelf cards rewritten: a shelf line, the deciding spec, one evidence link. Register vocabulary (flag IDs, model strings, ASINs) left the cards for the product pages, and each product got its own illustration — {fresh_img}</td><td>Front page · category pages · SG-21, SG-22</td></tr>
+<tr><td>Asset weight</td><td>The four reused 3.7 MB PNGs became nine optimized JPEGs: 15 MB → 1.4 MB for the whole image set, with every reference updated and the gate refusing a PNG or a shared image</td><td>SG-21 · <code>assets/img/</code></td></tr>
+<tr><td>Editorial</td><td>Three new guides, each answerable from a published source: the ice-cup accuracy check, whole-chicken fit against the 165°F rule, and how to read thermometer listing copy. Four backlog rows closed with pointers to the guide that answers each</td><td><a href="guides/index.html">Guides</a> · <a href="topics.html">Topics</a></td></tr>
+<tr><td>Compliance detail</td><td>Program Policies §2(b), §4, §5, §6(a), §6(c) and §6(d) read verbatim and recorded (S27). Six consequences: a brand-endorsement statement, a freshness clock for the §6(c) removal duty, a written limit on training models with Program Content, a rule that affiliate email must be solicited, corrected disclosure wording, and a note that short labels rely on the §6(a) truncation permission</td><td>FLG-026 … FLG-031 · <a href="disclosure.html">Disclosure</a></td></tr>
+<tr><td>Expectation repair</td><td>Google's own changelog says the FAQ rich-result documentation was removed and HowTo is deprecated (S28), so no roadmap row promises a SERP feature from our FAQ markup</td><td>FLG-030 · Q-26</td></tr>
+<tr><td>Machinery</td><td>Two tools added and both exercised: <code>scripts/freshness.py</code> (age of {fresh_count} recorded reads) and <code>scripts/ledger_add.py</code> (a ledger row needs <code>--authorized</code>, a dated provenance string, integer-or-null fields, and no estimating words). The gate gained five rule families, each verified by breaking it first</td><td><a href="measurement.html">Measurement</a></td></tr>
+<tr><td>Decision board</td><td>Paths now name the register rows they comprise and the questions they wait on, so a choice is checkable before it is made; SG-19 (imagery) decided and shipped; SG-21 … SG-27 added</td><td><a href="direction.html">Suggestions &amp; paths</a></td></tr>
 </tbody></table></div>
 
 <h2>What has to happen before any of this earns anything</h2>

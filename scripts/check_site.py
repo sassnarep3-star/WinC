@@ -273,6 +273,9 @@ for s in suggestions:
         fail(f"suggestion {sid}: status {s.get('status')!r} is not one of {sorted(SUG_STATUSES)}")
     if s.get("effort") not in ("S", "M", "L"):
         fail(f"suggestion {sid}: effort {s.get('effort')!r} must be S, M or L")
+    if s.get("status") in ("done-this-session", "shipped") and not re.search(
+            r"(session |arena-|ab951e4c|23d7ed19|82d39deb|0458cd24|dd79e08d|5c2f1a2c|4ca9e665)", str(s.get("status_detail", ""))):
+        fail(f"suggestion {sid}: marked {s['status']!r} without naming the pass that shipped it in status_detail")
 
 q_doc = json.load(open(os.path.join(ROOT, "data/questions.json"), encoding="utf-8"))
 seen_q = set()
@@ -456,6 +459,14 @@ for i, r in enumerate(ledger.get("rows", [])):
             fail(f"campaign-ledger row {i}: {k} contains {EST.search(v).group(0)!r} — the ledger holds figures read out of a report, nothing else")
     if r.get("provenance") and not re.search(r"\d{4}-\d{2}-\d{2}", str(r["provenance"])):
         fail(f"campaign-ledger row {i}: provenance carries no YYYY-MM-DD date, so the row cannot be re-checked")
+
+# 3b. Any flag ID cited in rendered copy must exist. Flag IDs were renumbered once
+#     already (FLG-015..017 collided across sessions), and a citation pointing at an
+#     unrelated number is worse than no citation.
+for hf in html_files:
+    for m in re.finditer(r"FLG-(\d{3})", read(hf)):
+        if "FLG-" + m.group(1) not in {f["id"] for f in FLAGS}:
+            fail(f"{hf}: cites FLG-{m.group(1)}, which is not in data/flags.json")
 
 # 4. Program Policies §6(d): brand names sit next to buy buttons, so the
 #    not-endorsed-by-the-brand statement has to stay on the disclosure page.

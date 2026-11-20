@@ -322,6 +322,24 @@
       "status": "fixed by this session",
       "sources": [],
       "source_note": "Internal only — a stale cross-reference inside the repository, found and removed in the same pass that added the rows it would have misled a reader about."
+    },
+    {
+      "id": "FLG-034",
+      "title": "The executive summary page cited flag IDs that had drifted to the wrong findings",
+      "detail": "Found by session ab951e4c on 2026-11-20 while reading the exec page for other reasons. Its 'latest verification pass' table cited FLG-019 for the wattage correction, FLG-015/FLG-017 for the capacity and preset conflicts, FLG-016 for the name string, and FLG-020/FLG-021 for the size family and newer-model notices. In the current register those numbers belong to other findings (the real ones are FLG-022, FLG-018/FLG-020, FLG-019, FLG-023/FLG-024). The prose was right; the pointers were not — the predictable result of a pass-level findings table typed into the builder while the register it cites kept growing and was renumbered once by another session.",
+      "action": "All five references corrected in the same commit, and the gate now fails any generated page that cites a FLG id absent from data/flags.json. A semantic check (does the cited flag actually match the sentence?) cannot be automated, which is what SG-28 is for.",
+      "status": "fixed by this session; structural rule added to the gate",
+      "sources": [],
+      "source_note": "Internal only — a cross-reference inside this repository, found by reading the rendered page against the register."
+    },
+    {
+      "id": "FLG-035",
+      "title": "Three suggestion rows said ‘shipped in this session’, which stops meaning anything after four sessions",
+      "detail": "Found by session ab951e4c while reconciling the suggestion register against the code. SG-16, SG-17 and SG-18 carried status 'done-this-session' with a status_detail of 'Shipped in this session: …', and the file-level field reviewed_by_session names only the most recent reviewer. Read literally, the register claimed that the newest pass had shipped work three earlier passes had done — the same class of error as a mis-numbered flag reference (FLG-034), just pointing at authorship instead of a finding.",
+      "action": "Each row now names the session and task that shipped it (arena-82d39deb, T20/T22/T23). The _note no longer invites readers to treat reviewed_by_session as authorship, and the gate fails any shipped/done row whose status_detail does not name a pass.",
+      "status": "fixed by this session; gate rule added",
+      "sources": [],
+      "source_note": "Internal only — a provenance error inside this repository's own register, found by reading the rows against the coordination log."
     }
   ]
 }

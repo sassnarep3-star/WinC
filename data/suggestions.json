@@ -1,5 +1,5 @@
 {
-  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. Statuses are re-checked against the code on every pass: a register that misstates its own status is worse than no register.",
+  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' and 'done-this-session' both mean implemented; the pass that did it is named in that row's status_detail, NOT in the file's reviewed_by_session field (which only names the most recent reviewer, and reading it as the author of every done row is how a register starts lying). 'recommended-now' / 'open' / 'open-blocked' = still to decide. Statuses are re-checked against the code on every pass: a register that misstates its own status is worse than no register. Every 'done-this-session' row must name a session in its own status_detail — the gate enforces it.",
   "updated": "2026-11-20",
   "reviewed_by_session": "ab951e4c (fourth pass; SG-19 decided and shipped, SG-03/SG-15 status details extended, SG-21..SG-27 added)",
   "suggestions": [
@@ -237,7 +237,7 @@
       "title": "Every category needs a decision shortcut that names its deciding spec",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped in this session: data/categories.json + 'Match to your situation' block on both category pages.",
+      "status_detail": "Shipped by session arena-82d39deb (task T22, 2026-11-20): data/categories.json + the 'Match to your situation' block on both category pages. Wording de-asserted later by session ab951e4c so no profile ranks a product.",
       "area": "Editorial",
       "problem": "A reader could read every spec on a category page and still not know which spec decides their case. The previous session flagged this as SG-11 and left it open because a recommendation without a stated method reads like affiliate spam.",
       "proposal": "For each category, write reader situations ('two of you, most weeknights'), name the one listed spec that decides that situation, state what the listings actually say about it, and give the answer with the listing linked. Never rank; always name the spec the answer rests on.",
@@ -253,7 +253,7 @@
       "title": "Publish the question backlog so the pipeline is visible",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped in this session: data/topics.json renders as topics.html, linked from the guides index, the front page and the sitemap.",
+      "status_detail": "Shipped by session arena-82d39deb (task T23, 2026-11-20): data/topics.json renders as topics.html, linked from the guides index, the front page and the sitemap. Rows closed by a later pass now carry a published_as pointer (session ab951e4c).",
       "area": "Findability",
       "problem": "The brief asks to publish question-shaped guides and then measure whether anyone arrives. Nothing on the site recorded what was planned, what was published, or how each topic was chosen — so the cadence was invisible and the 'why this topic' question had no public answer.",
       "proposal": "Add a topics page listing planned guides with the reader question, the sources each would need, and a 'chosen from' line that says plainly whether the topic came from an editorial hypothesis or from a measured query. Keep published guides separate from planned ones.",
@@ -269,7 +269,7 @@
       "title": "Read a spec row from the product's own details table, never from a sibling product",
       "status": "done-this-session",
       "status_detail_by": "arena-82d39deb (2026-11-20)",
-      "status_detail": "Shipped in this session: the third independent re-read found one wrong row (the 8-quart Chefman's wattage) and it was corrected with the prior capture kept.",
+      "status_detail": "Shipped by session arena-82d39deb (task T20, 2026-11-20): the third independent re-read found one wrong row (the 8-quart Chefman's wattage) and corrected it with the prior capture kept beside it.",
       "area": "Data",
       "problem": "The 8-quart Chefman was recorded at 1700W / 120V, which is the wattage printed on the 6-quart Chefman listing. The live bullet for the 8-quart reads '1000 Watts/120 Volts – RJ38-SQSS-8T'. A reader comparing power draw would have been reading a number copied from a different product.",
       "proposal": "Make the details-table read mandatory for any spec row, keep the prior capture beside the corrected value so the change is visible, and re-read the remaining rows (model, UPC, weight) for the two thermometers, whose model and package details are still partly blank or inferred from another marketplace.",
@@ -337,7 +337,8 @@
       "risk": "A reader sees less of the uncertainty up front. Mitigated by the decide-on line, which names the deciding spec, and by the trust rail that says blank beats guessed.",
       "expected_effect": "Cards read like a shop. If the framing works, outbound click rate on product cards should rise once the counter is deployed — unmeasured until then.",
       "evidence": "index.html and category pages before this pass printed `see FLG-005` and `ASIN B0…` inside the product grid; after it, cards print no flag ID and no model string (gate rule added).",
-      "feeds_prompt": "Reader-facing cards must not contain flag identifiers, model strings or ASINs; keep those on product pages and registers. Add a gate rule that fails a card block containing /FLG-\\d{3}/."
+      "feeds_prompt": "Reader-facing cards must not contain flag identifiers, model strings or ASINs; keep those on product pages and registers. Add a gate rule that fails a card block containing /FLG-\\d{3}/.",
+      "status_detail": "Shipped by session ab951e4c on 2026-11-20: cards rewritten to shelf line + deciding spec + one evidence line, register vocabulary moved off the reader path, and a gate rule that fails a shelf card printing FLG-\\d{3}, 'ASIN' or a Model line."
     },
     {
       "id": "SG-23",
@@ -351,7 +352,8 @@
       "risk": "Publishing faster than the traffic can arrive means nobody reads it. The mitigation is the same one already in the brief: choose topic six from Search Console queries when the property exists, not from the backlog.",
       "expected_effect": "A visible pipeline that stays truthful. Measured per-guide impressions after 28 days in Search Console; until then this is a hypothesis about cadence, not about demand.",
       "evidence": "This session published 3 guides and marked 4 backlog rows (TP-03, TP-06, TP-08, TP-09) as published in data/topics.json with a pointer to the guide that answers each — the mechanism works, the rate is the decision.",
-      "feeds_prompt": "Publishing cadence: at most 3 guides per build, each from data/guides/*.json, each with a source link per figure, and the matching topics.json row updated to published in the same commit."
+      "feeds_prompt": "Publishing cadence: at most 3 guides per build, each from data/guides/*.json, each with a source link per figure, and the matching topics.json row updated to published in the same commit.",
+      "status_detail": ""
     },
     {
       "id": "SG-24",
@@ -365,7 +367,8 @@
       "risk": "Seasonal pages rot publicly. Mitigation: the page carries its season window and the builder marks it stale after the season passes rather than letting it look evergreen.",
       "expected_effect": "A second entry point for the same verified facts. Measured as entrances and outbound clicks on that URL once the counter exists.",
       "evidence": "Blocked by Q-20: nobody has decided whether the site is seasonal or evergreen, and a season the owner will not maintain is worse than no season.",
-      "feeds_prompt": "Blocked on Q-20 (seasonal vs evergreen). If seasonal is chosen: build a seasons/ landing page from existing guide and product data, date-stamp the season window, and add it to sitemap and nav."
+      "feeds_prompt": "Blocked on Q-20 (seasonal vs evergreen). If seasonal is chosen: build a seasons/ landing page from existing guide and product data, date-stamp the season window, and add it to sitemap and nav.",
+      "status_detail": ""
     },
     {
       "id": "SG-25",
@@ -379,7 +382,8 @@
       "risk": "Comparison pages are the classic doorway-page trap. Mitigated by refusing to emit a page when the fields do not line up, and by never publishing a winner.",
       "expected_effect": "Three or four extra indexable documents that match exact-intent queries. Whether they earn impressions is measurable in Search Console; it is not claimed here.",
       "evidence": "The three air fryers share capacity, exterior dimensions, weight, model and price-blank rows — enough for genuine pair pages; the two thermometers share almost no comparable fields, so they should not get one.",
-      "feeds_prompt": "Add a comparison generator for product pairs with ≥3 comparable non-blank fields; each cell keeps its own source link; no verdict, no winner, no fabricated attribute."
+      "feeds_prompt": "Add a comparison generator for product pairs with ≥3 comparable non-blank fields; each cell keeps its own source link; no verdict, no winner, no fabricated attribute.",
+      "status_detail": ""
     },
     {
       "id": "SG-26",
@@ -393,7 +397,8 @@
       "risk": "Emitting markup Google ignores is harmless but misleading to the next operator, who reads it as a feature. The gate should therefore only accept schema types with a dated source row.",
       "expected_effect": "Structured data that matches what search actually consumes. Success signal: rich-result impressions in Search Console, which requires the property (Q-13/SG-08).",
       "evidence": "scripts/build_site.py currently emits four schema types; no source row in data/sources.json covers Google's HowTo or FAQ documentation, so this session left the markup as-is rather than claiming it is optimal.",
-      "feeds_prompt": "Before adding or keeping any schema type, add a dated source row citing Google's own structured-data documentation for that type; the gate should fail a schema type with no source row."
+      "feeds_prompt": "Before adding or keeping any schema type, add a dated source row citing Google's own structured-data documentation for that type; the gate should fail a schema type with no source row.",
+      "status_detail": ""
     },
     {
       "id": "SG-27",
@@ -407,7 +412,23 @@
       "risk": "Keeping it indefinitely converts a trust signal into a lie by omission. Choosing ‘no list’ is a legitimate answer and should be recorded as one.",
       "expected_effect": "One fewer thing on the page that does not do what it looks like it does. Measurable as subscription starts only if a provider is chosen.",
       "evidence": "Blocked by Q-21 (who owns the reader list and which provider handles addresses); the site's disclosure page already states what is and is not collected.",
-      "feeds_prompt": "Blocked on Q-21. Decision either way: (a) provider + confirmed opt-in flow + retention note, form action wired to it, or (b) remove the form entirely and link feed.xml as the follow mechanism. Update the disclosure page in the same commit."
+      "feeds_prompt": "Blocked on Q-21. Decision either way: (a) provider + confirmed opt-in flow + retention note, form action wired to it, or (b) remove the form entirely and link feed.xml as the follow mechanism. Update the disclosure page in the same commit.",
+      "status_detail": ""
+    },
+    {
+      "id": "SG-28",
+      "title": "Move pass-level findings out of the builder into a register file",
+      "status": "open",
+      "area": "maintainability",
+      "effort": "M",
+      "cost": "none",
+      "problem": "Each session's 'what changed' table is typed inside scripts/build_site.py and cites flag IDs by hand. Two things follow: the references drift when another session renumbers the register (this happened — FLG-034), and the page silently becomes a fossil of whichever pass last edited it, because nothing fails when the prose stops matching the data.",
+      "proposal": "Add data/pass-log.json: one entry per pass with its date, session id, area, change text and the flag ids it touched. Render the executive summary's 'what changed' table from that file, and let the gate verify that every cited flag id exists AND is mentioned by that pass's own flag rows.",
+      "risk": "One more register to fill in honestly; a writer can still describe a finding badly. Mitigated by the gate, which checks the links even when it cannot check the prose.",
+      "expected_effect": "The exec page cannot rot silently. Measurable as zero FLG-citation corrections needed in later passes — currently one pass needed it.",
+      "evidence": "FLG-034 records the drift this session found and fixed; the structural half of the guard shipped with it (the gate now fails a page citing a flag id that does not exist).",
+      "feeds_prompt": "Create data/pass-log.json with one entry per session pass (date, session, area, change, flag_ids). Render executive-summary 'what changed' from it; the gate must check that each flag id cited by a pass entry exists and cites the same source refs as that pass.",
+      "status_detail": ""
     }
   ]
 }

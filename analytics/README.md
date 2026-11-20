@@ -52,3 +52,21 @@ happened. Order and revenue rows must be transcribed from Associates Central's o
 `data/campaign-ledger.json` with the export date, which is the only reason the ledger ships empty.
 Run it behind TLS and keep the `--origin` pin on when it faces the public internet; this file is a
 measurement tool, not a hardened service.
+
+## How a measured number reaches the public site
+
+The collector writes one JSON line per event to `events.jsonl` (gitignored, no IP, no cookie, no
+user agent, five event names only). It never writes an order, because it cannot see one.
+
+The only path from a figure to `data/campaign-ledger.json` — and therefore to `measurement.html` — is:
+
+    python3 scripts/ledger_add.py --authorized \
+        --timestamp 2026-12-05T00:00:00Z \
+        --source "Associates Central > Reports > Earnings" \
+        --channel "site:guides" --clicks 41 --orders 2 --sessions null \
+        --provenance "earnings-2026-12-05.csv, exported by the owner on 2026-12-05"
+
+It refuses rows without `--authorized`, rows whose fields are floats or derived values, rows whose
+source or provenance contains an estimating word, and rows without a dated provenance string. The
+`check_site.py` gate re-validates the file on every build. Until a first-party report exists the
+ledger stays empty — that is the correct state, not an unfinished one.
