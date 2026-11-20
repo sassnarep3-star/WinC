@@ -103,7 +103,8 @@ Irregularities are published on the Flagged for Review page (`docs/flagged.html`
 
 | Item | Result |
 |------|--------|
-| PR | (pending) |
-| Merge | (pending) |
-| GitHub Pages | (pending) |
+| PR | https://github.com/sassnarep3-star/WinC/pull/35 (arena/d1b621b7-winc → main) |
+| Merge | (pending final check run) |
+| GitHub Pages | (pending — will be enabled from /docs on main after merge) |
 | Live URL | https://sassnarep3-star.github.io/WinC/ (pending) |
+| Pre-merge gate | `scripts/check_site.py` → OK, all checks passed (18 pages), 2026-11-20 |
