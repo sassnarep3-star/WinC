@@ -63,3 +63,82 @@ This checkout has no session identifier beyond the active Arena branch (`arena/9
 ### Integration note (68dc5c3a, 2026-11-20)
 
 Session 9471c338's Counter Notes stub (decision.html, review.html, ledger.html, styles.css) is preserved under `archive/counter-notes/` as historical record. The live site is ShopNow Kitchen (this branch), which implements the full brief: verified products, measurement, guides. Their `.github/workflows/pages.yml` is kept; live deploy remains legacy Pages (branch main, path /).
+
+---
+
+# Session arena-23d7ed19 — second-pass verification + publication polish
+
+Branch `arena/23d7ed19-winc`, based on `a6083c9` but worked from `origin/main` after merge
+(`c2a5823`). Started 2026-11-20. Scope: verification re-run, publication/SEO polish, decision
+layer, gate extension. Did **not** rewrite the ShopNow Kitchen site; edited the builder on top of
+the merged state.
+
+## Coordination incident worth reading (merge conflict, resolved without loss)
+
+I claimed T-01..T-14 on a board I created while `main` was still the empty single-commit repo, then
+ran `git pull --rebase origin main` before pushing. By that moment **two other sessions had merged**
+(PR #1 `arena/9471c338-winc`, PR #2 `arena/68dc5c3a-winc`), so the rebase stopped on a
+both-added conflict in `COORDINATION.md`. Resolution: `git rebase --abort` → kept my board text in
+`/tmp` → `git reset --hard origin/main` → adopted *their* board as the trunk document and appended
+mine instead of replacing it. `git ls-tree -r origin/main` (45 files) was read before touching
+anything; `archive/counter-notes/` was left untouched. Nothing from either session was discarded.
+Lesson for the next session: the repo state at claim time is not the repo state at push time —
+re-read `main` immediately before editing shared outputs.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | Files |
+| --- | --- | --- | --- | --- |
+| T08 | Independent live re-observation of all 5 supplied links + probe log | done | arena-23d7ed19 | `data/probes.json`, `data/sources.json` |
+| T09 | Flag register reconciliation (close FLG-008, add FLG-009..FLG-014) | done | arena-23d7ed19 | `data/flags.json` |
+| T10 | Publication polish: imagery, og/twitter cards, lead story, nav labels | done | arena-23d7ed19 | `assets/img/*`, `assets/style.css`, `scripts/build_site.py` |
+| T11 | Two new guides + guides/products index pages + cluster-correct CARDS | done | arena-23d7ed19 | `data/guides/*`, `scripts/build_site.py` |
+| T12 | Suggestion/decision register + prompt builder | done | arena-23d7ed19 | `data/suggestions.json`, `direction.html` |
+| T13 | Open-questions register (blocking flags + discovery actions) | done | arena-23d7ed19 | `data/questions.json`, `questions.html` |
+| T14 | Gate extension (claim drift, image existence, unlinked sources) | done | arena-23d7ed19 | `scripts/check_site.py` |
+| T15 | Cadence tooling: guides as data + scaffolder | done | arena-23d7ed19 | `scripts/new_guide.py`, `data/guides/_TEMPLATE.json` |
+| T16 | Exec summary + README reconciliation with repo state | done | arena-23d7ed19 | `EXECUTIVE-SUMMARY.md`, `README.md` |
+| T17 | PR → main → confirm Pages live | in progress | arena-23d7ed19 | (integration only) |
+
+## Verified sources added by this session
+
+`S16` USDA FSIS Safe Minimum Internal Temperature Chart · `S17` USDA FSIS Food Thermometers ·
+`S18` this session's redirect re-observation (`data/probes.json`) · `S19` Google Search Central
+link qualification (fetched directly, quotable) · `S20` Associates Central tracking-ID help
+(login-gated) · `S21` GitHub Pages API record for this repo.
+Two corrections applied to the existing register rather than left silently wrong: the Amazon
+`S01`/`S02`/`S06`/`S20` rows are now marked as *indexed copies of login-gated pages, not
+authenticated reads*, and `S03` (ftc.gov) is marked as unreachable from this sandbox with the CFR
+text preferred. Claiming a "verification" we did not perform is the failure mode this whole repo is
+supposed to avoid.
+
+## Findings (this session's numbering; also on `flagged-for-review.html`)
+
+| ID | Finding | Status |
+| --- | --- | --- |
+| F-09 | All 5 redirect targets reproduce across two dates, but every response carries `lv=shuf` + `plpRedirect=mhFallback` — a fallback route. Stable ≠ intended. `intended_*` stays blank. | FLG-009, open by design |
+| F-10 | Two migrated guides cited "Sources: Amazon listings B0…, B0…" as **plain text with no links**, which breaks the per-row source rule. Fixed; gate now fails an unlinked guide. | fixed |
+| F-11 | `about_body()` asserted "Meat Thermometers (2 products, 1 guide)" while the cluster had **zero** guides, and air fryers had 4, not 3. Typed prose had drifted from data, as typed prose does. Counts are now computed. | fixed |
+| F-12 | `measurement.html` claimed reader capture was "shipped" with "double opt-in via provider" — no list, no provider, no consent flow exists. Reworded to `partial — no list behind it`. | fixed |
+| F-13 | RSS `<pubDate>` values were ISO (`2026-11-20T00:00:00Z`), which is not valid RFC-822; validators reject the feed. Now formatted properly with `atom:link`, `isPermaLink` GUIDs and categories. | fixed |
+| F-14 | Every guide embedded **all five** products, so the air-fryer comparison ended with two meat thermometers. Now filtered by cluster with a fallback so the block can never render empty. | fixed |
+| F-15 | Hardcoded "4 min read" on every guide regardless of length (2,441–3,378 chars). Now computed from word count. | fixed |
+| F-16 | Emeril listing contradicts itself on accessories (title "Six Cooking Accessories" vs bullets "7 Accessories Included"). Not our transcription error; still needs a manufacturer check. | FLG-010, needs review |
+| F-17 | Zero image files existed in `assets/` and no `og:image` was emitted anywhere. | fixed (illustrations only) |
+| F-18 | `robots.txt` was `Allow: /` only, leaving `/scripts/`, `/data/`, `/analytics/`, `/archive/` in the crawl set. | fixed |
+
+Not irregularities, recorded so nobody re-litigates them: prices/ratings stay blank (policy +
+volatility), the short links are not called invalid (FLG-003 per the brief), and no testing or
+"best" claim is made because none could be sourced.
+
+## Gate status
+
+`python3 scripts/build_site.py && python3 scripts/check_site.py` →
+`OK: 26 pages checked, 25 sitemap URLs, no violations.`
+(25 = 26 pages minus `404.html`, which is intentionally unsitemap'd.)
+
+## PR / merge record (T17)
+
+- Pushed `arena/23d7ed19-winc`, PR → `main`, merged without waiting for review per instruction.
+- Pages: `build_type: legacy`, source `main:/`. Deploy confirmed via the Pages API/build endpoint
+  after merge; live URL re-fetched. Result recorded in the commit that follows this one.

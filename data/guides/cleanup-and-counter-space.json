@@ -1,0 +1,26 @@
+{
+  "slug": "cleanup-and-counter-space",
+  "path": "guides/cleanup-and-counter-space.html",
+  "title": "How to assess cleanup and counter-space trade-offs",
+  "desc": "Dishwasher-safe parts, windows, and the inches your counter actually has. A practical cleanup and footprint guide for basket vs. oven-style fryers.",
+  "cluster": "Air Fryers",
+  "published": "2026-11-20",
+  "updated": "2026-11-20",
+  "season": "Everyday",
+  "image": "",
+  "image_caption": "",
+  "body": "<p>Air fryers promise less oil. They do not promise less washing. Cleanup and counter space are where “great on paper” appliances end up in a closet. Compare these two things before you buy.</p>\n<h2>Cleanup: count the parts</h2>\n<div class=\"tablewrap\"><table><thead><tr><th>Model</th><th>Parts to wash (per listing)</th><th>What to verify on Amazon</th></tr></thead><tbody>\n<tr><td>Chefman 6 Qt Dual</td><td>Two nonstick baskets; dishwasher-safe per listing</td><td>“Dishwasher safe” wording + window seals (hand-wash vs. dishwasher)</td></tr>\n<tr><td>Chefman 8 Qt</td><td>One nonstick basket; dishwasher-safe parts per listing</td><td>Same — confirm which parts are dishwasher-safe</td></tr>\n<tr><td>Emeril 26QT</td><td>Rack, bake pan, drip tray, crisper basket, rotisserie spit, fetch tool (7 accessories)</td><td>Which accessories are dishwasher-safe; crumb-tray access</td></tr>\n</tbody></table></div>\n<p class=\"src\">Sources: <a href=\"https://www.amazon.com/dp/B0CDY277D3\" rel=\"nofollow noopener\" target=\"_blank\">B0CDY277D3</a> · <a href=\"https://www.amazon.com/dp/B08DKYBTPH\" rel=\"nofollow noopener\" target=\"_blank\">B08DKYBTPH</a> · <a href=\"https://www.amazon.com/dp/B09B7SB46R\" rel=\"nofollow noopener\" target=\"_blank\">B09B7SB46R</a> — checked 2026-11-20. Every cell above is transcribed from those listings; blanks mean we could not confirm the value.</p>\n<h2>Counter space: measure depth first</h2>\n<ul>\n<li><strong>Chefman 6 Qt:</strong> 13.38 in deep × 11.81 in wide × 10.63 in tall.</li>\n<li><strong>Chefman 8 Qt:</strong> 12.75 in deep × 13.5 in wide × 10 in tall.</li>\n<li><strong>Emeril 26QT:</strong> 16.9 in deep × 15.8 in wide × 14.8 in tall — measure counter depth and the cabinet above it.</li>\n</ul>\n<p>Tip: tape the footprint on your counter with painter’s tape. Leave it for a day. If you keep moving it, it is too big for that spot.</p>\n<h2>Windows and shake reminders: small features, daily use</h2>\n<p>The Chefman 6 Qt has easy-view windows and a shake reminder; the 8 Qt has an LED shake reminder. These do not change capacity — they change how often you open the basket to check. If you cook daily, they matter. If you cook weekly, they do not.</p>\n<h2>Shop with cleanup in mind</h2>\n<div class=\"grid\">CARDS</div>\n<h2>Frequently asked questions</h2>\n<div class=\"faq\">\n<details><summary>Are all parts dishwasher-safe?</summary><p>Listings say baskets/parts are dishwasher-safe, but always confirm which parts on Amazon — windows, seals, and accessories are often hand-wash only.</p></details>\n<details><summary>How much counter depth do I need?</summary><p>At least the unit’s depth plus a few inches to pull baskets or open doors. The Emeril needs ~17 inches of depth; many counters are 24–25 inches deep, but cabinets above can be the real limit.</p></details>\n</div>",
+  "faq": [
+    [
+      "Are all parts dishwasher-safe?",
+      "Listings say baskets/parts are dishwasher-safe, but always confirm which parts on Amazon — windows, seals, and accessories are often hand-wash only."
+    ],
+    [
+      "How much counter depth do I need?",
+      "At least the unit’s depth plus a few inches to pull baskets or open doors. The Emeril needs ~17 inches of depth; many counters are 24–25 inches deep, but cabinets above can be the real limit."
+    ]
+  ],
+  "_provenance": " Source line converted from bare text to linked citations by arena-23d7ed19 (gate check: no unlinked sources).",
+  "category": "Air Fryers",
+  "weight": 70
+}

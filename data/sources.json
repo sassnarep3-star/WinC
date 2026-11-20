@@ -1,19 +1,156 @@
 {
   "sources": [
-    {"id": "S01", "title": "Amazon Associates Program Operating Agreement (Updated 2025-10-15)", "url": "https://affiliate-program.amazon.com/help/operating/agreement", "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats", "date": "2026-11-20"},
-    {"id": "S02", "title": "Amazon Associates Program Policies (Updated 2026-04-14)", "url": "https://affiliate-program.amazon.com/help/operating/policies", "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; disclosure + privacy requirements", "date": "2026-11-20"},
-    {"id": "S03", "title": "FTC Endorsement Guides: What People Are Asking", "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking", "what": "Affiliate commission relationship must be disclosed clearly and conspicuously; closer to recommendation is better", "date": "2026-11-20"},
-    {"id": "S04", "title": "Google — Qualify your outbound links to Google (rel=sponsored)", "url": "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links", "what": "Mark ads/paid placements with rel=sponsored; affiliate links qualify", "date": "2026-11-20"},
-    {"id": "S05", "title": "Sell on Amazon — What is an ASIN?", "url": "https://sell.amazon.com/blog/what-is-an-asin", "what": "ASIN is a unique 10-character alphanumeric code; found after /dp/ in product URL", "date": "2026-11-20"},
-    {"id": "S06", "title": "Amazon Associates — Application Review Process (special tagged links)", "url": "https://affiliate-program.amazon.com/help/node/topic/G8TW5AE9XL2VX9VM", "what": "Special links are identifiers (e.g. abcd-20) embedded in Amazon product links; must be embedded on declared sites", "date": "2026-11-20"},
-    {"id": "S07", "title": "Amazon Associates — Why do I have to identify myself as an Associate?", "url": "https://affiliate-program.amazon.com/help/node/topic/GPXFHVYZMTGPUMPE", "what": "Link-level disclosure must be clear + conspicuous near link; Operating Agreement statement must appear clearly and conspicuously on Site", "date": "2026-11-20"},
-    {"id": "S08", "title": "GitHub Pages documentation", "url": "https://docs.github.com/en/pages", "what": "GitHub Pages turns a repository into a live website; site URL https://sassnarep3-star.github.io/WinC/", "date": "2026-11-20"},
-    {"id": "S09", "title": "Amazon listing — CHEFMAN 6 Qt Dual Basket (B0CDY277D3)", "url": "https://www.amazon.com/dp/B0CDY277D3", "what": "Title, brand, model RJ38-SQPF-3TDB-2W, 6 Qt, dimensions, weight, temp, UPC", "date": "2026-11-20"},
-    {"id": "S10", "title": "Amazon listing — Emeril Lagasse 26QT French Door (B09B7SB46R)", "url": "https://www.amazon.com/dp/B09B7SB46R", "what": "Title, brand, model 4-00675-02X-VN, 26QT, dimensions, weight, UPC", "date": "2026-11-20"},
-    {"id": "S11", "title": "Amazon listing — Chefman 8 Qt TurboFry (B08DKYBTPH)", "url": "https://www.amazon.com/dp/B08DKYBTPH", "what": "Title, brand, 8 Qt, dimensions, weight, power, UPC; model/temp conflicts flagged (FLG-005)", "date": "2026-11-20"},
-    {"id": "S12", "title": "Amazon listing — ThermoMaven 1 Sec (B0DHZTCNR5)", "url": "https://www.amazon.com/dp/B0DHZTCNR5", "what": "Title, ±0.5°F accuracy, NIST&NSF certified, auto-rotate LED, waterproof; model HT07 via Amazon.fr (FLG-004)", "date": "2026-11-20"},
-    {"id": "S13", "title": "Amazon listing — CHEF iQ Sense Gen3 (B0DZFD6R9Z)", "url": "https://www.amazon.com/dp/B0DZFD6R9Z", "what": "Title, 3 probes + hub, WiFi, 1000°F, model CQ60-3C-Z1-E, UPC, package dims", "date": "2026-11-20"},
-    {"id": "S14", "title": "Prior sessions — live link resolutions 2026-11-17 (provenance, not official)", "url": "https://github.com/kanlerxz87-cyber/Zone2/pull/160", "what": "B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z; also Zone3 #153, Prod3 #11", "date": "2026-11-20"},
-    {"id": "S15", "title": "Submitted short links (as supplied in brief)", "url": "https://link.amazon/B04G1MEwY", "what": "Five tokens (9 chars each): B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj. Compliance status unresolved (FLG-003) — not claimed invalid.", "date": "2026-11-20"}
+    {
+      "id": "S01",
+      "title": "Amazon Associates Program Operating Agreement (Updated 2025-10-15)",
+      "url": "https://affiliate-program.amazon.com/help/operating/agreement",
+      "what": "§5: 'As an Amazon Associate I earn from qualifying purchases.' must be clearly and prominently stated on Site; §1: Special Links must use tagged formats",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+    },
+    {
+      "id": "S02",
+      "title": "Amazon Associates Program Policies (Updated 2026-04-14)",
+      "url": "https://affiliate-program.amazon.com/help/operating/policies",
+      "what": "Price/availability display only via Amazon-served link or Creators/PA API; no static prices; disclosure + privacy requirements",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+    },
+    {
+      "id": "S03",
+      "title": "FTC Endorsement Guides: What People Are Asking",
+      "url": "https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking",
+      "what": "Affiliate commission relationship must be disclosed clearly and conspicuously; closer to recommendation is better",
+      "date": "2026-11-20",
+      "access": "ftc.gov HTML page returned an error from this sandbox. Use the CFR/FTC PDF text instead (S22) for the quoted standard."
+    },
+    {
+      "id": "S04",
+      "title": "Google — Qualify your outbound links to Google (rel=sponsored)",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links",
+      "what": "Mark ads/paid placements with rel=sponsored; affiliate links qualify",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S05",
+      "title": "Sell on Amazon — What is an ASIN?",
+      "url": "https://sell.amazon.com/blog/what-is-an-asin",
+      "what": "ASIN is a unique 10-character alphanumeric code; found after /dp/ in product URL",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S06",
+      "title": "Amazon Associates — Application Review Process (special tagged links)",
+      "url": "https://affiliate-program.amazon.com/help/node/topic/G8TW5AE9XL2VX9VM",
+      "what": "Special links are identifiers (e.g. abcd-20) embedded in Amazon product links; must be embedded on declared sites",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+    },
+    {
+      "id": "S07",
+      "title": "Amazon Associates — Why do I have to identify myself as an Associate?",
+      "url": "https://affiliate-program.amazon.com/help/node/topic/GPXFHVYZMTGPUMPE",
+      "what": "Link-level disclosure must be clear + conspicuous near link; Operating Agreement statement must appear clearly and conspicuously on Site",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S08",
+      "title": "GitHub Pages documentation",
+      "url": "https://docs.github.com/en/pages",
+      "what": "GitHub Pages turns a repository into a live website; site URL https://sassnarep3-star.github.io/WinC/",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S09",
+      "title": "Amazon listing — CHEFMAN 6 Qt Dual Basket (B0CDY277D3)",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "what": "Title, brand, model RJ38-SQPF-3TDB-2W, 6 Qt, dimensions, weight, temp, UPC",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S10",
+      "title": "Amazon listing — Emeril Lagasse 26QT French Door (B09B7SB46R)",
+      "url": "https://www.amazon.com/dp/B09B7SB46R",
+      "what": "Title, brand, model 4-00675-02X-VN, 26QT, dimensions, weight, UPC",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S11",
+      "title": "Amazon listing — Chefman 8 Qt TurboFry (B08DKYBTPH)",
+      "url": "https://www.amazon.com/dp/B08DKYBTPH",
+      "what": "Title, brand, 8 Qt, dimensions, weight, power, UPC; model/temp conflicts flagged (FLG-005)",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S12",
+      "title": "Amazon listing — ThermoMaven 1 Sec (B0DHZTCNR5)",
+      "url": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "what": "Title, ±0.5°F accuracy, NIST&NSF certified, auto-rotate LED, waterproof; model HT07 via Amazon.fr (FLG-004)",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S13",
+      "title": "Amazon listing — CHEF iQ Sense Gen3 (B0DZFD6R9Z)",
+      "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "what": "Title, 3 probes + hub, WiFi, 1000°F, model CQ60-3C-Z1-E, UPC, package dims",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S14",
+      "title": "Prior sessions — live link resolutions 2026-11-17 (provenance, not official)",
+      "url": "https://github.com/kanlerxz87-cyber/Zone2/pull/160",
+      "what": "B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z; also Zone3 #153, Prod3 #11",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S15",
+      "title": "Submitted short links (as supplied in brief)",
+      "url": "https://link.amazon/B04G1MEwY",
+      "what": "Five tokens (9 chars each): B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj. Compliance status unresolved (FLG-003) — not claimed invalid.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S16",
+      "title": "USDA FSIS — Safe Minimum Internal Temperature Chart",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
+      "what": "All poultry (incl. ground poultry, giblets, stuffing) 165°F; ground meats 160°F; beef/pork/veal/lamb steaks, chops, roasts 145°F + rest ≥3 min; fresh/ham uncooked 145°F + rest. Used as the only numeric food-safety claims in the two new guides.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S17",
+      "title": "USDA FSIS — Food Thermometers",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
+      "what": "A food thermometer is 'the only reliable way' to confirm safe minimum internal temperature; whole poultry checked in three places (innermost thigh, innermost wing, thickest breast), avoid bone; do not stuff whole poultry for optimum safety; stuffing centre must reach 165°F.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S18",
+      "title": "Independent redirect re-observation, session arena-23d7ed19 (2026-11-20)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "All five link.amazon tokens resolved live; 5/5 targets match the 2026-11-17 prior-session mapping (S14). Every final URL carried lv=shuf and plpRedirect=mhFallback. Raw query strings + page titles recorded in data/probes.json.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S19",
+      "title": "Google — Make your links crawlable / qualify outbound links",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/links-crawlable",
+      "what": "Fetched directly: 'If you were paid in some way for the link, qualify these links with sponsored or nofollow.' Basis for rel=\"sponsored nofollow noopener\" on every reader button.",
+      "date": "2026-11-20"
+    },
+    {
+      "id": "S20",
+      "title": "Amazon Associates — Can I change my Associates ID? (tracking ID suffix)",
+      "url": "https://affiliate-program.amazon.com/help/node/topic/GM6CHU93RDXZV7D8",
+      "what": "'our software automatically adds \"-20\" to the end of all Associate IDs' — supports treating shopnow047c-20 as a US-marketplace-shaped tracking ID. Does not confirm issuance (FLG-001).",
+      "date": "2026-11-20",
+      "access": "Login-gated Associates Central page. Text was obtained from the indexed copy of the official page, not from an authenticated read in this session — re-verify in your own console before relying on it (see FLG-006)."
+    },
+    {
+      "id": "S21",
+      "title": "GitHub Pages API record for this repository",
+      "url": "https://api.github.com/repos/sassnarep3-star/WinC/pages",
+      "what": "build_type=legacy, source branch main path /, public true, https enforced, html_url https://sassnarep3-star.github.io/WinC/. Basis for generating the site into the repo root (F-04).",
+      "date": "2026-11-20"
+    }
   ]
 }

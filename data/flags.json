@@ -1,12 +1,102 @@
 {
   "flags": [
-    {"id": "FLG-001", "title": "Tracking ID shopnow047c-20 cannot be confirmed from public pages", "detail": "Shape matches Amazon's published abcd-20 pattern (S06), but no public page confirms this ID is issued/active. Reader links embed it as supplied; do not scale until confirmed in Associates Central.", "action": "Confirm ID + declared sites in Associates Central; record confirmation date in product-intent record.", "status": "needs review"},
-    {"id": "FLG-002", "title": "Reader Special Links not yet tested in enrolled Associates workflow", "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session.", "action": "Test one link per product in Associates workflow; confirm destination and tracking report before scaling.", "status": "needs review"},
-    {"id": "FLG-003", "title": "Supplied link.amazon short links — compliance status unresolved", "detail": "Exact compliance status is unresolved. This site does NOT claim the supplied short links are invalid. They are shown only in the verification register for provenance, not as reader buy buttons.", "action": "Confirm in Associates Central whether link.amazon short links are permitted Special Links.", "status": "needs review"},
-    {"id": "FLG-004", "title": "ThermoMaven ASIN variant URL (B0DHZTCNR5 vs B0DMDQZTZN)", "detail": "One search result for B0DHZTCNR5 surfaced a us.amazon.com URL with dp/B0DMDQZTZN. Canonical ASIN needs re-observation.", "action": "Re-observe redirect; confirm canonical ASIN on live listing.", "status": "needs review"},
-    {"id": "FLG-005", "title": "Chefman 8 Qt (B08DKYBTPH) model / max-temp conflicts", "detail": "Listing snippets conflict: model 'RJ38-SQSS-8T' vs 'Large Air Fryer'; max temp 400°F vs 450°F Hi-Fry mention.", "action": "Confirm model + temp range on live listing and manufacturer page; correct specs table.", "status": "needs review"},
-    {"id": "FLG-006", "title": "Prices, ratings, review counts left blank", "detail": "Per Program Policies (S02), static prices must not be displayed; ratings/counts are volatile and not API-sourced. All such cells are blank + flagged, never inferred.", "action": "Only display via Creators/PA API with timestamp, or keep blank.", "status": "needs review"},
-    {"id": "FLG-007", "title": "Analytics endpoint code provided, not deployed", "detail": "GitHub Pages is static and cannot run a server endpoint. Worker code + client beacon are shipped; events record locally until endpoint URL is configured.", "action": "Deploy analytics/worker.js, set endpoint in assets/app.js, then record events.", "status": "needs review"},
-    {"id": "FLG-008", "title": "Redirects not re-observed in this session (sandbox network)", "detail": "This sandbox cannot reach link.amazon/amazon.com directly. Observed targets rely on prior sessions' 2026-11-17 live resolutions + Amazon listing snippets (S14, S09–S13).", "action": "Re-observe all five redirects from an unrestricted network and update observed_date.", "status": "needs review"}
+    {
+      "id": "FLG-001",
+      "title": "Tracking ID shopnow047c-20 cannot be confirmed from public pages",
+      "detail": "Shape matches Amazon's published abcd-20 pattern (S06), but no public page confirms this ID is issued/active. Reader links embed it as supplied; do not scale until confirmed in Associates Central.",
+      "action": "Confirm ID + declared sites in Associates Central; record confirmation date in product-intent record.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-002",
+      "title": "Reader Special Links not yet tested in enrolled Associates workflow",
+      "detail": "Reader buy buttons are constructed as amazon.com/dp/<observed ASIN>?tag=shopnow047c-20. Destination + tracking-report confirmation (one link per product) has not been done in this session.",
+      "action": "Test one link per product in Associates workflow; confirm destination and tracking report before scaling.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-003",
+      "title": "Supplied link.amazon short links — compliance status unresolved",
+      "detail": "Exact compliance status is unresolved. This site does NOT claim the supplied short links are invalid. They are shown only in the verification register for provenance, not as reader buy buttons.",
+      "action": "Confirm in Associates Central whether link.amazon short links are permitted Special Links.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-004",
+      "title": "ThermoMaven ASIN variant URL (B0DHZTCNR5 vs B0DMDQZTZN)",
+      "detail": "One search result for B0DHZTCNR5 surfaced a us.amazon.com URL with dp/B0DMDQZTZN. Canonical ASIN needs re-observation. 2026-11-20 update: a fresh redirect landed on B0DHZTCNR5 again, not B0DMDQZTZN. Weakens the variant concern but does not settle canonicality, because the redirect is a fallback route (FLG-009).",
+      "action": "Re-observe redirect; confirm canonical ASIN on live listing.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-005",
+      "title": "Chefman 8 Qt (B08DKYBTPH) model / max-temp conflicts",
+      "detail": "Listing snippets conflict: model 'RJ38-SQSS-8T' vs 'Large Air Fryer'; max temp 400°F vs 450°F Hi-Fry mention. 2026-11-20 update: the listing's own <title> reads 'TurboFry® 4-in-1 ... 450°F Hi-Fry' while the captured title string says 'TurboFry Touch ... Family Size' with 200-400°F, so the conflict is on the page itself, not in our transcription.",
+      "action": "Confirm model + temp range on live listing and manufacturer page; correct specs table.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-006",
+      "title": "Prices, ratings, review counts left blank",
+      "detail": "Per Program Policies (S02), static prices must not be displayed; ratings/counts are volatile and not API-sourced. All such cells are blank + flagged, never inferred.",
+      "action": "Only display via Creators/PA API with timestamp, or keep blank.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-007",
+      "title": "Analytics endpoint code provided, not deployed",
+      "detail": "GitHub Pages is static and cannot run a server endpoint. Worker code + client beacon are shipped; events record locally until endpoint URL is configured.",
+      "action": "Deploy analytics/worker.js, set endpoint in assets/app.js, then record events.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-008",
+      "title": "Redirects not re-observed in this session (sandbox network)",
+      "detail": "This sandbox cannot reach link.amazon/amazon.com directly. Observed targets rely on prior sessions' 2026-11-17 live resolutions + Amazon listing snippets (S14, S09–S13). RESOLVED: session arena-23d7ed19 re-observed all five redirects live on 2026-11-20 (see data/probes.json and S18). Every target matches the prior-session mapping 5/5, so the observed_* fields are reproducible rather than single-session noise.",
+      "action": "Nothing further. If a future re-observation diverges, re-open this flag and re-check the intended_* fields too.",
+      "status": "resolved 2026-11-20"
+    },
+    {
+      "id": "FLG-009",
+      "title": "Observed redirect is a fallback route, not a canonical resolution",
+      "detail": "All five final URLs carried lv=shuf and plpRedirect=mhFallback. That is Amazon's shuffle/listing-page fallback, i.e. the requested identifier did not resolve to a listing. The mapping is stable across 2026-11-17 and 2026-11-20, so 'observed' is a trustworthy record of where the link goes — but it is NOT evidence of what the supplier intended. Intended fields stay blank for this reason.",
+      "action": "Get the ten-character ASIN or full /dp/ URL from the link supplier (Q-02). Until then never describe the observed product as 'the product you gave us'.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-010",
+      "title": "Emeril 26QT listing: 'Six Cooking Accessories' (title) vs '7 Accessories Included' (bullets)",
+      "detail": "Both strings appear on the same captured page for B09B7SB46R. Accessory count is a minor spec but it is exactly the kind of detail a reader uses to decide, and it is the kind of error that makes a site look scraped.",
+      "action": "Confirm on the manufacturer's own page; if still ambiguous, render 'per listing: 6 or 7 (title vs bullets)' instead of choosing silently.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-011",
+      "title": "Audience/locale unresolved: NL-based owner, US-targeted content",
+      "detail": "Everything on the site is English content pointing at amazon.com with a US-shaped tracking suffix, while the owner's locale is South Holland, NL. No OneLink, no secondary marketplace enrolment, no translated content exists. This is a strategic gap, not an error.",
+      "action": "Decide the primary audience (Q-10). If NL/EU readers matter, check per-marketplace Associates enrolment before writing more content.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-012",
+      "title": "No legal review performed; disclosure satisfies Amazon + FTC framing only",
+      "detail": "The site carries the required Associates sentence above the fold and in the footer, and a link-level Sponsored label, which is what the cited sources require. It has NOT been reviewed against EU/Dutch consumer-information or e-commerce rules, has no imprint, no entity name and no contact route, and this session makes no claim that it is legally compliant — only that it matches the two published texts in sources.json.",
+      "action": "Owner + qualified adviser: confirm imprint/identity requirements for a commercial site targeting NL/EU readers, then add entity + contact to the footer.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-013",
+      "title": "Newsletter copy promised a consent flow that no code implements",
+      "detail": "The capture block asserted 'Double opt-in. No tracking pixel.' while the only implemented behaviour is a local event record and a provider the owner has not configured yet. Fixed in this session's copy, but recorded here because privacy claims are the ones readers hold you to.",
+      "action": "Keep capture copy and capture code in the same change; check_site.py now blocks unimplemented privacy promises in copy.",
+      "status": "fixed in this session"
+    },
+    {
+      "id": "FLG-014",
+      "title": "Product identities rest on Amazon marketing copy, not manufacturer data",
+      "detail": "Brand/model/capacity/dimension values in data/products.json were transcribed from Amazon listing pages (S09-S13). For an affiliate site that is a reasonable source, but Amazon bullets are seller-written marketing text; two of five already show internal contradictions (FLG-005, FLG-010).",
+      "action": "For numeric specs that drive a buying decision, prefer the manufacturer spec sheet and record its URL + date per cell.",
+      "status": "needs review"
+    }
   ]
 }

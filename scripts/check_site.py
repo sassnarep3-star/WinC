@@ -4,7 +4,7 @@ Run: python3 scripts/check_site.py
 Checks: disclosure strip on every page, sponsored links, no prices, sitemap coverage,
 internal links resolve, product data sanity (9-char tokens, 10-char ASINs, blank intended).
 """
-import os, re, json, sys, xml.etree.ElementTree as ET
+import os, re, json, sys, html as _html, xml.etree.ElementTree as ET
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
@@ -124,6 +124,128 @@ if "<rss" not in feed:
 robots = read("robots.txt")
 if "Sitemap:" not in robots:
     fail("robots.txt missing Sitemap")
+
+# --- extra gate (session arena-23d7ed19): drift that used to need a human reviewer ---
+GUIDE_DIR = os.path.join(ROOT, "data", "guides")
+guide_files = []
+if os.path.isdir(GUIDE_DIR):
+    guide_files = [fn for fn in sorted(os.listdir(GUIDE_DIR))
+                   if fn.endswith(".json") and not fn.startswith("_")]
+if not guide_files:
+    fail("data/guides/ has no guide files (files starting with _ are templates)")
+
+CATS = ("Air Fryers", "Meat Thermometers")
+def _count_products(cat):
+    return sum(1 for x in products if x["category"] == cat)
+def _guide_docs():
+    out = []
+    for fn in guide_files:
+        with open(os.path.join(GUIDE_DIR, fn), encoding="utf-8") as f:
+            out.append(json.load(f))
+    return out
+guides = _guide_docs()
+for g in guides:
+    slug = os.path.splitext(g["_file"] if "_file" in g else fn)[0] if False else None
+    name = g.get("slug") or (g.get("path", "").split("/")[-1].replace(".html", ""))
+    gp = g.get("path", "")
+    if not gp:
+        fail(f"guide {name}: missing path"); continue
+    if not os.path.exists(os.path.join(ROOT, gp)):
+        fail(f"guide {name}: built page missing ({gp}) — run scripts/build_site.py")
+    if SITE + gp not in locs:
+        fail(f"guide {name}: {gp} not in sitemap.xml (cadence must not need hand-edits)")
+    for field in ("title", "desc", "cluster", "category", "published", "body", "faq"):
+        if not g.get(field):
+            fail(f"guide {name}: field '{field}' is empty")
+    body = g.get("body", "")
+    if "CARDS" in body and "grid" not in body:
+        fail(f"guide {name}: CARDS token used without a .grid wrapper")
+    if not re.search(r'(amazon\.com|\.gov|associates|Operating Agreement)', body):
+        fail(f"guide {name}: no source anchor in body — every published figure needs one")
+    if g.get("category") not in CATS:
+        fail(f"guide {name}: category '{g.get('category')}' is not a shop category, so CARDS falls back to all products")
+    if g.get("image") and not os.path.exists(os.path.join(ROOT, g["image"])):
+        fail(f"guide {name}: image {g['image']} does not exist")
+
+# expected product counts per category: a category with zero guides is a dead end
+for cat in CATS:
+    if _count_products(cat) and not any(x.get("category") == cat for x in guides):
+        fail(f"category {cat} has products but no guide — orphaned cluster")
+
+# every referenced local asset must exist
+for hf in html_files:
+    content = read(hf)
+    base = os.path.dirname(hf)
+    for m in re.finditer(r'<img[^>]+src="([^"]+)"', content):
+        src = m.group(1)
+        if src.startswith(("http", "data:", "mailto:")):
+            continue
+        rel = os.path.normpath(os.path.join(base, src)) if base else src
+        if not os.path.exists(os.path.join(ROOT, rel)):
+            fail(f"{hf}: missing image -> {src}")
+    for m in re.finditer(r'<meta property="og:image" content="([^"]+)"', content):
+        u = m.group(1)
+        if not u.startswith(SITE):
+            fail(f"{hf}: og:image not on this site: {u}")
+        elif not os.path.exists(os.path.join(ROOT, u[len(SITE):])):
+            fail(f"{hf}: og:image file missing: {u}")
+
+# claims the repo has no evidence for. Affirmative-claim patterns only:
+# negations ("no hands-on testing was performed") are the correct copy and stay allowed.
+BANNED = [
+    (r"\bwe tested\b", "claims testing that has not happened"),
+    (r"\bour\s+(test\s+)?lab\b", "claims a test facility"),
+    (r"\bwe tried\b", "claims personal use"),
+    (r"\bbest overall\b", "ranking without a stated method"),
+    (r"\beditor'?s choice\b", "award language without a process"),
+    (r"\bdouble opt-in\b", "promises a consent flow no code implements"),
+    (r"\bgame[- ]?changer\b", "AI-slop register"),
+    (r"\bdelve\b", "AI-slop register"),
+    (r"\belevate your\b", "AI-slop register"),
+    (r"\bin today.s (fast|world)\b", "AI-slop register"),
+    (r"\bin conclusion\b", "essay filler"),
+    (r"\btrust us\b", "asks for trust instead of showing sources"),
+    (r"\bonly \d+ left\b", "false scarcity"),
+    (r"\b(hottest|must-have|must have|blow[sd]? your mind)\b", "hype without a source"),
+]
+NEGATORS = ("no ", "not ", "never ", "without ", "avoid ", "refuse", "cannot", "can't",
+            "don't", "do not ", "won't", "zero ", "neither", "claims nothing", "only")
+def scan_text(hf):
+    t = re.sub(r"(?s)<script.*?</script>|<style.*?</style>", " ", read(hf))
+    t = re.sub(r"(?s)<[^>]+>", " ", t)
+    t = _html.unescape(t)
+    # drop quoted mentions: this site quotes bad copy in order to say it does not use it
+    q = "".join(chr(c) for c in (0x201C, 0x201D, 0x2018, 0x2019, 34, 39, 96))
+    t = re.sub("[" + q + "][^" + q + "]{1,90}[" + q + "]", " ", t)
+    return t
+for hf in html_files:
+    text = scan_text(hf)
+    for pat, why in BANNED:
+        for m in re.finditer(pat, text, re.I):
+            pre = text[max(0, m.start() - 60):m.start()].lower()
+            pre = pre[pre.rfind(".") + 1:]
+            if any(n in pre for n in NEGATORS):
+                continue  # negated mention, e.g. "no hands-on testing"
+            fail(f"{hf}: banned phrase {m.group(0)!r} — {why}")
+
+# typed counts drift; computed counts do not. About page must match the data.
+parts = "; ".join(f"{c} ({_count_products(c)} products, {sum(1 for x in guides if x.get('category')==c)} guides)" for c in CATS)
+about = read("about.html")
+if parts not in about:
+    fail(f"about.html cluster counts do not match data (expected substring: {parts!r}) — compute them in build_site.py, do not type them")
+
+# nav labels must resolve to index pages, not to a single leaf
+idx = read("index.html")
+for label, target in (("Guides", "guides/index.html"), ("The shop", "products/index.html")):
+    if f'href="{target}"' not in idx:
+        fail(f"navigation: '{label}' does not point at {target}")
+    if not os.path.exists(os.path.join(ROOT, target)):
+        fail(f"navigation target missing: {target}")
+
+# process file the brief requires
+if not os.path.exists(os.path.join(ROOT, "COORDINATION.md")):
+    fail("COORDINATION.md missing — shared task board is required by the working agreement")
+
 
 if errors:
     print(f"FAIL ({len(errors)} violations):")
