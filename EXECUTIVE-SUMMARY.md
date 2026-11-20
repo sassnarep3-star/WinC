@@ -96,9 +96,8 @@ Corrected the register where earlier sessions had over-claimed (Amazon policy pa
 
 ### What every pass has held constant
 
-<<<<<<< HEAD
 No prices. No ratings. No testing claims. Intended and observed ASINs in separate fields. Short links never called invalid. Every table row that makes a claim carries a source link or an explicit “internal only” note.
-=======
+
 Nothing in this repo can confirm the tracking ID is issued, that a hand-built `?tag=` link is an
 approved link form for this account, or that these five listings are the five products that were
 meant to be promoted (Q-01, Q-02, Q-16). Those need an enrolled Associates account. Until they are
@@ -295,8 +294,174 @@ explicit design directive to the build-prompt builder.
 
 **No revenue forecast, no conversion score, no traffic projection.** The ledger stays empty until
 authorised first-party reports arrive.
->>>>>>> origin/main
 
+---
+
+# Sixth observation and a shop-shaped front page (2026-11-20, session `f1fd0ff0`)
+
+The brief for this pass had three parts: lead with the products, give the reader a decision to
+make, and keep every number sourced. Three things changed on the site, and one row of data turned
+out to be wrong in public.
+
+## 1 · Verification, a sixth time — 5/5 titles verbatim, and two new findings
+
+- **All five supplied links were re-resolved and all five listings re-read** on 2026-11-20. Two
+  parallel sessions had already recorded observations #4 and #5 the same day; this is #6, and the
+  register now holds six observations across two dates. 5/5 page `<title>` values match the stored product
+  titles verbatim; the redirect responses still carry `lv=shuf` + `plpRedirect=mhFallback`. The
+  Emeril page exposed its full details table, so dimensions (16.9" × 15.8" × 14.8"), capacity
+  (24.6 litres), model `4-00675-02X-VN`, UPC `752356835682`, 1700 W and its own ASIN row were
+  re-checked cell by cell against `data/products.json` — all match, and the same page repeats the
+  six-versus-seven accessories contradiction (FLG-010) in `Configuration` vs `Item Highlight`.
+- **FLG-026 (new):** two of five resolved URLs carried a variant parameter (`th=1`), and Amazon's
+  own rails showed sibling listings for three products (Chefman 6 Qt dual basket `B0B7C327LK`,
+  ThermoMaven Orange `B0GL7Z4KP4`, CHEF iQ Sense `B0DZFNQXGL`). A stable destination still does not
+  pin the variant a reader is served, so no product page here claims a colour, size or bundle.
+- **FLG-027 (new):** prices, star ratings and “Black Friday Deal” badges were visible during the
+  reads and were not copied (Program Policies, S02). The consequence is stated as an open decision
+  (SG-27 / Q-23), not left as a silent gap.
+- **One reader-facing value was wrong in public:** the Chefman 8 Qt `temperature` and `model`
+  fields carried “— see FLG-005” inside the *value*, so a shopper copying the number copied our
+  bookkeeping with it. The fields are now clean (`200-400°F`, `RJ38-SQSS-8T`) and the disagreement
+  lives where it belongs — the product page's “Where the listing disagrees with itself” block and
+  the Flagged page. The gate now fails any spec value that carries a flag id.
+
+## 2 · The shop, rebuilt so it reads like one
+
+- Cards no longer print Amazon's keyword-stuffed title as body copy. Each carries a short editorial
+  line written only from that product's own sourced fields, with the verbatim listing title moved
+  to the product page under “What the listing itself says, verbatim”.
+- One commissioned illustration per product, so no two cards share artwork, and product artwork doubles as each
+  page's `og:image`. Every picture is captioned as a commissioned illustration that does not show the exact unit,
+  and each file is served through the site's `<picture>` pipeline (a compressed PNG with a WebP twin) instead of the
+  multi-megabyte originals the repo had started to accumulate.
+- The front page leads with the products and a one-screen at-a-glance table (form, capacity,
+  footprint, weight, what the listing sets it up for, source link per row), followed by the guides.
+  Register counts no longer appear as a feature of the landing page; the dashboard pages are one
+  navigation group plus the footer, as the brief asks.
+- A dated seasonal strip points at the holiday guides, beside the season bands and the series rail the shop already runs. It states its year in its own text, because
+  an undated seasonal promise is how a site ends up looking stale in public.
+
+## 3 · Guides and backlog: four rows closed by this pass
+
+`29` sources · `27` flags · `24` questions (5 blocking) ·
+`30` suggestions (19 shipped, 10 open, 1 recommended now) · `13` topics (4 published).
+
+Two guides were written this pass, each from sources already readable (a third, on turkey probe
+placement, was drafted and then deleted because a parallel session published `guides/turkey-probe-placement.html` on the same question —
+two near-identical articles is exactly the failure mode this site is trying to avoid):
+**probe-accuracy-check** and **counter-fit-before-you-order** —
+thermometer accuracy (USDA FSIS ice-water and boiling-water calibration methods, the 2–4°F
+expectation, which types cannot be adjusted), probe placement for a holiday bird (three places in a
+whole bird, 165°F, stuffing, the leave-in rule), and counter fit (the listed footprints and weights,
+with ventilation clearance explicitly refused because no listing states one).
+
+Build and gate at the close of this reconciliation are quoted in the final block of this section, after the three
+merges with `main` — the site ends the day at 40 pages and 17 guides with the gate green.
+
+## What still cannot be answered from this repo
+
+Nothing changed about the four blockers: the tracking ID's issuance (FLG-001), the one-link
+Associates test (FLG-002), the compliance status of the supplied short links (FLG-003), and the
+specification conflicts inside two listings (FLG-004, FLG-005, FLG-010). All of them need an enrolled
+Associates account or the owner's decision, and all of them are published on the Flagged page with
+the action that settles each. No price, rating, ranking or revenue figure appears anywhere, and the
+ledger stays empty until first-party reports arrive.
+
+### Reconciliation with the parallel passes that landed mid-session
+
+`main` absorbed two other sessions while this pass was in flight (PRs #38 and #41: their own fourth-pass verification, per-product artwork,
+a computed season kicker, and the `turkey-probe-placement` + `black-friday-air-fryer-checklist` guides). Both merges were resolved by union,
+main's rows keeping every colliding id, this session's rows renumbered (SG-39…SG-47, Q-24…Q-26, S30…S32, TP-15, FLG-026/027), this session's
+re-read recorded as observation #6 rather than overwriting #4 or #5, and this session's duplicate holiday guide deleted. The five product
+illustrations now resolve to this session's ~150 KB JPEGs and the 2.7–2.9 MB PNGs are gone. Full collision table in `COORDINATION.md`.
+
+### Reconciliation with the parallel sessions that landed the same day
+
+`main` absorbed three more passes while this one was being merged (PRs #17/#18 by their owners, then #37–#41 and #43–#45).
+This session's contribution was merged into that tree by union, three times over, with these decisions:
+
+- **Renderer:** `main`'s narrative/series/WebP builder was adopted; this session's front-page additions were grafted on
+  top of it (an at-a-glance comparison table, a dated seasonal strip, an editorial card line that takes precedence over
+  a scraped listing title) rather than replacing it. A shop gets one front page.
+- **Duplicate guide deleted, not doubled:** this session drafted a turkey probe-placement guide, found
+  `guides/turkey-probe-placement.html` already published by a parallel session, and removed its own. Two near-identical
+  articles on one question is the slop behaviour the brief asks to avoid, so the backlog rows TP-06/TP-09 point at the page
+  that exists.
+- **Sixth observation:** `data/probes.json` now carries observations #1–#6 across 2026-11-17 and 2026-11-20 (four separate
+  sessions). 5/5 tokens → 5/5 ASINs reproduced every time; observation #6 additionally compared each listing's `<title>`
+  byte-for-byte with this register (5/5 verbatim) and re-checked the Emeril details table cell by cell. Nothing overwritten.
+- **Id discipline:** where ids collided, `main`'s row kept the id and this session's rows were renumbered
+  (S36–S38, FLG-030/031, SG-39…SG-47, Q-26…Q-28, TP-16), with cross-references fixed so no register row cites an id that
+  now means something else. Four suggestion rows and one question row that a first-pass collision rule had silently dropped
+  were restored, so the register matches the work actually done.
+- **Imagery:** the PNG+WebP `<picture>` pair pipeline is kept; this session's JPEG conversions and their orphaned
+  leftovers were deleted, and `data/products.json` carries one artwork reference per product instead of two competing sets.
+- **Findings published rather than blocked:** FLG-030 (a `th=1` variant parameter on two of five resolved URLs, so a stable
+  ASIN still does not pin the colour/size/bundle served) and FLG-031 (deal season arrives and the no-price stance is still
+  an undecided editorial position, not a stated one), with SG-44/SG-45 and Q-26/Q-28 as the decisions the owner has to make.
+- **Real defect found and fixed in public:** two Chefman 8 Qt spec values carried “— see FLG-005” inside the value a reader
+  would copy. Values cleaned; the note lives on the product page and the Flagged page; the gate now fails that pattern, and
+  also fails a seasonal strip with no year in it.
+
+Standing rules for the next session, unchanged: prices, ratings, review counts and deal badges are never copied;
+`intended_*` and `observed_*` stay separate; nothing is claimed about testing; the tracking ID (FLG-001), the one-link
+Associates test (FLG-002) and the short-link status (FLG-003) still require the enrolled account, and the campaign ledger
+stays empty until an authorized first-party report is filed with provenance.
+
+
+---
+
+### Fourth merge of `main` the same day (PR #48, session `arena-156c2ecf`) — id discipline a third time, and one source row deleted rather than duplicated
+
+Their pass rewrote `data/sources.json`, `data/suggestions.json` and `data/topics.json` wholesale while this branch was being
+reconciled. Resolution:
+
+- **A duplicate source row was dropped, not merged.** This session had registered its own per-listing read rows; their S32/S33/S34
+  are the same two listings read on the same date. Mine were deleted and every reference repointed at their rows, so the register
+  carries one line per listing read. The only row this session added is S36, the sixth redirect observation, which their register
+  did not have.
+- **Suggestions renumbered again:** their SG-39…SG-42 keep the ids; this session's nine rows moved to SG-43…SG-51. Nine rows are
+  real work records (card copy, artwork, glance table, bookkeeping out of reader copy, backlog closure, the price stance, the
+  variant pin, the measurement-gated topics, print styles) — restoring them after an earlier collision rule silently dropped four
+  of them, and re-dropping them now would lose the record again.
+- **Topics:** their 18-row backlog was kept as the base; TP-06/TP-09 were flipped to their `turkey-probe-placement` page and
+  TP-08 to the accuracy guide, and this session's counter-fit row was appended as **TP-19** (TP-15…TP-18 were already taken).
+- **Their prose-count and dated-source-stamp rules (SG-39…SG-42) are honoured by this merge:** every source row this session
+  touches carries its read date, and no count in the docs was typed — the reconciliation blocks below state the build numbers as
+  the build printed them.
+- Nothing else of mine survived as a duplicate: the stylesheet and the builder are main's, plus the two grafted blocks and the two
+  grafted gate rules; my product JPEGs and my duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green (gate + `scripts/test_analytics.py` + `analytics/test_worker.mjs`).
+
+### Fifth merge of `main` the same day (PR #49, session `arena/1c6908d1-winc`) — and a contradiction between observations, recorded rather than resolved
+
+This pass merged with `-X theirs` (main wins every conflicting hunk), then re-registered this session's rows at free ids
+rather than reusing taken ones. Outcome, in the order it matters:
+
+- **What main's side kept:** its renderer, stylesheet, registers and its own new rows (S36, SG-43/SG-44, FLG-030, Q-26).
+  This branch's topics flips (TP-06/TP-08/TP-09 → published pages), `sixth_observation` + `probe6_note`, the two new guides,
+  `card_copy`, the glance table, the dated seasonal strip and the two gate rules all survived the merge — verified after it,
+  not assumed.
+- **What this session re-added at free ids:** sources S37 (the sixth observation) and the S17 calibration/care/types passages;
+  flags FLG-031 (the undecided no-price stance), FLG-032 (the `th=1` variant parameter) and FLG-033 (below); questions
+  Q-27/Q-28/Q-29; suggestions SG-45…SG-53 (nine records of the shop pass, with their cross-references repointed to the ids
+  main actually uses, so no row cites an id that now means something else). SG-36/SG-37/SG-38/SG-43 are cross-referenced
+  instead of duplicated, and the artwork row was rewritten to describe main's PNG+WebP pipeline rather than the JPEG set this
+  session first drafted.
+- **A real disagreement between observations, published:** FLG-030 records that `arena/1c6908d1`'s fetch path did *not*
+  reproduce the five-token → five-ASIN mapping. Six observations by four sessions (2026-11-17 and five on 2026-11-20) map all
+  five tokens to the same five ASINs every time, with the page titles matching verbatim. Neither side is overwritten: **FLG-033**
+  states that the discrepancy is about the fetch path, not about the links, and sets the action that settles it — FLG-002's
+  one-link test inside the enrolled Associates workflow, which is the only route that determines what a reader actually receives.
+  The supplied short links are still not called invalid (FLG-003 unchanged).
+- Duplication avoided rather than litigated: the two per-listing source rows this session had registered were dropped in favour
+  of main's S32/S33/S34 (same listings, same date), and the duplicate holiday guide stayed deleted.
+
+`Built 40 pages, 39 sitemap URLs, 17 guides, 34 search rows.` → `OK: 40 pages checked, 39 sitemap URLs, no violations.` ·
+`npm run verify` green.
 
 ---
 
@@ -382,6 +547,7 @@ manufacturer-page spec conflicts, analytics-endpoint deployment and Search Conso
 enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
 forecast; the campaign ledger stays empty until first-party reports arrive.
 
+<<<<<<< HEAD
 
 ---
 
@@ -420,3 +586,13 @@ have to be known to decide it. Question rows with no answer say "not yet answere
 factsheet (S17, fetched and read 2026-11-20) for the three-point whole-bird check and the 165 °F
 minimum (S16). TP-01/TP-02 marked published crediting their sessions; this session's parallel TP-10
 draft was dropped in favour of the merged one.
+=======
+### Integration outcome (this session)
+
+PR #47 was merged into `main` as `0d257d5` after five rounds of reconciling with parallel sessions; GitHub Pages rebuilt
+(`status: built`, no error) one second after the merge commit, and the new guide was re-fetched from the live URL to confirm the
+deployed state. What landed: the sixth redirect observation, two sourced guides, the front-page glance table and dated seasonal
+strip grafted onto main's renderer, `card_copy` on all five products, and four added gate rules. What was withdrawn on purpose:
+this session's duplicate holiday guide, its two per-listing source rows, its JPEG artwork set, and its rewrite of the renderer
+and stylesheet. Full reconciliation and handoff notes are in the `f1fd0ff0` section of `COORDINATION.md`.
+>>>>>>> origin/main

@@ -527,6 +527,42 @@ if html_files:
             finally:
                 os.unlink(tmp)
 
+# --- register language kept out of reader values, and dated seasonal copy (f1fd0ff0) ---
+for p2 in products:
+    for fld in ("capacity", "dimensions", "weight", "temperature", "power", "model", "upc", "brand"):
+        val = p2.get(fld) or ""
+        if "FLG-" in val or re.search(r"\bS\d\d\b", val):
+            fail(f"{p2['id']}: '{fld}' carries register language ({val[:60]!r}) — a reader copies this value into a "
+                 f"shopping list; the note belongs in listing_notes and on Flagged for Review")
+    cc = p2.get("card_copy")
+    if cc:
+        if "FLG-" in cc or PRICE_RE.search(cc):
+            fail(f"{p2['id']}: card_copy carries a flag id or a price")
+        if len(cc) > 400:
+            fail(f"{p2['id']}: card_copy is {len(cc)} chars — a card line, not an article")
+
+# a published topic must point at a guide file that actually exists
+for t3 in topic_doc["topics"]:
+    if t3.get("status") == "published":
+        pa = t3.get("published_as") or ""
+        if not pa:
+            fail(f"topic {t3.get('id')}: marked published with no published_as path")
+            continue
+        if not os.path.exists(os.path.join(ROOT, pa)):
+            fail(f"topic {t3.get('id')}: published_as {pa} is not built")
+        src = "data/guides/" + os.path.basename(pa) + "src" if False else "data/guides/" + os.path.basename(pa).replace(".html", ".json")
+        if not os.path.exists(os.path.join(ROOT, src)):
+            fail(f"topic {t3.get('id')}: {pa} has no source file {src} (publish = drop a file in data/guides/)")
+
+# an undated seasonal promise is how a site looks stale in public
+idx_html2 = read("index.html") if os.path.exists(os.path.join(ROOT, "index.html")) else ""
+m_sea = re.search(r'(?s)<section class="seasonal".*?</section>', idx_html2)
+if m_sea and not re.search(r"20\d\d", m_sea.group(0)):
+    fail("index.html: the seasonal strip carries no year — date it or drop it")
+if m_sea and "amazon.com/dp/" in m_sea.group(0):
+    fail("index.html: the seasonal strip links a product listing; keep it editorial and let the shop do that")
+
+
 if errors:
     print(f"FAIL ({len(errors)} violations):")
     for e in errors:

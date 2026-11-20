@@ -13,7 +13,7 @@
       "intended_source": "",
       "observed_asin": "B0CDY277D3",
       "observed_listing_url": "https://www.amazon.com/dp/B0CDY277D3",
-      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #6 control re-read 2026-11-20 (S37)",
+      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #7 control re-read 2026-11-20 (S38)",
       "observed_source": "Prior sessions' live resolutions (Zone3 #153, Zone2 #154/#160) + Amazon listing snippet",
       "title": "CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black",
       "brand": "Chefman",
@@ -45,8 +45,8 @@
           "note": "The listing's own details table gives Capacity: 6 liters, while the title and the bullet copy say 6-quart / two 3-quart baskets. The quart figure is the one the product name and the two-basket claim use, so that is what this site records. Units disagree on the source page."
         },
         {
-          "flag": "FLG-031",
-          "note": "The submitted short link for this product landed on the Amazon home page on observation #6 (2026-11-20, S37) - reproducing the divergence recorded as FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
+          "flag": "FLG-034",
+          "note": "The submitted short link for this product landed on the Amazon home page on observation #7 (2026-11-20, S38) - extending the cross-path disagreement recorded as FLG-033/FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
         }
       ],
       "source_date_prior_capture": "2026-11-20",
@@ -65,7 +65,14 @@
         ]
       ],
       "image": "assets/img/p6qt.png",
-      "image_caption": "Editorial illustration: a dual-basket air fryer with two pull-out baskets, one open. Not a product photograph of this product."
+      "image_caption": "Commissioned editorial illustration: a dual-basket fryer with both baskets pulled out. Not a product photograph, and not a photograph of this exact unit.",
+      "card_copy": "Two independent 3-quart baskets inside one 11.8-inch-wide shell, with a window on each so you can see both without opening them. Sync finish is the listing's own answer to two dishes landing at the same time; the baskets are listed dishwasher-safe.",
+      "card_image": "assets/img/p6qt.png",
+      "card_image_caption": "Commissioned editorial illustration: a dual-basket fryer with both baskets pulled out. Not a product photograph, and not a photograph of this exact unit.",
+      "form_factor": "Two independent baskets, one shell",
+      "best_for": "A main and a side finishing together — the listing's own 'Sync Finish'",
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim; breadcrumb Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers; final URL still carried lv=shuf + plpRedirect=mhFallback. Amazon's own 'also viewed' rail on the same page showed a sibling 6 Qt dual-basket listing at B0B7C327LK (FLG-030).",
+      "sixth_read_source": "S36"
     },
     {
       "id": "p2-emeril-26qt",
@@ -78,7 +85,7 @@
       "intended_source": "",
       "observed_asin": "B09B7SB46R",
       "observed_listing_url": "https://www.amazon.com/dp/B09B7SB46R",
-      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #6 control re-read 2026-11-20 (S37)",
+      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #7 control re-read 2026-11-20 (S38)",
       "observed_source": "Prior sessions' live resolutions + Amazon listing snippet",
       "title": "Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included",
       "brand": "Emeril",
@@ -123,8 +130,8 @@
           "note": "Serving claim: the bullet copy says the 26-quart cavity is 'suitable for preparing food for 4–6 people', can rotisserie a 6-lb chicken and bake a 12\" pizza. That is the manufacturer's own sizing claim on the listing, quoted as such."
         },
         {
-          "flag": "FLG-031",
-          "note": "The submitted short link for this product landed on the Amazon home page on observation #6 (2026-11-20, S37) - reproducing the divergence recorded as FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
+          "flag": "FLG-034",
+          "note": "The submitted short link for this product landed on the Amazon home page on observation #7 (2026-11-20, S38) - extending the cross-path disagreement recorded as FLG-033/FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
         }
       ],
       "listing_claims": {
@@ -148,7 +155,14 @@
         ]
       ],
       "image": "assets/img/p26qt.png",
-      "image_caption": "Editorial illustration: a french-door countertop oven with racks visible. Not a product photograph of this product."
+      "image_caption": "Commissioned editorial illustration: an oven-style fryer with twin glass doors open over wire racks. Not a product photograph, and not a photograph of this exact unit.",
+      "card_copy": "An oven instead of a drawer: twin glass doors, wire racks, and a 24.6-litre cavity the listing says takes a 12-inch pizza. It is 14.8 inches tall and 26.5 lb, so this is the one that stays on the counter, not in a cupboard.",
+      "card_image": "assets/img/p26qt.png",
+      "card_image_caption": "Commissioned editorial illustration: an oven-style fryer with twin glass doors open over wire racks. Not a product photograph, and not a photograph of this exact unit.",
+      "form_factor": "Oven-style, twin glass doors, racks",
+      "best_for": "A whole bird on the rotisserie or a 12-inch pizza, as the listing states",
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — details table re-read: Item Dimensions 16.9\"D x 15.8\"W x 14.8\"H, Capacity 24.6 liters, Model Number 4-00675-02X-VN, UPC 752356835682, Wattage 1700 W, 75–500°F, ASIN row B09B7SB46R — all match this register. 'Configuration' reads '24 Functions and 7 Accessories' while 'Item Highlight' reads 'Six Cooking Accessories Included' (FLG-010 confirmed again).",
+      "sixth_read_source": "S36"
     },
     {
       "id": "p3-chefman-8qt",
@@ -161,16 +175,16 @@
       "intended_source": "",
       "observed_asin": "B08DKYBTPH",
       "observed_listing_url": "https://www.amazon.com/dp/B08DKYBTPH",
-      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #6 control re-read 2026-11-20 (S37)",
+      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #7 control re-read 2026-11-20 (S38)",
       "observed_source": "Prior sessions' live resolutions + Amazon listing snippet",
       "title": "Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel",
       "brand": "Chefman",
-      "model": "RJ38-SQSS-8T (listing also shows 'Large Air Fryer' — see FLG-005)",
+      "model": "RJ38-SQSS-8T",
       "category": "Air Fryers",
       "capacity": "8 Quarts",
       "dimensions": "12.75\"D x 13.5\"W x 10\"H",
       "weight": "12.8 Pounds",
-      "temperature": "200-400°F (listing also mentions 450°F Hi-Fry — see FLG-005)",
+      "temperature": "200-400°F",
       "power": "1000W / 120V",
       "upc": "816458024518",
       "price": "",
@@ -212,8 +226,8 @@
           "note": "Amazon's own page states 'There is a newer model of this item' and shows the Chefman Air Fryer 6 QT Compact (B0CNY1YVDD). Worth reading before paying for an older generation."
         },
         {
-          "flag": "FLG-031",
-          "note": "The submitted short link for this product landed on the Amazon home page on observation #6 (2026-11-20, S37) - reproducing the divergence recorded as FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
+          "flag": "FLG-034",
+          "note": "The submitted short link for this product landed on the Amazon home page on observation #7 (2026-11-20, S38) - extending the cross-path disagreement recorded as FLG-033/FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
         }
       ],
       "listing_claims": {
@@ -236,7 +250,14 @@
         ]
       ],
       "image": "assets/img/p8qt.png",
-      "image_caption": "Editorial illustration: a stainless single-basket air fryer with the basket open. Not a product photograph of this product."
+      "image_caption": "Commissioned editorial illustration: a single-basket air fryer with the drawer pulled open. Not a product photograph, and not a photograph of this exact unit.",
+      "card_copy": "One 8-quart basket rather than two, so a single bigger batch fits in one go. The listing names a 450°F high-fry option, a shake reminder and dishwasher-safe nonstick parts, in a shell 13.5 inches wide.",
+      "card_image": "assets/img/p8qt.png",
+      "card_image_caption": "Commissioned editorial illustration: a single-basket air fryer with the drawer pulled open. Not a product photograph, and not a photograph of this exact unit.",
+      "form_factor": "One deep basket, pull-out drawer",
+      "best_for": "A single large batch of the thing you cook most",
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim; the resolved URL added a variant parameter (th=1) on top of lv=shuf + plpRedirect=mhFallback (FLG-030).",
+      "sixth_read_source": "S36"
     },
     {
       "id": "p4-thermomaven",
@@ -249,7 +270,7 @@
       "intended_source": "",
       "observed_asin": "B0DHZTCNR5",
       "observed_listing_url": "https://www.amazon.com/dp/B0DHZTCNR5",
-      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #6 control re-read 2026-11-20 (S37)",
+      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #7 control re-read 2026-11-20 (S38)",
       "observed_source": "Prior sessions' live resolutions + Amazon listing snippet (see FLG-004 variant URL)",
       "title": "ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black",
       "brand": "ThermoMaven",
@@ -258,7 +279,7 @@
       "capacity": "—",
       "dimensions": "",
       "weight": "",
-      "temperature": "Accuracy ±0.5°F (NIST & NSF certified per listing)",
+      "temperature": "±0.5°F (the listing's own claim)",
       "power": "—",
       "upc": "",
       "price": "",
@@ -283,8 +304,8 @@
           "note": "Model number: the US listing's product-details table did not show it in the 2026-11-20 read. The 'HT07' string seen on an Amazon.fr listing is not carried over to this page, so the cell stays blank (FLG-015) and the canonical-ASIN question stays open (FLG-004)."
         },
         {
-          "flag": "FLG-031",
-          "note": "The submitted short link for this product landed on the Amazon home page on observation #6 (2026-11-20, S37) - reproducing the divergence recorded as FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
+          "flag": "FLG-034",
+          "note": "The submitted short link for this product landed on the Amazon home page on observation #7 (2026-11-20, S38) - extending the cross-path disagreement recorded as FLG-033/FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
         }
       ],
       "faq": [
@@ -303,7 +324,14 @@
       ],
       "model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)",
       "image": "assets/img/pthermo.png",
-      "image_caption": "Editorial illustration: a slim instant-read thermometer on a cutting board beside a roasted chicken. Not a product photograph of this product."
+      "image_caption": "Commissioned editorial illustration: a folding instant-read probe in the thickest part of a steak. Not a product photograph.",
+      "card_copy": "The probe you hold and check at the end of the cook. Its listing title claims a one-second reading, ±0.5°F accuracy and IP67 waterproofing — we quote those claims, we have not measured them, and the accuracy claim is the one worth testing at home.",
+      "card_image": "assets/img/pthermo.png",
+      "card_image_caption": "Commissioned editorial illustration: a folding instant-read probe in the thickest part of a steak. Not a product photograph.",
+      "form_factor": "Instant-read you hold",
+      "best_for": "A spot check you take yourself, in the thickest part",
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim (Black colourway); the same page's rails showed the identical ThermoMaven title in Orange at B0GL7Z4KP4 (FLG-030). Model stays blank (FLG-015).",
+      "sixth_read_source": "S36"
     },
     {
       "id": "p5-chefiq",
@@ -316,7 +344,7 @@
       "intended_source": "",
       "observed_asin": "B0DZFD6R9Z",
       "observed_listing_url": "https://www.amazon.com/dp/B0DZFD6R9Z",
-      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #6 control re-read 2026-11-20 (S37)",
+      "observed_date": "2026-11-17 (prior sessions) + listing snippet 2026-11-20 · observation #7 control re-read 2026-11-20 (S38)",
       "observed_source": "Prior sessions' live resolutions + Amazon listing snippet",
       "title": "CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3",
       "brand": "CHEF iQ",
@@ -325,7 +353,7 @@
       "capacity": "3 probes + hub",
       "dimensions": "8.43 x 4.69 x 1.93 inches (package); 14.07 ounces",
       "weight": "",
-      "temperature": "Heat safe to 1000°F (per listing)",
+      "temperature": "1000°F heat-safe probes (the listing's own claim)",
       "power": "Rechargeable (hub charges probes)",
       "upc": "810170921148",
       "price": "",
@@ -359,11 +387,18 @@
         ]
       ],
       "image": "assets/img/pchefiq.png",
-      "image_caption": "Editorial illustration: ultra-thin probe thermometers resting in a charging hub. Not a product photograph of this product.",
+      "image_caption": "Commissioned editorial illustration: a leave-in probe running from a smoker to a counter hub. Not a product photograph.",
+      "card_copy": "The probe you leave in. Three ultra-thin probes wire to a hub that reports over WiFi, and the listing says the probes are heat-safe to 1000°F — that combination is what lets you walk away and still know when to stop.",
+      "card_image": "assets/img/pchefiq.png",
+      "card_image_caption": "Commissioned editorial illustration: a leave-in probe running from a smoker to a counter hub. Not a product photograph.",
+      "form_factor": "Leave-in probes with a hub",
+      "best_for": "Three probes reporting over WiFi while the food cooks, per the listing",
+      "sixth_read": "2026-11-20 · session f1fd0ff0 (sixth live read) — page <title> matches the stored title verbatim ('… | Gen3: Home & Kitchen'); resolved URL carried th=1 + lv=shuf + plpRedirect=mhFallback, and a sibling CHEF iQ Sense listing (B0DZFNQXGL) appeared in the rails (FLG-030).",
+      "sixth_read_source": "S36",
       "listing_notes": [
         {
-          "flag": "FLG-031",
-          "note": "The submitted short link for this product landed on the Amazon home page on observation #6 (2026-11-20, S37) - reproducing the divergence recorded as FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
+          "flag": "FLG-034",
+          "note": "The submitted short link for this product landed on the Amazon home page on observation #7 (2026-11-20, S38) - extending the cross-path disagreement recorded as FLG-033/FLG-030. The direct /dp/ link this site publishes was re-opened the same day and still served this product, so the page and the button are unaffected; the short link's behaviour is the open item."
         }
       ]
     }

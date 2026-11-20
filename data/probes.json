@@ -1,7 +1,7 @@
 {
   "_note": "Independent re-observation of the five supplied links. Observed redirect targets are stored HERE and mirrored into products.json only as 'observed_*' fields. The intended identifier is never derived from these observations.",
   "probe_method": "Live HTTP resolution through the fetch_page reader (no direct sandbox network), following redirects, recording the final URL and page <title>. Query-string flags are recorded verbatim because they describe the mechanism of the redirect. Third observation re-read each resolved listing's product-details table and bullet copy to check the recorded spec rows line by line. Observation #5 (arena-70bd2fcc) re-read each listing page <title> and category breadcrumb through the fetch_page reader; no price, rating or availability value was copied from any page (S02 rule).",
-  "probe_session": "arena-70bd2fcc (fifth observation). Earlier: 2026-11-17 (prior sessions); 2026-11-20 observations #2 (arena-23d7ed19), #3 (arena-82d39deb), #4 (arena-c2123b9c).",
+  "probe_session": "f1fd0ff0 (observation #6, 2026-11-20)",
   "probe_date": "2026-11-20",
   "probes": [
     {
@@ -14,9 +14,10 @@
       "final_url": "https://www.amazon.com/dp/B0CDY277D3?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-0710b7a4f0d14338&channelId=704&plpRedirect=mhFallback",
       "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
+        "channelId=704",
         "lv=shuf",
-        "plpRedirect=mhFallback",
-        "channelId=704"
+        "plpRedirect=mhFallback"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
@@ -38,15 +39,29 @@
         "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
       },
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0CDY277D3",
+        "final_url": "https://www.amazon.com/dp/B0CDY277D3?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -59,9 +74,10 @@
       "final_url": "https://www.amazon.com/dp/B09B7SB46R?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-77f54b7c4a256532&channelId=704&plpRedirect=mhFallback",
       "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
+        "channelId=704",
         "lv=shuf",
-        "plpRedirect=mhFallback",
-        "channelId=704"
+        "plpRedirect=mhFallback"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
@@ -84,15 +100,29 @@
         "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
       },
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B09B7SB46R",
+        "final_url": "https://www.amazon.com/dp/B09B7SB46R?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -105,9 +135,11 @@
       "final_url": "https://www.amazon.com/dp/B08DKYBTPH?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-2189f4dab9032c5f&channelId=704&plpRedirect=mhFallback&th=1",
       "final_title": "Amazon.com: Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
+        "channelId=704",
         "lv=shuf",
         "plpRedirect=mhFallback",
-        "channelId=704"
+        "th=1"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
@@ -130,15 +162,30 @@
         "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
       },
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B08DKYBTPH",
+        "final_url": "https://www.amazon.com/dp/B08DKYBTPH?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -151,9 +198,9 @@
       "final_url": "https://www.amazon.com/dp/B0DHZTCNR5?lv=shuf&btn_type=ss&gaOptInStatus=true&_encoding=UTF8&sp_csd=...&language=en_US&content-id=amzn1.sym.4582c56b-139d-4168-9db2-822c68889360&ie=UTF8&btn_ref=srctok-3fc2944d621f80c1&channelId=500&plpRedirect=mhFallback",
       "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
         "lv=shuf",
-        "plpRedirect=mhFallback",
-        "channelId=500"
+        "plpRedirect=mhFallback"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
       "agrees_with_prior_session": true,
@@ -176,15 +223,28 @@
         "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
       },
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DHZTCNR5",
+        "final_url": "https://www.amazon.com/dp/B0DHZTCNR5?lv=shuf&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -197,9 +257,9 @@
       "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-15c87a8b6e264a7a&channelId=500&plpRedirect=mhFallback&th=1",
       "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
         "lv=shuf",
         "plpRedirect=mhFallback",
-        "channelId=500",
         "th=1"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
@@ -223,14 +283,29 @@
         "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
       },
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DZFD6R9Z",
+        "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to a product listing (unchanged)",
         "final_asin": "B0DZFD6R9Z",
         "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5ed90c5aacfa7a7e&channelId=500&plpRedirect=mhFallback&th=1",
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
-        "agrees_with_observations_1_to_5": true,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)"
+        "agrees_with_observations_1_to_6": true,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)"
       }
     },
     {
@@ -246,22 +321,37 @@
       "final_url": "https://www.amazon.com/dp/B0CDY277D3?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-6ac5c55694dd065d&channelId=704&plpRedirect=mhFallback",
       "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
+        "channelId=704",
         "lv=shuf",
-        "plpRedirect=mhFallback",
-        "channelId=704"
+        "plpRedirect=mhFallback"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0CDY277D3",
+        "final_url": "https://www.amazon.com/dp/B0CDY277D3?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -277,23 +367,38 @@
       "final_url": "https://www.amazon.com/dp/B09B7SB46R?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-039a25afc55ea595&channelId=704&plpRedirect=mhFallback",
       "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
+        "channelId=704",
         "lv=shuf",
-        "plpRedirect=mhFallback",
-        "channelId=704"
+        "plpRedirect=mhFallback"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
       "note": "Title still reads 'Six Cooking Accessories Included' while captured bullet copy says 7 accessories - FLG-010 stands on a third capture.",
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B09B7SB46R",
+        "final_url": "https://www.amazon.com/dp/B09B7SB46R?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven | Countertop Convection Cooker, 24 One-Touch Preset Options, Extra Large Interior, Six Cooking Accessories Included : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -309,24 +414,40 @@
       "final_url": "https://www.amazon.com/dp/B08DKYBTPH?lv=shuf&btn_type=ss&gaOptInStatus=true&btn_ref=srctok-5756d38428f77669&channelId=704&plpRedirect=mhFallback&th=1",
       "final_title": "Amazon.com: Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
+        "channelId=704",
         "lv=shuf",
         "plpRedirect=mhFallback",
-        "channelId=704",
         "th=1"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers",
       "agrees_with_prior_session": true,
       "note": "Listing <title> again shows 'TurboFry® 4-in-1 ... 450°F Hi-Fry ... XL Nonstick Dishwasher-Safe Basket' against captured 200-400°F copy - FLG-005 stands on a third capture.",
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B08DKYBTPH",
+        "final_url": "https://www.amazon.com/dp/B08DKYBTPH?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option for Crispier Results | Bake, Dehydrate, Frozen | XL Nonstick Dishwasher-Safe Basket | Stainless Steel : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -342,23 +463,36 @@
       "final_url": "https://www.amazon.com/dp/B0DHZTCNR5?lv=shuf&btn_type=ss&gaOptInStatus=true&_encoding=UTF8&sp_csd=d2lkZ2V0TmFtZT1zcF9waG9uZV9ob21lcGFnZV9ibGVuZGVk&language=en_US&content-id=amzn1.sym.4582c56b-139d-4168-9db2-822c68889360&ie=UTF8&btn_ref=srctok-746a9d4ac23b0098&channelId=500&plpRedirect=mhFallback",
       "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black : Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
         "lv=shuf",
-        "plpRedirect=mhFallback",
-        "channelId=500"
+        "plpRedirect=mhFallback"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
       "agrees_with_prior_session": true,
       "note": "Fifth consecutive landing on B0DHZTCNR5 (weakens FLG-004 further; does not settle canonicality - fallback route, FLG-009). Listing <title> wording rotated again ('IP67 Waterproof ... Stocking Stuffers Gifts for Men' vs the captured 'Highly Waterproof for Grill BBQ Camping') - seller copy rotates between captures; consistent with FLG-014.",
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DHZTCNR5",
+        "final_url": "https://www.amazon.com/dp/B0DHZTCNR5?lv=shuf&plpRedirect=mhFallback",
+        "final_title": "Amazon.com: ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified, Auto-Rotate Bright LED Screen, IP67 Waterproof for Grill BBQ, Stocking Stuffers Gifts for Men, Black : Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "plpRedirect=mhFallback"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to the Amazon home page (not a product listing)",
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observations_1_to_5": false,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
+        "agrees_with_observations_1_to_6": false,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)",
+        "note": "On this short-link pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#6 recorded - extending the cross-path disagreement FLG-033 records (FLG-030 vs the 5/5 passes). Re-fetched individually with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-034."
       }
     },
     {
@@ -374,30 +508,45 @@
       "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5cc162659fe052bf&channelId=500&plpRedirect=mhFallback&th=1",
       "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
       "observed_flags": [
+        "channelId=500",
         "lv=shuf",
         "plpRedirect=mhFallback",
-        "channelId=500",
         "th=1"
       ],
       "breadcrumb_top": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat",
       "agrees_with_prior_session": true,
       "note": "Carousel shows sibling variants (2-probe Gen3 B0FXBQ3KX1, USA-250 edition B0H2JP9YDM); the observed target remains the 3-probe Gen3 title. Variants recorded to show the listing family is active.",
       "sixth_observation": {
+        "session": "f1fd0ff0",
+        "date": "2026-11-20",
+        "final_asin": "B0DZFD6R9Z",
+        "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&channelId=500&plpRedirect=mhFallback&th=1",
+        "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
+        "observed_flags": [
+          "lv=shuf",
+          "channelId=500",
+          "plpRedirect=mhFallback",
+          "th=1"
+        ],
+        "matches_prior_observations": true,
+        "note": "Title matches the stored product title verbatim; details table re-read where the fetched chunk carried it. Prices, ratings and deal badges on the page were not copied (FLG-006, FLG-027)."
+      },
+      "seventh_observation": {
         "session": "b0920c92",
         "date": "2026-11-20",
         "result": "redirect followed to a product listing (unchanged)",
         "final_asin": "B0DZFD6R9Z",
         "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5ed90c5aacfa7a7e&channelId=500&plpRedirect=mhFallback&th=1",
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
-        "agrees_with_observations_1_to_5": true,
-        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)"
+        "agrees_with_observations_1_to_6": true,
+        "renamed": "recorded as observation #7 (arena/f1fd0ff0's listing re-read holds the #6 slot)"
       }
     }
   ],
   "interpretation": {
-    "reproduced": "The observed ASINs are reproducible: observations #1-#4 (2026-11-17, then arena-23d7ed19, arena-82d39deb and arena-c2123b9c on 2026-11-20) agreed 5/5, and the listing re-reads by arena-70bd2fcc (S30-S34) and arena/1c6908d1 (S36) confirmed every observed listing still serves the recorded page. The SHORT LINKS are a different story: two independent re-resolution passes on 2026-11-20 (arena/1c6908d1 -> FLG-030; b0920c92 -> FLG-031, S37) both found four of the five short links landing on the Amazon home page, with only B0f3GKalj still resolving to a product. So: the observed_* product records are reproducible; the submitted short links' behaviour is not stable over hours.",
-    "what_reproduction_does_not_prove": "Every final URL ever observed carries lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback) - a fallback route, not a canonical resolution of the submitted token, which is why the intended_* fields stay blank (FLG-009, FLG-029). The divergence passes (FLG-030, FLG-031) add a second reason: the short links did not all resolve to product pages on the two most recent passes. Nothing here says the short links are invalid - FLG-003 remains open and unresolved.",
-    "operational_consequence": "The reader-facing links on this site are NOT the submitted short links. They are built from the observed ASINs as direct https://www.amazon.com/dp/<ASIN> URLs. All five were re-opened directly on 2026-11-20 as a control in observation #6 (S37) and every one still served the product page and breadcrumb recorded in data/products.json. So the published links are unaffected by the short-link behaviour; what needs the owner's attention is confirming the intended destination for each product (Q-02) and the one-link Associates test (FLG-002)."
+    "reproduced": "The observed ASINs are reproducible: observations #1-#6 (2026-11-17; then arena-23d7ed19, arena-82d39deb, arena-c2123b9c, arena-70bd2fcc and arena/f1fd0ff0 on 2026-11-20) all agree 5/5, and every listing re-read (S30-S34, S36, S37) matched the stored titles and breadcrumbs verbatim. The SHORT LINKS are a different story: two independent short-link re-resolution passes on 2026-11-20 (arena/1c6908d1 -> FLG-030; b0920c92 -> FLG-034, S38) both found four of the five landing on the Amazon home page, with only B0f3GKalj still resolving to a product. So: the observed_* product records are reproducible; the submitted short links' behaviour is not stable over hours, and the two fetch paths disagree (FLG-033).",
+    "what_reproduction_does_not_prove": "Every final URL ever observed carries lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback) - a fallback route, not a canonical resolution of the submitted token, which is why the intended_* fields stay blank (FLG-009, FLG-029). The divergent short-link passes (FLG-030, FLG-034) add a second reason: the short links did not all resolve to product pages on the two most recent short-link passes. Nothing here says the short links are invalid - FLG-003 remains open and unresolved.",
+    "operational_consequence": "The reader-facing links on this site are NOT the submitted short links. They are built from the observed ASINs as direct https://www.amazon.com/dp/<ASIN> URLs. All five were re-opened directly on 2026-11-20 as a control in observation #7 (S38) and every one still served the product page and breadcrumb recorded in data/products.json. So the published links are unaffected by the short-link behaviour; what needs the owner's attention is confirming the intended destination for each product (Q-02) and the one-link Associates test (FLG-002)."
   },
   "probe_dates": [
     "2026-11-17 (prior sessions)",
@@ -405,8 +554,10 @@
     "2026-11-20 (arena-82d39deb)",
     "2026-11-20 observation #4: arena-c2123b9c",
     "2026-11-20 observation #5: arena-70bd2fcc",
-    "2026-11-20 observation #6: b0920c92 — divergent (4/5 home page; confirms FLG-030)"
+    "2026-11-20 observation #6: f1fd0ff0",
+    "2026-11-20 observation #7: b0920c92 — divergent (4/5 home page; extends FLG-033)"
   ],
   "probe4_note": "Fourth independent observation (session arena-c2123b9c, 2026-11-20), via live HTTP resolution through the fetch_page reader, same method as observations #2 and #3. All five mappings reproduced 5/5 again. Per-row 'session'/'date'/'observation' fields mark which observation produced the row (rows without them are observation #3 by arena-82d39deb). Channel IDs varied (704/704/704/500/500) and two rows carried th=1 - recorded verbatim. Every row still carries lv=shuf and plpRedirect=mhFallback, so FLG-009's fallback-route reading stands. New per-listing observations: the Emeril <title> still says 'Six Cooking Accessories' (FLG-010 on a third capture); the Chefman 8 Qt <title> still shows the 450F Hi-Fry wording against captured 200-400F copy (FLG-005); the ThermoMaven <title> wording rotated again (consistent with FLG-014). Provenance row: S29.",
-  "probe6_note": "Sixth pass (session b0920c92, 2026-11-20, S37). Short links re-resolved: four of five ended on the Amazon home page, only B0f3GKalj still resolved to a product. This independently reproduces the divergence arena/1c6908d1 recorded as FLG-030 on the same day. The /dp/ control in the same pass confirmed all five listings still serve the recorded products, so the published reader links are unaffected. FLG-003 stays open; see FLG-030 and FLG-031."
+  "probe6_note": "Sixth independent observation (session f1fd0ff0, 2026-11-20). Same method: live resolution through the fetch_page reader, then a byte-for-byte comparison of each resolved listing's <title> against data/products.json. 5/5 mappings reproduced and 5/5 titles matched verbatim; the Emeril page exposed its full product-details table, so dimensions, capacity, model number, UPC, wattage and its own ASIN row were re-checked against the register, and the six-versus-seven accessories contradiction reproduced again (FLG-010). Two of five responses additionally served a variant parameter (th=1). Prices, star ratings, review counts and deal badges were visible on those pages and were not copied (S02, FLG-006, FLG-027).",
+  "probe7_note": "Seventh pass (session b0920c92, 2026-11-20, S38). Short links re-resolved: four of five ended on the Amazon home page, only B0f3GKalj still resolved to a product. This extends the cross-path disagreement FLG-033 records: listing re-reads keep agreeing 5/5 (S30-S34, S36, S37) while short-link passes diverge (FLG-030, FLG-034). The /dp/ control in the same pass confirmed all five listings still serve the recorded products, so the published reader links are unaffected. FLG-003 stays open."
 }

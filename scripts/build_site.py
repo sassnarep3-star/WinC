@@ -282,7 +282,7 @@ def product_card(p, depth=0):
 <figure class="cardimg">{pic(img, cap, 800, 500, pfx, cls="cardpic")}</figure>
 <span class="cat">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h3><a href="{pfx}{p['page']}">{esc(p['short_label'])}</a></h3>
-<p class="cardhook">{esc((STORIES.get(p["id"]) or {}).get("standfirst") or p["title"])}</p>
+<p class="cardhook">{esc(p.get("card_copy") or (STORIES.get(p["id"]) or {}).get("standfirst") or p["title"])}</p>
 <ul class="specs">{li}</ul>
 <div class="actions">{buy_button_small(p)}</div>
 <div class="cardfoot">{series_link(p, depth)}{('<a class="sourcetail" href="' + pfx + 'verification.html">Listing read ' + esc(p["source_date"]) + '</a>')}</div>
@@ -434,6 +434,48 @@ document.getElementById('reader-capture').addEventListener('submit', function(e)
 </section>"""
 
 # ---------- HOME ----------
+def glance_table():
+    """A comparison the reader can finish on the landing page, built from the same rows as the
+    cards so it cannot drift. One column of numbers per product, source link per row.
+    (session f1fd0ff0)"""
+    head = ("<tr><th>Product</th><th>Form, as listed</th><th>Capacity</th><th>Footprint</th>"
+            "<th>Weight</th><th>What the listing sets it up for</th><th>Source</th></tr>")
+    rows = []
+    for p2 in PRODUCTS:
+        rows.append(
+            f'<tr><td><a href="{p2["page"]}">{esc(p2["short_label"])}</a></td>'
+            f'<td>{esc(p2.get("form_factor", ""))}</td>'
+            f'<td>{esc(p2["capacity"]) if p2["capacity"] and p2["capacity"] != "—" else "— see listing"}</td>'
+            f'<td>{esc(p2["dimensions"]) if p2["dimensions"] else "— not confirmed"}</td>'
+            f'<td>{esc(p2["weight"]) if p2["weight"] else "— not confirmed"}</td>'
+            f'<td>{esc(p2.get("best_for", ""))}</td>'
+            f'<td class="src"><a href="{esc(p2["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p2["observed_asin"])}</a></td></tr>')
+    return ('<div class="tablewrap glance"><table><thead>' + head + "</thead><tbody>" + "".join(rows) +
+            "</tbody></table></div>"
+            f'<p class="legend">Every cell is copied from the listing linked in the last column, read {TODAY}. '
+            "No price, rating or ranking appears here, because a static page cannot keep any of them current — "
+            '<a href="disclosure.html">why not</a>.</p>')
+
+
+def seasonal_strip():
+    """Dated seasonal front for the pages that answer this week's questions. The date lives in
+    the sentence, so the strip cannot go stale in silence (session f1fd0ff0)."""
+    picks = [g for g in GUIDES if (g.get("season") or "").strip().lower().startswith("holiday")][:3]
+    if not picks:
+        return ""
+    items = "".join(
+        f'<li><a href="{g["path"]}">{esc(g["title"])}</a> <span class="meta">{read_min(g)} min · {esc(g["cluster"])}</span></li>'
+        for g in picks)
+    return f"""<section class="seasonal" aria-label="This week">
+<div>
+<span class="kicker kicker-warm">This week · holiday cook</span>
+<h2>Thanksgiving falls on Thursday 26 November 2026.</h2>
+<p>Four days to settle the questions that actually decide dinner: where the probe goes, whether the counter can take the appliance, and what a listing is really promising. All of it answered from the federal food-safety guidance and the manufacturers' own listings — never from us guessing, and never with a price.</p>
+<ul class="seasonallist">{items}</ul>
+</div>
+</section>"""
+
+
 def home_body():
     c = counts()
     cards = "".join(product_card(x) for x in PRODUCTS)
@@ -479,13 +521,14 @@ def home_body():
 {house_ad()}
 <h2>The shop</h2>
 <div class="grid">{cards}</div>
+{glance_table()}
 <p class="seclink"><a class="btn btn-quiet" href="products/index.html">Compare every spec in one table →</a></p>
 
 <h2>Start with a question, not a brand</h2>
 <div class="grid">{rail}</div>
 <p class="seclink"><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a> <a class="btn btn-quiet" href="topics.html">What we are writing next →</a></p>
 
-{season_bands}<h2>Or start with a category</h2>
+{season_bands}{seasonal_strip()}<h2>Or start with a category</h2>
 <div class="catgrid">{tiles}</div>
 
 <h2>How this site works</h2>
@@ -706,6 +749,7 @@ def product_body(p):
 {house_ad(depth=1)}
 <h2>Specs (from Amazon’s listing)</h2>
 {specs_table(p)}
+{f'<p class="footnote">{esc(p["sixth_read"])}</p>' if p.get('sixth_read') else ''}
 <h2>What to compare before you buy</h2>
 <ul>
 <li><strong>Capacity vs. your actual meals:</strong> {esc(p['capacity'] or 'see listing')} — measure the tray or bird you cook most often.</li>
@@ -1445,14 +1489,30 @@ def probes_section():
         agree = "matches 2026-11-17" if pr.get("agrees_with_prior_session") else "DIVERGES from 2026-11-17"
         flags = " ".join(f"<code>{esc(f)}</code>" for f in pr.get("observed_flags", []))
         note = f'<p class="meta">{esc(pr["note"])}</p>' if pr.get("note") else ""
+        latest = ""
+        for key in ("sixth_observation", "fifth_observation", "fourth_observation", "third_observation"):
+            if pr.get(key):
+                o = pr[key]
+                ok = o.get("matches_prior_observations", True)
+                latest = (f'{esc(o.get("date", ""))} · <span class="okpill">title matches verbatim</span>' if ok
+                          else f'{esc(o.get("date", ""))} · <span class="flagpill">title differs</span>')
+                newflags = sorted({f for f in o.get("observed_flags", [])} - {f for f in pr.get("observed_flags", [])})
+                if newflags:
+                    latest += ' <span class="meta">new on this read: ' + " ".join(f"<code>{esc(x)}</code>" for x in newflags) + "</span>"
+                break
+        if not latest:
+            latest = '<span class="meta">not re-read by the latest pass</span>'
+        n_obs = len(PROBES.get("probe_dates", [])) or 3
         rows += (f'<tr><td><code>{esc(pr["submitted_token"])}</code><br><span class="meta">{pr["token_chars"]} chars · lowercase: {esc(pr["token_lowercase_letters"])}</span></td>'
                  f'<td>{esc(pr["http_result"])}</td><td><a href="{esc(pr["final_url"].split("?")[0])}" rel="nofollow noopener" target="_blank">{esc(pr["final_asin"])}</a></td>'
-                 f'<td class="src">{flags}</td><td>{esc(agree)}</td><td>{esc(pr["breadcrumb_top"])}{note}</td></tr>')
+                 f'<td class="src">{flags}</td><td>{esc(agree)}</td><td>{latest}</td>'
+                 f'<td>{esc(pr["breadcrumb_top"])}{note}</td></tr>')
     interp = PROBES["interpretation"]
     return f"""
 <h2 id="probes">4 · Redirect re-observation log</h2>
-<p>Independent re-check of all five supplied links, run by {esc(PROBES['probe_session'])} on {esc(PROBES['probe_date'])} — which closes FLG-008, the prior session’s note that nobody in this repo had observed the redirects directly. Method: {esc(PROBES['probe_method'])}</p>
-<div class="tablewrap"><table><thead><tr><th>Supplied token</th><th>Result</th><th>Final listing</th><th>Query flags on the response</th><th>vs prior session</th><th>Browse path / note</th></tr></thead><tbody>{rows}</tbody></table></div>
+<p>{n_obs} independent observations of all five supplied links, recorded in <code>data/probes.json</code>. Most recent: {esc(PROBES['probe_session'])} on {esc(PROBES['probe_date'])} — the pass that closed FLG-008, the note that no session in this repo had observed the redirects directly. Method: {esc(PROBES['probe_method'])}</p>
+{f'<p class="meta">{esc(PROBES["probe6_note"])}</p>' if PROBES.get('probe6_note') else ''}
+<div class="tablewrap"><table><thead><tr><th>Supplied token</th><th>Result</th><th>Final listing</th><th>Query flags on the response</th><th>vs prior session</th><th>Latest re-read</th><th>Browse path / note</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h3>What this proves</h3>
 <p>{esc(interp['reproduced'])}</p>
 <h3>What it does not prove</h3>
