@@ -18,6 +18,10 @@
     [
       "Is wireless always better than instant-read?",
       "No. Wireless wins for long, unattended cooks. Instant-read wins for quick, portable checks and needs no app or WiFi. They solve different problems."
+    ],
+    [
+      "Are the accessories dishwasher-safe?",
+      "Partly confirmed. The Chefman 6 Qt listing calls its removable non-stick baskets dishwasher safe, and the Chefman 8 Qt bullet says the 8-quart non-stick basket and flat frying tray are top rack dishwasher safe. For the Emeril 26QT the accessories are listed, but the dishwasher-safe wording was not confirmed on the page we read, so check it on the listing before you buy."
     ]
   ],
   "_provenance": "migrated verbatim from scripts/build_site.py GUIDES list by session arena-23d7ed19, 2026-11-20. No copy changes. category field added by arena-23d7ed19 so CARDS filters to this cluster and cluster counts are computed.",

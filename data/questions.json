@@ -1,5 +1,5 @@
 {
-  "_note": "Information register: the questions that must be answered before the next decision is reasonable. 'have' cites a source id from data/sources.json; 'missing' is what is genuinely absent; 'discovery' is the concrete action that produces the answer, including who can do it. The 'answer' column is intentionally empty for the owner to fill — blank is a real state here, not a placeholder.",
+  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped.",
   "updated": "2026-11-20",
   "blocking_count": 5,
   "questions": [
@@ -179,6 +179,61 @@
       "blocking": "no",
       "discovery": "Work them in this order: Q-01 (tracking ID), Q-04 (rates), Q-02 (intent), then specs. Each answer should be pasted into the same page next to the flag so the next session inherits the fact, not the guess.",
       "owner": "Owner + next session",
+      "answer": ""
+    },
+    {
+      "id": "Q-17",
+      "question": "What would count as this site working, and over what window?",
+      "decision_it_gates": "Whether any suggestion in the register can be judged, and whether a topic can be called a success or a failure.",
+      "have": "Five defined events (page_view, outbound_click, guide_read, reader_capture_submit, search_submit), a self-hosted endpoint that is not deployed, and an empty campaign ledger.",
+      "missing": "Any target: a traffic range, an outbound-click rate, a guide that gets read to the end, a first-party order count, a review window. Nothing in the repo states what 'working' looks like.",
+      "blocking": "no — but every 'how we would know it worked' line in the suggestions register is a hypothesis until this is answered",
+      "discovery": "Owner writes one sentence: the outcome that matters, the number that represents it, and the date the window closes. Put it in this row's answer field and in EXECUTIVE-SUMMARY.md. If the number must come from Amazon, use the Associates Reports link and record the report date.",
+      "owner": "Account owner",
+      "answer": ""
+    },
+    {
+      "id": "Q-18",
+      "question": "Does the catalogue stay at five products, or widen to a broader kitchen category?",
+      "decision_it_gates": "How many guides, category pages and comparison tables are worth building, and whether the site stays a focused comparison desk or becomes a general kitchen site.",
+      "have": "Five products across two categories, verified one by one against their listings, with three of the five coming from an unresolved link form.",
+      "missing": "Any decision about widening the catalogue, and if it widens, which products join on what evidence — listing quality, commission eligibility, or reader demand that has not been measured.",
+      "blocking": "no — but it changes the shape of every content plan and it is cheaper to decide before the next ten guides",
+      "discovery": "Owner picks one: (a) five products, deep coverage; (b) widen to a category, with each addition needing its own intent record, spec read and source link; (c) widen only if a measured query shows a gap. Record the choice in this row's answer field.",
+      "owner": "Account owner",
+      "answer": ""
+    },
+    {
+      "id": "Q-19",
+      "question": "When an Amazon listing and a manufacturer page disagree, which one wins — and who signs off?",
+      "decision_it_gates": "Every contested spec cell on the site (FLG-005, FLG-010, FLG-015, FLG-017, FLG-019) and any future 'best' claim that rests on a number.",
+      "have": "A standing rule today: show both strings with their dates, pick neither, and flag the row. Four live listing-internal contradictions are published that way.",
+      "missing": "A written precedence rule and a named person who resolves the conflicts, plus a place to record the resolution so it is not re-litigated every session.",
+      "blocking": "no — the current rule (show both, flag it) is the safe one",
+      "discovery": "Owner confirms the precedence rule (manufacturer page over listing is the usual choice, but it needs saying out loud) and names who resolves rows. Add the rule to the About page's method list and the answer field here.",
+      "owner": "Account owner",
+      "answer": ""
+    },
+    {
+      "id": "Q-20",
+      "question": "Is this a seasonal site (holiday cooking) or an evergreen one, and which season comes first?",
+      "decision_it_gates": "The topic backlog's order, the season label on every guide, and whether effort goes into a December cluster or into year-round questions.",
+      "have": "Two season labels in use (Everyday, Holiday cooking), a holiday-cluster guide, and a topics backlog whose entries are mostly 'Everyday' with three marked 'Holiday cooking'.",
+      "missing": "A decision on the lead season and a calendar of the topics that go with it. The current date is 2026-11-20, so a December cluster is the near-term opportunity and it expires in weeks.",
+      "blocking": "no — but a seasonal site has a deadline that a backlog does not show on its own",
+      "discovery": "Owner names the lead season and the publish date for the first cluster item. The topics page already carries a season field per topic, so the decision becomes a priority order rather than new work.",
+      "owner": "Account owner",
+      "answer": ""
+    },
+    {
+      "id": "Q-21",
+      "question": "Who owns the reader list, and which provider handles the addresses?",
+      "decision_it_gates": "Whether the newsletter block can ever do more than count a local event, and what the privacy wording is allowed to promise.",
+      "have": "A form that records a local reader_capture_submit count and nothing else. No list, no provider, no consent record, no sending.",
+      "missing": "A provider decision, a confirmed-consent flow, a retention rule and a named owner — plus the legal basis for storing addresses if the audience is in the EU.",
+      "blocking": "no — but until it is answered the capture block can only promise what it already does",
+      "discovery": "Owner picks a provider that supports a confirmed-consent flow (the address is only usable after the reader confirms it) and exports its list, writes the retention rule (for example: delete after 12 months of inactivity), and adds a matching line to the About and Disclosure pages. Until then the copy stays as it is now: a local count and nothing more.",
+      "owner": "Account owner",
       "answer": ""
     }
   ]

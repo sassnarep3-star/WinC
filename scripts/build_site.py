@@ -43,6 +43,10 @@ _sug = load("data/suggestions.json")
 SUGGESTIONS = _sug["suggestions"]
 QUESTIONS = load("data/questions.json")["questions"]
 QMETA = load("data/questions.json")
+CATEGORY_DATA = load("data/categories.json")
+CATEGORY_PROFILES = {c["category"]: c for c in CATEGORY_DATA["categories"]}
+TOPIC_DATA = load("data/topics.json")
+TOPICS = TOPIC_DATA["topics"]
 
 CATEGORIES = [("Air Fryers", "air-fryers.html"), ("Meat Thermometers", "thermometers.html")]
 CAT_IMG = {
@@ -69,7 +73,8 @@ def cluster_sentence():
     return "; ".join(bits)
 def counts():
     return {"products": len(PRODUCTS), "guides": len(GUIDES), "sources": len(SOURCES),
-            "flags": len(FLAGS), "questions": len(QUESTIONS),
+            "flags": len(FLAGS), "questions": len(QUESTIONS), "topics": len(TOPICS),
+            "profiles": sum(len(v.get("profiles", [])) for v in CATEGORY_PROFILES.values()),
             "blocking": sum(1 for q in QUESTIONS if q.get("blocking","no").startswith("yes")),
             "open_sug": sum(1 for x in SUGGESTIONS if x["status"].startswith("open")),
             "done_sug": sum(1 for x in SUGGESTIONS if x["status"] == "done-this-session")}
@@ -124,6 +129,7 @@ NAV_READER = [
     ("guides/index.html", "Guides"),
     ("air-fryers.html", "Air fryers"),
     ("thermometers.html", "Thermometers"),
+    ("topics.html", "Topics"),
 ]
 # Every dashboard surface lives in exactly one navigation group, and in the footer.
 NAV_DESK = [
@@ -171,6 +177,7 @@ Prices and availability are shown on Amazon — check Amazon for current details
 </ul></div>
 <div><h4>Guides</h4><ul>
 <li><a href="{p}guides/index.html">All guides</a></li>
+<li><a href="{p}topics.html">Topics: what is next</a></li>
 {guide_links}
 </ul></div>
 <div><h4>The Desk</h4><ul>
@@ -296,7 +303,7 @@ def capture_block(depth=0):
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>The honest version: this is a static site, so submitting only records a <code>reader_capture_submit</code> count inside your own browser and takes you to the <a href="{pfx}measurement.html">measurement page</a>. No list exists and nothing reaches a server until the owner wires up an email provider — see <a href="{pfx}flagged-for-review.html">FLG-013</a>.</small>
+<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect.</small>
 </section>"""
 
 # ---------- HOME ----------
@@ -323,36 +330,57 @@ def home_body():
 
 <h2>The shop</h2>
 <div class="grid">{cards}</div>
-<div class="notice"><strong>How to read this page:</strong> every “Check on Amazon” button is a sponsored link, marked <span class="sponsored-tag">Sponsored</span>. Prices and availability live on Amazon, not here. The specs are copied from Amazon’s own listings on {TODAY}; where a cell is blank it is because we could not confirm the value, and we would rather show you a gap than a guess.</div>
+<p class="seclink"><a class="btn btn-quiet" href="products/index.html">Compare every spec in one table →</a></p>
 
-<h2>Start with a question, not a product</h2>
+<h2>Start with a question, not a brand</h2>
 <div class="grid">{rail}</div>
-<p><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a></p>
+<p><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a> <a class="btn btn-quiet" href="topics.html">What we are writing next →</a></p>
 
-<h2>Browse by category</h2>
+<h2>Or start with a category</h2>
 <div class="catgrid">{tiles}</div>
 
-<h2>Why the numbers here are boring in a good way</h2>
-<ul>
-<li>{c['sources']} sources on the <a href="verification.html">verification register</a>. Every product row links to the listing it came from, with the date it was read.</li>
-<li>{c['flags']} items we could not confirm, published on <a href="flagged-for-review.html">Flagged for review</a> with the action that would settle each one.</li>
-<li>Intended product and observed redirect are stored as separate fields, on purpose: a link that redirects somewhere is not proof of what someone meant.</li>
-<li>{c['questions']} open questions ({c['blocking']} of them blocking) are on one page: <a href="questions.html">Open questions</a>.</li>
-</ul>
+<h2>How this site works</h2>
+<div class="notice"><strong>Every number here is copied from the manufacturer's own Amazon listing, with the link and the date beside it.</strong> Where a value could not be confirmed, the cell stays blank and is listed for review — never estimated. Every outbound product link is sponsored and labelled as such: the <a href="disclosure.html">disclosure</a> explains it, and the <a href="verification.html">source register</a> shows the evidence.</div>
 {capture_block()}
-<h2>What we do not do</h2>
-<ul>
-<li>No “best” rankings without a stated method. We compare listed specs; you decide.</li>
-<li>No invented hands-on testing. Nobody on this desk has cooked with these five units, so no page claims it.</li>
-<li>No copied Amazon descriptions, no scraped Amazon images, no countdown timers, no “only 3 left in stock”.</li>
-</ul>
 """
 
 # ---------- CATEGORY PAGES ----------
+SPEC_LABELS = {
+    "capacity": "listed capacity",
+    "dimensions": "listed footprint",
+    "weight": "listed weight",
+    "temperature": "listed temperature range",
+    "power": "listed power",
+    "model": "listed model number",
+    "title": "what the listing says the product is",
+    "brand": "listed brand",
+    "upc": "listed UPC",
+    "listing_claims": "the listing's own claims",
+    "observed_asin": "the ASIN the link resolves to",
+}
+
+def human_key(k):
+    return k.replace("_", " ").capitalize()
+
+def profile_block(cat):
+    """Reader situations for a category. Every answer names the one listed spec it rests on."""
+    profs = CATEGORY_PROFILES.get(cat, {}).get("profiles", [])
+    if not profs:
+        return '<p class="meta">No profiles recorded for this category yet.</p>'
+    out = []
+    for pr in profs:
+        out.append(f"""<article class="profile">
+<h3>{esc(pr['situation'])}</h3>
+<p class="sugmeta">Deciding spec: <strong>{esc(SPEC_LABELS.get(pr['deciding_spec'], human_key(pr['deciding_spec'])))}</strong></p>
+<p>{esc(pr['what_the_listings_say'])}</p>
+<p><strong>What that means for you:</strong> {esc(pr['answer'])}</p>
+<p class="src">Source: <a href="{esc(pr['source'])}" rel="nofollow noopener" target="_blank">{esc(pr['source'])}</a> · listings read {TODAY}.</p>
+</article>""")
+    return '<div class="profilelist">' + "".join(out) + "</div>"
+
 def category_body(cat, title, intro, guide_links):
     ps = [p for p in PRODUCTS if p["category"] == cat]
     cards = "".join(product_card(p) for p in ps)
-    # comparison table
     cols = ["Field"] + [p["short_label"] for p in ps]
     fields = ["Brand", "Model", "Capacity", "Dimensions", "Weight", "Temperature / accuracy", "Power", "UPC", "Price"]
     keys = ["brand", "model", "capacity", "dimensions", "weight", "temperature", "power", "upc", "price"]
@@ -367,6 +395,9 @@ def category_body(cat, title, intro, guide_links):
 <section class="hero"><span class="kicker">Category · {esc(cat)}</span>
 <h1>{esc(title)}</h1><p class="lede">{esc(intro)}</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
+<h2>Match to your situation</h2>
+<p>Each answer names the one listed spec that settles the case, and links the listing it came from. Nobody here has cooked with these units, so there is no “we tested it” line anywhere — you check the spec against your kitchen.</p>
+{profile_block(cat)}
 <div class="grid">{cards}</div>
 <h2>Compare side by side</h2>
 {table}
@@ -384,8 +415,27 @@ def product_body(p):
                   '<li><a href="../guides/air-fryer-capacity-checklist.html">Capacity checklist</a></li>'
                   '<li><a href="../guides/cleanup-and-counter-space.html">Cleanup &amp; counter-space trade-offs</a></li>')
     else:
-        guides = ('<li><a href="../guides/multi-function-appliance-questions.html">Questions before buying a multi-function appliance</a></li>'
+        guides = ('<li><a href="../guides/instant-read-or-leave-in.html">Instant-read or leave-in probe</a></li>'
+                  '<li><a href="../guides/multi-function-appliance-questions.html">Questions before buying a multi-function appliance</a></li>'
                   '<li><a href="../thermometers.html">Compare both thermometers</a></li>')
+    notes = ""
+    if p.get("listing_notes"):
+        items = "".join(f'<li><strong>{esc(n["flag"])}:</strong> {esc(n["note"])}</li>' for n in p["listing_notes"])
+        notes = (f'<h2>Where the listing disagrees with itself</h2><ul class="notes">{items}</ul>'
+                 '<p class="meta">Every item above is published on the <a href="../flagged-for-review.html">Flagged for review</a> page with the action that would settle it. '
+                 'None of them is resolved by guessing.</p>')
+    claims = ""
+    if p.get("listing_claims"):
+        rows = "".join(f'<tr><th>{esc(human_key(k))}</th><td>{esc(v)}</td></tr>' for k, v in p["listing_claims"].items())
+        claims = (f'<h2>What the listing claims, quoted as claims</h2><div class="tablewrap"><table><thead><tr><th>Claim</th>'
+                  f'<th>What the listing says</th></tr></thead><tbody>{rows}</tbody></table></div>'
+                  f'<p class="src">Source: <a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p["source_url"])}</a> · read {esc(p["source_date"])}. '
+                  "These are the statements the seller wrote on the listing — not measurements taken by this site.</p>")
+    faq = p.get("faq") or []
+    faq_html = ""
+    if faq:
+        rows = "".join(f'<details class="faqitem"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)
+        faq_html = f'<h2>Questions readers ask about this one</h2><div class="faqlist">{rows}</div>'
     return f"""
 <section class="hero"><span class="kicker">{esc(p['category'])} · {esc(p['brand'])}</span>
 <h1>{esc(p['short_label'])}</h1>
@@ -403,6 +453,9 @@ def product_body(p):
 <li><strong>Cleanup:</strong> check whether baskets/parts are listed as dishwasher-safe on Amazon before you buy.</li>
 <li><strong>Functions you will use weekly:</strong> presets only help if they match your routine (see the multi-function guide).</li>
 </ul>
+{notes}
+{claims}
+{faq_html}
 <h2>Related guides</h2><ul>{guides}</ul>
 <h2>More in {esc(p['category'])}</h2>
 <div class="grid">{rel_cards}</div>
@@ -433,6 +486,37 @@ def guide_body(g):
 {capture_block(depth=1)}
 """
 
+def breadcrumb_jsonld(items):
+    """items: list of (name, site-relative path)."""
+    li = [{"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + u}
+          for i, (n, u) in enumerate(items)]
+    return ('<script type="application/ld+json">' +
+            json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": li}) + "</script>")
+
+
+def article_jsonld(g):
+    return ('<script type="application/ld+json">' + json.dumps({
+        "@context": "https://schema.org", "@type": "Article",
+        "headline": g["title"], "description": g["desc"],
+        "datePublished": g["published"], "dateModified": g.get("updated", g["published"]),
+        "author": {"@type": "Organization", "name": "ShopNow Kitchen Desk"},
+        "publisher": {"@type": "Organization", "name": "ShopNow Kitchen"},
+        "image": SITE + (g.get("image") or HERO_IMG[0]),
+        "mainEntityOfPage": SITE + g["path"],
+        "isAccessibleForFree": True,
+        "articleSection": g.get("cluster", ""),
+    }) + "</script>")
+
+
+def product_faq_jsonld(p):
+    faq = p.get("faq") or []
+    if not faq:
+        return ""
+    items = [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]
+    return ('<script type="application/ld+json">' +
+            json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": items}) + "</script>")
+
+
 def faq_jsonld(g):
     items = [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in g["faq"]]
     return ('<script type="application/ld+json">' +
@@ -449,12 +533,43 @@ def status_pill_class(st):
 
 EFFORT = {"S": "small — hours", "M": "medium — a session", "L": "large — more than one session"}
 
+def suggestion_table():
+    rows = ""
+    for x in SUGGESTIONS:
+        cls = status_pill_class(x["status"])
+        rows += (f'<tr><td><strong>{esc(x["id"])}</strong></td>'
+                 f'<td><a href="#{esc(x["id"])}">{esc(x["title"])}</a></td>'
+                 f'<td>{esc(x["area"])}</td><td>{esc(x["effort"])}</td><td>{esc(x["cost"])}</td>'
+                 f'<td>{pill(x["status"], cls)}</td>'
+                 f'<td>{esc(x["expected_effect"])}</td></tr>')
+    return ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Suggestion</th><th>Area</th><th>Effort</th>'
+            '<th>Cost</th><th>Status</th><th>How we would know it worked</th></tr></thead><tbody>'
+            + rows + "</tbody></table></div>")
+
+
+def suggestion_stages():
+    now = [x for x in SUGGESTIONS if x["status"].startswith("recommended")]
+    decide = [x for x in SUGGESTIONS if x["status"] == "open"]
+    blocked = [x for x in SUGGESTIONS if x["status"].startswith("open-blocked")]
+    shipped = [x for x in SUGGESTIONS if x["status"].startswith("shipped") or x["status"].startswith("done-this-session")]
+    def block(title, items, note):
+        if not items:
+            return ""
+        lis = "".join(f'<li><a href="#{esc(x["id"])}"><strong>{esc(x["id"])}</strong> — {esc(x["title"])}</a></li>' for x in items)
+        return f'<h3>{esc(title)}</h3><ul class="stagelist">{lis}</ul><p class="meta">{esc(note)}</p>'
+    return (block("Do now", now, "These gate everything else: until they are done, the site cannot earn or be measured.")
+            + block("Decide next", decide, "Each one is a decision only the owner can take; the evidence is on the card below.")
+            + block("Blocked", blocked, "Blocked items wait on a named question on the open-questions register.")
+            + block("Already shipped", shipped, "Done in an earlier session or this one — kept so the reasoning is not lost."))
+
+
 def direction_body():
     c = counts()
     cards = ""
     for x in SUGGESTIONS:
         cls = status_pill_class(x["status"])
-        opts = ""
+        detail = x.get("status_detail", "")
+        detail_html = f'<p class="why"><span>Status detail</span>{rich(detail)}</p>' if detail else ""
         cards += f"""<article class="sug" id="{esc(x['id'])}">
 <header><h3>{esc(x['title'])}</h3>{pill(x['status'], cls)}</header>
 <p class="sugmeta">{esc(x['area'])} · {esc(x['id'])} · effort {esc(x['effort'])} ({EFFORT.get(x['effort'], x['effort'])}) · cost: {esc(x['cost'])}</p>
@@ -463,6 +578,7 @@ def direction_body():
 <p class="why"><span>Risk</span>{rich(x['risk'])}</p>
 <p class="why"><span>How we would know it worked</span>{rich(x['expected_effect'])}</p>
 <p class="why"><span>Evidence</span>{rich(x['evidence'])}</p>
+{detail_html}
 <details class="promptbox"><summary>Instruction block for the next build prompt</summary>
 <pre><code>{esc(x['feeds_prompt'])}</code></pre></details>
 </article>"""
@@ -470,14 +586,21 @@ def direction_body():
 <section class="hero"><span class="kicker">Direction · {len(SUGGESTIONS)} suggestions, nothing implemented by surprise</span>
 <h1>Read these, choose a path, and the next prompt writes itself</h1>
 <p class="lede">Each suggestion states the evidence for it, what it changes, the risk, and how to tell whether it worked. Ticking boxes here changes nothing on the site — it stores your selection in this browser and assembles a copy-paste instruction block for whoever builds next. Implementation only starts after you choose.</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {c['open_sug']} still open, {c['done_sug']} already shipped this session</p></section>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {c['open_sug']} still open, {c['done_sug']} shipped this session</p></section>
+
+<h2>The register at a glance</h2>
+{suggestion_table()}
+
+<h2>Recommended sequence</h2>
+<p>One build at a time. The order below is the order that keeps the site honest first and productive second.</p>
+{suggestion_stages()}
 
 <h2>Choose the next path</h2>
 <div class="notice"><strong>How to choose:</strong> pick the path that matches what you want in the next month, not the one that sounds most ambitious. Paths are mutually exclusive for one build. Your choice is stored only in this browser (localStorage); no data leaves the device and nothing is sent anywhere.</div>
 <form class="chooser" id="path-chooser">
 <label><input type="radio" name="path" value="A"> <strong>Path A — Trust the money path first (recommended).</strong> Run the one-link Associates tests, confirm the tracking ID, keep links gated until they pass. Nothing grows until the click actually attributes.</label>
-<label><input type="radio" name="path" value="B"> <strong>Path B — Shop depth.</strong> Add a “match to your situation” block to both categories and per-row source dates on every spec, then licensed photography. Best for conversion; needs the imagery decision (Q-07).</label>
-<label><input type="radio" name="path" value="C"> <strong>Path C — Content volume.</strong> Two guides a week from the question backlog plus a seasonal cluster. Best for coverage; worst without measurement, because you will be guessing which topic to write next.</label>
+<label><input type="radio" name="path" value="B"> <strong>Path B — Shop depth.</strong> Extend the decision blocks with per-row source dates, then settle the imagery question (Q-07) and commission licensed photography. Best for conversion.</label>
+<label><input type="radio" name="path" value="C"> <strong>Path C — Content volume.</strong> Two guides a week from the published topic backlog plus a seasonal cluster. Best for coverage; worst without measurement, because you will be guessing which topic to write next.</label>
 <label><input type="radio" name="path" value="D"> <strong>Path D — Measure first.</strong> Deploy the endpoint and Search Console now, add nothing, and choose the next five topics from 4 weeks of real queries.</label>
 <button class="btn" type="submit">Save my choice (this browser only)</button>
 <span id="chooser-msg" class="meta"></span>
@@ -491,7 +614,7 @@ m.textContent='Saved: Path '+v.value+' (this browser only, nothing transmitted).
 f.addEventListener('submit',function(e){{e.preventDefault();save();}});
 try{{var s=localStorage.getItem('sk_path');if(s){{var r=document.querySelector('input[name=path][value="'+s+'"]');if(r)r.checked=true;}}}}catch(e){{}}}})();
 </script>
-<h2>The register</h2>
+<h2>The register, one card at a time</h2>
 <p>Tick the ones you want, then copy the block at the bottom of the page. Anything marked <em>open-blocked</em> cannot start until the matching question on the <a href="questions.html">open-questions register</a> is answered.</p>
 <div class="suglist">{cards}</div>
 {prompt_builder()}
@@ -582,12 +705,15 @@ def verification_body():
         ("Every outbound product link sponsored", "rel=sponsored nofollow + Sponsored tag + data-event", "all product links (gate-checked)"),
         ("Product-intent record (separate fields)", "Intended blank; observed populated; never merged", "this page"),
         ("Validated Special Links (one-link test)", "Constructed links pending Associates test (FLG-002); short links not claimed invalid (FLG-003)", "flagged-for-review.html"),
-        ("Question-shaped guides + measure", "4 guides published; 5 events defined; ledger empty", "guides/, measurement.html"),
+        ("Question-shaped guides + measure", f"{len(GUIDES)} guides published; {len(TOPICS)} topics queued; 5 events defined; ledger empty", "guides/, topics.html, measurement.html"),
         ("Click/conversion measurement first", "Beacon + Worker code; local-only until deployed (FLG-007)", "assets/app.js, analytics/"),
         ("Campaign ledger (evidence-based)", "Empty, well-defined; first-party reports only", "measurement.html"),
         ("Compliance gate in workflow", "scripts/check_site.py fails on disclosure/sponsored/price/sitemap violations", "scripts/check_site.py"),
         ("Publication polish (authorship, seasons, clusters)", "Kitchen Desk byline, season/cluster labels, RSS/Search Console/reader capture status", "about.html"),
-        ("Suggestions + Q&A before decisions", "Direction page with path chooser + Q&A table", "direction.html"),
+        ("Suggestions + Q&A before decisions", f"Direction page with a reviewable table, a staged path and a prompt builder + {len(QUESTIONS)}-row Q&A table", "direction.html, questions.html"),
+        ("Lead with the products, not the process", "Front page order: hero, shop, guides, categories, one method line; every dashboard surface in the footer and one nav group", "index.html"),
+        ("Decision support, no ranking", f"{sum(len(v.get('profiles', [])) for v in CATEGORY_PROFILES.values())} reader situations, each naming the one listed spec it rests on", "air-fryers.html, thermometers.html, data/categories.json"),
+        ("Topic pipeline visible", f"{len(TOPICS)} planned topics, each stating how it was chosen (hypothesis or measured query)", "topics.html"),
         ("Executive summary", "Summary + counts + next steps", "executive-summary.html"),
     ]
     trace = "".join(f"<tr><td>{esc(a)}</td><td>{esc(b)}</td><td class='src'>{esc(c)}</td></tr>" for a, b, c in trace_rows)
@@ -723,8 +849,10 @@ def about_body():
 <li><strong>Seasons:</strong> currently “Holiday cooking” alongside everyday cooking; grilling and holiday-baking angles run as guides, not as banners that expire on the server.</li>
 <li><strong>Clusters (computed from data, so this cannot drift):</strong> {esc(cluster_sentence())}.</li>
 </ul>
+<h2>How a reader makes the decision</h2>
+<p>Every category page opens with reader situations — “two of you, most weeknights” — and answers them by naming the one listed spec that settles the case, with the listing linked. No profile ranks a product best, and no profile reaches past a listed specification. Product pages add what the listing says, where the listing contradicts itself, and the questions readers actually ask, each with its source.</p>
 <h2>Publishing cadence</h2>
-<p>A new guide is one JSON file in <code>data/guides/</code>, then <code>npm run build</code>. Sitemap, RSS, the search index, this page’s cluster counts and every nav rail pick it up from the same source — no hand-edited lists. The next topic should come from measured queries rather than instinct, which is why <a href="measurement.html">measurement</a> is wired even while it records nothing yet.</p>
+<p>A new guide is one JSON file in <code>data/guides/</code>, then <code>npm run build</code>. Sitemap, RSS, the search index, this page’s cluster counts and every nav rail pick it up from the same source — no hand-edited lists. The next topic should come from measured queries rather than instinct, which is why <a href="measurement.html">measurement</a> is wired even while it records nothing yet. Every planned topic and how it was chosen is published on the <a href="topics.html">topics page</a>, so the editorial pipeline is visible rather than implied.</p>
 <h2>Corrections</h2>
 <p>If a row on this site is wrong, that is a defect, not a difference of opinion. Flagged items are published on <a href="flagged-for-review.html">Flagged for review</a> with the source link and the action that would settle them; we would rather show an open question than fill it with a guess.</p>
 {capture_block()}
@@ -733,34 +861,44 @@ def about_body():
 # ---------- EXEC SUMMARY ----------
 def exec_body():
     c = counts()
+    total_pages = 4 + len(CATEGORIES) + len(PRODUCTS) + len(GUIDES) + len(NAV_DESK)
     return f"""
 <section class="hero"><span class="kicker">Executive summary · for the owner, not for readers</span>
-<h1>Executive summary: {c['products']} products, {c['guides']} guides, nothing invented</h1>
+<h1>Executive summary: {c['products']} products, {c['guides']} guides, {c['flags']} flags, nothing invented</h1>
 <p class="lede">ShopNow Kitchen is a publication front page over an evidence ledger. It leads with products and buyer questions; verification sits one click away instead of in the way. Every number below is computed from the repo, not typed by hand, so this page cannot go stale without the data going stale first.</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · full text in <code>EXECUTIVE-SUMMARY.md</code></p></section>
 
 <h2>What is live</h2>
 <div class="tablewrap"><table><thead><tr><th>Layer</th><th>State</th><th>Where</th></tr></thead><tbody>
-<tr><td>Shop</td><td>{c['products']} product pages, 2 category pages, 1 shop index, all with sponsored buttons and disclosure above the fold</td><td><a href="products/index.html">The shop</a></td></tr>
-<tr><td>Editorial</td><td>{c['guides']} question-shaped guides, newest first, each filtered to its own cluster</td><td><a href="guides/index.html">Guides index</a></td></tr>
-<tr><td>Trust</td><td>{c['sources']} sources, {c['flags']} flagged items, intended vs observed kept in separate fields</td><td><a href="verification.html">Verification</a></td></tr>
-<tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open, {c['done_sug']} done this session) + {c['questions']} questions, {c['blocking']} blocking</td><td><a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
+<tr><td>Shop</td><td>{c['products']} product pages, {len(CATEGORIES)} category pages, 1 shop index, each with a decision block or a decision shortcut</td><td><a href="products/index.html">The shop</a></td></tr>
+<tr><td>Editorial</td><td>{c['guides']} question-shaped guides, {c['topics']} planned topics, {c['profiles']} reader situations that name their deciding spec</td><td><a href="guides/index.html">Guides</a> · <a href="topics.html">Topics</a></td></tr>
+<tr><td>Trust</td><td>{c['sources']} sources, {c['flags']} flagged items, intended vs observed kept in separate fields</td><td><a href="verification.html">Verification</a> · <a href="flagged-for-review.html">Flagged</a></td></tr>
+<tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open) + {c['questions']} questions, {c['blocking']} blocking</td><td><a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
 <tr><td>Measurement</td><td>5 events defined, beacon shipped, endpoint <strong>not deployed</strong>, ledger empty by design</td><td><a href="measurement.html">Measurement</a></td></tr>
-<tr><td>Findability</td><td>1 sitemap ({c['guides'] + c['products'] + 12} URLs), RSS, canonicals, FAQ + Article schema, robots scoping internals out</td><td><code>sitemap.xml</code></td></tr>
+<tr><td>Findability</td><td>{total_pages} pages in the sitemap, RSS, canonicals, Article + FAQ + Breadcrumb schema, robots scoping internals out</td><td><code>sitemap.xml</code></td></tr>
 </tbody></table></div>
 
 <h2>The five links, in one table</h2>
 <div class="tablewrap"><table><thead><tr><th>Supplied</th><th>Token length</th><th>Valid ASIN?</th><th>Observed destination</th><th>Intended ASIN</th></tr></thead><tbody>
 {"".join(f"<tr><td><code>{esc(p['submitted_token'])}</code></td><td>{p['token_length']}</td><td>No — 10 characters required (S05)</td><td><strong>{esc(p['observed_asin'])}</strong></td><td>{blank(p['intended_asin'])}</td></tr>" for p in PRODUCTS)}
 </tbody></table></div>
-<p class="src">Re-observed independently on {PROBES['probe_date']} by {esc(PROBES['probe_session'])}: 5/5 destinations matched the earlier observation, and every final URL carried <code>lv=shuf</code> + <code>plpRedirect=mhFallback</code> — a fallback route, so “observed” is not “intended” (FLG-009). Log: <a href="verification.html">Verification §4</a>.</p>
+<p class="src">Observed live three times (2026-11-17, and twice on 2026-11-20 by sessions arena-23d7ed19 and arena-82d39deb): 5/5 destinations identical every time, and every final URL carried <code>lv=shuf</code> + <code>plpRedirect=mhFallback</code> — a fallback route, so “observed” is not “intended” (FLG-009). Log: <a href="verification.html#probes">Verification §4</a>.</p>
+
+<h2>What the latest verification pass changed</h2>
+<div class="tablewrap"><table><thead><tr><th>Finding</th><th>What changed</th><th>Where</th></tr></thead><tbody>
+<tr><td>One spec row was wrong</td><td>The 8-quart Chefman was recorded at 1700 W / 120 V. Its live bullet reads “1000 Watts/120 Volts – RJ38-SQSS-8T” — 1700 W is the 6-quart model's number. Corrected, and the earlier capture kept beside it.</td><td>FLG-019, <a href="verification.html">Verification</a></td></tr>
+<tr><td>Four listing-internal contradictions confirmed live</td><td>8-Qt temperature (title 450°F vs bullets 200–400°F) · Emeril accessory count (title 6 vs bullets 7) · Emeril preset count (title 24 vs bullets 25) · 6-Qt capacity unit (details “6 liters” vs title “6 quart”)</td><td>FLG-005, FLG-010, FLG-015, FLG-017</td></tr>
+<tr><td>One Amazon product-name string differs from the earlier capture</td><td>B08DKYBTPH serves “TurboFry 4-in-1 … 450°F Hi-Fry” now and a different name string earlier. Both are stored; the live one is displayed.</td><td>FLG-016</td></tr>
+<tr><td>Two buyer-relevant facts found in the live pages</td><td>The 8-Qt ASIN is a 6/8/9-quart size family, and Amazon's own page states there is a newer model of that item. Both are now on the product page.</td><td>FLG-020, FLG-021</td></tr>
+</tbody></table></div>
 
 <h2>What has to happen before any of this earns anything</h2>
 <ol>
 <li>Confirm the tracking ID and one test link per product in Associates Central (FLG-001, FLG-002, Q-01, Q-16).</li>
 <li>Confirm intent for the five products with whoever supplied them (Q-02) — do not infer it from a redirect.</li>
 <li>Deploy the metrics endpoint, then pick topics from Search Console queries rather than taste (SG-07, SG-08).</li>
-<li>Settle the spec conflicts on the manufacturer page, not on Amazon marketing copy (FLG-005, FLG-010, Q-05).</li>
+<li>Settle the spec conflicts on the manufacturer page, not on Amazon marketing copy (FLG-005, FLG-010, Q-05, Q-19).</li>
+<li>Decide the audience, the marketplace and what “working” means (Q-10, Q-17, SG-20) — before more content is written, not after.</li>
 </ol>
 <div class="notice"><strong>No revenue forecast, no conversion score, no traffic projection.</strong> There is no first-party data yet, so any number here would be fiction. The ledger stays empty until authorised reports arrive — that is the honest starting point, and it is also what makes the first real number meaningful.</div>
 {capture_block()}
@@ -907,6 +1045,40 @@ def probes_section():
 <div class="notice"><strong>Operational consequence.</strong> {esc(interp['operational_consequence'])}</div>
 """
 
+# ---------- TOPICS (backlog) ----------
+def topics_body():
+    rows = ""
+    for t in TOPICS:
+        status = t.get("status", "planned")
+        cls = "okpill" if status == "published" else ("flagpill" if status == "blocked" else "warnpill")
+        rows += (f'<tr><td><strong>{esc(t["id"])}</strong></td>'
+                 f'<td><strong>{esc(t["title"])}</strong><p class="meta">{esc(t["question"])}</p></td>'
+                 f'<td>{esc(t["cluster"])}</td><td>{esc(t.get("season", "Everyday"))}</td>'
+                 f'<td>{esc(t["why"])}</td><td>{esc(t["needs"])}</td>'
+                 f'<td>{esc(t["chosen_from"])}</td>'
+                 f'<td><span class="{cls}">{esc(status)}</span></td></tr>')
+    published = "".join(f'<li><a href="{g["path"]}">{esc(g["title"])}</a> <span class="meta">({esc(g.get("cluster",""))})</span></li>'
+                        for g in GUIDES)
+    return f"""
+<section class="hero"><span class="kicker">Topics · {len(TOPICS)} in the backlog</span>
+<h1>What we are writing next — and how each topic was chosen</h1>
+<p class="lede">Every guide on this site starts as a question someone would actually type. This page shows the questions still to write, what each one would need, and — in plain words — whether the topic came from an editorial hunch or from a measured query.</p>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
+<div class="notice"><strong>Read the “chosen from” column before treating a title as evidence of demand.</strong> No Search Console property exists for this site yet, so no topic on this list is chosen from measured queries. They are editorial hypotheses: plausible questions, not popularity claims. When the analytics endpoint and the Search Console property exist, this column is where a measured query replaces a hunch — and the gate fails if a topic ever claims measured demand without a recorded source.</div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Topic (the question)</th><th>Cluster</th><th>Season</th><th>Why it earns a page</th><th>What it would need</th><th>Chosen from</th><th>Status</th></tr></thead><tbody>{rows}</tbody></table></div>
+<h2>Already published</h2>
+<ul>{published}</ul>
+<p class="seclink"><a class="btn btn-quiet" href="guides/index.html">Read the guides →</a> <a class="btn btn-quiet" href="direction.html">Suggest a different topic →</a></p>
+<h2>How a topic gets written</h2>
+<ol>
+<li>A reader question that can be answered from listed specifications and published guidance — never from an opinion.</li>
+<li>A row per claim, each with a source link, and anything unconfirmable left blank and flagged.</li>
+<li>One JSON file in <code>data/guides/</code>, then <code>npm run build</code> — the index, sitemap, feed and search index all follow.</li>
+<li>The gate runs before publish: disclosure present, sponsored links qualified, no static prices, no broken internal links.</li>
+</ol>
+{capture_block()}
+"""
+
 # ---------- BUILD ----------
 def rfc822(d):
     return datetime.datetime.strptime(d, "%Y-%m-%d").strftime("%a, %d %b %Y 00:00:00 +0000")
@@ -923,6 +1095,9 @@ def main():
     pages["guides/index.html"] = P("guides/index.html", "Guides — question-shaped buying guides | ShopNow Kitchen",
         f"{counts()['guides']} buyer guides on air fryers and meat thermometers: capacity, cleanup, counter space, probes, and food-safety targets.",
         guides_index_body(), image=HERO_IMG[0])
+    pages["topics.html"] = P("topics.html", "Topics — what we are writing next | ShopNow Kitchen",
+        f"{len(TOPICS)} planned buyer questions, each with the sources it would need and how the topic was chosen. Editorial hypotheses until real query data exists.",
+        topics_body(), image=HERO_IMG[0])
     pages["questions.html"] = P("questions.html", "Open questions — what must be answered before deciding | ShopNow Kitchen",
         f"{counts()['questions']} questions with what we have, what is missing, why it blocks a decision, and how to find the answer.",
         questions_body())
@@ -943,14 +1118,25 @@ def main():
         t, d, h1, lede = cat_copy[name]
         pages[href] = P(href, t, d,
             category_body(name, h1, lede, guide_li(name)),
+            extra_head=breadcrumb_jsonld([("Home", "index.html"), (name, href)]),
             image=CAT_IMG[name][0])
     for x in PRODUCTS:
+        cat_href_x = dict(CATEGORIES).get(x["category"], "products/index.html")
         pages[x["page"]] = P(x["page"], f"{x['short_label']} — specs & comparison | ShopNow Kitchen",
             f"{x['title']} Specs read from Amazon's listing, source linked. Price and rating intentionally not displayed.",
-            product_body(x), image=CAT_IMG.get(x["category"], HERO_IMG)[0])
+            product_body(x),
+            extra_head=(product_faq_jsonld(x) + breadcrumb_jsonld(
+                [("Home", "index.html"), ("The shop", "products/index.html"),
+                 (x["category"], cat_href_x), (x["short_label"], x["page"])])),
+            image=CAT_IMG.get(x["category"], HERO_IMG)[0])
     for g in GUIDES:
+        g_cat = dict(CATEGORIES).get(g.get("category"), "guides/index.html")
         pages[g["path"]] = P(g["path"], g["title"] + " | ShopNow Kitchen", g["desc"], guide_body(g),
-                             page_type="guide", extra_head=faq_jsonld(g), image=g.get("image") or "")
+                             page_type="guide",
+                             extra_head=(article_jsonld(g) + faq_jsonld(g) + breadcrumb_jsonld(
+                                 [("Home", "index.html"), ("Guides", "guides/index.html"),
+                                  (g.get("cluster", "Guides"), g_cat), (g["title"], g["path"])])),
+                             image=g.get("image") or "")
     pages["direction.html"] = P("direction.html", "Suggestions & paths — the decision board | ShopNow Kitchen",
         f"{len(SUGGESTIONS)} reviewed suggestions with evidence, effort, risk and how to measure each one; tick the ones you accept and copy the next build prompt.",
         direction_body())
@@ -1026,6 +1212,7 @@ def main():
                                ("thermometers.html", "Meat Thermometers", "instant-read wireless probe USDA 165"),
                                ("products/index.html", "The shop", "all products table specs sources"),
                                ("guides/index.html", "All guides", "buyer questions checklists"),
+                               ("topics.html", "Topics: what is next", "planned questions editorial backlog pipeline"),
                                ("direction.html", "Suggestions & paths", "decision board next prompt"),
                                ("questions.html", "Open questions", "missing information blocking"),
                                ("verification.html", "Verification", "sources intent observed redirect"),

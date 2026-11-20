@@ -31,8 +31,8 @@
     {
       "id": "FLG-005",
       "title": "Chefman 8 Qt (B08DKYBTPH) model / max-temp conflicts",
-      "detail": "Listing snippets conflict: model 'RJ38-SQSS-8T' vs 'Large Air Fryer'; max temp 400°F vs 450°F Hi-Fry mention. 2026-11-20 update: the listing's own <title> reads 'TurboFry® 4-in-1 ... 450°F Hi-Fry' while the captured title string says 'TurboFry Touch ... Family Size' with 200-400°F, so the conflict is on the page itself, not in our transcription.",
-      "action": "Confirm model + temp range on live listing and manufacturer page; correct specs table.",
+      "detail": "Listing snippets conflict: model 'RJ38-SQSS-8T' vs 'Large Air Fryer'; max temp 400°F vs 450°F Hi-Fry mention. Third independent read of the live page on 2026-11-20 (session arena-82d39deb) confirmed both strings on the SAME page: the <title> element reads 'TurboFry® 4-in-1 with 450°F Hi-Fry Option', while the bullet copy reads 'a temperature range from 200-400°F'. The model string in the bullet ('1000 Watts/120 Volts – RJ38-SQSS-8T') now confirms RJ38-SQSS-8T. The conflict is on the listing, not in our transcription.",
+      "action": "Confirm on the manufacturer product page for RJ38-SQSS-8T; until then the site shows the bullet range (200-400°F) and the title's 450°F claim side by side with both dates, and never picks one silently.",
       "status": "needs review"
     },
     {
@@ -66,8 +66,8 @@
     {
       "id": "FLG-010",
       "title": "Emeril 26QT listing: 'Six Cooking Accessories' (title) vs '7 Accessories Included' (bullets)",
-      "detail": "Both strings appear on the same captured page for B09B7SB46R. Accessory count is a minor spec but it is exactly the kind of detail a reader uses to decide, and it is the kind of error that makes a site look scraped.",
-      "action": "Confirm on the manufacturer's own page; if still ambiguous, render 'per listing: 6 or 7 (title vs bullets)' instead of choosing silently.",
+      "detail": "Both strings appear on the same captured page for B09B7SB46R, and a third independent read on 2026-11-20 (session arena-82d39deb) reproduced it: the live <title> element says 'Six Cooking Accessories Included' while the earlier capture of the same listing read '7 Accessories Included'. The same page also disagrees with itself about preset count — see FLG-017.",
+      "action": "Confirm on the manufacturer's own page for model 4-00675-02X-VN; the site renders the accessory count as 'per listing: 6 (title) or 7 (bullets)' rather than choosing silently.",
       "status": "needs review"
     },
     {
@@ -96,6 +96,55 @@
       "title": "Product identities rest on Amazon marketing copy, not manufacturer data",
       "detail": "Brand/model/capacity/dimension values in data/products.json were transcribed from Amazon listing pages (S09-S13). For an affiliate site that is a reasonable source, but Amazon bullets are seller-written marketing text; two of five already show internal contradictions (FLG-005, FLG-010).",
       "action": "For numeric specs that drive a buying decision, prefer the manufacturer spec sheet and record its URL + date per cell.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-015",
+      "title": "Chefman 6-Qt listing states its capacity in two different units (6 liters vs 6 quart)",
+      "detail": "On the live listing read 2026-11-20 (session arena-82d39deb) the product-details table says 'Capacity: 6 liters' while the title and the bullet copy say 6-quart / two 3-quart baskets. The site records the quart figure because that is what the product name and the two-basket claim use.",
+      "action": "Leave the quart figure in the specs table (it matches the product name) and keep this note on the product page so a reader who spots '6 liters' knows why.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-016",
+      "title": "Amazon serves more than one product-name string for the same ASIN (B08DKYBTPH)",
+      "detail": "The live <title> element read 2026-11-20 says 'Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 with 450°F Hi-Fry Option ...'. An earlier capture of the same ASIN carried 'Chefman TurboFry Touch Air Fryer, XL 8-Qt Family Size, One-Touch Digital Control Presets ...'. Amazon's name strings vary with the size variant shown on the page.",
+      "action": "Both strings are stored in data/products.json (title + title_prior_capture) and the live one is displayed. No reconciliation is possible without the manufacturer page.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-017",
+      "title": "Emeril 26QT listing disagrees with itself on preset count (24 vs 25)",
+      "detail": "Live read 2026-11-20: the <title> says '24 One-Touch Preset Options'; the bullet heading says '25 COOKING PRE-SETS' and then lists eleven named modes (ribs, defrost, bake, toast, chicken, pizza, pastry, slow cook, roast, reheat, keep warm).",
+      "action": "The site states the range of what the listing claims and links it; it never publishes a preset count as a headline number.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-018",
+      "title": "Serving, rotisserie and pizza claims on the Emeril listing are seller-written and unverified by the manufacturer",
+      "detail": "The listing bullets say the 26-quart cavity is 'suitable for preparing food for 4–6 people', can rotisserie a 6-lb chicken and bake a 12\" pizza. These are the seller's claims on the listing; no manufacturer page has been checked.",
+      "action": "Keep quoting them as 'per listing bullet' with the source link, and never restate them as this site's own sizing advice.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-019",
+      "title": "Power row for the Chefman 8-Qt was wrong in this repo and has been corrected",
+      "detail": "data/products.json recorded 1700W / 120V for B08DKYBTPH. The live listing bullet read 2026-11-20 says '1000 Watts/120 Volts – RJ38-SQSS-8T'. 1700 W is the wattage stated on the 6-quart Chefman listing, so the earlier value was a transcription carry-over. The corrected value is 1000W / 120V; the earlier capture is kept as power_prior_capture.",
+      "action": "Nothing further. If the product's own wattage label differs from the listing, correct again with the manufacturer's spec sheet.",
+      "status": "resolved 2026-11-20"
+    },
+    {
+      "id": "FLG-020",
+      "title": "The Chefman 8-Qt ASIN is a size-variation family (6 / 8 / 9 quarts under one link)",
+      "detail": "The live page for B08DKYBTPH shows a size selector with 6, 8 and 9 quarts and 8 quarts selected, and the product-details table reads 'Capacity: 8 quarts'. A reader sent to the same URL can land on a different size.",
+      "action": "Mention the size selector on the product page and the guide that covers capacity; do not treat the ASIN as a single fixed size.",
+      "status": "needs review"
+    },
+    {
+      "id": "FLG-021",
+      "title": "Amazon's 8-Qt listing states there is a newer model of the item",
+      "detail": "The live page carries 'There is a newer model of this item' and shows the Chefman Air Fryer 6 QT Compact (B0CNY1YVDD). Whether that is a better buy is not this site's claim to make — but a buyer should see it.",
+      "action": "Carry the note on the product page with the listing link, and let the buyer decide.",
       "status": "needs review"
     }
   ]
