@@ -35,7 +35,7 @@
 
 ## PR / merge record
 
-- 2026-11-20 — arena/a42979d2-winc (T07 integration): build + gate green (27 pages, 26 sitemap URLs, 6 guides, 23 search rows; check_site: OK, no violations). Live Pages: https://sassnarep3-star.github.io/WinC/. PR to main opened from this branch; merge result and Pages confirmation recorded below once complete.
+- 2026-11-20 — arena/a42979d2-winc (T07 integration): build + gate green (27 pages, 26 sitemap URLs, 6 guides, 23 search rows; check_site: OK, no violations). Live Pages: https://sassnarep3-star.github.io/WinC/. PR #19 https://github.com/sassnarep3-star/WinC/pull/19 (arena/a42979d2-winc → main), `gh pr merge 19 --merge` → merged, merge commit ddbfc531e0592cd7bd4ae13c5cc50a04e2adb2c2. Pages build #1386264636 for commit ddbfc53: status built, error null, updated 2026-11-20T06:23:08Z. Site live: https://sassnarep3-star.github.io/WinC/. T07 complete.
 
 ## Session 9471c338 (merged via PR #1, archived 2026-11-20)
 
