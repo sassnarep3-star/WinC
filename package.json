@@ -6,7 +6,8 @@
   "scripts": {
     "build": "python3 scripts/build_site.py",
     "check": "python3 scripts/check_site.py",
-    "verify": "npm run build && npm run check && npm run verify-measurement",
+    "test": "python3 scripts/test_analytics.py && node analytics/test_worker.mjs",
+    "verify": "npm run build && npm run check && npm test && npm run verify-measurement",
     "new-guide": "python3 scripts/new_guide.py",
     "verify-measurement": "python3 scripts/verify_measurement.py"
   }

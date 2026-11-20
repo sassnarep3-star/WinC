@@ -8,10 +8,11 @@ have" option, so that measuring is never blocked on choosing a hosting product.
     python3 analytics/collect.py --port 8080 --out /var/log/shopnow-events.jsonl
     # then in assets/app.js:  CONFIG.endpoint = "http://HOST:8080/collect"
 
-Contract (matches assets/app.js):  POST /collect  {"site","event","page","at","props"}
-Only the five defined events are accepted. No cookies, no IP logging, no user-agent storage,
-no cross-page session stitching. Each line written is one event, timestamped by the client,
-with the server receipt time alongside it so a clock skew is visible rather than hidden.
+Contract (matches assets/app.js):  POST /collect  {"site","event","page","props","ts"}
+Only the five defined events are accepted. Event-specific allow-lists drop arbitrary client
+properties, including email addresses and search queries. No cookies, no IP logging, no user-agent
+storage, no cross-page session stitching. Each row carries only the server-generated day; client
+timestamps and client-provided site IDs are discarded.
 
 Read:  GET /stats -> aggregate counts (from the local file only)
        GET /ledger -> campaign-ledger rows aggregated by page+event
@@ -27,6 +28,39 @@ from urllib.parse import urlparse, parse_qs
 EVENTS = ("page_view", "outbound_click", "guide_read", "reader_capture_submit", "search_submit")
 MAX_BODY = 8 * 1024
 ALLOWED_ORIGIN = None
+PAGE_RE = re.compile(r"^[A-Za-z0-9._/-]{1,200}$")
+ASIN_RE = re.compile(r"^[A-Za-z0-9]{10}$")
+DEPTH_BUCKETS = {"full", "90+", "50-89", "25-49", "0-24"}
+
+
+def normalize_event(payload):
+    """Return only the fixed, non-PII event schema; reject malformed route/event data.
+
+    Client properties are never copied wholesale: each event has an explicit allow-list.
+    This boundary is important even though the bundled browser client currently sends only
+    aggregate fields; a modified client must not be able to submit email addresses or queries.
+    """
+    if not isinstance(payload, dict):
+        raise ValueError("payload must be a JSON object")
+    event = payload.get("event")
+    if event not in EVENTS:
+        raise ValueError("event not in the defined set")
+    page = str(payload.get("page") or "")
+    if len(page) > 200 or not PAGE_RE.fullmatch(page) or ".." in page:
+        raise ValueError("invalid page")
+    # One row per accepted event, dated by server day only (no time-of-day, no client identifiers).
+    row = {"day": time.strftime("%Y-%m-%d", time.gmtime()),
+           "event": event, "page": page, "props": {}}
+    props = payload.get("props") if isinstance(payload.get("props"), dict) else {}
+    if event == "outbound_click":
+        asin = str(props.get("asin") or "")
+        if ASIN_RE.fullmatch(asin):
+            row["props"]["asin"] = asin.upper()
+    elif event == "guide_read":
+        depth = props.get("depth")
+        if depth in DEPTH_BUCKETS:
+            row["props"]["depth"] = depth
+    return row
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -111,23 +145,11 @@ class Handler(BaseHTTPRequestHandler):
             d = json.loads(raw.decode("utf-8"))
         except (ValueError, UnicodeDecodeError):
             return self._send(400, {"error": "not json"})
-        event = d.get("event")
-        if event not in EVENTS:
-            return self._send(422, {"error": "event not in the defined set"})
-        page = str(d.get("page") or "")[:200]
-        # The value is only ever written to a log, never opened as a path — but normalise it
-        # anyway so the file stays a clean table and cannot carry injected newlines.
-        if (not page or ".." in page or not re.match(r"^[A-Za-z0-9._/\-]{1,200}$", page)
-                or any(c in page for c in "\r\n\t")):
-            page = "rejected" if d.get("page") else ""
-        props = d.get("props") if isinstance(d.get("props"), dict) else {}
-        keep = {k: str(v)[:64] for k, v in list(props.items())[:8]}
-        # The shipped beacon (assets/app.js) sends the client timestamp as "at";
-        # "ts" is accepted too so an older payload still records a timestamp.
-        row = {"ts_client": str(d.get("at") or d.get("ts") or "")[:32],
-               "ts_server": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-               "site": str(d.get("site") or "")[:64], "event": event,
-               "page": page, "props": keep}
+        try:
+            row = normalize_event(d)
+        except ValueError as e:
+            return self._send(422, {"error": str(e)})
+        event, page = row["event"], row["page"]
         try:
             with open(Handler.out_path, "a", encoding="utf-8") as f:
                 f.write(json.dumps(row) + "\n")
@@ -135,7 +157,7 @@ class Handler(BaseHTTPRequestHandler):
         except OSError as e:
             return self._send(500, {"error": "write failed"})
         if not Handler.quiet:
-            sys.stderr.write("%s %s %s\n" % (row["ts_server"], event, page))
+            sys.stderr.write("%s %s %s\n" % (row["day"], event, page))
         self._send(202, {"ok": True})
 
     def log_message(self, *a):

@@ -194,17 +194,41 @@
     },
     {
       "id": "S27",
-      "title": "Fourth observation of the five submitted link.amazon short links (2026-11-20)",
-      "url": "https://link.amazon/B0f3GKalj",
-      "what": "Session b0920c92 re-resolved all five submitted short links on 2026-11-20. Four of the five (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) ended on the Amazon home page; the fifth (B0f3GKalj) still resolved to B0DZFD6R9Z with the same fallback flags as before. Two of the four were re-fetched one at a time and gave the same result. Recorded as an observation only - this does not establish that the links are invalid (FLG-003 stays open) and it does not establish why.",
+      "title": "USDA FSIS - Leftovers and Food Safety",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/leftovers-and-food-safety",
+      "what": "Verbatim, fetched 2026-11-20: 'Within 2 hours of cooking food or after it is removed from an appliance keeping it warm, leftovers must be refrigerated. Throw away all perishable foods that have been left in room temperature for more than 2 hours (1 hour if the temperature is over 90° F...)'; 'Leftovers can be kept in the refrigerator for 3 to 4 days or frozen for 3 to 4 months.'; 'When reheating leftovers, be sure they reach 165° F as measured with a food thermometer. Reheat sauces, soups and gravies by bringing them to a rolling boil. Cover leftovers to reheat.'; 'Bacteria grow rapidly between the temperatures of 40° F and 140° F.' Page footer: 'Last Updated: Jul 31, 2020'.",
       "date": "2026-11-20",
-      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92. Direct shell access to amazon.com is blocked by this sandbox's egress policy, so every observation is a reader fetch, not a raw HTTP request."
+      "access": "Fetched directly by arena-c2123b9c (full page, both chunks). Official .gov source; page states its own last-updated date."
     },
     {
       "id": "S28",
+      "title": "Google Search documentation updates - FAQ rich result documentation removed (June 2026 entry)",
+      "url": "https://developers.google.com/search/updates#removing-faq-rich-result",
+      "what": "June 2026 entry: 'Removing documentation for the FAQ rich result feature'. The former page developers.google.com/search/docs/appearance/structured-data/faqpage now resolves to this updates page (observed by following the old URL on 2026-11-20). Consequence recorded for this site: FAQPage JSON-LD may remain as machine-readable markup, but no page may promise FAQ rich results.",
+      "date": "2026-11-20",
+      "access": "Fetched directly by arena-c2123b9c; redirect of the old FAQ-doc URL observed live on 2026-11-20."
+    },
+    {
+      "id": "S29",
+      "title": "Independent redirect observation #4, session arena-c2123b9c (2026-11-20)",
+      "url": "https://github.com/sassnarep3-star/WinC/blob/main/data/probes.json",
+      "what": "Fourth probe observation: all five link.amazon tokens re-resolved live; 5/5 mappings reproduce (B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z). Rows carry session=arena-c2123b9c, date=2026-11-20, observation=4. Fallback-route flags still on every row (FLG-009).",
+      "date": "2026-11-20",
+      "access": "Rows committed on branch arena/c2123b9c-winc; URL resolves on main once this session's PR merges."
+    },
+    {
+      "id": "S30",
+      "title": "Independent redirect observation #5, session b0920c92 (2026-11-20)",
+      "url": "https://link.amazon/B0f3GKalj",
+      "what": "Session b0920c92 re-resolved all five submitted short links on 2026-11-20, the fifth live pass of the day. DIVERGENT from observation #4 (arena-c2123b9c, S29), which had reproduced 5/5 product targets earlier: on this pass four of the five (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) ended on the Amazon home page, and only B0f3GKalj still resolved to B0DZFD6R9Z with the same fallback flags. Two of the four were re-fetched individually and gave the same result, so this is not a parallel-request artefact. Recorded as an observation only - this does not establish that the links are invalid (FLG-003 stays open) and the cause is not determinable from this environment.",
+      "date": "2026-11-20",
+      "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92. Direct shell access to amazon.com is blocked by this sandbox's egress policy, so every observation is a reader fetch."
+    },
+    {
+      "id": "S31",
       "title": "Control re-read of all five observed listings via their direct /dp/ URLs (2026-11-20)",
       "url": "https://www.amazon.com/dp/B0CDY277D3",
-      "what": "Session b0920c92 opened https://www.amazon.com/dp/<ASIN> for each of the five observed ASINs (B0CDY277D3, B09B7SB46R, B08DKYBTPH, B0DHZTCNR5, B0DZFD6R9Z). Every listing served the <title> and the category breadcrumb already recorded in data/products.json, so the reader-facing links on this site still resolve to the products they name, whatever the submitted short links do.",
+      "what": "Session b0920c92 opened https://www.amazon.com/dp/<ASIN> for each of the five observed ASINs (B0CDY277D3, B09B7SB46R, B08DKYBTPH, B0DHZTCNR5, B0DZFD6R9Z). Every listing served the <title> and the category breadcrumb already recorded in data/products.json, so the reader-facing links on this site still resolve to the products they name whatever the submitted short links do on this pass.",
       "date": "2026-11-20",
       "access": "Read live through the fetch_page reader on 2026-11-20 by session b0920c92."
     }

@@ -1,7 +1,7 @@
 {
-  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. Every row also carries `path` (A-D, matching the four published paths), `decision_by` (who can actually decide it) and `discovery` (what would have to be known to decide it). A row with no missing information says so rather than pretending otherwise.",
+  "_note": "Reviewable suggestion register. Nothing here is implemented by default. Each row carries the evidence for it, what it would change, the risk, how to measure whether it worked, and the exact instruction block to feed into the next build prompt. 'expected_effect' values are hypotheses to test, never forecasts — do not present them as projected traffic or revenue. Status vocabulary: 'shipped' = implemented in an earlier session; 'done-this-session' = implemented by the session named in reviewed_by_session; 'recommended-now' / 'open' / 'open-blocked' = still to decide. Every row also carries `path` (A-D, matching the four published paths), `decision_by` (who can actually decide it) and `discovery` (what would have to be known to decide it). Rows whose discovery is a derivation say so. Annotations added by b0920c92 (2026-11-20) to the union of both sessions' registers.",
   "updated": "2026-11-20",
-  "reviewed_by_session": "arena-82d39deb (third pass; statuses repaired against the code, new suggestions added); paths, decision owners and discovery added by b0920c92 (2026-11-20)",
+  "reviewed_by_session": "arena-82d39deb (third pass); SG-27..30 back-filled + SG-31..34 added by arena-c2123b9c (2026-11-20)",
   "suggestions": [
     {
       "id": "SG-01",
@@ -19,8 +19,7 @@
       "status_detail": "Still the first thing to do: it gates every monetised link on the site.",
       "path": "A",
       "decision_by": "Account owner",
-      "discovery": "Needs Associates Central access — no public source can settle it.",
-      "status_detail_by": "Account owner"
+      "discovery": "Needs Associates Central access — no public source can settle it."
     },
     {
       "id": "SG-02",
@@ -38,8 +37,7 @@
       "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
       "path": "C",
       "decision_by": "This site",
-      "discovery": "Already shipped; keep both clusters covered.",
-      "status_detail_by": "This site"
+      "discovery": "Already shipped; keep both clusters covered."
     },
     {
       "id": "SG-03",
@@ -57,8 +55,7 @@
       "status_detail": "Illustrations shipped; the licensed-photography decision (Q-07) is still open.",
       "path": "B",
       "decision_by": "This site",
-      "discovery": "Already shipped; keep the illustrations.",
-      "status_detail_by": "This site"
+      "discovery": "Already shipped; keep the illustrations."
     },
     {
       "id": "SG-04",
@@ -76,8 +73,7 @@
       "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
       "path": "C",
       "decision_by": "This site",
-      "discovery": "Already shipped; keep the navigation honest.",
-      "status_detail_by": "This site"
+      "discovery": "Already shipped; keep the navigation honest."
     },
     {
       "id": "SG-05",
@@ -114,8 +110,7 @@
       "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
       "path": "C",
       "decision_by": "This site",
-      "discovery": "Already shipped; keep data/ the single source of truth.",
-      "status_detail_by": "This site"
+      "discovery": "Already shipped; keep data/ the single source of truth."
     },
     {
       "id": "SG-07",
@@ -133,8 +128,7 @@
       "status_detail": "Still open: the endpoint code exists but is not deployed, so no event leaves a browser.",
       "path": "D",
       "decision_by": "Account owner",
-      "discovery": "Needs a host for the endpoint; the code is already verified end to end.",
-      "status_detail_by": "Account owner"
+      "discovery": "Needs a host for the endpoint; the code is already verified end to end."
     },
     {
       "id": "SG-08",
@@ -152,8 +146,7 @@
       "status_detail": "Still open: no Search Console property exists, so no topic on the backlog is chosen from measured queries yet.",
       "path": "D",
       "decision_by": "Account owner",
-      "discovery": "Needs Search Console property access.",
-      "status_detail_by": "Account owner"
+      "discovery": "Needs Search Console property access."
     },
     {
       "id": "SG-09",
@@ -171,8 +164,7 @@
       "status_detail": "Still open: the desk byline is honest but caps trust signals.",
       "path": "B",
       "decision_by": "Account owner",
-      "discovery": "Needs one real name and a bio, or a decision to keep the desk byline.",
-      "status_detail_by": "Account owner"
+      "discovery": "Needs one real name and a bio, or a decision to keep the desk byline."
     },
     {
       "id": "SG-10",
@@ -190,8 +182,7 @@
       "status_detail": "Partly closed: the third read on 2026-11-20 confirmed both conflicting strings on the live listing; the manufacturer page is still the only way to settle them.",
       "path": "A",
       "decision_by": "Account owner",
-      "discovery": "Needs the manufacturer's own page to settle two listing conflicts.",
-      "status_detail_by": "Account owner"
+      "discovery": "Needs the manufacturer's own page to settle two listing conflicts."
     },
     {
       "id": "SG-11",
@@ -228,8 +219,7 @@
       "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20; extended again in this session (register-schema checks).",
       "path": "A",
       "decision_by": "This site",
-      "discovery": "Already shipped; keep it.",
-      "status_detail_by": "This site"
+      "discovery": "Already shipped; keep it."
     },
     {
       "id": "SG-13",
@@ -266,8 +256,7 @@
       "status_detail": "Shipped by session arena-23d7ed19 on 2026-11-20.",
       "path": "C",
       "decision_by": "This site",
-      "discovery": "Already shipped; keep the robots file honest.",
-      "status_detail_by": "This site"
+      "discovery": "Already shipped; keep the robots file honest."
     },
     {
       "id": "SG-15",
@@ -361,8 +350,7 @@
       "feeds_prompt": "Decide the imagery line once, in writing, and either commission licensed photography with credits or record 'illustrations by policy' as the standing rule. Never use Amazon-hosted product images.",
       "path": "B",
       "decision_by": "Account owner",
-      "discovery": "Needs a decision on licensing and budget.",
-      "status_detail_by": "Account owner"
+      "discovery": "Needs a decision on licensing and budget."
     },
     {
       "id": "SG-20",
@@ -380,8 +368,201 @@
       "feeds_prompt": "Record the audience, marketplace and language decision in data/questions.json answers and on the About page, then re-check every outbound link format against that decision.",
       "path": "A",
       "decision_by": "Account owner",
-      "discovery": "Needs a decision on audience, marketplace and locale.",
-      "status_detail_by": "Account owner"
+      "discovery": "Needs a decision on audience, marketplace and locale."
+    },
+    {
+      "id": "SG-27",
+      "title": "One navigation group on every page, labels that match destinations",
+      "status": "done-this-session",
+      "area": "Design",
+      "problem": "Earlier passes risked stacking navigation groups with different labels per page, so no reader or crawler saw a stable site structure, and index pages were one click harder to reach than leaf pages.",
+      "proposal": "Ship exactly one navigation group on every page: reader pages first (front page, The shop, Guides, categories), operator desk one group down. Labels point at index pages, never at a single leaf.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. Cosmetic unless a new page is added outside it.",
+      "expected_effect": "Same nav on all pages; the gate fails if 'Guides' or 'The shop' stop pointing at their index pages. Measure: nav check in scripts/check_site.py passes every build.",
+      "evidence": "Shipped status recorded on measurement.html (findability row SG-27); nav assertion lives in scripts/check_site.py. Related: SG-04 (the earlier labels fix).",
+      "feeds_prompt": "Keep the single navigation group on every page. Any new page must be added to it (or the footer) and to the sitemap in the same build - never as a floating link.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Derived from the row's status, not stated by its author — name what would have to be known before deciding this one."
+    },
+    {
+      "id": "SG-28",
+      "title": "Ship a real RSS feed generated from the guides register",
+      "status": "done-this-session",
+      "area": "Findability",
+      "problem": "Without a feed, guide publishing is invisible to feed readers and aggregators. The first feed also carried ISO dates that are not valid RFC-822 (finding F-13), so validators rejected it.",
+      "proposal": "Generate feed.xml on every build from the guides register: RFC-822 pubDates, atom:link self reference, isPermaLink GUIDs, category tags.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low.",
+      "expected_effect": "A valid feed that updates itself when a guide is dropped into data/guides/. Measure: feed.xml regenerates on build; new guides appear in it without hand edits.",
+      "evidence": "feed.xml at repo root; date fix recorded as finding F-13 in COORDINATION.md; shipped status on measurement.html (findability row SG-28).",
+      "feeds_prompt": "Publishing a guide must regenerate feed.xml automatically. Never hand-edit the feed; if the feed is wrong, fix the builder.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Derived from the row's status, not stated by its author — name what would have to be known before deciding this one."
+    },
+    {
+      "id": "SG-29",
+      "title": "Submit sitemap.xml in Search Console and record the date",
+      "status": "open",
+      "area": "Findability",
+      "problem": "The sitemap and robots file are ready and the site is live, but nothing public confirms any crawler was told. Only the owner of the Search Console property can submit - the sandbox cannot.",
+      "proposal": "Owner submits https://sassnarep3-star.github.io/WinC/sitemap.xml in Search Console, then records the submission date in the findability row (SG-29) on measurement.html. SG-08 is the second half: letting the queries that arrive pick the next topics.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. No site change involved.",
+      "expected_effect": "Coverage and queries start appearing in Search Console within weeks; the date recorded here makes the wait auditable. Measure: date filled on measurement.html; later, query data feeds topic choice (SG-08).",
+      "evidence": "sitemap.xml in repo root (27 URLs after this session's two new guides); prior sessions' status recorded on measurement.html (SG-29 row, pending).",
+      "feeds_prompt": "Submit https://sassnarep3-star.github.io/WinC/sitemap.xml in Google Search Console; record the submission date in the SG-29 row on measurement.html; then apply SG-08.",
+      "path": "D",
+      "decision_by": "Account owner",
+      "discovery": "Needs Search Console property access."
+    },
+    {
+      "id": "SG-30",
+      "title": "Wire the reader-capture form to a real, confirmed-opt-in list",
+      "status": "open-blocked",
+      "area": "Trust",
+      "problem": "The capture form renders on the front page and guides but records a local count only: no list, no provider, no confirmed opt-in. The copy was already corrected to say so (finding F-12; FLG-013), and the honest partial status is on measurement.html. Shipping it as-is promises nothing - but it also captures nothing.",
+      "proposal": "Pick an email provider, implement confirmed opt-in, update the form copy to state exactly what happens to the address, and swap the local counter for the provider's form. Blocked on: provider choice and data ownership - Q-21 holds that decision.",
+      "effort": "M",
+      "cost": "provider-dependent - a real budget line for the first time",
+      "risk": "Medium: a newsletter is a permanent promise to readers. Confirmed opt-in is the floor, not a nice-to-have.",
+      "expected_effect": "A real list of readers who asked for updates; measure confirmed subscribers against form impressions once deployed. Until then the honest partial state stays.",
+      "evidence": "FLG-013 (copy promised a consent flow no code implements); F-12 rewording; Q-21 (reader-list ownership/provider); partial status on measurement.html (SG-30 row).",
+      "feeds_prompt": "Answer Q-21, choose an email provider, implement confirmed opt-in for the reader-capture form, rewrite the form copy to match exactly what the code does, close FLG-013, and update the SG-30 row on measurement.html.",
+      "path": "B",
+      "decision_by": "Account owner",
+      "discovery": "Needs a list provider and a confirmed-opt-in flow the owner chooses."
+    },
+    {
+      "id": "SG-31",
+      "title": "Add a five-product side-by-side comparison page rendered from data",
+      "status": "shipped",
+      "area": "Design",
+      "status_detail_by": "arena-82d39deb",
+      "status_detail": "products/index.html is now 'Everything in the shop, in one table': all five products, verified cells, blanks rendered as blanks, per-row listing link + date, and the price/rating blanks explained by policy (FLG-006). The gate's register check covers the page.",
+      "problem": "The verified specs lived on five separate product pages. An undecided reader had to hold one product in memory while opening another - the single comparison table is the page most shop visitors actually look for, and it was missing.",
+      "proposal": "One page, one table, all five products as rows, only verified cells, every cell carrying its source link and date, blanks rendered as blanks. Render it from data/products.json in the builder so the table cannot drift from the register (the F-11 lesson).",
+      "effort": "M",
+      "cost": "none",
+      "risk": "Medium-low: it is more verified surface to maintain, and the gate must learn to check it. No new facts are needed - only a new arrangement of confirmed ones.",
+      "expected_effect": "A page that answers 'which of these fits me' in one screen; measure outbound clicks from the comparison page once measurement is deployed (SG-07). Internal-link depth drops by one for every product.",
+      "evidence": "products/index.html rendered from data/products.json by scripts/build_site.py products_index_body(); register-row source check in scripts/check_site.py REGISTER_PAGES.",
+      "feeds_prompt": "Keep products/index.html rendered from data/products.json (no typed facts), give every row its source + date, keep blanks blank, and keep the page inside the gate's REGISTER_PAGES list.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Derived from the row's status, not stated by its author — name what would have to be known before deciding this one."
+    },
+    {
+      "id": "SG-32",
+      "title": "A deal-season playbook that never quotes prices",
+      "status": "open",
+      "area": "Editorial",
+      "problem": "Deal-season traffic (cyber week, January clearance) peaks for kitchen appliances, but a 'deals' page is impossible here: prices may only come from Amazon-served links (S02), and the no-price rule is a deliberate posture (Q-13, FLG-006). A site that chases deal keywords with no prices would be worse than one that does not try.",
+      "proposal": "Publish question-shaped deal-literacy content instead: what to verify before checkout, how listing copy conflicts arise (FLG-010 and FLG-020 are live examples), the holiday-to-leftovers food-safety arc (S27), and the counter-space math that decides returns. Season fields mark the window so January readers see honest, dated pages. Q-20 (seasonal vs evergreen) holds the calendar decision.",
+      "effort": "M",
+      "cost": "none",
+      "risk": "Low: seasonal pages can look dated after the window - mitigate with the season field and a refresh pass, not by deleting history.",
+      "expected_effect": "Seasonal guides indexed before the window; measured arrivals once SG-29 + SG-07 exist. If a seasonal guide earns no arrivals in its window, that is the measurement saying stop.",
+      "evidence": "USDA FSIS leftovers guidance (S27); the Emeril accessory-count (FLG-010) and preset-count (FLG-020) conflicts as worked examples; Q-20 (seasonal windows) is the blocking decision.",
+      "feeds_prompt": "Answer Q-20 first (pick the seasonal windows with dates). For the next window, write two question-shaped guides with zero price claims, register them in data/guides/ with season fields, rebuild, and record what the window earned in the campaign ledger once deployed.",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Derived from the row's status, not stated by its author — name what would have to be known before deciding this one."
+    },
+    {
+      "id": "SG-33",
+      "title": "Structured-data review: FAQ rich results no longer exist as a documented feature",
+      "status": "open",
+      "area": "Findability",
+      "status_detail_by": "arena-c2123b9c",
+      "status_detail": "Half shipped already: arena-82d39deb added Article + BreadcrumbList JSON-LD (article_jsonld/breadcrumb_jsonld in build_site.py). Remaining: run a structured-data validator once and record the date; audit copy so nothing promises FAQ rich results; optionally extend the gate to fail on such promises.",
+      "problem": "Guide pages emit FAQPage JSON-LD. That markup is still valid schema.org, but Google removed the FAQ rich result documentation in June 2026 (S28) and the old doc URL now redirects to the updates page. Any copy or plan that promises FAQ rich results is promising a feature Google no longer documents.",
+      "proposal": "Keep FAQPage markup for readers and other engines; keep the Article + BreadcrumbList markup that already shipped; never promise FAQ rich results in copy or suggestions. Validate once with a validator and record the date.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low.",
+      "expected_effect": "No page promises a removed feature; richer machine-readable metadata (author, date, breadcrumb path) for crawlers that do use it. Measure: structured data validated without errors; gate extended to fail on any FAQ-rich-result promise.",
+      "evidence": "S28 - developers.google.com/search/updates#removing-faq-rich-result, fetched 2026-11-20; FAQPage JSON-LD generated by scripts/build_site.py faq_jsonld().",
+      "feeds_prompt": "Validate the guide and product pages' JSON-LD once with a structured-data validator and record the date here; keep FAQPage + Article + BreadcrumbList; audit copy for any FAQ-rich-result promise and cite S28.",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Derived from the row's status, not stated by its author — name what would have to be known before deciding this one."
+    },
+    {
+      "id": "SG-34",
+      "title": "Write the dead-listing runbook before the first 404",
+      "status": "open-blocked",
+      "area": "Machinery",
+      "problem": "No documented response exists for the day an observed ASIN 404s, goes unavailable, or rotates into a different model. This is not hypothetical: listing titles rotated between captures (ThermoMaven wording changed between observations; probe rows in data/probes.json), the Chefman 8 Qt page carries a two-version conflict on itself (FLG-005), and Amazon now states a newer model exists on that listing (FLG-024). A dead or altered link is a when, not an if.",
+      "proposal": "Decide the two paths now: (a) retired - page stays live with buttons hidden, a dated note, and a link to the flagged register; (b) replaced - a fresh product-intent record with new intended_* fields, never reusing the old slug for a different product. Q-22 holds the decision; SG-34 implements whatever is chosen.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low until it happens, then urgent: a sponsored link to a dead or wrong listing is the worst failure an affiliate page can ship.",
+      "expected_effect": "No dead sponsored link survives a build. Measure: gate check passes with a retired-listing fixture in the test set.",
+      "evidence": "FLG-005 (two-version listing conflict), FLG-010 (accessory-count conflict), FLG-014 (seller-copy caveat), FLG-024 (newer-model notice), and probe observation #4 notes on title rotation (data/probes.json, S29).",
+      "feeds_prompt": "Answer Q-22, then implement the retired-listing state in scripts/build_site.py (hide buy buttons, dated note), extend scripts/check_site.py to fail on a live sponsored link whose listing is marked retired, and document the decision in README under 'Rules that never bend'.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Needs a decision on what counts as a dead listing and who is told, then it is writing work."
+    },
+    {
+      "id": "SG-21",
+      "title": "Write comparison headlines that sound like a buyer asking, not a brand claiming",
+      "status": "open",
+      "area": "Editorial",
+      "problem": "Some headlines read like product descriptions instead of buyer questions. The question-shaped ones earn more trust and match how people actually search.",
+      "proposal": "Rewrite product-card headlines and page titles to lead with the buyer's question, not the manufacturer's name string. Keep the full listing title where it appears (it's sourced), but let the editorial headline do the selling.",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. No claims change; only the framing of existing copy.",
+      "expected_effect": "Headlines read like a shop, not a data dump. Measure: outbound_click rate on question-shaped vs name-shaped cards once the endpoint exists.",
+      "evidence": "Front page card headings vs guide headings; guide titles are already question-shaped.",
+      "feeds_prompt": "Audit every product-card heading on index.html, air-fryers.html and thermometers.html; where a heading is a manufacturer name string, replace it with a buyer question that the listed specs answer.",
+      "status_detail": "Open. This is the shop-framing pass — the framing layer, not the data layer.",
+      "path": "B",
+      "decision_by": "This site",
+      "discovery": "Derived from the row's status, not stated by its author — name what would have to be known before deciding this one."
+    },
+    {
+      "id": "SG-22",
+      "title": "Let Search Console queries pick topic six and beyond",
+      "status": "open",
+      "area": "Findability",
+      "problem": "All topics are editorial hypotheses. None is backed by measured query data because no Search Console property exists yet. The site cannot yet choose topics from real demand.",
+      "proposal": "Verify Search Console ownership (SG-08), export the query list, and rank topics by impressions + position. Any topic the site already ranks 8–25 for with 50+ impressions gets promoted to 'write next'.",
+      "effort": "M",
+      "cost": "none",
+      "risk": "None. Search Console is read-only; it informs the backlog, it does not change any page.",
+      "expected_effect": "Topics chosen from demand instead of taste. Measure: number of topics whose 'chosen_from' changes from hypothesis to measured query.",
+      "evidence": "data/topics.json — every topic says 'no measured query data exists yet'.",
+      "feeds_prompt": "Verify Search Console ownership for https://sassnarep3-star.github.io/WinC/, export the top queries, and mark any topic whose question matches a measured query as 'promoted by measured query' with the query and date recorded.",
+      "status_detail": "Blocked on SG-07 (endpoint deploy) and owner action (Search Console verification).",
+      "path": "D",
+      "decision_by": "Account owner",
+      "discovery": "Needs Search Console property access, then a query export."
+    },
+    {
+      "id": "SG-35",
+      "title": "Publication polish: season badges on guide cards and a season lead on category pages",
+      "status": "done-this-session",
+      "status_detail": "Shipped in session arena/a81c0f0e-winc. Every guide card now shows a season pill (Everyday / Holiday cooking), each category page carries a guide count in its kicker and a season-framed lead, and the build-prompt builder carries an explicit design directive. The front-page seasonal band is kept as-is; this suggestion adds the badge and lead layer on top without duplicating the band.",
+      "area": "Editorial / design",
+      "problem": "The site read like a careful verification dashboard rather than a polished marketing publication. The reader-facing surfaces lacked the season framing on individual cards and category pages that make an affiliate shop feel published rather than generated.",
+      "proposal": "Add a publication-polish layer: a season pill on every guide card, a guide count and season-framed lead on each category page, and an explicit design directive in the build-prompt builder so the suggestions feed a polished-marketing-publication build. Keep every compliance rule intact (disclosure above the fold, sponsored marking, blank prices).",
+      "effort": "S",
+      "cost": "none",
+      "risk": "Low. Cosmetic and additive only; no data or compliance rule changed. Risk is over-claiming if a 'trending' label implied measured data, which is why the framing is explicitly editorial.",
+      "expected_effect": "The site reads as a published marketing publication, which is the condition for organic traffic and click-through. Measure: outbound_click rate and guide views once the endpoint and Search Console are live (Q-08, Q-13).",
+      "evidence": "User brief: 'Make suggestions that will feed into the prompt to design the site so it should look like a polished marketing affiliate website... It should not read like some AI slop website.' Layered on the existing seasonal band and publication-polish pass.",
+      "feeds_prompt": "Design direction: the site must read like a polished marketing affiliate publication — catchy, human-sounding buyer questions as titles, editorial season framing, clean single-group navigation. It must NOT read like a generated dashboard. Keep disclosure above the fold on every page, mark every outbound product link Sponsored with rel=\"sponsored nofollow noopener\", and never print a price or rating.",
+      "path": "C",
+      "decision_by": "This site",
+      "discovery": "Derived from the row's status, not stated by its author — name what would have to be known before deciding this one."
     }
   ],
   "path_definitions": {

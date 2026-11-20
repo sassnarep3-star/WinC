@@ -36,7 +36,8 @@ No third-party dependencies: Python standard library only.
 - Short links are never claimed invalid; their status is flagged (FLG-003).
 
 Pages a reader sees: front page, `products/index.html`, `guides/index.html`, `topics.html`,
-two category pages, five product pages, six guides. Pages an operator sees (one nav group, plus
+two category pages, five product pages, eleven guides (seasonal guides surface in a front-page band,
+with season badges on every card). Pages an operator sees (one nav group, plus
 the footer): `verification.html`, `flagged-for-review.html`, `questions.html`, `direction.html`,
 `measurement.html`, `executive-summary.html`, `search.html`, `about.html`, `disclosure.html`.
 

@@ -11,14 +11,16 @@
       "question": "Am I buying a different machine, or the same machine with a different name?",
       "why": "The oven-style listing names toaster-oven modes and a much larger cavity; the fryer listings name baskets. Readers cannot tell from a title which one their cooking style needs.",
       "needs": "Listed cavity size, listed functions, listed capacity for each of the three air fryers (already in data/products.json). No new sources required.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the brief's 'basket or oven-style' question is the site's own framing; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
-      ]
+      ],
+      "status_note": "Published 2026-11-20 as guides/air-fryer-vs-convection-oven.html by session arena/a81c0f0e-winc (merged via PR #37); the guide's own _provenance records its per-row sources.",
+      "published_as": "guides/air-fryer-vs-convection-oven.html"
     },
     {
       "id": "TP-02",
@@ -28,14 +30,16 @@
       "question": "Quarts are not servings — what fits, in practice?",
       "why": "Capacity is the first spec every buyer filters on and the easiest one to over-interpret. The Emeril listing itself makes a serving claim (4–6 people) that can be checked against the others.",
       "needs": "Listed capacities (6 Qt / two 3-Qt baskets, 8 quarts, 26 Qt = 24.6 L) plus the listing's own serving claim. USDA MyPlate serving guidance would be the neutral yardstick for portions if it is cited per row.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — pairs with the published capacity checklist; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
-      ]
+      ],
+      "status_note": "Published 2026-11-20 as guides/what-6-quarts-actually-holds.html by session arena/a81c0f0e-winc (merged via PR #37); the guide's own _provenance records its per-row sources.",
+      "published_as": "guides/what-6-quarts-actually-holds.html"
     },
     {
       "id": "TP-03",
@@ -165,7 +169,7 @@
         "https://www.amazon.com/dp/B09B7SB46R"
       ],
       "published_as": "guides/first-air-fryer-six-checks.html",
-      "status_note": "Published 2026-11-20 by session b0920c92; sourced entirely from the recorded listings (S09-S11, S28) and Amazon Program Policies (S02)."
+      "status_note": "Published 2026-11-20 by session arena/a81c0f0e-winc (merged via PR #37); every numeric cell is a value read from the listed Amazon product that day (S09-S11, S24-S26). Session b0920c92 authored a parallel draft of the same topic against the older main and dropped it in the merge in favour of this one - see COORDINATION.md I-06."
     },
     {
       "id": "TP-11",
@@ -198,6 +202,40 @@
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-13",
+      "title": "Basket or oven-style: which air fryer wins your counter?",
+      "cluster": "Air Fryers",
+      "season": "Everyday",
+      "question": "Two baskets vs. one big cavity — which one do I actually need?",
+      "why": "The two Chefman listings differ in basket count and capacity, and the Emeril is a different shape entirely. This is the question at the top of the shop.",
+      "needs": "Listed capacity, dimensions and basket configuration for each of the three air fryers — already in data/products.json.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — the site's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
+    },
+    {
+      "id": "TP-14",
+      "title": "Instant-read or leave-in: which probe actually does your job?",
+      "cluster": "Thermometers",
+      "season": "Everyday",
+      "question": "Spot-check or stay-in-the-food — which one fits how you cook?",
+      "why": "The ThermoMaven is an instant-read you pull out; the CHEF iQ stays in and reports over WiFi. The decision is about cooking style, not about which one is 'better'.",
+      "needs": "Listed connectivity, probe count, heat limits and USDA FSIS check-point guidance — already in data/products.json and the sources register.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — the thermometer cluster's own framing question; no measured query data exists yet",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0DHZTCNR5",
+        "https://www.amazon.com/dp/B0DZFD6R9Z",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers"
       ]
     }
   ]

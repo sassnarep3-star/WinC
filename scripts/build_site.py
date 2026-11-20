@@ -8,7 +8,9 @@ import json, html, os, datetime, re, glob
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
 TAG = "shopnow047c-20"
-TODAY = "2026-11-20"
+# Build-date knob: keep the shipped date by default so rebuilds are byte-stable;
+# set WINC_BUILD_DATE=YYYY-MM-DD for a dated rebuild. (arena-c2123b9c, 2026-11-20)
+TODAY = os.environ.get("WINC_BUILD_DATE", "2026-11-20")
 
 def load(p):
     with open(os.path.join(ROOT, p), encoding="utf-8") as f:
@@ -250,16 +252,23 @@ def product_card(p, depth=0):
 <p class="meta">ASIN {esc(p['observed_asin'])} · <a href="{pfx}verification.html">Source</a></p>
 </article>"""
 
+def season_pill(season):
+    """Season badge for guide cards and section kickers. Act (coloured) for non-Everyday."""
+    kind = "act" if season and season != "Everyday" else "note"
+    return f'<span class="seasonpill pill-{kind}">{esc(season or "Everyday")}</span>'
+
 def guide_card(g, depth=0):
     pfx = "../" * depth
     img = g.get("image") or CAT_IMG.get(g.get("category", ""), HERO_IMG)[0]
     cap = g.get("image_caption", "Editorial illustration. Not a product photograph.")
+    season = g.get("season", "Everyday")
+    sp = season_pill(season) + " "
     return f'''<article class="card guidecard">
 <figure class="cardimg"><img src="{pfx}{esc(img)}" alt="Editorial illustration for: {esc(g['title'])}" loading="lazy" width="800" height="500"></figure>
 <span class="cat">Guide · {esc(g['cluster'])}</span>
 <h3><a href="{pfx}{g['path']}">{esc(g['title'])}</a></h3>
 <p>{esc(g['desc'])}</p>
-<p class="meta">{esc(g['published'])} · {read_min(g)} min read · {esc(g.get('season', 'Everyday'))}</p>
+<p class="meta">{sp}{esc(g['published'])} · {read_min(g)} min read</p>
 </article>'''
 
 def link_source_ids(text, prefix="", suffix=""):
@@ -356,6 +365,17 @@ def home_body():
         cimg, ccap = CAT_IMG[name]
         tiles += (f'<a class="cattile" href="{href}"><img src="{cimg}" alt="{esc(ccap)}" loading="lazy" width="800" height="500">'
                   f'<span class="catname">{esc(name)}</span><span class="catcount">{len(prods(name))} in the shop · {len(guides_for(name))} guides</span></a>')
+    # Seasonal band: guides whose season is set, grouped by season. Computed from the
+    # guides register so it cannot drift from data (F-11 lesson). (arena-c2123b9c)
+    by_season = {}
+    for g in GUIDES:
+        s = (g.get("season") or "Everyday").strip()
+        if s and s != "Everyday":
+            by_season.setdefault(s, []).append(g)
+    season_bands = ""
+    for sname, gs in by_season.items():
+        scards = "".join(guide_card(g) for g in gs)
+        season_bands += f'<h2>In season · {esc(sname)}</h2>\n<div class="grid">{scards}</div>\n'
     return f"""
 <section class="hero">
 <span class="kicker">Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
@@ -374,7 +394,7 @@ def home_body():
 <div class="grid">{rail}</div>
 <p><a class="btn btn-quiet" href="guides/index.html">All {c['guides']} guides →</a> <a class="btn btn-quiet" href="topics.html">What we are writing next →</a></p>
 
-<h2>Or start with a category</h2>
+{season_bands}<h2>Or start with a category</h2>
 <div class="catgrid">{tiles}</div>
 
 <h2>How this site works</h2>
@@ -439,10 +459,12 @@ def category_body(cat, title, intro, guide_links):
         rows.append(f"<tr><th>{esc(f)}</th>{cells}</tr>")
     table = ('<div class="tablewrap"><table><thead><tr>' + head_row + "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>"
              + '<p class="src">Sources: ' + " · ".join(f'<a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p["observed_asin"])}</a>' for p in ps) + f' · checked {TODAY}. Blank = unverified.</p>')
+    nguides = len(guides_for(cat))
     return f"""
-<section class="hero"><span class="kicker">Category · {esc(cat)}</span>
+<section class="hero"><span class="kicker">Category · {esc(cat)} · {nguides} guides</span>
 <h1>{esc(title)}</h1><p class="lede">{esc(intro)}</p>
-<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
+<p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · <a href="guides/index.html">All guides</a></p></section>
+<p class="railnote">Start with the situation you are in, not the brand. Each answer names the one listed spec that settles it — then the side-by-side table puts the numbers next to each other.</p>
 <h2>Match to your situation</h2>
 <p>Each answer names the one listed spec that settles the case, and links the listing it came from. Nobody here has cooked with these units, so there is no “we tested it” line anywhere — you check the spec against your kitchen.</p>
 {profile_block(cat)}
@@ -731,7 +753,7 @@ def prompt_builder():
 <script>
 (function(){{
  var out=document.getElementById('prompt-out'), msg=document.getElementById('copy-msg');
- var HEAD="Implement on the ShopNow Kitchen site (repo sassnarep3-star/WinC). Standing rules: read COORDINATION.md and claim tasks before editing; never fill an unverified value — leave it blank and flag it; keep intended_* and observed_* fields separate; run `npm run build && npm run check` until green; open a PR to main, merge, and confirm Pages is live.\n\nACCEPTED SUGGESTIONS\n";
+ var HEAD="Implement on the ShopNow Kitchen site (repo sassnarep3-star/WinC). DESIGN DIRECTION: the site must read like a polished marketing affiliate publication — catchy, human-sounding buyer questions as titles, editorial season framing, clean single-group navigation. It must NOT read like a generated dashboard or AI slop. Standing rules: read COORDINATION.md and claim tasks before editing; never fill an unverified value — leave it blank and flag it; keep intended_* and observed_* fields separate; run `npm run build && npm run check` until green; open a PR to main, merge, and confirm Pages is live.\n\nACCEPTED SUGGESTIONS\n";
  var TAIL="\n\nAlso: re-verify anything you touch against an official source and add it to data/sources.json with a retrieval date. Do not add prices, ratings, review counts, or hands-on-testing claims. Every outbound product link keeps rel=\"sponsored nofollow noopener\" and the affiliate tag.";
  function fmt(){{
   var on=[].slice.call(document.querySelectorAll('.sg-pick:checked'));

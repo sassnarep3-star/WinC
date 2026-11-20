@@ -239,14 +239,15 @@
     },
     {
       "id": "FLG-026",
-      "title": "Four of the five submitted short links landed on the Amazon home page on 2026-11-20",
-      "detail": "Fourth observation of the five submitted link.amazon URLs. B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the product listing that the first three observations recorded. B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four were re-fetched individually and gave the same result, so this is not a parallel-request artefact. Cause not determinable from this environment. This is NOT a claim that the short links are invalid - FLG-003 remains open and unresolved. It does mean the submitted links can no longer be relied on to land on these five products.",
-      "action": "Open each of the five submitted links in a normal browser session and record where it lands, with the date. If the home page is what an ordinary reader gets, the owner must confirm the intended product per link (Q-02) and use a Special Link from Associates Central instead (FLG-002).",
+      "title": "Observation #5: four of the five submitted short links landed on the Amazon home page",
+      "detail": "Fifth live pass of the submitted link.amazon URLs (session b0920c92, 2026-11-20, S30). B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the product listing recorded by observations #1-#4 — including observation #4 (arena-c2123b9c, S29) earlier the SAME day, which had reproduced 5/5 product targets. B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four were re-fetched individually: identical, so not a parallel-request artefact. Cause not determinable from this environment. This is NOT a claim that the short links are invalid — FLG-003 remains open and unresolved. It does mean the submitted links cannot be relied on to land on these five products at any given time.",
+      "action": "Open each of the five submitted links in a normal browser session on two different days and record where each lands. If the home page is what an ordinary reader gets, the owner must confirm the intended product per link (Q-02) and use a Special Link from Associates Central instead (FLG-002).",
       "status": "needs review",
       "sources": [
         "S15",
-        "S27",
-        "S28"
+        "S29",
+        "S30",
+        "S31"
       ],
       "source_note": ""
     },
@@ -259,7 +260,7 @@
       "sources": [
         "S12",
         "S13",
-        "S28"
+        "S31"
       ],
       "source_note": ""
     }
