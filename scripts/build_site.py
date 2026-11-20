@@ -61,6 +61,17 @@ CAT_IMG = {
 HERO_IMG = ("assets/img/hero-counter.jpg",
     "Editorial illustration: kitchen counter with an air fryer, a probe thermometer and a board of roasted potatoes. Not a product photograph.")
 
+def current_season():
+    """Publication season computed from the build date (arena-70bd2fcc's helper) — never typed by hand."""
+    t = datetime.date.today()
+    if t.month in (11, 12):
+        return f"Holiday {t.year}"
+    if t.month == 1:
+        return f"New Year {t.year}"
+    if 6 <= t.month <= 8:
+        return f"Summer {t.year}"
+    return "Everyday"
+
 def prods(cat=None):
     return [x for x in PRODUCTS if cat is None or x["category"] == cat]
 def guides_for(cat=None):
@@ -404,7 +415,7 @@ def home_body():
         season_bands += f'<h2>In season · {esc(sname)}</h2>\n<div class="grid">{scards}</div>\n'
     return f"""
 <section class="hero hero-shop">
-<span class="kicker">{c['products']} appliances on the counter · {c['guides']} guides · updated {TODAY}</span>
+<span class="kicker">{c['products']} appliances on the counter · {c['guides']} guides · {esc(current_season())} · updated {TODAY}</span>
 <h1>Three air fryers and two thermometers, on the numbers you can check yourself.</h1>
 <p class="lede">No “best of” list and no invented prices. Every capacity, footprint and weight here is copied from the manufacturer's own Amazon listing, with the link and the date beside it — and anything we could not confirm stays blank instead of being estimated.</p>
 <figure class="lede-figure"><img src="{img}" alt="{esc(cap)}" width="1200" height="750"><figcaption>{esc(cap)}</figcaption></figure>

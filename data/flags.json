@@ -240,11 +240,10 @@
     {
       "id": "FLG-026",
       "title": "Sibling variant listings: a reader can land on a different listing than the row this site records",
-      "detail": "On the 2026-11-20 fifth read, two of the five resolved URLs carried a variant parameter (th=1) in addition to lv=shuf + plpRedirect=mhFallback, and Amazon's own rails on the recorded pages showed near-identical listings at different ASINs — Chefman 6 Qt dual basket at B0B7C327LK, ThermoMaven 1 Sec in Orange at B0GL7Z4KP4, a CHEF iQ Sense at B0DZFNQXGL. The five rows this site publishes are the listings that were observed, not a claim that every reader sees the same colourway or bundle.",
+      "detail": "On the 2026-11-20 sixth read, two of the five resolved URLs carried a variant parameter (th=1) in addition to lv=shuf + plpRedirect=mhFallback, and Amazon's own rails on the recorded pages showed near-identical listings at different ASINs — Chefman 6 Qt dual basket at B0B7C327LK, ThermoMaven 1 Sec in Orange at B0GL7Z4KP4, a CHEF iQ Sense at B0DZFNQXGL. The five rows this site publishes are the listings that were observed, not a claim that every reader sees the same colourway or bundle.",
       "action": "During the one-link Associates test (FLG-002), record the exact variant each link serves for each of the five products, pin the reader link to that variant, and leave intended_* blank until the owner confirms which listing was meant (FLG-003, FLG-009).",
       "status": "needs review",
       "sources": [
-        "S22",
         "S29",
         "S30"
       ],

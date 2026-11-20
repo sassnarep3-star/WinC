@@ -91,7 +91,7 @@
       "season": "Holiday cooking",
       "question": "Thigh, breast, or the wing — and how close to the bone?",
       "why": "USDA FSIS names the three places to check a whole bird and says to avoid bone. The instant-read listing cannot help with technique; a guide can, and the source is already in the register.",
-      "needs": "Published 2026-11-20 (session f1fd0ff0) from the sources on this row — USDA FSIS guidance plus the two listing titles re-read that day. No hands-on measurement was invented to fill a gap.",
+      "needs": "Published 2026-11-20 as guides/turkey-probe-placement.html (FSIS placement and the 165°F figure quoted from fsis.usda.gov). This session drafted a second guide on the same question and deleted it rather than publish two near-identical pages.",
       "status": "published",
       "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
       "priority": "high",
@@ -99,7 +99,7 @@
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
         "https://www.amazon.com/dp/B0DHZTCNR5"
       ],
-      "published_as": "guides/probe-placement-holiday-cook.html"
+      "published_as": "guides/turkey-probe-placement.html"
     },
     {
       "id": "TP-07",
@@ -140,14 +140,14 @@
       "season": "Everyday",
       "question": "Will the cable survive a small basket and a hot element?",
       "why": "The wireless listing names air fryer as a use and states a 1000°F probe heat limit. The cable rating is the part readers get wrong, and it is a check-the-listing question rather than a test result.",
-      "needs": "Published 2026-11-20 (session f1fd0ff0) from the sources on this row — USDA FSIS guidance plus the two listing titles re-read that day. No hands-on measurement was invented to fill a gap.",
+      "needs": "Published 2026-11-20 as guides/turkey-probe-placement.html (FSIS placement and the 165°F figure quoted from fsis.usda.gov). This session drafted a second guide on the same question and deleted it rather than publish two near-identical pages.",
       "status": "published",
       "chosen_from": "editorial hypothesis — cross-links the thermometer and air-fryer clusters; no measured query data exists yet",
       "priority": "medium",
       "source": [
         "https://www.amazon.com/dp/B0DZFD6R9Z"
       ],
-      "published_as": "guides/probe-placement-holiday-cook.html"
+      "published_as": "guides/turkey-probe-placement.html"
     },
     {
       "id": "TP-10",

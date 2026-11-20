@@ -1,5 +1,5 @@
 {
-  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped.",
+  "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet — it never means the row was skipped. Q-23 appended 2026-11-20 by session arena-70bd2fcc (task renumbered to T37 after an id collision with arena-c2123b9c).",
   "updated": "2026-11-20",
   "blocking_count": 5,
   "questions": [
@@ -325,11 +325,21 @@
       "blocking": "no - but it must be decided before the first 404, not after",
       "discovery": "Owner decision in one sitting. Then implement via SG-34 (builder retired state + gate check). If replacement is chosen, the new record follows the same intended-vs-observed rule as everything else.",
       "owner": "Account owner (decision); any session can implement it once made",
-      "answer": "",
-      "sources": []
+      "answer": ""
     },
     {
       "id": "Q-23",
+      "question": "When does a seasonal guide's measurement window close, and who closes it?",
+      "decision_it_gates": "SG-35 (seasonal band close-out rule) and any future claim about how a seasonal guide performed (SG-32's experiment cannot be judged without a window).",
+      "have": "Five guides carry season labels (Holiday cooking / Everyday) and the front page computes an 'In season' band from them; the campaign ledger schema has date and channel fields but no notion of a seasonal window.",
+      "missing": "Window start/end dates per seasonal guide; the rule for what happens when a window closes (band demotion? archive note?); who makes the call.",
+      "discovery": "One decision on the suggestions review desk (direction.html): pick the windows with dates, then implement the two fields from SG-35 and re-run the gate.",
+      "owner": "Owner/editorial decision; implementation can be any session once the dates exist.",
+      "answer": "",
+      "blocking": "no - the season labels keep pages honest on their own; but no seasonal-performance claim can be published until windows exist (Q-17's measurement bar)."
+    },
+    {
+      "id": "Q-24",
       "question": "Do we want seasonal price context, and if so are we willing to run the Creator/PA API?",
       "decision_it_gates": "Whether the site may show or reference price and deal context at all — which is the difference between a holiday buying guide that converts and one that only compares listed features.",
       "have": "Amazon's Program Policies rule as read on 2026-11-20: price and availability may be displayed only through an Amazon-served link or the Creator/PA API (S02). The listings read today show dollar amounts, star ratings and 'Black Friday Deal' badges, and none of it is copied here (FLG-006, FLG-027).",
@@ -347,7 +357,7 @@
       "source_note": ""
     },
     {
-      "id": "Q-24",
+      "id": "Q-25",
       "question": "What is the real publishing cadence this site can sustain, and who owns it?",
       "decision_it_gates": "Whether the topic backlog is a schedule or a wish list — which decides how many guides to scaffold now and when measured queries start driving the choice.",
       "have": "Every guide published so far was written from data already in this repo — the listings' own stated specs plus USDA FSIS guidance — with no new source required; three more were published on 2026-11-20 that way, and scripts/new_guide.py turns the mechanical part into one command. The backlog page says, per row, what each remaining topic would need.",
@@ -361,6 +371,24 @@
         "S30"
       ],
       "source_note": "Backlog: topics.html · scaffold: scripts/new_guide.py"
+    },
+    {
+      "id": "Q-26",
+      "question": "Which variant of each product should each reader link point at?",
+      "decision_it_gates": "Whether the five buttons promise the same listing the register describes, and whether product pages can claim a colour, bundle or size at all.",
+      "have": "Six independent observations of the same five tokens (2026-11-17 and five on 2026-11-20) all resolving to the same five ASINs, with titles matching verbatim; two URLs additionally served a th=1 variant parameter, and Amazon's rails showed sibling listings (Chefman 6 Qt dual basket B0B7C327LK, ThermoMaven Orange B0GL7Z4KP4, CHEF iQ Sense B0DZFNQXGL).",
+      "missing": "The variant actually intended by whoever supplied the five short links, and the variant the enrolled Associates workflow serves after the one-link test.",
+      "blocking": "no — but it caps what any product page may promise, so no colour/bundle claim is made anywhere on the site",
+      "discovery": "Run FLG-002's one-link test through the enrolled workflow and record the final URL with all query parameters for each of the five; compare the variant id (th=…) with the listing the register describes; then either pin the link or keep the generic /dp/<ASIN> form and say nothing about variants.",
+      "owner": "Account owner, with whoever chose the five links",
+      "answer": "",
+      "sources": [
+        "S29",
+        "S30",
+        "S31",
+        "S32"
+      ],
+      "source_note": "Published as FLG-026 on Flagged for Review."
     }
   ]
 }

@@ -296,16 +296,17 @@ authorised first-party reports arrive.
 
 ---
 
-# Fourth pass — make it read like a shop (2026-11-20, session `f1fd0ff0`)
+# Sixth observation and a shop-shaped front page (2026-11-20, session `f1fd0ff0`)
 
 The brief for this pass had three parts: lead with the products, give the reader a decision to
 make, and keep every number sourced. Three things changed on the site, and one row of data turned
 out to be wrong in public.
 
-## 1 · Verification, a fourth time — 5/5 titles verbatim, and two new findings
+## 1 · Verification, a sixth time — 5/5 titles verbatim, and two new findings
 
-- **All five supplied links were re-resolved and all five listings re-read** on 2026-11-20 by a
-  session that had not seen the earlier data. 5/5 page `<title>` values match the stored product
+- **All five supplied links were re-resolved and all five listings re-read** on 2026-11-20. Two
+  parallel sessions had already recorded observations #4 and #5 the same day; this is #6, and the
+  register now holds six observations across two dates. 5/5 page `<title>` values match the stored product
   titles verbatim; the redirect responses still carry `lv=shuf` + `plpRedirect=mhFallback`. The
   Emeril page exposed its full details table, so dimensions (16.9" × 15.8" × 14.8"), capacity
   (24.6 litres), model `4-00675-02X-VN`, UPC `752356835682`, 1700 W and its own ASIN row were
@@ -339,20 +340,22 @@ out to be wrong in public.
 - A dated seasonal strip points at the holiday guides. It states its year in its own text, because
   an undated seasonal promise is how a site ends up looking stale in public.
 
-## 3 · Nine guides, four backlog rows closed
+## 3 · Fifteen guides on the site, four backlog rows closed by this pass
 
 `29` sources · `27` flags · `24` questions (5 blocking) ·
 `30` suggestions (19 shipped, 10 open, 1 recommended now) · `13` topics (4 published).
 
-Three guides were written this pass, each from sources already readable:
-**probe-accuracy-check**, **probe-placement-holiday-cook** and **counter-fit-before-you-order** —
+Two guides were written this pass, each from sources already readable (a third, on turkey probe
+placement, was drafted and then deleted because a parallel session published `guides/turkey-probe-placement.html` on the same question —
+two near-identical articles is exactly the failure mode this site is trying to avoid):
+**probe-accuracy-check** and **counter-fit-before-you-order** —
 thermometer accuracy (USDA FSIS ice-water and boiling-water calibration methods, the 2–4°F
 expectation, which types cannot be adjusted), probe placement for a holiday bird (three places in a
 whole bird, 165°F, stuffing, the leave-in rule), and counter fit (the listed footprints and weights,
 with ventilation clearance explicitly refused because no listing states one).
 
-Build and gate: `Built 30 pages, 29 sitemap URLs, 9 guides, 26 search rows.` →
-`OK: 30 pages checked, 29 sitemap URLs, no violations.`
+Build and gate: `Built 36 pages, 35 sitemap URLs, 15 guides, 32 search rows.` →
+`OK: 36 pages checked, 35 sitemap URLs, no violations.` · `npm run verify` green (gate + analytics contract tests).
 
 ## What still cannot be answered from this repo
 
@@ -362,3 +365,11 @@ specification conflicts inside two listings (FLG-004, FLG-005, FLG-010). All of 
 Associates account or the owner's decision, and all of them are published on the Flagged page with
 the action that settles each. No price, rating, ranking or revenue figure appears anywhere, and the
 ledger stays empty until first-party reports arrive.
+
+### Reconciliation with the parallel passes that landed mid-session
+
+`main` absorbed two other sessions while this pass was in flight (PRs #38 and #41: their own fourth-pass verification, per-product artwork,
+a computed season kicker, and the `turkey-probe-placement` + `black-friday-air-fryer-checklist` guides). Both merges were resolved by union,
+main's rows keeping every colliding id, this session's rows renumbered (SG-39…SG-47, Q-24…Q-26, S30…S32, TP-15, FLG-026/027), this session's
+re-read recorded as observation #6 rather than overwriting #4 or #5, and this session's duplicate holiday guide deleted. The five product
+illustrations now resolve to this session's ~150 KB JPEGs and the 2.7–2.9 MB PNGs are gone. Full collision table in `COORDINATION.md`.
