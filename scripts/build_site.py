@@ -950,16 +950,18 @@ def measurement_body():
 <p>Client: <code>assets/app.js</code> · Endpoint code: <code>analytics/worker.js</code> (deploy separately — GitHub Pages is static, FLG-007). Until <code>CONFIG.endpoint</code> is set, counts live only in the reader’s browser (localStorage).</p>
 <h2>Is the measurement layer actually wired up?</h2>
 <div class="tablewrap"><table><thead><tr><th>Check</th><th>Result</th><th>Source</th></tr></thead><tbody>
-<tr><td>All five events accepted by the endpoint</td><td><span class="okpill">verified</span> &mdash; HTTP 202 for each, HTTP 422 for an event outside the defined set</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a></td></tr>
+<tr><td>All five events accepted by the endpoint</td><td><span class="okpill">verified</span> &mdash; HTTP 202 for each; HTTP 422 for an event outside the defined set and for a malformed page path</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a></td></tr>
 <tr><td>Aggregates come back correctly</td><td><span class="okpill">verified</span> &mdash; <code>/stats</code> and <code>/ledger</code> report the posted counts</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a></td></tr>
-<tr><td>Nothing identity-bearing is stored</td><td><span class="okpill">verified</span> &mdash; no IP, no user agent, no cookie, no email address, no search query; six fields per row</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a></td></tr>
+<tr><td>Nothing identity-bearing is stored</td><td><span class="okpill">verified</span> &mdash; rows carry the server day, event, page and allow-listed props only; no IP, user agent, cookie, email address, search query, client timestamp or client site ID survives</td><td class="src">Internal — <a href="scripts/verify_measurement.py">scripts/verify_measurement.py</a> and <a href="scripts/test_analytics.py">scripts/test_analytics.py</a></td></tr>
 <tr><td>The endpoint is reachable from the live site</td><td><span class="flagpill">not deployed</span> &mdash; GitHub Pages cannot host a server endpoint</td><td class="src">Internal — <a href="flagged-for-review.html#flag-FLG-007">FLG-007</a></td></tr>
 <tr><td>Orders and revenue</td><td><span class="flagpill">not collected</span> &mdash; these come only from an authorised first-party Associates export, never from the beacon</td><td class="src">Internal — <a href="data/campaign-ledger.json">data/campaign-ledger.json</a></td></tr>
 </tbody></table></div>
-<p class="src">The first three rows were checked by running the shipped collector as a real server and posting the
-beacon's own payload shape at it. That test found a genuine defect &mdash; the collector read the client timestamp
-from a field the beacon never sends, so every stored row had an empty client timestamp &mdash; which is now fixed.
-Running <code>python3 scripts/verify_measurement.py</code> reproduces the whole check in about a second.</p>
+<p class="src">The first three rows are checked by running the shipped collector as a real server and posting the
+beacon's own payload shape at it. The test has already caught one real defect &mdash; the collector once read the
+client timestamp from a field the beacon never sends, so every stored client timestamp was silently empty. The
+hardened schema (session arena-482d5832) then superseded that field entirely: client timestamps are discarded by
+design, and the test now asserts that. Running <code>python3 scripts/verify_measurement.py</code> reproduces the
+whole check in about a second.</p>
 
 <h2>Campaign ledger (empty by design)</h2>
 <p>Timestamp, source, channel, eligible sessions, clicks, and reported orders are recorded <strong>only</strong> when obtained from authorized first-party reports (Associates Reports). Keep a dated provenance trail. No conversion score or revenue forecast is presented here.</p>
