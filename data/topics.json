@@ -260,6 +260,57 @@
         "https://www.amazon.com/dp/B09B7SB46R",
         "https://www.amazon.com/dp/B08DKYBTPH"
       ]
+    },
+    {
+      "id": "TP-16",
+      "title": "Thanksgiving math: what fits in each fryer, and what temperature does the food need?",
+      "cluster": "Cross-cluster",
+      "season": "Thanksgiving → Christmas",
+      "question": "Can the machine I have handle the holiday spread, and how do I know the food is done?",
+      "why": "The three fryers' listed capacities (two 3-qt baskets, one 8-qt basket, a 26-qt oven) answer the size question from data this site already holds, and the temperature question has one authoritative answer (USDA FSIS). The two thermometers in the shop are the tools for checking it — a cross-cluster question neither category page answers alone.",
+      "needs": "Listed capacities from data/products.json (already captured), USDA FSIS temperatures quoted from S16/S17 only — re-check those sources before publishing (SG-41). No new sources required.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — the calendar season and this shop's own cross-cluster gap; no measured query data exists yet (Search Console pending, SG-29)",
+      "priority": "high",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R",
+        "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"
+      ]
+    },
+    {
+      "id": "TP-17",
+      "title": "Game day, two baskets, one kickoff: what can actually finish together?",
+      "cluster": "Air Fryers",
+      "season": "Winter (game day)",
+      "question": "How do I cook two things at once and have them land on the table at the same time?",
+      "why": "The dual-basket listing names two independent 3-quart baskets with a Sync Finish so both baskets can finish together; the single-basket 8-quart carries no such claim. That is a gathering question the listings answer without opinions.",
+      "needs": "Listed Sync Finish description and basket counts (already captured for B0CDY277D3 and B08DKYBTPH). No cook times may be invented.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — seasonal calendar (winter gatherings); no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH"
+      ]
+    },
+    {
+      "id": "TP-18",
+      "title": "New Year's honest question: which machine earns its counter space all year?",
+      "cluster": "Cross-cluster",
+      "season": "New Year",
+      "question": "After the holiday rush, what do I actually keep out on the counter?",
+      "why": "The listed footprints differ by nearly a factor of two between the basket fryers and the 26-qt oven (13.38\"D x 11.81\"W x 10.63\"H vs 16.9\"D x 15.8\"W x 14.8\"H), and the listed weights range 12.8-26.5 lb. The cleanup guide covers dishwasher-safe parts; the seasonal framing is the New Year habit of clearing the counter — the deciding numbers are the same listed specs.",
+      "needs": "Listed dimensions and weights (already in data/products.json). Nothing new; the keep-or-store judgement stays the reader's.",
+      "status": "planned",
+      "chosen_from": "editorial hypothesis — calendar season (New Year decluttering); no measured query data exists yet",
+      "priority": "medium",
+      "source": [
+        "https://www.amazon.com/dp/B0CDY277D3",
+        "https://www.amazon.com/dp/B08DKYBTPH",
+        "https://www.amazon.com/dp/B09B7SB46R"
+      ]
     }
   ]
 }

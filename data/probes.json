@@ -44,9 +44,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -90,9 +90,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -136,9 +136,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -182,9 +182,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -229,8 +229,8 @@
         "final_asin": "B0DZFD6R9Z",
         "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5ed90c5aacfa7a7e&channelId=500&plpRedirect=mhFallback&th=1",
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
-        "agrees_with_observation_5": true,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)"
+        "agrees_with_observations_1_to_5": true,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)"
       }
     },
     {
@@ -259,9 +259,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -291,9 +291,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -324,9 +324,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -356,9 +356,9 @@
         "final_asin": "",
         "final_url": "https://www.amazon.com/",
         "final_title": "Amazon.com. Spend less. Smile more.",
-        "agrees_with_observation_5": false,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)",
-        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded. Re-fetched individually (not in a batch) with the same result, so this is not a rate-limit artefact. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-030."
+        "agrees_with_observations_1_to_5": false,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)",
+        "note": "On this pass the redirect ended on the Amazon home page instead of the product listing that observations #1-#5 recorded - the same divergence arena/1c6908d1 recorded as FLG-030. Re-fetched individually (not in a batch) with the same result. An observation, not a verdict that the link is invalid: FLG-003 stays open. Published as FLG-031."
       }
     },
     {
@@ -389,15 +389,15 @@
         "final_asin": "B0DZFD6R9Z",
         "final_url": "https://www.amazon.com/dp/B0DZFD6R9Z?lv=shuf&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&btn_type=ss&gaOptInStatus=true&language=en_US&btn_ref=srctok-5ed90c5aacfa7a7e&channelId=500&plpRedirect=mhFallback&th=1",
         "final_title": "Amazon.com: CHEF iQ Sense | Smart Wireless Meat Thermometer | 3 Ultra-Thin Probes | WiFi Unlimited Range | 1000°F Heat Safe | 5 Sensors | BBQ, Grill, Oven, Smoker, Air Fryer | Gen3: Home & Kitchen",
-        "agrees_with_observation_5": true,
-        "renamed": "recorded as observation #6 in the merged register (arena-70bd2fcc holds the #5 slot)"
+        "agrees_with_observations_1_to_5": true,
+        "renamed": "recorded as observation #6 (arena/1c6908d1's listing re-reads hold the #5 slot)"
       }
     }
   ],
   "interpretation": {
-    "reproduced": "Observations #1-#5 (2026-11-17, and four passes on 2026-11-20 by arena-23d7ed19, arena-82d39deb, arena-c2123b9c and arena-70bd2fcc) agreed 5/5 on the observed targets. Observation #6 (2026-11-20, session b0920c92) diverged: four of the five submitted short links ended on the Amazon home page and only B0f3GKalj still resolved to a product listing. The earlier agreement therefore does not guarantee those short links resolve to those products at any given time.",
-    "what_reproduction_does_not_prove": "Every final URL ever observed carries lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback) - a fallback route, not a canonical resolution of the submitted token, which is why the intended_* fields stay blank (FLG-009, FLG-029). Observation #6 adds a second reason: the short links did not all resolve to product pages on the most recent pass, hours after passes in which they all did. Nothing here says the short links are invalid - FLG-003 remains open and unresolved.",
-    "operational_consequence": "The reader-facing links on this site are NOT the submitted short links. They are built from the observed ASINs as direct https://www.amazon.com/dp/<ASIN> URLs. All five were re-opened directly on 2026-11-20 as a control (S36) and every one still served the product page and breadcrumb recorded in data/products.json. So the published links are unaffected by the short-link behaviour; what needs the owner's attention is confirming the intended destination for each product (Q-02) and the one-link Associates test (FLG-002)."
+    "reproduced": "The observed ASINs are reproducible: observations #1-#4 (2026-11-17, then arena-23d7ed19, arena-82d39deb and arena-c2123b9c on 2026-11-20) agreed 5/5, and the listing re-reads by arena-70bd2fcc (S30-S34) and arena/1c6908d1 (S36) confirmed every observed listing still serves the recorded page. The SHORT LINKS are a different story: two independent re-resolution passes on 2026-11-20 (arena/1c6908d1 -> FLG-030; b0920c92 -> FLG-031, S37) both found four of the five short links landing on the Amazon home page, with only B0f3GKalj still resolving to a product. So: the observed_* product records are reproducible; the submitted short links' behaviour is not stable over hours.",
+    "what_reproduction_does_not_prove": "Every final URL ever observed carries lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback) - a fallback route, not a canonical resolution of the submitted token, which is why the intended_* fields stay blank (FLG-009, FLG-029). The divergence passes (FLG-030, FLG-031) add a second reason: the short links did not all resolve to product pages on the two most recent passes. Nothing here says the short links are invalid - FLG-003 remains open and unresolved.",
+    "operational_consequence": "The reader-facing links on this site are NOT the submitted short links. They are built from the observed ASINs as direct https://www.amazon.com/dp/<ASIN> URLs. All five were re-opened directly on 2026-11-20 as a control in observation #6 (S37) and every one still served the product page and breadcrumb recorded in data/products.json. So the published links are unaffected by the short-link behaviour; what needs the owner's attention is confirming the intended destination for each product (Q-02) and the one-link Associates test (FLG-002)."
   },
   "probe_dates": [
     "2026-11-17 (prior sessions)",
@@ -405,8 +405,8 @@
     "2026-11-20 (arena-82d39deb)",
     "2026-11-20 observation #4: arena-c2123b9c",
     "2026-11-20 observation #5: arena-70bd2fcc",
-    "2026-11-20 observation #6: b0920c92 — divergent (4/5 home page)"
+    "2026-11-20 observation #6: b0920c92 — divergent (4/5 home page; confirms FLG-030)"
   ],
   "probe4_note": "Fourth independent observation (session arena-c2123b9c, 2026-11-20), via live HTTP resolution through the fetch_page reader, same method as observations #2 and #3. All five mappings reproduced 5/5 again. Per-row 'session'/'date'/'observation' fields mark which observation produced the row (rows without them are observation #3 by arena-82d39deb). Channel IDs varied (704/704/704/500/500) and two rows carried th=1 - recorded verbatim. Every row still carries lv=shuf and plpRedirect=mhFallback, so FLG-009's fallback-route reading stands. New per-listing observations: the Emeril <title> still says 'Six Cooking Accessories' (FLG-010 on a third capture); the Chefman 8 Qt <title> still shows the 450F Hi-Fry wording against captured 200-400F copy (FLG-005); the ThermoMaven <title> wording rotated again (consistent with FLG-014). Provenance row: S29.",
-  "probe6_note": "Sixth live pass (session b0920c92, 2026-11-20, S36). Observation #4 (arena-c2123b9c) and observation #5 (arena-70bd2fcc, listing re-reads) had agreed 5/5 the same day. On this short-link pass, four of the five submitted links ended on the Amazon home page and only B0f3GKalj still resolved to a product. Two of the four re-fetched individually: identical. The /dp/ control in the same pass confirmed all five listings still serve the recorded products (S36), so the published reader links are unaffected. Recorded as FLG-030; the short links' compliance status stays unresolved (FLG-003). Passes #4/#5 vs #6 together show the short-link behaviour is not stable over hours."
+  "probe6_note": "Sixth pass (session b0920c92, 2026-11-20, S37). Short links re-resolved: four of five ended on the Amazon home page, only B0f3GKalj still resolved to a product. This independently reproduces the divergence arena/1c6908d1 recorded as FLG-030 on the same day. The /dp/ control in the same pass confirmed all five listings still serve the recorded products, so the published reader links are unaffected. FLG-003 stays open; see FLG-030 and FLG-031."
 }

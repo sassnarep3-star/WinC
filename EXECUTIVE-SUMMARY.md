@@ -13,12 +13,12 @@ A five-product Amazon Associates publication in two categories — air fryers an
 |---|---|
 | Products | 5 (3 air fryers, 2 meat thermometers), each with a long-form narrative, a spec table, an FAQ, and flagged listing contradictions |
 | Series | 2 editorial series pages, generated from `data/stories.json` |
-| Guides | 13 question-shaped guides across both categories, plus two series pages that tie each cluster together |
-| Topics | 15 in the published backlog — 4 marked published with links to the guide each became |
+| Guides | 15 question-shaped guides across both categories, plus two series pages that tie each cluster together |
+| Topics | 18 in the published backlog — 4 marked published with links to the guide each became |
 | Sources | 35 register rows, each with URL, what it confirms, and a retrieval date |
 | Flags | 29 items, each with the action that would resolve it; all public on *Flagged for review* |
 | Open questions | 25, of which 8 are blocking; four of those can only be answered inside an enrolled Associates account |
-| Suggestions | 33, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
+| Suggestions | 38, each with evidence, effort, cost, risk, how to measure it, and a copy-paste prompt block |
 | Measurement | 5 defined events; endpoint code (`analytics/worker.js`, `analytics/collect.py`) shipped and tested; **not deployed**; campaign ledger **empty** |
 | Gates | `scripts/check_site.py` (authority) and `tools/audit.mjs` (independent, written from the policy documents) — **both pass with zero findings** |
 
@@ -300,24 +300,108 @@ authorised first-party reports arrive.
 
 ---
 
+# Session `arena-156c2ecf` — line-by-line re-verification, decision-register completion — 2026-11-20
+
+This pass re-verified the load-bearing claims against their official sources where the reader could
+reach them, recorded the one fetch that failed instead of papering over it, added the seasonal
+topic rows and the register rows this session owns, reconciled typed counts, and resolved two
+rebases against the parallel PR rounds without dropping anyone's work.
+
+## Re-verification this session (official sources, links for manual review)
+
+| Ref | Source (manual review link) | Re-read result, 2026-11-20 |
+|-----|------------------------------|-----------------------------|
+| S01 | [Associates Program Operating Agreement](https://affiliate-program.amazon.com/help/operating/agreement) | §5 disclosure sentence verbatim; §1 tagged Special Links; §6 §5-violation = material breach; stamp "Updated: October 15, 2025". **Confirmed live.** |
+| S02 | [Associates Program Policies](https://affiliate-program.amazon.com/help/operating/policies) | Price/availability rule verbatim ((a) Amazon-served link or (b) Creators/PA API only); tag format "(appearing as XXXXX-##)"; stamp "Updated: April 14, 2026". **Confirmed live.** |
+| S03 | [FTC Endorsement Guides FAQ](https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking) | "disclosed clearly and conspicuously"; affiliate section present. **Confirmed live.** |
+| S05 | [What is an ASIN?](https://sell.amazon.com/blog/what-is-an-asin) | "unique 10-character alphanumeric code"; found after /dp/. **Confirmed live** — the 9-character submitted tokens cannot be ASINs, so `intended_asin` stays blank. |
+| S09 | [Amazon listing B0CDY277D3](https://www.amazon.com/dp/B0CDY277D3) | `<title>` matched the stored product title verbatim; breadcrumb confirmed; `lv=shuf` + `plpRedirect=mhFallback` fallback observed again. **Identity confirmed live.** |
+| S16/S17 | USDA FSIS pages | **Re-fetch FAILED in this session's reader (two attempts).** Not re-confirmed here; they stand on prior sessions' direct reads. Re-check before any new guide quotes them. |
+
+## What changed
+
+- **Suggestion register: SG-39..SG-42 added** (house-style/slop gate as a shipped standard, counts
+  honesty, the dated re-read trail with recorded failures, and the next seasonal-publishing
+  proposal). SG-27..SG-30 kept as the parallel pass wrote them — they are the rows the brief names.
+- **Seasonal topic rows TP-16..TP-18** (Thanksgiving sizing, game-day timing, New Year counter
+  space): catchy, question-shaped, each labelled "editorial hypothesis" in `chosen_from` — no
+  popularity or search-volume claim, exactly as the topics page demands.
+- **Typed counts reconciled** (SG-40): the state table above now matches the registers (15 guides,
+  18 topics, 38 suggestions, 35 sources, 29 flags).
+- **Rebase unions:** the PRs #37–#39 and #40–#45 rounds both conflicted with this branch; both
+  sides kept every time (registers unioned, colliding IDs renumbered — T29–T32 became T39–T42,
+  this session's topics moved to TP-16..TP-18 — HTML rebuilt from the merged data). Details in
+  COORDINATION.md.
+
+## Unchanged, on purpose
+
+No price, rating, review count, revenue forecast or conversion score anywhere. Short links are
+never called invalid (FLG-003). Intended vs observed identifiers stay in separate fields. The
+campaign ledger stays empty until first-party reports exist.
+
+---
+
+# Audit-clean pass + verification #5 (2026-11-20, session `arena/1c6908d1-winc`)
+
+This pass confirmed the independent-audit findings are cleared on `main`, re-ran the product
+verification line by line, and added review-prompt suggestions distinct from the site's existing work.
+
+## The independent audit is clean
+
+`tools/audit.mjs` reports **0 findings** (all ten rules pass) on the merged tree. A6 (the `#src-*`
+fragment links resolve — `main` fixed the source-row id quote style and rewrote the client-side search
+with the DOM API) and A7 (the reader-capture form no longer puts the email in the URL — this session
+upgraded it to `method="post"`, more robust than `get`+`novalidate` for a JavaScript-blocked browser)
+are both addressed. `npm run verify` → **Built 38 pages, 37 sitemap URLs** / **OK: 38 pages checked,
+37 sitemap URLs, no violations.**
+
+## Verification pass #5, and one new irregularity
+
+- **All five `amazon.com/dp/<ASIN>` listings re-read live on 2026-11-20.** Each `<title>` matched
+  `data/products.json` verbatim; breadcrumb confirms category (3 air fryers, 2 meat thermometers). The
+  `lv=shuf` + `plpRedirect=mhFallback` fallback route is present on all five (FLG-009/FLG-029). No spec
+  value drifted; no correction needed.
+- **New irregularity — FLG-030.** Re-fetching the five supplied `link.amazon` tokens directly did **not**
+  reproduce the prior token→ASIN mapping via this fetch path: 4/5 resolved to the amazon.com homepage and
+  `B0f3GKalj` returned HTTP 500 on two attempts. This does **not** establish the links are invalid
+  (FLG-003 unchanged — never claimed invalid); it means the mapping's reproducibility across observation
+  methods is in question. Recorded as source **S36**, flag **FLG-030**, and open question **Q-26**, with
+  the resolution action (re-resolve in an enrolled Associates browser with cookies + region).
+
+## New review-prompt suggestions (distinct from the site's existing suggestions)
+
+- **SG-43 — editorial voice pass.** Make reader copy read like a publication, not generated text, without
+  touching a single fact or source. Directly answers the brief's "should not read like AI slop."
+- **SG-44 — accept/reject/defer review workflow.** Record the review decision in-repo per suggestion so
+  the chosen path persists and gates the next build, rather than living only in the browser.
+
+## Still open (owner-side)
+
+Tracking-ID confirmation, the one-link Associates test, short-link compliance status, the
+manufacturer-page spec conflicts, analytics-endpoint deployment and Search Console — all require an
+enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
+forecast; the campaign ledger stays empty until first-party reports arrive.
+
+
+---
+
 # Session b0920c92 — row-level sourcing site-wide, observation #6, decision desk, measurement proof (T43–T49)
 
-Merged with `main` twice as parallel PRs landed (through #45); every register is the union of all
-sessions' work.
+Merged with `main` three times as parallel PRs landed (through #51); every register is the union of
+all sessions' work.
 
 ## 1 · Every table row on every page carries its source
 The gate's row-source rule now applies to every page: a row passes if it links an official source,
 cites the source register, prints the source URL as text, or explicitly says its source is internal
-or blank. The first strict run failed with 61 unsourced rows across 9 pages, and a further 22 in
-guides other sessions published; all repaired with per-row citations. Deep links (`#src-*`,
-`#flag-*`, `#q-*`, `#t-*`) are gate-checked to resolve.
+or blank. The strict runs found 95 unsourced rows across the waves (61 + 22 + 12); all repaired with
+per-row citations. Deep links (`#src-*`, `#flag-*`, `#q-*`, `#t-*`) are gate-checked to resolve.
 
-## 2 · Observation #6 of the five supplied links (FLG-030, S36)
-Hours after two sessions had re-confirmed 5/5 targets, this pass diverged: four of the five
-`link.amazon` short links landed on the Amazon home page; only B0f3GKalj still resolved. Re-fetched
-individually — identical. Control: all five direct `/dp/` listings still serve the recorded products,
-so the published reader links are unaffected. Recorded as an observation, not a verdict; FLG-003
-stays open. Together the passes show the short-link behaviour is not stable over hours.
+## 2 · Observation #6 corroborates the short-link divergence (FLG-031, S37)
+Two independent sessions recorded the same divergence on 2026-11-20: four of the five `link.amazon`
+short links land on the Amazon home page (FLG-030 by arena/1c6908d1; FLG-031 by this session, S37),
+while all five direct `/dp/` listings still serve the recorded products. Recorded as observations,
+not verdicts; FLG-003 stays open. The merged interpretation now separates the reproducible
+observed-ASIN records from the unstable short-link behaviour.
 
 ## 3 · The measurement layer is proven against its hardened contract
 `scripts/verify_measurement.py` runs the shipped collector as a real server, posts all five events
@@ -327,7 +411,7 @@ caught a real defect in the pre-hardening collector (client-timestamp field mism
 hardened schema superseded that field entirely. `npm run verify` includes it.
 
 ## 4 · The decision desk names its deciders
-Every suggestion row (34 across the union) carries its path (A–D), who decides it (SG-01, SG-07,
+Every suggestion row (40 across the union) carries its path (A–D), who decides it (SG-01, SG-07,
 SG-08, SG-09, SG-10, SG-19, SG-20, SG-22, SG-29 and SG-30 need the account owner) and what would
 have to be known to decide it. Question rows with no answer say "not yet answered".
 

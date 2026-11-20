@@ -294,14 +294,28 @@
     },
     {
       "id": "FLG-030",
-      "title": "Observation #6: four of the five submitted short links landed on the Amazon home page",
-      "detail": "Fifth short-link pass of the day (session b0920c92, 2026-11-20, S36). B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ (title 'Amazon.com. Spend less. Smile more.') instead of the product listing recorded by observations #1-#4 and by observation #5's listing re-reads (arena-70bd2fcc). B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four re-fetched individually: identical. The /dp/ control in the same pass confirmed all five listings still serve the recorded products. Cause not determinable from this environment. This is NOT a claim that the short links are invalid - FLG-003 remains open and unresolved. It does mean the submitted links cannot be relied on to land on these five products at any given time, and that their behaviour is not stable over hours.",
-      "action": "Open each of the five submitted links in a normal browser session on two different days and record where each lands. If the home page is what an ordinary reader gets, the owner must confirm the intended product per link (Q-02) and use a Special Link from Associates Central instead (FLG-002).",
+      "title": "Supplied link.amazon tokens did not reproduce the prior ASIN mapping via this fetch path (2026-11-20)",
+      "detail": "Session arena/1c6908d1-winc re-fetched all five supplied link.amazon tokens directly on 2026-11-20. Four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) resolved to the amazon.com homepage and B0f3GKalj returned HTTP 500 on two attempts — i.e. the token->ASIN mapping recorded by prior sessions (S14/S18/S22/S29, data/probes.json) was NOT reproduced through this fetch path. This does NOT establish the links are invalid (FLG-003 unchanged, never claimed invalid). The likely causes are a difference in redirect/cookie/region handling between the page-reader fetch and the prior sessions' browser/curl resolution, or session-dependent redirect behaviour. The observed_* ASIN values remain valid product identities (the /dp/ listings are live and titles match), but the token-to-ASIN mapping's reproducibility across observation methods is now in question.",
+      "action": "Re-resolve each token in a real enrolled-Associates browser context (cookies + region) and record the final URL per token in data/probes.json with a dated provenance line; reconcile against the prior mapping. Do not claim the links are invalid until that is done.",
+      "status": "needs review",
+      "sources": [
+        "S15",
+        "S18",
+        "S36"
+      ],
+      "source_note": ""
+    },
+    {
+      "id": "FLG-031",
+      "title": "Second independent confirmation of the short-link divergence: observation #6 also landed 4/5 on the home page",
+      "detail": "Session b0920c92's short-link pass on 2026-11-20 (S37) reproduces the divergence that session arena/1c6908d1 recorded as FLG-030: B04G1MEwY, B02NbDxp3, B00hJ57DV and B0c8moW59 each ended on https://www.amazon.com/ instead of the product listing recorded by observations #1-#4, while B0f3GKalj still resolved to B0DZFD6R9Z with the same lv=shuf / plpRedirect=mhFallback flags. Two of the four were re-fetched individually: identical. The /dp/ control in the same pass confirmed all five listings still serve the recorded products. Two sessions, one day, same divergence: the short-link behaviour is not stable over hours. This is NOT a claim that the short links are invalid - FLG-003 remains open and unresolved.",
+      "action": "Same action as FLG-030: verify each submitted link in a normal browser session on two different days; if the home page is what a reader gets, the owner confirms intended products (Q-02) and issues Special Links from Associates Central (FLG-002).",
       "status": "needs review",
       "sources": [
         "S15",
         "S29",
-        "S36"
+        "S36",
+        "S37"
       ],
       "source_note": ""
     }
