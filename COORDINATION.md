@@ -481,4 +481,65 @@ Scope discipline: prior sessions' registers are appended to and status-corrected
 | T33 | Questions register v3: rows this session could answer from official sources + new discovery actions | in progress | ab951e4c | `data/questions.json`, `scripts/build_site.py` (questions_body) |
 | T34 | Ledger ingest tooling: validated `scripts/ledger_add.py` (first-party rows only, refuses invented numbers) | in progress | ab951e4c | `scripts/ledger_add.py`, `analytics/README.md`, `measurement.html` (generated) |
 | T35 | Gate extensions: image uniqueness on the reader path, no flag IDs in card copy, shelf-line presence, ledger row schema | in progress | ab951e4c | `scripts/check_site.py` |
-| T36 | Final integration: build + gate green, PR → main, merge, confirm Pages, record here | pending | ab951e4c | all (integration only) |
+| T36 | Final integration: build + gate green, PR → main, merge, confirm Pages, record here | in progress | ab951e4c | all (integration only) |
+| T37 | Program Policies §2(b)/§4/§5/§6(a)/(c)/(d) verbatim read → 10 new flags, disclosure + footer corrections, freshness clock, ledger ingest gate, exec-page drift repair | done | ab951e4c | `data/sources.json`, `data/flags.json`, `data/questions.json`, `data/suggestions.json`, `scripts/build_site.py`, `scripts/check_site.py`, `scripts/freshness.py`, `scripts/ledger_add.py`, `data/freshness.json`, `analytics/README.md`, `README.md`, `EXECUTIVE-SUMMARY.md` |
+
+## Results (ab951e4c, 2026-11-20)
+
+**Sources verified this session (all fetched live, all quoted or checkable):**
+
+| Ref | Source | What was confirmed by reading it |
+| --- | --- | --- |
+| S27 | affiliate-program.amazon.com/help/operating/policies (chunks 3–4 of 11) | §2(b) misleading-claim rule + Product-lists original-content rule + price/availability display rule; §4 Special Links in email only where solicited; §5 no Program Content used to develop ML models without express prior written approval; §6(a) no altering Program Content, truncation allowed where meaning is unchanged; §6(c) prompt removal of Program Content Amazon no longer displays; §6(d) no implied endorsement from a name or likeness in Program Content |
+| S28 | developers.google.com/search/updates | Changelog entry "Removing documentation for the FAQ rich result feature" (June 2026); the FAQPage and HowTo doc URLs now redirect to that page (#removing-faq-rich-result, #how-to-deprecation) |
+| S17 | fsis.usda.gov Food Thermometers (deeper read) | "Most food thermometers will give an accurate reading within 2 to 4 degrees F"; ice-water calibration procedure (≥2 in deep, ≥30 s, 32°F); boiling procedure (212°F at sea level, distilled water, −2°F to −5°F at altitude, ask the local Cooperative Extension office); "If the thermometer doesn't allow manual calibration, you may need to replace it"; care wording (do not immerse most thermometers; plastic faces can melt; do not leave in food unless designed for it); types table (oven-cord/fork cannot be calibrated, thermistor 10 s, thermocouple 2–5 s, wireless/smart designed to remain in food at ≥1 in deep, more costly) |
+| S16 | fsis.usda.gov Safe Minimum Internal Temperature Chart | All poultry 165°F; ground meats and eggs 160°F; steaks/chops/roasts and uncooked ham 145°F + ≥3-minute rest; fish 145°F; casseroles 165°F; whole-bird three-place check and the stuffing rule |
+| S09–S13 | the five amazon.com listings | Reused only as recorded evidence for shelf lines and the three new guides; every string quoted is already in `data/products.json` with its read date |
+
+**Work shipped:** per-product editorial imagery (5 new originals) + 15 MB → 1.39 MB asset pass; shelf
+cards rewritten for a buyer (shelf line, deciding spec, one evidence line) with register vocabulary
+moved off the reader path; 3 new sourced guides; topic backlog reconciled (4 rows closed with
+pointers, 6 rows added); editor's-pick front-page lead driven by data; disclosure + footer corrected
+and extended for §6(a)/(c)/(d) and §4; `scripts/freshness.py` + `data/freshness.json`;
+`scripts/ledger_add.py`; 6 new gate rule families; suggestions v3 (SG-21…SG-28, SG-19 decided) and
+questions v3 (Q-22…Q-26, five rows answered); `EXECUTIVE-SUMMARY.md` + `README.md` +
+`analytics/README.md` reconciled.
+
+**Verification performed on the work itself (not just claimed):**
+
+- `npm run build && npm run check` → `Built 30 pages, 29 sitemap URLs, 9 guides, 26 search rows.` /
+  `OK: 30 pages checked, 29 sitemap URLs, no violations.`
+- Each new gate rule was proven to fail before it was trusted: shared-image rule, ledger
+  float/extra-key rule, §6(d) sentence-removal rule, non-existent FLG citation rule.
+- `scripts/ledger_add.py` was exercised end-to-end: refusals (no `--authorized`, estimating word,
+  float field, undated provenance), a valid row rendered into `measurement.html`, then the ledger was
+  **reverted to empty** because no authorized first-party report exists.
+- `scripts/freshness.py --as-of 2026-11-20` → 56 recorded reads, 0 stale; `--as-of 2027-02-01`
+  correctly fails all 56, proving the clock is real and deterministic.
+- Guide source anchors checked by the gate (every guide body must link amazon.com or a .gov page);
+  sitemap includes the 3 new guide URLs automatically.
+
+**Irregularities found and recorded (all published on `flagged-for-review.html`, none blocking):**
+
+| ID | Finding | Status |
+| --- | --- | --- |
+| FLG-026 | Brand/celebrity names sat next to buy buttons with no §6(d) non-endorsement statement | fixed (statement added to disclosure, About, footer; gate enforces it) |
+| FLG-027 | No process for §6(c) prompt removal of Program Content Amazon no longer displays | mitigated by the freshness clock; the removal decision stays human |
+| FLG-028 | §5 bars using Program Content to train ML models — the limit on the brief's "AI-powered" ambition | recorded as a standing rule in README + Q-25 |
+| FLG-029 | §4 permits affiliate links in email only for solicited recipients; the capture form collects nothing, so no list can start from it | open, gated by Q-21 |
+| FLG-030 | Google removed the FAQ rich-result documentation; HowTo is deprecated — no SERP feature may be promised from our markup | expectation corrected, markup kept |
+| FLG-031 | Short shelf labels rely on §6(a)'s truncation permission; verbatim title published beside each for a human comparison | open, needs human review (Q-23) |
+| FLG-032 | The disclosure claimed "Amazon product descriptions are never copied" while product pages publish the verbatim listing title | fixed — replaced with what is taken, what is never taken, and the clause permitting it |
+| FLG-033 | `measurement.html` labelled a table "Findability status (SG-27..SG-30)" when those IDs name different rows | fixed — heading describes its own contents; rows cite files, not suggestion IDs |
+| FLG-034 | The executive summary page's "what changed" table cited five flag IDs that had drifted to the wrong findings after a renumbering | fixed + structural gate rule (a page may not cite a FLG id absent from the register); SG-28 proposes the data-file fix |
+| FLG-035 | Three suggestion rows claimed "shipped in this session", which stops meaning anything after four sessions, and `_note` invited readers to read `reviewed_by_session` as authorship | fixed — rows name the shipping pass; gate fails a done/shipped row without one |
+
+**Unchanged on purpose:** prices, ratings, review counts, stock, conversion scores and revenue
+forecasts stay absent; `intended_*` fields stay blank; FLG-003 is still unresolved and the short links
+are not called invalid; the analytics endpoint is still not deployed (FLG-007); the campaign ledger is
+still empty; no testing, ranking or "best" claim was added anywhere.
+
+## PR / merge record (ab951e4c)
+
+| Time (UTC) | Result |
+| --- | --- |

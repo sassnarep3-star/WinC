@@ -321,16 +321,17 @@ def capture_block(depth=0):
 <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
 <button class="btn" type="submit">Subscribe</button>
 </form>
-<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect. One rule is already settled: Amazon's Program Policies permit affiliate links in email only where the recipient asked for the message, so no link here will ever go out uninvited. One rule is already settled: Amazon's Program Policies permit Special Links in email only where the message was solicited by the recipient, so no affiliate link ever goes out uninvited.</small>
+<small>There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and sends your address nowhere. Which provider, which consent flow and how long addresses would be kept are open questions on the <a href="{pfx}questions.html">questions page</a>, and the <a href="{pfx}disclosure.html">disclosure</a> says exactly what this site does and does not collect. One rule is already settled: Amazon's Program Policies permit Special Links in email only where the message was solicited by the recipient, so no affiliate link here will ever go out uninvited.</small>
 </section>"""
 
 # ---------- HOME ----------
 def home_body():
     c = counts()
+    # An editor picks the front-page story; the newest/heaviest guide is only the fallback.
+    lead = next((g for g in GUIDES if g.get("featured")), GUIDES[0])
     cards = "".join(product_card(x) for x in PRODUCTS)
-    rail = "".join(guide_card(g) for g in GUIDES)
+    rail = "".join(guide_card(g) for g in GUIDES if g is not lead)
     img, cap = HERO_IMG
-    lead = GUIDES[0]
     tiles = ""
     for name, href in CATEGORIES:
         cimg, ccap = CAT_IMG[name]
@@ -338,7 +339,7 @@ def home_body():
                   f'<span class="catname">{esc(name)}</span><span class="catcount">{len(prods(name))} in the shop · {len(guides_for(name))} guides</span></a>')
     return f"""
 <section class="hero">
-<span class="kicker">Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
+<span class="kicker">Editor’s pick · Countertop cooking · Season: {esc(lead.get('season', 'Everyday'))}</span>
 <h1>{esc(lead['title'])}</h1>
 <p class="lede">{esc(lead['desc'])}</p>
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY} · {read_min(lead)} min read · <a href="about.html">How we check</a></p>

@@ -26,5 +26,7 @@
   ],
   "_provenance": "migrated verbatim from scripts/build_site.py GUIDES list by session arena-23d7ed19, 2026-11-20. No copy changes. category field added by arena-23d7ed19 so CARDS filters to this cluster and cluster counts are computed.",
   "category": "Air Fryers",
-  "weight": 100
+  "weight": 100,
+  "featured": true,
+  "featured_note": "Editor's pick for the front page since 2026-11-20: it is the question the whole shop is organized around, and both category pages link it."
 }
