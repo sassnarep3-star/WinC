@@ -886,7 +886,7 @@ live Pages. Resolution, without discarding either side:
 | Time (UTC) | Result |
 | --- | --- |
 | 2026-11-20 | PR #18 opened: https://github.com/sassnarep3-star/WinC/pull/18 (`arena/23428c9e-winc` → `main`). |
-| 2026-11-20 | Merge attempts hit conflicts four times as `main` advanced mid-flight (PRs #1–#16, then #17–#21, then #22–#25, then #27–#30). Each round resolved with `main` as trunk: shared site files taken from `main`, `COORDINATION.md` union-merged (full session history + this session's section, nothing dropped), this edition archived under `archive/air-ember-edition/`, gate (`scripts/check_site.py`) re-run green each round (27→29 pages, no violations). |
+| 2026-11-20 | Merge attempts hit conflicts five times as `main` advanced mid-flight (PRs #1–#16, then #17–#21, then #22–#25, then #27–#30, then #36). Each round resolved with `main` as trunk: shared site files taken from `main`, `COORDINATION.md` union-merged (full session history + this session's section, nothing dropped), this edition archived under `archive/air-ember-edition/`, gate (`scripts/check_site.py`) re-run green each round (27→29 pages, no violations). |
 | 2026-11-20 | PR #18 merged to `main`; Pages deploy and live re-fetch confirmed — see the verification note appended after merge. |
 
 ---
@@ -934,3 +934,26 @@ link or PA API). Not a gap — a policy choice, and it is not changed.
 | Time (UTC) | Result |
 | --- | --- |
 | 2026-11-20 | (filled in at merge — see final section) |
+
+## Post-merge verification (appended after PR #18 merged)
+
+- **Merge:** PR #18 merged to `main` 2026-11-20 as merge commit `4c4ed1a` ("Merge pull request #18
+  from sassnarep3-star/arena/23428c9e-winc"). `origin/main` verified an ancestor of the branch head
+  `9f64a3c` before merging.
+- **Pages deploy:** `pages-build-deployment` run `44689391826` completed **success** (only a Node 20
+  deprecation annotation on `actions/upload-artifact`); `gh api /repos/sassnarep3-star/WinC/pages`
+  → `status: built`, `https_enforced: true`.
+- **Live re-fetch (page reader, 2026-11-20):**
+  `https://sassnarep3-star.github.io/WinC/` serves the merged homepage — disclosure strip first,
+  five product picks each with `?tag=shopnow047c-20` + "Sponsored · paid affiliate link", guide
+  cards, `Not a product photograph.` captions.
+  `https://sassnarep3-star.github.io/WinC/flagged-for-review.html` serves the full FLG register
+  (FLG-001…013+) with the same disclosure. Method note per prior sessions: sandbox `curl` to
+  `*.github.io` is refused (egress limit), so verification uses the page reader + Pages API, never
+  a refused curl read as failure.
+- **Archived edition completed:** `archive/air-ember-edition/` was missing its front page and a few
+  sibling targets after the trunk adoption (the root `index.html`, `questions.html`,
+  `verification.html`, `executive-summary.html`, `feed.xml`, `data/products.json` resolved to main's
+  canonicals). All seven restored from this branch's own history (`9f61f0d` / `125d5bc`), so the
+  archive's internal links resolve: scripted re-check → **0 missing refs**. Root site unaffected;
+  archive stays out of nav/sitemap/feed; gate re-run green.
