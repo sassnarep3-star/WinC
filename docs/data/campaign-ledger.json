@@ -1,0 +1,25 @@
+{
+  "record_type": "campaign-ledger",
+  "schema_version": "1.0",
+  "updated": "2026-11-20",
+  "rows": [],
+  "entry_rules": [
+    "Zero rows until an authorized first-party report supplies the numbers. No estimates, no forecasts, no modeled conversion scores.",
+    "Every row requires: timestamp (UTC), source (the report it came from), channel, eligible sessions, clicks, reported orders, and a provenance link or report identifier.",
+    "Values obtained from Amazon Associates reports are entered exactly as reported, with the report date recorded.",
+    "Rows are append-only; corrections are added as new rows with a note referencing the row being corrected.",
+    "This ledger never contains personally identifiable visitor data."
+  ],
+  "columns": [
+    { "key": "timestamp_utc", "label": "Timestamp (UTC)", "definition": "When the row was entered", "source_of_truth": "Operator entry" },
+    { "key": "period_start", "label": "Period start", "definition": "Start of the reporting window", "source_of_truth": "Report header" },
+    { "key": "period_end", "label": "Period end", "definition": "End of the reporting window", "source_of_truth": "Report header" },
+    { "key": "source", "label": "Source", "definition": "Authorised first-party report the numbers came from", "source_of_truth": "Report name, e.g. Amazon Associates Report" },
+    { "key": "channel", "label": "Channel", "definition": "Where the traffic came from (site, rss, search, social, email)", "source_of_truth": "Report / analytics" },
+    { "key": "eligible_sessions", "label": "Eligible sessions", "definition": "Sessions eligible for attribution in the window", "source_of_truth": "Report" },
+    { "key": "clicks", "label": "Clicks", "definition": "Clicks recorded on outbound product links", "source_of_truth": "Report / measurement endpoint" },
+    { "key": "reported_orders", "label": "Reported orders", "definition": "Orders as reported by the associate program", "source_of_truth": "Report" },
+    { "key": "provenance", "label": "Provenance", "definition": "Link or identifier of the underlying report", "source_of_truth": "Report" },
+    { "key": "notes", "label": "Notes", "definition": "Adjustments, refunds, corrections", "source_of_truth": "Operator entry" }
+  ]
+}
