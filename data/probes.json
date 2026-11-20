@@ -1,7 +1,7 @@
 {
   "_note": "Independent re-observation of the five supplied links. Observed redirect targets are stored HERE and mirrored into products.json only as 'observed_*' fields. The intended identifier is never derived from these observations.",
-  "probe_method": "Live HTTP resolution through the fetch_page reader (no direct sandbox network), following redirects, recording the final URL and page <title>. Query-string flags are recorded verbatim because they describe the mechanism of the redirect. Third observation re-read each resolved listing's product-details table and bullet copy to check the recorded spec rows line by line.",
-  "probe_session": "arena-82d39deb (third observation; first by arena-23d7ed19 on the same date, first ever by the 2026-11-17 sessions)",
+  "probe_method": "Live HTTP resolution through the fetch_page reader (no direct sandbox network), following redirects, recording the final URL and page <title>. Query-string flags are recorded verbatim because they describe the mechanism of the redirect. Third observation re-read each resolved listing's product-details table and bullet copy to check the recorded spec rows line by line. Observation #5 (arena-70bd2fcc) re-read each listing page <title> and category breadcrumb through the fetch_page reader; no price, rating or availability value was copied from any page (S02 rule).",
+  "probe_session": "arena-70bd2fcc (fifth observation). Earlier: 2026-11-17 (prior sessions); 2026-11-20 observations #2 (arena-23d7ed19), #3 (arena-82d39deb), #4 (arena-c2123b9c).",
   "probe_date": "2026-11-20",
   "probes": [
     {
@@ -30,6 +30,14 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -66,6 +74,14 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -102,6 +118,14 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -138,6 +162,14 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Kitchen Utensils & Gadgets › Thermometers & Timers › Meat",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "",
@@ -175,6 +207,14 @@
         "matches_second_observation": true
       },
       "fifth_observation": {
+        "date": "2026-11-20",
+        "session": "arena-70bd2fcc",
+        "result": "Same ASIN, same verbatim page <title>, same category breadcrumb. Breadcrumb re-confirmed: Home & Kitchen › Kitchen & Dining › Kitchen Utensils & Gadgets › Thermometers & Timers › Meat",
+        "route_note": "Listing served through the summary/fallback route (lv=shuf + plpRedirect=mhFallback) again; FLG-009 stands. B0DHZTCNR5 page additionally displayed \"In Stock\" and a price, and B0DZFD6R9Z served with &th=1 (variation selected) — neither value copied to this site.",
+        "agrees_with_prior_sessions": true,
+        "renamed": "recorded as observation #5 in the merged register (session arena-c2123b9c had already claimed the #4 slot)"
+      },
+      "sixth_observation": {
         "session": "arena-9a3bb152",
         "date": "2026-11-20",
         "final_asin": "B0DZFD6R9Z",
@@ -292,17 +332,18 @@
     }
   ],
   "interpretation": {
-    "reproduced": "Five observations of the five supplied links are recorded: 2026-11-17 (prior sessions), 2026-11-20 by arena-23d7ed19, 2026-11-20 by arena-82d39deb, 2026-11-20 by arena-c2123b9c (S29, 5/5 matched) and 2026-11-20 by arena-9a3bb152 (1/5 matched — the other four tokens landed on the Amazon homepage; FLG-026). Four of five runs agree 5/5 with the recorded mapping; the observed_* fields rest on those runs, and the divergent run is published rather than dropped. FLG-008 stays closed: no run contradicted a previously recorded target, one run simply failed to reproduce it from that client.",
+    "reproduced": "Six observations of the five supplied links are recorded: 2026-11-17 (prior sessions); 2026-11-20 observations #2-#5 by arena-23d7ed19, arena-82d39deb, arena-c2123b9c (S29) and arena-70bd2fcc — all five of those runs agree 5/5 with the recorded mapping; and observation #6 on 2026-11-20 by arena-9a3bb152, which matched only 1/5 (B0f3GKalj reproduced; the other four tokens landed on the Amazon homepage — FLG-030, S36). FLG-008 stays closed: no run contradicted a previously recorded target; one run failed to reproduce from that client, and it is published rather than dropped.",
     "what_reproduction_does_not_prove": "Every final URL in the first three observations carried lv=shuf (shuffle) and plpRedirect=mhFallback (listing-page fallback). That is a fallback route, not a canonical resolution of the submitted token. The targets were stable per token across the first three observations, so they are a usable observation — but they do not confirm that the person who supplied the links intended these five products, and the fourth observation shows the behavior can differ from one run to the next. Intended fields therefore stay blank.",
-    "operational_consequence": "Keep publishing without reader links until the Associates one-link test (FLG-002) confirms destination and tracking report. If the owner confirms the five products are the intended ones, nothing about the pages changes except the intended_* fields and confirmation_date. Third observation also re-read each listing's product-details table: one recorded row was wrong (the 8-quart Chefman's wattage — FLG-022, corrected) and four listing-internal contradictions were confirmed (FLG-005, FLG-010, FLG-018, FLG-020). Fifth recorded observation (FLG-026): destination must be re-checked from a normal browser and inside the enrolled Associates workflow test (FLG-002) before any short link is used at scale."
+    "operational_consequence": "Keep publishing without reader links until the Associates one-link test (FLG-002) confirms destination and tracking report. If the owner confirms the five products are the intended ones, nothing about the pages changes except the intended_* fields and confirmation_date. Third observation also re-read each listing's product-details table: one recorded row was wrong (the 8-quart Chefman's wattage — FLG-022, corrected) and four listing-internal contradictions were confirmed (FLG-005, FLG-010, FLG-018, FLG-020). Sixth recorded observation (FLG-030): destination must be re-checked from a normal browser and inside the enrolled Associates workflow test (FLG-002) before any short link is used at scale."
   },
   "probe_dates": [
     "2026-11-17 (prior sessions)",
     "2026-11-20 (arena-23d7ed19)",
     "2026-11-20 (arena-82d39deb)",
     "2026-11-20 observation #4: arena-c2123b9c",
-    "2026-11-20 observation #5: arena-9a3bb152 (1/5 matched — homepage divergence, FLG-026)"
+    "2026-11-20 observation #5: arena-70bd2fcc",
+    "2026-11-20 observation #6: arena-9a3bb152 (1/5 matched — homepage divergence, FLG-030)"
   ],
   "probe4_note": "Fourth independent observation (session arena-c2123b9c, 2026-11-20), via live HTTP resolution through the fetch_page reader, same method as observations #2 and #3. All five mappings reproduced 5/5 again. Per-row 'session'/'date'/'observation' fields mark which observation produced the row (rows without them are observation #3 by arena-82d39deb). Channel IDs varied (704/704/704/500/500) and two rows carried th=1 - recorded verbatim. Every row still carries lv=shuf and plpRedirect=mhFallback, so FLG-009's fallback-route reading stands. New per-listing observations: the Emeril <title> still says 'Six Cooking Accessories' (FLG-010 on a third capture); the Chefman 8 Qt <title> still shows the 450F Hi-Fry wording against captured 200-400F copy (FLG-005); the ThermoMaven <title> wording rotated again (consistent with FLG-014). Provenance row: S29.",
-  "fifth_observation_note": "Fourth re-resolution, 2026-11-20, session arena-9a3bb152: 1 of 5 matched the recorded mapping (B0f3GKalj → B0DZFD6R9Z). The other four tokens landed on the Amazon homepage rather than the recorded /dp/ targets. The first three observations (2026-11-17 and twice on 2026-11-20) agreed 5/5. Divergence is published as FLG-026 with the re-check action; no link is claimed invalid (FLG-003), and intended_* fields stay blank."
+  "sixth_observation_note": "Fourth re-resolution, 2026-11-20, session arena-9a3bb152: 1 of 5 matched the recorded mapping (B0f3GKalj → B0DZFD6R9Z). The other four tokens landed on the Amazon homepage rather than the recorded /dp/ targets. The first three observations (2026-11-17 and twice on 2026-11-20) agreed 5/5. Divergence is published as FLG-026 with the re-check action; no link is claimed invalid (FLG-003), and intended_* fields stay blank."
 }
