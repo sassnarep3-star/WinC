@@ -5,6 +5,7 @@ Checks: disclosure strip on every page, sponsored links, no prices, sitemap cove
 internal links resolve, product data sanity (9-char tokens, 10-char ASINs, blank intended).
 """
 import os, re, json, sys, html as _html, xml.etree.ElementTree as ET
+from urllib.parse import urlparse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://sassnarep3-star.github.io/WinC/"
@@ -33,6 +34,26 @@ for p in products:
         fail(f"{p['id']}: price must stay blank (Program Policies)")
     if p["rating"]:
         fail(f"{p['id']}: rating must stay blank (unverified)")
+    intended_asin = p.get("intended_asin", "")
+    intended_listing = urlparse(p.get("intended_listing_url", ""))
+    intent_complete = (all(p.get(k) for k in (
+        "intended_asin", "intended_listing_url", "confirmation_date", "intended_source"))
+        and len(intended_asin) == 10
+        and intended_asin == p.get("observed_asin")
+        and intended_listing.scheme == "https"
+        and intended_listing.hostname in ("amazon.com", "www.amazon.com")
+        and f"/dp/{intended_asin}" in intended_listing.path)
+    test = p.get("associates_link_test", {})
+    if not isinstance(test, dict):
+        fail(f"{p['id']}: associates_link_test must be a separate record")
+        test = {}
+    test_url = test.get("special_link_url", "")
+    test_complete = (test.get("destination_confirmed") is True
+                     and test.get("tracking_report_confirmed") is True
+                     and all(test.get(k) for k in (
+                         "confirmation_date", "source", "report_reference"))
+                     and test_url.startswith("https://"))
+    p["_purchase_link_ready"] = bool(intent_complete and test_complete)
 
 # --- collect html pages ---
 html_files = []
@@ -49,6 +70,12 @@ if not html_files:
     fail("no html pages found — run scripts/build_site.py first")
 
 PRICE_RE = re.compile(r"\$\s?\d|\bUSD\s?\d|€\s?\d|£\s?\d", re.I)
+outbound_seen = set()
+
+# Anchor index: deep links into the flag and source tables are how a reader jumps to a row.
+page_ids = {}
+for hf in html_files:
+    page_ids[hf] = set(re.findall(r'id=["\']([^"\']+)["\']', read(hf)))
 
 for hf in html_files:
     content = read(hf)
@@ -75,6 +102,29 @@ for hf in html_files:
                 fail(f"{hf}: evidence link must not carry affiliate tag: {href[:80]}")
             if 'rel="nofollow' not in tag:
                 fail(f"{hf}: evidence link missing rel=nofollow: {href[:80]}")
+    # Every live purchase link must match both the confirmed product intent and the exact
+    # Special Link that was tested in Associates Central. An observed redirect alone never unlocks it.
+    for m in re.finditer(r'<a\b[^>]*data-event="outbound_click"[^>]*>', content):
+        tag = m.group(0)
+        href_m = re.search(r'href="([^"]+)"', tag)
+        asin_m = re.search(r'data-asin="([^"]+)"', tag)
+        if 'rel="sponsored' not in tag:
+            fail(f"{hf}: outbound purchase link missing rel=sponsored")
+        if not href_m or not asin_m:
+            fail(f"{hf}: outbound purchase link missing href or intended ASIN")
+            continue
+        href, asin = _html.unescape(href_m.group(1)), _html.unescape(asin_m.group(1))
+        matches = [p for p in products if p.get("_purchase_link_ready")
+                   and p.get("intended_asin") == asin
+                   and p.get("associates_link_test", {}).get("special_link_url") == href]
+        if not matches:
+            fail(f"{hf}: outbound link is not backed by a completed intent + Associates test ({asin})")
+        else:
+            outbound_seen.add(asin)
+    # A tagged Amazon URL that is not the tested buy button must not leak into reader copy.
+    for m in re.finditer(r'<a\b[^>]*href="([^"]*tag=[^"]*)"[^>]*>', content):
+        if 'data-event="outbound_click"' not in m.group(0):
+            fail(f"{hf}: affiliate-tagged URL is not a marked outbound purchase link")
     # sponsored label near product links (at least one per page that has product links)
     if "amazon.com/dp/" in content and "Sponsored" not in content:
         fail(f"{hf}: has product links but no Sponsored label")
@@ -102,6 +152,25 @@ for hf in html_files:
         resolved = os.path.normpath(os.path.join(base, target)) if base else target
         if not os.path.exists(os.path.join(ROOT, resolved)):
             fail(f"{hf}: broken internal link -> {href} (resolved {resolved})")
+    # fragment anchors must resolve too (a dead #FLG-00x deep link is a broken reference)
+    for m in re.finditer(r'href="([^"]*#[^"]+)"', content):
+        href = _html.unescape(m.group(1))
+        if href.startswith(("http", "mailto:", "data:")):
+            continue
+        tgt, _, frag = href.partition("#")
+        if not frag:
+            continue
+        base = os.path.dirname(hf)
+        target = os.path.normpath(os.path.join(base, tgt)) if tgt else hf
+        if target not in page_ids:
+            continue
+        if frag not in page_ids[target]:
+            fail(f"{hf}: broken in-page anchor -> {href}")
+
+# A completed test should produce a live button; incomplete tests must never do so.
+for p in products:
+    if p.get("_purchase_link_ready") and p["intended_asin"] not in outbound_seen:
+        fail(f"{p['id']}: link record is marked complete but no matching sponsored button was rendered")
 
 # --- sitemap coverage ---
 sm = read("sitemap.xml")

@@ -459,3 +459,30 @@ rebased onto that `main`; content conflicts in `data/products.json`, `data/sourc
 | --- | --- |
 | 2026-11-20 | PR opened from `arena/0458cd24-winc` → `main`: source-register corrections (S01/S02/S03/S06/S20 access notes), product-title reconciliation (FLG-018), COORDINATION.md + EXECUTIVE-SUMMARY.md integration record. |
 | 2026-11-20 | Merged to `main`. GitHub Pages legacy build re-run; `status: built`, no error. Live pages re-fetched to confirm the merged content serves. |
+
+---
+
+# Session arena/d49143e1-winc — Associates purchase-link release gate (2026-11-20)
+
+**Branch:** `arena/d49143e1-winc` (used as supplied by Arena; no branch switch or parallel branch created).
+
+## Task board update
+
+| ID | Task | Status | Owner | File scope |
+|---|---|---|---|---|
+| T29 | Keep purchase CTAs disabled until intended product identity and exact Associates Special Link destination + tracking report are confirmed; enforce in build gate | done locally; PR/deploy pending | arena/d49143e1-winc | `data/products.json`, `data/suggestions.json`, `scripts/build_site.py`, `scripts/check_site.py`, `assets/style.css`, generated product/shop/category/guide/direction pages, `README.md`, `EXECUTIVE-SUMMARY.md`, `COORDINATION.md` |
+
+## Changes and verification
+
+- Repository review found SG-01 still recommended gating while the builder rendered an affiliate-tagged URL derived from the observed redirect. Replaced that behavior: each product now has a separate, empty `associates_link_test` record; rendering an active CTA requires complete intended-product fields plus an exact tested link URL, destination confirmation, tracking-report confirmation, date, source, and report reference.
+- All five records remain incomplete. Their CTAs are non-clickable and labeled as pending. Product-detail pages say no purchase link is active and link to FLG-002. The site does not construct `?tag=shopnow047c-20` purchase URLs from observed targets anymore.
+- Original submitted short URLs, intended-product fields, observed redirect fields, and Associates test fields remain separate. FLG-003 still says the short-link compliance status is unresolved; this change does **not** claim they are invalid.
+- `scripts/check_site.py` now fails if an outbound CTA lacks `rel="sponsored"`, does not match the exact tested URL and intended ASIN record, or is rendered before both intent and test records are complete. It also fails if a complete record has no rendered CTA.
+- SG-01 now records the implementation and remains reviewable on Direction. Executive summary and README were reconciled; generated site pages were rebuilt.
+- Verification performed in this checkout: `python3 scripts/build_site.py` → `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.`; `python3 scripts/check_site.py` → `OK: 27 pages checked, 26 sitemap URLs, no violations.`
+- Official source references retained for manual review: Amazon Associates Operating Agreement (S01) https://affiliate-program.amazon.com/help/operating/agreement and Program Policies (S02) https://affiliate-program.amazon.com/help/operating/policies; Google affiliate-link qualification (S04) https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links. This session relied on the existing source register and did not independently re-fetch official pages; no Amazon Associates Central account/report was accessible.
+
+## Open items / irregularities
+
+- FLG-001 (tracking ID issuance), FLG-002 (one-link-per-product destination + tracking-report test), and FLG-003 (submitted short-link status) remain unresolved. No purchase link is active until the owner’s authorized account workflow supplies the missing records. Therefore this session cannot claim that all requested monetization is live.
+- Build is static GitHub Pages; an independently deployed analytics endpoint, Search Console ownership, and first-party conversion data remain outside this change and are still open as already recorded.
