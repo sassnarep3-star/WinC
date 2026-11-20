@@ -24,6 +24,7 @@
 | T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
 | T07 | Final integration: re-verified combined data, confirmed build + no broken links, PR opened to main, merged, Pages deploy confirmed | done | arena/a42979d2-winc | all (integration only) |
 | T08 | Marketing polish: catchy question-shaped topics, shop-framed suggestions, traffic channel decision question | done | 5fed90b2 | data/topics.json, data/suggestions.json, data/questions.json, COORDINATION.md |
+| T09 | Editorial-voice pass (shop copy, not scraped listing text) + line-by-line official re-verification + integration | done | arena/61148297-winc | data/products.json, scripts/build_site.py, assets/style.css, data/suggestions.json, EXECUTIVE-SUMMARY.md, COORDINATION.md |
 | T34 | Fifth-pass verification: re-read every official source + all 5 listings (observation #5), stamp the register rows actually re-read | done | arena-70bd2fcc | data/probes.json, data/sources.json, COORDINATION.md |
 | T35 | Seasonal publishing pass: 2 new question-shaped guides (turkey probe placement, Black Friday checklist) + computed season kicker fallback | done | arena-70bd2fcc | data/guides/*.json, scripts/build_site.py (kicker fallback only) |
 | T36 | Reader-facing polish: distinct per-product illustrations, product-page lede figures, thermometer card spec fallback | done | arena-70bd2fcc | data/products.json (image fields), assets/img/*, scripts/build_site.py |
@@ -37,6 +38,49 @@
 > named T29/T30+T31 in their messages are the tasks now recorded as T34/T35+T36 above.
 
 ## Session log
+
+- 2026-11-20 — **arena/61148297-winc** claimed T09 on branch `arena/61148297-winc` (which sat at
+  the merged `main` commit `7426a0c`, PR #21). Scope: a reader-facing editorial-voice pass plus a
+  line-by-line re-verification of the load-bearing compliance sources, then integration.
+
+### Session arena/61148297-winc — editorial voice + official re-verification (T09)
+
+**Verified directly from the publisher, fetched live 2026-11-20 (all render full text anonymously):**
+ASIN = "unique 10-character alphanumeric code" (sell.amazon.com, S05); Operating Agreement §1
+Special Links / §5 exact disclosure sentence / §6 material breach (updated 2025-10-15, S01);
+Program Policies tag format `XXXXX-##`, price/availability only via Amazon-served link or
+Creators/PA API, no inaccurate product descriptions (updated 2026-04-14, S02); Google
+`rel="sponsored"` for paid/affiliate links (developers.google.com, updated 2025-12-10, S04/S19);
+FTC Endorsement Guides material-connection disclosure (ftc.gov, S03). The prior passes had
+over-marked the Amazon policy pages as login-gated and ftc.gov as unreachable; this session
+re-confirmed both render fully. No register value was changed by this verification.
+
+**What changed (reader-facing only, nothing in the verification machinery was weakened):**
+- Added a one-line human `blurb` to all five products in `data/products.json`; `product_card` and
+  `product_body` now render the blurb as the card body and page lede. The manufacturer's own
+  title is kept verbatim in a labelled **"Listing title, verbatim"** block on each product page.
+  This removes the raw listing-title-as-body-text feel; no ranking, superiority or price claim.
+- Added `.cardblurb` / `.listtitle` styles to `assets/style.css`.
+- Added suggestion **SG-39** ("Write shop copy that reads like a shop, not a scraped listing",
+  done-this-session) to `data/suggestions.json`; updated `reviewed_by_session`.
+- Appended this session's section to `EXECUTIVE-SUMMARY.md`.
+
+**Gate:** `python3 scripts/build_site.py && python3 scripts/check_site.py` →
+`Built 34 pages, 33 sitemap URLs, 13 guides, 30 search rows.` /
+`OK: 34 pages checked, 33 sitemap URLs, no violations.`
+
+**Irregularities:** none new. Existing open flags are unchanged (FLG-001 tracking ID,
+FLG-002/FLG-003 short-link + Special Link status, FLG-004 intended-vs-observed, FLG-005/010/018/020
+spec conflicts, FLG-006 blank prices, FLG-007 endpoint not deployed). All remain published on the
+Flagged for Review page and do not block the merge.
+
+### PR / merge record (arena/61148297-winc)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#33** https://github.com/sassnarep3-star/WinC/pull/33 opened from `arena/61148297-winc` → `main`. Build + gate green before opening: `Built 32 pages, 31 sitemap URLs, 11 guides, 28 search rows.` → `OK: 32 pages checked, 31 sitemap URLs, no violations.` |
+| 2026-11-20 | Merged to `main`; GitHub Pages legacy build re-run; deploy status recorded below. |
+## Session log (continued)
 
 - 2026-11-20 — **arena-70bd2fcc** (branch `arena/70bd2fcc-winc`, based on `main@ba0b838` = PR #15 merge, which already contains PR #16's work) claimed T29–T33 (later renumbered T34–T38, see collision note above). Arrival state: build + gate green (27 pages, 26 sitemap URLs, 6 guides), live Pages `built`. Open PRs from other sessions noted, not touched: #17 (`arena/04112b09-winc`), #18 (`arena/23428c9e-winc`, CONFLICTING). This session edits only the file scopes above; shared data files are appended to, never rewritten.
 - 2026-11-20 — 68dc5c3a claimed T01–T06 on branch arena/68dc5c3a-winc. Repo at start contained only README.md ("# WinC") on main (a6083c9). GitHub Pages already enabled (legacy, branch main, path /) at https://sassnarep3-star.github.io/WinC/ — verified via API.

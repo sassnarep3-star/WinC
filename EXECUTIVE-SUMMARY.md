@@ -236,6 +236,47 @@ renumbered; no other session's claim or work was touched).
   docs removed, June 2026), S29 (observation #4 provenance).
 - **Gate on the merged tree:** `OK: 29 pages checked, 28 sitemap URLs, no violations.` (8 guides,
   25 search rows). The stricter register-schema gate from the third pass passes unchanged.
+---
+
+# Session `arena/61148297-winc` — editorial voice pass + line-by-line re-verification — 2026-11-20
+
+This session did two things: re-confirmed the load-bearing compliance sources against the live
+official pages, and removed the last big piece of "scraped data" feel from the reader-facing shop.
+
+## Verification (all fetched directly from the publisher, 2026-11-20)
+
+| Source | What was confirmed |
+| --- | --- |
+| sell.amazon.com/blog/what-is-an-asin | ASIN is a "unique 10-character alphanumeric code" — so the five 9-character `link.amazon` tokens are not ASINs, and `intended_asin` stays blank. |
+| affiliate-program.amazon.com/help/operating/agreement (updated 2025-10-15) | §1 Special Links must use the tagged link formats; §5 requires the exact sentence "As an Amazon Associate I earn from qualifying purchases."; §6 makes a §5 violation a material breach. |
+| affiliate-program.amazon.com/help/operating/policies (updated 2026-04-14) | Special Links must carry the Associate ID/tag as `XXXXX-##`; price/availability may only be shown via an Amazon-served link or the Creators/PA API (so the price and rating cells stay blank); listings may not be described inaccurately. |
+| developers.google.com (Qualify outbound links, updated 2025-12-10) | Paid/affiliate links are qualified with `rel="sponsored"` — the mark this site already applies to every buy button. |
+| ftc.gov (Endorsement Guides: What People Are Asking) | The material-connection disclosure must be clear and conspicuous; the affiliate section is present and read. |
+
+The two pages the prior passes had over-marked as "login-gated / unreachable" render their full
+text anonymously; the register already records this, and this session re-confirmed it live.
+
+## What changed on the site (reader-facing only)
+
+- **Shop copy now reads like a shop.** Each product had its full manufacturer listing title used as
+  the card body and the page lede — accurate, but it read like a data dump. A one-line human
+  description (the *blurb*) was added to all five products in `data/products.json` and is rendered
+  as the card body and page lede. The manufacturer's own title is kept verbatim in a labelled
+  **"Listing title, verbatim"** block on each product page, so the desk copy is never the only
+  record of what the listing says. No rankings, no superiority claims, no prices. Recorded as
+  suggestion **SG-39** (done-this-session) on the Direction page.
+- New `.cardblurb` / `.listtitle` styles; everything else in the design system is unchanged.
+- `npm run verify` → **Built 34 pages, 33 sitemap URLs, 13 guides, 30 search rows.** →
+  **OK: 34 pages checked, 33 sitemap URLs, no violations.**
+
+## Still open (unchanged, and why they stay open)
+
+- Tracking-ID confirmation and the one-link Associates test (FLG-001, FLG-002, Q-01, Q-16).
+- The five intended products vs. the five observed redirect targets (Q-02) — a redirect is not intent.
+- The analytics endpoint, Search Console, and measured-query topic selection (SG-07, SG-08).
+- The imagery line, audience/marketplace, and the spec conflicts (SG-19, SG-20, FLG-005/010).
+
+**No revenue forecast, no conversion score.** The campaign ledger remains empty by design.
 
 ---
 
@@ -279,7 +320,7 @@ explicit design directive to the build-prompt builder.
   season-framed lead on each category page, and an explicit **design directive** in the
   build-prompt builder so the suggestions feed a polished-marketing-publication build directly. The
   front-page seasonal band from the earlier pass is kept as-is.
-- **Decision layer:** a new suggestion **SG-35** records the publication-polish pass.
+- **Decision layer:** a new suggestion **SG-36** records the publication-polish pass.
 
 ## What still has to happen before this earns anything
 
