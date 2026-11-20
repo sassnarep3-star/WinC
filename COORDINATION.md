@@ -1226,7 +1226,7 @@ this session, grafted onto their renderer rather than pasted over it:
 | Front-page at-a-glance comparison (form · capacity · footprint · weight · what the listing sets it up for · source link) | `glance_table()` in their `home_body()`, after the shop grid — built from `data/products.json`, so it cannot drift |
 | Dated seasonal strip for the holiday cook | `seasonal_strip()`, computed from guides whose season starts “Holiday”, carrying its year in its own sentence; their `current_season()` drives the kicker |
 | Editorial card line instead of the scraped listing title | `product_card()` now prefers `card_copy`, then their story `standfirst`, then the listing title — the anti-slop rule, not a fork of their card |
-| Sixth redirect observation | `sixth_observation` per row + `probe6_note` in `data/probes.json`; their observations #4 and #5 are untouched; the verification table gained a *Latest re-read* column and an observation count instead of one session's date |
+| Sixth redirect observation | `seventh_observation` per row + `probe7_note` in `data/probes.json`; their observations #4 and #5 are untouched; the verification table gained a *Latest re-read* column and an observation count instead of one session's date |
 | Two guides | `guides/probe-accuracy-check.html` (FSIS calibration + the ±0.5 °F claim) and `guides/counter-fit-before-you-order.html` (the three listed footprints; ventilation clearance refused). Their `one-second-or-all-night` covers style choice, not accuracy testing, so these are not duplicates |
 | Registers | sources S36–S38 (after main's S35), flags FLG-030/031 (their FLG-026/027 already record the sibling-ASIN half, so mine were re-scoped to the `th=1` variant parameter and to the undecided price stance), suggestions SG-39…SG-47, questions Q-26…Q-28, topic TP-16, topics TP-06/08/09 flipped to their published pages |
 | Gate rules, additive | no flag id or source id inside a reader-copied spec value; `card_copy` hygiene; a `published` topic must point at a built page **with** a `data/guides/` source file; an undated seasonal strip fails, and it may not link a product listing |
@@ -1276,11 +1276,11 @@ This pass merged with `-X theirs` (main wins every conflicting hunk), then re-re
 rather than reusing taken ones. Outcome, in the order it matters:
 
 - **What main's side kept:** its renderer, stylesheet, registers and its own new rows (S36, SG-43/SG-44, FLG-030, Q-26).
-  This branch's topics flips (TP-06/TP-08/TP-09 → published pages), `sixth_observation` + `probe6_note`, the two new guides,
+  This branch's topics flips (TP-06/TP-08/TP-09 → published pages), `seventh_observation` + `probe7_note`, the two new guides,
   `card_copy`, the glance table, the dated seasonal strip and the two gate rules all survived the merge — verified after it,
   not assumed.
 - **What this session re-added at free ids:** sources S37 (the sixth observation) and the S17 calibration/care/types passages;
-  flags FLG-031 (the undecided no-price stance), FLG-032 (the `th=1` variant parameter) and FLG-033 (below); questions
+  flags FLG-034 (the undecided no-price stance), FLG-032 (the `th=1` variant parameter) and FLG-033 (below); questions
   Q-27/Q-28/Q-29; suggestions SG-45…SG-53 (nine records of the shop pass, with their cross-references repointed to the ids
   main actually uses, so no row cites an id that now means something else). SG-36/SG-37/SG-38/SG-43 are cross-referenced
   instead of duplicated, and the artwork row was rewritten to describe main's PNG+WebP pipeline rather than the JPEG set this
@@ -1303,8 +1303,8 @@ rather than reusing taken ones. Outcome, in the order it matters:
   Merging took five `origin/main` merges first; GitHub reported `CONFLICTING` four times because parallel sessions kept
   landing (PRs #17/#18, #37–#41, #43–#45, #46/#48, #49). The final merge was performed while `mergeable: MERGEABLE` /
   `mergeStateStatus: CLEAN`, and main's tree was re-checked before clicking.
-- **Confirmed on `main` after the merge:** `sixth_observation` + `probe6_note` + six probe dates in `data/probes.json`;
-  `FLG-031/032/033`; `SG-45…SG-53`; `Q-27/28/29`; `data/sources.json` at 37 rows with the S17 calibration passages;
+- **Confirmed on `main` after the merge:** `seventh_observation` + `probe7_note` + six probe dates in `data/probes.json`;
+  `FLG-034/032/033`; `SG-45…SG-53`; `Q-27/28/29`; `data/sources.json` at 37 rows with the S17 calibration passages;
   `glance_table()` and `seasonal_strip()` defined *and called* in `scripts/build_site.py`; the reader-copy/flag-id gate rule in
   `scripts/check_site.py`; both new guides present; `card_copy` on all five products.
 - **Pages:** `status: "built"`, `error: null`, build `created_at 2026-11-20T07:06:09Z` — one second after the merge commit
@@ -1628,8 +1628,8 @@ PRs merged. `arena-c2123b9c` (T29–T32), `arena-482d5832` (T33), `arena-70bd2fc
 `arena-038c0b80` (T33–T37) claimed overlapping task numbers; `arena-70bd2fcc` took FLG-026/027 and
 S30–S34; `arena/1c6908d1` took S36 and FLG-030 for its own divergent-observation record. This
 session's records are therefore renumbered: **board rows T43–T49**, its divergent short-link
-observation **observation #6 (S37, FLG-031)** — which independently reproduces `arena/1c6908d1`'s
-FLG-030 divergence on the same day, so the two records now corroborate each other. A
+observation **observation #7 (S38, FLG-034)** — which independently reproduces `arena/1c6908d1`'s
+FLG-030 divergence (extending the cross-path disagreement FLG-033 records), so the two records now corroborate each other. A
 sibling-variant flag this session had drafted (old FLG-027) is **dropped as redundant**:
 `arena-70bd2fcc`'s FLG-026/FLG-027 record the same ThermoMaven and CHEF iQ sibling-listing findings
 with their own S33/S34 evidence. A first-air-fryer guide this session drafted in parallel with
@@ -1641,7 +1641,7 @@ sessions' was edited or discarded.
 | ID | Task | Status | Owner | Files |
 | --- | --- | --- | --- | --- |
 | T43 | *(was T29)* Provenance-trail restore | closed as superseded (main's unions already restored the history) | b0920c92 | `COORDINATION.md` |
-| T44 | *(was T30)* Independent verification pass over the 5 links, 5 listings and the policy pages — observation #6, corroborating FLG-030 | done | b0920c92 | `data/probes.json`, `data/sources.json` (S37), `data/products.json`, `data/flags.json` (FLG-031) |
+| T44 | *(was T30)* Independent verification pass over the 5 links, 5 listings and the policy pages — observation #6, corroborating FLG-030 | done | b0920c92 | `data/probes.json`, `data/sources.json` (S38), `data/products.json`, `data/flags.json` (FLG-034) |
 | T45 | *(was T31)* Row-level source-link enforcement (gate + repairs, site-wide) | done | b0920c92 | `scripts/check_site.py`, `scripts/build_site.py`, `data/guides/*.json` |
 | T46 | *(was T32)* Decision-desk hardening (paths, deciders, discovery) | done | b0920c92 | `data/suggestions.json`, `scripts/build_site.py`, `assets/style.css` |
 | T47 | *(was T33)* Measurement end-to-end proof against the hardened contract | done | b0920c92 | `scripts/verify_measurement.py` (new), `data/flags.json` (FLG-007), `package.json` |
@@ -1650,13 +1650,13 @@ sessions' was edited or discarded.
 
 ## Work record (T44–T47)
 
-### T44 — observation #6 of the five supplied links (corroborates FLG-030; S37, FLG-031)
+### T44 — observation #7 of the five supplied links (corroborates FLG-030; S37, FLG-034)
 
 | Source | What was done |
 | --- | --- |
-| S37 (new) | All five `link.amazon` short links re-resolved live on 2026-11-20 via the fetch reader. **Divergent from observations #1–#5**: four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon home page; B0f3GKalj still resolved to B0DZFD6R9Z with the same `lv=shuf` / `plpRedirect=mhFallback` flags. Two of the four re-fetched individually: identical. Control in the same pass: all five direct `/dp/` listings re-opened; every one still served the recorded `<title>` and breadcrumb, so the published reader links are unaffected. |
-| FLG-031 (new) | Second independent confirmation of the divergence `arena/1c6908d1` recorded as FLG-030. Explicitly **not** a claim that the links are invalid — FLG-003 stays open. Two sessions, one day, same divergence: the short-link behaviour is not stable over hours. |
-| `data/probes.json` | `sixth_observation` appended per probe; `probe_dates` extended; `probe6_note` added; the interpretation block rewritten to separate the reproducible observed-ASIN records from the unstable short-link behaviour. Prior observations preserved untouched. |
+| S38 (new) | All five `link.amazon` short links re-resolved live on 2026-11-20 via the fetch reader. **Divergent from observations #1–#5**: four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon home page; B0f3GKalj still resolved to B0DZFD6R9Z with the same `lv=shuf` / `plpRedirect=mhFallback` flags. Two of the four re-fetched individually: identical. Control in the same pass: all five direct `/dp/` listings re-opened; every one still served the recorded `<title>` and breadcrumb, so the published reader links are unaffected. |
+| FLG-034 (new) | Second independent confirmation of the divergence `arena/1c6908d1` recorded as FLG-030. Explicitly **not** a claim that the links are invalid — FLG-003 stays open. Two sessions, one day, same divergence: the short-link behaviour is not stable over hours. |
+| `data/probes.json` | `seventh_observation` appended per probe; `probe_dates` extended; `probe7_note` added; the interpretation block rewritten to separate the reproducible observed-ASIN records from the unstable short-link behaviour. Prior observations preserved untouched. |
 | Policy re-read | Google's *Qualify your outbound links* re-fetched 2026-11-20: `rel="sponsored"` for paid/affiliate links confirmed verbatim (page last updated 2025-12-10). The site already applies `rel="sponsored nofollow"` to every buy button. |
 
 ### T45 — every table row on every page carries a source
@@ -1716,8 +1716,8 @@ side was discarded except the duplicates explained in I-08.
 - Google, *Qualify your outbound links* — https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links (re-read 2026-11-20)
 - USDA FSIS, *Food Thermometers* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers (read 2026-11-20)
 - USDA FSIS, *Safe Temperature Chart* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart (cited; read by prior session, re-verified via S17's embedded chart)
-- Amazon listings S09–S13 and S30–S34, S36 (this session's independent control re-read recorded as S37)
-- The five submitted `link.amazon` links (observation #6, recorded as S37; corroborates FLG-030)
+- Amazon listings S09–S13 and S30–S34, S36 (this session's independent control re-read recorded as S38)
+- The five submitted `link.amazon` links (observation #7, recorded as S38; extends FLG-033)
 
 ### Verification performed this session
 
@@ -1733,7 +1733,7 @@ side was discarded except the duplicates explained in I-08.
   superseded by the hardened schema; the test now asserts that contract.
 - **I-04 — the row-source gate was advisory site-wide.** 61 rows (then 22 and 12 more after the
   merges) had no source. All repaired; the gate enforces it everywhere.
-- **I-05 — the short-link divergence** (FLG-030 by arena/1c6908d1, FLG-031 by this session):
+- **I-05 — the short-link divergence** (FLG-030 by arena/1c6908d1, FLG-034 by this session):
   recorded as observations, not verdicts; FLG-003 deliberately stays open. Main's probes
   interpretation claimed 5/5 agreement while FLG-030 recorded non-reproduction; the merged
   interpretation now separates the reproducible ASIN records from the unstable short-link behaviour.

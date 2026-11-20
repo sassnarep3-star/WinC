@@ -562,9 +562,9 @@ cites the source register, prints the source URL as text, or explicitly says its
 or blank. The strict runs found 95 unsourced rows across the waves (61 + 22 + 12); all repaired with
 per-row citations. Deep links (`#src-*`, `#flag-*`, `#q-*`, `#t-*`) are gate-checked to resolve.
 
-## 2 · Observation #6 corroborates the short-link divergence (FLG-031, S37)
+## 2 · Observation #7 extends the short-link cross-path disagreement (FLG-034, S38)
 Two independent sessions recorded the same divergence on 2026-11-20: four of the five `link.amazon`
-short links land on the Amazon home page (FLG-030 by arena/1c6908d1; FLG-031 by this session, S37),
+short links land on the Amazon home page (FLG-030 by arena/1c6908d1; FLG-034 by this session, S38; cross-path disagreement recorded as FLG-033),
 while all five direct `/dp/` listings still serve the recorded products. Recorded as observations,
 not verdicts; FLG-003 stays open. The merged interpretation now separates the reproducible
 observed-ASIN records from the unstable short-link behaviour.
