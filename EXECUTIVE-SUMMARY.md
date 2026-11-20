@@ -547,6 +547,46 @@ manufacturer-page spec conflicts, analytics-endpoint deployment and Search Conso
 enrolled Associates account or an owner decision this environment cannot reach. Nothing here is a
 forecast; the campaign ledger stays empty until first-party reports arrive.
 
+<<<<<<< HEAD
+
+---
+
+# Session b0920c92 — row-level sourcing site-wide, observation #6, decision desk, measurement proof (T43–T49)
+
+Merged with `main` three times as parallel PRs landed (through #51); every register is the union of
+all sessions' work.
+
+## 1 · Every table row on every page carries its source
+The gate's row-source rule now applies to every page: a row passes if it links an official source,
+cites the source register, prints the source URL as text, or explicitly says its source is internal
+or blank. The strict runs found 95 unsourced rows across the waves (61 + 22 + 12); all repaired with
+per-row citations. Deep links (`#src-*`, `#flag-*`, `#q-*`, `#t-*`) are gate-checked to resolve.
+
+## 2 · Observation #7 extends the short-link cross-path disagreement (FLG-034, S38)
+Two independent sessions recorded the same divergence on 2026-11-20: four of the five `link.amazon`
+short links land on the Amazon home page (FLG-030 by arena/1c6908d1; FLG-034 by this session, S38; cross-path disagreement recorded as FLG-033),
+while all five direct `/dp/` listings still serve the recorded products. Recorded as observations,
+not verdicts; FLG-003 stays open. The merged interpretation now separates the reproducible
+observed-ASIN records from the unstable short-link behaviour.
+
+## 3 · The measurement layer is proven against its hardened contract
+`scripts/verify_measurement.py` runs the shipped collector as a real server, posts all five events
+with the beacon's own payload, and asserts responses, aggregates, the hardened row schema, and that
+no IP, user agent, cookie, email, search query, client timestamp or client site ID survives. It
+caught a real defect in the pre-hardening collector (client-timestamp field mismatch) before the
+hardened schema superseded that field entirely. `npm run verify` includes it.
+
+## 4 · The decision desk names its deciders
+Every suggestion row (40 across the union) carries its path (A–D), who decides it (SG-01, SG-07,
+SG-08, SG-09, SG-10, SG-19, SG-20, SG-22, SG-29 and SG-30 need the account owner) and what would
+have to be known to decide it. Question rows with no answer say "not yet answered".
+
+## 5 · TP-06 published; register reconciled
+**Where exactly do you put the probe in a chicken?** (TP-06) quotes the USDA FSIS *Food Thermometers*
+factsheet (S17, fetched and read 2026-11-20) for the three-point whole-bird check and the 165 °F
+minimum (S16). TP-01/TP-02 marked published crediting their sessions; this session's parallel TP-10
+draft was dropped in favour of the merged one.
+=======
 ### Integration outcome (this session)
 
 PR #47 was merged into `main` as `0d257d5` after five rounds of reconciling with parallel sessions; GitHub Pages rebuilt
@@ -555,3 +595,4 @@ deployed state. What landed: the sixth redirect observation, two sourced guides,
 strip grafted onto main's renderer, `card_copy` on all five products, and four added gate rules. What was withdrawn on purpose:
 this session's duplicate holiday guide, its two per-listing source rows, its JPEG artwork set, and its rewrite of the renderer
 and stylesheet. Full reconciliation and handoff notes are in the `f1fd0ff0` section of `COORDINATION.md`.
+>>>>>>> origin/main

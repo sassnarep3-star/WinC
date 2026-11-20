@@ -332,6 +332,57 @@ def rich(text):
     """Escape, then let `backticked` spans become code. Register copy is prose, not HTML."""
     return re.sub(r"`([^`\n]{1,120})`", r"<code>\1</code>", esc(text))
 
+def path_boxes():
+    """The suggestions that belong to each published path, so choosing a path shows its work."""
+    defs = _sug.get("path_definitions", {})
+    out = []
+    for key in ("A", "B", "C", "D"):
+        items = [x for x in SUGGESTIONS if x.get("path") == key]
+        if not items:
+            continue
+        lis = "".join(f'<li><a href="#{esc(x["id"])}"><strong>{esc(x["id"])}</strong> — {esc(x["title"])}</a>'
+                      f' <span class="meta">({esc(x.get("decision_by","This site"))})</span></li>' for x in items)
+        out.append(f'<div class="pathbox" data-path="{key}"><h3>Path {key}</h3>'
+                   f'<p>{esc(defs.get(key, ""))}</p><ul>{lis}</ul></div>')
+    return "".join(out)
+
+def suggestion_sources(x):
+    """Where the evidence for a suggestion lives, derived from the ids its evidence cites.
+    Nothing is invented: an S-id links into the source register (which links the official
+    page), an FLG id into the flagged register, a Q-id into the open-questions register."""
+    ev = x.get("evidence", "")
+    out = []
+    for sid in sorted(set(re.findall(r"\bS\d{2}\b", ev))):
+        if sid in SRC:
+            out.append(f'<a href="verification.html#src-{sid}">{sid}</a>')
+    for flg in sorted(set(re.findall(r"\bFLG-\d{3}\b", ev))):
+        out.append(f'<a href="flagged-for-review.html#flag-{flg}">{flg}</a>')
+    for qid in sorted(set(re.findall(r"\bQ-\d{2}\b", ev))):
+        out.append(f'<a href="questions.html#q-{qid}">{qid}</a>')
+    if not out:
+        return f'Internal - <a href="#{esc(x["id"])}">evidence on this card</a>'
+    return "Internal - " + " &middot; ".join(out)
+
+def internal_refs(text, depth=0):
+    """Render an internal file list, linking the parts that are real files in this repo.
+    Used where the honest source of a row is the site's own file, not an outside page."""
+    pfx = "../" * depth
+    out = []
+    for part in re.split(r",\s*", text):
+        part = part.strip()
+        if not part:
+            continue
+        m = re.fullmatch(r"([A-Za-z0-9_.\-/]+\.(?:html|xml|js|css|py|json))", part)
+        if m and os.path.exists(os.path.join(ROOT, m.group(1))):
+            out.append(f'<a href="{pfx}{m.group(1)}">{esc(part)}</a>')
+        else:
+            out.append(esc(part))
+    return " · ".join(out)
+
+def cite(url, label="src"):
+    """Inline citation for a table cell, so the cell itself carries its official source."""
+    return f'<a class="cite" href="{esc(url)}" rel="nofollow noopener" target="_blank">{esc(label)}</a>'
+
 def pill(text, kind="note"):
     return f'<span class="pill pill-{esc(kind)}">{esc(text)}</span>'
 
@@ -351,8 +402,16 @@ def specs_table(p):
     ]
     trs = []
     for k, v in rows:
-        trs.append(f"<tr><th>{esc(k)}</th><td>{blank(v)}</td></tr>")
-    return ('<div class="tablewrap"><table><thead><tr><th>Field</th><th>Value (as listed on Amazon)</th></tr></thead><tbody>'
+        # Every row carries its own source: the listing for a confirmed value, the flagged
+        # register for a value we looked for and could not confirm.
+        if v:
+            src = source_link(p["source_url"], p["observed_asin"])
+        else:
+            src = ('<span class="blank">— not confirmed</span> '
+                   '<a href="../flagged-for-review.html">Flagged for review</a>')
+        trs.append(f'<tr><th>{esc(k)}</th><td>{blank(v)}</td><td class="src">{src}</td></tr>')
+    return ('<div class="tablewrap"><table><thead><tr><th>Field</th><th>Value (as listed on Amazon)</th>'
+            '<th>Source</th></tr></thead><tbody>'
             + "".join(trs) + "</tbody></table></div>"
             + f'<p class="src">Source: <a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p["source_url"])}</a> · checked {esc(p["source_date"])}. Blank = not confirmed from an official source (see <a href="../flagged-for-review.html">Flagged for Review</a>).</p>')
 
@@ -520,7 +579,17 @@ def category_body(cat, title, intro, guide_links):
     head_row = "".join(f"<th>{esc(c)}</th>" for c in cols)
     rows = []
     for f, k in zip(fields, keys):
-        cells = "".join(f"<td>{blank(p[k])}</td>" for p in ps)
+        if k == "price":
+            # Prices are not displayed here at all (Program Policies). Say so in the row and
+            # cite the rule, rather than printing five empty cells that look like missing data.
+            cells = "".join('<td><span class="blank">— not shown (policy)</span></td>' for p in ps)
+            rows.append('<tr><th>Price — not shown on this site '
+                        '(<a href="verification.html#src-S02">Program Policies S02</a>)</th>'
+                        f"{cells}</tr>")
+            continue
+        # Each value cell carries the listing it was read from, so a single row is verifiable
+        # without scrolling to the bottom of the page.
+        cells = "".join(f'<td>{blank(p[k])} {cite(p["source_url"], "[src]")}</td>' for p in ps)
         rows.append(f"<tr><th>{esc(f)}</th>{cells}</tr>")
     table = ('<div class="tablewrap"><table><thead><tr>' + head_row + "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>"
              + '<p class="src">Sources: ' + " · ".join(f'<a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p["observed_asin"])}</a>' for p in ps) + f' · checked {TODAY}. Blank = unverified.</p>')
@@ -655,9 +724,11 @@ def product_body(p):
                  'None of them is resolved by guessing.</p>')
     claims = ""
     if p.get("listing_claims"):
-        rows = "".join(f'<tr><th>{esc(human_key(k))}</th><td>{esc(v)}</td></tr>' for k, v in p["listing_claims"].items())
+        rows = "".join(f'<tr><th>{esc(human_key(k))}</th><td>{esc(v)}</td>'
+                       f'<td class="src">{source_link(p["source_url"], p["observed_asin"])}</td></tr>'
+                       for k, v in p["listing_claims"].items())
         claims = (f'<h2>What the listing claims, quoted as claims</h2><div class="tablewrap"><table><thead><tr><th>Claim</th>'
-                  f'<th>What the listing says</th></tr></thead><tbody>{rows}</tbody></table></div>'
+                  f'<th>What the listing says</th><th>Source</th></tr></thead><tbody>{rows}</tbody></table></div>'
                   f'<p class="src">Source: <a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">{esc(p["source_url"])}</a> · read {esc(p["source_date"])}. '
                   "These are the statements the seller wrote on the listing — not measurements taken by this site.</p>")
     faq = p.get("faq") or []
@@ -773,10 +844,14 @@ def suggestion_table():
         rows += (f'<tr><td><strong>{esc(x["id"])}</strong></td>'
                  f'<td><a href="#{esc(x["id"])}">{esc(x["title"])}</a></td>'
                  f'<td>{esc(x["area"])}</td><td>{esc(x["effort"])}</td><td>{esc(x["cost"])}</td>'
+                 f'<td><span class="pathpill">Path {esc(x.get("path","?"))}</span></td>'
+                 f'<td>{esc(x.get("decision_by","This site"))}</td>'
+                 f'<td class="src">{suggestion_sources(x)}</td>'
                  f'<td>{pill(x["status"], cls)}</td>'
                  f'<td>{esc(x["expected_effect"])}</td></tr>')
     return ('<div class="tablewrap"><table><thead><tr><th>ID</th><th>Suggestion</th><th>Area</th><th>Effort</th>'
-            '<th>Cost</th><th>Status</th><th>How we would know it worked</th></tr></thead><tbody>'
+            '<th>Cost</th><th>Path</th><th>Who decides</th><th>Status</th><th>Where the evidence is</th>'
+            '<th>How we would know it worked</th></tr></thead><tbody>'
             + rows + "</tbody></table></div>")
 
 
@@ -868,8 +943,9 @@ def decision_desk(c):
 </div>
 <h3 id="paths">The four paths</h3>
 <div class="pickpath">{paths}</div>
-<div class="tablewrap"><table><thead><tr><th>Path</th><th>What you spend</th><th>What can go wrong</th><th>Done when</th></tr></thead><tbody>
-{''.join(f'<tr><td><strong>{esc(p["name"])}</strong><br><span class="meta">{esc(p["what"])}</span></td><td>{esc(p["cost"])}</td><td>{esc(p["risk"])}</td><td>{esc(p["done_when"])}</td></tr>' for p in DECISION_PATHS.values())}
+<div class="tablewrap"><table><thead><tr><th>Path</th><th>What you spend</th><th>What can go wrong</th><th>Done when</th><th>Source</th></tr></thead><tbody>
+{''.join(f'<tr><td><strong>{esc(p["name"])}</strong><br><span class="meta">{esc(p["what"])}</span></td><td>{esc(p["cost"])}</td><td>{esc(p["risk"])}</td><td>{esc(p["done_when"])}</td>'
+                 f'<td class="src">Internal — assembled from the <a href="#suggestions">suggestion register</a> on this page</td></tr>' for p in DECISION_PATHS.values())}
 </tbody></table></div>
 <div class="notice warn"><strong>What no path can promise.</strong> Not one number on this site is a traffic, click, conversion or revenue forecast. The ledger is empty (FLG-028), no endpoint is deployed (FLG-007), and no Search Console property exists (SG-29) — so every “done when” above is a measurement you will take, not a result this page has seen.</div>
 """
@@ -883,12 +959,13 @@ def direction_body():
         detail_html = f'<p class="why"><span>Status detail</span>{rich(detail)}</p>' if detail else ""
         cards += f"""<article class="sug" id="{esc(x['id'])}">
 <header><h3>{esc(x['title'])}</h3>{pill(x['status'], cls)}</header>
-<p class="sugmeta">{esc(x['area'])} · {esc(x['id'])} · effort {esc(x['effort'])} ({EFFORT.get(x['effort'], x['effort'])}) · cost: {esc(x['cost'])}</p>
+<p class="sugmeta">{esc(x['area'])} · {esc(x['id'])} · effort {esc(x['effort'])} ({EFFORT.get(x['effort'], x['effort'])}) · cost: {esc(x['cost'])} · Path {esc(x.get('path','?'))} · decided by {esc(x.get('decision_by','This site'))}</p>
 <p class="why"><span>Problem</span>{rich(x['problem'])}</p>
 <p class="why"><span>Suggestion</span>{rich(x['proposal'])}</p>
 <p class="why"><span>Risk</span>{rich(x['risk'])}</p>
 <p class="why"><span>How we would know it worked</span>{rich(x['expected_effect'])}</p>
 <p class="why"><span>Evidence</span>{rich(x['evidence'])}</p>
+<p class="why"><span>What would have to be known to decide this</span>{rich(x.get('discovery','Not stated.'))}</p>
 {detail_html}
 <details class="promptbox"><summary>Instruction block for the next build prompt</summary>
 <pre><code>{esc(x['feeds_prompt'])}</code></pre></details>
@@ -914,6 +991,7 @@ def direction_body():
 <label><input type="radio" name="path" value="B"> <strong>Path B — Shop depth.</strong> Extend the decision blocks with per-row source dates, then settle the imagery question (Q-07) and commission licensed photography. Best for conversion.</label>
 <label><input type="radio" name="path" value="C"> <strong>Path C — Content volume.</strong> Two guides a week from the published topic backlog plus a seasonal cluster. Best for coverage; worst without measurement, because you will be guessing which topic to write next.</label>
 <label><input type="radio" name="path" value="D"> <strong>Path D — Measure first.</strong> Deploy the endpoint and Search Console now, add nothing, and choose the next five topics from 4 weeks of real queries.</label>
+<div class="pathboxes">{path_boxes()}</div>
 <button class="btn" type="submit">Save my choice (this browser only)</button>
 <span id="chooser-msg" class="meta"></span>
 </form>
@@ -1016,9 +1094,9 @@ def verification_body():
     trace_rows = [
         ("Read like a shop, not an audit", "Front page leads with 5 product cards; verification below the fold", "index.html"),
         ("Findable (one site to index)", "Sitemap, RSS, canonicals, JSON-LD, internal search", "sitemap.xml, feed.xml, search.html"),
-        ("Disclosure above the fold, every page", "Strip under masthead + footer repeat + per-link Sponsored label", "all pages (gate-checked)"),
-        ("Every outbound product link sponsored", "rel=sponsored nofollow + Sponsored tag + data-event", "all product links (gate-checked)"),
-        ("Product-intent record (separate fields)", "Intended blank; observed populated; never merged", "this page"),
+        ("Disclosure above the fold, every page", "Strip under masthead + footer repeat + per-link Sponsored label", "disclosure.html, scripts/check_site.py"),
+        ("Every outbound product link sponsored", "rel=sponsored nofollow + Sponsored tag + data-event", "scripts/check_site.py, assets/app.js"),
+        ("Product-intent record (separate fields)", "Intended blank; observed populated; never merged", "data/products.json, data/probes.json"),
         ("Validated Special Links (one-link test)", "Constructed links pending Associates test (FLG-002); short links not claimed invalid (FLG-003)", "flagged-for-review.html"),
         ("Question-shaped guides + measure", f"{len(GUIDES)} guides published; {len(TOPICS)} topics queued; 5 events defined; ledger empty", "guides/, topics.html, measurement.html"),
         ("Click/conversion measurement first", "Beacon + Worker code; local-only until deployed (FLG-007)", "assets/app.js, analytics/"),
@@ -1031,9 +1109,13 @@ def verification_body():
         ("Topic pipeline visible", f"{len(TOPICS)} planned topics, each stating how it was chosen (hypothesis or measured query)", "topics.html"),
         ("Executive summary", "Summary + counts + next steps", "executive-summary.html"),
     ]
-    trace = "".join(f"<tr><td>{esc(a)}</td><td>{esc(b)}</td><td class='src'>{esc(c)}</td></tr>" for a, b, c in trace_rows)
-    trace_table = ('<div class="tablewrap"><table><thead><tr><th>Requirement</th><th>Where addressed</th><th>File</th></tr></thead><tbody>'
-                   + trace + "</tbody></table></div>")
+    trace = "".join(f"<tr><td>{esc(a)}</td><td>{esc(b)}</td>"
+                    f"<td class='src'>Internal — {internal_refs(c)}</td></tr>" for a, b, c in trace_rows)
+    trace_table = ('<div class="tablewrap"><table><thead><tr><th>Requirement</th><th>Where addressed</th>'
+                   '<th>Where in this repo</th></tr></thead><tbody>'
+                   + trace + "</tbody></table></div>"
+                   + '<p class="src">This trace table records where each requirement is handled inside this '
+                     'repository, so its source is the repository itself — not an external page.</p>')
 
     return f"""
 <section class="hero"><span class="kicker">Verification · Source register</span>
@@ -1074,7 +1156,7 @@ def flag_sources(f):
 
 def flagged_body():
     rows = "".join(
-        f"<tr><td><strong>{esc(f['id'])}</strong></td><td>{esc(f['title'])}</td><td>{esc(f['detail'])}</td>"
+        f'<tr id="flag-{esc(f["id"])}"><td><strong>{esc(f["id"])}</strong></td><td>{esc(f["title"])}</td><td>{esc(f["detail"])}</td>' 
         f"<td>{esc(f['action'])}</td><td>{flag_sources(f)}</td>"
         f"<td><span class='flagpill'>{esc(f['status'])}</span></td></tr>"
         for f in FLAGS)
@@ -1120,7 +1202,7 @@ def disclosure_body():
 def ledger_rows_html():
     rows = LEDGER.get("rows", [])
     if not rows:
-        return '<tr><td colspan="7"><span class="blank">— no rows yet (ledger is empty until first-party data arrives)</span></td></tr>'
+        return ('<tr><td colspan="7"><span class="blank">— no rows yet (the ledger is empty until authorised first-party data arrives)</span> &middot; Internal — <a href="https://github.com/sassnarep3-star/WinC/blob/main/data/campaign-ledger.json">data/campaign-ledger.json</a></td></tr>')
     out = []
     for r in rows:
         cells = [r.get("timestamp"), r.get("source"), r.get("channel"), r.get("eligible_sessions"),
@@ -1137,13 +1219,14 @@ def measurement_body():
 <p class="meta">By the ShopNow Kitchen Desk · Updated {TODAY}</p></section>
 
 <h2>The five defined events</h2>
-<div class="tablewrap"><table><thead><tr><th>#</th><th>Event</th><th>When it fires</th><th>What is stored</th><th>What is never stored</th></tr></thead><tbody>
-<tr><td>1</td><td><code>page_view</code></td><td>Once per page load</td><td>Day + page (aggregate)</td><td>IP, user agent, cookies</td></tr>
-<tr><td>2</td><td><code>outbound_click</code></td><td>Click on a Sponsored Amazon link</td><td>Day + page + observed ASIN</td><td>Identity, full URL, query</td></tr>
-<tr><td>3</td><td><code>guide_read</code></td><td>Reader reaches 50%+ on a guide</td><td>Day + page + depth bucket</td><td>Reading content, identity</td></tr>
-<tr><td>4</td><td><code>reader_capture_submit</code></td><td>Newsletter form submitted</td><td>Day + page count</td><td>Email address (provider handles it)</td></tr>
-<tr><td>5</td><td><code>search_submit</code></td><td>Internal search submitted</td><td>Day + page count</td><td>Search query text</td></tr>
+<div class="tablewrap"><table><thead><tr><th>#</th><th>Event</th><th>When it fires</th><th>What is stored</th><th>What is never stored</th><th>Source</th></tr></thead><tbody>
+<tr><td>1</td><td><code>page_view</code></td><td>Once per page load</td><td>Day + page (aggregate)</td><td>IP, user agent, cookies</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>2</td><td><code>outbound_click</code></td><td>Click on a Sponsored Amazon link</td><td>Day + page + observed ASIN</td><td>Identity, full URL, query</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>3</td><td><code>guide_read</code></td><td>Reader reaches 50%+ on a guide</td><td>Day + page + depth bucket</td><td>Reading content, identity</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>4</td><td><code>reader_capture_submit</code></td><td>Newsletter form submitted</td><td>Day + page count</td><td>Email address (provider handles it)</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
+<tr><td>5</td><td><code>search_submit</code></td><td>Internal search submitted</td><td>Day + page count</td><td>Search query text</td><td class="src">Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
 </tbody></table></div>
+<p class="src">These five events are defined by this site's own code, so the source of each row is the code that implements it — not an outside page. The receiving end is <a href="analytics/worker.js">analytics/worker.js</a> (Cloudflare Worker) or <a href="analytics/collect.py">analytics/collect.py</a> (any Python 3 host).</p>
 <p>Client: <code>assets/app.js</code> · Endpoint code: <code>analytics/worker.js</code> (deploy separately — GitHub Pages is static, FLG-007). Until <code>CONFIG.endpoint</code> is set, counts live only in the reader’s browser (localStorage).</p>
 
 <h2>Campaign ledger (empty by design)</h2>
@@ -1155,12 +1238,12 @@ def measurement_body():
 
 <h2>Findability status (SG-27..SG-30)</h2>
 <div class="tablewrap"><table><thead><tr><th>Item</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
-<tr><td>Nav labels (SG-27)</td><td><span class="okpill">shipped</span></td><td>Single navigation group on every page</td></tr>
-<tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td><a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
-<tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record date here</td></tr>
-<tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see FLG-013</td></tr>
+<tr><td>Nav labels (SG-27)</td><td><span class="okpill">shipped</span></td><td>Single navigation group on every page. Internal — <a href="index.html">index.html</a></td></tr>
+<tr><td>RSS feed (SG-28)</td><td><span class="okpill">shipped</span></td><td>Internal — <a href="feed.xml">feed.xml</a> lists all guides + products</td></tr>
+<tr><td>Search Console (SG-29)</td><td><span class="flagpill">pending</span></td><td>Sitemap ready at <a href="sitemap.xml">sitemap.xml</a>; submit in Search Console, then record the date in <code>data/suggestions.json</code>. Internal — <a href="robots.txt">robots.txt</a></td></tr>
+<tr><td>Reader capture (SG-30)</td><td><span class="warnpill">partial — no list behind it</span></td><td>Form renders on front page + guides; records a local count only. No list, no provider, no confirmed-opt-in flow yet — see <a href="flagged-for-review.html#flag-FLG-013">FLG-013</a>. Internal — <a href="assets/app.js">assets/app.js</a></td></tr>
 <tr><td>Structured data</td><td><span class="okpill">shipped, with one honest caveat</span></td><td>Article, BreadcrumbList and ItemList JSON-LD are emitted and valid. FAQPage markup is still emitted for machine readability, but Google removed the FAQ rich-result feature in June 2026 (<a href="verification.html#src-S35">S35</a>) — this site does not count it as a rich-snippet win.</td></tr>
-<tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td><a href="search.html">search.html</a> (client-side, no server)</td></tr>
+<tr><td>Internal search</td><td><span class="okpill">shipped</span></td><td>Internal — <a href="search.html">search.html</a> (client-side, no server)</td></tr>
 </tbody></table></div>
 {capture_block()}
 """
@@ -1212,26 +1295,31 @@ def exec_body():
 
 <h2>What is live</h2>
 <div class="tablewrap"><table><thead><tr><th>Layer</th><th>State</th><th>Where</th></tr></thead><tbody>
-<tr><td>Shop</td><td>{c['products']} product pages, {len(CATEGORIES)} category pages, 1 shop index, each with a decision block or a decision shortcut</td><td><a href="products/index.html">The shop</a></td></tr>
-<tr><td>Editorial</td><td>{c['guides']} question-shaped guides, {c['topics']} planned topics, {c['profiles']} reader situations that name their deciding spec</td><td><a href="guides/index.html">Guides</a> · <a href="topics.html">Topics</a></td></tr>
-<tr><td>Trust</td><td>{c['sources']} sources, {c['flags']} flagged items, intended vs observed kept in separate fields</td><td><a href="verification.html">Verification</a> · <a href="flagged-for-review.html">Flagged</a></td></tr>
-<tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open) + {c['questions']} questions, {c['blocking']} blocking</td><td><a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
-<tr><td>Measurement</td><td>5 events defined, beacon shipped, endpoint <strong>not deployed</strong>, ledger empty by design</td><td><a href="measurement.html">Measurement</a></td></tr>
-<tr><td>Findability</td><td>{total_pages} pages in the sitemap, RSS, canonicals, Article + FAQ + Breadcrumb schema, robots scoping internals out</td><td><code>sitemap.xml</code></td></tr>
+<tr><td>Shop</td><td>{c['products']} product pages, {len(CATEGORIES)} category pages, 1 shop index, each with a decision block or a decision shortcut</td><td>Internal — <a href="products/index.html">The shop</a></td></tr>
+<tr><td>Editorial</td><td>{c['guides']} question-shaped guides, {c['topics']} planned topics, {c['profiles']} reader situations that name their deciding spec</td><td>Internal — <a href="guides/index.html">Guides</a> · <a href="topics.html">Topics</a></td></tr>
+<tr><td>Trust</td><td>{c['sources']} sources, {c['flags']} flagged items, intended vs observed kept in separate fields</td><td>Internal — <a href="verification.html">Verification</a> · <a href="flagged-for-review.html">Flagged</a></td></tr>
+<tr><td>Decisions</td><td>{len(SUGGESTIONS)} suggestions ({c['open_sug']} open) + {c['questions']} questions, {c['blocking']} blocking</td><td>Internal — <a href="direction.html">Suggestions</a> · <a href="questions.html">Open questions</a></td></tr>
+<tr><td>Measurement</td><td>5 events defined, beacon shipped, endpoint <strong>not deployed</strong>, ledger empty by design</td><td>Internal — <a href="measurement.html">Measurement</a></td></tr>
+<tr><td>Findability</td><td>{total_pages} pages in the sitemap, RSS, canonicals, Article + FAQ + Breadcrumb schema, robots scoping internals out</td><td>Internal — <a href="sitemap.xml">sitemap.xml</a></td></tr>
 </tbody></table></div>
 
 <h2>The five links, in one table</h2>
 <div class="tablewrap"><table><thead><tr><th>Supplied</th><th>Token length</th><th>Valid ASIN?</th><th>Observed destination</th><th>Intended ASIN</th></tr></thead><tbody>
-{"".join(f"<tr><td><code>{esc(p['submitted_token'])}</code></td><td>{p['token_length']}</td><td>No — 10 characters required (S05)</td><td><strong>{esc(p['observed_asin'])}</strong></td><td>{blank(p['intended_asin'])}</td></tr>" for p in PRODUCTS)}
+{"".join(f"<tr><td><code>{esc(p['submitted_token'])}</code></td><td>{p['token_length']}</td>"
+         f'<td>No — 10 characters required (<a href="verification.html#src-S05">S05</a>)</td>'
+         f'<td><strong>{esc(p["observed_asin"])}</strong> &middot; Internal — '
+         f'<a href="https://www.amazon.com/dp/{esc(p["observed_asin"])}" rel="nofollow noopener" target="_blank">listing</a></td>'
+         f'<td>{blank(p["intended_asin"])} &middot; <a href="verification.html#src-S05">S05</a></td></tr>'
+         for p in PRODUCTS)}
 </tbody></table></div>
 <p class="src">Observed live three times (2026-11-17, and twice on 2026-11-20 by sessions arena-23d7ed19 and arena-82d39deb): 5/5 destinations identical every time, and every final URL carried <code>lv=shuf</code> + <code>plpRedirect=mhFallback</code> — a fallback route, so “observed” is not “intended” (FLG-009). Log: <a href="verification.html#probes">Verification §4</a>.</p>
 
 <h2>What the latest verification pass changed</h2>
 <div class="tablewrap"><table><thead><tr><th>Finding</th><th>What changed</th><th>Where</th></tr></thead><tbody>
-<tr><td>One spec row was wrong</td><td>The 8-quart Chefman was recorded at 1700 W / 120 V. Its live bullet reads “1000 Watts/120 Volts – RJ38-SQSS-8T” — 1700 W is the 6-quart model's number. Corrected, and the earlier capture kept beside it.</td><td>FLG-019, <a href="verification.html">Verification</a></td></tr>
-<tr><td>Four listing-internal contradictions confirmed live</td><td>8-Qt temperature (title 450°F vs bullets 200–400°F) · Emeril accessory count (title 6 vs bullets 7) · Emeril preset count (title 24 vs bullets 25) · 6-Qt capacity unit (details “6 liters” vs title “6 quart”)</td><td>FLG-005, FLG-010, FLG-015, FLG-017</td></tr>
-<tr><td>One Amazon product-name string differs from the earlier capture</td><td>B08DKYBTPH serves “TurboFry 4-in-1 … 450°F Hi-Fry” now and a different name string earlier. Both are stored; the live one is displayed.</td><td>FLG-016</td></tr>
-<tr><td>Two buyer-relevant facts found in the live pages</td><td>The 8-Qt ASIN is a 6/8/9-quart size family, and Amazon's own page states there is a newer model of that item. Both are now on the product page.</td><td>FLG-020, FLG-021</td></tr>
+<tr><td>One spec row was wrong</td><td>The 8-quart Chefman was recorded at 1700 W / 120 V. Its live bullet reads “1000 Watts/120 Volts – RJ38-SQSS-8T” — 1700 W is the 6-quart model's number. Corrected, and the earlier capture kept beside it.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-019">FLG-019</a> · <a href="verification.html">Verification</a></td></tr>
+<tr><td>Four listing-internal contradictions confirmed live</td><td>8-Qt temperature (title 450°F vs bullets 200–400°F) · Emeril accessory count (title 6 vs bullets 7) · Emeril preset count (title 24 vs bullets 25) · 6-Qt capacity unit (details “6 liters” vs title “6 quart”)</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-005">FLG-005</a>, <a href="flagged-for-review.html#flag-FLG-010">FLG-010</a>, <a href="flagged-for-review.html#flag-FLG-015">FLG-015</a>, <a href="flagged-for-review.html#flag-FLG-017">FLG-017</a></td></tr>
+<tr><td>One Amazon product-name string differs from the earlier capture</td><td>B08DKYBTPH serves “TurboFry 4-in-1 … 450°F Hi-Fry” now and a different name string earlier. Both are stored; the live one is displayed.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-016">FLG-016</a></td></tr>
+<tr><td>Two buyer-relevant facts found in the live pages</td><td>The 8-Qt ASIN is a 6/8/9-quart size family, and Amazon's own page states there is a newer model of that item. Both are now on the product page.</td><td>Internal — <a href="flagged-for-review.html#flag-FLG-020">FLG-020</a>, <a href="flagged-for-review.html#flag-FLG-021">FLG-021</a></td></tr>
 </tbody></table></div>
 
 <h2>What has to happen before any of this earns anything</h2>
@@ -1358,11 +1446,11 @@ def questions_body():
     for q in QUESTIONS:
         bl = q.get("blocking", "no")
         kind = "act" if bl.startswith("yes") else "note"
-        rows += (f'<tr><td><strong>{esc(q["id"])}</strong><br>{pill("blocking" if bl.startswith("yes") else "non-blocking", kind)}</td>'
+        rows += (f'<tr id="q-{esc(q["id"])}"><td><strong>{esc(q["id"])}</strong><br>{pill("blocking" if bl.startswith("yes") else "non-blocking", kind)}</td>'
                  f'<td><strong>{esc(q["question"])}</strong><p class="meta">Gates: {esc(q["decision_it_gates"])}</p></td>'
                  f'<td>{link_source_ids(esc(q["have"]))}</td><td>{esc(q["missing"])}</td><td>{esc(q["discovery"])}</td>'
                  f'<td>{esc(q["owner"])}</td><td>{question_sources(q)}<br><span class="meta">Internal only — no external source applies.</span></td>'
-                 f'<td class="answercell">{blank(q["answer"])}</td></tr>')
+                 f'<td class="answercell">{esc(q["answer"]) if q.get("answer") else "<span class=blank>&#8212; not yet answered</span>"}</td></tr>')
     pack = "\n\n".join(f'{q["id"]}. {q["question"]}\nWhat we need: {q["missing"]}\nHow to get it: {q["discovery"]}'
                         for q in QUESTIONS if q.get("blocking", "no").startswith("yes"))
     return f"""
@@ -1451,7 +1539,7 @@ def topics_body():
     for t in TOPICS:
         status = t.get("status", "planned")
         cls = "okpill" if status == "published" else ("flagpill" if status == "blocked" else "warnpill")
-        rows += (f'<tr><td><strong>{esc(t["id"])}</strong></td>'
+        rows += (f'<tr id="t-{esc(t["id"])}"><td><strong>{esc(t["id"])}</strong></td>'
                  f'<td><strong>{esc(t["title"])}</strong><p class="meta">{esc(t["question"])}</p></td>'
                  f'<td>{esc(t["cluster"])}</td><td>{esc(t.get("season", "Everyday"))}</td>'
                  f'<td>{esc(t["why"])}</td><td>{esc(t["needs"])}</td>'

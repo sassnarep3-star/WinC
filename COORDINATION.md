@@ -1561,3 +1561,130 @@ Corroborates register rows **S01, S02, S03, S05** (and the price-display rows) �
   content was lost (every duplicated block already existed above); cleaned in the follow-up PR
   recorded below. Logged here because the coordination file is shared.
 
+---
+
+# Session arena/b0920c92-winc — row-level sourcing site-wide, observation #7, decision desk, measurement proof (T43–T49)
+
+Branch `arena/b0920c92-winc`, based on `main@87f7284`; re-merged three times as `main` advanced
+(`a37c95b` via PR #37, `6a989c0` via PRs #38–#45, `1dc7a6a` via PRs #35/#49/#51).
+
+**I-08 — ID collisions across five sessions, resolved by renumbering (recorded, not hidden).**
+This session claimed T29–T35 against `main@87f7284` (commit `884f67a`) before the newer sessions'
+PRs merged. `arena-c2123b9c` (T29–T32), `arena-482d5832` (T33), `arena-70bd2fcc` (T34–T38) and
+`arena-038c0b80` (T33–T37) claimed overlapping task numbers; `arena-70bd2fcc` took FLG-026/027 and
+S30–S34; `arena/1c6908d1` took S36 and FLG-030 for its own divergent-observation record. This
+session's records are therefore renumbered: **board rows T43–T49**, its divergent short-link
+observation **observation #7 (S38, FLG-034)** — which independently reproduces `arena/1c6908d1`'s
+FLG-030 divergence (extending the cross-path disagreement FLG-033 records), so the two records now corroborate each other. A
+sibling-variant flag this session had drafted (old FLG-027) is **dropped as redundant**:
+`arena-70bd2fcc`'s FLG-026/FLG-027 record the same ThermoMaven and CHEF iQ sibling-listing findings
+with their own S33/S34 evidence. A first-air-fryer guide this session drafted in parallel with
+`arena/a81c0f0e-winc` was likewise dropped in favour of their merged version. Nothing of the other
+sessions' was edited or discarded.
+
+## Board (this session, renumbered)
+
+| ID | Task | Status | Owner | Files |
+| --- | --- | --- | --- | --- |
+| T43 | *(was T29)* Provenance-trail restore | closed as superseded (main's unions already restored the history) | b0920c92 | `COORDINATION.md` |
+| T44 | *(was T30)* Independent verification pass over the 5 links, 5 listings and the policy pages — observation #7, extending FLG-033 | done | b0920c92 | `data/probes.json`, `data/sources.json` (S38), `data/products.json`, `data/flags.json` (FLG-034) |
+| T45 | *(was T31)* Row-level source-link enforcement (gate + repairs, site-wide) | done | b0920c92 | `scripts/check_site.py`, `scripts/build_site.py`, `data/guides/*.json` |
+| T46 | *(was T32)* Decision-desk hardening (paths, deciders, discovery) | done | b0920c92 | `data/suggestions.json`, `scripts/build_site.py`, `assets/style.css` |
+| T47 | *(was T33)* Measurement end-to-end proof against the hardened contract | done | b0920c92 | `scripts/verify_measurement.py` (new), `data/flags.json` (FLG-007), `package.json` |
+| T48 | *(was T34)* TP-06 guide published; TP-01/TP-02 register marks; duplicate TP-10 draft dropped | done | b0920c92 | `data/guides/probe-placement-whole-chicken.json`, `data/topics.json`, `EXECUTIVE-SUMMARY.md` |
+| T49 | *(was T35)* Final integration (three-way merges of all parallel work, gate, PR, Pages) | in progress | b0920c92 | all (integration only) |
+
+## Work record (T44–T47)
+
+### T44 — observation #7 of the five supplied links (extends FLG-033; S38, FLG-034)
+
+| Source | What was done |
+| --- | --- |
+| S38 (new) | All five `link.amazon` short links re-resolved live on 2026-11-20 via the fetch reader. **Divergent from observations #1–#5**: four (B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59) landed on the Amazon home page; B0f3GKalj still resolved to B0DZFD6R9Z with the same `lv=shuf` / `plpRedirect=mhFallback` flags. Two of the four re-fetched individually: identical. Control in the same pass: all five direct `/dp/` listings re-opened; every one still served the recorded `<title>` and breadcrumb, so the published reader links are unaffected. |
+| FLG-034 (new) | Second independent confirmation of the divergence `arena/1c6908d1` recorded as FLG-030. Explicitly **not** a claim that the links are invalid — FLG-003 stays open. Two sessions, one day, same divergence: the short-link behaviour is not stable over hours. |
+| `data/probes.json` | `seventh_observation` appended per probe; `probe_dates` extended; `probe7_note` added; the interpretation block rewritten to separate the reproducible observed-ASIN records from the unstable short-link behaviour. Prior observations preserved untouched. |
+| Policy re-read | Google's *Qualify your outbound links* re-fetched 2026-11-20: `rel="sponsored"` for paid/affiliate links confirmed verbatim (page last updated 2025-12-10). The site already applies `rel="sponsored nofollow"` to every buy button. |
+
+### T45 — every table row on every page carries a source
+
+The gate's row-source rule was extended from 4 register pages to **all** pages: a row passes if it
+links an official source, cites `verification.html#src-*`, prints the source URL as text, or
+explicitly says its source is internal (linking the file) or explicitly blank (pointing at the
+register). First strict run: **61 violations** across 9 pages; the second and third merges added 22
+and 12 more in guides other sessions published — all repaired with per-row citations (each cell
+citing the exact listing or the USDA page). Deep-link anchors (`#src-*`, `#flag-*`, `#q-*`, `#t-*`)
+are gate-checked to resolve. The `link.amazon` rule was narrowed to reader links only — a nofollow
+provenance citation, or the URL printed as text (FLG-029's non-clickable record), is legitimate.
+
+### T46 — decision desk names its deciders
+
+Every suggestion row in the union register (40 rows across all waves) now carries `path` (A–D,
+matching the published paths), `decision_by` (the rows that need the account owner, not the site:
+SG-01, SG-07, SG-08, SG-09, SG-10, SG-19, SG-20, SG-22, SG-29, SG-30) and `discovery` (what would
+have to be known to decide it; derived defaults say so). The path chooser shows each path's
+suggestions with their deciders. Question rows with no answer say "not yet answered".
+
+### T47 — measurement proven end to end, against the hardened contract
+
+`scripts/verify_measurement.py` (new, stdlib-only) starts `analytics/collect.py` as a real server,
+posts all five events with the exact payload `assets/app.js` sends, and asserts: HTTP 202 ×5, HTTP
+422 for an undefined event and for path traversal, `/stats` and `/ledger` aggregates, the hardened
+row schema (server day + event + page + allow-listed props only), and that no IP / user agent /
+cookie / email / search query / client timestamp / client site ID is stored. History, recorded
+honestly: the first version ran against the pre-hardening collector and **found a real defect**
+(the collector read the client timestamp from `ts` while the beacon sends `at` — fixed), then
+arena-482d5832's hardened schema superseded that field entirely and the test was rewritten to
+assert the hardened contract. `npm run verify` = build + gate + analytics contract tests + this
+end-to-end proof. The campaign ledger stays empty — unchanged by design.
+
+### T48 — TP-06 published; register marks reconciled
+
+- **`guides/probe-placement-whole-chicken.html`** (TP-06) — placement/stuffing/care wording quoted
+  from the USDA FSIS *Food Thermometers* factsheet (S17), fetched and read 2026-11-20; the 165 °F
+  poultry minimum from the FSIS safe-temperature chart (S16).
+- `data/topics.json`: TP-06 published (b0920c92); TP-01 and TP-02 marked published crediting
+  `arena/a81c0f0e-winc`'s merged guides; TP-10's note corrected to credit `arena/a81c0f0e-winc`
+  (this session's parallel draft dropped — see I-08).
+
+### Conflict resolution (three merges, recorded per the working agreement)
+
+`git merge origin/main` three times (at `a37c95b`, `6a989c0`, `1dc7a6a`). Conflicts resolved as
+**unions**: generated HTML/sitemap/feed/search files regenerated from the merged data; registers
+merged by ID with this session's additions renumbered onto free slots; `analytics/collect.py` taken
+from main's hardened version (the end-to-end test asserts that contract); `scripts/build_site.py`
+merged at function level (main's story layer, decision desk, publisher checklist and season rail
+kept; this session's per-row source columns, path boxes, measurement verification table and
+deep-link anchors re-applied on top); style sheets and package scripts unioned. Nothing from either
+side was discarded except the duplicates explained in I-08.
+
+### Sources used this session
+
+- Google, *Qualify your outbound links* — https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links (re-read 2026-11-20)
+- USDA FSIS, *Food Thermometers* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers (read 2026-11-20)
+- USDA FSIS, *Safe Temperature Chart* — https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart (cited; read by prior session, re-verified via S17's embedded chart)
+- Amazon listings S09–S13 and S30–S34, S36 (this session's independent control re-read recorded as S38)
+- The five submitted `link.amazon` links (observation #7, recorded as S38; extends FLG-033)
+
+### Verification performed this session
+
+`python3 scripts/build_site.py` → pages/sitemap/guides rebuilt from the merged registers.
+`python3 scripts/check_site.py` → OK, no violations (row-source rule site-wide; deep links checked).
+`python3 scripts/test_analytics.py && node analytics/test_worker.mjs` → OK.
+`python3 scripts/verify_measurement.py` → 5 events accepted, 2 payloads rejected, nothing identity-bearing stored.
+
+### Irregularities recorded this session
+
+- **I-03 — the measurement timestamp defect.** The pre-hardening collector silently dropped the client
+  timestamp (field mismatch between beacon and collector). Found by the new end-to-end test; fixed;
+  superseded by the hardened schema; the test now asserts that contract.
+- **I-04 — the row-source gate was advisory site-wide.** 61 rows (then 22 and 12 more after the
+  merges) had no source. All repaired; the gate enforces it everywhere.
+- **I-05 — the short-link divergence** (FLG-030 by arena/1c6908d1, FLG-034 by this session):
+  recorded as observations, not verdicts; FLG-003 deliberately stays open. Main's probes
+  interpretation claimed 5/5 agreement while FLG-030 recorded non-reproduction; the merged
+  interpretation now separates the reproducible ASIN records from the unstable short-link behaviour.
+- **I-08 — ID collisions across five sessions** (task IDs, flag IDs, source IDs, the observation
+  slots, a parallel TP-10 guide). Renumbered onto free slots; duplicates dropped in favour of merged
+  records; no other session's text edited.
+=======
+>>>>>>> origin/main
