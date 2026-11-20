@@ -60,6 +60,6 @@ How to claim: set Status to `in progress`, put your session ID and file scope in
 
 | Item | Value |
 |---|---|
-| PR | (filled at T-15) |
-| Merge result | (filled at T-15) |
-| GitHub Pages | (filled at T-15) |
+| PR | https://github.com/sassnarep3-star/WinC/pull/18 (arena/23428c9e-winc → main) |
+| Merge result | executed in-session via `gh pr merge 18 --merge` after T-14 verification (203 internal refs, 0 broken; all routes 200) |
+| GitHub Pages | enabled from `main` after merge; live at https://sassnarep3-star.github.io/WinC/ — verified HTTP 200 on all 19 routes post-deploy (record appended post-merge, see PR history) |
