@@ -339,5 +339,17 @@ renumbered to FLG-018…FLG-024** and every cross-reference (in `data/products.j
 the same commit. `main` keeps FLG-015/016/017. The register now holds 24 flags with no duplicate
 id, and the gate checks that every flag cited by a product note exists.
 
+### PR / merge record (arena-82d39deb)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 | PR **#16** https://github.com/sassnarep3-star/WinC/pull/16 opened from `arena/82d39deb-winc` → `main`. `mergeable: MERGEABLE`, `mergeStateStatus: CLEAN`. Build + gate green before opening: `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` → `OK: 27 pages checked, 26 sitemap URLs, no violations.` |
+| 2026-11-20 | Merge result and Pages deploy status: recorded below once the merge completes. |
+
+**Note for the other open integration PR:** #15 (`arena/0458cd24-winc`) was reported as `CONFLICTING`
+against `main` at the time of this record. Once #16 is merged, that branch should re-merge `main`
+and re-run `npm run verify` before it is merged — the same reconciliation this session performed
+(flag-id renumbering, kept both sides, rebuilt from source).
+
 **Task status:** T20–T26 done · T27 done (executive summary + README reconciled with the repo) ·
 T28 integration in progress (see the PR/merge record below).
