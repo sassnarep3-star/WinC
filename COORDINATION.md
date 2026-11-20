@@ -330,3 +330,53 @@ in one command, which is the argument for small, frequent commits.
 | 2026-11-20 (live) | Live re-fetch of `measurement.html` shows the merged five-event table, the endpoint note (FLG-007, not deployed), and the empty ledger. The sandbox cannot reach `github.io` directly; the check was done through the page reader. |
 
 **Status:** T33 done. Open after this task, unchanged: FLG-007 (endpoint not deployed), SG-29 (Search Console not submitted), SG-30 / FLG-013 (no newsletter list). Nothing in this task claims any of them as complete.
+
+---
+
+# Session arena/68db484a-winc — integration + verification pass (2026-11-20)
+
+Branch `arena/68db484a-winc`, merged onto `origin/main` (`c12c40c`, PR #29). Started 2026-11-20. No reader-facing content changed; the build is reproduced from `data/` and the compliance gate passes.
+
+## Verification performed
+
+| What | How | Result |
+|------|-----|--------|
+| Build + compliance gate | `python3 scripts/build_site.py && python3 scripts/check_site.py` | `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` / `OK: 27 pages checked, 26 sitemap URLs, no violations.` |
+| ASIN definition | Web search of sell.amazon.com/blog/what-is-an-asin (official) | Corroborated: "unique 10-character alphanumeric code" — matches register row S05 |
+| Google rel=sponsored | Web search of developers.google.com/.../qualify-outbound-links (official) | Corroborated: affiliate links qualify for rel=sponsored — matches register rows S04/S19 |
+
+## Sources that could NOT be re-fetched this session (host restriction)
+
+Sandbox outbound is restricted to github.com hosts, so the following official pages claimed as direct reads in prior sessions (`data/sources.json`) could not be independently re-verified here. They are treated as prior-session provenance and are linked for manual review:
+
+- https://affiliate-program.amazon.com/help/operating/agreement (S01/S07)
+- https://affiliate-program.amazon.com/help/operating/policies (S02)
+- https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking (S03)
+- https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links (S04/S19)
+- https://sell.amazon.com/blog/what-is-an-asin (S05 — corroborated above)
+- https://affiliate-program.amazon.com/help/node/topic/G8TW5AE9XL2VX9VM (S06)
+- https://www.fsis.usda.gov/.../safe-temperature-chart (S16)
+- https://www.fsis.usda.gov/.../food-thermometers (S17)
+
+## Irregularities flagged (do not block the merge)
+
+- FLG-001 tracking ID shopnow047c-20 unconfirmed (requires Associates Central login; Q-01).
+- FLG-002 one-link Associates workflow test not done (Q-02, Q-16).
+- FLG-003 short-link compliance status unresolved; never claimed invalid.
+- FLG-007 analytics endpoint code shipped, not deployed (Pages is static; needs an owner host).
+- FLG-008/FLG-009 redirect is a reproducible fallback route (lv=shuf + plpRedirect=mhFallback); intended ASINs stay blank.
+- All 25 flags are published on `flagged-for-review.html` with source links and resolution actions; none blocks the merge.
+
+## AI-powered automation (honest limitation)
+
+The brief's "AI-powered platform" ask (automated niche identification, trend analysis, pricing/review/competition analysis, continuous campaign optimization) cannot be delivered from this repo: GitHub Pages is static (no backend), no Amazon PA API / Associates API credentials are available, and no LLM API key is provisioned. The site ships the measurable foundation instead — five defined events, privacy-preserving beacon, self-hosted endpoint code (`analytics/worker.js`, `analytics/collect.py`), empty campaign ledger, question-shaped guides, and the compliance gate. Automation beyond this requires an enrolled Associates account, API access, and an owner-operated host; recorded as open decisions Q-01, Q-04, Q-08, SG-07, SG-08, SG-20.
+
+## Task status
+
+T01–T07 verified green. T07 integration (this session): PR → main → merge → Pages confirm, recorded below.
+
+## PR / merge record
+
+- PR: opened from `arena/68db484a-winc` → `main` after this commit is pushed (number recorded below once created).
+- Merge result: pending.
+- Pages deploy: site already reports `status: built`, `https_enforced: true`, source `{main, /}` at https://sassnarep3-star.github.io/WinC/ ; re-confirmed after the merge commit builds (recorded below).
