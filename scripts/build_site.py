@@ -525,8 +525,9 @@ def story_body(p):
     anchor_value = p.get(st.get("spec_anchor", "")) or "not confirmed from the listing"
     sname = SERIES_OF.get(p["id"])
     series_meta = SERIES_META.get(sname, {})
-    crumb = (f'<p class="seriesline"><span class="seriesmark">{esc(st["series"])}</span> · '
-             f'<a href="../{esc(series_meta.get("slug", ""))}">{esc(sname)}</a></p>' if sname else "")
+    # one series marker only: the badge itself links to the series page
+    crumb = (f'<p class="seriesline"><a class="seriesmark" href="../{esc(series_meta.get("slug", ""))}">{esc(st["series"])}</a>'
+             f' · <span class="meta">series</span></p>' if sname else "")
     maker = ""
     if mk:
         maker = (f'<div class="makerbox"><h3>About the maker: {esc(mk["name"])}</h3>'
