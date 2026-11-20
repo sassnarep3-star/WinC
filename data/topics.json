@@ -92,13 +92,15 @@
       "question": "Thigh, breast, or the wing — and how close to the bone?",
       "why": "USDA FSIS names the three places to check a whole bird and says to avoid bone. The instant-read listing cannot help with technique; a guide can, and the source is already in the register.",
       "needs": "USDA FSIS Food Thermometers page (S17) — already cited in the published probe guide; would need a cooking-technique section with per-step citations.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the FSIS source makes it answerable without inventing anything; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-thermometers",
         "https://www.amazon.com/dp/B0DHZTCNR5"
-      ]
+      ],
+      "published_as": "guides/probe-placement-whole-chicken.html",
+      "status_note": "Published 2026-11-20 by session b0920c92; placement, stuffing and care wording quoted from USDA FSIS Food Thermometers (S17), fetched and read that day; the 165 F minimum from the FSIS safe-temperature chart (S16)."
     },
     {
       "id": "TP-07",
@@ -154,14 +156,16 @@
       "question": "What should I check so I do not regret this in a month?",
       "why": "A beginner checklist is the highest-intent entry point for a first purchase, and every row can be a listed spec: capacity, footprint, weight, temperature range, wattage, dishwasher-safe parts, accessory count.",
       "needs": "The specs already verified in data/products.json. No new sources, no opinions, no ranking.",
-      "status": "planned",
+      "status": "published",
       "chosen_from": "editorial hypothesis — the natural top-of-funnel page for a first-time buyer; no measured query data exists yet",
       "priority": "high",
       "source": [
         "https://www.amazon.com/dp/B0CDY277D3",
         "https://www.amazon.com/dp/B08DKYBTPH",
         "https://www.amazon.com/dp/B09B7SB46R"
-      ]
+      ],
+      "published_as": "guides/first-air-fryer-six-checks.html",
+      "status_note": "Published 2026-11-20 by session b0920c92; sourced entirely from the recorded listings (S09-S11, S28) and Amazon Program Policies (S02)."
     },
     {
       "id": "TP-11",
