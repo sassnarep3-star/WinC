@@ -171,3 +171,21 @@ collector counts clicks and reads only — it cannot see an order, by design.
 
 New session note for whoever picks this up: `pkill -f collect.py` / `pgrep -f 'collect\.py'` will
 kill your own shell if the same string appears in the running command. Use `fuser -k <port>/tcp`.
+
+---
+
+## Session dd79e08d (branch `arena/dd79e08d-winc`, started 2026-11-20)
+
+State on arrival: `main` = `358dd0c` (PR #9), gate green (26 pages, 25 sitemap URLs), live Pages `built` at `358dd0c`. Live front page re-read through the fetch tool; Operating Agreement re-read (updated 2025-10-15, matches S01 register row).
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T18 | Label + sourcing audit pass: remove inferred "single basket" wording (8 Qt listing title says "XL Nonstick Dishwasher-Safe Basket"); blank ThermoMaven model "HT07" sourced from Amazon.fr, not the US listing (new flag FLG-015); regenerate; gate; PR + merge + Pages check | done | dd79e08d | `data/products.json`, `data/guides/*.json`, `data/flags.json`, `data/sources.json`, `COORDINATION.md`, generated HTML |
+
+**Sources (T18):** Amazon Associates Operating Agreement https://affiliate-program.amazon.com/help/operating/agreement (fetched 2026-11-20, "Updated October 15, 2025"); observed listing https://www.amazon.com/dp/B08DKYBTPH (fetched 2026-11-20 via fetch tool; fallback route per FLG-009; title "Chefman Air Fryer 8 Qt | TurboFry® 4-in-1 … XL Nonstick Dishwasher-Safe Basket"); live site https://sassnarep3-star.github.io/WinC/ (fetched 2026-11-20).
+
+**Verification performed:** live front page re-read and compared against the build; buy links checked (5/5 carry `tag=shopnow047c-20`, `rel="sponsored nofollow noopener"`, Sponsored label); gate `python3 scripts/check_site.py` → OK, no violations.
+
+**Irregularities found and handled:** (1) "single basket" label was inferred, not sourced → replaced with listing wording "XL basket" (FLG-016, fixed). (2) ThermoMaven model HT07 came from Amazon.fr, not the US listing → blanked (FLG-015, needs review). Nothing else changed; FLG-001..FLG-014 unchanged.
+
+**Not done (no access in sandbox):** Associates Central tracking-ID confirmation and one-link workflow test (FLG-001, FLG-002, Q-01, Q-16). These remain owner-side.

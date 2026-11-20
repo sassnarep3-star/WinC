@@ -90,7 +90,7 @@
       "source_url": "https://www.amazon.com/dp/B08DKYBTPH",
       "source_date": "2026-11-20",
       "page": "products/chefman-8qt-turbofry-b08dkybtph.html",
-      "short_label": "Chefman 8 Qt TurboFry (single basket)"
+      "short_label": "Chefman 8 Qt TurboFry (XL basket)"
     },
     {
       "id": "p4-thermomaven",
@@ -107,7 +107,7 @@
       "observed_source": "Prior sessions' live resolutions + Amazon listing snippet (see FLG-004 variant URL)",
       "title": "ThermoMaven 1 Sec Professional Digital Meat Thermometer, ±0.5℉ Accuracy | NIST&NSF Certified Food Thermometer, Auto-Rotate Bright LED Screen, Highly Waterproof for Grill BBQ Camping, Black",
       "brand": "ThermoMaven",
-      "model": "HT07 (per Amazon.fr listing — confirm on US listing; see FLG-004)",
+      "model": "","model_note": "Blank: HT07 appeared only on an Amazon.fr listing, not the US listing observed (FLG-015)",
       "category": "Meat Thermometers",
       "capacity": "—",
       "dimensions": "",
