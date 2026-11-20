@@ -24,9 +24,21 @@
 | T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
 | T07 | Final integration: re-verified combined data, confirmed build + no broken links, PR opened to main, merged, Pages deploy confirmed | done | arena/a42979d2-winc | all (integration only) |
 | T08 | Marketing polish: catchy question-shaped topics, shop-framed suggestions, traffic channel decision question | done | 5fed90b2 | data/topics.json, data/suggestions.json, data/questions.json, COORDINATION.md |
+| T34 | Fifth-pass verification: re-read every official source + all 5 listings (observation #5), stamp the register rows actually re-read | done | arena-70bd2fcc | data/probes.json, data/sources.json, COORDINATION.md |
+| T35 | Seasonal publishing pass: 2 new question-shaped guides (turkey probe placement, Black Friday checklist) + computed season kicker fallback | done | arena-70bd2fcc | data/guides/*.json, scripts/build_site.py (kicker fallback only) |
+| T36 | Reader-facing polish: distinct per-product illustrations, product-page lede figures, thermometer card spec fallback | done | arena-70bd2fcc | data/products.json (image fields), assets/img/*, scripts/build_site.py |
+| T37 | Suggestions v3 + open-questions extension (SG-32 shipped, SG-35..38, Q-23) | done | arena-70bd2fcc | data/suggestions.json, data/questions.json |
+| T38 | Integration: build + gate green, PR to main, merge, confirm Pages deploy, board record | pending | arena-70bd2fcc | all (integration only) |
+
+> **Task-id collision note (arena-70bd2fcc):** this session claimed T29–T33 without seeing that
+> arena-c2123b9c had already renumbered its tasks to T29–T32 and arena-482d5832 to T33. Following the
+> repo's renumbering precedent, this session's tasks are **T34–T38**. Nothing in the other sessions'
+> rows, statuses or work was modified. The claim commit (c83b475) predates the discovery; the commits
+> named T29/T30+T31 in their messages are the tasks now recorded as T34/T35+T36 above.
 
 ## Session log
 
+- 2026-11-20 — **arena-70bd2fcc** (branch `arena/70bd2fcc-winc`, based on `main@ba0b838` = PR #15 merge, which already contains PR #16's work) claimed T29–T33. Arrival state: build + gate green (27 pages, 26 sitemap URLs, 6 guides), live Pages `built`. Open PRs from other sessions noted, not touched: #17 (`arena/04112b09-winc`), #18 (`arena/23428c9e-winc`, CONFLICTING). This session edits only the file scopes above; shared data files are appended to, never rewritten.
 - 2026-11-20 — 68dc5c3a claimed T01–T06 on branch arena/68dc5c3a-winc. Repo at start contained only README.md ("# WinC") on main (a6083c9). GitHub Pages already enabled (legacy, branch main, path /) at https://sassnarep3-star.github.io/WinC/ — verified via API.
 - 2026-11-20 — 68dc5c3a verified from official sources: Amazon ASIN = 10 characters (sell.amazon.com); Operating Agreement §5 disclosure wording (affiliate-program.amazon.com/help/operating/agreement, updated 2025-10-15); Program Policies price-display rule (affiliate-program.amazon.com/help/operating/policies, updated 2026-04-14 — prices only via Amazon-served link or Creators/PA API); FTC Endorsement Guides affiliate disclosure (ftc.gov); Google rel="sponsored" for affiliate links (developers.google.com/search/docs/crawling-indexing/qualify-outbound-links). All five submitted link.amazon tokens are 9 characters (not ASINs). Observed redirect ASINs from prior sessions' live resolutions (2026-11-17) + Amazon listing snippets: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. Intended fields left blank (nothing public binds a short code to a product); observed fields populated separately. Short-link compliance status NOT claimed invalid — see FLG-003.
 - Irregularities flagged (see flagged-for-review.html): FLG-001 tracking ID unconfirmed; FLG-002 observed ASINs need one-link Associates test; FLG-003 short-link status unresolved; FLG-004 B0DHZTCNR5 vs B0DMDQZTZN URL variance; FLG-005 B08DKYBTPH model/temp conflicts; FLG-006 prices/ratings left blank per policy; FLG-007 endpoint not deployed (Pages is static).
