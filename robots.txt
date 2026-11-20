@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /scripts/
+Disallow: /data/
+Disallow: /analytics/
+Disallow: /archive/
+Disallow: /assets/search-index.json
+Sitemap: https://sassnarep3-star.github.io/WinC/sitemap.xml

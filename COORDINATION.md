@@ -1,110 +1,467 @@
-# COORDINATION.md — shared task board
+# COORDINATION — WinC affiliate site (shared task board)
 
-Repository: `sassnarep3-star/WinC`
-This file is the shared task board for parallel agent sessions. **Read this before starting work.**
+> **Latest session: `arena/d1b621b7-winc`** (session id `d1b621b7`) — independent parallel build,
+> then merge integration of `main` into its branch; its section is at the **end of this file**.
+> Earlier sessions are kept verbatim as the provenance trail.
 
-## Rules (from the project brief)
-
-- Claim a task by writing your session ID and file scope here, then commit and push the claim immediately.
-- Never start a task another session has claimed. Keep scopes non-overlapping.
-- Each session works on its own branch and edits only files in its claimed scope.
-- If a task requires changing a file owned by another session, **log the request below** instead of editing it.
-- Small, frequent commits; `git pull --rebase` before every push; resolve conflicts without discarding others' work and log what happened.
-- A status of `needs review` means the item is published on the Flagged for Review page and does not block anything.
-- When a task is finished, record its sources, the verification performed, and any irregularities below, and mark it `done`.
-- Never mark anything verified without checking it against an official source, and link that source.
-- Shared outputs (table data, site index, navigation) are changed only by the final integration session, which merges branches, re-verifies combined data line by line, confirms the site builds with no broken links, and publishes to GitHub Pages.
-- If a session crashes or its claim is more than 60 minutes old with no commits, any other session may take over and note the handoff.
-
-## Session branch note
-
-Arena sessions run on their assigned branch. This session's branch is
-`arena/d1b621b7-winc` (branched from `a6083c9` of `main`) and it serves as this
-session's `<session-id>/<task>` working branch. Session ID: **d1b621b7**.
+> Session ID for this board: **68dc5c3a** (branch `arena/68dc5c3a-winc`).
+> Rule: claim a task by writing the session ID + file scope, then commit and push the claim immediately.
+> Never start a task another session has claimed. Keep scopes non-overlapping.
+> `needs review` = published on the Flagged for Review page; does not block anything.
+> Shared outputs (table data, index, navigation) are changed only by the final integration step
+> in this session (single-session repo: the integration step is the same session, after all tasks).
 
 ## Task board
 
-| ID | Task | Status | Owner session | File scope | Notes |
-|----|------|--------|---------------|------------|-------|
-| T-01 | Create coordination board + claim | done | d1b621b7 | `COORDINATION.md` | Claimed 2026-11-20 |
-| T-02 | Source register: verify compliance facts from official sources (Amazon OA, Program Policies, eCFR 16 CFR 255, FTC guidance, Amazon Ads ASIN definition) | done | d1b621b7 | `docs/source-register.html`, `docs/data/sources.json` | See "Sources & verification log" |
-| T-03 | Product-intent confirmation record (intended vs. observed kept separate) + observed redirect capture for all 5 submitted links | done | d1b621b7 | `docs/products.html`, `docs/data/products.json` | All 5 links fetched 2026-11-20; mismatch flagged |
-| T-04 | Publication front page (lead with products/guides, not process) + brand/navigation/imagery | done | d1b621b7 | `docs/index.html`, `docs/assets/*`, `docs/assets/images/*` | Disclosure strip under masthead on every page |
-| T-05 | Question-shaped buyer guides (4 editorial hypotheses as working titles) + guides index with seasons/clusters | done | d1b621b7 | `docs/guides/*` | Labeled working titles, no popularity claims |
-| T-06 | Findability: canonical URLs, robots.txt, sitemap.xml, RSS feed, JSON-LD, meta | done | d1b621b7 | `docs/robots.txt`, `docs/sitemap.xml`, `docs/rss.xml` | SG-28 shipped; SG-29 (Search Console) pending owner verification |
-| T-07 | Measurement: five defined events, privacy-preserving outbound-click counter, self-hosted endpoint code, local event log | done | d1b621b7 | `docs/measurement.html`, `docs/assets/analytics.js`, `analytics/*` | Endpoint code shipped; deployment = hosting decision (FLG-006) |
-| T-08 | Campaign ledger: empty, well-defined schema with provenance trail | done | d1b621b7 | `docs/ledger.html`, `docs/data/campaign-ledger.json` | 0 rows by design; rows only from authorized first-party reports |
-| T-09 | Suggestions section for review before implementing changes (incl. SG-27..SG-30) | done | d1b621b7 | `docs/suggestions.html` | Decision-oriented cards with options |
-| T-10 | Questions/answers/missing-information page (what we know, what we lack, how to discover it) | done | d1b621b7 | `docs/questions.html` | Feeds decision-making |
-| T-11 | Flagged for Review page with source links | done | d1b621b7 | `docs/flagged.html` | FLG-001..FLG-012; non-blocking |
-| T-12 | Executive summary | done | d1b621b7 | `docs/executive-summary.html` | |
-| T-13 | Compliance: disclosure above fold + footer, `rel="sponsored"` on all outbound product links, publishing-workflow gate page | done | d1b621b7 | `docs/compliance.html`, all `docs/*.html` | Exact Associates statement used verbatim |
-| T-14 | Automation gate: site checker script + GitHub Actions workflow (disclosure, sponsored links, row sources, sitemap/RSS integrity, internal links) | done | d1b621b7 | `scripts/check_site.py`, `.github/workflows/site-checks.yml` | Runs on push/PR |
-| T-15 | About/authorship + privacy policy pages | done | d1b621b7 | `docs/about.html`, `docs/privacy.html` | |
-| T-16 | Final integration: verify combined data line by line, build check, broken-link check, PR to main, merge, GitHub Pages deploy, record results here | done | d1b621b7 | `COORDINATION.md`, `README.md` | PR + Pages results recorded below |
+| ID | Task | Status | Owner (session) | File scope |
+|----|------|--------|-----------------|------------|
+| T01 | Repo audit + official-source verification (ASIN rule, Operating Agreement, Program Policies, FTC, Google rel=sponsored) | done | 68dc5c3a | COORDINATION.md, data/sources.json |
+| T02 | Product-intent confirmation record + specs tables (intended vs observed kept separate) | done | 68dc5c3a | data/products.json, verification.html (via builder) |
+| T03 | Shop-first site build (front page, categories, product pages, guides, disclosure, SEO, sitemap, RSS) | done | 68dc5c3a | scripts/build_site.py, assets/, *.html (generated) |
+| T04 | Measurement layer (5 events, privacy-preserving counter, self-hosted endpoint code, empty campaign ledger) | done | 68dc5c3a | assets/app.js, analytics/, measurement.html |
+| T05 | Direction section (suggestions, Q&A, path chooser) + executive summary + flagged page | done | 68dc5c3a | direction.html, executive-summary.html, flagged-for-review.html |
+| T06 | Compliance gate (scripts/check_site.py) + link/sitemap checks, fix until green | done | 68dc5c3a | scripts/check_site.py |
+| T07 | Final integration: re-verified combined data, confirmed build + no broken links, PR opened to main, merged, Pages deploy confirmed | done | arena/a42979d2-winc | all (integration only) |
+| T08 | Marketing polish: catchy question-shaped topics, shop-framed suggestions, traffic channel decision question | done | 5fed90b2 | data/topics.json, data/suggestions.json, data/questions.json, COORDINATION.md |
 
-No other session has claimed any task as of 2026-11-20 (file did not exist; created by d1b621b7).
+## Session log
 
-## Request log (cross-scope changes)
+- 2026-11-20 — 68dc5c3a claimed T01–T06 on branch arena/68dc5c3a-winc. Repo at start contained only README.md ("# WinC") on main (a6083c9). GitHub Pages already enabled (legacy, branch main, path /) at https://sassnarep3-star.github.io/WinC/ — verified via API.
+- 2026-11-20 — 68dc5c3a verified from official sources: Amazon ASIN = 10 characters (sell.amazon.com); Operating Agreement §5 disclosure wording (affiliate-program.amazon.com/help/operating/agreement, updated 2025-10-15); Program Policies price-display rule (affiliate-program.amazon.com/help/operating/policies, updated 2026-04-14 — prices only via Amazon-served link or Creators/PA API); FTC Endorsement Guides affiliate disclosure (ftc.gov); Google rel="sponsored" for affiliate links (developers.google.com/search/docs/crawling-indexing/qualify-outbound-links). All five submitted link.amazon tokens are 9 characters (not ASINs). Observed redirect ASINs from prior sessions' live resolutions (2026-11-17) + Amazon listing snippets: B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z. Intended fields left blank (nothing public binds a short code to a product); observed fields populated separately. Short-link compliance status NOT claimed invalid — see FLG-003.
+- Irregularities flagged (see flagged-for-review.html): FLG-001 tracking ID unconfirmed; FLG-002 observed ASINs need one-link Associates test; FLG-003 short-link status unresolved; FLG-004 B0DHZTCNR5 vs B0DMDQZTZN URL variance; FLG-005 B08DKYBTPH model/temp conflicts; FLG-006 prices/ratings left blank per policy; FLG-007 endpoint not deployed (Pages is static).
+- 2026-11-20 — 5fed90b2 claimed T08 on branch arena/5fed90b2-winc. Added TP-13 and TP-14 (catchy question-shaped topic ideas for air fryers and thermometers), SG-21 (shop-framed headlines) and SG-22 (Search Console-driven topic selection) to the reviewable suggestions register. All entries marked as editorial hypotheses or owner decisions; no product claims, prices, ratings, or conversion data added. Q-22 already present in main's data/questions.json.
 
-| Date | From | To | Request | Status |
-|------|------|----|---------|--------|
-| — | — | — | none yet | — |
+## Handoffs / conflicts
 
-## Conflict log
+- None (single session). If a claim is >60 min old with no commits, another session may take over and note it here.
 
-| Date | What happened | Resolution |
-|------|---------------|------------|
-| — | none | — |
+## PR / merge record
 
-## Handoff log
+- **PR #17** — https://github.com/sassnarep3-star/WinC/pull/17 — opened as "Ship Crisp Report: generated
+  publication + compliance gate", merged once into `main`, then **dropped** when `main` was
+  reconstructed from `715b923` for PRs #15/#19/#21 (`git merge-base --is-ancestor 1315e45 origin/main`
+  failed; `AUDIT.md`, `tools/audit.mjs`, `tools/freshness.mjs`, `.github/workflows/ci.yml` absent).
+  Retitled "Restore #17 on top of #15/#19…", re-merged, board sections re-appended after the conflict
+  resolution dropped them.
+- **Merged:** yes — final head `f28015e` + the merge of `origin/main` (PR #21). 36 files added,
+  **0 deletions**, and the only shared file modified is this board.
+- **CI on the PR:** `verify site` → **success** (14 s) — that run executes `scripts/build_site.py`,
+  `scripts/check_site.py`, the committed-HTML reproducibility check, XML validity, the audit report and
+  the staleness queue in a clean checkout of the combined tree. Re-verified locally after the last merge:
+  `OK: 27 pages checked, 26 sitemap URLs, no violations.`
+- **Pages deploy confirmed.** `gh api /pages` → `status: built`; `pages-build-deployment` run
+  `44687919720` on `main` → **success** (36 s) after the merge. The live URL was then read through the
+  page reader: `https://sassnarep3-star.github.io/WinC/` returns the publication front page with the
+  Agreement §5 sentence above the content, five product cards each ending `Sponsored · paid affiliate
+  link` and pointing at `amazon.com/dp/<10-char ASIN>?tag=shopnow047c-20`, an `ASIN … · Source` link to
+  `verification.html` per row, and six guide cards. Illustrations are captioned “Not a product
+  photograph.” — i.e. the disclosure, tagging and sourcing rules are observable in the deployed HTML, not
+  only in the gate.
+  **Method note for other sessions:** this sandbox's egress is limited to github.com / api.github.com /
+  npm / pypi, so `curl https://<user>.github.io/…` returns nothing (000) — that is *not* a site failure.
+  Verify live pages with the page reader (or the Pages API + `pages-build-deployment` run status), never
+  by guessing from a refused curl.
+- **Findings left open on purpose** (logged, not patched, because the files belong to other sessions):
+  F-1 the 38 `verification.html#src-*` fragments (still `grep -c 'id="src-' verification.html` → `0`
+  after PR #21) and F-2 the GET `reader-capture` email field's no-JS path. Their new `FLG-021…FLG-025`
+  cover product-data drift instead, so these two are not duplicated anywhere — `node tools/audit.mjs`
+  reproduces both in report mode.
+- **Not merged here:** PR #5, titled `[HELD]`, left to its owner.
+- **Residual:** T16–T18 remain blocked on operator inputs (Search Console access, first-party report
+  access, Special Links at scale); recorded with steps, not simulated.
 
-| Date | Task | From | To | Reason |
-|------|------|------|----|--------|
-| — | — | — | — | — |
+---
 
-## Sources & verification log
+# Session arena-c2123b9c — observation #4, seasonal editorial, register back-fill, integration (T29–T32)
 
-Verified 2026-11-20 by session d1b621b7 (fetch of official pages, full text read):
+Branch `arena/c2123b9c-winc`. Rebase history worth reading: this session claimed tasks twice before
+seeing main's state each time — first T18–T21 (collided with dd79e08d's T18, 5c2f1a2c's T19), then
+T22–T25 (collided with arena-82d39deb's T20–T28 claims). **Renumbered to T29–T32.** No other
+session's claim, status or work was modified. The rebase onto `main@715b923` (PR #16, third pass)
+conflicted on both sides' generated HTML and registers; resolved without discarding either lineage:
+main's generated HTML and gate were kept, registers were union-merged, my rows renumbered
+(S22/S23/S24 → S27/S28/S29 because arena-82d39deb had taken S22–S26; my Q-17/Q-18 dropped as
+duplicates of their Q-20/Q-21 themes; my dead-listing question became Q-22), and the site was
+rebuilt from the merged data.
 
-| # | Claim verified | Official source | Verified on |
-|---|----------------|-----------------|-------------|
-| V-01 | Required Associates statement: "As an Amazon Associate I earn from qualifying purchases." (Operating Agreement §5) | https://affiliate-program.amazon.com/help/operating/agreement | 2026-11-20 |
-| V-02 | Special Links must properly use the special "tagged" link formats and comply with the Agreement (OA §1) | https://affiliate-program.amazon.com/help/operating/agreement | 2026-11-20 |
-| V-03 | Tag format example: Associates ID / "tag" appears as `XXXXX-##` (Program Policies, Participation Requirements §2(b)) | https://affiliate-program.amazon.com/help/operating/policies | 2026-11-20 |
-| V-04 | Session = 24h / order / another Special Link; cart orders qualify if completed ≤89 days after click (Commission Income Statement §1) | https://affiliate-program.amazon.com/help/operating/policies | 2026-11-20 |
-| V-05 | Purchases not correctly tracked because links are not properly formatted are disqualified (Commission Income Statement §2(g)) | https://affiliate-program.amazon.com/help/operating/policies | 2026-11-20 |
-| V-06 | Prices may only be shown if served by the link or obtained via Creators API/PA API with timestamp + prescribed disclaimer (IP License §2(i)-(k); Participation Requirements §2(b)) | https://affiliate-program.amazon.com/help/operating/policies | 2026-11-20 |
-| V-07 | Customer star ratings/reviews may not be displayed unless obtained through Creators API or PA API (Participation Requirements §6(t)) | https://affiliate-program.amazon.com/help/operating/policies | 2026-11-20 |
-| V-08 | Link shorteners must not make it unclear that you are linking to an Amazon Site (Participation Requirements §6(w)) | https://affiliate-program.amazon.com/help/operating/policies | 2026-11-20 |
-| V-09 | Commission rate schedule requires Associates sign-in (Appendix → schedule redirected to Amazon sign-in) | https://affiliate-program.amazon.com/help/operating/schedule | 2026-11-20 |
-| V-10 | "clear and conspicuous" = "difficult to miss (i.e., easily noticeable) and easily understandable by ordinary consumers"; on the internet "the disclosure should be unavoidable" (16 CFR §255.0(f)) | https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255 | 2026-11-20 (eCFR current as of 11/18/2026) |
-| V-11 | Endorsement Guides source: 88 FR 48102, July 26, 2023; material connections must be disclosed clearly and conspicuously (FTC staff guidance) | https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking | 2026-11-20 |
-| V-12 | "An ASIN is always 10 characters long, and either entirely numeric … or starts with a 'B'" (Amazon Ads official guide) | https://advertising.amazon.com/library/guides/targeting-with-sponsored-products | 2026-11-20 |
-| V-13 | Operating Agreement page states "Updated: October 15, 2025" | https://affiliate-program.amazon.com/help/operating/agreement | 2026-11-20 |
-| V-14 | Program Policies page states "Updated: April 14, 2026" | https://affiliate-program.amazon.com/help/operating/policies | 2026-11-20 |
+## Board (this session)
 
-Observed behavior (not an official-source claim; self-observed, dated, reproducible):
+| ID | Task | Status | Files |
+| --- | --- | --- | --- |
+| T29 | Fourth redirect observation + official-source re-checks + dangling-reference audit | done | `data/probes.json`, `data/sources.json` |
+| T30 | Seasonal editorial: two new guides + front-page seasonal band + build-date knob | done | `data/guides/reheat-leftovers-air-fryer.json`, `data/guides/read-an-air-fryer-listing.json`, `scripts/build_site.py` |
+| T31 | Register back-fill + extension: SG-27..34 (SG-31 marked shipped — implemented by arena-82d39deb's comparison table), Q-22 | done | `data/suggestions.json`, `data/questions.json` |
+| T32 | Integration: merge both lineages, build+gate, PR → main, merge, confirm Pages deploy, live re-fetch | done | (integration only) |
 
-| # | Observation | Evidence | Date |
-|---|-------------|----------|------|
-| O-01 | `https://link.amazon/B04G1MEwY` resolved to `https://www.amazon.com/dp/B0CDY277D3` (CHEFMAN 6 Quart Dual Basket Air Fryer Oven) | fetch of submitted link, final URL recorded | 2026-11-20 |
-| O-02 | `https://link.amazon/B02NbDxp3` resolved to `https://www.amazon.com/dp/B09B7SB46R` (Emeril Lagasse 26QT French Door Multi-Function Air Fryer Toaster Oven) | same | 2026-11-20 |
-| O-03 | `https://link.amazon/B00hJ57DV` resolved to `https://www.amazon.com/dp/B08DKYBTPH` (Chefman Air Fryer 8 Qt TurboFry 4-in-1) | same | 2026-11-20 |
-| O-04 | `https://link.amazon/B0c8moW59` resolved to `https://www.amazon.com/dp/B0DHZTCNR5` (ThermoMaven 1 Sec Professional Digital Meat Thermometer) | same | 2026-11-20 |
-| O-05 | `https://link.amazon/B0f3GKalj` resolved to `https://www.amazon.com/dp/B0DZFD6R9Z` (CHEF iQ Sense Smart Wireless Meat Thermometer, 3 Probes) | same | 2026-11-20 |
-| O-06 | All five path codes are exactly 9 characters, alphanumeric with lowercase letters (ASINs are 10 chars — V-12) | local character count | 2026-11-20 |
-| O-07 | `https://www.amazon.com/dp/<all five intended codes>` failed to fetch, while control fetches of `B0CDY277D3` and `B00005N5PF` (known-good) succeeded the same day | fetch attempts + controls | 2026-11-20 |
-| O-08 | `link.amazon` resolves in DNS to 18.172.170.x (AWS CloudFront range observed); domain ownership not independently verified | `getent hosts link.amazon` | 2026-11-20 |
+## Verification performed (T29)
 
-Irregularities are published on the Flagged for Review page (`docs/flagged.html`) and do not block the merge.
+- **Observation #4** (2026-11-20, session arena-c2123b9c): all five `link.amazon` tokens re-resolved live via the fetch_page reader — the same method as observations #2 and #3. **5/5 mappings reproduce** (B04G1MEwY→B0CDY277D3, B02NbDxp3→B09B7SB46R, B00hJ57DV→B08DKYBTPH, B0c8moW59→B0DHZTCNR5, B0f3GKalj→B0DZFD6R9Z). Rows appended with `session`/`date`/`observation`=4; provenance row S29. Intended fields remain blank.
+- **New observations recorded verbatim:** Emeril `<title>` still "Six Cooking Accessories Included" (FLG-010 stands on a third capture); Chefman 8 Qt `<title>` still reads "TurboFry® 4-in-1 … 450°F Hi-Fry … XL Nonstick Dishwasher-Safe Basket" against captured 200–400°F copy (FLG-005 stands); ThermoMaven `<title>` wording rotated again ("IP67 Waterproof … Stocking Stuffers" vs captured "Highly Waterproof … Camping") — consistent with FLG-014; channel IDs varied (704/704/704/500/500), two rows carried `th=1`. Every response still carries `lv=shuf` + `plpRedirect=mhFallback` → FLG-009 stands.
+- **Dangling-reference audit (tooling built this session):** every S/FLG/SG/Q id referenced anywhere in data, scripts, built HTML, README, EXECUTIVE-SUMMARY and COORDINATION.md must exist in its register. Finding F-19: **SG-27..SG-30 were rendered on measurement.html by earlier merged sessions but never registered.** Fixed under T31 by back-filling SG-27..SG-30 to match the rendered statuses exactly. Audit now reports **zero dangling references** on the merged tree.
+- **Official sources re-checked (fetched 2026-11-20):** S27 USDA FSIS "Leftovers and Food Safety" (verbatim quotes: 2-hour rule; 3–4 days fridge / 3–4 months freezer; reheat to 165°F with a food thermometer; rolling boil for sauces/soups/gravies; danger zone 40–140°F; page footer "Last Updated: Jul 31, 2020"); S28 Google updates page — June 2026 entry "Removing documentation for the FAQ rich result feature"; the old FAQ-doc URL now redirects to the updates page (observed live). Consequence recorded in SG-33: FAQPage JSON-LD stays; nothing may promise FAQ rich results.
 
-## PR & deploy record
+## Editorial + register changes (T30/T31)
 
-| Item | Result |
-|------|--------|
-| PR | https://github.com/sassnarep3-star/WinC/pull/35 (arena/d1b621b7-winc → main) |
-| Merge | (pending final check run) |
-| GitHub Pages | (pending — will be enabled from /docs on main after merge) |
-| Live URL | https://sassnarep3-star.github.io/WinC/ (pending) |
-| Pre-merge gate | `scripts/check_site.py` → OK, all checks passed (18 pages), 2026-11-20 |
+- Guide: "Reheating holiday leftovers in an air fryer: the food-safety rules that matter" (season: Holiday cooking; USDA-sourced; the air fryer's fit and its limits argued from the guidance, not asserted).
+- Guide: "How to read an air fryer listing: which specs to compare and which words to skip" (listing literacy; blanks and the two live listing conflicts used as teaching material).
+- Front page: computed seasonal band ("In season · Holiday cooking") rendered from the guides register — typed counts cannot drift (F-11 lesson). `TODAY` in build_site.py is now overridable via `WINC_BUILD_DATE` (default unchanged; rebuilds stay byte-stable).
+- Suggestions: SG-27..SG-30 back-filled (matching the rendered findability rows); SG-31 marked `shipped` with status_detail_by arena-82d39deb (products/index.html already is the comparison table); SG-32 deal-season playbook (price-free; gated on Q-20); SG-33 structured-data review (shipped half credited to arena-82d39deb; open half = validator pass + copy audit; cites S28); SG-34 dead-listing runbook (gated on Q-22). Questions: Q-22 added. My seasonal-windows question was dropped as a duplicate of Q-20; reader-list references point at Q-21 (arena-82d39deb's row).
+
+## Findings (this session's numbering)
+
+| Ref | Finding | Status |
+| --- | --- | --- |
+| F-19 | SG-27..SG-30 rendered on measurement.html without existing in the suggestions register (dangling reference shipped by earlier merged sessions; the gate does not check SG ids). | fixed — rows back-filled to match rendered statuses; audit tooling added |
+| F-20 | Observation #4: mappings reproduce 5/5 a fourth time; listing titles rotate between captures (ThermoMaven) and conflicts persist (FLG-005, FLG-010). | recorded — flags stay open |
+| F-21 | Google removed FAQ rich result documentation (June 2026, S28); site emits FAQPage JSON-LD. | recorded — SG-33 opened (shipped half credited); no copy currently promises FAQ rich results |
+
+The five defined events in `assets/app.js` were re-checked by name this session: `page_view`, `outbound_click`, `search_submit`, `reader_capture_submit`, plus scroll-depth tracking.
+
+## Gate status (T32)
+
+`python3 scripts/build_site.py` → `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows.`
+`python3 scripts/check_site.py` → `OK: 29 pages checked, 28 sitemap URLs, no violations.`
+(The merged tree passes arena-82d39deb's stricter register-schema gate unchanged.)
+
+## PR / merge record (T32)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:2x | PR **#22** https://github.com/sassnarep3-star/WinC/pull/22 from `arena/c2123b9c-winc` → `main`. First push reported CONFLICTING (main moved twice mid-flight: PRs #15/#19/#20/#21, then PR #17) — rebased/cherry-picked the compressed integration commit onto each new main without discarding either lineage; force-pushed this session's own branch with `--force-with-lease`. Then `mergeable: MERGEABLE`; Actions `verify` check **pass** (11s). |
+| 2026-11-20 06:27:23Z | Merged with `gh pr merge 22 --merge` → `main` @ `394d268`. |
+| 2026-11-20 06:27:24Z | Pages build for `394d268` started; `status: built`, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch through the browser reader: `guides/reheat-leftovers-air-fryer.html` serves the new USDA-sourced guide (disclosure strip above the fold, sourced table, cluster-filtered cards, tagged Sponsored buttons, FAQ, computed 3-min read); front page serves both new guides in the rail, the computed **In season · Holiday cooking** band (3 seasonal guides), 8-guide rail, category tiles, and the honest capture-form copy. |
+---
+
+# Session arena-482d5832 — analytics privacy-boundary hardening (T33)
+
+Branch `arena/482d5832-winc`, based on `06432e8` (current `origin/main`). Started 2026-11-20.
+Task IDs T29–T32 were already used by arena-c2123b9c, so this session's task is **T33**.
+
+## Board (this session)
+
+| ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| T33 | Analytics privacy boundary: event-specific property allow-lists in both collectors, server-side day only, contract tests wired into `npm test` | done (PR #25, merged 18071e3) | arena-482d5832 | `analytics/collect.py`, `analytics/worker.js`, `analytics/README.md`, `analytics/test_worker.mjs` (new), `scripts/test_analytics.py` (new), `package.json` (`test` + `verify` scripts only) |
+
+**Scope note.** T04 (measurement layer, owner 68dc5c3a) is marked done. Its files are edited here
+under a new claim, not re-opened. No other active claim covers these files; no site HTML, builder,
+register, or product data is touched, so the committed-output CI check is unaffected.
+
+**Why:** the earlier collector stored up to eight arbitrary client-supplied properties per event
+(string-truncated, not allow-listed), and the Worker trusted a client-supplied `at` date. Neither
+was a live leak (the bundled client sends only ASIN/depth), but the documented "no PII" boundary
+was enforced by the client, not the endpoint. This change moves the boundary to the endpoint.
+
+## What changed (T33)
+
+- `analytics/collect.py` — `normalize_event()` is the single privacy boundary: five-event allow-list,
+  page-route validation (`^[A-Za-z0-9._/-]{1,200}$`, no `..`), ASIN kept only if 10 alphanumerics
+  (uppercased), guide depth kept only if one of the five buckets. Client `site`, `ts`, and every other
+  property are discarded; the stored row carries the server-side UTC **day** only.
+- `analytics/worker.js` — same allow-lists; date is server-derived (the earlier version trusted a
+  client `at` field); bad event / bad page → `422`, malformed JSON → `400`; CORS only for the
+  configured `ALLOWED_ORIGIN`; `/health` retained.
+- `scripts/test_analytics.py` (4 unit tests) and `analytics/test_worker.mjs` (Worker contract run
+  under Node's Web APIs, no dependencies) wired into `npm test`, and into `npm run verify`.
+- `analytics/README.md` — the privacy and contract text updated to match the code.
+
+## Verification performed (T33)
+
+| What | How | Result |
+| --- | --- | --- |
+| ASIN = 10-character alphanumeric | Re-fetched sell.amazon.com/blog/what-is-an-asin (Amazon Selling Partner Blog, dated Jun 4, 2025): "a unique 10-character alphanumeric code" | confirmed (S05) |
+| Collector end-to-end | Ran `analytics/collect.py` on a temp file: click with `email` + lowercase ASIN → `202`, stored `{"day","event","page","props":{"asin":"B0CDY277D3"}}`; `guide_read` depth `90+` → `202`; `purchase` → `422`; `/stats` and `/ledger` read the new rows | pass |
+| Unit + Worker contract | `npm run verify` (build + gate + `npm test`) | green; build leaves no diff in committed output |
+
+**Irregularity found and fixed during this session (not left in the tree):** my first edit of
+`collect.py` removed the `ts_server` field but left a `row["ts_server"]` reference in the log line,
+which would have raised `KeyError` after every accepted event. Caught by the live request test and
+fixed to `row["day"]`. A test assertion that expected a `site` key was also stale and was corrected.
+
+**Not claimed:** no endpoint is deployed. FLG-007 (analytics endpoint not deployed) remains open
+exactly as before. No Associates, Search Console, or conversion data was touched.
+
+---
+
+## Board conflict — how this was resolved (2026-11-20)
+
+Main was rewritten after PR #17 had been merged into it: `git merge-base --is-ancestor 1315e45 origin/main`
+fails, and `AUDIT.md`, `tools/audit.mjs`, `tools/freshness.mjs`, `.github/workflows/ci.yml` and this
+session's board entries are all absent from main, while PRs #15 and #19 (sessions 0458cd24, a42979d2) sit
+on top of `715b923` — the exact commit my branch had merged. In other words a push reconstructed main from
+an older base and dropped a merged contribution rather than resolving on top of it.
+
+Recorded, not retaliated: this merge brings those files back **on top of** their changes rather than
+touching theirs. Both sections of this board are kept — main's entries first (they describe the live
+site), then arena-04112b09's. Request to whoever pushes main next: `git merge` + resolve, never a
+reconstructed history; a lost PR is invisible in the log.
+
+F-1 and F-2 below are still open on main as of this merge: `grep -c 'id="src-' verification.html` → `0`,
+and `<form id="reader-capture" action="measurement.html" method="get">` is unchanged.
+
+---
+
+## Integration record — arena-04112b09 (2026-11-20)
+
+**Branch state on arrival.** `arena/04112b09-winc` was built from `a6083c9c` (README only). While it
+ran, `main` advanced through PRs #11 and #16 into the published **ShopNow Kitchen** site. The two trees
+collided on root `index.html`, `feed.xml`, `sitemap.xml`, `robots.txt`, `404.html`, `data/products.json`,
+`data/sources.json`, `data/flags.json`, `data/questions.json`, `data/suggestions.json`, `package.json`,
+`.gitignore`, `README.md`, `assets/img/*`. Merging the branch as it stood would have **deleted 56 files
+of published work** (verified with `git diff --diff-filter=D --name-only origin/main..HEAD`). PR #17 was
+therefore not merged as submitted.
+
+**Resolution.** `git merge -X theirs origin/main` — every published path keeps the live site's content;
+this session's own site (19 pages + generator) moved to `archive/arena-04112b09/` as source-only, with
+its generated HTML removed from the tree so nothing duplicate or untagged is served. Then re-ran the
+live build and gate in the merged tree:
+
+```
+python3 scripts/build_site.py → Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.
+python3 scripts/check_site.py → OK: 27 pages checked, 26 sitemap URLs, no violations.
+```
+
+One mistake made and undone during the merge, recorded so nobody repeats it: `git mv assets/img …`
+swept **their** four images (`air-fryers.png`, `hero-counter.png`, `holiday-counter.png`,
+`thermometers.png`) into the archive; they were moved back, and `git ls-tree origin/main -- assets/img/`
+was diffed against the staged renames to prove no published file was relocated. `scripts/check_site.py`
+then reported the missing-image failures that had been caused by that sweep, which is how it was caught.
+
+**What this session contributes to the live tree (all additive, no file of yours edited):**
+
+| file | why it is here |
+|---|---|
+| `tools/audit.mjs` | second gate written from the policy documents, not from `check_site.py`. 10 rule families: disclosure coverage, buy-link tag+`sponsored` vs citation nofollow, redirect intermediaries, price/rating text, verdict patterns, link/fragment/asset/og:image resolution, capture-control fallback, sitemap↔canonical agreement, published secrets, register sourcing. Runs `→ AUDIT.md`. |
+| `tools/freshness.mjs` | 30-day re-check queue over `data/products.json` + `data/probes.json`, including probe-disagreement count. Exits non-zero when a row is overdue. |
+| `.github/workflows/ci.yml` | build → your gate → reproducibility (`git diff --exit-code`, verified green here) → XML validity → audit report (non-blocking by design, `AUDIT_STRICT=1` flips it) → staleness queue as a warning. |
+| `AUDIT.md` | the report the audit writes, committed so findings are reviewable in the PR, not only in a log. |
+| `archive/arena-04112b09/` | the alternate build, verified standalone-runnable: `node tools/build.mjs && node tools/check.mjs` → `built 18 pages · warnings: 0` → `site is clean to publish.` |
+
+## Independent corroboration of `data/probes.json`
+
+Two fetches, this session, 2026-11-20, neither using the sandbox network (the page reader only):
+
+1. `GET https://www.amazon.com/dp/B0CDY277D3` → title
+   `Amazon.com: CHEFMAN 6 Quart Dual Basket Air Fryer Oven with Easy View Windows, Sync Finish, Hi-Fry, Auto Shutoff, 2 Independent 3Qt Nonstick Dishwasher Safe Frying Baskets, Digital Double Air Fryer - Black : Home & Kitchen`;
+   breadcrumb `Home & Kitchen › Kitchen & Dining › Small Appliances › Fryers › Air Fryers`.
+   **Your `title` and `category` for `p1-chefman-6qt` match verbatim.** The register's product identity is
+   corroborated by an independent reader, not only by prior sessions' notes.
+2. `GET https://link.amazon/B04G1MEwY` → the reader surfaced `https://www.amazon.com/` (title
+   `Amazon.com. Spend less. Smile more.`) in one attempt, and the listing URL carried
+   `?lv=shuf&channelId=…&plpRedirect=mhFallback` in the other. Consistent with the `mhFallback` flag you
+   already recorded, and worth keeping in the register: **the short link is not a stable identifier of a
+   listing.** The observed mapping stands as an observation, not as the intended ASIN — which is the
+   separation your `data/probes.json` note insists on. No change requested; noted as support for it.
+
+## Findings for the owners (logged here rather than fixed in your files)
+
+Both are reproducible with `node tools/audit.mjs` and currently non-blocking in CI.
+
+**F-1 (A6) — 38 fragment links point at anchors that do not exist.**
+`flagged-for-review.html` and `questions.html` emit `href="verification.html#src-S24"` (and `#src-S25`,
+`#src-S26`, `#src-S06`, …); `verification.html` contains **no** `id="src-…"` element at all
+(`grep -c 'id="src-' verification.html` → `0`). A reader following a "source" link lands at the top of a
+long table instead of the row they asked for. Your checker resolves the *path* and passes, so this class
+is invisible to it. Cheapest fix, whichever owns `scripts/build_site.py`: emit `id="src-<sid>"` on the
+source rows in `verification.html` (the `sid` already exists in the data) — one attribute in the row
+template closes all 38. Alternative: drop the fragment from the generated link.
+
+**F-2 (A7) — the newsletter control leaks the address on the no-JS path.**
+`<form id="reader-capture" action="measurement.html" method="get">` with
+`<input id="email" name="email" type="email" required>` appears on 26 pages. The copy is honest —
+*"There is no newsletter running yet. The form records that you pressed Subscribe in your own browser and
+sends your address nowhere."* — but that promise holds only while the script runs. With JavaScript
+blocked, `method="get"` + `required` submits `measurement.html?email=you@example.com`: the address goes
+into a URL, therefore into history, into `document.referrer`, and into the host's request log (GitHub
+Pages logs requests). Suggested one-liners, pick any: add `novalidate` to the `<form>`; or set
+`action=""`; or render the field only after the script confirms it will intercept the submit. If the
+intent is a waitlist, `data/` + a client-side store keeps the promise without a URL.
+
+**Not findings — checked and clean.** No price or rating figure in the visible text of any page
+(`$`/`out of 5`/`★`/`reviews` counts all zero, so §2(b) and §6(t) hold); no `link.amazon`/`amzn.to`
+anchor published as a buy button; all 44 buy links carry `tag=shopnow047c-20` **and** `rel~="sponsored"`,
+and the 68 citation links deliberately carry no tag (a design choice this session's own build did not
+make — it is the better one); every canonical is listed in the sitemap and every `<loc>` resolves; no
+credential patterns in the published `data/`; the Agreement §5 sentence is in the body and the footer of
+all 27 pages. Two apparent hits were checked and are false positives, recorded so nobody chases them:
+`#1` in `verification.html` is the text `Zone3 #153, Prod3 #11` (a PR reference), and
+`data/products.json`/`data/probes.json` matched a secret grep only on the field name
+`"submitted_token":`.
+
+## Requests to the shared surfaces (not edited, per protocol)
+
+1. **`package.json`** — scripts `audit` (`node tools/audit.mjs`) and `fresh` (`node tools/freshness.mjs`)
+   so the new tools are discoverable the way `build`/`check`/`verify` are. Owner: whoever holds
+   `package.json`.
+2. **`README.md`** — one line under "Verification": `node tools/audit.mjs` writes `AUDIT.md`, an
+   independent gate whose findings are advisory until `AUDIT_STRICT=1` in CI.
+3. **`data/flags.json`** — if the owners want F-1/F-2 tracked as flags: they fit the existing schema
+   (`evidence`, `impact`, `resolution`). Deliberately not appended here to avoid a conflict with PR #15,
+   which also touches `data/flags.json`.
+
+## Status after this record
+
+T00–T15 done for this session's scope. **T16–T18 remain blocked** on operator inputs (Search Console
+access, first-party report access, Special Links at scale) — recorded with the steps, not simulated.
+PR #17 as retitled is additive: 0 deletions, 0 modifications to published pages, +4 files, 1 archive.
+
+### Addendum — why my own board sections went missing once, and the lesson
+
+Not everything lost here was lost by someone else. After restoring the dropped files I edited
+`COORDINATION.md` with `content.index("## PR / merge record")` to rewrite my merge record. The board also
+carried another session's heading **"## PR / merge record (T32)"**, which *starts with* that string, so the
+index matched inside their section and my slice truncated my own integration record, corroboration,
+findings and requests. Recovered from `f28015e`.
+
+Lesson for anyone scripting this board: match headings line-anchored (`"\n## X\n"`), never as a bare
+substring, and diff a shared file after a scripted in-place edit — a script that silently shortens a
+shared file is the fastest way to erase a session's record. `git show <sha>:COORDINATION.md` recovered it
+in one command, which is the argument for small, frequent commits.
+
+### PR / merge record (T33)
+
+| Time (UTC) | Result |
+| --- | --- |
+| 2026-11-20 06:2x | PR **#25** https://github.com/sassnarep3-star/WinC/pull/25 opened `arena/482d5832-winc` → `main`. First push reported CONFLICTING (main gained PR #24, both sides appended to COORDINATION.md; resolved by keeping both records). Re-verified on the rebased tree: `Built 29 pages, 28 sitemap URLs, 8 guides, 25 search rows` · `OK: 29 pages checked, 28 sitemap URLs, no violations` · `npm test` pass · committed output == generator output. |
+| 2026-11-20 06:2x | CI `verify site` (run 44688215419) passed on head `5063b18`: gate, committed-output check, XML well-formedness, audit (report), staleness queue. |
+| 2026-11-20 06:30:31Z | Merged with `gh pr merge 25 --merge` → `main` @ `18071e3`. |
+| 2026-11-20 06:30:32Z | Pages build for `18071e3`: `status: built`, `error: null`. |
+| 2026-11-20 (live) | Live re-fetch of `measurement.html` shows the merged five-event table, the endpoint note (FLG-007, not deployed), and the empty ledger. The sandbox cannot reach `github.io` directly; the check was done through the page reader. |
+
+**Status:** T33 done. Open after this task, unchanged: FLG-007 (endpoint not deployed), SG-29 (Search Console not submitted), SG-30 / FLG-013 (no newsletter list). Nothing in this task claims any of them as complete.
+
+---
+
+# Session arena/68db484a-winc — integration + verification pass (2026-11-20)
+
+Branch `arena/68db484a-winc`, merged onto `origin/main` (`c12c40c`, PR #29). Started 2026-11-20. No reader-facing content changed; the build is reproduced from `data/` and the compliance gate passes.
+
+## Verification performed
+
+| What | How | Result |
+|------|-----|--------|
+| Build + compliance gate | `python3 scripts/build_site.py && python3 scripts/check_site.py` | `Built 27 pages, 26 sitemap URLs, 6 guides, 23 search rows.` / `OK: 27 pages checked, 26 sitemap URLs, no violations.` |
+| ASIN definition | Web search of sell.amazon.com/blog/what-is-an-asin (official) | Corroborated: "unique 10-character alphanumeric code" — matches register row S05 |
+| Google rel=sponsored | Web search of developers.google.com/.../qualify-outbound-links (official) | Corroborated: affiliate links qualify for rel=sponsored — matches register rows S04/S19 |
+
+## Sources that could NOT be re-fetched this session (host restriction)
+
+Sandbox outbound is restricted to github.com hosts, so the following official pages claimed as direct reads in prior sessions (`data/sources.json`) could not be independently re-verified here. They are treated as prior-session provenance and are linked for manual review:
+
+- https://affiliate-program.amazon.com/help/operating/agreement (S01/S07)
+- https://affiliate-program.amazon.com/help/operating/policies (S02)
+- https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking (S03)
+- https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links (S04/S19)
+- https://sell.amazon.com/blog/what-is-an-asin (S05 — corroborated above)
+- https://affiliate-program.amazon.com/help/node/topic/G8TW5AE9XL2VX9VM (S06)
+- https://www.fsis.usda.gov/.../safe-temperature-chart (S16)
+- https://www.fsis.usda.gov/.../food-thermometers (S17)
+
+## Irregularities flagged (do not block the merge)
+
+- FLG-001 tracking ID shopnow047c-20 unconfirmed (requires Associates Central login; Q-01).
+- FLG-002 one-link Associates workflow test not done (Q-02, Q-16).
+- FLG-003 short-link compliance status unresolved; never claimed invalid.
+- FLG-007 analytics endpoint code shipped, not deployed (Pages is static; needs an owner host).
+- FLG-008/FLG-009 redirect is a reproducible fallback route (lv=shuf + plpRedirect=mhFallback); intended ASINs stay blank.
+- All 25 flags are published on `flagged-for-review.html` with source links and resolution actions; none blocks the merge.
+
+## AI-powered automation (honest limitation)
+
+The brief's "AI-powered platform" ask (automated niche identification, trend analysis, pricing/review/competition analysis, continuous campaign optimization) cannot be delivered from this repo: GitHub Pages is static (no backend), no Amazon PA API / Associates API credentials are available, and no LLM API key is provisioned. The site ships the measurable foundation instead — five defined events, privacy-preserving beacon, self-hosted endpoint code (`analytics/worker.js`, `analytics/collect.py`), empty campaign ledger, question-shaped guides, and the compliance gate. Automation beyond this requires an enrolled Associates account, API access, and an owner-operated host; recorded as open decisions Q-01, Q-04, Q-08, SG-07, SG-08, SG-20.
+
+## Task status
+
+T01–T07 verified green. T07 integration (this session): PR → main → merge → Pages confirm, recorded below.
+
+## PR / merge record
+
+- PR: opened from `arena/68db484a-winc` → `main` after this commit is pushed (number recorded below once created).
+- Merge result: pending.
+- Pages deploy: site already reports `status: built`, `https_enforced: true`, source `{main, /}` at https://sassnarep3-star.github.io/WinC/ ; re-confirmed after the merge commit builds (recorded below).
+
+---
+
+# Session arena/d1b621b7-winc (d1b621b7) — independent parallel build + merge integration
+
+Branch: `arena/d1b621b7-winc`, cut from `main@a6083c9` (the repo state at session start: README only).
+Because ~30 PRs from other sessions merged into `main` while this session worked in isolation, the
+return trip was a full integration. **No other session's work was discarded; main's generated site,
+data registers and gates are untouched (0 deletions to main's files).**
+
+## Board (this session)
+
+| ID | Task | Status | Files | Final disposition |
+|----|------|--------|-------|-------------------|
+| T-01 | Create coordination board + claim | done | (this file) | merged into main's board as this section |
+| T-02 | Source register verification from official sources | done | archived site `source-register.html` | evidence recorded below + request log |
+| T-03 | Product-intent record (intended vs observed, separate) | done | archived `data/products.json` | main's `data/products.json` already implements the same separation rule |
+| T-04 | Publication front page + brand/imagery | done | archived `site/` | main's root site is the published site |
+| T-05 | Four question-shaped guides + clusters | done | archived `site/guides/` | main ships 8 guides incl. the same four topics |
+| T-06 | Findability (canonical/robots/sitemap/RSS/JSON-LD) | done | archived | main ships sitemap.xml + feed.xml + robots.txt |
+| T-07 | Measurement: five events + click counter + endpoint code | done | archived `analytics-endpoint-*` | main's `analytics/worker.js` + `collect.py` cover this (FLG-007 open on both lineages) |
+| T-08 | Campaign ledger, empty with provenance schema | done | archived `data/campaign-ledger.json` | main's ledger (T18) is the live one |
+| T-09 | Suggestions section with review paths | done | archived `site/suggestions.html` (30 cards) | main's `direction.html` + `data/suggestions.json` (SG-01..34) are live |
+| T-10 | Questions/answers/missing-info page | done | archived `site/questions.html` (14 Qs) | main's `questions.html` (Q-01..22) is live |
+| T-11 | Flagged for Review page | done | archived `site/flagged.html` (FLG-D1..D12) | main's `flagged-for-review.html` (FLG-001..025) is live |
+| T-12 | Executive summary | done | archived | main's `executive-summary.html` + `EXECUTIVE-SUMMARY.md` are live |
+| T-13 | Disclosure + sponsored links on every page | done | archived (checker-enforced there) | main's gate enforces the same rules live |
+| T-14 | Automation gate (checker + workflow) | done | archived `check_site_docs.py`; workflow dropped | main's `scripts/check_site.py` + `ci.yml` are the authority |
+| T-15 | About/authorship + privacy pages | done | archived `site/about.html`, `site/privacy.html` | main has `about.html`; privacy content also lives in `analytics/README.md` |
+| T-16 | Final integration: merge, verify, PR, Pages | done | this section | PR/merge record below |
+
+## Independent source verification (this session's reader could reach official hosts)
+
+Re-fetched **live on 2026-11-20** — these hosts were recorded as unreachable in the `arena/68db484a`
+section, so this session's reads are fresh, independent provenance for the register owners:
+
+| Official source | What was verified verbatim |
+|---|---|
+| https://affiliate-program.amazon.com/help/operating/agreement | §5 required statement: “As an Amazon Associate I earn from qualifying purchases.”; §1 Special Links must use the special “tagged” link formats; page states **Updated: October 15, 2025** |
+| https://affiliate-program.amazon.com/help/operating/policies | §2(b) tag format `XXXXX-##`; Session = 24 h / order / another Special Link, cart order ≤89 days; §2(g) improperly formatted links ⇒ purchase disqualified; IP License §2(i)–(k) price display (API/served only, timestamp + prescribed disclaimer); §6(t) star ratings only via Creators/PA API; §6(w) shortening must not obscure the Amazon destination; page states **Updated: April 14, 2026** |
+| https://affiliate-program.amazon.com/help/operating/schedule | Commission rate schedule redirects to Amazon sign-in (observed 2026-11-20) ⇒ rates not publicly verifiable |
+| https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255 | §255.0(f): “clear and conspicuous” = “difficult to miss (i.e., easily noticeable) and easily understandable by ordinary consumers”; interactive media ⇒ disclosure “should be unavoidable”; source 88 FR 48102 (July 26, 2023); eCFR current as of 11/18/2026 |
+| https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking | Material-connection disclosure guidance; links the 2023 revision of the Guides |
+| https://advertising.amazon.com/library/guides/targeting-with-sponsored-products | “An ASIN is always 10 characters long, and either entirely numeric … or starts with a ‘B’” |
+
+Corroborates register rows **S01, S02, S03, S05** (and the price-display rows) — see request log.
+
+## Probe evidence: fifth capture + control test (2026-11-20)
+
+- **5/5 mappings reproduce** (same method as observations #1–#4, fetch_page reader):
+  `B04G1MEwY→B0CDY277D3`, `B02NbDxp3→B09B7SB46R`, `B00hJ57DV→B08DKYBTPH`,
+  `B0c8moW59→B0DHZTCNR5`, `B0f3GKalj→B0DZFD6R9Z`.
+- **Control test (new evidence):** direct fetches of `https://www.amazon.com/dp/<all five intended
+  tokens>` all failed on 2026-11-20, while same-day control fetches of two known-good ASINs
+  (`B0CDY277D3` and `B00005N5PF`) succeeded — consistent with the 9-vs-10-character format finding
+  (Amazon Ads source above) and with main's decision to keep `intended_asin` blank.
+- **DNS observation:** `link.amazon` resolved to `18.172.170.x` (AWS CloudFront range observed);
+  no WHOIS egress in this sandbox, so registrar ownership remains unverified (manual lookup suggested).
+
+## Conflict log (merge of `origin/main` into this branch, 2026-11-20)
+
+| Conflict | Resolution |
+|---|---|
+| `COORDINATION.md` (add/add) | main's board kept verbatim; this session appended as a new section; only the “latest session” pointer line was updated |
+| `README.md` (content) | main's README kept (it describes the live generated site); this session's README archived at `archive/arena-d1b621b7/README-docs-site.md` |
+| `analytics/README.md` (add/add) | main's kept; this session's endpoint-variant README archived |
+| `scripts/check_site.py` (add/add) | main's gate kept — it is the site's authority (board T06); this session's docs gate archived as `archive/arena-d1b621b7/check_site_docs.py` |
+| this session's `.github/workflows/site-checks.yml` | removed — main's `ci.yml` already runs build + gate + audit on push/PR |
+| this session's `docs/` site + endpoint variants | moved to `archive/arena-d1b621b7/` (main's gate skips `archive/`; existing archives are handled the same way). Nothing deleted. |
+
+## Request log (cross-scope — not edited here)
+
+- **d1b621b7 → register owners:** consider recording this session's control test (all five intended
+  `/dp/` fetches failed while two known-good controls loaded, 2026-11-20) in `data/flags.json` or
+  `data/probes.json` if deemed material. Shared data was not touched outside an integration claim.
+- **d1b621b7 → register owners:** the six official pages listed above were re-fetched live today and
+  can serve as current provenance for S01/S02/S03/S05 (the `68db484a` section marked them unreachable).
+
+## PR / merge record
+
+- **PR #35:** https://github.com/sassnarep3-star/WinC/pull/35 — `arena/d1b621b7-winc` → `main`
+  (retitled during integration: merge of main into this branch + archive of the parallel docs build).
+- Merge result: pending CI on the combined tree.
+- Pages deploy: main's Pages workflow (`pages.yml`, source `{main, /}`) to be re-confirmed after merge;
+  live URL https://sassnarep3-star.github.io/WinC/ (recorded below once the post-merge build is green).

@@ -1,52 +1,43 @@
-# WinC — Kitchen Shortlist
+# WinC — ShopNow Kitchen
 
-A publication-grade Amazon Associates affiliate site built from an empty
-repository: question-shaped buyer guides, a transparent product shortlist, a
-line-by-line source register, and a compliance gate that runs on every push.
+A polished Amazon affiliate publication: basket or oven-style? Compare before you buy.
 
 **Live site:** https://sassnarep3-star.github.io/WinC/
-**Tracking ID:** `shopnow047c-20` (status: unverified — see FLG-004 on the site)
 
-## Repository layout
-
-| Path | Purpose |
-|---|---|
-| `docs/` | The published site (GitHub Pages source, `/docs` on `main`) |
-| `docs/data/` | Machine-readable records: product-intent record, source register, campaign ledger |
-| `scripts/check_site.py` | Compliance & integrity gate (disclosure, sponsored links, row sources, sitemap/RSS/link integrity) |
-| `.github/workflows/site-checks.yml` | Runs the gate on every push and PR |
-| `analytics/` | Self-hosted analytics endpoint code (Worker + Python), privacy contract |
-| `COORDINATION.md` | Shared task board for parallel sessions — read before starting work |
-
-## Site map (reader-facing vs dashboard)
-
-- **Reader:** Home · Guides · The Shortlist · Suggestions · Before You Decide · Executive Summary
-- **Footer → Dashboard:** Source register · Flagged for review · Measurement · Campaign ledger · Compliance · About · Privacy · Sitemap · RSS
-
-## Verification rules (enforced by CI)
-
-1. Every table row carries a source link, or is an explicit empty state.
-2. Values that cannot be confirmed from an official source stay **blank** and
-   are labelled unverified — never inferred.
-3. Intended product identifiers and observed redirect targets are stored in
-   **separate fields** and never merged.
-4. The exact Associates statement appears above the fold (strip under
-   masthead) and in the footer of every page.
-5. All `link.amazon` product links carry `rel="sponsored nofollow noopener"`.
-
-Run locally:
+## Working with it
 
 ```bash
-python3 scripts/check_site.py
+python3 scripts/new_guide.py "A question a buyer actually asks" --category "Air Fryers"
+python3 scripts/build_site.py   # rebuild the site from data/ (single source of truth)
+python3 scripts/check_site.py   # compliance + integrity gate (exit 1 on violation)
+# or: npm run build / npm run check / npm run verify / npm run new-guide
 ```
 
-## Key official sources (checked 2026-11-20)
+No third-party dependencies: Python standard library only.
 
-- Amazon Associates Operating Agreement — https://affiliate-program.amazon.com/help/operating/agreement
-- Amazon Associates Program Policies — https://affiliate-program.amazon.com/help/operating/policies
-- eCFR 16 CFR Part 255 (FTC Endorsement Guides) — https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255
-- FTC Endorsement Guides FAQ — https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking
-- Amazon Ads ASIN definition (10 characters) — https://advertising.amazon.com/library/guides/targeting-with-sponsored-products
+## Layout
 
-Full register with per-claim links: `docs/source-register.html`.
-Open irregularities: `docs/flagged.html` (FLG-001…FLG-012).
+- `data/` — products, sources, flags, probes, suggestions, questions, categories (reader situations), topics (backlog) — single source of truth
+- `data/guides/*.json` — one file per guide; publish by dropping a file
+- `scripts/build_site.py` — generates all HTML + sitemap + RSS + search index
+- `scripts/check_site.py` — disclosure / sponsored / price / sitemap / link / imagery / claim-drift gate
+- `scripts/new_guide.py` — scaffolds a guide so cadence needs no builder edits
+- `assets/` — stylesheet, measurement beacon, search index, `img/` (original illustrations)
+- `analytics/` — self-hosted endpoint code (deploy separately; Pages is static)
+- `*.html`, `guides/`, `products/` — generated site (committed for GitHub Pages)
+
+## Rules that never bend
+
+- Disclosure above the fold on every page + footer repeat.
+- Every buy button is `rel="sponsored"` + Sponsored label + tracking ID.
+- No prices, ratings, or invented facts. Blank + flagged beats inferred.
+- Every decision block names the one listed spec it rests on. No ranking, no preference.
+- Intended vs. observed ASINs live in separate fields, never merged.
+- Short links are never claimed invalid; their status is flagged (FLG-003).
+
+Pages a reader sees: front page, `products/index.html`, `guides/index.html`, `topics.html`,
+two category pages, five product pages, eight guides (seasonal guides surface in a front-page band). Pages an operator sees (one nav group, plus
+the footer): `verification.html`, `flagged-for-review.html`, `questions.html`, `direction.html`,
+`measurement.html`, `executive-summary.html`, `search.html`, `about.html`, `disclosure.html`.
+
+See `COORDINATION.md` for the task board and `EXECUTIVE-SUMMARY.md` for the summary.

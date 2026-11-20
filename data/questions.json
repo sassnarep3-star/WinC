@@ -1,0 +1,331 @@
+{
+ "_note": "Open-questions register: what we have and can cite, what is genuinely missing, which decision the gap blocks, and the concrete action that produces the answer. An empty answer cell means nobody has it yet \u2014 it never means the row was skipped.",
+ "updated": "2026-11-20",
+ "blocking_count": 5,
+ "questions": [
+  {
+   "id": "Q-01",
+   "question": "Is tracking ID shopnow047c-20 actually issued to this account and active?",
+   "decision_it_gates": "Whether any reader-facing buy link should be live at all, and whether the site can be scaled.",
+   "have": "The string is well-formed for Amazon's pattern, and the '-20' suffix is what Amazon's own help says it appends automatically to Associate IDs for amazon.com (S06). Nothing public confirms this specific ID exists.",
+   "missing": "Confirmation that the ID is issued, active, and that this domain is in the site list Amazon expects.",
+   "blocking": "yes \u2014 blocks scaling and any claim of monetisation",
+   "discovery": "Associates Central \u2192 account settings \u2192 Manage your Tracking IDs: confirm shopnow047c exists and amazon.com site list includes the Pages domain. Screenshot the row, store the date, set confirmation_date in data/products.json.",
+   "owner": "Account owner only",
+   "answer": "",
+   "sources": [
+    "S06",
+    "S20"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-02",
+   "question": "Did the five people-supplied links mean these five products, or were they placeholders?",
+   "decision_it_gates": "Whether the whole shop is about the right products, or whether product pages must be rebuilt around a different list.",
+   "have": "Today's re-observation reproduced the prior sessions' mapping 5/5 (probes.json): B04G1MEwY\u2192B0CDY277D3, B02NbDxp3\u2192B09B7SB46R, B00hJ57DV\u2192B08DKYBTPH, B0c8moW59\u2192B0DHZTCNR5, B0f3GKalj\u2192B0DZFD6R9Z. All five land inside Home & Kitchen, three in Air Fryers and two in Meat thermometers, which is consistent with the brief's air-fryer hypotheses.",
+   "missing": "Any statement from the person who supplied the links, or any Amazon artefact, that binds the 9-character token to the destination. Every observed URL carries lv=shuf and plpRedirect=mhFallback \u2014 a shuffle/fallback route, not a canonical resolution (FLG-009).",
+   "blocking": "yes \u2014 blocks filling intended_asin, intended_listing_url and confirmation_date",
+   "discovery": "Ask the supplier for the ten-character ASIN or the full amazon.com/dp/\u2026 URL per product. If unavailable, confirm by matching each product to the campaign the links came from. Do not accept 'it redirects there, so it is that product' as an answer.",
+   "owner": "Brief author / campaign owner",
+   "answer": "",
+   "sources": [
+    "S15",
+    "S22"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-03",
+   "question": "Are the supplied link.amazon short links permitted Special Links under the Operating Agreement?",
+   "decision_it_matters_note": "Left unresolved deliberately",
+   "decision_it_gates": "Whether provenance links can ever become reader links, or must stay internal records only.",
+   "have": "Site policy right now: short links appear only in the verification register, never as a reader button; reader buttons use the tagged amazon.com/dp/ form. The brief states the compliance status is unresolved (FLG-003) and this site does not claim they are invalid.",
+   "missing": "Amazon's answer on whether this short-link form is an approved link format for this account, and whether it preserves the tag.",
+   "blocking": "no \u2014 current handling is already the safe one",
+   "discovery": "Associates Central \u2192 Help \u2192 link formats / Special Links; or open a support ticket quoting the exact URL form and asking whether it is permitted and whether the tag survives. Paste the reply into the flagged page.",
+   "owner": "Account owner only",
+   "answer": "",
+   "sources": [
+    "S01",
+    "S02"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-04",
+   "question": "What are the commission rates for these two categories, and are these items even eligible?",
+   "decision_it_gates": "Whether the niche is worth a publishing cadence at all, and which category to write for first.",
+   "have": "Nothing. The rate card is published only inside Associates Central and no authorized first-party source was reachable from this environment.",
+   "missing": "Current category rate for Home/Kitchen small appliances, cookie window, and any exclusions that apply to these five listings.",
+   "blocking": "yes \u2014 blocks Priority 4 (the campaign ledger cannot be reasoned about without a rate)",
+   "discovery": "Associates Central \u2192 Reports \u2192 Income Accounting Rate Card, plus the Program Policies earnings statement. Record rate, effective date and a screenshot path in data/campaign-ledger.json's provenance block.",
+   "owner": "Account owner only",
+   "answer": "",
+   "sources": [
+    "S02"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-05",
+   "question": "Which of the observed spec conflicts are real: B08DKYBTPH model and max temperature, ThermoMaven canonical ASIN, Emeril accessory count?",
+   "decision_it_gates": "Whether the specs tables can be cited, and whether a reader who cross-checks finds a contradiction.",
+   "have": "Three documented conflicts: FLG-005 (model + 400\u00b0F vs 450\u00b0F Hi-Fry on B08DKYBTPH \u2014 today's capture of that listing's own title repeats the 450\u00b0F figure), FLG-004 (B0DHZTCNR5 vs B0DMDQZTZN; today's redirect hit B0DHZTCNR5), FLG-010 (Emeril title says 'Six Cooking Accessories', bullets say '7 Accessories Included').",
+   "missing": "The manufacturer's own published specification, which outranks Amazon marketing copy.",
+   "blocking": "no \u2014 cells are blank or dual-reported, never guessed",
+   "discovery": "Chefman, Emeril Table Top and ThermoMaven product/support pages: find the model-specific spec sheet, record URL + retrieval date in data/sources.json, then re-render the table showing both values where they still disagree.",
+   "owner": "Any session with a browser",
+   "answer": "",
+   "sources": [
+    "S10",
+    "S11",
+    "S12",
+    "S23"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-15",
+   "question": "Are these five listings still live, in stock, and the same model today?",
+   "decision_it_gates": "Whether the product pages describe something a reader can actually buy this week, and whether any spec quoted here is stale.",
+   "have": "Each listing was readable on 2026-11-20 (titles captured verbatim in data/probes.json), so all five destinations existed on that date.",
+   "missing": "Availability, variant structure, and whether the listing content changed since the specs were copied. Listings move; a title captured once is not a permanent fact.",
+   "blocking": "no",
+   "discovery": "Re-open each observed URL on the day you publish, diff the bullet list against data/products.json, and stamp source_date per row rather than per file.",
+   "owner": "Any session with a browser",
+   "answer": "",
+   "sources": [
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-16",
+   "question": "Does the '-20' suffix mean the tag is already complete for a manual amazon.com link?",
+   "decision_it_gates": "Whether ?tag=shopnow047c-20 is the correct manual link form, or whether links must be generated in Associates Central instead.",
+   "have": "Amazon's help states '-20' is appended automatically to all Associate IDs (S20), and the site currently uses ?tag=shopnow047c-20 verbatim. That is consistent, and consistency is not confirmation.",
+   "missing": "Whether Amazon requires Special Links generated via SiteStripe/Links tool rather than hand-built query strings for this account type.",
+   "blocking": "yes \u2014 blocks scaling links, together with Q-01 and Q-03",
+   "discovery": "Generate one link per product in Associates Central and compare it character-by-character against the hand-built form. If they differ, adopt the generated ones and record the diff in the flagged page.",
+   "owner": "Account owner only",
+   "answer": "",
+   "sources": [
+    "S06",
+    "S20"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-06",
+   "question": "Who is the human author, and what experience do they actually have?",
+   "decision_it_gates": "Bylines, review policy, and whether the site can ever claim hands-on testing.",
+   "have": "The site bylines 'the ShopNow Kitchen Desk' and states in About that it does not invent credentials, test kitchens or hands-on reviews. That is a defensible position and the copy is consistent with it.",
+   "missing": "A real name, bio, contact route, and a decision about whether a person's name goes on a monetised recommendation site.",
+   "blocking": "yes \u2014 blocks any E-E-A-T improvement and any future 'tested' claim",
+   "discovery": "Owner decides and supplies it; then create data/authors.json and re-render bylines. If the owner prefers anonymity, record that as a policy in Editorial so 'no testing claims' stays true forever.",
+   "owner": "Owner decision",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-07",
+   "question": "Where do the images come from, permanently?",
+   "decision_it_gates": "Whether product pages can show the actual item, which is the biggest gap between this site and a real shop.",
+   "have": "Four editorial illustrations now exist, generated for this publication, each captioned as an illustration. The IP License forbids lifting Amazon product images, and nothing here does that.",
+   "missing": "Licensed or self-owned product photography for the five items \u2014 the only imagery that can honestly sit next to a buy button.",
+   "blocking": "no \u2014 current labelling is honest",
+   "discovery": "Either buy the item and photograph it (which also finally permits a testing claim, with dates and observations), or license stock that is not brand-identifying, or keep the illustration policy as-is and accept a lower-converting page.",
+   "owner": "Owner (budget decision)",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-08",
+   "question": "Is there any first-party click or conversion data yet?",
+   "decision_it_gates": "Whether the next topic is chosen from data or from taste \u2014 the whole premise of Priority 4.",
+   "have": "No. The ledger is empty by design, the five events are defined, the client beacon is shipped, and CONFIG.endpoint is an empty string, so nothing is recorded server-side anywhere.",
+   "missing": "A deployed collector and ~4 weeks of traffic. Also the Associates Reports baseline (clicks, sessions, orders) to compare against.",
+   "blocking": "no \u2014 but it blocks every optimisation decision, which is most of them",
+   "discovery": "Deploy analytics/worker.js, set the endpoint, submit the site to Search Console, then fill data/campaign-ledger.json only from timestamped first-party exports.",
+   "owner": "Any session + owner for the host",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-09",
+   "question": "Which legal entity and jurisdiction owns this site, and is the disclosure enough for it?",
+   "decision_it_gates": "Footer identity, contact page, and whether 'clear and conspicuous' placement meets the standard where the owner actually lives.",
+   "have": "The site carries the required Associates sentence above the fold and in the footer on every page, plus a link-level Sponsored label \u2014 matching the Operating Agreement and FTC guidance as cited in sources.json (S01, S03). The owner's approximate locale is the Netherlands, South Holland.",
+   "missing": "Entity name, address, contact route, and whether Dutch/EU consumer and GDPR-style rules add obligations (imprint, cookie consent) that US FTC framing alone does not cover.",
+   "blocking": "no \u2014 but a missing imprint is the kind of thing that gets noticed by the wrong person",
+   "discovery": "Owner supplies entity + contact. Then a short review against EU consumer-information rules for a commercial site targeting NL/EU readers \u2014 this site makes no claim to have done that legal review, and should not pretend to.",
+   "owner": "Owner + a real lawyer if scaled",
+   "answer": "",
+   "sources": [
+    "S03"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-10",
+   "question": "Should the site target NL/EU readers, or only amazon.com (US) shoppers?",
+   "decision_it_gates": "Language, marketplace per product, OneLink-style routing, and which Associates programme pays you.",
+   "have": "Everything here is amazon.com content in English, with a US-shaped tracking suffix. The owner's locale is NL.",
+   "missing": "A stated audience. If NL/EU readers matter, amazon.com links and US-oriented cooking references are a mismatch, and separate enrolments/OneLink are needed.",
+   "blocking": "no \u2014 but it should be decided before a lot of content is written",
+   "discovery": "Owner picks the primary audience. If non-US matters: check Associates enrolment for each marketplace, then evaluate OneLink routing before writing anything translated.",
+   "owner": "Owner decision",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-11",
+   "question": "Does Pages stay a legacy branch build, or move to an Actions deploy?",
+   "decision_it_gates": "Every future build step, and whether the site can be checked in CI before publish.",
+   "have": "Pages API reports build_type legacy, source branch main, path / \u2014 which is why the site is generated into the repo root and committed. The token in this environment gets 403 on Actions permissions, so a workflow-based deploy could not be verified here.",
+   "missing": "Whether the owner wants Actions enabled with admin rights, and whether a build artifact deploy would be more robust than committing generated HTML.",
+   "blocking": "no \u2014 current setup works and is documented",
+   "discovery": "If Actions is enabled later: switch Pages to the Actions build type in the same change that adds the workflow, or Pages will keep serving main's committed files and confuse everyone.",
+   "owner": "Owner (repo admin)",
+   "answer": "",
+   "sources": [
+    "S08",
+    "S21"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-12",
+   "question": "What is the cadence, honestly, given that one person owns this?",
+   "decision_it_matters_note": "Pace, not volume",
+   "decision_it_gates": "Whether the site gets six guides in six weeks or four in six months \u2014 and whether the plan survives week three.",
+   "have": "The machinery now supports a one-command publish: drop a JSON file in data/guides/, run build + gate, and sitemap, RSS, search index and cluster counts follow automatically.",
+   "missing": "A committed, achievable rate and a topic backlog. The four original titles came from the brief and are explicitly working hypotheses, not demand data.",
+   "blocking": "no",
+   "discovery": "Set the rate at whatever survives the owner's calendar \u2014 one guide per week is realistic only if the file-drop workflow is used. Keep a backlog in data/questions.json answers, then promote answered questions into guide titles.",
+   "owner": "Owner decision",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-13",
+   "question": "Do we ever quote prices, and if so how?",
+   "decision_it_gates": "Whether product pages can show the single number a buyer wants most.",
+   "have": "Current rule: never. Program Policies bar static price display (S02), so every price cell is blank and labelled, and the CTA says 'Check price & details on Amazon'.",
+   "missing": "Whether the account has Creators API access, which is the only route to a live, timestamped price on the page.",
+   "blocking": "no \u2014 the blank-and-labelled approach is compliant today",
+   "discovery": "Check Creators API status in Associates Central. If granted: fetch at render/build time with a timestamp shown next to the number and an expiry rule; if not granted, leave prices off the page permanently.",
+   "owner": "Account owner only",
+   "answer": "",
+   "sources": [
+    "S02"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-14",
+   "question": "Who resolves the flags, and in what order?",
+   "decision_it_gates": "Whether the eleven flagged items decay into noise.",
+   "have": "Every flag is on one page with its source link, action and status; nothing flagged is presented as fact anywhere else on the site. That satisfies the brief's 'publish them so I can review after launch'.",
+   "missing": "An owner pass over the list, marking each item confirmed, accepted-as-blank, or wrong \u2014 and closing the two that are already closed.",
+   "blocking": "no",
+   "discovery": "Work them in this order: Q-01 (tracking ID), Q-04 (rates), Q-02 (intent), then specs. Each answer should be pasted into the same page next to the flag so the next session inherits the fact, not the guess.",
+   "owner": "Owner + next session",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-17",
+   "question": "What would count as this site working, and over what window?",
+   "decision_it_gates": "Whether any suggestion in the register can be judged, and whether a topic can be called a success or a failure.",
+   "have": "Five defined events (page_view, outbound_click, guide_read, reader_capture_submit, search_submit), a self-hosted endpoint that is not deployed, and an empty campaign ledger.",
+   "missing": "Any target: a traffic range, an outbound-click rate, a guide that gets read to the end, a first-party order count, a review window. Nothing in the repo states what 'working' looks like.",
+   "blocking": "no \u2014 but every 'how we would know it worked' line in the suggestions register is a hypothesis until this is answered",
+   "discovery": "Owner writes one sentence: the outcome that matters, the number that represents it, and the date the window closes. Put it in this row's answer field and in EXECUTIVE-SUMMARY.md. If the number must come from Amazon, use the Associates Reports link and record the report date.",
+   "owner": "Account owner",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-18",
+   "question": "Does the catalogue stay at five products, or widen to a broader kitchen category?",
+   "decision_it_gates": "How many guides, category pages and comparison tables are worth building, and whether the site stays a focused comparison desk or becomes a general kitchen site.",
+   "have": "Five products across two categories, verified one by one against their listings, with three of the five coming from an unresolved link form.",
+   "missing": "Any decision about widening the catalogue, and if it widens, which products join on what evidence \u2014 listing quality, commission eligibility, or reader demand that has not been measured.",
+   "blocking": "no \u2014 but it changes the shape of every content plan and it is cheaper to decide before the next ten guides",
+   "discovery": "Owner picks one: (a) five products, deep coverage; (b) widen to a category, with each addition needing its own intent record, spec read and source link; (c) widen only if a measured query shows a gap. Record the choice in this row's answer field.",
+   "owner": "Account owner",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-19",
+   "question": "When an Amazon listing and a manufacturer page disagree, which one wins \u2014 and who signs off?",
+   "decision_it_gates": "Every contested spec cell on the site (FLG-005, FLG-010, FLG-018, FLG-020, FLG-022) and any future 'best' claim that rests on a number.",
+   "have": "A standing rule today: show both strings with their dates, pick neither, and flag the row. Four live listing-internal contradictions are published that way.",
+   "missing": "A written precedence rule and a named person who resolves the conflicts, plus a place to record the resolution so it is not re-litigated every session.",
+   "blocking": "no \u2014 the current rule (show both, flag it) is the safe one",
+   "discovery": "Owner confirms the precedence rule (manufacturer page over listing is the usual choice, but it needs saying out loud) and names who resolves rows. Add the rule to the About page's method list and the answer field here.",
+   "owner": "Account owner",
+   "answer": "",
+   "sources": [
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13"
+   ],
+   "source_note": ""
+  },
+  {
+   "id": "Q-20",
+   "question": "Is this a seasonal site (holiday cooking) or an evergreen one, and which season comes first?",
+   "decision_it_gates": "The topic backlog's order, the season label on every guide, and whether effort goes into a December cluster or into year-round questions.",
+   "have": "Two season labels in use (Everyday, Holiday cooking), a holiday-cluster guide, and a topics backlog whose entries are mostly 'Everyday' with three marked 'Holiday cooking'.",
+   "missing": "A decision on the lead season and a calendar of the topics that go with it. The current date is 2026-11-20, so a December cluster is the near-term opportunity and it expires in weeks.",
+   "blocking": "no \u2014 but a seasonal site has a deadline that a backlog does not show on its own",
+   "discovery": "Owner names the lead season and the publish date for the first cluster item. The topics page already carries a season field per topic, so the decision becomes a priority order rather than new work.",
+   "owner": "Account owner",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-21",
+   "question": "Who owns the reader list, and which provider handles the addresses?",
+   "decision_it_gates": "Whether the newsletter block can ever do more than count a local event, and what the privacy wording is allowed to promise.",
+   "have": "A form that records a local reader_capture_submit count and nothing else. No list, no provider, no consent record, no sending.",
+   "missing": "A provider decision, a confirmed-consent flow, a retention rule and a named owner \u2014 plus the legal basis for storing addresses if the audience is in the EU.",
+   "blocking": "no \u2014 but until it is answered the capture block can only promise what it already does",
+   "discovery": "Owner picks a provider that supports a confirmed-consent flow (the address is only usable after the reader confirms it) and exports its list, writes the retention rule (for example: delete after 12 months of inactivity), and adds a matching line to the About and Disclosure pages. Until then the copy stays as it is now: a local count and nothing more.",
+   "owner": "Account owner",
+   "answer": "",
+   "sources": [],
+   "source_note": "Internal only \u2014 this one is answered inside the Associates console, inside the repo, or by a decision only the owner can make. No official page states it."
+  },
+  {
+   "id": "Q-22",
+   "question": "What is the runbook when an observed listing dies, goes unavailable, or rotates into a different model?",
+   "decision_it_gates": "Whether a product page can stay live while its listing is gone, and how fast a sponsored link is hidden. Gates SG-34.",
+   "have": "Evidence the risk is real: listing titles rotated between captures (ThermoMaven wording changed across observations; data/probes.json observation #4), the Chefman 8 Qt listing carries a two-version conflict on its own page (FLG-005), and Amazon now states a newer model exists on that listing (FLG-024).",
+   "missing": "An owner decision between (a) retired state - page stays, buttons hidden, dated note; (b) replacement via a fresh product-intent record with new intended_* fields, never reusing the old slug; plus who monitors listings and how often.",
+   "blocking": "no - but it must be decided before the first 404, not after",
+   "discovery": "Owner decision in one sitting. Then implement via SG-34 (builder retired state + gate check). If replacement is chosen, the new record follows the same intended-vs-observed rule as everything else.",
+   "owner": "Account owner (decision); any session can implement it once made",
+   "answer": ""
+  }
+ ]
+}

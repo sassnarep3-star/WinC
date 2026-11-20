@@ -1,64 +1,56 @@
-# Analytics endpoint (self-hosted)
+# Self-hosted analytics endpoint (not run on GitHub Pages)
 
-The site (`docs/`) records five events **locally** by default. To aggregate
-events across devices and browsers, deploy one of the endpoints here and set:
+GitHub Pages serves static files only — it cannot run a server endpoint. This folder
+ships the endpoint code so it can be deployed separately (e.g. Cloudflare Worker + KV).
 
-```html
-<script>window.SITE_ANALYTICS_ENDPOINT = "https://your-endpoint/e";</script>
-```
+## What it records (five defined events)
 
-in the `<head>` of each page (replacing the `null` default).
+| # | Event | When it fires | Stored (aggregates only) |
+|---|-------|---------------|--------------------------|
+| 1 | `page_view` | Once per page load | day + page count |
+| 2 | `outbound_click` | Click on a sponsored Amazon link | day + page + observed ASIN count |
+| 3 | `guide_read` | Reader reaches 50%+ on a guide | day + page + depth bucket |
+| 4 | `reader_capture_submit` | Newsletter form submitted | day + page count (no email stored) |
+| 5 | `search_submit` | Internal search submitted | day + page count (query NOT stored) |
 
-## Why this exists
+## Privacy rules
 
-GitHub Pages is static — it cannot accept `POST`s. The measurement design
-therefore ships as code + a one-line config switch, and stays in *local mode*
-until a host is chosen (tracked as **FLG-006 / SG-12** on the site).
+- No cookies, no fingerprinting, no IP / user-agent storage, no email storage.
+- Both endpoint implementations apply event-specific allow-lists: only a valid 10-character ASIN for `outbound_click` and a fixed depth bucket for `guide_read` can be retained; all other client properties are dropped.
+- The server supplies the event date and site ID; client timestamps, email addresses, search queries, referrers, and arbitrary properties are not stored.
+- Client (`assets/app.js`) runs in local-only mode until `CONFIG.endpoint` is set.
 
-## The five events (FLG-009, pending owner approval)
+## Deploy
 
-| Event | Fired by |
-|---|---|
-| `page_view` | page load |
-| `outbound_product_click` | click on a sponsored product link |
-| `guide_cta_click` | click on a primary CTA |
-| `search_query` | on-page search |
-| `subscribe_click` | RSS / subscribe link |
+1. Create a KV namespace and bind it as `COUNTS`.
+2. Deploy `worker.js`.
+3. Set `endpoint` in `assets/app.js` to the Worker `/collect` URL.
+4. Record the deploy date on the Measurement page and in `COORDINATION.md`.
 
-Anything not in this allowlist is rejected by the endpoint (`422`).
+Status: **code shipped, not yet deployed** — see FLG-007 on the Flagged for Review page.
 
-## Variant A — Cloudflare Worker (recommended)
+---
 
-```bash
-cd analytics
-npx wrangler kv:namespace create EVENTS     # paste the id into wrangler.toml
-npx wrangler deploy
-```
+## `collect.py` — the one-command option (added 2026-11-20, session `arena-23d7ed19`)
 
-- `POST /e` accepts an event JSON, increments day-scoped counters in KV.
-- `GET /stats?day=YYYY-MM-DD` returns aggregate counts.
-- No IPs, no cookies, no per-user rows are stored.
-
-## Variant B — Python stdlib server
+`worker.js` is the edge deployment. If you would rather just run it somewhere you already have,
+`analytics/collect.py` is the same contract with zero dependencies:
 
 ```bash
-python3 server.py --port 8787 --root /var/lib/ks-analytics
+python3 analytics/collect.py --port 8080 --out /var/log/shopnow-events.jsonl \
+        --origin https://sassnarep3-star.github.io
+# then set CONFIG.endpoint in assets/app.js to https://HOST:8080/collect
 ```
 
-- `POST /e` appends a minimal JSON line (event, path, anonymous session id,
-  truncated detail — **no IP, no user agent, no raw referrer**).
-- `GET /stats?day=YYYY-MM-DD` aggregates on read.
-- Put it behind TLS (Caddy/nginx) and allow only the site origin.
+Endpoints: `POST /collect` (only the five defined events), `GET /stats`, `GET /ledger`,
+`GET /healthz`. The contract tests cover event allow-listing and field redaction for both endpoint
+implementations, valid and invalid route names, and rejection of out-of-set events. Each accepted
+Python event writes one JSONL row; only the event name, server-side day, a validated route, and the
+approved event-specific property (ASIN or depth bucket) are stored. No IP logging (access log disabled),
+no cookies, no user-agent storage, no session stitching.
 
-## Privacy contract
-
-1. No cookies; client session id is random and browser-local.
-2. Endpoint never receives or stores raw IP addresses.
-3. Only allowlisted event names are accepted.
-4. CORS limited to the site origin.
-5. The site's `privacy.html` must be updated **before** an endpoint goes live.
-
-## Local mode (current)
-
-Without an endpoint, events accumulate in `localStorage` (ring buffer, 500 max)
-and render on `docs/measurement.html`. Nothing leaves the browser.
+Honest limits: this counts **clicks and reads, not orders**. `/ledger` will never know a sale
+happened. Order and revenue rows must be transcribed from Associates Central's own reports into
+`data/campaign-ledger.json` with the export date, which is the only reason the ledger ships empty.
+Run it behind TLS and keep the `--origin` pin on when it faces the public internet; this file is a
+measurement tool, not a hardened service.
