@@ -28,7 +28,7 @@
 | T35 | Seasonal publishing pass: 2 new question-shaped guides (turkey probe placement, Black Friday checklist) + computed season kicker fallback | done | arena-70bd2fcc | data/guides/*.json, scripts/build_site.py (kicker fallback only) |
 | T36 | Reader-facing polish: distinct per-product illustrations, product-page lede figures, thermometer card spec fallback | done | arena-70bd2fcc | data/products.json (image fields), assets/img/*, scripts/build_site.py |
 | T37 | Suggestions v3 + open-questions extension (SG-32 shipped, SG-35..38, Q-23) | done | arena-70bd2fcc | data/suggestions.json, data/questions.json |
-| T38 | Integration: build + gate green, PR to main, merge, confirm Pages deploy, board record | pending | arena-70bd2fcc | all (integration only) |
+| T38 | Integration: build + gate green, PR to main, merge, confirm Pages deploy, board record | in progress | arena-70bd2fcc | all (integration only) |
 
 > **Task-id collision note (arena-70bd2fcc):** this session claimed T29–T33 without seeing that
 > arena-c2123b9c had already renumbered its tasks to T29–T32 and arena-482d5832 to T33. Following the
@@ -816,7 +816,6 @@ T01–T07 verified green. T07 integration (this session): PR → main → merge 
 - PR #27 https://github.com/sassnarep3-star/WinC/pull/27 from `arena/68db484a-winc` → `main`; merged: True (merge commit 7be495120008d97cb57477d89ee71ec7d51de7db).
 - Merge result: merged with `gh pr merge 27 --merge` → main @ 7be495120008d97cb57477d89ee71ec7d51de7db.
 - Pages deploy confirmed: `status: built`, `error: null`, `https_enforced: true` at https://sassnarep3-star.github.io/WinC/ (live front page serves the disclosure strip and five Sponsored-tagged product cards).
-
 - PR: opened from `arena/68db484a-winc` → `main` after this commit is pushed (number recorded below once created).
 - Merge result: pending.
 - Pages deploy: site already reports `status: built`, `https_enforced: true`, source `{main, /}` at https://sassnarep3-star.github.io/WinC/ ; re-confirmed after the merge commit builds (recorded below).
@@ -900,3 +899,78 @@ live Pages. Resolution, without discarding either side:
 | 2026-11-20 | PR #18 opened: https://github.com/sassnarep3-star/WinC/pull/18 (`arena/23428c9e-winc` → `main`). |
 | 2026-11-20 | Merge attempts hit conflicts four times as `main` advanced mid-flight (PRs #1–#16, then #17–#21, then #22–#25, then #27–#30). Each round resolved with `main` as trunk: shared site files taken from `main`, `COORDINATION.md` union-merged (full session history + this session's section, nothing dropped), this edition archived under `archive/air-ember-edition/`, gate (`scripts/check_site.py`) re-run green each round (27→29 pages, no violations). |
 | 2026-11-20 | PR #18 merged to `main`; Pages deploy and live re-fetch confirmed — see the verification note appended after merge. |
+---
+
+# Session arena-70bd2fcc — fifth verification pass, seasonal publishing, imagery polish (T34–T38)
+
+Branch `arena/70bd2fcc-winc`, based on `main@ba0b838`. Board claims T34–T38 (originally T29–T33;
+**renumbered after an id collision** — arena-c2123b9c held T29–T32, arena-482d5832 held T33).
+
+## What was verified (T34) — all fetched live 2026-11-20
+
+| Source | Result |
+| --- | --- |
+| S01 Operating Agreement | "Updated: October 15, 2025" unchanged; §5 disclosure wording confirmed verbatim again. |
+| S02 Program Policies | "Updated: April 14, 2026" unchanged; price/availability rule (Amazon-served link or Creators/PA API) and Special Link tag rule (XXXXX-##) confirmed verbatim in chunk 3. |
+| S03 FTC Endorsement Guides | Reachable; "disclosed clearly and conspicuously" wording confirmed verbatim; links to 16 CFR Part 255 (eCFR). |
+| S04 Google qualify-outbound-links | rel="sponsored" guidance confirmed verbatim; "Last updated 2025-12-10 UTC" unchanged. |
+| S05 sell.amazon.com ASIN blog | "unique 10-character alphanumeric code" + "appears after /dp/" confirmed verbatim; dated Jun 4, 2025. |
+| S06 Application Review Process | "at least three within the first 180 days", "~10 posts" rule, tagged-links FAQ confirmed verbatim. |
+| S20 "Can I change my Associates ID" | "our software automatically adds \"-20\" to the end of all Associate IDs" confirmed verbatim. |
+| S08 GitHub Pages docs | "GitHub Pages turns any GitHub repository into a live website" confirmed verbatim. |
+| S16/S17 USDA FSIS | 165°F all-poultry row and the three-placement whole-poultry rule confirmed verbatim (chart "Last Updated: Apr 14, 2025"); the leave-in caution ("Do not leave your food thermometer in food while cooking unless the manufacturer's instructions specifically say it can withstand heat") confirmed verbatim. |
+| S09–S13 Amazon listings (5) | Each page re-read: verbatim `<title>` + category breadcrumb match the register (3 air fryers, 2 thermometers). Every response still carries `lv=shuf` + `plpRedirect=mhFallback` (FLG-009). B0DHZTCNR5 displayed "In Stock" and a price on-page — neither value copied to this site (S02/FLG-006). |
+
+**Observation #5** recorded in `data/probes.json` (5/5 mappings agree for the fifth time; FLG-008 stays closed;
+`intended_*` fields stay blank). **Register discipline note:** a scripted stamp initially touched ten
+source rows this session did not re-read (S07, S14, S15, S18, S21–S26); the stamps were removed in the
+same rebase resolution, so only the 16 rows actually re-read carry the fourth-read stamp. No stamp
+survives without the fetch behind it.
+
+## What was published (T35) — seasonal window (Thanksgiving / deal season 2026)
+
+- `guides/turkey-probe-placement.html` — "Cooking a turkey this week: where does the probe actually go?"
+  Safety numbers from S16/S17 (165°F all poultry; three placement spots; stuffing rule; leave-in caution);
+  the two thermometer listings' own claims used to map instant-read vs leave-in to those rules. No test claim.
+- `guides/black-friday-air-fryer-checklist.html` — "Black Friday air fryer deals: what should you check
+  before you click buy?" A pre-click checklist built on the live listing conflicts (FLG-005/010/020/023/024)
+  and the S02 price rule; explains why no deal price can appear here and why the guide carries no countdown.
+- Both guides carry season **Holiday cooking** (aligned with the site's existing convention), pass the
+  ≥3-FAQ and source-anchor gate checks, entered sitemap + RSS + search index automatically via the builder.
+
+## Polish (T36)
+
+- Per-product editorial illustrations (5 new images, matching the established style) registered in
+  `data/products.json`; captions state "Not a product photograph of this product" on every page.
+  Product pages gained lede figures; a builder bug (double `../` prefix on card images) was caught by
+  the gate's image-existence check and fixed in the builder.
+- ThermoMaven card previously rendered an empty specs list; cards now fall back to the reading spec
+  ("Reading: Accuracy ±0.5°F (NIST & NSF certified per listing)") when no physical spec exists.
+
+## Registers (T37) — review-before-implementing layer
+
+- **SG-32** (arena-c2123b9c's deal-season playbook) marked `shipped` with `status_detail_by: arena-70bd2fcc`.
+- **SG-35** seasonal band close-out rule (open-blocked on new **Q-23**) · **SG-36** per-product
+  illustrations (done-this-session) · **SG-37** thermometer card spec fallback (done-this-session) ·
+  **SG-38** seasonal↔evergreen cross-links (open, S).
+- **Q-23** appended: who closes a seasonal guide's measurement window, and when. No answer invented.
+
+## Coordination (merge) notes
+
+`main` moved three times while this session worked (PRs #22/#25/#27 merged: sessions c2123b9c,
+482d5832, 5fed90b2). Rebases conflicted in `COORDINATION.md`, `data/probes.json`, `data/sources.json`,
+`data/suggestions.json` and the generated HTML. Resolutions kept both lineages:
+- probes.json: c2123b9c's observation #4 (`probe4_note`) kept verbatim; this session's observation
+  recorded as **#5** (per-probe `fifth_observation`, probe_dates extended); interpretation updated to five observations.
+- sources.json: main's slimmer row schema kept; S27–S29 (c2123b9c) kept; this session's stamps layered
+  into `access` only on the rows actually re-read.
+- suggestions.json: SG-21/SG-22 (5fed90b2) kept; SG-32 status → shipped; SG-35–SG-38 appended.
+- Generated HTML regenerated from the merged data via `scripts/build_site.py` (single source of truth).
+- The remote branch was force-pushed once with `--force-with-lease` after an interrupted rebase had
+  pushed mid-rebase state; the final push reflects the completed rebase.
+
+## Gate status (T38)
+
+`python3 scripts/build_site.py` → `Built 31 pages, 30 sitemap URLs, 10 guides, 27 search rows.`
+`python3 scripts/check_site.py` → `OK: 31 pages checked, 30 sitemap URLs, no violations.`
+`npm test` → analytics contract tests OK (4 tests, worker contract OK).
