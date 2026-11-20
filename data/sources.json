@@ -1,0 +1,123 @@
+{
+  "retrieved_on": "2026-11-20",
+  "note": "Source register created in this repository. Earlier references (S01-S24, FLG-003, SG-27-SG-30) were not present in the repo and were not reconstructed. Status values: Verified = text read on the official page; Partly verified = official page read in part, or claim taken from an official search excerpt, full-page check pending; Not reviewed = linked but not read.",
+  "sources": [
+    {
+      "id": "SRC-01",
+      "title": "Associates Program Operating Agreement",
+      "url": "https://affiliate-program.amazon.com/help/operating/agreement",
+      "publisher": "Amazon Associates Central",
+      "page_date": "Updated October 15, 2025 (page statement)",
+      "status": "Verified",
+      "supports": "Section 5 disclosure text: 'As an Amazon Associate I earn from qualifying purchases.' Must be clearly and prominently stated on the site. Section 5 also bars misrepresenting the Amazon relationship."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Associates Program Policies (incl. Participation Requirements and Commission Income Statement)",
+      "url": "https://affiliate-program.amazon.com/help/operating/policies",
+      "publisher": "Amazon Associates Central",
+      "page_date": "Updated April 14, 2026 (page statement)",
+      "status": "Partly verified",
+      "supports": "Participation Requirements 2(b): Special Links must carry the Associates tag as a URL parameter (format XXXXX-##, or another format Amazon designates). 2(v): no cloaking or obscuring of the site URL, including by redirecting links. 2(w): no link shortening service or placement that makes it unclear that the link goes to an Amazon Site. Full-page confirmation of 2(b), 2(v), 2(w) is pending manual review. Text was read from official search excerpts."
+    },
+    {
+      "id": "SRC-03",
+      "title": "Product Advertising API 5.0 - GetItems",
+      "url": "https://webservices.amazon.com/paapi5/documentation/get-items.html",
+      "publisher": "Amazon Web Services / Amazon Associates",
+      "page_date": "Not stated",
+      "status": "Partly verified",
+      "supports": "Defines ASIN as 'Amazon Standard Identification Number: 10-Character alphanumeric unique identifier assigned by Amazon.' Text read from official search excerpt; page not fetched in full."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Disclosures 101 for Social Media Influencers",
+      "url": "https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers",
+      "publisher": "U.S. Federal Trade Commission",
+      "page_date": "November 2019 (page statement)",
+      "status": "Verified",
+      "supports": "Disclose any financial relationship; place the disclosure where it is hard to miss, with the endorsement; not only on an About page or at the end of a post; use clear terms like 'ad' or 'sponsored'; do not make up claims that would need proof you don't have. Linked Endorsement Guides PDF was not reviewed (SRC-13)."
+    },
+    {
+      "id": "SRC-05",
+      "title": "Qualify your outbound links to Google (rel=\"sponsored\")",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links",
+      "publisher": "Google Search Central",
+      "page_date": "Last updated 2025-12-10 (page statement)",
+      "status": "Verified",
+      "supports": "rel=\"sponsored\" marks advertisements or paid placements, including affiliate links, with the sponsored value. Multiple rel values may be combined."
+    },
+    {
+      "id": "SRC-06",
+      "title": "Amazon Associates Central - Contact Us",
+      "url": "https://affiliate-program.amazon.com/contact",
+      "publisher": "Amazon Associates Central",
+      "page_date": "Not stated",
+      "status": "Not reviewed",
+      "supports": "Link observed in the Operating Agreement page navigation (SRC-01). Listed as the owner's route to ask Associates about the submitted links (see Q-02). Not opened."
+    },
+    {
+      "id": "SRC-07",
+      "title": "Amazon.com product page (observed) - B0CDY277D3",
+      "url": "https://www.amazon.com/dp/B0CDY277D3",
+      "publisher": "Amazon.com",
+      "page_date": "Captured 2026-11-20 (fetch tool)",
+      "status": "Verified",
+      "supports": "Title, breadcrumb (Home & Kitchen > Kitchen & Dining > Small Appliances > Fryers > Air Fryers), Buy New price $79.93. Product rating not on the captured sections."
+    },
+    {
+      "id": "SRC-08",
+      "title": "Amazon.com product page (observed) - B09B7SB46R",
+      "url": "https://www.amazon.com/dp/B09B7SB46R",
+      "publisher": "Amazon.com",
+      "page_date": "Captured 2026-11-20 (fetch tool)",
+      "status": "Verified",
+      "supports": "Title, breadcrumb (Air Fryers), Buy New price $149.99. Product rating not on the captured sections."
+    },
+    {
+      "id": "SRC-09",
+      "title": "Amazon.com product page (observed) - B08DKYBTPH",
+      "url": "https://www.amazon.com/dp/B08DKYBTPH",
+      "publisher": "Amazon.com",
+      "page_date": "Captured 2026-11-20 (fetch tool)",
+      "status": "Verified",
+      "supports": "Title, breadcrumb (Air Fryers), Buy New price $69.99. Product rating not on the captured sections."
+    },
+    {
+      "id": "SRC-10",
+      "title": "Amazon.com product page (observed) - B0DHZTCNR5",
+      "url": "https://www.amazon.com/dp/B0DHZTCNR5",
+      "publisher": "Amazon.com",
+      "page_date": "Captured 2026-11-20 (fetch tool)",
+      "status": "Verified",
+      "supports": "Title, breadcrumb (Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Thermometers & Timers > Meat), price $16.99 (list $22.99), rating 4.6 out of 5 stars (3,499). A 'Black Friday Deal' banner was shown on the capture."
+    },
+    {
+      "id": "SRC-11",
+      "title": "Amazon.com product page (observed) - B0DZFD6R9Z",
+      "url": "https://www.amazon.com/dp/B0DZFD6R9Z",
+      "publisher": "Amazon.com",
+      "page_date": "Captured 2026-11-20 (fetch tool)",
+      "status": "Verified",
+      "supports": "Title, breadcrumb (Thermometers & Timers > Meat), Buy New price $119.99. Product rating not on the captured sections."
+    },
+    {
+      "id": "SRC-12",
+      "title": "Submitted short links (link.amazon), resolved with the fetch tool",
+      "url": "https://link.amazon/B04G1MEwY",
+      "publisher": "Submitted by the site owner (domain owner not verified)",
+      "page_date": "Resolved 2026-11-20",
+      "status": "Verified (redirect only)",
+      "supports": "Five submitted links: B04G1MEwY, B02NbDxp3, B00hJ57DV, B0c8moW59, B0f3GKalj. Each resolved to an amazon.com /dp/ page (see product records). Sandbox curl to link.amazon failed with an SSL error, so the fetch tool was the only resolver used. Compliance status of the short links is unresolved (F-03)."
+    },
+    {
+      "id": "SRC-13",
+      "title": "FTC Guides Concerning the Use of Endorsements and Testimonials in Advertising (linked from SRC-04)",
+      "url": "https://www.ftc.gov/sites/default/files/attachments/press-releases/ftc-publishes-final-guides-governing-endorsements-testimonials/091005revisedendorsementguides.pdf",
+      "publisher": "U.S. Federal Trade Commission",
+      "page_date": "Not stated",
+      "status": "Not reviewed",
+      "supports": "Linked from SRC-04. Not opened. Needed for the legal review in Q-15."
+    }
+  ]
+}

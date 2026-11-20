@@ -1,0 +1,167 @@
+{
+  "intro": "Questions that must be answered before a sound decision can be made. 'Have' lists what the repository and sources support now. 'Missing' lists what is absent. 'How to find out' names the step that would close the gap.",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question": "Which Amazon marketplace does tracking ID shopnow047c-20 belong to?",
+      "status": "Unanswered",
+      "have": "All observed destinations are amazon.com (SRC-07 to SRC-11).",
+      "missing": "The marketplace of the tracking ID in the owner's account.",
+      "how_to_find_out": "Owner checks the tracking ID in Associates Central. Confirm whether the Netherlands marketplace should be used.",
+      "refs": ["F-04", "SRC-01"]
+    },
+    {
+      "id": "Q-02",
+      "question": "Are the five submitted link.amazon short links permitted as Special Links?",
+      "status": "Unresolved",
+      "have": "Each link resolves to an amazon.com /dp/ page (SRC-12). Participation Requirements 2(v) and 2(w) are on file (SRC-02, partly verified).",
+      "missing": "An Associates answer about the short-link format.",
+      "how_to_find_out": "Ask Associates through the Contact Us route (SRC-06). Record the answer and date.",
+      "refs": ["F-03", "SRC-02", "SRC-06"]
+    },
+    {
+      "id": "Q-03",
+      "question": "Does each submitted link attribute clicks to shopnow047c-20?",
+      "status": "Unanswered",
+      "have": "No tag= parameter observed in any redirect target (F-02).",
+      "missing": "A click and tracking-report line for each product.",
+      "how_to_find_out": "Run the single-link test in the enrolled Associates workflow (F-09). Compare the destination with the tracking report.",
+      "refs": ["F-02", "F-09"]
+    },
+    {
+      "id": "Q-04",
+      "question": "What is the intended ASIN for each submitted link?",
+      "status": "Unanswered",
+      "have": "Observed ASINs from the redirect targets (for example B0CDY277D3 for P-01). Submitted tokens are 9 characters.",
+      "missing": "The owner's intent for each link, and a 10-character ASIN with a source.",
+      "how_to_find_out": "Owner confirms the intended product for each link. Any ASIN supplied must be checked on its Amazon page.",
+      "refs": ["F-01"]
+    },
+    {
+      "id": "Q-05",
+      "question": "What are the current prices and availability?",
+      "status": "Partly answered",
+      "have": "Buy Box prices for all five products on 2026-11-20 (US delivery location shown).",
+      "missing": "Re-capture before publishing; prices for the Netherlands marketplace.",
+      "how_to_find_out": "Re-capture on the publication date. Use the marketplace confirmed in Q-01.",
+      "refs": ["F-06", "F-04"]
+    },
+    {
+      "id": "Q-06",
+      "question": "What are the product ratings and review counts?",
+      "status": "Partly answered",
+      "have": "P-04: 4.6 out of 5, 3,499 reviews (SRC-10).",
+      "missing": "Ratings and review counts for P-01, P-02, P-03 and P-05.",
+      "how_to_find_out": "Read the product summary section of each page on a later capture.",
+      "refs": ["F-06"]
+    },
+    {
+      "id": "Q-07",
+      "question": "What commission rate applies to these products?",
+      "status": "Unanswered",
+      "have": "The Commission Income Statement exists (SRC-02). No rate was captured.",
+      "missing": "The rate card for these categories in the owner's marketplace.",
+      "how_to_find_out": "Owner reads the rate card in Associates Central. Do not estimate commission from other sources.",
+      "refs": ["SRC-02"]
+    },
+    {
+      "id": "Q-08",
+      "question": "Which niches have demand and competition that justify the pages?",
+      "status": "Unanswered",
+      "have": "Five products and their titles, breadcrumbs and prices. No search or sales data.",
+      "missing": "Search demand, sales rank, competition and trend data, all dated and sourced.",
+      "how_to_find_out": "See Suggestions S-07 for dated capture options. No demand or trend claim is made until data exists.",
+      "refs": []
+    },
+    {
+      "id": "Q-09",
+      "question": "Which five events should be recorded, and what does each one mean?",
+      "status": "Unanswered",
+      "have": "The request names five events but the repo does not define them.",
+      "missing": "The five definitions.",
+      "how_to_find_out": "Owner chooses from the proposal on the Suggestions page (S-03).",
+      "refs": ["F-08"]
+    },
+    {
+      "id": "Q-10",
+      "question": "Where will the self-hosted analytics endpoint run?",
+      "status": "Unanswered",
+      "have": "The site is GitHub Pages (static only).",
+      "missing": "A host that can run a server, or an approved third-party analytics service.",
+      "how_to_find_out": "Owner chooses a hosting option (Suggestions S-02).",
+      "refs": ["F-08"]
+    },
+    {
+      "id": "Q-11",
+      "question": "What is the site name and domain?",
+      "status": "Unanswered",
+      "have": "A working name, 'WinC Kitchen Picks', is used on the site.",
+      "missing": "The owner's brand name and domain.",
+      "how_to_find_out": "Owner decides (Suggestions S-10).",
+      "refs": []
+    },
+    {
+      "id": "Q-12",
+      "question": "How often should new guides be published?",
+      "status": "Unanswered",
+      "have": "No cadence has been set. No guides are published yet.",
+      "missing": "Owner-approved cadence.",
+      "how_to_find_out": "Owner chooses one option (Suggestions S-04).",
+      "refs": []
+    },
+    {
+      "id": "Q-13",
+      "question": "Which of the four working-title guides should be written first?",
+      "status": "Unanswered",
+      "have": "Four working titles from the request, listed on the Guides page as hypotheses only.",
+      "missing": "Owner selection. Sourced facts for each guide.",
+      "how_to_find_out": "Owner chooses (Suggestions S-05).",
+      "refs": []
+    },
+    {
+      "id": "Q-14",
+      "question": "Are Amazon product images permitted on the site?",
+      "status": "Unanswered",
+      "have": "No Amazon images are used.",
+      "missing": "A reading of the Associates IP licence and usage requirements.",
+      "how_to_find_out": "Read the IP licence in SRC-02 in full. Owner chooses an imagery option (S-06).",
+      "refs": ["F-11"]
+    },
+    {
+      "id": "Q-15",
+      "question": "Does the disclosure placement and wording meet legal requirements?",
+      "status": "Unanswered",
+      "have": "FTC Disclosures 101 (SRC-04) and the Associates statement (SRC-01 §5) were read. Placement follows both.",
+      "missing": "Legal review. The FTC Endorsement Guides (SRC-13) have not been read.",
+      "how_to_find_out": "Counsel reviews against SRC-13 and the Associates Policies.",
+      "refs": ["F-10"]
+    },
+    {
+      "id": "Q-16",
+      "question": "Where are the original source register and coordination files referenced in the request?",
+      "status": "Answered: not in this repository",
+      "have": "The repo had only README.md at the start of the session. A new register and board were created.",
+      "missing": "The original S01-S24 register, FLG-003 and SG-27-SG-30 records, and the Operating Agreement copy.",
+      "how_to_find_out": "Owner supplies the files or confirms that the new register replaces them.",
+      "refs": ["F-05"]
+    },
+    {
+      "id": "Q-17",
+      "question": "What clicks, sessions and orders have actually happened?",
+      "status": "Unanswered",
+      "have": "No first-party reports were provided. The campaign ledger is empty by design.",
+      "missing": "Authorised first-party reports (clicks, eligible sessions, reported orders).",
+      "how_to_find_out": "Owner exports Associates reports for the tracking ID and adds them to the ledger with a source and date.",
+      "refs": ["SRC-01"]
+    },
+    {
+      "id": "Q-18",
+      "question": "Is the owner's Associates account active and in good standing?",
+      "status": "Unanswered",
+      "have": "Nothing in the repo or the sources shows the account status.",
+      "missing": "Account status.",
+      "how_to_find_out": "Owner checks the account in Associates Central.",
+      "refs": ["SRC-01", "SRC-02"]
+    }
+  ]
+}

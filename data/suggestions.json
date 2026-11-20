@@ -1,0 +1,115 @@
+{
+  "intro": "Proposals for you to choose from. Nothing on this page has been implemented. Reply with the ID and option letter (for example 'S-01: B') and the change will be made in a later session.",
+  "suggestions": [
+    {
+      "id": "S-01",
+      "topic": "Outbound link policy until Special Link validation",
+      "options": [
+        {"letter": "A", "text": "Keep the five submitted short links as they are, marked sponsored, with the flags shown.", "tradeoff": "Buyers can click now. Compliance (F-02, F-03) stays open."},
+        {"letter": "B", "text": "Hide the buy buttons until the single-link test passes (F-09). Show product details only.", "tradeoff": "No outbound clicks during the test. Lowest compliance risk."},
+        {"letter": "C", "text": "Replace the short links with Special Links generated in Associates Central after a passing test.", "tradeoff": "Requires the test and an Associates account login."}
+      ],
+      "recommendation": "B now, then C if the test passes. A only if you accept the open compliance risk.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-02",
+      "topic": "Click counter and analytics hosting",
+      "options": [
+        {"letter": "A", "text": "No site analytics. Use Associates reports only.", "tradeoff": "Nothing is installed. No click data on the site."},
+        {"letter": "B", "text": "Self-hosted privacy-friendly analytics and a click endpoint on a server you control.", "tradeoff": "Data stays with you. Needs a server (outside GitHub Pages) and maintenance."},
+        {"letter": "C", "text": "A hosted privacy-focused analytics service with an outbound-click event.", "tradeoff": "Fast to set up. A third-party processor needs a data agreement."}
+      ],
+      "recommendation": "B if the data must stay with you; C if speed matters more. Either needs a host choice first.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-03",
+      "topic": "Five events to record (proposal, not adopted)",
+      "options": [
+        {"letter": "A", "text": "page_view: a reader loads a page. Counts only; no identifiers stored.", "tradeoff": "Basic traffic signal."},
+        {"letter": "B", "text": "product_view: a product card is shown on screen.", "tradeoff": "Shows which products are seen."},
+        {"letter": "C", "text": "outbound_click: a sponsored link is clicked. Records product ID and link ID only.", "tradeoff": "The core measure for the Amazon program."},
+        {"letter": "D", "text": "guide_read_50: a reader scrolls past 50% of a guide.", "tradeoff": "Measures engagement with guides."},
+        {"letter": "E", "text": "feed_subscribe: a reader opens the RSS feed.", "tradeoff": "Measures interest in new guides."}
+      ],
+      "recommendation": "Adopt all five only after the owner confirms the list (Q-09). Keep the set to these names unless the owner changes it.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-04",
+      "topic": "Publishing cadence",
+      "options": [
+        {"letter": "A", "text": "One guide per week.", "tradeoff": "Fastest learning; higher workload; thinner pages risk."},
+        {"letter": "B", "text": "One guide every two weeks, with a review after eight weeks.", "tradeoff": "Enough time for sourcing; slower signal."},
+        {"letter": "C", "text": "One guide per month.", "tradeoff": "Lowest workload; slowest learning."}
+      ],
+      "recommendation": "B, with a measurement review before choosing the next topic.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-05",
+      "topic": "Which guide to write first",
+      "options": [
+        {"letter": "A", "text": "Basket or oven-style air fryer: what should you compare?", "tradeoff": "Matches P-01 to P-03 and P-02 in form."},
+        {"letter": "B", "text": "A no-hype checklist for comparing air fryer capacity", "tradeoff": "Uses only listed capacities, which must be sourced."},
+        {"letter": "C", "text": "How to assess cleanup and counter-space trade-offs", "tradeoff": "Needs dimensions and care instructions, which are not yet captured."},
+        {"letter": "D", "text": "Questions to ask before buying a multi-function kitchen appliance", "tradeoff": "Broad; covers the oven-style products."}
+      ],
+      "recommendation": "A, then B. Both need only data that can be captured from product pages. The four titles are working titles, not claims about popularity or quality.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-06",
+      "topic": "Imagery",
+      "options": [
+        {"letter": "A", "text": "Owner supplies original photos of the products.", "tradeoff": "Best for trust; needs the owner's time."},
+        {"letter": "B", "text": "No product images. Typographic cards (current).", "tradeoff": "No licence risk. Less visual appeal."},
+        {"letter": "C", "text": "Labelled illustrations that are not product photos.", "tradeoff": "Looks fuller; must not imply a product depiction."}
+      ],
+      "recommendation": "B now. Move to A once the IP licence (Q-14) is read.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-07",
+      "topic": "Dated data for niche and trend research",
+      "options": [
+        {"letter": "A", "text": "Weekly dated capture of public Amazon Best Sellers pages for these categories, with source and date on each row.", "tradeoff": "Free; manual unless automated within terms."},
+        {"letter": "B", "text": "Product Advertising API data, once the account is eligible.", "tradeoff": "Official; depends on the owner's Associates account status (Q-18)."},
+        {"letter": "C", "text": "A third-party research tool.", "tradeoff": "Fast; its data needs its own licence check. Not reviewed."}
+      ],
+      "recommendation": "A now; B once eligible. No trend or conversion claim until dated data exists.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-08",
+      "topic": "Marketplace",
+      "options": [
+        {"letter": "A", "text": "amazon.com only (current listings).", "tradeoff": "Matches the supplied links."},
+        {"letter": "B", "text": "Netherlands marketplace listings, if the tracking ID is for that marketplace.", "tradeoff": "Matches the owner's location; needs new links."}
+      ],
+      "recommendation": "Decide after Q-01 is answered.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-09",
+      "topic": "Search Console and reader capture",
+      "options": [
+        {"letter": "A", "text": "Owner verifies the site in Google Search Console and submits the sitemap.", "tradeoff": "Manual step; gives real search data."},
+        {"letter": "B", "text": "Add a reader email capture through a third-party form.", "tradeoff": "Needs a consent flow and a data agreement."}
+      ],
+      "recommendation": "A now (the sitemap and feed already exist). B later, once consent is set up.",
+      "status": "Awaiting your choice"
+    },
+    {
+      "id": "S-10",
+      "topic": "Site name and brand",
+      "options": [
+        {"letter": "A", "text": "Keep the working name 'WinC Kitchen Picks'.", "tradeoff": "No change."},
+        {"letter": "B", "text": "Owner supplies a name and domain.", "tradeoff": "Needs a domain and a change to every page."}
+      ],
+      "recommendation": "B when a name is chosen. A until then.",
+      "status": "Awaiting your choice"
+    }
+  ]
+}

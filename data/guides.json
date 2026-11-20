@@ -1,0 +1,10 @@
+{
+  "intro": "Working titles from the request. They are hypotheses for you to choose from. None is published, and none makes a claim about popularity, search volume, or product quality.",
+  "status": "Not published. Awaiting selection (Suggestions S-05).",
+  "guides": [
+    {"id": "G-01", "working_title": "Basket or oven-style air fryer: what should you compare?", "question_it_answers": "What separates a basket air fryer from an oven-style one?", "sourcing_needed": "Capacity, dimensions and cooking modes from each product page (SRC-07 to SRC-09)."},
+    {"id": "G-02", "working_title": "A no-hype checklist for comparing air fryer capacity", "question_it_answers": "How do I read capacity figures without being misled?", "sourcing_needed": "Capacity figures as listed by each manufacturer, with the unit stated."},
+    {"id": "G-03", "working_title": "How to assess cleanup and counter-space trade-offs", "question_it_answers": "Which features change the cleaning and storage effort?", "sourcing_needed": "Dishwasher-safe claims and dimensions from listings or manufacturer pages. Not yet captured."},
+    {"id": "G-04", "working_title": "Questions to ask before buying a multi-function kitchen appliance", "question_it_answers": "Which questions reveal whether a multi-function appliance fits my kitchen?", "sourcing_needed": "Presets and functions as listed. Not yet captured in full."}
+  ]
+}
