@@ -1,0 +1,10 @@
+node_modules/
+.jekyll-cache/
+.jekyll-site/
+_site/
+.build-manifest.json
+events.jsonl
+.DS_Store
+*.log
+.env
+.env.*

@@ -1,0 +1,27 @@
+{
+  "$comment": "Presentation model for the Picks desk. Product identity and every store-side value live in data/product-intent.json and stay blank until confirmed; this file only decides how those rows are shown and what the desk says about them.",
+  "desk_statement": "Five links were submitted for marketing. None of them identifies a product we can confirm, so this page shows the work rather than the verdict: what we were given, what we checked, what is still missing, and where you can check it yourself in a minute.",
+  "columns": [
+    { "key": "row", "label": "Row", "type": "id" },
+    { "key": "supplied_link", "label": "Link as supplied", "type": "mono" },
+    { "key": "token", "label": "Identifier token", "type": "mono" },
+    { "key": "shape", "label": "Shape check", "type": "state" },
+    { "key": "intended_asin_confirmed", "label": "Intended ASIN confirmed", "type": "bool" },
+    { "key": "official_listing_url", "label": "Official listing URL", "type": "value", "blank_ok": true },
+    { "key": "title", "label": "Product title", "type": "value", "blank_ok": true },
+    { "key": "price", "label": "Price", "type": "value", "blank_ok": true, "blank_reason": "Only Amazon-served content or Creators/PA API output may carry a price (SRC-02 §2(b)); neither is available here" },
+    { "key": "rating", "label": "Rating", "type": "value", "blank_ok": true, "blank_reason": "Customer reviews and star ratings require a link obtained via Creators API or PA API (SRC-02 §6(t))" },
+    { "key": "observed_redirect_target", "label": "Observed redirect (kept separate)", "type": "value", "blank_ok": true, "blank_reason": "Not observable from the build sandbox; egress to that host is blocked" }
+  ],
+  "value_policy": "A populated cell needs a source id. A blank cell needs a reason. Both are rendered, because a blank with a reason is a usable answer and a blank without one is a rumour.",
+  "editorial_context": {
+    "note": "The brief's guide topics concern air fryers and multi-function kitchen appliances. Whether the five links belong to that category is one of the unresolved items, so no guide names a product and no product row claims a category.",
+    "src": ["SRC-11"]
+  },
+  "what_a_row_gives_the_reader": [
+    "a straight answer about whether we can cite the product at all",
+    "the exact identifier we were given, so the reader can check it independently",
+    "a link to the official store help page or listing when one exists",
+    "the decision criteria that do not depend on our data: capacity, footprint, cleaning, controls, and what to look for on the listing"
+  ]
+}

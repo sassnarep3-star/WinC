@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive summary — Crisp Report</title>
+<meta name="description" content="One page: what was asked for, what exists, what blocks it, and the order in which the rest can honestly be done.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/executive-summary/">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Crisp Report">
+<meta property="og:title" content="Executive summary — Crisp Report">
+<meta property="og:description" content="One page: what was asked for, what exists, what blocks it, and the order in which the rest can honestly be done.">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/executive-summary/">
+<meta property="og:image" content="https://sassnarep3-star.github.io/WinC/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Crisp Report — new guides" href="../feed.xml">
+<link rel="stylesheet" href="../assets/styles.css">
+
+</head>
+<body class="pg-exec">
+<a class="skip" href="#main">Skip to content</a>
+<header class="mast">
+  <div class="mast-in">
+    <a class="brand" href="../">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-txt"><span class="brand-name">Crisp Report</span><span class="brand-kicker">Small-appliance buying intelligence</span></span>
+    </a>
+    <p class="issue">Issue 01 · 20 November 2026 · Autumn/winter 2026</p>
+  </div>
+  <nav class="nav" aria-label="Reader"><div class="nav-in"><a href="../">Front page</a><a href="../picks/">The Desk</a><a href="../guides/">Guides</a><a href="../suggestions/">Ideas</a></div></nav>
+</header>
+<div class="disclosure" role="note">
+  <p class="disclosure-in"><span class="disc-required">As an Amazon Associate I earn from qualifying purchases.</span>
+  <span class="disc-plain">Every link to a store on this site is a paid link: if you buy after clicking it we may earn a commission, at no cost to you. We show no prices, ratings or review text, because we cannot verify a single product yet — <a href="../disclosure/">what that means in practice</a>.</span>
+  <a class="disc-more" href="../disclosure/">Disclosure</a></p>
+</div>
+<main id="main">
+<header class="page-head"><p class="kicker">Read this first</p>
+<h1>Executive summary</h1>
+<p class="sub">Written 20 November 2026 by session <code>arena-04112b09</code>, after a line-by-line pass over the brief, the repository, and six official pages.</p></header>
+<section class="exec">
+  <h2>1 · The situation in one paragraph</h2>
+  <p>The brief asked for a compliant, traffic-worthy Amazon affiliate publication built around five products, plus the automation to research, publish and optimise it at scale. The repository was empty when this session started — one commit, a six-byte README — so there was no prior source register to polish. Of the five product identifiers supplied, none can currently be resolved to a listing, which means the only honest product page is a register of what is missing. Everything else the brief asked for — a shop-like front page, question-shaped guides, disclosure above the fold, sponsored links, sitemap and feed, a measurement plan, an empty-but-defined campaign ledger, and a gate that refuses unsourced claims — is built and live.</p>
+  <h2>2 · What is live now</h2>
+  <div class="tablewrap"><table class="grid-table"><thead><tr><th>Surface</th><th>State</th><th>Where</th></tr></thead><tbody><tr><td><span>Publication front page with disclosure strip, desk status and guide rail</span></td><td><span class="ok">live</span></td><td><a href="../">front page</a></td></tr>
+<tr><td><span>5 buyer-method guides, question-shaped, zero product claims</span></td><td><span class="ok">live</span></td><td><a href="../guides/">Guides</a></td></tr>
+<tr><td><span>Product-intent register: five rows, intended identifier, confirmation fields, separate redirect column</span></td><td><span class="ok">live · all rows unresolved</span></td><td><a href="../picks/">The Desk</a></td></tr>
+<tr><td><span>Source register with quoted official text and read-dates</span></td><td><span class="ok">live · 10/16 fetched</span></td><td><a href="../sources/">Source register</a></td></tr>
+<tr><td><span>15-rule publishing gate wired into the build</span></td><td><span class="ok">enforced</span></td><td><a href="../how-it-works/">Compliance &amp; the gate</a></td></tr>
+<tr><td><span>Sitemap, RSS (no store links in item bodies), canonical, BlogPosting markup</span></td><td><span class="ok">live</span></td><td><a href="../sitemap.xml">sitemap.xml</a></td></tr>
+<tr><td><span>Outbound click counter, local-only; collector shipped disabled</span></td><td><span class="ok">live, in safe mode</span></td><td><a href="../measurement/">Measurement</a></td></tr>
+<tr><td><span>Campaign ledger: headers defined, zero rows</span></td><td><span class="ok">ready, empty</span></td><td><a href="../data/ledger.csv">data/ledger.csv</a></td></tr>
+<tr><td><span>15-row ideas board with options, recommendation and copy-paste build instructions</span></td><td><span class="ok">awaiting decisions</span></td><td><a href="../suggestions/">Ideas</a></td></tr>
+<tr><td><span>15 open questions with discovery steps</span></td><td><span class="ok">three of them blocking</span></td><td><a href="../questions/">Open questions</a></td></tr>
+<tr><td><span>12 flagged irregularities with sources</span></td><td><span class="ok">published</span></td><td><a href="../flagged/">Flagged for review</a></td></tr></tbody></table></div>
+  <h2>3 · The three facts that changed the plan</h2>
+  <ol class="plain-ol">
+    <li><strong>Prices and ratings are not free data.</strong> They may be shown only where Amazon serves the link or from the approved API, and review/star display is tied to that same API. Result: no number in any currency appears anywhere on this site, and the build fails if one is added by hand.</li>
+    <li><strong>The API that would power “automated research” is behind a sales gate.</strong> Creators API requires an enrolled account and at least ten qualifying sales in the last thirty days; PA-API 5 is deprecated and returns 403. Result: automation is sequenced <em>after</em> content earns, not before — and the ledger stays empty rather than predictive.</li>
+    <li><strong>Some obvious affiliate tricks are explicitly forbidden.</strong> Price alerts, per-visitor sub-tagging, incentivised clicks, pop-ups, redirect intermediaries and search-engine placements on “amazon” keywords each have a clause. Result: they are absent by construction, and the gate asserts their absence.</li>
+  </ol>
+  <h2>4 · What is blocking the commercial half</h2>
+  <p>Three blocking questions, all answerable by the account owner in under fifteen minutes: which product each link points at (<a href="../questions/#q-01">Q-01</a>), whether the identifier tokens are truncated (<a href="../questions/#q-02">Q-02</a>), and which marketplace the tracking ID is registered against (<a href="../questions/#q-03">Q-03</a>). Until those are answered, the site can publish method but not verdicts — which is exactly the distinction the guides are built on.</p>
+  <h2>5 · Recommended path, in order</h2>
+  <div class="tablewrap"><table class="grid-table"><thead><tr><th>#</th><th>Move</th><th>Why this order</th><th>Board ref</th></tr></thead><tbody><tr><td><span class="stepno">1</span></td><td><span>Resolve the five identifiers by regenerating one tagged link per product from its listing</span></td><td><span>Every other decision depends on knowing what the product is, and this motion satisfies the Special Link rule at the same time</span></td><td><span>&lt;a href=&#39;../suggestions/#sg-01&#39;&gt;SG-01&lt;/a&gt;, &lt;a href=&#39;./suggestions/#sg-02&#39;&gt;SG-02&lt;/a&gt;</span></td></tr>
+<tr><td><span class="stepno">2</span></td><td><span>Fix the marketplace/locale (US vs NL/EU) before writing for it</span></td><td><span>A wrong store link loses the sale and the reader at once; geo-redirects are prohibited so the choice has to be explicit</span></td><td><span>&lt;a href=&#39;../suggestions/#sg-03&#39;&gt;SG-03&lt;/a&gt;</span></td></tr>
+<tr><td><span class="stepno">3</span></td><td><span>Publish one guide a week from the four briefed questions, then pick the fifth from Search Console queries</span></td><td><span>Cadence with a measured selector is the only version of &#39;content strategy&#39; this desk can defend</span></td><td><span>&lt;a href=&#39;../suggestions/#sg-08&#39;&gt;SG-08&lt;/a&gt;, &lt;a href=&#39;./suggestions/#sg-09&#39;&gt;SG-09&lt;/a&gt;</span></td></tr>
+<tr><td><span class="stepno">4</span></td><td><span>Turn on measurement in the safe order: local counters + Search Console; collector only with a host and a legal basis</span></td><td><span>Static hosting cannot receive events, and per-visitor tagging is barred; the honest floor is aggregate counting</span></td><td><span>&lt;a href=&#39;../suggestions/#sg-06&#39;&gt;SG-06&lt;/a&gt;</span></td></tr>
+<tr><td><span class="stepno">5</span></td><td><span>Decide authorship (a named human) before any claim gets stronger than method</span></td><td><span>The disclosure sentence is first-person; endorsements need an endorser</span></td><td><span>&lt;a href=&#39;../suggestions/#sg-12&#39;&gt;SG-12&lt;/a&gt;</span></td></tr>
+<tr><td><span class="stepno">6</span></td><td><span>After ten qualifying sales in thirty days, unlock the API and only then build price-aware comparison tables and a staleness bot</span></td><td><span>This is the sequence the rules force: content earns the data access, the data access earns the automation</span></td><td><span>&lt;a href=&#39;../suggestions/#sg-05&#39;&gt;SG-05&lt;/a&gt;, &lt;a href=&#39;./suggestions/#sg-07&#39;&gt;SG-07&lt;/a&gt;</span></td></tr>
+<tr><td><span class="stepno">7</span></td><td><span>Keep the domain decision open until ten guides exist, then move with one commit</span></td><td><span>Canonicals and the sitemap are generated; flip them once, deliberately</span></td><td><span>&lt;a href=&#39;../suggestions/#sg-10&#39;&gt;SG-10&lt;/a&gt;</span></td></tr></tbody></table></div>
+  <h2>6 · What this summary does not claim</h2>
+  <ul class="plain">
+    <li>It does not claim traffic, rankings, conversions or revenue. There is no measurement history in this repository, and the ledger is empty on purpose.</li>
+    <li>It does not claim the five supplied links are invalid. Their compliance status is unresolved and stays flagged.</li>
+    <li>It does not claim any product is good, bad, or suitable for you. No product has been confirmed, let alone tested.</li>
+    <li>It does not present the ASIN length rule as verified from an official page; we reported a measurement, not a verdict from a source we could not open.</li>
+  </ul>
+  <p class="exec-close">Everything above is reproducible: the data files are published next to the HTML, the quotes are in the register, and <code>npm run verify</code> re-runs the whole argument.</p>
+</section></main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <p class="foot-name">Crisp Report</p>
+      <p class="foot-tag">We read the listing so you don&#39;t have to guess.</p>
+      <p class="foot-note">Drafted with machine assistance inside a repository session; a named human must review and sign off before this line changes to &#39;reviewed by&#39;. Until then the site says who made it and how, which is the answer to Google&#39;s &#39;Who / How / Why&#39; questions (SRC-08).</p>
+    </div>
+    <nav class="foot-col" aria-label="Read"><h2>Front page &amp; more</h2><a href="../">Front page</a><a href="../picks/">The Desk</a><a href="../guides/">Guides</a><a href="../suggestions/">Ideas</a>
+      <a href="../guides/">Guides index</a><a href="../feed.xml">RSS feed</a><a href="../sitemap.xml">Sitemap</a></nav>
+    <nav class="foot-col" aria-label="The workroom">
+      <h2>The workroom</h2><a href="../executive-summary/">Executive summary</a><a href="../questions/">Open questions</a><a href="../sources/">Source register</a><a href="../how-it-works/">Compliance &amp; gate</a><a href="../measurement/">Measurement</a><a href="../flagged/">Flagged for review</a></nav>
+    <nav class="foot-col" aria-label="Policies"><h2>Policies &amp; contact</h2>
+      <a href="../disclosure/">Affiliate disclosure</a><a href="../privacy/">Privacy &amp; measurement</a>
+      <a href="../about/">About, authorship &amp; corrections</a>
+      <a href="https://github.com/sassnarep3-star/WinC" rel="noopener">Source repository</a></nav>
+  </div>
+  <div class="foot-bar"><div class="foot-bar-in">
+    <p class="disc-required">As an Amazon Associate I earn from qualifying purchases.</p>
+    <p class="foot-fine">Registered tracking ID on outbound links: <code>shopnow047c-20</code> · operator-supplied; not checked against an Associates account from this environment. Built from data in <code>data/</code>; every table cell that is not blank names its source. Site generated 2026-11-20.</p>
+  </div></div>
+</footer>
+<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/clicks.js" defer></script>
+</body></html>

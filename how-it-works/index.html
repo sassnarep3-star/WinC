@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compliance and the publishing gate — Crisp Report</title>
+<meta name="description" content="The rules this site is built against, quoted from Amazon&#39;s own agreement and policies, with which of them a build can enforce automatically and which one a human has to look at.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/how-it-works/">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Crisp Report">
+<meta property="og:title" content="Compliance and the publishing gate — Crisp Report">
+<meta property="og:description" content="The rules this site is built against, quoted from Amazon&#39;s own agreement and policies, with which of them a build can enforce automatically and which one a human has to look at.">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/how-it-works/">
+<meta property="og:image" content="https://sassnarep3-star.github.io/WinC/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Crisp Report — new guides" href="../feed.xml">
+<link rel="stylesheet" href="../assets/styles.css">
+
+</head>
+<body class="pg-rules">
+<a class="skip" href="#main">Skip to content</a>
+<header class="mast">
+  <div class="mast-in">
+    <a class="brand" href="../">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-txt"><span class="brand-name">Crisp Report</span><span class="brand-kicker">Small-appliance buying intelligence</span></span>
+    </a>
+    <p class="issue">Issue 01 · 20 November 2026 · Autumn/winter 2026</p>
+  </div>
+  <nav class="nav" aria-label="Reader"><div class="nav-in"><a href="../">Front page</a><a href="../picks/">The Desk</a><a href="../guides/">Guides</a><a href="../suggestions/">Ideas</a></div></nav>
+</header>
+<div class="disclosure" role="note">
+  <p class="disclosure-in"><span class="disc-required">As an Amazon Associate I earn from qualifying purchases.</span>
+  <span class="disc-plain">Every link to a store on this site is a paid link: if you buy after clicking it we may earn a commission, at no cost to you. We show no prices, ratings or review text, because we cannot verify a single product yet — <a href="../disclosure/">what that means in practice</a>.</span>
+  <a class="disc-more" href="../disclosure/">Disclosure</a></p>
+</div>
+<main id="main">
+<header class="page-head"><p class="kicker">Machinery</p>
+<h1>What is automated, and what is gated</h1>
+<p class="sub">Everything in the left column below runs on <code>npm run verify</code> and fails the build. Everything in the right column needs a person, because it depends on an account, a listing, or a judgement we refuse to fake.</p></header>
+<section class="band">
+  <div class="band-head"><h2>Pipeline</h2></div>
+  <div class="tablewrap"><table class="grid-table"><thead><tr><th>Stage</th><th>Automated?</th><th>How it works here</th><th>Rule</th></tr></thead><tbody><tr><td><strong>Ingest supplied links</strong></td><td><span class="ptag t-auto">auto</span></td><td><span>Validated for shape (length, case, host) by the intent register; a token that fails the shape check can never become a published claim.</span></td><td>SRC-12</td></tr>
+<tr><td><strong>Confirm product identity</strong></td><td><span class="ptag t-human">human</span></td><td><span>Needs a real listing opened by the account owner. Recorded per row in &lt;code&gt;data/product-intent.json&lt;/code&gt;, kept separate from any observed redirect.</span></td><td>SRC-01 §1</td></tr>
+<tr><td><strong>Build Special Links</strong></td><td><span class="ptag t-auto">auto</span></td><td><span>The generator emits the tagged format with &lt;code&gt;rel=&amp;quot;sponsored nofollow&amp;quot;&lt;/code&gt; and the (paid link) label; the gate rejects a store link without a tag.</span></td><td>SRC-01 §1<br>SRC-02 §2(b)<br>SRC-16</td></tr>
+<tr><td><strong>Write the guide</strong></td><td><span class="ptag t-mixed">drafted auto, owned by a person</span></td><td><span>Blocks come from &lt;code&gt;content/guides/*.json&lt;/code&gt;; a named reviewer must set &lt;code&gt;reviewed_on&lt;/code&gt; before a claim gets stronger than method.</span></td><td>SRC-02 §1<br>SRC-08</td></tr>
+<tr><td><strong>Publish price or rating</strong></td><td><span class="ptag t-blocked">blocked, not declined</span></td><td><span>Not permitted from this position: only an Amazon-served link or the approved API may carry those values, and API access needs a sales threshold. The build forbids the pattern outright.</span></td><td>SRC-02 §2(b), §6(t)<br>SRC-05</td></tr>
+<tr><td><strong>Keep content fresh</strong></td><td><span class="ptag t-mixed">auto-flag, human-check</span></td><td><span>Rows older than 30 days fail the build, so the removal duty cannot be quietly skipped.</span></td><td>SRC-02 §6(c)</td></tr>
+<tr><td><strong>Sitemap, feed, canonical</strong></td><td><span class="ptag t-auto">auto</span></td><td><span>Regenerated from the guide registry on every build; the feed body carries no store link.</span></td><td>SRC-07<br>SRC-02 §4</td></tr>
+<tr><td><strong>Measure clicks</strong></td><td><span class="ptag t-auto">auto, local-only</span></td><td><span>Counter in the visitor&#39;s browser; posting disabled until an endpoint exists. Never a per-visitor sub-tag.</span></td><td>SRC-02 §2(b), §6(s)</td></tr>
+<tr><td><strong>Optimise campaigns</strong></td><td><span class="ptag t-none">not built, on purpose</span></td><td><span>No campaign logic exists that could act on unverified data; the ledger starts empty by design.</span></td><td>—</td></tr></tbody></table></div><p class="tcap">Read the middle column as the promise and the last column as the reason the promise is shaped that way.</p>
+</section>
+<section class="band two">
+  <div><div class="band-head"><h2>Why the AI pipeline is smaller than the brief implies</h2></div>
+  <p>Two published constraints shape it, and they are worth stating before anyone builds an agent.</p>
+  <ul class="plain">
+    <li>Program Content and Special Links may not be used to develop machine-learning models or related technology without Amazon's prior written approval.</li>
+    <li>Product data access runs through the Creators API, which requires an enrolled account and at least ten qualifying sales in the past thirty days; the older PA-API 5 endpoint returns 403 Forbidden.</li>
+  </ul>
+  <p>So the automatable part of “AI-powered” here is generation and hygiene: drafting structure, validating identifiers, keeping the sitemap and feed true, refusing a page that contains an unsourced claim, and queueing stale rows. The part that is not automatable from a repository is <em>acquiring the facts</em> — and pretending otherwise is how affiliate sites end up with invented prices.</p>
+  <p class="rule-src">Sources: <a href="../sources/#src-02">SRC-02 §5, §6(s)</a>, <a href="../sources/#src-05">SRC-05</a>, <a href="../sources/#src-06">SRC-06</a>.</p></div>
+  <div><div class="band-head"><h2>Build &amp; deploy</h2></div>
+  <p>The site is generated, so the HTML you are reading is an artefact, not a hand-written file. Commands:</p>
+  <ul class="code-list">
+    <li><code>npm run build</code> — regenerate every page, the sitemap and the feed</li>
+    <li><code>npm run check</code> — the gate: links, disclosure, sponsored rels, tag presence, price/rating patterns, sourced cells</li>
+    <li><code>npm run verify</code> — build, then gate; this is what CI runs</li>
+    <li><code>npm run serve</code> — preview at <code>http://localhost:8080/WinC/</code> with the same sub-path as Pages</li>
+  </ul>
+  <p>Deployment is GitHub Pages, publishing from branch <code>main</code> at <code>/</code> with a legacy build, which is why generated HTML sits at the repository root rather than in a <code>docs/</code> or <code>dist/</code> folder.</p>
+  <p class="rule-src">Sources: <a href="../sources/#src-09">SRC-09</a>, <a href="../sources/#src-10">SRC-10</a>.</p></div>
+</section></main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <p class="foot-name">Crisp Report</p>
+      <p class="foot-tag">We read the listing so you don&#39;t have to guess.</p>
+      <p class="foot-note">Drafted with machine assistance inside a repository session; a named human must review and sign off before this line changes to &#39;reviewed by&#39;. Until then the site says who made it and how, which is the answer to Google&#39;s &#39;Who / How / Why&#39; questions (SRC-08).</p>
+    </div>
+    <nav class="foot-col" aria-label="Read"><h2>Front page &amp; more</h2><a href="../">Front page</a><a href="../picks/">The Desk</a><a href="../guides/">Guides</a><a href="../suggestions/">Ideas</a>
+      <a href="../guides/">Guides index</a><a href="../feed.xml">RSS feed</a><a href="../sitemap.xml">Sitemap</a></nav>
+    <nav class="foot-col" aria-label="The workroom">
+      <h2>The workroom</h2><a href="../executive-summary/">Executive summary</a><a href="../questions/">Open questions</a><a href="../sources/">Source register</a><a href="../how-it-works/">Compliance &amp; gate</a><a href="../measurement/">Measurement</a><a href="../flagged/">Flagged for review</a></nav>
+    <nav class="foot-col" aria-label="Policies"><h2>Policies &amp; contact</h2>
+      <a href="../disclosure/">Affiliate disclosure</a><a href="../privacy/">Privacy &amp; measurement</a>
+      <a href="../about/">About, authorship &amp; corrections</a>
+      <a href="https://github.com/sassnarep3-star/WinC" rel="noopener">Source repository</a></nav>
+  </div>
+  <div class="foot-bar"><div class="foot-bar-in">
+    <p class="disc-required">As an Amazon Associate I earn from qualifying purchases.</p>
+    <p class="foot-fine">Registered tracking ID on outbound links: <code>shopnow047c-20</code> · operator-supplied; not checked against an Associates account from this environment. Built from data in <code>data/</code>; every table cell that is not blank names its source. Site generated 2026-11-20.</p>
+  </div></div>
+</footer>
+<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/clicks.js" defer></script>
+</body></html>

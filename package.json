@@ -1,0 +1,17 @@
+{
+  "name": "winc-crisp-report",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Crisp Report — an Amazon affiliate publication generated from a sourced data register, with a compliance gate that refuses unsourced claims.",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "check": "node tools/check.mjs",
+    "verify": "node tools/build.mjs && node tools/check.mjs",
+    "fresh": "node tools/freshness.mjs",
+    "serve": "node tools/serve.mjs"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED",
+  "repository": { "type": "git", "url": "git+https://github.com/sassnarep3-star/WinC.git" }
+}

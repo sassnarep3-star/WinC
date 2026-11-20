@@ -1,0 +1,46 @@
+name: verify site
+
+# The gate is the product. Pages deploys whatever main contains, so this workflow is what stops
+# an unsourced claim, a missing disclosure or a broken link from becoming a live URL.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build every page from the data registers
+        run: node tools/build.mjs
+
+      - name: Fail on an unsourced cell, a missing disclosure, an untagged or unlabelled store link
+        run: node tools/check.mjs
+
+      - name: Staleness queue (confirmed rows older than 30 days must be re-checked or removed)
+        run: node tools/freshness.mjs
+
+      - name: Generated output must be reproducible
+        run: |
+          node tools/build.mjs >/dev/null
+          git diff --exit-code -- '*.html' '*.xml' 'robots.txt' 'assets/js/config.js' || {
+            echo "::error::committed HTML is not what the generator produces — run npm run build and commit the result"; exit 1; }
+
+      - name: Feed and sitemap must be well-formed XML
+        run: |
+          python3 - <<'PY'
+          import xml.dom.minidom, sys
+          for f in ("feed.xml", "sitemap.xml"):
+              xml.dom.minidom.parse(f)
+              print("ok:", f)
+          PY

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Crisp Report — buyer guides</title>
+  <link>https://sassnarep3-star.github.io/WinC/</link>
+  <description>Small-appliance buying intelligence. Headlines and dates only: this feed carries no store links, so the buying decision stays on a page where the disclosure is.</description>
+  <language>en-US</language>
+  <lastBuildDate>Fri, 20 Nov 2026 07:00:00 GMT</lastBuildDate>
+  <atom:link href="https://sassnarep3-star.github.io/WinC/feed.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>What to check on an appliance listing before you click buy</title>
+    <link>https://sassnarep3-star.github.io/WinC/guides/what-to-check-on-the-listing/</link>
+    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/what-to-check-on-the-listing/</guid>
+    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
+    <description>The fields that can be verified, the ones that are decoration, and the two lines that tell you a listing was written by someone who used the thing.</description>
+  </item>
+  <item>
+    <title>Questions to ask before buying a multi-function kitchen appliance</title>
+    <link>https://sassnarep3-star.github.io/WinC/guides/multifunction-questions/</link>
+    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/multifunction-questions/</guid>
+    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
+    <description>Nine cooking modes is a spec sheet, not a reason. Six questions that separate a replacement from a duplicate - and save you the counter space anyway.</description>
+  </item>
+  <item>
+    <title>How to assess cleanup and counter-space trade-offs</title>
+    <link>https://sassnarep3-star.github.io/WinC/guides/cleanup-and-counter-space/</link>
+    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/cleanup-and-counter-space/</guid>
+    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
+    <description>The appliance you keep using is the one that is easy to wash and easy to park. Both are checkable before you buy, from documents you can open in a minute.</description>
+  </item>
+  <item>
+    <title>A no-hype checklist for comparing air fryer capacity</title>
+    <link>https://sassnarep3-star.github.io/WinC/guides/capacity-checklist/</link>
+    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/capacity-checklist/</guid>
+    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
+    <description>Litres, quart counts and &#39;feeds a family of&#39; claims measure different things. Here is how to read each one without being sold something.</description>
+  </item>
+  <item>
+    <title>Basket or oven-style air fryer: what should you compare?</title>
+    <link>https://sassnarep3-star.github.io/WinC/guides/basket-or-oven/</link>
+    <guid isPermaLink="true">https://sassnarep3-star.github.io/WinC/guides/basket-or-oven/</guid>
+    <pubDate>Fri, 20 Nov 2026 07:00:00 GMT</pubDate>
+    <description>Two shapes, two failure modes. The trade-offs that decide it are on the listing, if you know which fields to read.</description>
+  </item>
+</channel>
+</rss>

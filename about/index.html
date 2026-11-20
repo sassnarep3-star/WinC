@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About, authorship and corrections — Crisp Report</title>
+<meta name="description" content="Who writes here, how, with what limits, and how to correct us.">
+<link rel="canonical" href="https://sassnarep3-star.github.io/WinC/about/">
+<meta name="theme-color" content="#f6f3ec">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Crisp Report">
+<meta property="og:title" content="About, authorship and corrections — Crisp Report">
+<meta property="og:description" content="Who writes here, how, with what limits, and how to correct us.">
+<meta property="og:url" content="https://sassnarep3-star.github.io/WinC/about/">
+<meta property="og:image" content="https://sassnarep3-star.github.io/WinC/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Crisp Report — new guides" href="../feed.xml">
+<link rel="stylesheet" href="../assets/styles.css">
+
+</head>
+<body class="pg-policy">
+<a class="skip" href="#main">Skip to content</a>
+<header class="mast">
+  <div class="mast-in">
+    <a class="brand" href="../">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-txt"><span class="brand-name">Crisp Report</span><span class="brand-kicker">Small-appliance buying intelligence</span></span>
+    </a>
+    <p class="issue">Issue 01 · 20 November 2026 · Autumn/winter 2026</p>
+  </div>
+  <nav class="nav" aria-label="Reader"><div class="nav-in"><a href="../">Front page</a><a href="../picks/">The Desk</a><a href="../guides/">Guides</a><a href="../suggestions/">Ideas</a></div></nav>
+</header>
+<div class="disclosure" role="note">
+  <p class="disclosure-in"><span class="disc-required">As an Amazon Associate I earn from qualifying purchases.</span>
+  <span class="disc-plain">Every link to a store on this site is a paid link: if you buy after clicking it we may earn a commission, at no cost to you. We show no prices, ratings or review text, because we cannot verify a single product yet — <a href="../disclosure/">what that means in practice</a>.</span>
+  <a class="disc-more" href="../disclosure/">Disclosure</a></p>
+</div>
+<main id="main">
+<header class="page-head"><p class="kicker">About</p><h1>Crisp Report</h1>
+<p class="sub">We read the listing so you don&#39;t have to guess. Question-shaped guides, sourced claims only, and a visible note whenever a link can earn us a commission.</p></header>
+<h2>Who made this</h2>
+<p>Byline: <strong>Crisp Report desk</strong>. Drafted with machine assistance inside a repository session; a named human must review and sign off before this line changes to &#39;reviewed by&#39;. Until then the site says who made it and how, which is the answer to Google&#39;s &#39;Who / How / Why&#39; questions (SRC-08).</p>
+<p>There is no named human author yet, and we will not invent one. A fake reviewer would be a false identity in the masthead and a misleading endorsement in the copy at the same time, so every page here stops at <em>method</em> — what to check, which field to read, which claim is unverifiable — rather than asserting a personal test nobody performed. When the operator supplies a name, <code>authorship.person_byline</code> and <code>review_required</code> in <code>site.config.json</code> change, and each guide gains a <em>reviewed by</em> line.</p>
+<h2>How we work</h2>
+<ol class="plain-ol">
+  <li>A claim enters a data file, not a page, with a source id attached.</li>
+  <li>The generator writes the HTML; nobody hand-edits a published number.</li>
+  <li>The gate refuses the build if a cell lacks a source, a disclosure is missing, a store link is untagged or unlabelled, or a price or rating pattern appears anywhere.</li>
+  <li>Anything that cannot be confirmed stays visibly blank with a reason, and gets a row on the <a href="../flagged/">flagged</a> page.</li>
+  <li>Product rows carry a re-check date; older than thirty days fails the build until someone re-reads or removes them.</li>
+</ol>
+<h2>Corrections</h2>
+<p>Log: <a href="../data/corrections.json"><code>data/corrections.json</code></a> — schema published, no entries yet. A correction gets a row within one working day of confirmation, on the page it belongs to, with what was wrong and what is true.</p>
+<h2>Contact</h2>
+<p>The route that exists today is the repository: <a href="https://github.com/sassnarep3-star/WinC" rel="noopener"><code>github.com/sassnarep3-star/WinC</code></a> — open an issue for a correction, an accepted decision from the ideas board, or the answers to the blocking questions. We deliberately do not print an email address we have not been given.</p>
+<h2>Brand naming, in case it looks close to something</h2>
+<p>The name contains no Amazon mark and does not imply sponsorship or endorsement by Amazon — which is both a requirement of the agreement and the reason the strip at the top of this page exists.</p></main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <p class="foot-name">Crisp Report</p>
+      <p class="foot-tag">We read the listing so you don&#39;t have to guess.</p>
+      <p class="foot-note">Drafted with machine assistance inside a repository session; a named human must review and sign off before this line changes to &#39;reviewed by&#39;. Until then the site says who made it and how, which is the answer to Google&#39;s &#39;Who / How / Why&#39; questions (SRC-08).</p>
+    </div>
+    <nav class="foot-col" aria-label="Read"><h2>Front page &amp; more</h2><a href="../">Front page</a><a href="../picks/">The Desk</a><a href="../guides/">Guides</a><a href="../suggestions/">Ideas</a>
+      <a href="../guides/">Guides index</a><a href="../feed.xml">RSS feed</a><a href="../sitemap.xml">Sitemap</a></nav>
+    <nav class="foot-col" aria-label="The workroom">
+      <h2>The workroom</h2><a href="../executive-summary/">Executive summary</a><a href="../questions/">Open questions</a><a href="../sources/">Source register</a><a href="../how-it-works/">Compliance &amp; gate</a><a href="../measurement/">Measurement</a><a href="../flagged/">Flagged for review</a></nav>
+    <nav class="foot-col" aria-label="Policies"><h2>Policies &amp; contact</h2>
+      <a href="../disclosure/">Affiliate disclosure</a><a href="../privacy/">Privacy &amp; measurement</a>
+      <a href="../about/">About, authorship &amp; corrections</a>
+      <a href="https://github.com/sassnarep3-star/WinC" rel="noopener">Source repository</a></nav>
+  </div>
+  <div class="foot-bar"><div class="foot-bar-in">
+    <p class="disc-required">As an Amazon Associate I earn from qualifying purchases.</p>
+    <p class="foot-fine">Registered tracking ID on outbound links: <code>shopnow047c-20</code> · operator-supplied; not checked against an Associates account from this environment. Built from data in <code>data/</code>; every table cell that is not blank names its source. Site generated 2026-11-20.</p>
+  </div></div>
+</footer>
+<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/clicks.js" defer></script>
+</body></html>
