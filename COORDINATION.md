@@ -1166,4 +1166,5 @@ discarding either side, both times:
 
 | Time (UTC) | Result |
 | --- | --- |
-| 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round; merge result and Pages status appended below. |
+| 2026-11-20 | PR **#46** https://github.com/sassnarep3-star/WinC/pull/46 opened from `arena/156c2ecf-winc` → `main`; rebased onto `6a989c0` after the second conflict round. |
+| 2026-11-20 | **PR #46 merged** (`gh pr merge 46 --merge`). Main HEAD = `afa86c7b` "Merge pull request #46 from sassnarep3-star/arena/156c2ecf-winc". GitHub Pages: `status: built`, source `main`, https://sassnarep3-star.github.io/WinC/ — live re-fetch confirms the merged build serves (topics page shows "18 in the backlog", including TP-16..TP-18). Build + gate before merge: `Built 38 pages, 37 sitemap URLs, 15 guides, 32 search rows.` / `OK: 38 pages checked, 37 sitemap URLs, no violations.` |
